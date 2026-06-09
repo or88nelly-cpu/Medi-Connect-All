@@ -7,7 +7,6 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 /// Central standard activity progress spinner.
 class AppLoader extends StatelessWidget {
   final String? message;
@@ -21,10 +20,7 @@ class AppLoader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircularProgressIndicator(
-            color: AppColors.primary,
-            strokeWidth: 3.w,
-          ),
+          CircularProgressIndicator(color: AppColors.primary, strokeWidth: 3.w),
           if (message != null) ...[
             SizedBox(height: 16.h),
             Text(
@@ -48,10 +44,12 @@ class ShimmerLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor =
-        isDark ? const Color(0xFF2C2C2C) : const Color(0xFFE5E7EB);
-    final highlightColor =
-        isDark ? const Color(0xFF3C3C3C) : const Color(0xFFF3F4F6);
+    final baseColor = isDark
+        ? const Color(0xFF2C2C2C)
+        : const Color(0xFFE5E7EB);
+    final highlightColor = isDark
+        ? const Color(0xFF3C3C3C)
+        : const Color(0xFFF3F4F6);
 
     return ListView.separated(
       shrinkWrap: true,
@@ -83,17 +81,9 @@ class ShimmerLoader extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 150.w,
-                      height: 16.h,
-                      color: Colors.white,
-                    ),
+                    Container(width: 150.w, height: 16.h, color: Colors.white),
                     SizedBox(height: 8.h),
-                    Container(
-                      width: 100.w,
-                      height: 12.h,
-                      color: Colors.white,
-                    ),
+                    Container(width: 100.w, height: 12.h, color: Colors.white),
                     SizedBox(height: 8.h),
                     Container(
                       width: double.infinity,

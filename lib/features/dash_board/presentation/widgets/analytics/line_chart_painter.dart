@@ -14,7 +14,10 @@ class LineChartPainter extends CustomPainter {
     final paintFill = Paint()
       ..style = PaintingStyle.fill
       ..shader = LinearGradient(
-        colors: [AppColors.primary.withAlpha(64), AppColors.primary.withAlpha(0)],
+        colors: [
+          AppColors.primary.withAlpha(64),
+          AppColors.primary.withAlpha(0),
+        ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
@@ -46,8 +49,14 @@ class LineChartPainter extends CustomPainter {
       // Draw smooth cubic curves between points
       final pPrev = points[i - 1];
       final pCurrent = points[i];
-      final controlPoint1 = Offset(pPrev.dx + (pCurrent.dx - pPrev.dx) / 2, pPrev.dy);
-      final controlPoint2 = Offset(pPrev.dx + (pCurrent.dx - pPrev.dx) / 2, pCurrent.dy);
+      final controlPoint1 = Offset(
+        pPrev.dx + (pCurrent.dx - pPrev.dx) / 2,
+        pPrev.dy,
+      );
+      final controlPoint2 = Offset(
+        pPrev.dx + (pCurrent.dx - pPrev.dx) / 2,
+        pCurrent.dy,
+      );
       path.cubicTo(
         controlPoint1.dx,
         controlPoint1.dy,

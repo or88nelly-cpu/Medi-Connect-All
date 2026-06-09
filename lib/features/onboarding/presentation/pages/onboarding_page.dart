@@ -10,7 +10,6 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
-
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
 
@@ -46,104 +45,107 @@ class _OnboardingPageState extends State<OnboardingPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
-                  onPressed: () => context.go(RouteNames.login),
-                  child: Text(
-                    "Skip",
-                    style: AppTextStyles.labelMedium
-                        .copyWith(color: AppColors.primary),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  },
-                  itemCount: _slides.length,
-                  itemBuilder: (context, index) {
-                    final slide = _slides[index];
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 70.r,
-                          backgroundColor: AppColors.primary.withOpacity(0.08),
-                          child: Icon(
-                            _getIconData(slide['icon']!),
-                            size: 72.r,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                        SizedBox(height: 48.h),
-                        Text(
-                          slide['title']!,
-                          style: AppTextStyles.headingMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 16.h),
-                        Text(
-                          slide['desc']!,
-                          style: AppTextStyles.bodyLarge.copyWith(
-                            color: AppColors.textSecondary,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  _slides.length,
-                  (index) => AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    margin: EdgeInsets.symmetric(horizontal: 4.w),
-                    width: _currentIndex == index ? 24.w : 8.w,
-                    height: 8.h,
-                    decoration: BoxDecoration(
-                      color: _currentIndex == index
-                          ? AppColors.primary
-                          : AppColors.border,
-                      borderRadius: BorderRadius.circular(4.r),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: TextButton(
+                    onPressed: () => context.go(RouteNames.login),
+                    child: Text(
+                      "Skip",
+                      style: AppTextStyles.labelMedium.copyWith(
+                        color: AppColors.primary,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 48.h),
-              PrimaryButton(
-                text: _currentIndex == _slides.length - 1
-                    ? AppStrings.getStarted
-                    : AppStrings.next,
-                onPressed: () {
-                  if (_currentIndex == _slides.length - 1) {
-                    context.go(RouteNames.login);
-                  } else {
-                    _pageController.nextPage(
+                Expanded(
+                  child: PageView.builder(
+                    controller: _pageController,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    itemCount: _slides.length,
+                    itemBuilder: (context, index) {
+                      final slide = _slides[index];
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 70.r,
+                            backgroundColor: AppColors.primary.withOpacity(
+                              0.08,
+                            ),
+                            child: Icon(
+                              _getIconData(slide['icon']!),
+                              size: 72.r,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          SizedBox(height: 48.h),
+                          Text(
+                            slide['title']!,
+                            style: AppTextStyles.headingMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 16.h),
+                          Text(
+                            slide['desc']!,
+                            style: AppTextStyles.bodyLarge.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    _slides.length,
+                    (index) => AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeIn,
-                    );
-                  }
-                },
-              ),
-              SizedBox(height: 16.h),
-            ],
+                      margin: EdgeInsets.symmetric(horizontal: 4.w),
+                      width: _currentIndex == index ? 24.w : 8.w,
+                      height: 8.h,
+                      decoration: BoxDecoration(
+                        color: _currentIndex == index
+                            ? AppColors.primary
+                            : AppColors.border,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 48.h),
+                PrimaryButton(
+                  text: _currentIndex == _slides.length - 1
+                      ? AppStrings.getStarted
+                      : AppStrings.next,
+                  onPressed: () {
+                    if (_currentIndex == _slides.length - 1) {
+                      context.go(RouteNames.login);
+                    } else {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                    }
+                  },
+                ),
+                SizedBox(height: 16.h),
+              ],
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
   }
 
   IconData _getIconData(String key) {

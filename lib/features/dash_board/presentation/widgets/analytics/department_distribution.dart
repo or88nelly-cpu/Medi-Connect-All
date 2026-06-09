@@ -7,10 +7,7 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 class DepartmentDistribution extends StatelessWidget {
   final List<dynamic> deptStats;
 
-  const DepartmentDistribution({
-    super.key,
-    required this.deptStats,
-  });
+  const DepartmentDistribution({super.key, required this.deptStats});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,9 @@ class DepartmentDistribution extends StatelessWidget {
         children: [
           Text(
             AppStrings.departmentDistribution,
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           Expanded(
@@ -39,7 +38,10 @@ class DepartmentDistribution extends StatelessWidget {
                 final item = deptStats[index] as Map<dynamic, dynamic>;
                 final name = item['department'] ?? AppStrings.other;
                 final count = item['count'] ?? 0;
-                final double progress = (count / 15).clamp(0.0, 1.0); // Assume max 15 doctors in a dept
+                final double progress = (count / 15).clamp(
+                  0.0,
+                  1.0,
+                ); // Assume max 15 doctors in a dept
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +52,9 @@ class DepartmentDistribution extends StatelessWidget {
                         Text(name, style: AppTextStyles.bodyMedium),
                         Text(
                           "$count${AppStrings.docsLabel}",
-                          style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold),
+                          style: AppTextStyles.bodySmall.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),

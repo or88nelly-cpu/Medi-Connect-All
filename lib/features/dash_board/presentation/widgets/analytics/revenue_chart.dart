@@ -23,7 +23,9 @@ class RevenueChart extends StatelessWidget {
         children: [
           Text(
             AppStrings.weeklyRevenueTrend,
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           Expanded(

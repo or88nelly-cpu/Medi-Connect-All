@@ -7,7 +7,6 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
-
 /// Reusable base Dialog widget that styles the background card.
 class BaseDialog extends StatelessWidget {
   final Widget child;
@@ -17,15 +16,10 @@ class BaseDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       elevation: 8,
       backgroundColor: Theme.of(context).cardColor,
-      child: Padding(
-        padding: EdgeInsets.all(24.r),
-        child: child,
-      ),
+      child: Padding(padding: EdgeInsets.all(24.r), child: child),
     );
   }
 }
@@ -52,8 +46,11 @@ class SuccessDialog extends StatelessWidget {
           CircleAvatar(
             radius: 30.r,
             backgroundColor: AppColors.success.withOpacity(0.1),
-            child: Icon(Icons.check_circle_outline,
-                size: 36.r, color: AppColors.success),
+            child: Icon(
+              Icons.check_circle_outline,
+              size: 36.r,
+              color: AppColors.success,
+            ),
           ),
           SizedBox(height: 16.h),
           Text(
@@ -103,8 +100,11 @@ class ErrorDialog extends StatelessWidget {
           CircleAvatar(
             radius: 30.r,
             backgroundColor: AppColors.error.withOpacity(0.1),
-            child:
-                Icon(Icons.error_outline, size: 36.r, color: AppColors.error),
+            child: Icon(
+              Icons.error_outline,
+              size: 36.r,
+              color: AppColors.error,
+            ),
           ),
           SizedBox(height: 16.h),
           Text(
@@ -171,8 +171,11 @@ class ConfirmationDialog extends StatelessWidget {
           CircleAvatar(
             radius: 30.r,
             backgroundColor: AppColors.warning.withOpacity(0.1),
-            child: Icon(Icons.warning_amber_outlined,
-                size: 36.r, color: AppColors.warning),
+            child: Icon(
+              Icons.warning_amber_outlined,
+              size: 36.r,
+              color: AppColors.warning,
+            ),
           ),
           SizedBox(height: 16.h),
           Text(

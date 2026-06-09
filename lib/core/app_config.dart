@@ -20,6 +20,14 @@ import 'package:medi_connect/features/dash_board/domain/repositories/analytics_r
 import 'package:medi_connect/features/dash_board/domain/use_cases/admin_analytics_usecases.dart';
 import 'package:medi_connect/features/dash_board/domain/use_cases/get_analytics_usecase.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_analytics_bloc.dart';
+import 'package:medi_connect/features/department/data/datasource/department_remote_datasource.dart';
+import 'package:medi_connect/features/department/data/repository/department_repository_impl.dart';
+import 'package:medi_connect/features/department/domain/repositories/department_repository.dart';
+import 'package:medi_connect/features/department/domain/use_cases/add_department_usecase.dart';
+import 'package:medi_connect/features/department/domain/use_cases/delete_department_usecase.dart';
+import 'package:medi_connect/features/department/domain/use_cases/get_departments_usecase.dart';
+import 'package:medi_connect/features/department/domain/use_cases/update_department_usecase.dart';
+import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -105,4 +113,57 @@ void configureAnalyticsDependencies(GetIt sl) {
   sl.registerLazySingleton<GetDashboardStatsUseCase>(
     () => GetDashboardStatsUseCase(sl<AnalyticsRepository>()),
   );
+}
+
+void configureDepartmentDependencies(GetIt sl) {
+  // Remote Datasource
+  if (!sl.isRegistered<DepartmentRemoteDataSource>()) {
+    sl.registerLazySingleton<DepartmentRemoteDataSource>(
+      () => DepartmentRemoteDataSourceImpl(sl<SupabaseService>()),
+    );
+  }
+
+  // Repository
+  if (!sl.isRegistered<DepartmentRepository>()) {
+    sl.registerLazySingleton<DepartmentRepository>(
+      () => DepartmentRepositoryImpl(sl<DepartmentRemoteDataSource>()),
+    );
+  }
+
+  // UseCases
+  if (!sl.isRegistered<GetDepartmentsUseCase>()) {
+    sl.registerLazySingleton<GetDepartmentsUseCase>(
+      () => GetDepartmentsUseCase(sl<DepartmentRepository>()),
+    );
+  }
+
+  if (!sl.isRegistered<AddDepartmentUseCase>()) {
+    sl.registerLazySingleton<AddDepartmentUseCase>(
+      () => AddDepartmentUseCase(sl<DepartmentRepository>()),
+    );
+  }
+
+  if (!sl.isRegistered<UpdateDepartmentUseCase>()) {
+    sl.registerLazySingleton<UpdateDepartmentUseCase>(
+      () => UpdateDepartmentUseCase(sl<DepartmentRepository>()),
+    );
+  }
+
+  if (!sl.isRegistered<DeleteDepartmentUseCase>()) {
+    sl.registerLazySingleton<DeleteDepartmentUseCase>(
+      () => DeleteDepartmentUseCase(sl<DepartmentRepository>()),
+    );
+  }
+
+  // Bloc
+  if (!sl.isRegistered<DepartmentBloc>()) {
+    sl.registerFactory<DepartmentBloc>(
+      () => DepartmentBloc(
+        getDepartments: sl<GetDepartmentsUseCase>(),
+        addDepartment: sl<AddDepartmentUseCase>(),
+        updateDepartment: sl<UpdateDepartmentUseCase>(),
+        deleteDepartment: sl<DeleteDepartmentUseCase>(),
+      ),
+    );
+  }
 }

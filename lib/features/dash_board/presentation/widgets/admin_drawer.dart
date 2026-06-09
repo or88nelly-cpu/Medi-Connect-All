@@ -1,4 +1,4 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -142,17 +142,28 @@ class AdminDrawer extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? (user.firstName != null ? "${user.firstName} ${user.lastName ?? ''}".trim() : "Administrator");
+          name =
+              user.name ??
+              (user.firstName != null
+                  ? "${user.firstName} ${user.lastName ?? ''}".trim()
+                  : "Administrator");
           email = user.email;
           profileImage = user.profileImage;
-          accessLevel = user.accessLevel ?? (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
+          accessLevel =
+              user.accessLevel ??
+              (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
         }
 
         final initials = name.isNotEmpty ? name[0].toUpperCase() : "A";
 
         return Container(
           width: double.infinity,
-          padding: EdgeInsets.only(top: 50.h, left: 20.w, right: 20.w, bottom: 20.h),
+          padding: EdgeInsets.only(
+            top: 50.h,
+            left: 20.w,
+            right: 20.w,
+            bottom: 20.h,
+          ),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: AppColors.adminGradient,
@@ -252,7 +263,11 @@ class AdminDrawer extends StatelessWidget {
     Color? textColor,
   }) {
     return ListTile(
-      leading: Icon(icon, color: iconColor ?? AppColors.textPrimary, size: 22.r),
+      leading: Icon(
+        icon,
+        color: iconColor ?? AppColors.textPrimary,
+        size: 22.r,
+      ),
       title: Text(
         title,
         style: AppTextStyles.bodyMedium.copyWith(

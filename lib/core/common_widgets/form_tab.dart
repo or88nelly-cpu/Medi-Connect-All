@@ -1,9 +1,9 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+
 class FormTab extends StatelessWidget {
   final List<Widget> children;
   final String tilte;
@@ -30,29 +30,31 @@ class FormTab extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(children: [
-        Text(
-          tilte,
-          style: AppTextStyles.headingMedium.copyWith(
-            color: AppColors.textDarkNavy,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        if (subTitle != null) ...[
-          SizedBox(height: 4.h),
+      child: Column(
+        children: [
           Text(
-            subTitle!,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
-              fontSize: 12.sp,
+            tilte,
+            style: AppTextStyles.headingMedium.copyWith(
+              color: AppColors.textDarkNavy,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
             ),
-            textAlign: TextAlign.center,
           ),
+          if (subTitle != null) ...[
+            SizedBox(height: 4.h),
+            Text(
+              subTitle!,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+                fontSize: 12.sp,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+          SizedBox(height: 20.r),
+          ...children,
         ],
-        SizedBox(height:20.r),
-        ...children
-      ]),
+      ),
     );
   }
 }

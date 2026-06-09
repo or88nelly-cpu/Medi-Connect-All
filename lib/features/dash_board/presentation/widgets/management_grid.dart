@@ -35,7 +35,7 @@ class ManagementGrid extends StatelessWidget {
         _NavCard(
           title: AppStrings.patientsDirectory,
           subtitle: AppStrings.patientsDirectoryDesc,
-          icon:AppAssets.femaleAvatarPng,
+          icon: AppAssets.femaleAvatarPng,
           route: '/admin/patients',
         ),
       ],
@@ -76,7 +76,7 @@ class _NavCard extends StatelessWidget {
                 radius: 28.r,
                 backgroundColor: AppColors.primary.withAlpha(20),
 
-                child: CustomImageView(imagePath: icon,),
+                child: CustomImageView(imagePath: icon),
               ),
               SizedBox(width: 12.w),
               Expanded(
@@ -86,12 +86,19 @@ class _NavCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold,fontSize: 14.sp),
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
                     ),
                     SizedBox(height: 2.h),
                     Text(
                       subtitle,
-                      style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary, fontSize: 12.sp,height: 1),
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textSecondary,
+                        fontSize: 12.sp,
+                        height: 1,
+                      ),
                       maxLines: 2,
 
                       overflow: TextOverflow.ellipsis,
@@ -99,7 +106,11 @@ class _NavCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(Icons.arrow_forward_ios, size: 14.r, color: AppColors.textSecondary),
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 14.r,
+                color: AppColors.textSecondary,
+              ),
             ],
           ),
         ),

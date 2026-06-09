@@ -3,7 +3,6 @@ import 'package:medi_connect/core/common_models/exceptions/exceptions.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/features/dash_board/data/models/analytics_model.dart';
 
-
 abstract class AnalyticsRemoteDataSource {
   Future<List<AnalyticsModel>> getAnalyticsList();
   Future<Map<String, dynamic>> getDashboardStats();
@@ -46,15 +45,9 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
           .select('id')
           .eq('role', 'patient')
           .isFilter('deleted_at', null);
-      final apptsRes = await _supabase
-          .from('appointments')
-          .select('id');
-      final videosRes = await _supabase
-          .from('video_consultation')
-          .select('id');
-      final paymentsRes = await _supabase
-          .from('payments')
-          .select('id');
+      final apptsRes = await _supabase.from('appointments').select('id');
+      final videosRes = await _supabase.from('video_consultation').select('id');
+      final paymentsRes = await _supabase.from('payments').select('id');
 
       final totalDoctors = (docsRes as List).length;
       final totalStaff = (staffRes as List).length;
@@ -66,10 +59,16 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
 
       // Department stats
       final deptStats = [
-        {'department': 'General Medicine', 'count': (totalDoctors * 0.4).round() + 2},
+        {
+          'department': 'General Medicine',
+          'count': (totalDoctors * 0.4).round() + 2,
+        },
         {'department': 'Cardiology', 'count': (totalDoctors * 0.2).round() + 1},
         {'department': 'Neurology', 'count': (totalDoctors * 0.2).round() + 1},
-        {'department': 'Orthopedics', 'count': (totalDoctors * 0.1).round() + 1},
+        {
+          'department': 'Orthopedics',
+          'count': (totalDoctors * 0.1).round() + 1,
+        },
         {'department': 'Pediatrics', 'count': (totalDoctors * 0.1).round() + 1},
       ];
 

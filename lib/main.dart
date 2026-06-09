@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/themes/app_theme.dart';
 
-
 import 'core/app_initializer.dart';
 import 'core/app_router.dart';
 import 'core/app_providers.dart';

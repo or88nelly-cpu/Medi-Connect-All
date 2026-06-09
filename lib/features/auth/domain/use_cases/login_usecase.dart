@@ -5,6 +5,7 @@ import '../entities/user_entity.dart';
 import '../repositories/auth_repository.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
 import 'package:medi_connect/core/usecases/usecase.dart';
+
 class LoginParams {
   final String email;
   final String password;

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
-
 class GradientButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -28,10 +27,8 @@ class GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveColors = gradientColors ?? [
-      AppColors.primary,
-      AppColors.secondary,
-    ];
+    final effectiveColors =
+        gradientColors ?? [AppColors.primary, AppColors.secondary];
 
     final isButtonEnabled = onPressed != null && !isLoading;
 
@@ -82,7 +79,8 @@ class GradientButton extends StatelessWidget {
                 )
               : Text(
                   text,
-                  style: textStyle ??
+                  style:
+                      textStyle ??
                       AppTextStyles.labelMedium.copyWith(
                         color: AppColors.textLight,
                         fontSize: AppTextStyles.s16,

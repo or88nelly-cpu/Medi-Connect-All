@@ -14,7 +14,7 @@ class AppDateUtils {
       'September',
       'October',
       'November',
-      'December'
+      'December',
     ];
     return "${months[date.month - 1]} ${date.day}, ${date.year}";
   }
@@ -22,8 +22,9 @@ class AppDateUtils {
   /// Formats DateTime with time details (e.g. "June 5, 2026 at 12:30 PM").
   static String formatDateTime(DateTime date) {
     final dateStr = formatDate(date);
-    final hour =
-        date.hour > 12 ? date.hour - 12 : (date.hour == 0 ? 12 : date.hour);
+    final hour = date.hour > 12
+        ? date.hour - 12
+        : (date.hour == 0 ? 12 : date.hour);
     final period = date.hour >= 12 ? 'PM' : 'AM';
     final minuteStr = date.minute.toString().padLeft(2, '0');
     return "$dateStr at $hour:$minuteStr $period";
@@ -31,8 +32,9 @@ class AppDateUtils {
 
   /// Formats time portion only (e.g. "12:30 PM").
   static String formatTime(DateTime date) {
-    final hour =
-        date.hour > 12 ? date.hour - 12 : (date.hour == 0 ? 12 : date.hour);
+    final hour = date.hour > 12
+        ? date.hour - 12
+        : (date.hour == 0 ? 12 : date.hour);
     final period = date.hour >= 12 ? 'PM' : 'AM';
     final minuteStr = date.minute.toString().padLeft(2, '0');
     return "$hour:$minuteStr $period";

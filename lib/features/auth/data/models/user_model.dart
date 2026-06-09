@@ -45,8 +45,10 @@ class UserModel extends UserEntity {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     // Check if fields are inside user_metadata or directly at the root
     final metadataMap = json['user_metadata'] as Map<String, dynamic>? ?? {};
-    final parsedName = json['name'] as String? ?? metadataMap['name'] as String?;
-    final parsedRole = json['role'] as String? ?? metadataMap['role'] as String? ?? 'patient';
+    final parsedName =
+        json['name'] as String? ?? metadataMap['name'] as String?;
+    final parsedRole =
+        json['role'] as String? ?? metadataMap['role'] as String? ?? 'patient';
 
     return UserModel(
       id: json['id'] as String,
@@ -54,7 +56,8 @@ class UserModel extends UserEntity {
       name: parsedName,
       phoneNumber: json['phone'] as String? ?? json['phone_number'] as String?,
       role: parsedRole,
-      profileCompletionStatus: json['profile_completion_status'] as bool? ?? false,
+      profileCompletionStatus:
+          json['profile_completion_status'] as bool? ?? false,
       status: json['status'] as String? ?? 'Pending Registration',
       department: json['department'] as String?,
       qualification: json['qualification'] as String?,

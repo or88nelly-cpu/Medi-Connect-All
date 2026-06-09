@@ -66,21 +66,33 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
     _iconScale = TweenSequence<double>([
       TweenSequenceItem(
-          tween: Tween(begin: 1.0, end: 1.15)
-              .chain(CurveTween(curve: Curves.easeOut)),
-          weight: 30),
+        tween: Tween(
+          begin: 1.0,
+          end: 1.15,
+        ).chain(CurveTween(curve: Curves.easeOut)),
+        weight: 30,
+      ),
       TweenSequenceItem(
-          tween: Tween(begin: 1.15, end: 1.0)
-              .chain(CurveTween(curve: Curves.easeIn)),
-          weight: 20),
+        tween: Tween(
+          begin: 1.15,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeIn)),
+        weight: 20,
+      ),
       TweenSequenceItem(
-          tween: Tween(begin: 1.0, end: 1.08)
-              .chain(CurveTween(curve: Curves.easeOut)),
-          weight: 20),
+        tween: Tween(
+          begin: 1.0,
+          end: 1.08,
+        ).chain(CurveTween(curve: Curves.easeOut)),
+        weight: 20,
+      ),
       TweenSequenceItem(
-          tween: Tween(begin: 1.08, end: 1.0)
-              .chain(CurveTween(curve: Curves.easeIn)),
-          weight: 30),
+        tween: Tween(
+          begin: 1.08,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeIn)),
+        weight: 30,
+      ),
     ]).animate(_pulseController);
 
     // 4. Continuous rotation scanning animation (repeats)
@@ -88,9 +100,10 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(seconds: 4),
     )..repeat();
-    _rotation = Tween<double>(begin: 0.0, end: 2 * 3.1415926535).animate(
-      CurvedAnimation(parent: _rotateController, curve: Curves.linear),
-    );
+    _rotation = Tween<double>(
+      begin: 0.0,
+      end: 2 * 3.1415926535,
+    ).animate(CurvedAnimation(parent: _rotateController, curve: Curves.linear));
 
     // 5. Text & Bottom loading slide-in animation (one shot)
     _textController = AnimationController(
@@ -99,19 +112,22 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     );
     _textFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-          parent: _textController,
-          curve: const Interval(0.0, 0.7, curve: Curves.easeIn)),
+        parent: _textController,
+        curve: const Interval(0.0, 0.7, curve: Curves.easeIn),
+      ),
     );
-    _textSlide =
-        Tween<Offset>(begin: const Offset(0.0, 0.4), end: Offset.zero).animate(
-      CurvedAnimation(
-          parent: _textController,
-          curve: const Interval(0.2, 0.9, curve: Curves.easeOutCubic)),
-    );
+    _textSlide = Tween<Offset>(begin: const Offset(0.0, 0.4), end: Offset.zero)
+        .animate(
+          CurvedAnimation(
+            parent: _textController,
+            curve: const Interval(0.2, 0.9, curve: Curves.easeOutCubic),
+          ),
+        );
     _bottomLoaderFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-          parent: _textController,
-          curve: const Interval(0.6, 1.0, curve: Curves.easeIn)),
+        parent: _textController,
+        curve: const Interval(0.6, 1.0, curve: Curves.easeIn),
+      ),
     );
 
     _textController.forward();
@@ -132,11 +148,14 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final isWebOrDesktop = kIsWeb || 
-        defaultTargetPlatform == TargetPlatform.windows || 
-        defaultTargetPlatform == TargetPlatform.macOS || 
+    final isWebOrDesktop =
+        kIsWeb ||
+        defaultTargetPlatform == TargetPlatform.windows ||
+        defaultTargetPlatform == TargetPlatform.macOS ||
         defaultTargetPlatform == TargetPlatform.linux;
-    final bgImage = isWebOrDesktop ? AppAssets.splashBgWebPng : AppAssets.splashBgMobPng;
+    final bgImage = isWebOrDesktop
+        ? AppAssets.splashBgWebPng
+        : AppAssets.splashBgMobPng;
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
@@ -414,17 +433,10 @@ class _FloatingMedicalCrossState extends State<FloatingMedicalCross>
         builder: (context, child) {
           return Transform.translate(
             offset: Offset(0, _yOffset.value),
-            child: Transform.rotate(
-              angle: _rotation.value,
-              child: child,
-            ),
+            child: Transform.rotate(angle: _rotation.value, child: child),
           );
         },
-        child: Icon(
-          Icons.add,
-          size: widget.size.r,
-          color: widget.color,
-        ),
+        child: Icon(Icons.add, size: widget.size.r, color: widget.color),
       ),
     );
   }

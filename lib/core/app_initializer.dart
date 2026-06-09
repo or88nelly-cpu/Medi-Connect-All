@@ -28,5 +28,6 @@ class AppInitializer {
     );
     configureAuthDependencies(sl);
     configureAnalyticsDependencies(sl);
+    configureDepartmentDependencies(sl);
   }
 }

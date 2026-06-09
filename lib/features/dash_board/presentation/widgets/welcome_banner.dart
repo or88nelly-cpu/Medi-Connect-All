@@ -23,8 +23,12 @@ class WelcomeBanner extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthLoading || state is AuthInitial) {
           final isDark = Theme.of(context).brightness == Brightness.dark;
-          final baseColor = isDark ? const Color(0xFF2C2C2C) : const Color(0xFFE5E7EB);
-          final highlightColor = isDark ? const Color(0xFF3C3C3C) : const Color(0xFFF3F4F6);
+          final baseColor = isDark
+              ? const Color(0xFF2C2C2C)
+              : const Color(0xFFE5E7EB);
+          final highlightColor = isDark
+              ? const Color(0xFF3C3C3C)
+              : const Color(0xFFF3F4F6);
 
           return Shimmer.fromColors(
             baseColor: baseColor,
@@ -106,18 +110,25 @@ class WelcomeBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? (user.firstName != null ? "${user.firstName} ${user.lastName ?? ''}".trim() : "Administrator");
+          name =
+              user.name ??
+              (user.firstName != null
+                  ? "${user.firstName} ${user.lastName ?? ''}".trim()
+                  : "Administrator");
           profileImage = user.profileImage;
-          accessLevel = user.accessLevel ?? (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
-          gender=user.gender;
+          accessLevel =
+              user.accessLevel ??
+              (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
+          gender = user.gender;
         }
 
         final initials = name.isNotEmpty ? name[0].toUpperCase() : "A";
 
-        if(profileImage==null&& gender!=null)
-          {
-            profileImage= gender=="Male"? AppAssets.maleAdminAvatarPng:AppAssets.femaleAvatarPng;
-          }
+        if (profileImage == null && gender != null) {
+          profileImage = gender == "Male"
+              ? AppAssets.maleAdminAvatarPng
+              : AppAssets.femaleAvatarPng;
+        }
 
         return Container(
           width: double.infinity,
@@ -161,7 +172,10 @@ class WelcomeBanner extends StatelessWidget {
                     ),
                     SizedBox(height: 12.h),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 4.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.textLight.withAlpha(61),
                         borderRadius: BorderRadius.circular(4.r),
@@ -185,7 +199,10 @@ class WelcomeBanner extends StatelessWidget {
                     height: 64.r,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.textLight.withAlpha(50), width: 2),
+                      border: Border.all(
+                        color: AppColors.textLight.withAlpha(50),
+                        width: 2,
+                      ),
                     ),
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(
@@ -201,11 +218,16 @@ class WelcomeBanner extends StatelessWidget {
                     onTap: () => context.read<DashboardTabCubit>().setTab(4),
                     borderRadius: BorderRadius.circular(12.r),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 4.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.textLight.withAlpha(30),
                         borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(color: AppColors.textLight.withAlpha(80)),
+                        border: Border.all(
+                          color: AppColors.textLight.withAlpha(80),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

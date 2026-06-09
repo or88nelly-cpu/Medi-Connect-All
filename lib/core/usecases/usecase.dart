@@ -4,7 +4,6 @@ import 'package:fpdart/fpdart.dart';
 import 'package:equatable/equatable.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
 
-
 abstract class UseCase<Type, Params> {
   const UseCase();
 

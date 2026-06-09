@@ -78,22 +78,23 @@ class _NavCardMini extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-             Row(
-               children: [
-                 Icon(icon, size: 20.r, color: AppColors.primary),
-                 SizedBox(width: 6.w,),
-                 Expanded(
-                   child: Text(
-                     title.toUpperCase(),
-                     style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold,
-                     fontSize: 10.sp, ),
-                     maxLines: 1,
-                     overflow: TextOverflow.ellipsis,
-                   ),
-                 )
-               ],
-             )
-             ,
+              Row(
+                children: [
+                  Icon(icon, size: 20.r, color: AppColors.primary),
+                  SizedBox(width: 6.w),
+                  Expanded(
+                    child: Text(
+                      title.toUpperCase(),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10.sp,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 2.h),
               Text(
                 subtitle,

@@ -3,13 +3,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:medi_connect/core/common_models/logger/app_logger.dart';
 
-
 class AppNavigationObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
     AppLogger.navigation(
-        "PUSHED: ${route.settings.name} (${route.settings.arguments})");
+      "PUSHED: ${route.settings.name} (${route.settings.arguments})",
+    );
   }
 
   @override

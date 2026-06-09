@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/common_widgets/admin_logo_section.dart';
@@ -11,11 +10,7 @@ class AdminHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AdminLogoSection(
-          padding: 0.r,
-          size: 120.r,
-          decorationNeeded: false,
-        ),
+        AdminLogoSection(padding: 0.r, size: 120.r, decorationNeeded: false),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

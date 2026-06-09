@@ -11,7 +11,6 @@ import 'package:medi_connect/features/auth/data/data_source/auth_remote_datasour
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 
-
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final SecureStorageService _secureStorage;
@@ -28,7 +27,10 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
       );
-      await _secureStorage.write('profile_completion_status', userModel.profileCompletionStatus.toString());
+      await _secureStorage.write(
+        'profile_completion_status',
+        userModel.profileCompletionStatus.toString(),
+      );
       await _secureStorage.write('user_role', userModel.role);
       return Right(userModel);
     } on AuthException catch (e) {
@@ -58,7 +60,10 @@ class AuthRepositoryImpl implements AuthRepository {
         phoneNumber: phoneNumber,
       );
       log("AuthRepositoryImpl: User Model: ${userModel.toJson()}");
-      await _secureStorage.write('profile_completion_status', userModel.profileCompletionStatus.toString());
+      await _secureStorage.write(
+        'profile_completion_status',
+        userModel.profileCompletionStatus.toString(),
+      );
       await _secureStorage.write('user_role', userModel.role);
       return Right(userModel);
     } on AuthException catch (e) {
@@ -83,7 +88,10 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         token: token,
       );
-      await _secureStorage.write('profile_completion_status', userModel.profileCompletionStatus.toString());
+      await _secureStorage.write(
+        'profile_completion_status',
+        userModel.profileCompletionStatus.toString(),
+      );
       await _secureStorage.write('user_role', userModel.role);
       return Right(userModel);
     } on AuthException catch (e) {
@@ -96,9 +104,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> forgotPassword({
-    required String email,
-  }) async {
+  Future<Either<Failure, void>> forgotPassword({required String email}) async {
     try {
       await _remoteDataSource.forgotPassword(email: email);
       return const Right(null);
@@ -148,7 +154,10 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final userModel = await _remoteDataSource.getCurrentUser();
       if (userModel != null) {
-        await _secureStorage.write('profile_completion_status', userModel.profileCompletionStatus.toString());
+        await _secureStorage.write(
+          'profile_completion_status',
+          userModel.profileCompletionStatus.toString(),
+        );
         await _secureStorage.write('user_role', userModel.role);
       } else {
         await _secureStorage.delete('profile_completion_status');

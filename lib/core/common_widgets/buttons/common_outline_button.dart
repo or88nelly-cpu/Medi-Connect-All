@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
-
 class CommonOutlineButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -32,7 +31,7 @@ class CommonOutlineButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveBorderColor = borderColor ?? AppColors.primary;
     final effectiveTextColor = textColor ?? AppColors.primary;
-    
+
     final isButtonEnabled = onPressed != null && !isLoading;
 
     return SizedBox(
@@ -63,10 +62,13 @@ class CommonOutlineButton extends StatelessWidget {
               )
             : Text(
                 text,
-                style: textStyle ??
+                style:
+                    textStyle ??
                     AppTextStyles.labelMedium.copyWith(
                       fontSize: AppTextStyles.s16,
-                      color: isButtonEnabled ? effectiveTextColor : AppColors.textSecondary,
+                      color: isButtonEnabled
+                          ? effectiveTextColor
+                          : AppColors.textSecondary,
                     ),
               ),
       ),

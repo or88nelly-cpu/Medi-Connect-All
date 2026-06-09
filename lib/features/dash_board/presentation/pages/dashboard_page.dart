@@ -16,6 +16,10 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/management
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/admin_bottom_nav_bar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/operations_grid.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/welcome_banner.dart';
+import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/department/presentation/pages/department_list_home.dart';
+import 'package:medi_connect/features/department/presentation/pages/department_list_page.dart';
+import 'package:medi_connect/features/department/presentation/widgets/department_horizontal_list.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -30,6 +34,7 @@ class _DashboardPageState extends State<DashboardPage> {
     super.initState();
     context.read<AuthBloc>().add(AuthCheckRequested());
     context.read<DashboardAnalyticsBloc>().add(LoadDashboardStats());
+    context.read<DepartmentBloc>().add(const LoadDepartments());
   }
 
   @override
@@ -86,6 +91,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         const WelcomeBanner(),
                         SizedBox(height: 24.h),
                         const AnalyticsSection(),
+                        DepartmentListHome(),
                         SizedBox(height: 24.h),
                         Text(
                           AppStrings.managementConsole,

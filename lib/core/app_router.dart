@@ -7,8 +7,9 @@ import 'package:medi_connect/features/auth/presentation/pages/admin_login_page.d
 import 'package:medi_connect/features/auth/presentation/pages/admin_signup_page.dart';
 import 'package:medi_connect/features/auth/presentation/pages/splash_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/dashboard_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/patient_dashboard_page.dart';
+import 'package:medi_connect/features/department/presentation/pages/department_list_page.dart';
 import 'package:medi_connect/features/onboarding/presentation/pages/onboarding_page.dart';
-
 
 class AppRouterConfig {
   static GoRouter buildRouter() {
@@ -48,13 +49,17 @@ class AppRouterConfig {
         //   path: RouteNames.forgotPassword,
         //   builder: (context, state) => const ForgotPasswordPage(),
         // ),
-        // GoRoute(
-        //   path: RouteNames.resetPassword,
-        //   builder: (context, state) => const ResetPasswordPage(),
-        // ),
+        GoRoute(
+          path: "/departments",
+          builder: (context, state) => const DepartmentListPage(),
+        ),
         GoRoute(
           path: '/admin/dashboard',
           builder: (context, state) => const DashboardPage(),
+        ),
+        GoRoute(
+          path: '/patient/dashboard',
+          builder: (context, state) => const PatientDashboardPage(),
         ),
       ],
     );

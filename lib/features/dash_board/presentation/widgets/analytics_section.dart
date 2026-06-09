@@ -19,7 +19,6 @@ class AnalyticsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardAnalyticsBloc, DashboardAnalyticsState>(
       builder: (context, state) {
-
         if (state is DashboardAnalyticsLoading) {
           return const ShimmerLoader(count: 2);
         } else if (state is DashboardAnalyticsError) {

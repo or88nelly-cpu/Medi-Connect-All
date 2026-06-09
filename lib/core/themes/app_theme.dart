@@ -53,15 +53,18 @@ class AppTheme {
       dividerColor: const Color(0xFF2C2C2C),
       textTheme: TextTheme(
         headlineLarge: AppTextStyles.headingLarge.copyWith(color: Colors.white),
-        headlineMedium:
-            AppTextStyles.headingMedium.copyWith(color: Colors.white),
+        headlineMedium: AppTextStyles.headingMedium.copyWith(
+          color: Colors.white,
+        ),
         titleLarge: AppTextStyles.titleLarge.copyWith(color: Colors.white),
         titleMedium: AppTextStyles.titleMedium.copyWith(color: Colors.white),
         bodyLarge: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
-        bodyMedium:
-            AppTextStyles.bodyMedium.copyWith(color: const Color(0xFFB3B3B3)),
-        bodySmall:
-            AppTextStyles.bodySmall.copyWith(color: const Color(0xFF8C8C8C)),
+        bodyMedium: AppTextStyles.bodyMedium.copyWith(
+          color: const Color(0xFFB3B3B3),
+        ),
+        bodySmall: AppTextStyles.bodySmall.copyWith(
+          color: const Color(0xFF8C8C8C),
+        ),
         labelMedium: AppTextStyles.labelMedium.copyWith(color: Colors.white),
       ),
       appBarTheme: const AppBarTheme(

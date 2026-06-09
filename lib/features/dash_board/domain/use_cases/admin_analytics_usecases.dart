@@ -14,12 +14,15 @@ class GetDashboardStatsUseCase extends UseCase<Map<String, dynamic>, NoParams> {
   }
 }
 
-class GetAuditLogsUseCase extends UseCase<List<Map<String, dynamic>>, NoParams> {
+class GetAuditLogsUseCase
+    extends UseCase<List<Map<String, dynamic>>, NoParams> {
   final AnalyticsRepository _repository;
   const GetAuditLogsUseCase(this._repository);
 
   @override
-  Future<Either<Failure, List<Map<String, dynamic>>>> call(NoParams params) async {
+  Future<Either<Failure, List<Map<String, dynamic>>>> call(
+    NoParams params,
+  ) async {
     return _repository.getAuditLogs();
   }
 }

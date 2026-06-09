@@ -27,22 +27,22 @@ class AdminLogoSection extends StatelessWidget {
     return Container(
       height: size ?? 90.r,
       width: size ?? 90.r,
-      decoration:decorationNeeded? BoxDecoration(
-        color: bgColor ?? AppColors.background,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 20.r,
-            color: AppColors.textDarkNavy,
-            offset: Offset(0, 10),
-          ),
-        ],
-      ):null,
+      decoration: decorationNeeded
+          ? BoxDecoration(
+              color: bgColor ?? AppColors.background,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 20.r,
+                  color: AppColors.textDarkNavy,
+                  offset: Offset(0, 10),
+                ),
+              ],
+            )
+          : null,
       child: Padding(
         padding: EdgeInsets.all(padding ?? 16.r),
-        child: CustomImageView(
-          imagePath: imagePath ?? AppAssets.logoIconPng,
-        ),
+        child: CustomImageView(imagePath: imagePath ?? AppAssets.logoIconPng),
       ),
     );
   }

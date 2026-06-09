@@ -18,9 +18,7 @@ class AppRouter {
       refreshListenable: refreshListenable,
       redirect: guards.redirect,
       routes: routes,
-      observers: [
-        AppNavigationObserver(),
-      ],
+      observers: [AppNavigationObserver()],
     );
   }
 

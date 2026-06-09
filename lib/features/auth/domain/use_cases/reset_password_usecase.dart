@@ -4,6 +4,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
 import '../repositories/auth_repository.dart';
 import 'package:medi_connect/core/usecases/usecase.dart';
+
 class ResetPasswordUseCase extends UseCase<void, String> {
   final AuthRepository _repository;
 

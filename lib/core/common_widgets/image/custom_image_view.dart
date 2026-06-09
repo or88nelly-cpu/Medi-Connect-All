@@ -39,8 +39,9 @@ class CustomImageView extends StatelessWidget {
           width: width,
           height: height,
           fit: fit,
-          colorFilter:
-              color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+          colorFilter: color != null
+              ? ColorFilter.mode(color!, BlendMode.srcIn)
+              : null,
         );
       } else {
         imageWidget = CachedNetworkImage(
@@ -68,8 +69,9 @@ class CustomImageView extends StatelessWidget {
         width: width,
         height: height,
         fit: fit,
-        colorFilter:
-            color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+        colorFilter: color != null
+            ? ColorFilter.mode(color!, BlendMode.srcIn)
+            : null,
       );
     } else if (imagePath.contains('assets/')) {
       imageWidget = Image.asset(

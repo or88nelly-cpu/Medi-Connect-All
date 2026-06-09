@@ -1,4 +1,3 @@
-
 import 'package:medi_connect/core/common_models/exceptions/exceptions.dart';
 
 import 'supabase_service.dart';

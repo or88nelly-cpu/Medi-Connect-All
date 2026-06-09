@@ -28,14 +28,10 @@ abstract class AuthRepository {
   });
 
   /// Send password reset code.
-  Future<Either<Failure, void>> forgotPassword({
-    required String email,
-  });
+  Future<Either<Failure, void>> forgotPassword({required String email});
 
   /// Set a new password for the current user.
-  Future<Either<Failure, void>> resetPassword({
-    required String newPassword,
-  });
+  Future<Either<Failure, void>> resetPassword({required String newPassword});
 
   /// Sign out the current user session.
   Future<Either<Failure, void>> logout();

@@ -8,7 +8,6 @@ import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
-
 abstract class AuthRemoteDataSource {
   Future<UserModel> loginWithEmailAndPassword({
     required String email,
@@ -23,18 +22,11 @@ abstract class AuthRemoteDataSource {
     String? phoneNumber,
   });
 
-  Future<UserModel> verifyOtp({
-    required String email,
-    required String token,
-  });
+  Future<UserModel> verifyOtp({required String email, required String token});
 
-  Future<void> forgotPassword({
-    required String email,
-  });
+  Future<void> forgotPassword({required String email});
 
-  Future<void> resetPassword({
-    required String newPassword,
-  });
+  Future<void> resetPassword({required String newPassword});
 
   Future<void> logout();
 
@@ -71,10 +63,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
 
       final dbProfile = dbProfiles.first as Map<String, dynamic>;
-      final mergedJson = {
-        ...response.user!.toJson(),
-        ...dbProfile,
-      };
+      final mergedJson = {...response.user!.toJson(), ...dbProfile};
 
       return UserModel.fromJson(mergedJson);
     } on supabase.AuthException catch (e) {
@@ -122,28 +111,28 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       Map<String, dynamic> finalProfile;
 
       if (existingRecord != null) {
-        log("Existing profile found. Linking Auth User ID with existing profile.");
+        log(
+          "Existing profile found. Linking Auth User ID with existing profile.",
+        );
         // Link the Auth User ID with the existing profile. Keep existing fields, update ID and status
         final existingEmail = existingRecord['email'] as String? ?? email;
         final updateResponse = await _supabaseService.client
             .from('users')
-            .update({
-              'id': authUserId,
-              'status': 'Registered',
-            })
+            .update({'id': authUserId, 'status': 'Registered'})
             .eq('email', existingEmail)
             .select();
 
         if (updateResponse.isEmpty) {
-          throw const ServerException("Failed to update and link user profile.");
+          throw const ServerException(
+            "Failed to update and link user profile.",
+          );
         }
         finalProfile = updateResponse.first;
       } else {
         log("No existing profile. Creating a minimal profile record.");
         // Create a minimal profile record with false completion status
-        final insertResponse = await _supabaseService.client
-            .from('users')
-            .insert({
+        final insertResponse =
+            await _supabaseService.client.from('users').insert({
               'id': authUserId,
               'email': email,
               'phone': phoneNumber,
@@ -151,8 +140,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
               'name': name,
               'profile_completion_status': false,
               'status': 'Registered',
-            })
-            .select();
+            }).select();
 
         if (insertResponse.isEmpty) {
           throw const ServerException("Failed to create user profile.");
@@ -160,10 +148,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         finalProfile = insertResponse.first;
       }
 
-      final mergedJson = {
-        ...authUser.toJson(),
-        ...finalProfile,
-      };
+      final mergedJson = {...authUser.toJson(), ...finalProfile};
 
       return UserModel.fromJson(mergedJson);
     } on supabase.AuthException catch (e) {
@@ -201,10 +186,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         dbProfile = dbProfiles.first as Map<String, dynamic>;
       }
 
-      final mergedJson = {
-        ...response.user!.toJson(),
-        ...dbProfile,
-      };
+      final mergedJson = {...response.user!.toJson(), ...dbProfile};
 
       return UserModel.fromJson(mergedJson);
     } on supabase.AuthException catch (e) {
@@ -215,9 +197,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> forgotPassword({
-    required String email,
-  }) async {
+  Future<void> forgotPassword({required String email}) async {
     try {
       await _supabaseService.auth.resetPasswordForEmail(email);
     } on supabase.AuthException catch (e) {
@@ -228,9 +208,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> resetPassword({
-    required String newPassword,
-  }) async {
+  Future<void> resetPassword({required String newPassword}) async {
     try {
       await _supabaseService.auth.updateUser(
         supabase.UserAttributes(password: newPassword),
@@ -270,10 +248,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
 
       final dbProfile = dbProfiles.first as Map<String, dynamic>;
-      final mergedJson = {
-        ...user.toJson(),
-        ...dbProfile,
-      };
+      final mergedJson = {...user.toJson(), ...dbProfile};
 
       return UserModel.fromJson(mergedJson);
     } catch (e) {

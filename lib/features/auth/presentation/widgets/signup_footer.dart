@@ -13,9 +13,7 @@ class SignUpFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 10.r,
-        ),
+        SizedBox(height: 10.r),
         Row(
           children: [
             const Expanded(child: Divider(color: AppColors.border)),
@@ -23,16 +21,15 @@ class SignUpFooter extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
                 AppStrings.orDivider,
-                style: AppTextStyles.bodySmall
-                    .copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ),
             const Expanded(child: Divider(color: AppColors.border)),
           ],
         ),
-        SizedBox(
-          height: 10.r,
-        ),
+        SizedBox(height: 10.r),
         GestureDetector(
           onTap: () {
             if (context.canPop()) {
@@ -47,9 +44,7 @@ class SignUpFooter extends StatelessWidget {
                 color: AppColors.textSecondary,
               ),
               children: [
-                const TextSpan(
-                  text: AppStrings.alreadyHaveAccount,
-                ),
+                const TextSpan(text: AppStrings.alreadyHaveAccount),
                 TextSpan(
                   text: AppStrings.login,
                   style: AppTextStyles.bodyMedium.copyWith(
@@ -60,7 +55,7 @@ class SignUpFooter extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

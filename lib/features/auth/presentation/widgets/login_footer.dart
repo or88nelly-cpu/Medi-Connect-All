@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -12,9 +11,7 @@ class LoginFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 10.r,
-        ),
+        SizedBox(height: 10.r),
         Row(
           children: [
             const Expanded(child: Divider(color: AppColors.border)),
@@ -22,16 +19,15 @@ class LoginFooter extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
                 AppStrings.orDivider,
-                style: AppTextStyles.bodySmall
-                    .copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ),
             const Expanded(child: Divider(color: AppColors.border)),
           ],
         ),
-        SizedBox(
-          height: 10.r,
-        ),
+        SizedBox(height: 10.r),
         GestureDetector(
           onTap: () => context.push(RouteNames.register),
           child: RichText(
@@ -54,7 +50,7 @@ class LoginFooter extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

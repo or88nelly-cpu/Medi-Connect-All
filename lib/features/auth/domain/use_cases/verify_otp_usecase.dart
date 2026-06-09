@@ -5,6 +5,7 @@ import 'package:medi_connect/core/usecases/usecase.dart';
 import '../entities/user_entity.dart';
 import '../repositories/auth_repository.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
+
 class VerifyOtpParams {
   final String email;
   final String token;
@@ -19,9 +20,6 @@ class VerifyOtpUseCase extends UseCase<UserEntity, VerifyOtpParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(VerifyOtpParams params) {
-    return _repository.verifyOtp(
-      email: params.email,
-      token: params.token,
-    );
+    return _repository.verifyOtp(email: params.email, token: params.token);
   }
 }

@@ -13,7 +13,6 @@ import '../../domain/entities/user_entity.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-
 // ==========================================
 // Auth Bloc
 // ==========================================
@@ -34,14 +33,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required ResetPasswordUseCase resetPasswordUseCase,
     required LogoutUseCase logoutUseCase,
     required GetCurrentUserUseCase getCurrentUserUseCase,
-  })  : _loginUseCase = loginUseCase,
-        _registerUseCase = registerUseCase,
-        _verifyOtpUseCase = verifyOtpUseCase,
-        _forgotPasswordUseCase = forgotPasswordUseCase,
-        _resetPasswordUseCase = resetPasswordUseCase,
-        _logoutUseCase = logoutUseCase,
-        _getCurrentUserUseCase = getCurrentUserUseCase,
-        super(AuthInitial()) {
+  }) : _loginUseCase = loginUseCase,
+       _registerUseCase = registerUseCase,
+       _verifyOtpUseCase = verifyOtpUseCase,
+       _forgotPasswordUseCase = forgotPasswordUseCase,
+       _resetPasswordUseCase = resetPasswordUseCase,
+       _logoutUseCase = logoutUseCase,
+       _getCurrentUserUseCase = getCurrentUserUseCase,
+       super(AuthInitial()) {
     on<AuthCheckRequested>(_onAuthCheckRequested);
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
@@ -57,16 +56,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoading());
     final result = await _getCurrentUserUseCase(const NoParams());
-    result.fold(
-      (failure) => emit(Unauthenticated()),
-      (user) {
-        if (user != null) {
-          emit(Authenticated(user));
-        } else {
-          emit(Unauthenticated());
-        }
-      },
-    );
+    result.fold((failure) => emit(Unauthenticated()), (user) {
+      if (user != null) {
+        emit(Authenticated(user));
+      } else {
+        emit(Unauthenticated());
+      }
+    });
   }
 
   Future<void> _onLoginRequested(
@@ -74,10 +70,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    final result = await _loginUseCase(LoginParams(
-      email: event.email,
-      password: event.password,
-    ));
+    final result = await _loginUseCase(
+      LoginParams(email: event.email, password: event.password),
+    );
     result.fold(
       (failure) => emit(AuthError(failure)),
       (user) => emit(Authenticated(user)),
@@ -89,13 +84,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    final result = await _registerUseCase(RegisterParams(
-      email: event.email,
-      password: event.password,
-      name: event.name,
-      role: event.role,
-      phoneNumber: event.phoneNumber,
-    ));
+    final result = await _registerUseCase(
+      RegisterParams(
+        email: event.email,
+        password: event.password,
+        name: event.name,
+        role: event.role,
+        phoneNumber: event.phoneNumber,
+      ),
+    );
     result.fold(
       (failure) => emit(AuthError(failure)),
       (user) => emit(Authenticated(user)),
@@ -107,10 +104,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    final result = await _verifyOtpUseCase(VerifyOtpParams(
-      email: event.email,
-      token: event.token,
-    ));
+    final result = await _verifyOtpUseCase(
+      VerifyOtpParams(email: event.email, token: event.token),
+    );
     result.fold(
       (failure) => emit(AuthError(failure)),
       (user) => emit(Authenticated(user)),
@@ -126,7 +122,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (failure) => emit(AuthError(failure)),
       (_) => emit(
-          Unauthenticated()), // Returns back to unauthenticated route / login state
+        Unauthenticated(),
+      ), // Returns back to unauthenticated route / login state
     );
   }
 

@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
-
 /// Standard custom text input field.
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -53,8 +52,9 @@ class AppTextField extends StatelessWidget {
         fillColor: AppColors.background,
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         labelStyle: AppTextStyles.bodyMedium,
-        hintStyle:
-            AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+        hintStyle: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary,
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.border, width: 1.w),
           borderRadius: BorderRadius.circular(8.r),
@@ -107,8 +107,11 @@ class _PasswordFieldState extends State<PasswordField> {
       keyboardType: TextInputType.visiblePassword,
       validator: widget.validator,
       obscureText: _obscureText,
-      prefixIcon:
-          Icon(Icons.lock_outline, size: 24.r, color: AppColors.textSecondary),
+      prefixIcon: Icon(
+        Icons.lock_outline,
+        size: 24.r,
+        color: AppColors.textSecondary,
+      ),
       suffixIcon: IconButton(
         icon: Icon(
           _obscureText
@@ -146,12 +149,18 @@ class SearchField extends StatelessWidget {
       controller: controller,
       labelText: hintText,
       hintText: hintText,
-      prefixIcon:
-          Icon(Icons.search, size: 24.r, color: AppColors.textSecondary),
+      prefixIcon: Icon(
+        Icons.search,
+        size: 24.r,
+        color: AppColors.textSecondary,
+      ),
       suffixIcon: controller?.text.isNotEmpty == true
           ? IconButton(
-              icon:
-                  Icon(Icons.clear, size: 24.r, color: AppColors.textSecondary),
+              icon: Icon(
+                Icons.clear,
+                size: 24.r,
+                color: AppColors.textSecondary,
+              ),
               onPressed: () => controller?.clear(),
             )
           : null,
@@ -197,11 +206,8 @@ class OtpField extends StatelessWidget {
   final List<TextEditingController> controllers;
   final int length;
 
-  const OtpField({
-    super.key,
-    required this.controllers,
-    this.length = 6,
-  }) : assert(controllers.length == length);
+  const OtpField({super.key, required this.controllers, this.length = 6})
+    : assert(controllers.length == length);
 
   @override
   Widget build(BuildContext context) {
@@ -218,9 +224,7 @@ class OtpField extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.headingMedium.copyWith(fontSize: 20.sp),
             maxLength: 1,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               counterText: "",
               filled: true,

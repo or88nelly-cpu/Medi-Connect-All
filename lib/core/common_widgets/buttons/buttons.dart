@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
-
 /// Primary filled button.
 class PrimaryButton extends StatelessWidget {
   final String text;
@@ -109,11 +108,7 @@ class AppOutlinedButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
 
-  const AppOutlinedButton({
-    super.key,
-    required this.text,
-    this.onPressed,
-  });
+  const AppOutlinedButton({super.key, required this.text, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
