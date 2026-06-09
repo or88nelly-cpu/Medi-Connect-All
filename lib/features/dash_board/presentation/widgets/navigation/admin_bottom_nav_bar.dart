@@ -39,9 +39,9 @@ class AdminBottomNavBar extends StatelessWidget {
             children: [
               AdminNavItem(
                 index: 0,
-                outlineIcon: Icons.home_outlined,
-                solidIcon: Icons.home,
-                label: "Home",
+                outlineIcon: Icons.dashboard_customize_outlined,
+                solidIcon: Icons.dashboard_customize,
+                label: "Dashboard",
                 currentIndex: currentIndex,
                 onTap: onTap,
               ),

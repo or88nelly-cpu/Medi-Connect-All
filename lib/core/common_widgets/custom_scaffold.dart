@@ -3,7 +3,7 @@ import 'package:medi_connect/core/common_widgets/background_wrapper.dart';
 import 'package:medi_connect/core/common_widgets/common_app_bar.dart';
 
 class CustomScaffold extends StatelessWidget {
-  final AppBar? customAppbar;
+  final PreferredSizeWidget? customAppbar;
   final bool? appBarNeeded;
   final Widget? body;
   final Widget?
