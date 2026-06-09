@@ -1,0 +1,59 @@
+# Monorepo Consolidated Gitignore
+
+# Miscellaneous OS files
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.history
+Thumbs.db
+
+# IDEs and Editors
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+.history/
+
+# Flutter/Dart Build & Dependency artifacts (Recursive)
+**/build/
+**/.dart_tool/
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+
+# Android Platform artifacts (Recursive)
+**/android/local.properties
+**/android/key.properties
+**/android/app/src/main/assets/
+**/*.keystore
+**/*.jks
+**/.gradle/
+**/android/app/build/
+
+# iOS/macOS Platform artifacts (Recursive)
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/Flutter.podspec
+**/ios/Pods/
+**/Podfile.lock
+**/macos/Flutter/ephemeral/
+**/ios/Flutter/ephemeral/
+
+# Windows Platform artifacts (Recursive)
+**/windows/flutter/ephemeral/
+**/windows/CMakeCache.txt
+**/windows/CMakeFiles/
+
+# Environment Configurations & Private variables
+.env
+.env.local
+.env.*
+**/assets/.env
+
+# Supabase Local Development
+.supabase/
