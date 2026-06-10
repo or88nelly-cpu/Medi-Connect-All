@@ -10,9 +10,13 @@ class DepartmentRepositoryImpl implements DepartmentRepository {
   DepartmentRepositoryImpl(this._dataSource);
 
   @override
-  Future<Either<Failure, List<DepartmentEntity>>> getDepartments() async {
+  Future<Either<Failure, List<DepartmentEntity>>> getDepartments({
+    required bool isConsultationDept,
+  }) async {
     try {
-      final models = await _dataSource.getDepartments();
+      final models = await _dataSource.getDepartments(
+        isConsultationDept: isConsultationDept,
+      );
       return Right(models);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

@@ -128,115 +128,42 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
             }
 
             return SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              padding: EdgeInsets.all(12.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // ── Section header ──────────────────────
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppStrings.departments,
-                        style: AppTextStyles.titleMedium.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      ValueListenableBuilder<bool>(
-                        valueListenable: _showAllNotifier,
-                        builder: (context, showAll, _) {
-                          return TextButton.icon(
-                            onPressed: () => _showAllNotifier.value = !showAll,
-                            icon: Icon(
-                              showAll
-                                  ? Icons.expand_less
-                                  : Icons.grid_view_rounded,
-                              size: 16.r,
-                              color: AppColors.primary,
-                            ),
-                            label: Text(
-                              showAll
-                                  ? AppStrings.viewLess
-                                  : AppStrings.viewAll,
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 12.h),
-
                   // ── Department list ─────────────────────
                   if (departments.isEmpty)
                     _EmptyState()
                   else
-                    ValueListenableBuilder<bool>(
-                      valueListenable: _showAllNotifier,
-                      builder: (context, showAll, _) {
-                        if (!showAll) {
-                          // Horizontal strip
-                          return SizedBox(
-                            height: widget.isAdmin ? 168.h : 138.h,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: departments.length,
-                              itemBuilder: (context, i) => DepartmentCard(
-                                department: departments[i],
-                                isAdmin: widget.isAdmin,
-                                onEdit: widget.isAdmin
-                                    ? () => DepartmentFormDialog.show(
-                                        context,
-                                        existingDepartment: departments[i],
-                                      )
-                                    : null,
-                                onDelete: widget.isAdmin
-                                    ? () => _confirmDelete(
-                                        context,
-                                        departments[i],
-                                      )
-                                    : null,
-                              ),
-                            ),
-                          );
-                        } else {
-                          // Full grid
-                          return GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount:
-                                      MediaQuery.of(context).size.width > 600
-                                      ? 4
-                                      : 3,
-                                  crossAxisSpacing: 12.w,
-                                  mainAxisSpacing: 12.h,
-                                  childAspectRatio: widget.isAdmin
-                                      ? 0.62
-                                      : 0.75,
-                                ),
-                            itemCount: departments.length,
-                            itemBuilder: (context, i) => DepartmentCard(
-                              department: departments[i],
-                              isAdmin: widget.isAdmin,
-                              onEdit: widget.isAdmin
-                                  ? () => DepartmentFormDialog.show(
-                                      context,
-                                      existingDepartment: departments[i],
-                                    )
-                                  : null,
-                              onDelete: widget.isAdmin
-                                  ? () =>
-                                        _confirmDelete(context, departments[i])
-                                  : null,
-                            ),
-                          );
-                        }
-                      },
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: MediaQuery.of(context).size.width > 600
+                            ? 4
+                            : 3,
+                        crossAxisSpacing: 12.r,
+                        mainAxisSpacing: 12.r,
+                        childAspectRatio: widget.isAdmin ? 1.0 : 1.0,
+                      ),
+                      itemCount: departments.length,
+                      itemBuilder: (context, i) => DepartmentCard(
+                        department: departments[i],
+                        isSection: false,
+                        isAdmin: widget.isAdmin,
+                        onEdit: widget.isAdmin
+
+                            ? () => DepartmentFormDialog.show(
+                                context,
+                                existingDepartment: departments[i],
+                              )
+                            : null,
+                        onDelete: widget.isAdmin
+                            ? () => _confirmDelete(context, departments[i])
+                            : null,
+                      ),
                     ),
                 ],
               ),

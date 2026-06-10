@@ -8,7 +8,11 @@ import 'package:medi_connect/features/auth/presentation/pages/admin_signup_page.
 import 'package:medi_connect/features/auth/presentation/pages/splash_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/dashboard_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/patient_dashboard_page.dart';
+import 'package:medi_connect/features/department/data/models/department_model.dart';
+import 'package:medi_connect/features/department/presentation/pages/department_detail.dart';
 import 'package:medi_connect/features/department/presentation/pages/department_list_page.dart';
+import 'package:medi_connect/features/department/presentation/pages/section_detail.dart';
+import 'package:medi_connect/features/department/presentation/pages/section_list_page.dart';
 import 'package:medi_connect/features/onboarding/presentation/pages/onboarding_page.dart';
 
 class AppRouterConfig {
@@ -54,12 +58,27 @@ class AppRouterConfig {
           builder: (context, state) => const DepartmentListPage(),
         ),
         GoRoute(
+          path: "/sections",
+          builder: (context, state) => const SectionListPage(),
+        ),
+        GoRoute(
           path: '/admin/dashboard',
           builder: (context, state) => const DashboardPage(),
         ),
         GoRoute(
           path: '/patient/dashboard',
           builder: (context, state) => const PatientDashboardPage(),
+        ),
+        GoRoute(
+          path: "/sectionDetail",
+          builder: (context, state) =>  SectionDetail(
+            section: state.extra as DepartmentModel,
+          ),
+        ),
+         GoRoute(
+          path: "/departmentDetail",
+          builder: (context, state) =>
+              DepartmentDetail(department: state.extra as DepartmentModel),
         ),
       ],
     );

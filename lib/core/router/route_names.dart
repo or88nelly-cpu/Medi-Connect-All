@@ -26,6 +26,8 @@ class RouteNames {
   static const profile = 'profile';
   static const payments = 'payments';
   static const posts = 'posts';
+  static const sectionDetail = 'sectionDetail';
+  static const departmentDetail = 'departmentDetail';
 
   RouteNames._();
 }

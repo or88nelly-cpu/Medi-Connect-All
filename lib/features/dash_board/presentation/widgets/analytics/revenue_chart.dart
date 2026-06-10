@@ -6,7 +6,8 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'line_chart_painter.dart';
 
 class RevenueChart extends StatelessWidget {
-  const RevenueChart({super.key});
+  const RevenueChart({super.key, required this.weeklyRevenue});
+  final double? weeklyRevenue;
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +26,46 @@ class RevenueChart extends StatelessWidget {
             AppStrings.weeklyRevenueTrend,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
+              fontSize: 16.sp,
             ),
           ),
-          SizedBox(height: 12.h),
-          Expanded(
-            child: CustomPaint(
-              size: Size.infinite,
-              painter: LineChartPainter(),
-            ),
+          SizedBox(height: 12.r),
+          Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "₹ $weeklyRevenue",
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                    ),
+                  ),
+
+                  Row(
+                    children: [
+                      Text(
+                        "Today Revenue",
+                        style: AppTextStyles.bodySmall.copyWith(
+                          //fontWeight: FontWeight.bold,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_circle_up_outlined,
+                        size: 20.r,
+                        color: AppColors.success,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              CustomPaint(
+                size: Size(MediaQuery.of(context).size.width * 0.8, 100.h),
+                painter: LineChartPainter(),
+              ),
+            ],
           ),
         ],
       ),

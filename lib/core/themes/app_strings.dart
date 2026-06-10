@@ -26,6 +26,7 @@ class AppStrings {
   static const profile = "Profile";
   static const payments = "Payments";
   static const dashboard = "Dashboard";
+  static const availableBeds = "Available Beds";
 
   // Authentication & Onboarding
   static const splashTitle = "Medi-Connect";
@@ -266,6 +267,7 @@ class AppStrings {
 
   // Department Module
   static const departments = "Departments";
+    static const sections = "Sections";
   static const departmentsTitle = "Departments";
   static const addDepartment = "Add Department";
   static const editDepartment = "Edit Department";

@@ -14,16 +14,19 @@ import 'package:medi_connect/features/department/presentation/widgets/department
 /// Accepts an optional [isAdmin] flag to show admin controls.
 class DepartmentHorizontalList extends StatelessWidget {
   final bool isAdmin;
+  final String title;
   final List<DepartmentEntity> departments;
 
   const DepartmentHorizontalList({
     super.key,
     required this.departments,
     this.isAdmin = false,
+    required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
+    bool isSection = title.toLowerCase().contains("section");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,14 +35,15 @@ class DepartmentHorizontalList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              AppStrings.departments,
+              title,
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.sp,
               ),
             ),
             TextButton(
-              onPressed: () => context.push('/departments'),
+              onPressed: () =>
+                  context.push(isSection ? "/sections" : '/departments'),
               child: Text(
                 AppStrings.viewAll,
                 style: AppTextStyles.bodySmall.copyWith(
@@ -56,30 +60,67 @@ class DepartmentHorizontalList extends StatelessWidget {
         if (departments.isEmpty)
           _EmptyDepartmentsStrip()
         else
-          SizedBox(
-            height: isAdmin ? 168.h : 138.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.only(left: 2.w, right: 2.w, bottom: 4.h),
-              itemCount: departments.length,
-              itemBuilder: (context, index) {
-                final dept = departments[index];
-                return DepartmentCard(
-                  department: dept,
-                  isAdmin: isAdmin,
-                  onEdit: isAdmin
-                      ? () => DepartmentFormDialog.show(
-                          context,
-                          existingDepartment: dept,
-                        )
-                      : null,
-                  onDelete: isAdmin
-                      ? () => _confirmDelete(context, dept)
-                      : null,
-                );
-              },
-            ),
-          ),
+          isSection
+              ? SizedBox(
+                  height: 80.r,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.only(
+                      left: 2.w,
+                      right: 2.w,
+                      bottom: 4.h,
+                    ),
+                    itemCount: departments.length.clamp(0, 5),
+                    itemBuilder: (context, index) {
+                      final dept = departments[index];
+                      return DepartmentCard(
+                        isHorizontal: true,
+                        department: dept,
+                        isSection: true,
+                        isAdmin: isAdmin,
+                        width: 80.r,
+                        onEdit: isAdmin
+                            ? () => DepartmentFormDialog.show(
+                                context,
+                                existingDepartment: dept,
+                              )
+                            : null,
+                        onDelete: isAdmin
+                            ? () => _confirmDelete(context, dept)
+                            : null,
+                      );
+                    },
+                  ),
+                )
+              : GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: departments.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 8.w,
+                    mainAxisSpacing: 8.h,
+                    childAspectRatio: 1,
+                  ),
+                  itemBuilder: (context, index) {
+                    final dept = departments[index];
+                    return DepartmentCard(
+                      department: dept,
+                      isSection: isSection,
+                      isAdmin: false,
+                      onEdit: isAdmin
+                          ? () => DepartmentFormDialog.show(
+                              context,
+                              existingDepartment: dept,
+                            )
+                          : null,
+                      onDelete: isAdmin
+                          ? () => _confirmDelete(context, dept)
+                          : null,
+                    );
+                  },
+                ),
       ],
     );
   }

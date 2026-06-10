@@ -10,6 +10,9 @@ abstract class DepartmentEvent extends Equatable {
 class LoadDepartments extends DepartmentEvent {
   const LoadDepartments();
 }
+class LoadConsultDepartments extends DepartmentEvent {
+  const LoadConsultDepartments();
+}
 
 class AddDepartmentEvent extends DepartmentEvent {
   final String name;

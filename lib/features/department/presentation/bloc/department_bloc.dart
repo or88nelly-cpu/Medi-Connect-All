@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
-import 'package:medi_connect/core/usecases/usecase.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
 import 'package:medi_connect/features/department/domain/use_cases/add_department_usecase.dart';
 import 'package:medi_connect/features/department/domain/use_cases/delete_department_usecase.dart';
@@ -28,9 +27,20 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
        _deleteDepartment = deleteDepartment,
        super(DepartmentInitial()) {
     on<LoadDepartments>(_onLoad);
+    on<LoadConsultDepartments>(_onLoadConsult);
     on<AddDepartmentEvent>(_onAdd);
     on<UpdateDepartmentEvent>(_onUpdate);
     on<DeleteDepartmentEvent>(_onDelete);
+  }
+  Future<void> _onLoadConsult(
+    LoadConsultDepartments event,
+    Emitter<DepartmentState> emit,
+  ) async {
+    emit(DepartmentLoading());
+    final result = await _getDepartments(true);
+    result.fold((failure) => emit(DepartmentError(failure)), (departments) {
+      return emit(DepartmentsLoaded(departments, []));
+    });
   }
 
   Future<void> _onLoad(
@@ -38,11 +48,12 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
     Emitter<DepartmentState> emit,
   ) async {
     emit(DepartmentLoading());
-    final result = await _getDepartments(const NoParams());
-    result.fold(
-      (failure) => emit(DepartmentError(failure)),
-      (departments) => emit(DepartmentsLoaded(departments)),
-    );
+    final result = await _getDepartments(false);
+    result.fold((failure) => emit(DepartmentError(failure)), (departments) {
+      final normalDept = departments.where((element) => !element.consultation).toList();
+      final sections = departments.where((element) => element.consultation).toList();
+      return emit(DepartmentsLoaded(normalDept,sections));
+    });
   }
 
   Future<void> _onAdd(
@@ -52,9 +63,16 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
     // Duplicate check against currently loaded list.
     if (state is DepartmentsLoaded) {
       final existing = (state as DepartmentsLoaded).departments;
-      final isDuplicate = existing.any(
-        (d) => d.name.toLowerCase().trim() == event.name.toLowerCase().trim(),
-      );
+      final existingSection = (state as DepartmentsLoaded).sections;
+      final isDuplicate =
+          existing.any(
+            (d) =>
+                d.name.toLowerCase().trim() == event.name.toLowerCase().trim(),
+          ) ||
+          existingSection.any(
+            (d) =>
+                d.name.toLowerCase().trim() == event.name.toLowerCase().trim(),
+          );
       if (isDuplicate) {
         emit(
           DepartmentError(
@@ -63,7 +81,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
             ),
           ),
         );
-        emit(DepartmentsLoaded(existing)); // restore
+        emit(DepartmentsLoaded(existing, existingSection)); // restore
         return;
       }
     }
@@ -95,11 +113,18 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
     // Duplicate check (exclude self).
     if (state is DepartmentsLoaded) {
       final existing = (state as DepartmentsLoaded).departments;
-      final isDuplicate = existing.any(
-        (d) =>
-            d.id != event.id &&
-            d.name.toLowerCase().trim() == event.name.toLowerCase().trim(),
-      );
+      final existingSection = (state as DepartmentsLoaded).sections;
+      final isDuplicate =
+          existing.any(
+            (d) =>
+                d.id != event.id &&
+                d.name.toLowerCase().trim() == event.name.toLowerCase().trim(),
+          ) ||
+          existingSection.any(
+            (d) =>
+                d.id != event.id &&
+                d.name.toLowerCase().trim() == event.name.toLowerCase().trim(),
+          );
       if (isDuplicate) {
         emit(
           DepartmentError(
@@ -108,7 +133,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
             ),
           ),
         );
-        emit(DepartmentsLoaded(existing));
+        emit(DepartmentsLoaded(existing, existingSection));
         return;
       }
     }

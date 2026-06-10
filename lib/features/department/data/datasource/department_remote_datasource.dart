@@ -5,7 +5,9 @@ const _kTable = 'department_master';
 
 /// Remote data source for the Department feature backed by Supabase.
 abstract class DepartmentRemoteDataSource {
-  Future<List<DepartmentModel>> getDepartments();
+  Future<List<DepartmentModel>> getDepartments({
+    required bool isConsultationDept,
+  });
   Future<DepartmentModel> addDepartment({
     required String name,
     String? description,
@@ -26,7 +28,9 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
   DepartmentRemoteDataSourceImpl(this._supabase);
 
   @override
-  Future<List<DepartmentModel>> getDepartments() async {
+  Future<List<DepartmentModel>> getDepartments({
+    required bool isConsultationDept,
+  }) async {
     final response = await _supabase
         .from(_kTable)
         .select()

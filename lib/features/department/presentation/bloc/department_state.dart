@@ -13,8 +13,9 @@ class DepartmentLoading extends DepartmentState {}
 
 class DepartmentsLoaded extends DepartmentState {
   final List<DepartmentEntity> departments;
+  final List<DepartmentEntity> sections;
 
-  const DepartmentsLoaded(this.departments);
+  const DepartmentsLoaded(this.departments,this.sections);
 
   @override
   List<Object?> get props => [departments];

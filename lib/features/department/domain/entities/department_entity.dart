@@ -7,6 +7,7 @@ class DepartmentEntity extends Equatable {
   final String? description;
   final String? imageUrl;
   final DateTime createdAt;
+  final bool consultation;
 
   const DepartmentEntity({
     required this.id,
@@ -14,8 +15,9 @@ class DepartmentEntity extends Equatable {
     this.description,
     this.imageUrl,
     required this.createdAt,
+    required this.consultation,
   });
 
   @override
-  List<Object?> get props => [id, name, description, imageUrl, createdAt];
+  List<Object?> get props => [id, name, description, imageUrl, createdAt,consultation];
 }

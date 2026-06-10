@@ -6,6 +6,7 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/analytics_
 import 'package:medi_connect/features/dash_board/presentation/widgets/management_grid.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/operations_grid.dart';
 import 'package:medi_connect/features/department/presentation/pages/department_list_home.dart';
+import 'package:medi_connect/features/department/presentation/pages/section_list_home.dart';
 
 class DashboardHomeAdmin extends StatelessWidget {
   const DashboardHomeAdmin({super.key});
@@ -17,17 +18,19 @@ class DashboardHomeAdmin extends StatelessWidget {
       child: Column(
         children: [
           const AnalyticsSection(),
+          SectionListHome(),
+          SizedBox(height: 24.h),
           DepartmentListHome(),
           SizedBox(height: 24.h),
-          Text(
-            AppStrings.managementConsole,
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 16.h),
-          const ManagementGrid(),
-          SizedBox(height: 24.h),
+          // Text(
+          //   AppStrings.managementConsole,
+          //   style: AppTextStyles.titleMedium.copyWith(
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          // SizedBox(height: 16.h),
+          // const ManagementGrid(),
+         // SizedBox(height: 24.h),
           Text(
             AppStrings.systemOperations,
             style: AppTextStyles.titleMedium.copyWith(

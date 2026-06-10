@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/common_widgets/background_wrapper.dart';
-import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/features/department/presentation/widgets/department_card.dart';
-import 'package:medi_connect/features/department/presentation/widgets/department_form_dialog.dart';
 import 'package:medi_connect/features/department/presentation/widgets/department_horizontal_list.dart';
 
 /// Full department list page accessible from all roles.
@@ -64,7 +58,7 @@ class DepartmentListHome extends StatelessWidget {
         } else if (state is DepartmentActionSuccess) {
           departments = state.updatedDepartments;
         }
-        return DepartmentHorizontalList(departments: departments);
+        return DepartmentHorizontalList(departments: departments,title: AppStrings.departments,);
       },
     );
   }

@@ -128,6 +128,7 @@ class _PatientHomeTab extends StatelessWidget {
                   : [];
               return DepartmentHorizontalList(
                 departments: departments,
+                title: AppStrings.departments,
                 isAdmin: false,
               );
             },

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
+import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
@@ -13,7 +15,10 @@ class DepartmentCard extends StatelessWidget {
   final bool isAdmin;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
-  final VoidCallback? onTap;
+
+  final double? width;
+  final bool isHorizontal;
+  final bool isSection;
 
   const DepartmentCard({
     super.key,
@@ -21,90 +26,82 @@ class DepartmentCard extends StatelessWidget {
     this.isAdmin = false,
     this.onEdit,
     this.onDelete,
-    this.onTap,
+
+    this.width,
+    this.isHorizontal = false,
+    required this.isSection,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => context.push(
+        isSection ? RouteNames.sectionDetail : RouteNames.departmentDetail,
+        extra: department,
+      ),
       child: Container(
-        width: 110.w,
-        margin: EdgeInsets.only(right: 12.w),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(14.r),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withAlpha(15),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
-          border: Border.all(color: AppColors.border, width: 1),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // ── Image ──────────────────────────────────────
-            ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(14.r)),
-              child:
+        width: width ?? 80.r,
+        //height: width ?? 80.r,
+        padding: isHorizontal ? null : EdgeInsets.symmetric(horizontal: 8.r),
+        margin: EdgeInsets.only(right: isHorizontal ? 10.w : 0),
+        decoration: isHorizontal
+            ? null
+            : BoxDecoration(
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(
+                  color: AppColors.textSecondary.withValues(alpha: 0.1),
+                ),
+              ),
+        // padding: EdgeInsets.all(12.r),
+        child: Center(
+          child: Column(
+            children: [
+              Spacer(),
+              Column(
+                children: [
                   department.imageUrl != null && department.imageUrl!.isNotEmpty
-                  ? CustomImageView(
-                      imagePath: department.imageUrl!,
-                      width: 110.w,
-                      height: 76.h,
-                      fit: BoxFit.cover,
-                    )
-                  : _DefaultDepartmentImage(name: department.name),
-            ),
-
-            // ── Name ───────────────────────────────────────
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
-              child: Text(
-                department.name,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 11.sp,
-                ),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-
-            // ── Admin actions ──────────────────────────────
-            if (isAdmin)
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(14.r),
+                      ? CustomImageView(
+                          imagePath: department.imageUrl!,
+                          width: 40.r,
+                          height: 40.r,
+                          fit: BoxFit.cover,
+                        )
+                      : _DefaultDepartmentImage(name: department.name),
+                  Text(
+                    department.name,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: isAdmin ? 11.sp : 8.sp,
+                    ),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _ActionButton(
-                      icon: Icons.edit_outlined,
-                      color: AppColors.primary,
-                      tooltip: 'Edit',
-                      onTap: onEdit,
-                    ),
-                    Container(width: 1, height: 24.h, color: AppColors.border),
-                    _ActionButton(
-                      icon: Icons.delete_outline,
-                      color: AppColors.error,
-                      tooltip: 'Delete',
-                      onTap: onDelete,
-                    ),
-                  ],
-                ),
+                ],
               ),
-          ],
+              Spacer(),
+              // if (isAdmin)
+              //   Row(
+              //     crossAxisAlignment: CrossAxisAlignment.end,
+              //     children: [
+              //       _ActionButton(
+              //         icon: Icons.edit_outlined,
+              //         color: AppColors.primary,
+              //         tooltip: 'Edit',
+              //         onTap: onEdit,
+              //       ),
+              //       Spacer(),
+              //       _ActionButton(
+              //         icon: Icons.delete_outline,
+              //         color: AppColors.error,
+              //         tooltip: 'Delete',
+              //         onTap: onDelete,
+              //       ),
+              //     ],
+              //   ),
+            ],
+          ),
         ),
       ),
     );
@@ -121,8 +118,8 @@ class _DefaultDepartmentImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final initial = name.isNotEmpty ? name[0].toUpperCase() : 'D';
     return Container(
-      width: 110,
-      height: 76,
+      width: 50.r,
+      height: 50.r,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.primary, AppColors.secondary],
@@ -164,8 +161,13 @@ class _ActionButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(6.r),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+        child: Container(
+          margin: EdgeInsets.only(bottom: 3.r),
+          padding: EdgeInsets.symmetric(horizontal: 3.r, vertical: 3.r),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30.r),
+            color: color.withAlpha(25),
+          ),
           child: Icon(icon, size: 16.r, color: color),
         ),
       ),
