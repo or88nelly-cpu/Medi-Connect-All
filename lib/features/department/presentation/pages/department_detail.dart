@@ -69,11 +69,20 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
           // Department Banner Image (collapsible/static header)
           if (widget.department.imageUrl != null &&
               widget.department.imageUrl!.isNotEmpty)
-            CustomImageView(
-              imagePath: widget.department.imageUrl!,
-              width: double.infinity,
-              height: 150.h,
-              fit: BoxFit.cover,
+            Center(
+              child: CircleAvatar(
+                backgroundColor: AppColors.infoIndigo.withAlpha(20),
+                radius: 40.r,
+
+                child: Center(
+                  child: CustomImageView(
+                    imagePath: widget.department.imageUrl!,
+                    width: 50.r,
+                    height: 50.r,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
             )
           else
             Container(
