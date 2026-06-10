@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+import 'package:medi_connect/core/themes/theme_cubit.dart';
 
 class AdminSettingsPage extends StatefulWidget {
   const AdminSettingsPage({super.key});
@@ -11,7 +13,6 @@ class AdminSettingsPage extends StatefulWidget {
 }
 
 class _AdminSettingsPageState extends State<AdminSettingsPage> {
-  bool _darkMode = false;
   bool _pushNotifications = true;
   bool _smsAlerts = false;
   bool _emailReports = true;
@@ -30,12 +31,21 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
           ),
           SizedBox(height: 20.h),
           _buildCategoryHeader("General Preferences"),
-          _buildSwitchTile(
-            title: "Dark Mode",
-            subtitle: "Enable dark theme across the application",
-            value: _darkMode,
-            onChanged: (val) => setState(() => _darkMode = val),
-            icon: Icons.dark_mode_outlined,
+          BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, themeMode) {
+              final isDark = themeMode == ThemeMode.dark;
+              return _buildSwitchTile(
+                title: "Dark Mode",
+                subtitle: "Enable dark theme across the application",
+                value: isDark,
+                onChanged: (val) {
+                  context.read<ThemeCubit>().setThemeMode(
+                    val ? ThemeMode.dark : ThemeMode.light,
+                  );
+                },
+                icon: Icons.dark_mode_outlined,
+              );
+            },
           ),
           _buildSwitchTile(
             title: "Push Notifications",

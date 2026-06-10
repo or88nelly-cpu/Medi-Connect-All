@@ -1,7 +1,6 @@
-/// A premium background wrapper that loads the platform-specific common background images
-/// (common_bg_mob.png for mobile, common_bg_web.png for web/desktop).
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:medi_connect/core/themes/app_colors.dart';
 import '../utils/constants/app_assets.dart';
 
 class BackgroundWrapper extends StatelessWidget {
@@ -21,9 +20,21 @@ class BackgroundWrapper extends StatelessWidget {
         ? AppAssets.commonBgWebPng
         : AppAssets.commonBgMobPng;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(bgImage), fit: BoxFit.cover),
+        color: isDark ? const Color(0xFF121212) : AppColors.background,
+        image: DecorationImage(
+          image: AssetImage(bgImage),
+          fit: BoxFit.cover,
+          colorFilter: isDark
+              ? ColorFilter.mode(
+                  const Color(0xFF121212).withOpacity(0.95),
+                  BlendMode.srcOver,
+                )
+              : null,
+        ),
       ),
       child: child,
     );

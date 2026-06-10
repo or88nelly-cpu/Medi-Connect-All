@@ -9,6 +9,8 @@ import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
 import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
 
+import 'package:medi_connect/core/themes/theme_cubit.dart';
+
 class AdminProfilePage extends StatelessWidget {
   const AdminProfilePage({super.key});
 
@@ -118,6 +120,33 @@ class AdminProfilePage extends StatelessWidget {
                       Icons.calendar_month_outlined,
                       "Joining Date",
                       "Jan 15, 2025",
+                    ),
+                    const Divider(color: AppColors.border, height: 1),
+                    BlocBuilder<ThemeCubit, ThemeMode>(
+                      builder: (context, themeMode) {
+                        final isDark = themeMode == ThemeMode.dark;
+                        return SwitchListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                          ),
+                          title: Text(
+                            "Dark Mode",
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          value: isDark,
+                          onChanged: (val) {
+                            context.read<ThemeCubit>().setThemeMode(
+                              val ? ThemeMode.dark : ThemeMode.light,
+                            );
+                          },
+                          secondary: const Icon(
+                            Icons.dark_mode_outlined,
+                            color: AppColors.primary,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

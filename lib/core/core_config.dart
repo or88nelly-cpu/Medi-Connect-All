@@ -3,6 +3,7 @@ import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/network/unique_id_service.dart';
 import 'package:medi_connect/core/router/route_guards.dart';
 import 'package:medi_connect/core/storage/secure_storage_service.dart';
+import 'package:medi_connect/core/themes/theme_cubit.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -30,6 +31,11 @@ Future<void> configureCoreDependencies(
 
   // Register Secure Storage
   sl.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
+
+  // Register ThemeCubit
+  sl.registerLazySingleton<ThemeCubit>(
+    () => ThemeCubit(sl<SecureStorageService>()),
+  );
 
   // Register Routing Guards
   sl.registerLazySingleton<RouteGuards>(

@@ -14,6 +14,7 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawe
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
 import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
+import 'package:medi_connect/core/themes/theme_cubit.dart';
 
 class DoctorDashboardPage extends StatefulWidget {
   const DoctorDashboardPage({super.key});
@@ -660,6 +661,33 @@ class _DoctorProfileTab extends StatelessWidget {
                     ),
                     const Divider(color: AppColors.border, height: 1),
                     _buildInfoTile(Icons.work_outline, "Experience", "8 Years"),
+                    const Divider(color: AppColors.border, height: 1),
+                    BlocBuilder<ThemeCubit, ThemeMode>(
+                      builder: (context, themeMode) {
+                        final isDark = themeMode == ThemeMode.dark;
+                        return SwitchListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                          ),
+                          title: Text(
+                            "Dark Mode",
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          value: isDark,
+                          onChanged: (val) {
+                            context.read<ThemeCubit>().setThemeMode(
+                              val ? ThemeMode.dark : ThemeMode.light,
+                            );
+                          },
+                          secondary: const Icon(
+                            Icons.dark_mode_outlined,
+                            color: AppColors.secondary,
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

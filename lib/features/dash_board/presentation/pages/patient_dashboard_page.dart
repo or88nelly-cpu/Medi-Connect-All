@@ -13,6 +13,7 @@ import 'package:medi_connect/core/utils/constants/app_assets.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
+import 'package:medi_connect/core/themes/theme_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
@@ -1032,6 +1033,33 @@ class _PatientProfileTab extends StatelessWidget {
                       Icons.warning_amber_rounded,
                       "Allergies",
                       allergies,
+                    ),
+                    const Divider(color: AppColors.border, height: 1),
+                    BlocBuilder<ThemeCubit, ThemeMode>(
+                      builder: (context, themeMode) {
+                        final isDark = themeMode == ThemeMode.dark;
+                        return SwitchListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                          ),
+                          title: Text(
+                            "Dark Mode",
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          value: isDark,
+                          onChanged: (val) {
+                            context.read<ThemeCubit>().setThemeMode(
+                              val ? ThemeMode.dark : ThemeMode.light,
+                            );
+                          },
+                          secondary: const Icon(
+                            Icons.dark_mode_outlined,
+                            color: AppColors.primary,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

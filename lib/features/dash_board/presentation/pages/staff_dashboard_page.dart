@@ -14,6 +14,7 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawe
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
 import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
+import 'package:medi_connect/core/themes/theme_cubit.dart';
 
 class StaffDashboardPage extends StatefulWidget {
   const StaffDashboardPage({super.key});
@@ -660,6 +661,33 @@ class _StaffProfileTab extends StatelessWidget {
                       Icons.work_history_outlined,
                       "Joining Date",
                       "Feb 20, 2025",
+                    ),
+                    const Divider(color: AppColors.border, height: 1),
+                    BlocBuilder<ThemeCubit, ThemeMode>(
+                      builder: (context, themeMode) {
+                        final isDark = themeMode == ThemeMode.dark;
+                        return SwitchListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                          ),
+                          title: Text(
+                            "Dark Mode",
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          value: isDark,
+                          onChanged: (val) {
+                            context.read<ThemeCubit>().setThemeMode(
+                              val ? ThemeMode.dark : ThemeMode.light,
+                            );
+                          },
+                          secondary: const Icon(
+                            Icons.dark_mode_outlined,
+                            color: AppColors.accent,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
