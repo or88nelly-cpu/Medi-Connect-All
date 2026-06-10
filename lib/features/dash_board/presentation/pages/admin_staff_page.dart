@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/common_app_bar.dart';
@@ -6,6 +7,7 @@ import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AdminStaffPage extends StatefulWidget {
@@ -17,12 +19,15 @@ class AdminStaffPage extends StatefulWidget {
 
 class _AdminStaffPageState extends State<AdminStaffPage> {
   String _searchQuery = '';
+  String _selectedFilter = 'All';
   late Future<List<UserModel>> _staffFuture;
 
   @override
   void initState() {
     super.initState();
     _refreshList();
+    // Ensure departments/sections are loaded
+    context.read<DepartmentBloc>().add(const LoadDepartments());
   }
 
   void _refreshList() {
@@ -50,7 +55,9 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
       body: Padding(
         padding: EdgeInsets.all(20.r),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Search Bar
             TextField(
               onChanged: (val) => setState(() => _searchQuery = val),
               decoration: InputDecoration(
@@ -64,6 +71,63 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
               ),
             ),
             SizedBox(height: 16.h),
+
+            // Horizontal Combined Categories (Sections + Departments)
+            Text(
+              "Filter by Section / Department",
+              style: AppTextStyles.bodySmall.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textSecondary,
+              ),
+            ),
+            SizedBox(height: 8.h),
+
+            BlocBuilder<DepartmentBloc, DepartmentState>(
+              builder: (context, state) {
+                final List<String> categories = ['All'];
+                if (state is DepartmentsLoaded) {
+                  categories.addAll(state.sections.map((e) => e.name));
+                  categories.addAll(state.departments.map((e) => e.name));
+                } else if (state is DepartmentActionSuccess) {
+                  categories.addAll(state.updatedDepartments.map((e) => e.name));
+                }
+
+                return SizedBox(
+                  height: 38.h,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categories.length,
+                    itemBuilder: (context, idx) {
+                      final category = categories[idx];
+                      final isSelected = _selectedFilter == category;
+                      return Padding(
+                        padding: EdgeInsets.only(right: 8.w),
+                        child: ChoiceChip(
+                          label: Text(category),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            if (selected) {
+                              setState(() {
+                                _selectedFilter = category;
+                              });
+                            }
+                          },
+                          selectedColor: AppColors.primary.withOpacity(0.2),
+                          labelStyle: TextStyle(
+                            color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 16.h),
+
+            // Staff List
             Expanded(
               child: FutureBuilder<List<UserModel>>(
                 future: _staffFuture,
@@ -79,7 +143,11 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                   final filtered = snapshot.data!.where((stf) {
                     final matchesSearch = (stf.name ?? '').toLowerCase().contains(_searchQuery.toLowerCase()) ||
                         (stf.staffRole ?? '').toLowerCase().contains(_searchQuery.toLowerCase());
-                    return matchesSearch;
+
+                    final matchesFilter = _selectedFilter == 'All' || 
+                        (stf.department ?? '').toLowerCase() == _selectedFilter.toLowerCase();
+
+                    return matchesSearch && matchesFilter;
                   }).toList();
 
                   if (filtered.isEmpty) {
@@ -107,7 +175,7 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                             stf.name ?? '',
                             style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
                           ),
-                          subtitle: Text("${stf.staffRole ?? 'Support Staff'} | Shift: ${stf.availabilityStatus ?? 'Day'}"),
+                          subtitle: Text("${stf.staffRole ?? 'Support Staff'} | Dept/Sec: ${stf.department ?? 'None'}"),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [

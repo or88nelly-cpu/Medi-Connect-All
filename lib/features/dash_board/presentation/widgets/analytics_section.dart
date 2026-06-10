@@ -35,13 +35,16 @@ class AnalyticsSection extends StatelessWidget {
           final int staff = stats['totalStaff'] ?? 0;
           final int patients = stats['totalPatients'] ?? 0;
           final int appts = stats['todayAppointments'] ?? 0;
-          final double revenue = (stats['totalRevenue'] as num?)?.toDouble() ?? 0.0;
+          final double revenue =
+              (stats['totalRevenue'] as num?)?.toDouble() ?? 0.0;
           final deptStats = stats['departmentStats'] as List<dynamic>? ?? [];
 
           // Retriving our new mock stats
-          final pharmacy = stats['pharmacySummary'] as Map<String, dynamic>? ?? {};
+          final pharmacy =
+              stats['pharmacySummary'] as Map<String, dynamic>? ?? {};
           final lab = stats['labSummary'] as Map<String, dynamic>? ?? {};
-          final attendance = stats['staffAttendance'] as Map<String, dynamic>? ?? {};
+          final attendance =
+              stats['staffAttendance'] as Map<String, dynamic>? ?? {};
           final activities = stats['recentActivities'] as List<dynamic>? ?? [];
           final emergencies = stats['emergencyAlerts'] as List<dynamic>? ?? [];
 
@@ -105,7 +108,9 @@ class AnalyticsSection extends StatelessWidget {
 
               Text(
                 AppStrings.analyticsOverview,
-                style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 16.h),
               Wrap(
@@ -160,7 +165,10 @@ class AnalyticsSection extends StatelessWidget {
   // Helper Component Widgets
   // ─────────────────────────────────────────────────────────────────────────────
 
-  Widget _buildEmergencyBanner(BuildContext context, List<dynamic> emergencies) {
+  Widget _buildEmergencyBanner(
+    BuildContext context,
+    List<dynamic> emergencies,
+  ) {
     final first = emergencies.first;
     return Container(
       width: double.infinity,
@@ -187,7 +195,9 @@ class AnalyticsSection extends StatelessWidget {
                 ),
                 Text(
                   "Triggered ${first['time']}",
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),
@@ -196,7 +206,11 @@ class AnalyticsSection extends StatelessWidget {
             onPressed: () => context.push('/admin/emergencies'),
             child: Text(
               "View All",
-              style: TextStyle(color: AppColors.error, fontWeight: FontWeight.bold, fontSize: 12.sp),
+              style: TextStyle(
+                color: AppColors.error,
+                fontWeight: FontWeight.bold,
+                fontSize: 12.sp,
+              ),
             ),
           ),
         ],
@@ -208,7 +222,11 @@ class AnalyticsSection extends StatelessWidget {
     final actions = [
       {'label': 'Appt', 'icon': Icons.calendar_today, 'action': 'appointment'},
       {'label': 'Lab Test', 'icon': Icons.science_outlined, 'action': 'lab'},
-      {'label': 'Patient', 'icon': Icons.person_add_outlined, 'action': 'patient'},
+      {
+        'label': 'Patient',
+        'icon': Icons.person_add_outlined,
+        'action': 'patient',
+      },
       {'label': 'Admission', 'icon': Icons.bed_outlined, 'action': 'admission'},
       {'label': 'More', 'icon': Icons.more_horiz, 'action': 'more'},
     ];
@@ -218,7 +236,9 @@ class AnalyticsSection extends StatelessWidget {
       children: [
         Text(
           "Quick Actions",
-          style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         SizedBox(height: 12.h),
         Row(
@@ -227,22 +247,32 @@ class AnalyticsSection extends StatelessWidget {
             return Column(
               children: [
                 InkWell(
-                  onTap: () => _handleQuickAction(context, act['action'] as String),
+                  onTap: () =>
+                      _handleQuickAction(context, act['action'] as String),
                   borderRadius: BorderRadius.circular(14.r),
                   child: Container(
                     padding: EdgeInsets.all(14.r),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withOpacity(0.08),
                       borderRadius: BorderRadius.circular(14.r),
-                      border: Border.all(color: AppColors.primary.withOpacity(0.15)),
+                      border: Border.all(
+                        color: AppColors.primary.withOpacity(0.15),
+                      ),
                     ),
-                    child: Icon(act['icon'] as IconData, color: AppColors.primary, size: 24.r),
+                    child: Icon(
+                      act['icon'] as IconData,
+                      color: AppColors.primary,
+                      size: 24.r,
+                    ),
                   ),
                 ),
                 SizedBox(height: 6.h),
                 Text(
                   act['label'] as String,
-                  style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             );
@@ -255,15 +285,22 @@ class AnalyticsSection extends StatelessWidget {
   void _handleQuickAction(BuildContext context, String action) {
     if (action == 'more') {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Additional action features coming soon.")),
+        const SnackBar(
+          content: Text("Additional action features coming soon."),
+        ),
       );
       return;
     }
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Quick Action: Create ${action.toUpperCase()}", style: AppTextStyles.titleLarge),
-        content: Text("Are you sure you want to trigger the ${action} creation form?"),
+        title: Text(
+          "Quick Action: Create ${action.toUpperCase()}",
+          style: AppTextStyles.titleLarge,
+        ),
+        content: Text(
+          "Are you sure you want to trigger the ${action} creation form?",
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -273,7 +310,9 @@ class AnalyticsSection extends StatelessWidget {
             onPressed: () {
               Navigator.pop(ctx);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Form submitted successfully for $action.")),
+                SnackBar(
+                  content: Text("Form submitted successfully for $action."),
+                ),
               );
             },
             child: const Text("Confirm"),
@@ -296,7 +335,10 @@ class AnalyticsSection extends StatelessWidget {
         children: [
           Text(
             "Appointment Summary Graph",
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 16.sp),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 16.sp,
+            ),
           ),
           SizedBox(height: 4.h),
           Text(
@@ -320,7 +362,10 @@ class AnalyticsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildPharmacySummaryCard(BuildContext context, Map<String, dynamic> pharmacy) {
+  Widget _buildPharmacySummaryCard(
+    BuildContext context,
+    Map<String, dynamic> pharmacy,
+  ) {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -336,11 +381,18 @@ class AnalyticsSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.medication_outlined, color: AppColors.primary, size: 22.r),
+                    Icon(
+                      Icons.medication_outlined,
+                      color: AppColors.primary,
+                      size: 22.r,
+                    ),
                     SizedBox(width: 8.w),
                     Text(
                       "Pharmacy Summary",
-                      style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.sp,
+                      ),
                     ),
                   ],
                 ),
@@ -354,9 +406,21 @@ class AnalyticsSection extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMiniStat("Total Meds", pharmacy['totalMedicines']?.toString() ?? '0', AppColors.primary),
-                _buildMiniStat("Low Stock", pharmacy['lowStock']?.toString() ?? '0', AppColors.warning),
-                _buildMiniStat("Out of Stock", pharmacy['outOfStock']?.toString() ?? '0', AppColors.error),
+                _buildMiniStat(
+                  "Total Meds",
+                  pharmacy['totalMedicines']?.toString() ?? '0',
+                  AppColors.primary,
+                ),
+                _buildMiniStat(
+                  "Low Stock",
+                  pharmacy['lowStock']?.toString() ?? '0',
+                  AppColors.warning,
+                ),
+                _buildMiniStat(
+                  "Out of Stock",
+                  pharmacy['outOfStock']?.toString() ?? '0',
+                  AppColors.error,
+                ),
               ],
             ),
           ],
@@ -379,16 +443,26 @@ class AnalyticsSection extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.local_hospital_outlined, color: AppColors.infoTeal, size: 22.r),
+                Icon(
+                  Icons.local_hospital_outlined,
+                  color: AppColors.infoTeal,
+                  size: 22.r,
+                ),
                 SizedBox(width: 8.w),
                 Text(
                   "Department Overview",
-                  style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.sp,
+                  ),
                 ),
               ],
             ),
             SizedBox(height: 4.h),
-            Text("Patients consulted by department", style: AppTextStyles.bodySmall),
+            Text(
+              "Patients consulted by department",
+              style: AppTextStyles.bodySmall,
+            ),
             const Divider(color: AppColors.border),
             ListView.builder(
               shrinkWrap: true,
@@ -402,7 +476,12 @@ class AnalyticsSection extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(dept['department'] as String? ?? 'General'),
+                      Text(
+                        dept['department'] as String? ?? 'General',
+                        style: AppTextStyles.titleMedium.copyWith(
+                          fontSize: 10.sp,
+                        ),
+                      ),
                       Row(
                         children: [
                           Container(
@@ -425,7 +504,12 @@ class AnalyticsSection extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 8.w),
-                          Text("$count consulted"),
+                          Text(
+                            "$count consulted",
+                            style: AppTextStyles.bodySmall.copyWith(
+                              fontSize: 9.sp,
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -455,11 +539,18 @@ class AnalyticsSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.science_outlined, color: AppColors.infoPurple, size: 22.r),
+                    Icon(
+                      Icons.science_outlined,
+                      color: AppColors.infoPurple,
+                      size: 22.r,
+                    ),
                     SizedBox(width: 8.w),
                     Text(
                       "Lab Summary",
-                      style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.sp,
+                      ),
                     ),
                   ],
                 ),
@@ -473,9 +564,21 @@ class AnalyticsSection extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMiniStat("Total Tests", lab['totalTests']?.toString() ?? '0', AppColors.infoPurple),
-                _buildMiniStat("Pending", lab['pending']?.toString() ?? '0', AppColors.warning),
-                _buildMiniStat("Critical Alerts", lab['criticalAlerts']?.toString() ?? '0', AppColors.error),
+                _buildMiniStat(
+                  "Total Tests",
+                  lab['totalTests']?.toString() ?? '0',
+                  AppColors.infoPurple,
+                ),
+                _buildMiniStat(
+                  "Pending",
+                  lab['pending']?.toString() ?? '0',
+                  AppColors.warning,
+                ),
+                _buildMiniStat(
+                  "Critical Alerts",
+                  lab['criticalAlerts']?.toString() ?? '0',
+                  AppColors.error,
+                ),
               ],
             ),
           ],
@@ -484,7 +587,10 @@ class AnalyticsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildStaffAttendanceCard(BuildContext context, Map<String, dynamic> attendance) {
+  Widget _buildStaffAttendanceCard(
+    BuildContext context,
+    Map<String, dynamic> attendance,
+  ) {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -500,11 +606,18 @@ class AnalyticsSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.badge_outlined, color: AppColors.infoOrange, size: 22.r),
+                    Icon(
+                      Icons.badge_outlined,
+                      color: AppColors.infoOrange,
+                      size: 22.r,
+                    ),
                     SizedBox(width: 8.w),
                     Text(
                       "Staff Attendance",
-                      style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.sp,
+                      ),
                     ),
                   ],
                 ),
@@ -518,9 +631,21 @@ class AnalyticsSection extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMiniStat("Present", attendance['present']?.toString() ?? '0', AppColors.success),
-                _buildMiniStat("Absent", attendance['absent']?.toString() ?? '0', AppColors.error),
-                _buildMiniStat("On Leave", attendance['onLeave']?.toString() ?? '0', AppColors.warning),
+                _buildMiniStat(
+                  "Present",
+                  attendance['present']?.toString() ?? '0',
+                  AppColors.success,
+                ),
+                _buildMiniStat(
+                  "Absent",
+                  attendance['absent']?.toString() ?? '0',
+                  AppColors.error,
+                ),
+                _buildMiniStat(
+                  "On Leave",
+                  attendance['onLeave']?.toString() ?? '0',
+                  AppColors.warning,
+                ),
               ],
             ),
           ],
@@ -529,7 +654,10 @@ class AnalyticsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentActivityCard(BuildContext context, List<dynamic> activities) {
+  Widget _buildRecentActivityCard(
+    BuildContext context,
+    List<dynamic> activities,
+  ) {
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -546,11 +674,18 @@ class AnalyticsSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.history_toggle_off_outlined, color: AppColors.infoIndigo, size: 22.r),
+                    Icon(
+                      Icons.history_toggle_off_outlined,
+                      color: AppColors.infoIndigo,
+                      size: 22.r,
+                    ),
                     SizedBox(width: 8.w),
                     Text(
                       "Recent Activity",
-                      style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.sp,
+                      ),
                     ),
                   ],
                 ),
@@ -586,7 +721,9 @@ class AnalyticsSection extends StatelessWidget {
                           children: [
                             Text(
                               act['message'] as String? ?? '',
-                              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary),
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: AppColors.textPrimary,
+                              ),
                             ),
                             Text(
                               act['time'] as String? ?? '',
@@ -611,13 +748,13 @@ class AnalyticsSection extends StatelessWidget {
       children: [
         Text(
           value,
-          style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold, color: color),
+          style: AppTextStyles.titleLarge.copyWith(
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
         ),
         SizedBox(height: 2.h),
-        Text(
-          label,
-          style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp),
-        ),
+        Text(label, style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp)),
       ],
     );
   }

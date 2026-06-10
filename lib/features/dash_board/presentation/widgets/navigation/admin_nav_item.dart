@@ -30,21 +30,21 @@ class AdminNavItem extends StatelessWidget {
       onTap: () => onTap(index),
       borderRadius: BorderRadius.circular(16.r),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               isSelected ? solidIcon : outlineIcon,
               color: color,
-              size: 24.r,
+              size: 16.r,
             ),
             SizedBox(height: 4.h),
             Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(
                 color: color,
-                fontSize: 10.sp,
+                fontSize: 6.sp,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),
