@@ -37,12 +37,22 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
     super.initState();
     _nameController = TextEditingController(text: widget.user.name);
     _phoneController = TextEditingController(text: widget.user.phoneNumber);
-    _qualificationsController = TextEditingController(text: widget.user.qualification);
-    _specializationController = TextEditingController(text: widget.user.specialization);
-    _feeController = TextEditingController(text: widget.user.consultationFee?.toString() ?? '');
-    _expController = TextEditingController(text: widget.user.experience?.toString() ?? '');
+    _qualificationsController = TextEditingController(
+      text: widget.user.qualification,
+    );
+    _specializationController = TextEditingController(
+      text: widget.user.specialization,
+    );
+    _feeController = TextEditingController(
+      text: widget.user.consultationFee?.toString() ?? '',
+    );
+    _expController = TextEditingController(
+      text: widget.user.experience?.toString() ?? '',
+    );
     _staffRoleController = TextEditingController(text: widget.user.staffRole);
-    _designationController = TextEditingController(text: widget.user.designation);
+    _designationController = TextEditingController(
+      text: widget.user.designation,
+    );
 
     _availabilityStatus = widget.user.availabilityStatus ?? 'Available';
     _gender = widget.user.gender ?? 'Male';
@@ -66,18 +76,24 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
     final isDoctor = widget.user.role == 'doctor';
 
     return CustomScaffold(
-      customAppbar: CommonAppBar(title: "Edit ${widget.user.role.toUpperCase()}"),
+      customAppbar: CommonAppBar(
+        title: "Edit ${widget.user.role.toUpperCase()}",
+      ),
       body: BlocListener<DoctorStaffBloc, DoctorStaffState>(
         listener: (context, state) {
           if (state is DoctorStaffActionSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("${widget.user.role.toUpperCase()} updated successfully.")),
+              SnackBar(
+                content: Text(
+                  "${widget.user.role.toUpperCase()} updated successfully.",
+                ),
+              ),
             );
             Navigator.pop(context, true);
           } else if (state is DoctorStaffError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: Form(
@@ -88,7 +104,9 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: "Full Name"),
-                validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                validator: (val) => val == null || val.isEmpty
+                    ? AppStrings.requiredField
+                    : null,
               ),
               SizedBox(height: 12.h),
               TextFormField(
@@ -119,11 +137,14 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                   SizedBox(width: 12.w),
                   DropdownButton<String>(
                     value: _availabilityStatus,
-                    items: ['Available', 'On Leave', 'Busy', 'Offline'].map((s) {
+                    items: ['Available', 'On Leave', 'Busy', 'Offline'].map((
+                      s,
+                    ) {
                       return DropdownMenuItem(value: s, child: Text(s));
                     }).toList(),
                     onChanged: (val) {
-                      if (val != null) setState(() => _availabilityStatus = val);
+                      if (val != null)
+                        setState(() => _availabilityStatus = val);
                     },
                   ),
                 ],
@@ -132,31 +153,43 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
               if (isDoctor) ...[
                 TextFormField(
                   controller: _specializationController,
-                  decoration: const InputDecoration(labelText: "Specialization"),
-                  validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                  decoration: const InputDecoration(
+                    labelText: "Specialization",
+                  ),
+                  validator: (val) => val == null || val.isEmpty
+                      ? AppStrings.requiredField
+                      : null,
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _qualificationsController,
-                  decoration: const InputDecoration(labelText: "Qualifications"),
+                  decoration: const InputDecoration(
+                    labelText: "Qualifications",
+                  ),
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _feeController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Consultation Fee (₹)"),
+                  decoration: const InputDecoration(
+                    labelText: "Consultation Fee (₹)",
+                  ),
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _expController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Experience (Years)"),
+                  decoration: const InputDecoration(
+                    labelText: "Experience (Years)",
+                  ),
                 ),
               ] else ...[
                 TextFormField(
                   controller: _staffRoleController,
                   decoration: const InputDecoration(labelText: "Staff Role"),
-                  validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                  validator: (val) => val == null || val.isEmpty
+                      ? AppStrings.requiredField
+                      : null,
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
@@ -168,27 +201,47 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    final updatedUser = UserModel.fromEntity(widget.user).copyWith(
-                      name: _nameController.text,
-                      phoneNumber: _phoneController.text,
-                      gender: _gender,
-                      availabilityStatus: _availabilityStatus,
-                      specialization: isDoctor ? _specializationController.text : null,
-                      qualification: isDoctor ? _qualificationsController.text : null,
-                      consultationFee: isDoctor ? double.tryParse(_feeController.text) : null,
-                      experience: isDoctor ? int.tryParse(_expController.text) : null,
-                      staffRole: !isDoctor ? _staffRoleController.text : null,
-                      designation: !isDoctor ? _designationController.text : null,
+                    final updatedUser = UserModel.fromEntity(widget.user)
+                        .copyWith(
+                          name: _nameController.text,
+                          phoneNumber: _phoneController.text,
+                          gender: _gender,
+                          availabilityStatus: _availabilityStatus,
+                          specialization: isDoctor
+                              ? _specializationController.text
+                              : null,
+                          qualification: isDoctor
+                              ? _qualificationsController.text
+                              : null,
+                          consultationFee: isDoctor
+                              ? double.tryParse(_feeController.text)
+                              : null,
+                          experience: isDoctor
+                              ? int.tryParse(_expController.text)
+                              : null,
+                          staffRole: !isDoctor
+                              ? _staffRoleController.text
+                              : null,
+                          designation: !isDoctor
+                              ? _designationController.text
+                              : null,
+                        );
+                    context.read<DoctorStaffBloc>().add(
+                      UpdateDoctorStaffMember(updatedUser),
                     );
-                    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
                   }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   padding: EdgeInsets.symmetric(vertical: 16.h),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
                 ),
-                child: const Text("Save Changes", style: TextStyle(color: Colors.white)),
+                child: const Text(
+                  "Save Changes",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),

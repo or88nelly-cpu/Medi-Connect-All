@@ -50,9 +50,13 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
     emit(DepartmentLoading());
     final result = await _getDepartments(false);
     result.fold((failure) => emit(DepartmentError(failure)), (departments) {
-      final normalDept = departments.where((element) => !element.consultation).toList();
-      final sections = departments.where((element) => element.consultation).toList();
-      return emit(DepartmentsLoaded(normalDept,sections));
+      final normalDept = departments
+          .where((element) => !element.consultation)
+          .toList();
+      final sections = departments
+          .where((element) => element.consultation)
+          .toList();
+      return emit(DepartmentsLoaded(normalDept, sections));
     });
   }
 

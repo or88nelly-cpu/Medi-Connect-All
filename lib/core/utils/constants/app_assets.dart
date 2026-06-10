@@ -35,7 +35,7 @@ class AppAssets {
       "assets/images/male_staff_avatar.png";
   static const String appointments = "assets/images/appointment.png";
   static const String revenue = "assets/images/revenue.png";
-   static const String bed = "assets/images/department/ward.png";
+  static const String bed = "assets/images/department/ward.png";
   static const String present = "assets/images/present.png";
   static const String absent = "assets/images/absent.png";
   static const String leave = "assets/images/leave.png";

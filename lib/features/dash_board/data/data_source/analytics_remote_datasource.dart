@@ -133,7 +133,8 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
           },
           {
             'id': '2',
-            'message': 'Intense Patient Influx in ICU - Staff assistance requested',
+            'message':
+                'Intense Patient Influx in ICU - Staff assistance requested',
             'level': 'High',
             'time': '15m ago',
           },

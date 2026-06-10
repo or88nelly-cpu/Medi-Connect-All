@@ -11,10 +11,31 @@ class AdminEmergenciesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> alerts = [
-      {'id': '1', 'message': 'Code Blue in Emergency Ward - Room 108', 'level': 'Critical', 'time': '2m ago'},
-      {'id': '2', 'message': 'Intense Patient Influx in ICU - Staff assistance requested', 'level': 'High', 'time': '15m ago'},
-      {'id': '3', 'message': 'Power Generator Failure - Emergency Backup Active in Block B', 'level': 'High', 'time': '40m ago'},
-      {'id': '4', 'message': 'Ambulance Out of Service - Unit AMB-04 reported flat tire', 'level': 'Medium', 'time': '1h ago'},
+      {
+        'id': '1',
+        'message': 'Code Blue in Emergency Ward - Room 108',
+        'level': 'Critical',
+        'time': '2m ago',
+      },
+      {
+        'id': '2',
+        'message': 'Intense Patient Influx in ICU - Staff assistance requested',
+        'level': 'High',
+        'time': '15m ago',
+      },
+      {
+        'id': '3',
+        'message':
+            'Power Generator Failure - Emergency Backup Active in Block B',
+        'level': 'High',
+        'time': '40m ago',
+      },
+      {
+        'id': '4',
+        'message': 'Ambulance Out of Service - Unit AMB-04 reported flat tire',
+        'level': 'Medium',
+        'time': '1h ago',
+      },
     ];
 
     return CustomScaffold(
@@ -62,7 +83,10 @@ class AdminEmergenciesPage extends StatelessWidget {
                       children: [
                         Text(
                           alert['message'],
-                          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                         SizedBox(height: 4.h),
                         Text("Triggered: ${alert['time']}"),
@@ -70,7 +94,10 @@ class AdminEmergenciesPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: levelColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6.r),

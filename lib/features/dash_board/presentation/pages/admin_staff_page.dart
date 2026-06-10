@@ -48,10 +48,77 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
         .toList();
   }
 
+  void _showSelectDepartmentAndCreate(BuildContext context) {
+    final state = context.read<DepartmentBloc>().state;
+    List<String> list = [];
+    if (state is DepartmentsLoaded) {
+      list.addAll(state.sections.map((e) => e.name));
+      list.addAll(state.departments.map((e) => e.name));
+    }
+
+    if (list.isEmpty) {
+      list = [
+        'General Medicine',
+        'Cardiology',
+        'Neurology',
+        'Pediatrics',
+        'Emergency',
+        'OPD',
+      ];
+    }
+
+    String selectedDept = list.first;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text("Select Department"),
+          content: DropdownButton<String>(
+            value: selectedDept,
+            isExpanded: true,
+            items: list.map((d) {
+              return DropdownMenuItem(value: d, child: Text(d));
+            }).toList(),
+            onChanged: (val) {
+              if (val != null) setDialogState(() => selectedDept = val);
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                context
+                    .push(
+                      '/admin/doctor-staff/create',
+                      extra: {'role': 'staff', 'department': selectedDept},
+                    )
+                    .then((value) {
+                      if (value == true) _refreshList();
+                    });
+              },
+              child: const Text("Next"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppbar: const CommonAppBar(title: "Staff Directory"),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showSelectDepartmentAndCreate(context),
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: const Text("Add Staff", style: TextStyle(color: Colors.white)),
+        backgroundColor: AppColors.primary,
+      ),
       body: Padding(
         padding: EdgeInsets.all(20.r),
         child: Column(
@@ -89,7 +156,9 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                   categories.addAll(state.sections.map((e) => e.name));
                   categories.addAll(state.departments.map((e) => e.name));
                 } else if (state is DepartmentActionSuccess) {
-                  categories.addAll(state.updatedDepartments.map((e) => e.name));
+                  categories.addAll(
+                    state.updatedDepartments.map((e) => e.name),
+                  );
                 }
 
                 return SizedBox(
@@ -114,8 +183,12 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                           },
                           selectedColor: AppColors.primary.withOpacity(0.2),
                           labelStyle: TextStyle(
-                            color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            color: isSelected
+                                ? AppColors.primary
+                                : AppColors.textSecondary,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                             fontSize: 12.sp,
                           ),
                         ),
@@ -141,17 +214,26 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                   }
 
                   final filtered = snapshot.data!.where((stf) {
-                    final matchesSearch = (stf.name ?? '').toLowerCase().contains(_searchQuery.toLowerCase()) ||
-                        (stf.staffRole ?? '').toLowerCase().contains(_searchQuery.toLowerCase());
+                    final matchesSearch =
+                        (stf.name ?? '').toLowerCase().contains(
+                          _searchQuery.toLowerCase(),
+                        ) ||
+                        (stf.staffRole ?? '').toLowerCase().contains(
+                          _searchQuery.toLowerCase(),
+                        );
 
-                    final matchesFilter = _selectedFilter == 'All' || 
-                        (stf.department ?? '').toLowerCase() == _selectedFilter.toLowerCase();
+                    final matchesFilter =
+                        _selectedFilter == 'All' ||
+                        (stf.department ?? '').toLowerCase() ==
+                            _selectedFilter.toLowerCase();
 
                     return matchesSearch && matchesFilter;
                   }).toList();
 
                   if (filtered.isEmpty) {
-                    return const Center(child: Text("No matching staff found."));
+                    return const Center(
+                      child: Text("No matching staff found."),
+                    );
                   }
 
                   return ListView.builder(
@@ -169,26 +251,46 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                           contentPadding: EdgeInsets.all(12.r),
                           leading: CircleAvatar(
                             backgroundColor: AppColors.accent.withOpacity(0.1),
-                            child: Icon(Icons.badge_outlined, color: AppColors.accent),
+                            child: Icon(
+                              Icons.badge_outlined,
+                              color: AppColors.accent,
+                            ),
                           ),
                           title: Text(
                             stf.name ?? '',
-                            style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
                           ),
-                          subtitle: Text("${stf.staffRole ?? 'Support Staff'} | Dept/Sec: ${stf.department ?? 'None'}"),
+                          subtitle: Text(
+                            "${stf.staffRole ?? 'Support Staff'} | Dept/Sec: ${stf.department ?? 'None'}",
+                          ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.visibility_outlined, color: AppColors.primary),
+                                icon: const Icon(
+                                  Icons.visibility_outlined,
+                                  color: AppColors.primary,
+                                ),
                                 onPressed: () {
-                                  context.push('/admin/doctor-staff/detail', extra: stf);
+                                  context.push(
+                                    '/admin/doctor-staff/detail',
+                                    extra: stf,
+                                  );
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.edit_outlined, color: AppColors.warning),
+                                icon: const Icon(
+                                  Icons.edit_outlined,
+                                  color: AppColors.warning,
+                                ),
                                 onPressed: () async {
-                                  final res = await context.push('/admin/doctor-staff/edit', extra: stf);
+                                  final res = await context.push(
+                                    '/admin/doctor-staff/edit',
+                                    extra: stf,
+                                  );
                                   if (res == true) _refreshList();
                                 },
                               ),

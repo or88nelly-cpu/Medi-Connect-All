@@ -267,7 +267,7 @@ class AppStrings {
 
   // Department Module
   static const departments = "Departments";
-    static const sections = "Sections";
+  static const sections = "Sections";
   static const departmentsTitle = "Departments";
   static const addDepartment = "Add Department";
   static const editDepartment = "Edit Department";

@@ -20,90 +20,110 @@ class SectionDetail extends StatefulWidget {
   State<SectionDetail> createState() => _SectionDetailState();
 }
 
-class _SectionDetailState extends State<SectionDetail> {
+class _SectionDetailState extends State<SectionDetail>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {}); // Rebuild to update floating action button label/action
+    });
     context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.section.name));
   }
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: CustomScaffold(
-        customAppbar: AppBar(
-          title: Text(widget.section.name),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          bottom: TabBar(
-            indicatorColor: AppColors.primary,
-            labelColor: AppColors.primary,
-            unselectedLabelColor: AppColors.textSecondary,
-            labelStyle: AppTextStyles.labelMedium.copyWith(fontWeight: FontWeight.bold),
-            tabs: const [
-              Tab(text: "Doctors"),
-              Tab(text: "Staff"),
-            ],
+    final activeRole = _tabController.index == 0 ? 'doctor' : 'staff';
+
+    return CustomScaffold(
+      customAppbar: AppBar(
+        title: Text(widget.section.name),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: AppColors.primary,
+          labelColor: AppColors.primary,
+          unselectedLabelColor: AppColors.textSecondary,
+          labelStyle: AppTextStyles.labelMedium.copyWith(
+            fontWeight: FontWeight.bold,
           ),
+          tabs: const [
+            Tab(text: "Doctors"),
+            Tab(text: "Staff"),
+          ],
         ),
-        body: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
-          builder: (context, state) {
-            if (state is DoctorStaffLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is DoctorStaffError) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          context.push(
+            '/admin/doctor-staff/create',
+            extra: {'role': activeRole, 'department': widget.section.name},
+          );
+        },
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: Text(
+          "Add $activeRole",
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: AppColors.primary,
+      ),
+      body: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
+        builder: (context, state) {
+          if (state is DoctorStaffLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is DoctorStaffError) {
+            return Center(
+              child: Text(
+                state.message,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.error,
                 ),
-              );
-            } else if (state is DoctorStaffLoaded) {
-              return TabBarView(
-                children: [
-                  _buildListTab(context, state.doctors, 'doctor'),
-                  _buildListTab(context, state.staff, 'staff'),
-                ],
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+              ),
+            );
+          } else if (state is DoctorStaffLoaded) {
+            return TabBarView(
+              controller: _tabController,
+              children: [
+                _buildListTab(context, state.doctors, 'doctor'),
+                _buildListTab(context, state.staff, 'staff'),
+              ],
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
 
-  Widget _buildListTab(BuildContext context, List<UserModel> list, String role) {
+  Widget _buildListTab(
+    BuildContext context,
+    List<UserModel> list,
+    String role,
+  ) {
     final isDoctor = role == 'doctor';
     final roleColor = isDoctor ? AppColors.secondary : AppColors.accent;
 
     return Padding(
       padding: EdgeInsets.all(16.r),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${isDoctor ? 'Doctors' : 'Staff'} Directory",
-                style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  context.push(
-                    '/admin/doctor-staff/create',
-                    extra: {'role': role, 'department': widget.section.name},
-                  );
-                },
-                icon: const Icon(Icons.add, color: Colors.white),
-                label: Text("Add $role", style: const TextStyle(color: Colors.white)),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-                ),
-              ),
-            ],
+          Text(
+            "${isDoctor ? 'Doctors' : 'Staff'} Directory",
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 16.h),
           Expanded(
@@ -130,12 +150,16 @@ class _SectionDetailState extends State<SectionDetail> {
                           leading: CircleAvatar(
                             backgroundColor: roleColor.withOpacity(0.1),
                             child: Icon(
-                              isDoctor ? Icons.local_hospital_outlined : Icons.badge_outlined,
+                              isDoctor
+                                  ? Icons.local_hospital_outlined
+                                  : Icons.badge_outlined,
                               color: roleColor,
                             ),
                           ),
                           title: Text(
-                            user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim(),
+                            user.name ??
+                                "${user.firstName ?? ''} ${user.lastName ?? ''}"
+                                    .trim(),
                             style: AppTextStyles.bodyMedium.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.textPrimary,
@@ -143,26 +167,42 @@ class _SectionDetailState extends State<SectionDetail> {
                           ),
                           subtitle: Text(
                             isDoctor
-                                ? (user.specialization ?? 'General practitioner')
+                                ? (user.specialization ??
+                                      'General practitioner')
                                 : (user.staffRole ?? 'Support Staff'),
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.visibility_outlined, color: AppColors.primary),
+                                icon: const Icon(
+                                  Icons.visibility_outlined,
+                                  color: AppColors.primary,
+                                ),
                                 onPressed: () {
-                                  context.push('/admin/doctor-staff/detail', extra: user);
+                                  context.push(
+                                    '/admin/doctor-staff/detail',
+                                    extra: user,
+                                  );
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.edit_outlined, color: AppColors.warning),
+                                icon: const Icon(
+                                  Icons.edit_outlined,
+                                  color: AppColors.warning,
+                                ),
                                 onPressed: () {
-                                  context.push('/admin/doctor-staff/edit', extra: user);
+                                  context.push(
+                                    '/admin/doctor-staff/edit',
+                                    extra: user,
+                                  );
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.delete_outline, color: AppColors.error),
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  color: AppColors.error,
+                                ),
                                 onPressed: () => _confirmDelete(context, user),
                               ),
                             ],
@@ -182,14 +222,15 @@ class _SectionDetailState extends State<SectionDetail> {
       context: context,
       builder: (ctx) => ConfirmationDialog(
         title: "Delete Profile",
-        message: "Are you sure you want to delete ${user.name ?? 'this user'}? This action cannot be undone.",
+        message:
+            "Are you sure you want to delete ${user.name ?? 'this user'}? This action cannot be undone.",
         onConfirm: () {
           context.read<DoctorStaffBloc>().add(
-                DeleteDoctorStaffMember(
-                  userId: user.id,
-                  departmentName: widget.section.name,
-                ),
-              );
+            DeleteDoctorStaffMember(
+              userId: user.id,
+              departmentName: widget.section.name,
+            ),
+          );
         },
       ),
     );

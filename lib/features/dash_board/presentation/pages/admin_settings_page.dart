@@ -119,10 +119,7 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
             color: AppColors.textPrimary,
           ),
         ),
-        subtitle: Text(
-          subtitle,
-          style: AppTextStyles.bodySmall,
-        ),
+        subtitle: Text(subtitle, style: AppTextStyles.bodySmall),
         value: value,
         onChanged: onChanged,
       ),

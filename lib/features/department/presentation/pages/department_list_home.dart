@@ -58,7 +58,10 @@ class DepartmentListHome extends StatelessWidget {
         } else if (state is DepartmentActionSuccess) {
           departments = state.updatedDepartments;
         }
-        return DepartmentHorizontalList(departments: departments,title: AppStrings.departments,);
+        return DepartmentHorizontalList(
+          departments: departments,
+          title: AppStrings.departments,
+        );
       },
     );
   }

@@ -19,5 +19,12 @@ class DepartmentEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, name, description, imageUrl, createdAt,consultation];
+  List<Object?> get props => [
+    id,
+    name,
+    description,
+    imageUrl,
+    createdAt,
+    consultation,
+  ];
 }

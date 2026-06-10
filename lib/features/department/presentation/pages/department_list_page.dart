@@ -154,7 +154,6 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
                         isSection: false,
                         isAdmin: widget.isAdmin,
                         onEdit: widget.isAdmin
-
                             ? () => DepartmentFormDialog.show(
                                 context,
                                 existingDepartment: departments[i],

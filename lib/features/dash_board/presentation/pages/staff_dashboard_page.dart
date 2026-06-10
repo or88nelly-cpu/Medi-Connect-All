@@ -13,6 +13,7 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/navigation
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
+import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
 
 class StaffDashboardPage extends StatefulWidget {
   const StaffDashboardPage({super.key});
@@ -46,7 +47,9 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
                       backgroundColor: Colors.transparent,
                       title: Text(
                         AppStrings.staffDashboardTitle,
-                        style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                        style: AppTextStyles.titleLarge.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     )
                   : null,
@@ -90,14 +93,18 @@ class _StaffHomeTab extends StatelessWidget {
           SizedBox(height: 20.h),
           Text(
             "Shift Information",
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           _StaffShiftCard(),
           SizedBox(height: 20.h),
           Text(
             "My Tasks Overview",
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           _StaffTasksOverviewCard(),
@@ -118,7 +125,9 @@ class _StaffWelcomeBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           profileImage = user.profileImage;
           roleLabel = user.staffRole ?? 'Administrative Staff';
         }
@@ -149,7 +158,9 @@ class _StaffWelcomeBanner extends StatelessWidget {
                   children: [
                     Text(
                       AppStrings.welcomeUser,
-                      style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: Colors.white70,
+                      ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
@@ -164,7 +175,9 @@ class _StaffWelcomeBanner extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Text(
                       roleLabel!,
-                      style: AppTextStyles.bodySmall.copyWith(color: Colors.white70),
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: Colors.white70,
+                      ),
                     ),
                   ],
                 ),
@@ -215,7 +228,10 @@ class _StaffShiftCard extends StatelessWidget {
                 SizedBox(height: 4.h),
                 Text(
                   "Day Shift (08:00 AM - 04:00 PM)",
-                  style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ],
             ),
@@ -227,7 +243,11 @@ class _StaffShiftCard extends StatelessWidget {
               ),
               child: Text(
                 "Active",
-                style: TextStyle(color: AppColors.accent, fontWeight: FontWeight.bold, fontSize: 10.sp),
+                style: TextStyle(
+                  color: AppColors.accent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10.sp,
+                ),
               ),
             ),
           ],
@@ -256,7 +276,8 @@ class _StaffTasksOverviewCard extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: tasks.length,
-        separatorBuilder: (context, idx) => const Divider(color: AppColors.border, height: 1),
+        separatorBuilder: (context, idx) =>
+            const Divider(color: AppColors.border, height: 1),
         itemBuilder: (context, idx) {
           final t = tasks[idx];
           final isCompleted = t['status'] == 'Completed';
@@ -270,7 +291,9 @@ class _StaffTasksOverviewCard extends StatelessWidget {
               t['title']!,
               style: AppTextStyles.bodyMedium.copyWith(
                 decoration: isCompleted ? TextDecoration.lineThrough : null,
-                color: isCompleted ? AppColors.textSecondary : AppColors.textPrimary,
+                color: isCompleted
+                    ? AppColors.textSecondary
+                    : AppColors.textPrimary,
                 fontWeight: isCompleted ? FontWeight.normal : FontWeight.bold,
               ),
             ),
@@ -303,8 +326,16 @@ class _StaffTasksTabState extends State<_StaffTasksTab> {
   final List<Map<String, dynamic>> _tasks = [
     {'id': 'T-1', 'title': 'Sanitize consultation room 3', 'status': 'Pending'},
     {'id': 'T-2', 'title': 'Verify outpatient logs', 'status': 'Completed'},
-    {'id': 'T-3', 'title': 'Update stock checklist in Block A', 'status': 'Pending'},
-    {'id': 'T-4', 'title': 'Confirm receipt of lab reagents', 'status': 'Pending'},
+    {
+      'id': 'T-3',
+      'title': 'Update stock checklist in Block A',
+      'status': 'Pending',
+    },
+    {
+      'id': 'T-4',
+      'title': 'Confirm receipt of lab reagents',
+      'status': 'Pending',
+    },
   ];
 
   @override
@@ -314,7 +345,10 @@ class _StaffTasksTabState extends State<_StaffTasksTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("My Tasks", style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            "My Tasks",
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Expanded(
             child: ListView.builder(
@@ -342,8 +376,12 @@ class _StaffTasksTabState extends State<_StaffTasksTab> {
                       t['title']!,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: isCompleted ? AppColors.textSecondary : AppColors.textPrimary,
-                        decoration: isCompleted ? TextDecoration.lineThrough : null,
+                        color: isCompleted
+                            ? AppColors.textSecondary
+                            : AppColors.textPrimary,
+                        decoration: isCompleted
+                            ? TextDecoration.lineThrough
+                            : null,
                       ),
                     ),
                     subtitle: Text("Task ID: ${t['id']!}"),
@@ -367,11 +405,27 @@ class _StaffRosterTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> roster = [
-      {'day': 'Monday', 'shift': 'Day Shift (08:00 AM - 04:00 PM)', 'dept': 'OPD Support'},
-      {'day': 'Tuesday', 'shift': 'Day Shift (08:00 AM - 04:00 PM)', 'dept': 'OPD Support'},
+      {
+        'day': 'Monday',
+        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
+        'dept': 'OPD Support',
+      },
+      {
+        'day': 'Tuesday',
+        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
+        'dept': 'OPD Support',
+      },
       {'day': 'Wednesday', 'shift': 'Off Day', 'dept': '-'},
-      {'day': 'Thursday', 'shift': 'Night Shift (08:00 PM - 04:00 AM)', 'dept': 'Emergency Wards'},
-      {'day': 'Friday', 'shift': 'Night Shift (08:00 PM - 04:00 AM)', 'dept': 'Emergency Wards'},
+      {
+        'day': 'Thursday',
+        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
+        'dept': 'Emergency Wards',
+      },
+      {
+        'day': 'Friday',
+        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
+        'dept': 'Emergency Wards',
+      },
     ];
 
     return Padding(
@@ -379,7 +433,10 @@ class _StaffRosterTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Shift Roster", style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            "Shift Roster",
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Expanded(
             child: ListView.builder(
@@ -404,17 +461,27 @@ class _StaffRosterTab extends StatelessWidget {
                         children: [
                           Text(
                             r['day']!,
-                            style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
                           ),
                           SizedBox(height: 2.h),
                           Text(r['shift']!, style: AppTextStyles.bodySmall),
                           if (!isOff)
-                            Text("Dept: ${r['dept']!}", style: AppTextStyles.bodySmall),
+                            Text(
+                              "Dept: ${r['dept']!}",
+                              style: AppTextStyles.bodySmall,
+                            ),
                         ],
                       ),
                       Icon(
-                        isOff ? Icons.home_outlined : Icons.calendar_month_outlined,
-                        color: isOff ? AppColors.textSecondary : AppColors.accent,
+                        isOff
+                            ? Icons.home_outlined
+                            : Icons.calendar_month_outlined,
+                        color: isOff
+                            ? AppColors.textSecondary
+                            : AppColors.accent,
                       ),
                     ],
                   ),
@@ -437,8 +504,16 @@ class _StaffAlertsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> alerts = [
-      {'message': 'Code Blue in Emergency Ward - Room 108', 'time': '2m ago', 'level': 'Critical'},
-      {'message': 'Intense Patient Influx in ICU - Staff assistance requested', 'time': '15m ago', 'level': 'High'},
+      {
+        'message': 'Code Blue in Emergency Ward - Room 108',
+        'time': '2m ago',
+        'level': 'Critical',
+      },
+      {
+        'message': 'Intense Patient Influx in ICU - Staff assistance requested',
+        'time': '15m ago',
+        'level': 'High',
+      },
     ];
 
     return Padding(
@@ -446,14 +521,19 @@ class _StaffAlertsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Emergency Messages", style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            "Emergency Messages",
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Expanded(
             child: ListView.builder(
               itemCount: alerts.length,
               itemBuilder: (context, idx) {
                 final alert = alerts[idx];
-                Color levelColor = alert['level'] == 'Critical' ? AppColors.error : AppColors.warning;
+                Color levelColor = alert['level'] == 'Critical'
+                    ? AppColors.error
+                    : AppColors.warning;
 
                 return Card(
                   margin: EdgeInsets.only(bottom: 12.h),
@@ -467,7 +547,10 @@ class _StaffAlertsTab extends StatelessWidget {
                     leading: Icon(Icons.warning, color: levelColor),
                     title: Text(
                       alert['message']!,
-                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                     subtitle: Text("Triggered: ${alert['time']!}"),
                   ),
@@ -499,7 +582,9 @@ class _StaffProfileTab extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           email = user.email;
           phone = user.phoneNumber;
           roleLabel = user.staffRole;
@@ -529,12 +614,11 @@ class _StaffProfileTab extends StatelessWidget {
               SizedBox(height: 12.h),
               Text(
                 name,
-                style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleLarge.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              Text(
-                email,
-                style: AppTextStyles.bodyMedium,
-              ),
+              Text(email, style: AppTextStyles.bodyMedium),
               SizedBox(height: 8.h),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
@@ -560,11 +644,23 @@ class _StaffProfileTab extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildInfoTile(Icons.phone_outlined, "Phone", phone ?? "Not Set"),
+                    _buildInfoTile(
+                      Icons.phone_outlined,
+                      "Phone",
+                      phone ?? "Not Set",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoTile(Icons.badge_outlined, "Staff ID", "STF-2819"),
+                    _buildInfoTile(
+                      Icons.badge_outlined,
+                      "Staff ID",
+                      "STF-2819",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoTile(Icons.work_history_outlined, "Joining Date", "Feb 20, 2025"),
+                    _buildInfoTile(
+                      Icons.work_history_outlined,
+                      "Joining Date",
+                      "Feb 20, 2025",
+                    ),
                   ],
                 ),
               ),
@@ -572,11 +668,12 @@ class _StaffProfileTab extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(LogoutRequested());
-                  },
+                  onPressed: () => _showLogoutDialog(context),
                   icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text("Sign Out", style: TextStyle(color: Colors.white)),
+                  label: const Text(
+                    "Sign Out",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.error,
                     padding: EdgeInsets.all(16.r),
@@ -590,6 +687,19 @@ class _StaffProfileTab extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => ConfirmationDialog(
+        title: AppStrings.logout,
+        message: AppStrings.confirmSignOut,
+        onConfirm: () {
+          context.read<AuthBloc>().add(LogoutRequested());
+        },
+      ),
     );
   }
 

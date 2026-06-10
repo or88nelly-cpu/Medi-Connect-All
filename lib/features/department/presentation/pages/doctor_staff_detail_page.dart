@@ -44,16 +44,19 @@ class DoctorStaffDetailPage extends StatelessWidget {
                   ),
                   SizedBox(height: 12.h),
                   Text(
-                    user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim(),
-                    style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                    user.name ??
+                        "${user.firstName ?? ''} ${user.lastName ?? ''}".trim(),
+                    style: AppTextStyles.titleLarge.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Text(
-                    user.email,
-                    style: AppTextStyles.bodyMedium,
-                  ),
+                  Text(user.email, style: AppTextStyles.bodyMedium),
                   SizedBox(height: 8.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: roleColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20.r),
@@ -84,7 +87,10 @@ class DoctorStaffDetailPage extends StatelessWidget {
                   const Divider(color: AppColors.border, height: 1),
                   _buildInfoRow("Gender", user.gender ?? "Not Set"),
                   const Divider(color: AppColors.border, height: 1),
-                  _buildInfoRow("Department", user.department ?? "Not Assigned"),
+                  _buildInfoRow(
+                    "Department",
+                    user.department ?? "Not Assigned",
+                  ),
                 ],
               ),
             ),
@@ -99,19 +105,38 @@ class DoctorStaffDetailPage extends StatelessWidget {
               child: Column(
                 children: [
                   if (isDoctor) ...[
-                    _buildInfoRow("Specialization", user.specialization ?? "Not Set"),
+                    _buildInfoRow(
+                      "Specialization",
+                      user.specialization ?? "Not Set",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoRow("Qualifications", user.qualification ?? "Not Set"),
+                    _buildInfoRow(
+                      "Qualifications",
+                      user.qualification ?? "Not Set",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoRow("Consultation Fee", user.consultationFee != null ? "₹ ${user.consultationFee}" : "Not Set"),
+                    _buildInfoRow(
+                      "Consultation Fee",
+                      user.consultationFee != null
+                          ? "₹ ${user.consultationFee}"
+                          : "Not Set",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoRow("Experience", user.experience != null ? "${user.experience} Years" : "Not Set"),
+                    _buildInfoRow(
+                      "Experience",
+                      user.experience != null
+                          ? "${user.experience} Years"
+                          : "Not Set",
+                    ),
                   ] else ...[
                     _buildInfoRow("Staff Role", user.staffRole ?? "Not Set"),
                     const Divider(color: AppColors.border, height: 1),
                     _buildInfoRow("Designation", user.designation ?? "Not Set"),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoRow("Shift", user.availabilityStatus ?? "Day Shift"),
+                    _buildInfoRow(
+                      "Shift",
+                      user.availabilityStatus ?? "Day Shift",
+                    ),
                   ],
                   const Divider(color: AppColors.border, height: 1),
                   _buildInfoRow("Status", user.status),
@@ -131,7 +156,10 @@ class DoctorStaffDetailPage extends StatelessWidget {
         padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
         child: Text(
           title,
-          style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 14.sp),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 14.sp,
+          ),
         ),
       ),
     );

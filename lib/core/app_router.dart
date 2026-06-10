@@ -107,9 +107,8 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: "/sectionDetail",
-          builder: (context, state) => SectionDetail(
-            section: state.extra as DepartmentModel,
-          ),
+          builder: (context, state) =>
+              SectionDetail(section: state.extra as DepartmentModel),
         ),
         GoRoute(
           path: "/departmentDetail",
@@ -118,15 +117,13 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: '/admin/doctor-staff/detail',
-          builder: (context, state) => DoctorStaffDetailPage(
-            user: state.extra as UserModel,
-          ),
+          builder: (context, state) =>
+              DoctorStaffDetailPage(user: state.extra as UserModel),
         ),
         GoRoute(
           path: '/admin/doctor-staff/edit',
-          builder: (context, state) => DoctorStaffEditPage(
-            user: state.extra as UserModel,
-          ),
+          builder: (context, state) =>
+              DoctorStaffEditPage(user: state.extra as UserModel),
         ),
         GoRoute(
           path: '/admin/doctor-staff/create',

@@ -11,12 +11,42 @@ class AdminPharmacyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> items = [
-      {'name': 'Paracetamol 500mg', 'stock': 120, 'category': 'Analgesic', 'status': 'In Stock'},
-      {'name': 'Amoxicillin 250mg', 'stock': 8, 'category': 'Antibiotic', 'status': 'Low Stock'},
-      {'name': 'Ibuprofen 400mg', 'stock': 45, 'category': 'Analgesic', 'status': 'In Stock'},
-      {'name': 'Metformin 850mg', 'stock': 0, 'category': 'Antidiabetic', 'status': 'Out of Stock'},
-      {'name': 'Atorvastatin 10mg', 'stock': 3, 'category': 'Antihypertensive', 'status': 'Low Stock'},
-      {'name': 'Omeprazole 20mg', 'stock': 230, 'category': 'Antacid', 'status': 'In Stock'},
+      {
+        'name': 'Paracetamol 500mg',
+        'stock': 120,
+        'category': 'Analgesic',
+        'status': 'In Stock',
+      },
+      {
+        'name': 'Amoxicillin 250mg',
+        'stock': 8,
+        'category': 'Antibiotic',
+        'status': 'Low Stock',
+      },
+      {
+        'name': 'Ibuprofen 400mg',
+        'stock': 45,
+        'category': 'Analgesic',
+        'status': 'In Stock',
+      },
+      {
+        'name': 'Metformin 850mg',
+        'stock': 0,
+        'category': 'Antidiabetic',
+        'status': 'Out of Stock',
+      },
+      {
+        'name': 'Atorvastatin 10mg',
+        'stock': 3,
+        'category': 'Antihypertensive',
+        'status': 'Low Stock',
+      },
+      {
+        'name': 'Omeprazole 20mg',
+        'stock': 230,
+        'category': 'Antacid',
+        'status': 'In Stock',
+      },
     ];
 
     return CustomScaffold(
@@ -64,7 +94,10 @@ class AdminPharmacyPage extends StatelessWidget {
                       children: [
                         Text(
                           item['name'],
-                          style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                          style: AppTextStyles.titleMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.sp,
+                          ),
                         ),
                         SizedBox(height: 4.h),
                         Text("Category: ${item['category']}"),
@@ -73,7 +106,10 @@ class AdminPharmacyPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: badgeColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6.r),

@@ -13,6 +13,7 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/navigation
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
+import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
 
 class DoctorDashboardPage extends StatefulWidget {
   const DoctorDashboardPage({super.key});
@@ -46,7 +47,9 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                       backgroundColor: Colors.transparent,
                       title: Text(
                         AppStrings.doctorDashboardTitle,
-                        style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                        style: AppTextStyles.titleLarge.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     )
                   : null,
@@ -90,7 +93,9 @@ class _DoctorHomeTab extends StatelessWidget {
           SizedBox(height: 20.h),
           Text(
             "Quick Stats",
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           Row(
@@ -103,7 +108,9 @@ class _DoctorHomeTab extends StatelessWidget {
           SizedBox(height: 20.h),
           Text(
             "Today's Highlight Consultations",
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           _DoctorConsultationsCard(),
@@ -152,7 +159,9 @@ class _DoctorWelcomeBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           profileImage = user.profileImage;
           specialty = user.specialization ?? 'General Practitioner';
         }
@@ -183,7 +192,9 @@ class _DoctorWelcomeBanner extends StatelessWidget {
                   children: [
                     Text(
                       AppStrings.welcomeUser,
-                      style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: Colors.white70,
+                      ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
@@ -198,7 +209,9 @@ class _DoctorWelcomeBanner extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Text(
                       specialty!,
-                      style: AppTextStyles.bodySmall.copyWith(color: Colors.white70),
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: Colors.white70,
+                      ),
                     ),
                   ],
                 ),
@@ -232,8 +245,16 @@ class _DoctorConsultationsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> todayAppointments = [
-      {'name': 'Mr. Michael Miller', 'time': '10:30 AM', 'type': 'Physical Visit'},
-      {'name': 'Mrs. Sarah Connor', 'time': '11:00 AM', 'type': 'Video consultation'},
+      {
+        'name': 'Mr. Michael Miller',
+        'time': '10:30 AM',
+        'type': 'Physical Visit',
+      },
+      {
+        'name': 'Mrs. Sarah Connor',
+        'time': '11:00 AM',
+        'type': 'Video consultation',
+      },
       {'name': 'Mr. Bruce Wayne', 'time': '01:30 PM', 'type': 'Physical Visit'},
     ];
 
@@ -247,7 +268,8 @@ class _DoctorConsultationsCard extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: todayAppointments.length,
-        separatorBuilder: (context, idx) => const Divider(color: AppColors.border, height: 1),
+        separatorBuilder: (context, idx) =>
+            const Divider(color: AppColors.border, height: 1),
         itemBuilder: (context, idx) {
           final apt = todayAppointments[idx];
           return ListTile(
@@ -258,7 +280,10 @@ class _DoctorConsultationsCard extends StatelessWidget {
             ),
             title: Text(
               apt['name']!,
-              style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
             ),
             subtitle: Text("Type: ${apt['type']!}"),
             trailing: Container(
@@ -269,7 +294,11 @@ class _DoctorConsultationsCard extends StatelessWidget {
               ),
               child: Text(
                 apt['time']!,
-                style: TextStyle(color: AppColors.secondary, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: AppColors.secondary,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           );
@@ -292,16 +321,39 @@ class _DoctorScheduleTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Today's Schedule", style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            "Today's Schedule",
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Expanded(
             child: ListView(
               children: [
-                _buildScheduleRow("09:00 AM", "Staff Briefing", "General Conference", true),
-                _buildScheduleRow("10:00 AM", "Michael Miller", "Physical OPD - Room 3", false),
-                _buildScheduleRow("11:00 AM", "Sarah Connor", "Video consultation - App Room", false),
+                _buildScheduleRow(
+                  "09:00 AM",
+                  "Staff Briefing",
+                  "General Conference",
+                  true,
+                ),
+                _buildScheduleRow(
+                  "10:00 AM",
+                  "Michael Miller",
+                  "Physical OPD - Room 3",
+                  false,
+                ),
+                _buildScheduleRow(
+                  "11:00 AM",
+                  "Sarah Connor",
+                  "Video consultation - App Room",
+                  false,
+                ),
                 _buildScheduleRow("12:00 PM", "Lunch Break", "Cafeteria", true),
-                _buildScheduleRow("01:30 PM", "Bruce Wayne", "Physical OPD - Room 3", false),
+                _buildScheduleRow(
+                  "01:30 PM",
+                  "Bruce Wayne",
+                  "Physical OPD - Room 3",
+                  false,
+                ),
               ],
             ),
           ),
@@ -310,7 +362,12 @@ class _DoctorScheduleTab extends StatelessWidget {
     );
   }
 
-  Widget _buildScheduleRow(String time, String title, String detail, bool isBreak) {
+  Widget _buildScheduleRow(
+    String time,
+    String title,
+    String detail,
+    bool isBreak,
+  ) {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(16.r),
@@ -321,13 +378,26 @@ class _DoctorScheduleTab extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(time, style: AppTextStyles.titleMedium.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14.sp)),
+          Text(
+            time,
+            style: AppTextStyles.titleMedium.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.bold,
+              fontSize: 14.sp,
+            ),
+          ),
           SizedBox(width: 16.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+                Text(
+                  title,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
                 Text(detail, style: AppTextStyles.bodySmall),
               ],
             ),
@@ -347,9 +417,24 @@ class _DoctorPatientsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> patients = [
-      {'name': 'Michael Miller', 'age': '54', 'gender': 'Male', 'issue': 'Hypertension'},
-      {'name': 'Sarah Connor', 'age': '38', 'gender': 'Female', 'issue': 'Cardiac Arrhythmia'},
-      {'name': 'Bruce Wayne', 'age': '42', 'gender': 'Male', 'issue': 'Ankle Sprain'},
+      {
+        'name': 'Michael Miller',
+        'age': '54',
+        'gender': 'Male',
+        'issue': 'Hypertension',
+      },
+      {
+        'name': 'Sarah Connor',
+        'age': '38',
+        'gender': 'Female',
+        'issue': 'Cardiac Arrhythmia',
+      },
+      {
+        'name': 'Bruce Wayne',
+        'age': '42',
+        'gender': 'Male',
+        'issue': 'Ankle Sprain',
+      },
     ];
 
     return Padding(
@@ -357,7 +442,10 @@ class _DoctorPatientsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("My Patients", style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            "My Patients",
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Expanded(
             child: ListView.builder(
@@ -373,8 +461,16 @@ class _DoctorPatientsTab extends StatelessWidget {
                   ),
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16.r),
-                    title: Text(p['name']!, style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 14.sp)),
-                    subtitle: Text("Age: ${p['age']!} | Gender: ${p['gender']!} \nIssue: ${p['issue']!}"),
+                    title: Text(
+                      p['name']!,
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "Age: ${p['age']!} | Gender: ${p['gender']!} \nIssue: ${p['issue']!}",
+                    ),
                     trailing: const Icon(Icons.chevron_right),
                     isThreeLine: true,
                   ),
@@ -401,20 +497,38 @@ class _DoctorConsultsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Video Consultations", style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            "Video Consultations",
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Card(
             elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: const BorderSide(color: AppColors.border)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: const BorderSide(color: AppColors.border),
+            ),
             child: Padding(
               padding: EdgeInsets.all(20.r),
               child: Column(
                 children: [
-                  Icon(Icons.video_camera_front_outlined, size: 60.r, color: AppColors.secondary),
+                  Icon(
+                    Icons.video_camera_front_outlined,
+                    size: 60.r,
+                    color: AppColors.secondary,
+                  ),
                   SizedBox(height: 12.h),
-                  Text("Next Virtual Session", style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold)),
+                  Text(
+                    "Next Virtual Session",
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   SizedBox(height: 4.h),
-                  Text("Patient: Sarah Connor", style: AppTextStyles.bodyMedium),
+                  Text(
+                    "Patient: Sarah Connor",
+                    style: AppTextStyles.bodyMedium,
+                  ),
                   Text("Time: Today, 11:00 AM", style: AppTextStyles.bodySmall),
                   SizedBox(height: 16.h),
                   SizedBox(
@@ -422,15 +536,24 @@ class _DoctorConsultsTab extends StatelessWidget {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Launching video consultation room...")),
+                          const SnackBar(
+                            content: Text(
+                              "Launching video consultation room...",
+                            ),
+                          ),
                         );
                       },
                       icon: const Icon(Icons.video_call, color: Colors.white),
-                      label: const Text("Launch Consult", style: TextStyle(color: Colors.white)),
+                      label: const Text(
+                        "Launch Consult",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.secondary,
                         padding: EdgeInsets.symmetric(vertical: 12.h),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
                       ),
                     ),
                   ),
@@ -462,7 +585,9 @@ class _DoctorProfileTab extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           email = user.email;
           phone = user.phoneNumber;
           specialty = user.specialization;
@@ -492,12 +617,11 @@ class _DoctorProfileTab extends StatelessWidget {
               SizedBox(height: 12.h),
               Text(
                 name,
-                style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleLarge.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              Text(
-                email,
-                style: AppTextStyles.bodyMedium,
-              ),
+              Text(email, style: AppTextStyles.bodyMedium),
               SizedBox(height: 8.h),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
@@ -523,9 +647,17 @@ class _DoctorProfileTab extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildInfoTile(Icons.phone_outlined, "Phone", phone ?? "Not Set"),
+                    _buildInfoTile(
+                      Icons.phone_outlined,
+                      "Phone",
+                      phone ?? "Not Set",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoTile(Icons.badge_outlined, "Registration Number", "REG-DOC-2819"),
+                    _buildInfoTile(
+                      Icons.badge_outlined,
+                      "Registration Number",
+                      "REG-DOC-2819",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
                     _buildInfoTile(Icons.work_outline, "Experience", "8 Years"),
                   ],
@@ -535,11 +667,12 @@ class _DoctorProfileTab extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(LogoutRequested());
-                  },
+                  onPressed: () => _showLogoutDialog(context),
                   icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text("Sign Out", style: TextStyle(color: Colors.white)),
+                  label: const Text(
+                    "Sign Out",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.error,
                     padding: EdgeInsets.all(16.r),
@@ -553,6 +686,19 @@ class _DoctorProfileTab extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => ConfirmationDialog(
+        title: AppStrings.logout,
+        message: AppStrings.confirmSignOut,
+        onConfirm: () {
+          context.read<AuthBloc>().add(LogoutRequested());
+        },
+      ),
     );
   }
 

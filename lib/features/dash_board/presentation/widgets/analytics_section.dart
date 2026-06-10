@@ -96,16 +96,6 @@ class AnalyticsSection extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Emergency Alerts Banner
-              if (emergencies.isNotEmpty) ...[
-                _buildEmergencyBanner(context, emergencies),
-                SizedBox(height: 16.h),
-              ],
-
-              // 2. Quick Actions
-              _buildQuickActions(context),
-              SizedBox(height: 20.h),
-
               Text(
                 AppStrings.analyticsOverview,
                 style: AppTextStyles.titleMedium.copyWith(
@@ -121,7 +111,7 @@ class AnalyticsSection extends StatelessWidget {
               ),
               SizedBox(height: 16.h),
 
-              // 3. Revenue Chart & Appointment Summary Graph
+              // 1. Revenue Chart & Appointment Summary Graph
               Row(
                 children: [
                   Expanded(
@@ -134,25 +124,35 @@ class AnalyticsSection extends StatelessWidget {
               _buildAppointmentGraph(),
               SizedBox(height: 16.h),
 
-              // 4. Pharmacy Summary Card
+              // 2. Pharmacy Summary Card
               _buildPharmacySummaryCard(context, pharmacy),
               SizedBox(height: 16.h),
 
-              // 5. Department Overview Card
+              // 3. Department Overview Card
               _buildDepartmentOverviewCard(deptStats),
               SizedBox(height: 16.h),
 
-              // 6. Lab Summary Card
+              // 4. Lab Summary Card
               _buildLabSummaryCard(context, lab),
               SizedBox(height: 16.h),
 
-              // 7. Staff Attendance Card
+              // 5. Staff Attendance Card
               _buildStaffAttendanceCard(context, attendance),
               SizedBox(height: 16.h),
 
-              // 8. Recent Activity Card
+              // 6. Recent Activity Card
               _buildRecentActivityCard(context, activities),
               SizedBox(height: 20.h),
+
+              // 7. Quick Actions
+              _buildQuickActions(context),
+              SizedBox(height: 20.h),
+
+              // 8. Emergency Alerts Banner
+              if (emergencies.isNotEmpty) ...[
+                _buildEmergencyBanner(context, emergencies),
+                SizedBox(height: 16.h),
+              ],
             ],
           );
         }
@@ -391,14 +391,20 @@ class AnalyticsSection extends StatelessWidget {
                       "Pharmacy Summary",
                       style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15.sp,
+                        fontSize: 13.sp,
                       ),
                     ),
                   ],
                 ),
                 TextButton(
                   onPressed: () => context.push('/admin/pharmacy'),
-                  child: const Text("View All"),
+                  child: Text(
+                    "View All",
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.primary,
+                      fontSize: 10.sp,
+                    ),
+                  ),
                 ),
               ],
             ),

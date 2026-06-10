@@ -5,7 +5,9 @@ import 'package:medi_connect/features/department/domain/entities/department_enti
 /// Abstract contract for the Department feature repository.
 abstract class DepartmentRepository {
   /// Fetch all departments.
-  Future<Either<Failure, List<DepartmentEntity>>> getDepartments({required bool isConsultationDept});
+  Future<Either<Failure, List<DepartmentEntity>>> getDepartments({
+    required bool isConsultationDept,
+  });
 
   /// Create a new department.
   Future<Either<Failure, DepartmentEntity>> addDepartment({

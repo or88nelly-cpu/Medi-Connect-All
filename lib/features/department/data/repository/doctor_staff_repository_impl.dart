@@ -10,7 +10,9 @@ class DoctorStaffRepositoryImpl implements DoctorStaffRepository {
   DoctorStaffRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, List<UserModel>>> getDoctorStaff(String departmentName) async {
+  Future<Either<Failure, List<UserModel>>> getDoctorStaff(
+    String departmentName,
+  ) async {
     try {
       final list = await _remoteDataSource.getDoctorStaff(departmentName);
       return Right(list);
@@ -22,7 +24,9 @@ class DoctorStaffRepositoryImpl implements DoctorStaffRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> createDoctorStaffMember(UserModel user) async {
+  Future<Either<Failure, UserModel>> createDoctorStaffMember(
+    UserModel user,
+  ) async {
     try {
       final res = await _remoteDataSource.createDoctorStaffMember(user);
       return Right(res);
@@ -34,7 +38,9 @@ class DoctorStaffRepositoryImpl implements DoctorStaffRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> updateDoctorStaffMember(UserModel user) async {
+  Future<Either<Failure, UserModel>> updateDoctorStaffMember(
+    UserModel user,
+  ) async {
     try {
       final res = await _remoteDataSource.updateDoctorStaffMember(user);
       return Right(res);

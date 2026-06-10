@@ -19,7 +19,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
       'doctor': 'Dr. Sarah Chen',
       'time': '10:30 AM',
       'status': 'Confirmed',
-      'specialty': 'Cardiology'
+      'specialty': 'Cardiology',
     },
     {
       'id': 'APT-002',
@@ -27,7 +27,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
       'doctor': 'Dr. Michael Chen',
       'time': '11:15 AM',
       'status': 'Pending',
-      'specialty': 'Neurology'
+      'specialty': 'Neurology',
     },
     {
       'id': 'APT-003',
@@ -35,7 +35,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
       'doctor': 'Dr. Sarah Chen',
       'time': '02:00 PM',
       'status': 'Completed',
-      'specialty': 'Cardiology'
+      'specialty': 'Cardiology',
     },
     {
       'id': 'APT-004',
@@ -43,7 +43,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
       'doctor': 'Dr. James Wilson',
       'time': '03:30 PM',
       'status': 'Cancelled',
-      'specialty': 'Pediatrics'
+      'specialty': 'Pediatrics',
     },
   ];
 
@@ -53,8 +53,10 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
   @override
   Widget build(BuildContext context) {
     final filteredList = _appointments.where((apt) {
-      final matchesStatus = _filterStatus == 'All' || apt['status'] == _filterStatus;
-      final matchesSearch = apt['patient']!.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+      final matchesStatus =
+          _filterStatus == 'All' || apt['status'] == _filterStatus;
+      final matchesSearch =
+          apt['patient']!.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           apt['doctor']!.toLowerCase().contains(_searchQuery.toLowerCase());
       return matchesStatus && matchesSearch;
     }).toList();
@@ -74,10 +76,16 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
               ElevatedButton.icon(
                 onPressed: () => _showCreateAppointmentDialog(context),
                 icon: const Icon(Icons.add, color: Colors.white),
-                label: const Text("Create", style: TextStyle(color: Colors.white)),
+                label: const Text(
+                  "Create",
+                  style: TextStyle(color: Colors.white),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 10.h,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.r),
                   ),
@@ -103,24 +111,31 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: ['All', 'Confirmed', 'Pending', 'Completed', 'Cancelled'].map((status) {
-                final isSelected = _filterStatus == status;
-                return Padding(
-                  padding: EdgeInsets.only(right: 8.w),
-                  child: ChoiceChip(
-                    label: Text(status),
-                    selected: isSelected,
-                    onSelected: (val) {
-                      if (val) setState(() => _filterStatus = status);
+              children:
+                  ['All', 'Confirmed', 'Pending', 'Completed', 'Cancelled'].map(
+                    (status) {
+                      final isSelected = _filterStatus == status;
+                      return Padding(
+                        padding: EdgeInsets.only(right: 8.w),
+                        child: ChoiceChip(
+                          label: Text(status),
+                          selected: isSelected,
+                          onSelected: (val) {
+                            if (val) setState(() => _filterStatus = status);
+                          },
+                          selectedColor: AppColors.primary.withOpacity(0.2),
+                          labelStyle: TextStyle(
+                            color: isSelected
+                                ? AppColors.primary
+                                : AppColors.textSecondary,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      );
                     },
-                    selectedColor: AppColors.primary.withOpacity(0.2),
-                    labelStyle: TextStyle(
-                      color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                    ),
-                  ),
-                );
-              }).toList(),
+                  ).toList(),
             ),
           ),
           SizedBox(height: 16.h),
@@ -165,10 +180,15 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                             children: [
                               Text(
                                 apt['patient']!,
-                                style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w,
+                                  vertical: 4.h,
+                                ),
                                 decoration: BoxDecoration(
                                   color: statusColor.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(6.r),
@@ -188,7 +208,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 4.h),
-                              Text("Doctor: ${apt['doctor']!} (${apt['specialty']!})"),
+                              Text(
+                                "Doctor: ${apt['doctor']!} (${apt['specialty']!})",
+                              ),
                               SizedBox(height: 2.h),
                               Text("Time: ${apt['time']!}"),
                             ],
@@ -230,7 +252,8 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
           ),
           ElevatedButton(
             onPressed: () {
-              if (nameController.text.isNotEmpty && docController.text.isNotEmpty) {
+              if (nameController.text.isNotEmpty &&
+                  docController.text.isNotEmpty) {
                 setState(() {
                   _appointments.insert(0, {
                     'id': 'APT-${DateTime.now().millisecond}',
@@ -238,12 +261,14 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                     'doctor': docController.text,
                     'time': '09:00 AM',
                     'status': 'Pending',
-                    'specialty': 'General Medicine'
+                    'specialty': 'General Medicine',
                   });
                 });
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Appointment created successfully.")),
+                  const SnackBar(
+                    content: Text("Appointment created successfully."),
+                  ),
                 );
               }
             },

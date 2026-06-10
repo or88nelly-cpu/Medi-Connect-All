@@ -11,12 +11,42 @@ class AdminStaffAttendancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> staffList = [
-      {'name': 'Nurse Emma Watson', 'role': 'General Nurse', 'status': 'Present', 'time': '08:00 AM'},
-      {'name': 'Nurse Clara Oswald', 'role': 'ICU Nurse', 'status': 'Present', 'time': '07:45 AM'},
-      {'name': 'Thomas Shelby', 'role': 'Lab Technician', 'status': 'On Leave', 'time': '-'},
-      {'name': 'Sherlock Holmes', 'role': 'Pharmacist', 'status': 'Present', 'time': '08:15 AM'},
-      {'name': 'John Watson', 'role': 'Assistant Pharmacist', 'status': 'Absent', 'time': '-'},
-      {'name': 'Rose Tyler', 'role': 'Receptionist', 'status': 'Present', 'time': '08:00 AM'},
+      {
+        'name': 'Nurse Emma Watson',
+        'role': 'General Nurse',
+        'status': 'Present',
+        'time': '08:00 AM',
+      },
+      {
+        'name': 'Nurse Clara Oswald',
+        'role': 'ICU Nurse',
+        'status': 'Present',
+        'time': '07:45 AM',
+      },
+      {
+        'name': 'Thomas Shelby',
+        'role': 'Lab Technician',
+        'status': 'On Leave',
+        'time': '-',
+      },
+      {
+        'name': 'Sherlock Holmes',
+        'role': 'Pharmacist',
+        'status': 'Present',
+        'time': '08:15 AM',
+      },
+      {
+        'name': 'John Watson',
+        'role': 'Assistant Pharmacist',
+        'status': 'Absent',
+        'time': '-',
+      },
+      {
+        'name': 'Rose Tyler',
+        'role': 'Receptionist',
+        'status': 'Present',
+        'time': '08:00 AM',
+      },
     ];
 
     return CustomScaffold(
@@ -64,7 +94,10 @@ class AdminStaffAttendancePage extends StatelessWidget {
                       children: [
                         Text(
                           staff['name'],
-                          style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                          style: AppTextStyles.titleMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.sp,
+                          ),
                         ),
                         SizedBox(height: 4.h),
                         Text("Role: ${staff['role']}"),
@@ -74,7 +107,10 @@ class AdminStaffAttendancePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: statusColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6.r),

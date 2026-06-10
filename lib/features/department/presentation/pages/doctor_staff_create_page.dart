@@ -57,8 +57,12 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
   String _generateUUID() {
     final random = Random();
     String hex(int length) {
-      return List.generate(length, (_) => random.nextInt(16).toRadixString(16)).join();
+      return List.generate(
+        length,
+        (_) => random.nextInt(16).toRadixString(16),
+      ).join();
     }
+
     return '${hex(8)}-${hex(4)}-4${hex(3)}-${(random.nextInt(4) + 8).toRadixString(16)}${hex(3)}-${hex(12)}';
   }
 
@@ -72,13 +76,17 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
         listener: (context, state) {
           if (state is DoctorStaffActionSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("New ${widget.role.toUpperCase()} added successfully.")),
+              SnackBar(
+                content: Text(
+                  "New ${widget.role.toUpperCase()} added successfully.",
+                ),
+              ),
             );
             Navigator.pop(context, true);
           } else if (state is DoctorStaffError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: Form(
@@ -88,20 +96,27 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
             children: [
               Text(
                 "Department: ${widget.departmentName}",
-                style: AppTextStyles.titleMedium.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleMedium.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(height: 16.h),
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: "Full Name"),
-                validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                validator: (val) => val == null || val.isEmpty
+                    ? AppStrings.requiredField
+                    : null,
               ),
               SizedBox(height: 12.h),
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(labelText: "Email Address"),
-                validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                validator: (val) => val == null || val.isEmpty
+                    ? AppStrings.requiredField
+                    : null,
               ),
               SizedBox(height: 12.h),
               TextFormField(
@@ -129,31 +144,43 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
               if (isDoctor) ...[
                 TextFormField(
                   controller: _specializationController,
-                  decoration: const InputDecoration(labelText: "Specialization"),
-                  validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                  decoration: const InputDecoration(
+                    labelText: "Specialization",
+                  ),
+                  validator: (val) => val == null || val.isEmpty
+                      ? AppStrings.requiredField
+                      : null,
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _qualificationsController,
-                  decoration: const InputDecoration(labelText: "Qualifications"),
+                  decoration: const InputDecoration(
+                    labelText: "Qualifications",
+                  ),
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _feeController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Consultation Fee (₹)"),
+                  decoration: const InputDecoration(
+                    labelText: "Consultation Fee (₹)",
+                  ),
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _expController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Experience (Years)"),
+                  decoration: const InputDecoration(
+                    labelText: "Experience (Years)",
+                  ),
                 ),
               ] else ...[
                 TextFormField(
                   controller: _staffRoleController,
                   decoration: const InputDecoration(labelText: "Staff Role"),
-                  validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                  validator: (val) => val == null || val.isEmpty
+                      ? AppStrings.requiredField
+                      : null,
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
@@ -174,24 +201,41 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
                       profileCompletionStatus: true,
                       status: 'Available',
                       department: widget.departmentName,
-                      qualification: isDoctor ? _qualificationsController.text : null,
+                      qualification: isDoctor
+                          ? _qualificationsController.text
+                          : null,
                       gender: _gender,
-                      experience: isDoctor ? int.tryParse(_expController.text) : null,
-                      specialization: isDoctor ? _specializationController.text : null,
-                      consultationFee: isDoctor ? double.tryParse(_feeController.text) : null,
+                      experience: isDoctor
+                          ? int.tryParse(_expController.text)
+                          : null,
+                      specialization: isDoctor
+                          ? _specializationController.text
+                          : null,
+                      consultationFee: isDoctor
+                          ? double.tryParse(_feeController.text)
+                          : null,
                       staffRole: !isDoctor ? _staffRoleController.text : null,
-                      designation: !isDoctor ? _designationController.text : null,
+                      designation: !isDoctor
+                          ? _designationController.text
+                          : null,
                       availabilityStatus: 'Available',
                     );
-                    context.read<DoctorStaffBloc>().add(CreateDoctorStaffMember(newUser));
+                    context.read<DoctorStaffBloc>().add(
+                      CreateDoctorStaffMember(newUser),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   padding: EdgeInsets.symmetric(vertical: 16.h),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
                 ),
-                child: Text("Create ${widget.role.toUpperCase()}", style: const TextStyle(color: Colors.white)),
+                child: Text(
+                  "Create ${widget.role.toUpperCase()}",
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),

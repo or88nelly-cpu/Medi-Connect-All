@@ -48,10 +48,77 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
         .toList();
   }
 
+  void _showSelectDepartmentAndCreate(BuildContext context) {
+    final state = context.read<DepartmentBloc>().state;
+    List<String> list = [];
+    if (state is DepartmentsLoaded) {
+      list.addAll(state.sections.map((e) => e.name));
+      list.addAll(state.departments.map((e) => e.name));
+    }
+
+    if (list.isEmpty) {
+      list = [
+        'General Medicine',
+        'Cardiology',
+        'Neurology',
+        'Pediatrics',
+        'Emergency',
+        'OPD',
+      ];
+    }
+
+    String selectedDept = list.first;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text("Select Department"),
+          content: DropdownButton<String>(
+            value: selectedDept,
+            isExpanded: true,
+            items: list.map((d) {
+              return DropdownMenuItem(value: d, child: Text(d));
+            }).toList(),
+            onChanged: (val) {
+              if (val != null) setDialogState(() => selectedDept = val);
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                context
+                    .push(
+                      '/admin/doctor-staff/create',
+                      extra: {'role': 'doctor', 'department': selectedDept},
+                    )
+                    .then((value) {
+                      if (value == true) _refreshList();
+                    });
+              },
+              child: const Text("Next"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       customAppbar: const CommonAppBar(title: "Doctors Directory"),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showSelectDepartmentAndCreate(context),
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: const Text("Add Doctor", style: TextStyle(color: Colors.white)),
+        backgroundColor: AppColors.primary,
+      ),
       body: Padding(
         padding: EdgeInsets.all(20.r),
         child: Column(
@@ -87,9 +154,11 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                 if (state is DepartmentsLoaded) {
                   sections.addAll(state.sections.map((e) => e.name));
                 } else if (state is DepartmentActionSuccess) {
-                  sections.addAll(state.updatedDepartments
-                      .where((e) => !e.consultation)
-                      .map((e) => e.name));
+                  sections.addAll(
+                    state.updatedDepartments
+                        .where((e) => !e.consultation)
+                        .map((e) => e.name),
+                  );
                 }
 
                 return SizedBox(
@@ -114,8 +183,12 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                           },
                           selectedColor: AppColors.primary.withOpacity(0.2),
                           labelStyle: TextStyle(
-                            color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            color: isSelected
+                                ? AppColors.primary
+                                : AppColors.textSecondary,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                             fontSize: 12.sp,
                           ),
                         ),
@@ -141,17 +214,26 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                   }
 
                   final filtered = snapshot.data!.where((doc) {
-                    final matchesSearch = (doc.name ?? '').toLowerCase().contains(_searchQuery.toLowerCase()) ||
-                        (doc.specialization ?? '').toLowerCase().contains(_searchQuery.toLowerCase());
-                    
-                    final matchesSection = _selectedSection == 'All' || 
-                        (doc.department ?? '').toLowerCase() == _selectedSection.toLowerCase();
+                    final matchesSearch =
+                        (doc.name ?? '').toLowerCase().contains(
+                          _searchQuery.toLowerCase(),
+                        ) ||
+                        (doc.specialization ?? '').toLowerCase().contains(
+                          _searchQuery.toLowerCase(),
+                        );
+
+                    final matchesSection =
+                        _selectedSection == 'All' ||
+                        (doc.department ?? '').toLowerCase() ==
+                            _selectedSection.toLowerCase();
 
                     return matchesSearch && matchesSection;
                   }).toList();
 
                   if (filtered.isEmpty) {
-                    return const Center(child: Text("No matching doctors found."));
+                    return const Center(
+                      child: Text("No matching doctors found."),
+                    );
                   }
 
                   return ListView.builder(
@@ -168,27 +250,49 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                         child: ListTile(
                           contentPadding: EdgeInsets.all(12.r),
                           leading: CircleAvatar(
-                            backgroundColor: AppColors.secondary.withOpacity(0.1),
-                            child: Icon(Icons.local_hospital_outlined, color: AppColors.secondary),
+                            backgroundColor: AppColors.secondary.withOpacity(
+                              0.1,
+                            ),
+                            child: Icon(
+                              Icons.local_hospital_outlined,
+                              color: AppColors.secondary,
+                            ),
                           ),
                           title: Text(
                             doc.name ?? '',
-                            style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
                           ),
-                          subtitle: Text("${doc.specialization ?? 'General Medicine'} | Section: ${doc.department ?? 'None'}"),
+                          subtitle: Text(
+                            "${doc.specialization ?? 'General Medicine'} | Section: ${doc.department ?? 'None'}",
+                          ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.visibility_outlined, color: AppColors.primary),
+                                icon: const Icon(
+                                  Icons.visibility_outlined,
+                                  color: AppColors.primary,
+                                ),
                                 onPressed: () {
-                                  context.push('/admin/doctor-staff/detail', extra: doc);
+                                  context.push(
+                                    '/admin/doctor-staff/detail',
+                                    extra: doc,
+                                  );
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.edit_outlined, color: AppColors.warning),
+                                icon: const Icon(
+                                  Icons.edit_outlined,
+                                  color: AppColors.warning,
+                                ),
                                 onPressed: () async {
-                                  final res = await context.push('/admin/doctor-staff/edit', extra: doc);
+                                  final res = await context.push(
+                                    '/admin/doctor-staff/edit',
+                                    extra: doc,
+                                  );
                                   if (res == true) _refreshList();
                                 },
                               ),

@@ -11,11 +11,41 @@ class AdminLabsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> tests = [
-      {'id': 'LAB-492', 'patient': 'John Doe', 'test': 'Lipid Profile', 'status': 'Completed', 'priority': 'Normal'},
-      {'id': 'LAB-493', 'patient': 'Alice Smith', 'test': 'CBC & Hemoglobin', 'status': 'Pending', 'priority': 'High'},
-      {'id': 'LAB-494', 'patient': 'Robert Johnson', 'test': 'Thyroid Panel (T3, T4, TSH)', 'status': 'Completed', 'priority': 'Normal'},
-      {'id': 'LAB-495', 'patient': 'Emily Davis', 'test': 'Blood Sugar Fasting', 'status': 'Pending', 'priority': 'Critical'},
-      {'id': 'LAB-496', 'patient': 'David Miller', 'test': 'Kidney Function Test', 'status': 'Completed', 'priority': 'Normal'},
+      {
+        'id': 'LAB-492',
+        'patient': 'John Doe',
+        'test': 'Lipid Profile',
+        'status': 'Completed',
+        'priority': 'Normal',
+      },
+      {
+        'id': 'LAB-493',
+        'patient': 'Alice Smith',
+        'test': 'CBC & Hemoglobin',
+        'status': 'Pending',
+        'priority': 'High',
+      },
+      {
+        'id': 'LAB-494',
+        'patient': 'Robert Johnson',
+        'test': 'Thyroid Panel (T3, T4, TSH)',
+        'status': 'Completed',
+        'priority': 'Normal',
+      },
+      {
+        'id': 'LAB-495',
+        'patient': 'Emily Davis',
+        'test': 'Blood Sugar Fasting',
+        'status': 'Pending',
+        'priority': 'Critical',
+      },
+      {
+        'id': 'LAB-496',
+        'patient': 'David Miller',
+        'test': 'Kidney Function Test',
+        'status': 'Completed',
+        'priority': 'Normal',
+      },
     ];
 
     return CustomScaffold(
@@ -63,7 +93,10 @@ class AdminLabsPage extends StatelessWidget {
                       children: [
                         Text(
                           test['test'],
-                          style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 15.sp),
+                          style: AppTextStyles.titleMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15.sp,
+                          ),
                         ),
                         SizedBox(height: 4.h),
                         Text("Patient: ${test['patient']}"),
@@ -75,15 +108,22 @@ class AdminLabsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 4.h,
+                        ),
                         decoration: BoxDecoration(
-                          color: test['status'] == 'Completed' ? AppColors.success.withOpacity(0.1) : AppColors.warning.withOpacity(0.1),
+                          color: test['status'] == 'Completed'
+                              ? AppColors.success.withOpacity(0.1)
+                              : AppColors.warning.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           test['status'],
                           style: TextStyle(
-                            color: test['status'] == 'Completed' ? AppColors.success : AppColors.warning,
+                            color: test['status'] == 'Completed'
+                                ? AppColors.success
+                                : AppColors.warning,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.bold,
                           ),

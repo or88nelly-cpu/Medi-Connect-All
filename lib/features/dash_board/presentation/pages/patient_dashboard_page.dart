@@ -12,6 +12,7 @@ import 'package:medi_connect/core/utils/profile_image_helper.dart';
 import 'package:medi_connect/core/utils/constants/app_assets.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
@@ -443,7 +444,8 @@ class _PatientAppointmentsTab extends StatefulWidget {
   const _PatientAppointmentsTab();
 
   @override
-  State<_PatientAppointmentsTab> createState() => _PatientAppointmentsTabState();
+  State<_PatientAppointmentsTab> createState() =>
+      _PatientAppointmentsTabState();
 }
 
 class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
@@ -452,13 +454,13 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
       'doctor': 'Dr. Sarah Johnson',
       'specialty': 'Cardiologist',
       'time': 'June 12, 10:30 AM',
-      'type': 'Cardiology Clinic'
+      'type': 'Cardiology Clinic',
     },
     {
       'doctor': 'Dr. Michael Chen',
       'specialty': 'Neurologist',
       'time': 'June 15, 02:00 PM',
-      'type': 'Neurology Clinic'
+      'type': 'Neurology Clinic',
     },
   ];
 
@@ -496,10 +498,15 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
               ElevatedButton.icon(
                 onPressed: () => _showBookDoctorDialog(context),
                 icon: const Icon(Icons.search, color: Colors.white),
-                label: const Text("Book Doctor", style: TextStyle(color: Colors.white)),
+                label: const Text(
+                  "Book Doctor",
+                  style: TextStyle(color: Colors.white),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
                 ),
               ),
             ],
@@ -507,7 +514,9 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
           SizedBox(height: 16.h),
           Text(
             "My Scheduled Bookings",
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           Expanded(
@@ -530,11 +539,17 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
                     ),
                     title: Text(
                       apt['doctor']!,
-                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                     subtitle: Text("${apt['specialty']!} | ${apt['type']!}"),
                     trailing: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 4.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(6.r),
@@ -593,7 +608,9 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+                    } else if (snapshot.hasError ||
+                        !snapshot.hasData ||
+                        snapshot.data!.isEmpty) {
                       // Return a fallback list of doctors if database empty
                       return _buildFallbackDoctorsList(ctx);
                     }
@@ -672,17 +689,25 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
         contentPadding: EdgeInsets.all(16.r),
         leading: CircleAvatar(
           backgroundColor: AppColors.secondary.withOpacity(0.1),
-          child: Icon(Icons.local_hospital_outlined, color: AppColors.secondary),
+          child: Icon(
+            Icons.local_hospital_outlined,
+            color: AppColors.secondary,
+          ),
         ),
         title: Text(
           doc.name ?? 'Dr. Specialist',
-          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+          style: AppTextStyles.bodyMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: AppColors.textPrimary,
+          ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 2.h),
-            Text("${doc.specialization ?? 'General Medicine'} | Exp: ${doc.experience ?? 5} Yrs"),
+            Text(
+              "${doc.specialization ?? 'General Medicine'} | Exp: ${doc.experience ?? 5} Yrs",
+            ),
             Text("Fee: ₹ ${doc.consultationFee ?? 500}"),
           ],
         ),
@@ -693,7 +718,9 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.secondary,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.r)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6.r),
+            ),
           ),
           child: const Text("Book", style: TextStyle(color: Colors.white)),
         ),
@@ -706,7 +733,9 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text("Confirm Appointment", style: AppTextStyles.titleLarge),
-        content: Text("Do you want to book an appointment with ${doc.name}?\nConsultation Fee: ₹ ${doc.consultationFee ?? 500}"),
+        content: Text(
+          "Do you want to book an appointment with ${doc.name}?\nConsultation Fee: ₹ ${doc.consultationFee ?? 500}",
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -719,12 +748,16 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
                   'doctor': doc.name ?? 'Dr. Specialist',
                   'specialty': doc.specialization ?? 'General Medicine',
                   'time': 'June 18, 09:30 AM',
-                  'type': doc.department ?? 'General Clinic'
+                  'type': doc.department ?? 'General Clinic',
                 });
               });
               Navigator.pop(ctx);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Appointment booked with ${doc.name} successfully.")),
+                SnackBar(
+                  content: Text(
+                    "Appointment booked with ${doc.name} successfully.",
+                  ),
+                ),
               );
             },
             child: const Text("Confirm"),
@@ -744,9 +777,24 @@ class _PatientRecordsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> records = [
-      {'title': 'CBC Blood Test Report', 'date': 'June 08, 2026', 'type': 'Lab Report', 'doctor': 'Dr. Sarah Johnson'},
-      {'title': 'ECG Assessment Report', 'date': 'May 20, 2026', 'type': 'Lab Report', 'doctor': 'Dr. Sarah Johnson'},
-      {'title': 'Neurological Symptoms Assessment', 'date': 'May 12, 2026', 'type': 'Prescription', 'doctor': 'Dr. Michael Chen'},
+      {
+        'title': 'CBC Blood Test Report',
+        'date': 'June 08, 2026',
+        'type': 'Lab Report',
+        'doctor': 'Dr. Sarah Johnson',
+      },
+      {
+        'title': 'ECG Assessment Report',
+        'date': 'May 20, 2026',
+        'type': 'Lab Report',
+        'doctor': 'Dr. Sarah Johnson',
+      },
+      {
+        'title': 'Neurological Symptoms Assessment',
+        'date': 'May 12, 2026',
+        'type': 'Prescription',
+        'doctor': 'Dr. Michael Chen',
+      },
     ];
 
     return Padding(
@@ -754,7 +802,10 @@ class _PatientRecordsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AppStrings.medicalRecords, style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            AppStrings.medicalRecords,
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Expanded(
             child: ListView.builder(
@@ -775,19 +826,27 @@ class _PatientRecordsTab extends StatelessWidget {
                     leading: Container(
                       padding: EdgeInsets.all(10.r),
                       decoration: BoxDecoration(
-                        color: (isLab ? AppColors.secondary : AppColors.accent).withOpacity(0.1),
+                        color: (isLab ? AppColors.secondary : AppColors.accent)
+                            .withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        isLab ? Icons.science_outlined : Icons.description_outlined,
+                        isLab
+                            ? Icons.science_outlined
+                            : Icons.description_outlined,
                         color: isLab ? AppColors.secondary : AppColors.accent,
                       ),
                     ),
                     title: Text(
                       rec['title']!,
-                      style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
-                    subtitle: Text("Doctor: ${rec['doctor']!} \nDate: ${rec['date']!}"),
+                    subtitle: Text(
+                      "Doctor: ${rec['doctor']!} \nDate: ${rec['date']!}",
+                    ),
                     trailing: const Icon(Icons.download_outlined),
                     isThreeLine: true,
                   ),
@@ -814,13 +873,13 @@ class _PatientChatTab extends StatelessWidget {
         'doctor': 'Dr. Sarah Johnson',
         'specialty': 'Cardiologist',
         'lastMsg': 'Your ECG looks normal, please continue the medication.',
-        'time': 'Yesterday'
+        'time': 'Yesterday',
       },
       {
         'doctor': 'Dr. Michael Chen',
         'specialty': 'Neurologist',
         'lastMsg': 'Let\'s schedule a checkup next week if headache persists.',
-        'time': '3 days ago'
+        'time': '3 days ago',
       },
     ];
 
@@ -829,7 +888,10 @@ class _PatientChatTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AppStrings.chat, style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp)),
+          Text(
+            AppStrings.chat,
+            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          ),
           SizedBox(height: 16.h),
           Expanded(
             child: ListView.builder(
@@ -854,7 +916,10 @@ class _PatientChatTab extends StatelessWidget {
                       children: [
                         Text(
                           ch['doctor']!,
-                          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                         Text(ch['time']!, style: AppTextStyles.bodySmall),
                       ],
@@ -863,8 +928,15 @@ class _PatientChatTab extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 2.h),
-                        Text(ch['specialty']!, style: const TextStyle(fontWeight: FontWeight.bold)),
-                        Text(ch['lastMsg']!, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        Text(
+                          ch['specialty']!,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          ch['lastMsg']!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     ),
                   ),
@@ -897,7 +969,9 @@ class _PatientProfileTab extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           email = user.email;
           phone = user.phoneNumber;
           profileImage = user.profileImage;
@@ -928,12 +1002,11 @@ class _PatientProfileTab extends StatelessWidget {
               SizedBox(height: 12.h),
               Text(
                 name,
-                style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleLarge.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              Text(
-                email,
-                style: AppTextStyles.bodyMedium,
-              ),
+              Text(email, style: AppTextStyles.bodyMedium),
               SizedBox(height: 24.h),
               Card(
                 elevation: 0,
@@ -943,11 +1016,23 @@ class _PatientProfileTab extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildInfoTile(Icons.phone_outlined, "Phone", phone ?? "Not Set"),
+                    _buildInfoTile(
+                      Icons.phone_outlined,
+                      "Phone",
+                      phone ?? "Not Set",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoTile(Icons.bloodtype_outlined, "Blood Group", bloodGroup),
+                    _buildInfoTile(
+                      Icons.bloodtype_outlined,
+                      "Blood Group",
+                      bloodGroup,
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoTile(Icons.warning_amber_rounded, "Allergies", allergies),
+                    _buildInfoTile(
+                      Icons.warning_amber_rounded,
+                      "Allergies",
+                      allergies,
+                    ),
                   ],
                 ),
               ),
@@ -955,11 +1040,12 @@ class _PatientProfileTab extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(LogoutRequested());
-                  },
+                  onPressed: () => _showLogoutDialog(context),
                   icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text("Sign Out", style: TextStyle(color: Colors.white)),
+                  label: const Text(
+                    "Sign Out",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.error,
                     padding: EdgeInsets.all(16.r),
@@ -973,6 +1059,19 @@ class _PatientProfileTab extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => ConfirmationDialog(
+        title: AppStrings.logout,
+        message: AppStrings.confirmSignOut,
+        onConfirm: () {
+          context.read<AuthBloc>().add(LogoutRequested());
+        },
+      ),
     );
   }
 

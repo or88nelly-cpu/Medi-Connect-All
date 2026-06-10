@@ -35,7 +35,10 @@ class UpdateDoctorStaffMember extends DoctorStaffEvent {
 class DeleteDoctorStaffMember extends DoctorStaffEvent {
   final String userId;
   final String departmentName;
-  const DeleteDoctorStaffMember({required this.userId, required this.departmentName});
+  const DeleteDoctorStaffMember({
+    required this.userId,
+    required this.departmentName,
+  });
 
   @override
   List<Object?> get props => [userId, departmentName];

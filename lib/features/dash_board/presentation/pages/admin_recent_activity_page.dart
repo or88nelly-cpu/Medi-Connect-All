@@ -11,13 +11,41 @@ class AdminRecentActivityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> logs = [
-      {'time': '10 mins ago', 'message': 'Dr. Sarah Chen updated patient medical record', 'category': 'Record'},
-      {'time': '32 mins ago', 'message': 'New patient registered: John Doe', 'category': 'Patient'},
-      {'time': '1 hour ago', 'message': 'Lab report uploaded for Cardiology department', 'category': 'Lab'},
-      {'time': '2 hours ago', 'message': 'Appointment booked with Dr. Sarah Chen', 'category': 'Appointment'},
-      {'time': '4 hours ago', 'message': 'Inventory reordered: Amoxicillin (50 units)', 'category': 'Pharmacy'},
-      {'time': '6 hours ago', 'message': 'Doctor schedule updated: Dr. James Wilson', 'category': 'Doctor'},
-      {'time': '1 day ago', 'message': 'Admin settings modified: Biometrics enabled', 'category': 'System'},
+      {
+        'time': '10 mins ago',
+        'message': 'Dr. Sarah Chen updated patient medical record',
+        'category': 'Record',
+      },
+      {
+        'time': '32 mins ago',
+        'message': 'New patient registered: John Doe',
+        'category': 'Patient',
+      },
+      {
+        'time': '1 hour ago',
+        'message': 'Lab report uploaded for Cardiology department',
+        'category': 'Lab',
+      },
+      {
+        'time': '2 hours ago',
+        'message': 'Appointment booked with Dr. Sarah Chen',
+        'category': 'Appointment',
+      },
+      {
+        'time': '4 hours ago',
+        'message': 'Inventory reordered: Amoxicillin (50 units)',
+        'category': 'Pharmacy',
+      },
+      {
+        'time': '6 hours ago',
+        'message': 'Doctor schedule updated: Dr. James Wilson',
+        'category': 'Doctor',
+      },
+      {
+        'time': '1 day ago',
+        'message': 'Admin settings modified: Biometrics enabled',
+        'category': 'System',
+      },
     ];
 
     return CustomScaffold(

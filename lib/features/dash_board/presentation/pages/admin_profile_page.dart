@@ -7,6 +7,7 @@ import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
+import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
 
 class AdminProfilePage extends StatelessWidget {
   const AdminProfilePage({super.key});
@@ -23,11 +24,15 @@ class AdminProfilePage extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           email = user.email;
           phone = user.phoneNumber;
           profileImage = user.profileImage;
-          accessLevel = user.accessLevel ?? (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
+          accessLevel =
+              user.accessLevel ??
+              (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
         }
 
         return SingleChildScrollView(
@@ -61,15 +66,17 @@ class AdminProfilePage extends StatelessWidget {
                     SizedBox(height: 12.h),
                     Text(
                       name,
-                      style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+                      style: AppTextStyles.titleLarge.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Text(
-                      email,
-                      style: AppTextStyles.bodyMedium,
-                    ),
+                    Text(email, style: AppTextStyles.bodyMedium),
                     SizedBox(height: 8.h),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 4.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20.r),
@@ -95,11 +102,23 @@ class AdminProfilePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildInfoTile(Icons.phone_outlined, "Phone", phone ?? "Not Set"),
+                    _buildInfoTile(
+                      Icons.phone_outlined,
+                      "Phone",
+                      phone ?? "Not Set",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoTile(Icons.badge_outlined, "Employee ID", "EMP-ADMIN-01"),
+                    _buildInfoTile(
+                      Icons.badge_outlined,
+                      "Employee ID",
+                      "EMP-ADMIN-01",
+                    ),
                     const Divider(color: AppColors.border, height: 1),
-                    _buildInfoTile(Icons.calendar_month_outlined, "Joining Date", "Jan 15, 2025"),
+                    _buildInfoTile(
+                      Icons.calendar_month_outlined,
+                      "Joining Date",
+                      "Jan 15, 2025",
+                    ),
                   ],
                 ),
               ),
@@ -107,11 +126,12 @@ class AdminProfilePage extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(LogoutRequested());
-                  },
+                  onPressed: () => _showLogoutDialog(context),
                   icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text("Sign Out", style: TextStyle(color: Colors.white)),
+                  label: const Text(
+                    "Sign Out",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.error,
                     padding: EdgeInsets.all(16.r),
@@ -125,6 +145,19 @@ class AdminProfilePage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => ConfirmationDialog(
+        title: AppStrings.logout,
+        message: AppStrings.confirmSignOut,
+        onConfirm: () {
+          context.read<AuthBloc>().add(LogoutRequested());
+        },
+      ),
     );
   }
 

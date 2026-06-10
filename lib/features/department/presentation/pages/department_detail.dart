@@ -50,14 +50,25 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      customAppbar: CommonAppBar(
-        title: widget.department.name,
+      customAppbar: CommonAppBar(title: widget.department.name),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final res = await context.push(
+            '/admin/doctor-staff/create',
+            extra: {'role': 'staff', 'department': widget.department.name},
+          );
+          if (res == true) _refreshStaff();
+        },
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: const Text("Add Staff", style: TextStyle(color: Colors.white)),
+        backgroundColor: AppColors.primary,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Department Banner Image (collapsible/static header)
-          if (widget.department.imageUrl != null && widget.department.imageUrl!.isNotEmpty)
+          if (widget.department.imageUrl != null &&
+              widget.department.imageUrl!.isNotEmpty)
             CustomImageView(
               imagePath: widget.department.imageUrl!,
               width: double.infinity,
@@ -91,7 +102,10 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
               children: [
                 Text(
                   "Department Staff",
-                  style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                  ),
                 ),
                 SizedBox(height: 8.h),
                 // Search Bar
@@ -124,7 +138,9 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                     return Center(
                       child: Text(
                         "Error: ${snapshot.error}",
-                        style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: AppColors.error,
+                        ),
                       ),
                     );
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -137,8 +153,13 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                   }
 
                   final filtered = snapshot.data!.where((stf) {
-                    final matchesSearch = (stf.name ?? '').toLowerCase().contains(_searchQuery.toLowerCase()) ||
-                        (stf.staffRole ?? '').toLowerCase().contains(_searchQuery.toLowerCase());
+                    final matchesSearch =
+                        (stf.name ?? '').toLowerCase().contains(
+                          _searchQuery.toLowerCase(),
+                        ) ||
+                        (stf.staffRole ?? '').toLowerCase().contains(
+                          _searchQuery.toLowerCase(),
+                        );
                     return matchesSearch;
                   }).toList();
 
@@ -166,26 +187,44 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                           contentPadding: EdgeInsets.all(12.r),
                           leading: CircleAvatar(
                             backgroundColor: AppColors.accent.withOpacity(0.1),
-                            child: Icon(Icons.badge_outlined, color: AppColors.accent),
+                            child: Icon(
+                              Icons.badge_outlined,
+                              color: AppColors.accent,
+                            ),
                           ),
                           title: Text(
                             stf.name ?? '',
-                            style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
                           ),
                           subtitle: Text(stf.staffRole ?? 'Support Staff'),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.visibility_outlined, color: AppColors.primary),
+                                icon: const Icon(
+                                  Icons.visibility_outlined,
+                                  color: AppColors.primary,
+                                ),
                                 onPressed: () {
-                                  context.push('/admin/doctor-staff/detail', extra: stf);
+                                  context.push(
+                                    '/admin/doctor-staff/detail',
+                                    extra: stf,
+                                  );
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.edit_outlined, color: AppColors.warning),
+                                icon: const Icon(
+                                  Icons.edit_outlined,
+                                  color: AppColors.warning,
+                                ),
                                 onPressed: () async {
-                                  final res = await context.push('/admin/doctor-staff/edit', extra: stf);
+                                  final res = await context.push(
+                                    '/admin/doctor-staff/edit',
+                                    extra: stf,
+                                  );
                                   if (res == true) _refreshStaff();
                                 },
                               ),

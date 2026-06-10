@@ -15,7 +15,7 @@ class AdminBillingPage extends StatelessWidget {
         'amount': '₹ 1,500.00',
         'status': 'Paid',
         'date': 'June 10, 2026',
-        'method': 'UPI'
+        'method': 'UPI',
       },
       {
         'id': 'INV-1025',
@@ -23,7 +23,7 @@ class AdminBillingPage extends StatelessWidget {
         'amount': '₹ 800.00',
         'status': 'Pending',
         'date': 'June 10, 2026',
-        'method': 'Card'
+        'method': 'Card',
       },
       {
         'id': 'INV-1026',
@@ -31,7 +31,7 @@ class AdminBillingPage extends StatelessWidget {
         'amount': '₹ 2,400.00',
         'status': 'Paid',
         'date': 'June 09, 2026',
-        'method': 'Cash'
+        'method': 'Cash',
       },
       {
         'id': 'INV-1027',
@@ -39,7 +39,7 @@ class AdminBillingPage extends StatelessWidget {
         'amount': '₹ 500.00',
         'status': 'Failed',
         'date': 'June 09, 2026',
-        'method': 'Net Banking'
+        'method': 'Net Banking',
       },
     ];
 
@@ -64,7 +64,9 @@ class AdminBillingPage extends StatelessWidget {
           SizedBox(height: 24.h),
           Text(
             "Recent Invoices",
-            style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 12.h),
           ListView.builder(
@@ -118,10 +120,7 @@ class AdminBillingPage extends StatelessWidget {
                             ),
                             SizedBox(height: 4.h),
                             Text("Invoice: ${inv['id']!} | ${inv['method']!}"),
-                            Text(
-                              inv['date']!,
-                              style: AppTextStyles.bodySmall,
-                            ),
+                            Text(inv['date']!, style: AppTextStyles.bodySmall),
                           ],
                         ),
                       ),
@@ -138,7 +137,10 @@ class AdminBillingPage extends StatelessWidget {
                           ),
                           SizedBox(height: 4.h),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 6.w,
+                              vertical: 2.h,
+                            ),
                             decoration: BoxDecoration(
                               color: statusColor.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(4.r),
@@ -179,7 +181,9 @@ class AdminBillingPage extends StatelessWidget {
           children: [
             Text(
               title,
-              style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
             SizedBox(height: 4.h),
             Text(

@@ -8,9 +8,8 @@ class DepartmentModel extends DepartmentEntity {
     super.description,
     super.imageUrl,
     required super.createdAt,
-    required super.consultation
+    required super.consultation,
   });
-
 
   factory DepartmentModel.fromJson(Map<String, dynamic> json) {
     return DepartmentModel(
@@ -21,7 +20,7 @@ class DepartmentModel extends DepartmentEntity {
       createdAt:
           DateTime.tryParse(json['created_at'] as String? ?? "") ??
           DateTime.now(),
-      consultation: json['consultation'] as bool? ??false
+      consultation: json['consultation'] as bool? ?? false,
     );
   }
 
@@ -42,7 +41,7 @@ class DepartmentModel extends DepartmentEntity {
       description: entity.description,
       imageUrl: entity.imageUrl,
       createdAt: entity.createdAt,
-      consultation: entity.consultation
+      consultation: entity.consultation,
     );
   }
 }
