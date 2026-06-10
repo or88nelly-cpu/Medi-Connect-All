@@ -77,6 +77,51 @@ class AdminDrawer extends StatelessWidget {
                 ),
                 _buildDrawerItem(
                   context,
+                  icon: Icons.medication_outlined,
+                  title: "Pharmacy Stocks",
+                  onTap: () {
+                    context.pop();
+                    context.push('/admin/pharmacy');
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.science_outlined,
+                  title: "Laboratory",
+                  onTap: () {
+                    context.pop();
+                    context.push('/admin/labs');
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.co_present_outlined,
+                  title: "Staff Attendance Logs",
+                  onTap: () {
+                    context.pop();
+                    context.push('/admin/staff-attendance');
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.history_toggle_off_outlined,
+                  title: "Recent Activity Logs",
+                  onTap: () {
+                    context.pop();
+                    context.push('/admin/recent-activity');
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.warning_amber_rounded,
+                  title: "Active Emergencies",
+                  onTap: () {
+                    context.pop();
+                    context.push('/admin/emergencies');
+                  },
+                ),
+                _buildDrawerItem(
+                  context,
                   icon: Icons.analytics_outlined,
                   title: "Audit Logs",
                   onTap: () {

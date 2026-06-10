@@ -21,13 +21,17 @@ import 'package:medi_connect/features/dash_board/domain/use_cases/admin_analytic
 import 'package:medi_connect/features/dash_board/domain/use_cases/get_analytics_usecase.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_analytics_bloc.dart';
 import 'package:medi_connect/features/department/data/datasource/department_remote_datasource.dart';
+import 'package:medi_connect/features/department/data/datasource/doctor_staff_remote_datasource.dart';
 import 'package:medi_connect/features/department/data/repository/department_repository_impl.dart';
+import 'package:medi_connect/features/department/data/repository/doctor_staff_repository_impl.dart';
 import 'package:medi_connect/features/department/domain/repositories/department_repository.dart';
+import 'package:medi_connect/features/department/domain/repositories/doctor_staff_repository.dart';
 import 'package:medi_connect/features/department/domain/use_cases/add_department_usecase.dart';
 import 'package:medi_connect/features/department/domain/use_cases/delete_department_usecase.dart';
 import 'package:medi_connect/features/department/domain/use_cases/get_departments_usecase.dart';
 import 'package:medi_connect/features/department/domain/use_cases/update_department_usecase.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -122,11 +126,21 @@ void configureDepartmentDependencies(GetIt sl) {
       () => DepartmentRemoteDataSourceImpl(sl<SupabaseService>()),
     );
   }
+  if (!sl.isRegistered<DoctorStaffRemoteDataSource>()) {
+    sl.registerLazySingleton<DoctorStaffRemoteDataSource>(
+      () => DoctorStaffRemoteDataSourceImpl(sl<SupabaseService>()),
+    );
+  }
 
   // Repository
   if (!sl.isRegistered<DepartmentRepository>()) {
     sl.registerLazySingleton<DepartmentRepository>(
       () => DepartmentRepositoryImpl(sl<DepartmentRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<DoctorStaffRepository>()) {
+    sl.registerLazySingleton<DoctorStaffRepository>(
+      () => DoctorStaffRepositoryImpl(sl<DoctorStaffRemoteDataSource>()),
     );
   }
 
@@ -164,6 +178,11 @@ void configureDepartmentDependencies(GetIt sl) {
         updateDepartment: sl<UpdateDepartmentUseCase>(),
         deleteDepartment: sl<DeleteDepartmentUseCase>(),
       ),
+    );
+  }
+  if (!sl.isRegistered<DoctorStaffBloc>()) {
+    sl.registerFactory<DoctorStaffBloc>(
+      () => DoctorStaffBloc(sl<DoctorStaffRepository>()),
     );
   }
 }

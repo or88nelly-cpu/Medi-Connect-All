@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_analytics_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 
 class AppProviders {
   static List<BlocProvider> getProviders() {
@@ -13,6 +14,7 @@ class AppProviders {
         create: (_) => sl<DashboardAnalyticsBloc>(),
       ),
       BlocProvider<DepartmentBloc>(create: (_) => sl<DepartmentBloc>()),
+      BlocProvider<DoctorStaffBloc>(create: (_) => sl<DoctorStaffBloc>()),
     ];
   }
 }

@@ -80,6 +80,64 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
         'onlineConsultations': onlineConsultations,
         'totalRevenue': totalRevenue,
         'departmentStats': deptStats,
+        'pharmacySummary': {
+          'totalMedicines': 420,
+          'lowStock': 8,
+          'outOfStock': 3,
+          'pendingOrders': 14,
+        },
+        'labSummary': {
+          'totalTests': 185,
+          'pending': 12,
+          'completed': 168,
+          'criticalAlerts': 5,
+        },
+        'staffAttendance': {
+          'total': totalStaff > 0 ? totalStaff : 15,
+          'present': (totalStaff > 0 ? totalStaff * 0.8 : 12).round(),
+          'absent': (totalStaff > 0 ? totalStaff * 0.1 : 1).round(),
+          'onLeave': (totalStaff > 0 ? totalStaff * 0.1 : 2).round(),
+        },
+        'recentActivities': [
+          {
+            'id': '1',
+            'time': '10m ago',
+            'message': 'Dr. Sarah Chen updated patient medical record',
+            'category': 'Record',
+          },
+          {
+            'id': '2',
+            'time': '32m ago',
+            'message': 'New patient registered: John Doe',
+            'category': 'Patient',
+          },
+          {
+            'id': '3',
+            'time': '1h ago',
+            'message': 'Lab report uploaded for Cardiology department',
+            'category': 'Lab',
+          },
+          {
+            'id': '4',
+            'time': '2h ago',
+            'message': 'Appointment booked with Dr. Sarah Chen',
+            'category': 'Appointment',
+          },
+        ],
+        'emergencyAlerts': [
+          {
+            'id': '1',
+            'message': 'Code Blue in Emergency Ward - Room 108',
+            'level': 'Critical',
+            'time': '2m ago',
+          },
+          {
+            'id': '2',
+            'message': 'Intense Patient Influx in ICU - Staff assistance requested',
+            'level': 'High',
+            'time': '15m ago',
+          },
+        ],
       };
     } catch (e) {
       throw ServerException(e.toString());

@@ -7,6 +7,11 @@ import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_analytics_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/dashboard_home_admin.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_appointments_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_patients_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_billing_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_settings_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_profile_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/admin_dashboard/admin_appbar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/admin_drawer.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/admin_bottom_nav_bar.dart';
@@ -44,7 +49,17 @@ class _DashboardPageState extends State<DashboardPage> {
               appBarNeeded: true,
               customAppbar: AdminAppbar(isDashoard: currentIndex == 0),
               drawer: AdminDrawer(),
-              body: _getPage(currentIndex),
+              body: IndexedStack(
+                index: currentIndex,
+                children: [
+                  const DashboardHomeAdmin(),
+                  const AdminAppointmentsPage(),
+                  const AdminPatientsPage(),
+                  const AdminBillingPage(),
+                  const AdminSettingsPage(),
+                  const AdminProfilePage(),
+                ],
+              ),
               bottomNavigationBar: AdminBottomNavBar(
                 currentIndex: currentIndex,
                 onTap: (i) => context.read<DashboardTabCubit>().setTab(i),
@@ -54,14 +69,5 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
     );
-  }
-
-  Widget _getPage(int index) {
-    switch (index) {
-      case 0:
-        return const DashboardHomeAdmin();
-      default:
-        return Container();
-    }
   }
 }
