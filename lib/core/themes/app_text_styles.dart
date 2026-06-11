@@ -78,5 +78,44 @@ class AppTextStyles {
     color: AppColors.textPrimary,
   );
 
+  // Terminal theme styles
+  static TextStyle get terminalHeadingLarge => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s32,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle get terminalHeadingMedium => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s24,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle get terminalMonospace => const TextStyle(
+    fontFamily: 'monospace',
+  );
+
+  static TextStyle get terminalMonospaceLabel => TextStyle(
+    fontFamily: 'monospace',
+    fontSize: s12,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 0.5,
+  );
+
+  static TextStyle get terminalBodyLarge => TextStyle(
+    fontFamily: 'monospace',
+    fontSize: s16,
+  );
+
+  static TextStyle get terminalBodyMedium => TextStyle(
+    fontFamily: 'monospace',
+    fontSize: s14,
+  );
+
+  static TextStyle get terminalBodySmall => TextStyle(
+    fontFamily: 'monospace',
+    fontSize: s12,
+  );
+
   AppTextStyles._();
 }
