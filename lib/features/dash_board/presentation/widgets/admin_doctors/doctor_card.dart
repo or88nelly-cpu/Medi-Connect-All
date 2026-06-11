@@ -13,12 +13,14 @@ class DoctorCard extends StatelessWidget {
     required this.onTap,
     required this.onView,
     required this.onEdit,
+    this.onDelete,
   });
 
   final UserModel doc;
   final VoidCallback onTap;
   final VoidCallback onView;
   final VoidCallback onEdit;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +118,8 @@ class DoctorCard extends StatelessWidget {
                         onView();
                       } else if (action == 'edit') {
                         onEdit();
+                      } else if (action == 'delete') {
+                        onDelete?.call();
                       }
                     },
                     itemBuilder: (ctx) => [
@@ -127,6 +131,11 @@ class DoctorCard extends StatelessWidget {
                         value: 'edit',
                         child: Text("Edit Doctor", style: TextStyle(color: textColor)),
                       ),
+                      if (onDelete != null)
+                        PopupMenuItem(
+                          value: 'delete',
+                          child: Text("Delete", style: TextStyle(color: AppColors.error)),
+                        ),
                     ],
                   ),
                 ],

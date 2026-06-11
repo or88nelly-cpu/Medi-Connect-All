@@ -13,12 +13,14 @@ class StaffCard extends StatelessWidget {
     required this.onTap,
     required this.onView,
     required this.onEdit,
+    this.onDelete,
   });
 
   final UserModel stf;
   final VoidCallback onTap;
   final VoidCallback onView;
   final VoidCallback onEdit;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +117,8 @@ class StaffCard extends StatelessWidget {
                         onView();
                       } else if (action == 'edit') {
                         onEdit();
+                      } else if (action == 'delete') {
+                        onDelete?.call();
                       }
                     },
                     itemBuilder: (ctx) => [
@@ -126,6 +130,11 @@ class StaffCard extends StatelessWidget {
                         value: 'edit',
                         child: Text("Edit Staff", style: TextStyle(color: textColor)),
                       ),
+                      if (onDelete != null)
+                        PopupMenuItem(
+                          value: 'delete',
+                          child: Text("Delete", style: TextStyle(color: AppColors.error)),
+                        ),
                     ],
                   ),
                 ],
