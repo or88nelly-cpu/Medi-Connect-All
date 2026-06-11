@@ -17,8 +17,12 @@ class AdminDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final drawerBg = isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg;
+    final dividerColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+
     return Drawer(
-      backgroundColor: AppColors.background,
+      backgroundColor: drawerBg,
       child: Column(
         children: [
           _buildHeader(context),
@@ -35,8 +39,8 @@ class AdminDrawer extends StatelessWidget {
                     context.pop();
                   },
                 ),
-                const Divider(color: AppColors.border),
-                _buildSectionHeader("Management"),
+                Divider(color: dividerColor),
+                _buildSectionHeader(context, "Management"),
                 _buildDrawerItem(
                   context,
                   icon: Icons.local_hospital_outlined,
@@ -64,8 +68,8 @@ class AdminDrawer extends StatelessWidget {
                     context.push('/admin/patients');
                   },
                 ),
-                const Divider(color: AppColors.border),
-                _buildSectionHeader("Operations"),
+                Divider(color: dividerColor),
+                _buildSectionHeader(context, "Operations"),
                 _buildDrawerItem(
                   context,
                   icon: Icons.calendar_month_outlined,
@@ -147,8 +151,8 @@ class AdminDrawer extends StatelessWidget {
                     context.push('/admin/master-data');
                   },
                 ),
-                const Divider(color: AppColors.border),
-                _buildSectionHeader("Account"),
+                Divider(color: dividerColor),
+                _buildSectionHeader(context, "Account"),
                 _buildDrawerItem(
                   context,
                   icon: Icons.person_outline,
@@ -178,6 +182,17 @@ class AdminDrawer extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final headerGradients = isDark
+        ? [AppColors.terminalDarkBgGrad1, AppColors.terminalDarkBgGrad2]
+        : [AppColors.terminalLightBgGrad1, AppColors.terminalLightBgGrad2];
+
+    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final subColor = isDark ? Colors.white70 : AppColors.terminalLightLabel;
+    final iconColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final borderCol = isDark ? AppColors.terminalAccentCyan.withOpacity(0.5) : AppColors.primary.withOpacity(0.3);
+
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         String name = "Administrator";
@@ -199,8 +214,6 @@ class AdminDrawer extends StatelessWidget {
               (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
         }
 
-        final initials = name.isNotEmpty ? name[0].toUpperCase() : "A";
-
         return Container(
           width: double.infinity,
           padding: EdgeInsets.only(
@@ -209,9 +222,9 @@ class AdminDrawer extends StatelessWidget {
             right: 20.w,
             bottom: 20.h,
           ),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: AppColors.adminGradient,
+              colors: headerGradients,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -226,7 +239,7 @@ class AdminDrawer extends StatelessWidget {
                     height: 60.r,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white24, width: 2),
+                      border: Border.all(color: borderCol, width: 2),
                     ),
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(
@@ -239,7 +252,7 @@ class AdminDrawer extends StatelessWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.edit_outlined, color: Colors.white),
+                    icon: Icon(Icons.edit_outlined, color: iconColor),
                     onPressed: () {
                       context.read<DashboardTabCubit>().setTab(4);
                       context.pop();
@@ -251,7 +264,7 @@ class AdminDrawer extends StatelessWidget {
               Text(
                 name,
                 style: AppTextStyles.titleLarge.copyWith(
-                  color: Colors.white,
+                  color: textColor,
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,
@@ -259,7 +272,7 @@ class AdminDrawer extends StatelessWidget {
               ),
               Text(
                 email,
-                style: AppTextStyles.bodySmall.copyWith(color: Colors.white70),
+                style: AppTextStyles.bodySmall.copyWith(color: subColor),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -267,13 +280,13 @@ class AdminDrawer extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: Colors.white24,
+                  color: isDark ? Colors.white12 : Colors.black12,
                   borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Text(
                   accessLevel,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white,
+                    color: textColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -285,13 +298,16 @@ class AdminDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(BuildContext context, String title) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       child: Text(
         title.toUpperCase(),
         style: AppTextStyles.bodySmall.copyWith(
-          color: AppColors.textSecondary,
+          color: labelColor,
           fontWeight: FontWeight.bold,
           letterSpacing: 1.1,
         ),
@@ -307,16 +323,20 @@ class AdminDrawer extends StatelessWidget {
     Color? iconColor,
     Color? textColor,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final defaultTextColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final defaultLabelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
     return ListTile(
       leading: Icon(
         icon,
-        color: iconColor ?? AppColors.textPrimary,
+        color: iconColor ?? defaultLabelColor,
         size: 22.r,
       ),
       title: Text(
         title,
         style: AppTextStyles.bodyMedium.copyWith(
-          color: textColor ?? AppColors.textPrimary,
+          color: textColor ?? defaultTextColor,
           fontWeight: FontWeight.w600,
         ),
       ),

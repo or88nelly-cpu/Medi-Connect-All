@@ -168,9 +168,10 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                     setState(() {
                                       _selectedSection = section;
                                     });
+                                    context.read<DoctorStaffBloc>().add(LoadDoctorStaff(section));
                                   }
                                 },
-                                selectedColor: AppColors.primary.withOpacity(0.2),
+                                selectedColor: AppColors.primary.withValues(alpha: 0.2),
                                 labelStyle: TextStyle(
                                   color: isSelected
                                       ? AppColors.primary
@@ -245,9 +246,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                               child: ListTile(
                                 contentPadding: EdgeInsets.all(12.r),
                                 leading: CircleAvatar(
-                                  backgroundColor: AppColors.secondary.withOpacity(
-                                    0.1,
-                                  ),
+                                  backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
                                   child: Icon(
                                     Icons.local_hospital_outlined,
                                     color: AppColors.secondary,

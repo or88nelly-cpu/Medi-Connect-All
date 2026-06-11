@@ -346,5 +346,32 @@ class AppStrings {
   static const secureEncryptedEnv = "SECURE END-TO-END ENCRYPTED ENVIRONMENT";
   static const hipaaAgreementError = "Please agree to the HIPAA Compliance Terms & Privacy Protocol to continue.";
 
+  // New dashboard and operations strings
+  static const realTime = "REAL-TIME";
+  static const runAll = "Run All";
+  static const inStock = "IN STOCK";
+  static const expired = "EXPIRED";
+  static const outOfStock = "OUT OF STOCK";
+  static const totalTests = "TOTAL TESTS";
+  static const pending = "PENDING";
+  static const criticalAlerts = "CRITICAL ALERTS";
+  static const capacityUtilization = "Capacity utilization by department";
+  static const totalThisWeek = "Total this week";
+  static const weeklyConsultationAppointments = "Weekly consultation appointments count trend";
+  static const appointmentSummaryGraph = "Appointment Summary Graph";
+  static const pharmacySummary = "Pharmacy Summary";
+  static const recentActivity = "Recent Activity";
+  static const quickActions = "Quick Actions";
+  static const emergencyAlertCodeRed = "EMERGENCY ALERT: CODE RED";
+  static const emergencyAlertDesc = "Emergency Ward • Room 502 • Triggered 7m ago";
+  static const deptTuning = "DEPT TUNING";
+  static const deptTuningDesc = "Adjust parameters of active clinics.";
+  static const maintenance = "MAINTENANCE";
+  static const maintenanceDesc = "Data backups & server health status.";
+
+  static const present = "Present";
+  static const absent = "Absent";
+  static const onLeave = "On Leave";
+
   AppStrings._();
 }
