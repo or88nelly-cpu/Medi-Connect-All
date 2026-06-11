@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/common_widgets/common_app_bar.dart';
 import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
@@ -12,6 +11,8 @@ import 'package:medi_connect/features/department/presentation/bloc/department_bl
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
+import 'package:medi_connect/core/utils/profile_image_helper.dart';
 
 class AdminDoctorsPage extends StatefulWidget {
   const AdminDoctorsPage({super.key});
@@ -21,14 +22,23 @@ class AdminDoctorsPage extends StatefulWidget {
 }
 
 class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
-  String _searchQuery = '';
-  String _selectedSection = 'All';
+  final ValueNotifier<String> _searchNotifier = ValueNotifier<String>('');
+  final ValueNotifier<String> _selectedSectionNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(1);
+  final int _itemsPerPage = 5;
 
   @override
   void initState() {
     super.initState();
-    // Ensure departments/sections are loaded
     context.read<DepartmentBloc>().add(const LoadDepartments());
+  }
+
+  @override
+  void dispose() {
+    _searchNotifier.dispose();
+    _selectedSectionNotifier.dispose();
+    _currentPageNotifier.dispose();
+    super.dispose();
   }
 
   void _showSelectDepartmentAndCreate(BuildContext context) {
@@ -40,14 +50,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
     }
 
     if (list.isEmpty) {
-      list = [
-        'General Medicine',
-        'Cardiology',
-        'Neurology',
-        'Pediatrics',
-        'Emergency',
-        'OPD',
-      ];
+      list = ['General Medicine', 'Cardiology', 'Neurology', 'Pediatrics', 'Emergency', 'OPD'];
     }
 
     String selectedDept = list.first;
@@ -96,212 +99,375 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
+    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
     return BlocProvider(
       create: (context) => GetIt.I<DoctorStaffBloc>()..add(const LoadDoctorStaff('All')),
       child: Builder(
         builder: (context) {
           return CustomScaffold(
-            customAppbar: const CommonAppBar(title: "Doctors Directory"),
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => _showSelectDepartmentAndCreate(context),
-              icon: const Icon(Icons.add, color: Colors.white),
-              label: const Text("Add Doctor", style: TextStyle(color: Colors.white)),
-              backgroundColor: AppColors.primary,
-            ),
-            body: Padding(
-              padding: EdgeInsets.all(20.r),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Search Bar
-                  TextField(
-                    onChanged: (val) => setState(() => _searchQuery = val),
-                    decoration: InputDecoration(
-                      hintText: "Search doctor by name or specialty...",
-                      prefixIcon: const Icon(Icons.search),
-                      contentPadding: EdgeInsets.all(12.r),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                        borderSide: const BorderSide(color: AppColors.border),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16.h),
-
-                  // Horizontal Sections
-                  Text(
-                    "Filter by Section",
-                    style: AppTextStyles.bodySmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  BlocBuilder<DepartmentBloc, DepartmentState>(
-                    builder: (context, state) {
-                      final List<String> sections = ['All'];
-                      if (state is DepartmentsLoaded) {
-                        sections.addAll(state.sections.map((e) => e.name));
-                      } else if (state is DepartmentActionSuccess) {
-                        sections.addAll(
-                          state.updatedDepartments
-                              .where((e) => !e.consultation)
-                              .map((e) => e.name),
-                        );
-                      }
-
-                      return SizedBox(
-                        height: 38.h,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: sections.length,
-                          itemBuilder: (context, idx) {
-                            final section = sections[idx];
-                            final isSelected = _selectedSection == section;
-                            return Padding(
-                              padding: EdgeInsets.only(right: 8.w),
-                              child: ChoiceChip(
-                                label: Text(section),
-                                selected: isSelected,
-                                onSelected: (selected) {
-                                  if (selected) {
-                                    setState(() {
-                                      _selectedSection = section;
-                                    });
-                                    context.read<DoctorStaffBloc>().add(LoadDoctorStaff(section));
-                                  }
-                                },
-                                selectedColor: AppColors.primary.withValues(alpha: 0.2),
-                                labelStyle: TextStyle(
-                                  color: isSelected
-                                      ? AppColors.primary
-                                      : AppColors.textSecondary,
-                                  fontWeight: isSelected
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                  fontSize: 12.sp,
-                                ),
+            appBarNeeded: false,
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 1. Custom Header
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Doctors",
+                              style: AppTextStyles.titleLarge.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: textColor,
+                                fontSize: 24.sp,
                               ),
-                            );
-                          },
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              "Manage and view all doctors",
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: labelColor,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 16.h),
+                        Row(
+                          children: [
+                            _buildRoundHeaderButton(Icons.search, () {}),
+                            SizedBox(width: 8.w),
+                            _buildRoundHeaderButton(Icons.filter_list, () {}),
+                            SizedBox(width: 8.w),
+                            _buildRoundHeaderButton(Icons.more_vert, () {}),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
 
-                  // Doctors List
-                  Expanded(
-                    child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
+                    // 2. Dropdowns Row
+                    BlocBuilder<DepartmentBloc, DepartmentState>(
                       builder: (context, state) {
-                        if (state is DoctorStaffLoading) {
-                          return const Center(child: CircularProgressIndicator());
-                        } else if (state is DoctorStaffError) {
-                          return Center(child: Text("Error: ${state.message}"));
+                        final List<String> sections = ['All'];
+                        if (state is DepartmentsLoaded) {
+                          sections.addAll(state.sections.map((e) => e.name));
                         }
 
-                        List<UserModel> doctorsList = [];
-                        if (state is DoctorStaffLoaded) {
-                          doctorsList = state.doctors;
-                        }
-
-                        if (doctorsList.isEmpty) {
-                          return const Center(child: Text("No doctors registered."));
-                        }
-
-                        final filtered = doctorsList.where((doc) {
-                          final matchesSearch =
-                              (doc.name ?? '').toLowerCase().contains(
-                                    _searchQuery.toLowerCase(),
-                                  ) ||
-                              (doc.specialization ?? '').toLowerCase().contains(
-                                    _searchQuery.toLowerCase(),
+                        return Row(
+                          children: [
+                            Expanded(
+                              flex: 4,
+                              child: ValueListenableBuilder<String>(
+                                valueListenable: _selectedSectionNotifier,
+                                builder: (context, selectedSection, _) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                    decoration: BoxDecoration(
+                                      color: cardBg,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      border: Border.all(color: borderColor, width: 1.2),
+                                    ),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        value: sections.contains(selectedSection) ? selectedSection : 'All',
+                                        icon: Icon(Icons.keyboard_arrow_down, color: labelColor),
+                                        isExpanded: true,
+                                        dropdownColor: cardBg,
+                                        items: sections.map((sec) {
+                                          return DropdownMenuItem(
+                                            value: sec,
+                                            child: Text(
+                                              sec == 'All' ? 'All Categories' : sec,
+                                              style: TextStyle(
+                                                color: textColor,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (val) {
+                                          if (val != null) {
+                                            _selectedSectionNotifier.value = val;
+                                            _currentPageNotifier.value = 1;
+                                            context.read<DoctorStaffBloc>().add(LoadDoctorStaff(val));
+                                          }
+                                        },
+                                      ),
+                                    ),
                                   );
-
-                          final matchesSection =
-                              _selectedSection == 'All' ||
-                              (doc.department ?? '').toLowerCase() ==
-                                  _selectedSection.toLowerCase();
-
-                          return matchesSearch && matchesSection;
-                        }).toList();
-
-                        if (filtered.isEmpty) {
-                          return const Center(
-                            child: Text("No matching doctors found."),
-                          );
-                        }
-
-                        return ListView.builder(
-                          itemCount: filtered.length,
-                          itemBuilder: (context, idx) {
-                            final doc = filtered[idx];
-                            return Card(
-                              margin: EdgeInsets.only(bottom: 12.h),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                                side: const BorderSide(color: AppColors.border),
+                                },
                               ),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.all(12.r),
-                                leading: CircleAvatar(
-                                  backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-                                  child: Icon(
-                                    Icons.local_hospital_outlined,
-                                    color: AppColors.secondary,
-                                  ),
-                                ),
-                                title: Text(
-                                  doc.name ?? '',
-                                  style: AppTextStyles.bodyMedium.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textPrimary,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  "${doc.specialization ?? 'General Medicine'} | Section: ${doc.department ?? 'None'}",
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.visibility_outlined,
-                                        color: AppColors.primary,
-                                      ),
-                                      onPressed: () {
-                                        context.push(
-                                          '/admin/doctor-staff/detail',
-                                          extra: doc,
-                                        );
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.edit_outlined,
-                                        color: AppColors.warning,
-                                      ),
-                                      onPressed: () async {
-                                        final res = await context.push(
-                                          '/admin/doctor-staff/edit',
-                                          extra: doc,
-                                        );
-                                        if (res == true && context.mounted) {
-                                          context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
+                            ),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              flex: 3,
+                              child: _buildFilterSortButton("Filters", Icons.tune, () {}),
+                            ),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              flex: 3,
+                              child: _buildFilterSortButton("Sort", Icons.swap_vert, () {}),
+                            ),
+                          ],
                         );
                       },
                     ),
-                  ),
-                ],
+                    SizedBox(height: 12.h),
+
+                    // 3. Search Bar
+                    Container(
+                      decoration: BoxDecoration(
+                        color: cardBg,
+                        borderRadius: BorderRadius.circular(8.r),
+                        border: Border.all(color: borderColor, width: 1.2),
+                      ),
+                      child: TextField(
+                        onChanged: (val) {
+                          _searchNotifier.value = val;
+                          _currentPageNotifier.value = 1;
+                        },
+                        style: TextStyle(color: textColor, fontSize: 13.sp),
+                        decoration: InputDecoration(
+                          hintText: "Search doctors by name, email or phone...",
+                          hintStyle: TextStyle(color: labelColor.withValues(alpha: 0.7)),
+                          prefixIcon: Icon(Icons.search, color: labelColor),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12.h),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+
+                    // 4. Doctors List (Paginated & Filtered)
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
+                            builder: (context, state) {
+                              if (state is DoctorStaffLoading) {
+                                return const Center(child: CircularProgressIndicator());
+                              } else if (state is DoctorStaffError) {
+                                return Center(
+                                  child: Text(
+                                    "Error: ${state.message}",
+                                    style: TextStyle(color: AppColors.error),
+                                  ),
+                                );
+                              }
+
+                              List<UserModel> doctorsList = [];
+                              if (state is DoctorStaffLoaded) {
+                                doctorsList = state.doctors;
+                              }
+
+                              if (doctorsList.isEmpty) {
+                                return Center(
+                                  child: Text(
+                                    "No doctors registered.",
+                                    style: TextStyle(color: labelColor),
+                                  ),
+                                );
+                              }
+
+                              return ValueListenableBuilder<String>(
+                                valueListenable: _searchNotifier,
+                                builder: (context, searchQuery, _) {
+                                  return ValueListenableBuilder<String>(
+                                    valueListenable: _selectedSectionNotifier,
+                                    builder: (context, selectedSection, _) {
+                                      final filtered = doctorsList.where((doc) {
+                                        final matchesSearch = (doc.name ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
+                                            (doc.specialization ?? '').toLowerCase().contains(searchQuery.toLowerCase());
+                                        final matchesSection = selectedSection == 'All' ||
+                                            (doc.department ?? '').toLowerCase() == selectedSection.toLowerCase();
+                                        return matchesSearch && matchesSection;
+                                      }).toList();
+
+                                      if (filtered.isEmpty) {
+                                        return Center(
+                                          child: Text(
+                                            "No matching doctors found.",
+                                            style: TextStyle(color: labelColor),
+                                          ),
+                                        );
+                                      }
+
+                                      return ValueListenableBuilder<int>(
+                                        valueListenable: _currentPageNotifier,
+                                        builder: (context, currentPage, _) {
+                                          final totalPages = (filtered.length / _itemsPerPage).ceil();
+                                          final startIndex = (currentPage - 1) * _itemsPerPage;
+                                          final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
+                                          final paginatedList = filtered.sublist(startIndex, endIndex);
+
+                                          return Column(
+                                            children: [
+                                              Expanded(
+                                                child: ListView.builder(
+                                                  itemCount: paginatedList.length,
+                                                  itemBuilder: (context, idx) {
+                                                    final doc = paginatedList[idx];
+                                                    final yearsExp = (doc.age ?? 35) - 25;
+                                                    final status = doc.status;
+
+                                                    return Container(
+                                                      margin: EdgeInsets.only(bottom: 12.h),
+                                                      padding: EdgeInsets.all(12.r),
+                                                      decoration: BoxDecoration(
+                                                        color: cardBg,
+                                                        borderRadius: BorderRadius.circular(12.r),
+                                                        border: Border.all(color: borderColor, width: 1.2),
+                                                      ),
+                                                      child: Row(
+                                                        children: [
+                                                          CircleAvatar(
+                                                            radius: 24.r,
+                                                            backgroundColor: isDark ? Colors.white12 : Colors.black12,
+                                                            child: ClipOval(
+                                                              child: CustomImageView(
+                                                                imagePath: ProfileImageHelper.resolveImagePath(
+                                                                  doc.profileImage,
+                                                                  'doctor',
+                                                                  doc.gender,
+                                                                ),
+                                                                width: 48.r,
+                                                                height: 48.r,
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 12.w),
+                                                          Expanded(
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text(
+                                                                  doc.name ?? '',
+                                                                  style: AppTextStyles.bodyMedium.copyWith(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: textColor,
+                                                                    fontSize: 14.sp,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(height: 4.h),
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
+                                                                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                                                                      decoration: BoxDecoration(
+                                                                        color: AppColors.primary.withValues(alpha: 0.15),
+                                                                        borderRadius: BorderRadius.circular(4.r),
+                                                                      ),
+                                                                      child: Text(
+                                                                        doc.department ?? 'General',
+                                                                        style: TextStyle(
+                                                                          color: AppColors.primary,
+                                                                          fontSize: 10.sp,
+                                                                          fontWeight: FontWeight.bold,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                SizedBox(height: 4.h),
+                                                                Text(
+                                                                  "$yearsExp+ Years Experience",
+                                                                  style: TextStyle(
+                                                                    color: labelColor,
+                                                                    fontSize: 11.sp,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              _buildStatusPill(status),
+                                                              PopupMenuButton<String>(
+                                                                icon: Icon(Icons.more_vert, color: labelColor),
+                                                                color: cardBg,
+                                                                onSelected: (action) async {
+                                                                  if (action == 'view') {
+                                                                    context.push('/admin/doctor-staff/detail', extra: doc);
+                                                                  } else if (action == 'edit') {
+                                                                    final res = await context.push('/admin/doctor-staff/edit', extra: doc);
+                                                                    if (res == true && context.mounted) {
+                                                                      context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+                                                                    }
+                                                                  }
+                                                                },
+                                                                itemBuilder: (ctx) => [
+                                                                  PopupMenuItem(
+                                                                    value: 'view',
+                                                                    child: Text("View Profile", style: TextStyle(color: textColor)),
+                                                                  ),
+                                                                  PopupMenuItem(
+                                                                    value: 'edit',
+                                                                    child: Text("Edit Doctor", style: TextStyle(color: textColor)),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              // 5. Pagination controls
+                                              _buildPaginationControls(currentPage, totalPages),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          // Custom Add Doctor FAB & Label underneath
+                          Positioned(
+                            bottom: 16.h,
+                            right: 16.w,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                FloatingActionButton(
+                                  heroTag: 'add_doctor_fab',
+                                  onPressed: () => _showSelectDepartmentAndCreate(context),
+                                  backgroundColor: AppColors.primary,
+                                  child: const Icon(Icons.add, color: Colors.white),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  "Add Doctor",
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -309,5 +475,192 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
       ),
     );
   }
-}
 
+  Widget _buildRoundHeaderButton(IconData icon, VoidCallback onTap) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final btnBg = isDark ? Colors.white.withValues(alpha: 0.08) : Colors.black.withValues(alpha: 0.05);
+    final iconColor = isDark ? Colors.white : AppColors.terminalLightText;
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20.r),
+      child: Container(
+        padding: EdgeInsets.all(8.r),
+        decoration: BoxDecoration(
+          color: btnBg,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, color: iconColor, size: 18.r),
+      ),
+    );
+  }
+
+  Widget _buildFilterSortButton(String label, IconData icon, VoidCallback onTap) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
+    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8.r),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10.h),
+        decoration: BoxDecoration(
+          color: cardBg,
+          borderRadius: BorderRadius.circular(8.r),
+          border: Border.all(color: borderColor, width: 1.2),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: labelColor, size: 16.r),
+            SizedBox(width: 6.w),
+            Text(
+              label,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusPill(String status) {
+    Color dotColor = AppColors.success;
+    Color bgPillColor = AppColors.success.withValues(alpha: 0.1);
+    String label = "Active";
+
+    if (status.toLowerCase().contains("away")) {
+      dotColor = AppColors.accent;
+      bgPillColor = AppColors.accent.withValues(alpha: 0.1);
+      label = "Away";
+    } else if (status.toLowerCase().contains("inactive")) {
+      dotColor = AppColors.error;
+      bgPillColor = AppColors.error.withValues(alpha: 0.1);
+      label = "Inactive";
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: bgPillColor,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: dotColor.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6.r,
+            height: 6.r,
+            decoration: BoxDecoration(
+              color: dotColor,
+              shape: BoxShape.circle,
+            ),
+          ),
+          SizedBox(width: 6.w),
+          Text(
+            label,
+            style: TextStyle(
+              color: dotColor,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPaginationControls(int currentPage, int totalPages) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final activeBg = AppColors.primary;
+    final inactiveBg = isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05);
+
+    return Padding(
+      padding: EdgeInsets.only(top: 12.h, bottom: 4.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "$currentPage of ${totalPages > 0 ? totalPages : 1}",
+            style: TextStyle(color: labelColor, fontSize: 12.sp, fontWeight: FontWeight.bold),
+          ),
+          Row(
+            children: [
+              // Back arrow
+              _buildPaginationArrow(Icons.chevron_left, currentPage > 1 ? () {
+                _currentPageNotifier.value = currentPage - 1;
+              } : null),
+              SizedBox(width: 6.w),
+
+              // Page Numbers
+              ...List.generate(totalPages, (index) {
+                final pageNum = index + 1;
+                final isActive = pageNum == currentPage;
+                return GestureDetector(
+                  onTap: () {
+                    _currentPageNotifier.value = pageNum;
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 3.w),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                    decoration: BoxDecoration(
+                      color: isActive ? activeBg : inactiveBg,
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                    child: Text(
+                      pageNum.toString(),
+                      style: TextStyle(
+                        color: isActive ? Colors.white : textColor,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                );
+              }),
+
+              SizedBox(width: 6.w),
+              // Next arrow
+              _buildPaginationArrow(Icons.chevron_right, currentPage < totalPages ? () {
+                _currentPageNotifier.value = currentPage + 1;
+              } : null),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPaginationArrow(IconData icon, VoidCallback? onTap) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = onTap != null
+        ? (isDark ? Colors.white : AppColors.terminalLightText)
+        : (isDark ? Colors.white30 : Colors.black26);
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(4.r),
+      child: Container(
+        padding: EdgeInsets.all(4.r),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.r),
+          border: Border.all(
+            color: isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder,
+            width: 1,
+          ),
+        ),
+        child: Icon(icon, color: iconColor, size: 16.r),
+      ),
+    );
+  }
+}
