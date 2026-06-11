@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/common_app_bar.dart';
@@ -8,7 +9,34 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/department/data/models/department_model.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_state.dart';
+
+import 'package:medi_connect/features/departments/biomedical_engineering/presentation/pages/biomedical_engineering_detail_page.dart';
+import 'package:medi_connect/features/departments/casuality/presentation/pages/casuality_detail_page.dart';
+import 'package:medi_connect/features/departments/cssd/presentation/pages/cssd_detail_page.dart';
+import 'package:medi_connect/features/departments/customer_care/presentation/pages/customer_care_detail_page.dart';
+import 'package:medi_connect/features/departments/dyalisis/presentation/pages/dyalisis_detail_page.dart';
+import 'package:medi_connect/features/departments/emrd/presentation/pages/emrd_detail_page.dart';
+import 'package:medi_connect/features/departments/finance/presentation/pages/finance_detail_page.dart';
+import 'package:medi_connect/features/departments/fire_safety/presentation/pages/fire_safety_detail_page.dart';
+import 'package:medi_connect/features/departments/general_store/presentation/pages/general_store_detail_page.dart';
+import 'package:medi_connect/features/departments/human_resource/presentation/pages/human_resource_detail_page.dart';
+import 'package:medi_connect/features/departments/icu/presentation/pages/icu_detail_page.dart';
+import 'package:medi_connect/features/departments/information_technology/presentation/pages/information_technology_detail_page.dart';
+import 'package:medi_connect/features/departments/laboratory/presentation/pages/laboratory_detail_page.dart';
+import 'package:medi_connect/features/departments/management_information_system/presentation/pages/management_information_system_detail_page.dart';
+import 'package:medi_connect/features/departments/marketing/presentation/pages/marketing_detail_page.dart';
+import 'package:medi_connect/features/departments/mep_engineer/presentation/pages/mep_engineer_detail_page.dart';
+import 'package:medi_connect/features/departments/nursing/presentation/pages/nursing_detail_page.dart';
+import 'package:medi_connect/features/departments/nutrition_and_diabetics/presentation/pages/nutrition_and_diabetics_detail_page.dart';
+import 'package:medi_connect/features/departments/operation_theatre/presentation/pages/operation_theatre_detail_page.dart';
+import 'package:medi_connect/features/departments/pharmacy/presentation/pages/pharmacy_detail_page.dart';
+import 'package:medi_connect/features/departments/physio_therapy/presentation/pages/physio_therapy_detail_page.dart';
+import 'package:medi_connect/features/departments/purchase/presentation/pages/purchase_detail_page.dart';
+import 'package:medi_connect/features/departments/radiology/presentation/pages/radiology_detail_page.dart';
+import 'package:medi_connect/features/departments/ward/presentation/pages/ward_detail_page.dart';
 
 class DepartmentDetail extends StatefulWidget {
   const DepartmentDetail({super.key, required this.department});
@@ -20,35 +48,22 @@ class DepartmentDetail extends StatefulWidget {
 
 class _DepartmentDetailState extends State<DepartmentDetail> {
   String _searchQuery = '';
-  late Future<List<UserModel>> _staffFuture;
 
   @override
   void initState() {
     super.initState();
-    _refreshStaff();
-  }
-
-  void _refreshStaff() {
-    setState(() {
-      _staffFuture = _fetchDepartmentStaff();
-    });
-  }
-
-  Future<List<UserModel>> _fetchDepartmentStaff() async {
-    final response = await Supabase.instance.client
-        .from('users')
-        .select()
-        .eq('role', 'staff')
-        .eq('department', widget.department.name)
-        .isFilter('deleted_at', null);
-
-    return (response as List<dynamic>)
-        .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
-        .toList();
+    context.read<DoctorStaffBloc>().add(
+      LoadDoctorStaff(widget.department.name),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final customPage = _getWidgetDetailPage(widget.department.name);
+    if (customPage != null) {
+      return customPage;
+    }
+
     return CustomScaffold(
       customAppbar: CommonAppBar(title: widget.department.name),
       floatingActionButton: FloatingActionButton.extended(
@@ -57,7 +72,13 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
             '/admin/doctor-staff/create',
             extra: {'role': 'staff', 'department': widget.department.name},
           );
-          if (res == true) _refreshStaff();
+          if (res == true) {
+            if (mounted) {
+              context.read<DoctorStaffBloc>().add(
+                LoadDoctorStaff(widget.department.name),
+              );
+            }
+          }
         },
         icon: const Icon(Icons.add, color: Colors.white),
         label: const Text("Add Staff", style: TextStyle(color: Colors.white)),
@@ -66,14 +87,12 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Department Banner Image (collapsible/static header)
           if (widget.department.imageUrl != null &&
               widget.department.imageUrl!.isNotEmpty)
             Center(
               child: CircleAvatar(
                 backgroundColor: AppColors.infoIndigo.withAlpha(20),
                 radius: 40.r,
-
                 child: Center(
                   child: CustomImageView(
                     imagePath: widget.department.imageUrl!,
@@ -103,7 +122,6 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                 ),
               ),
             ),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
             child: Column(
@@ -117,7 +135,6 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                   ),
                 ),
                 SizedBox(height: 8.h),
-                // Search Bar
                 TextField(
                   onChanged: (val) => setState(() => _searchQuery = val),
                   decoration: InputDecoration(
@@ -133,116 +150,127 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
               ],
             ),
           ),
-
-          // Dynamic Staff List
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: FutureBuilder<List<UserModel>>(
-                future: _staffFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+              child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
+                builder: (context, state) {
+                  if (state is DoctorStaffLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
+                  } else if (state is DoctorStaffError) {
                     return Center(
                       child: Text(
-                        "Error: ${snapshot.error}",
+                        "Error: ${state.message}",
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.error,
                         ),
                       ),
                     );
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No staff members registered in this department.",
-                        style: AppTextStyles.bodyMedium,
-                      ),
-                    );
-                  }
-
-                  final filtered = snapshot.data!.where((stf) {
-                    final matchesSearch =
-                        (stf.name ?? '').toLowerCase().contains(
-                          _searchQuery.toLowerCase(),
-                        ) ||
-                        (stf.staffRole ?? '').toLowerCase().contains(
-                          _searchQuery.toLowerCase(),
-                        );
-                    return matchesSearch;
-                  }).toList();
-
-                  if (filtered.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No matching staff members found.",
-                        style: AppTextStyles.bodyMedium,
-                      ),
-                    );
-                  }
-
-                  return ListView.builder(
-                    itemCount: filtered.length,
-                    itemBuilder: (context, idx) {
-                      final stf = filtered[idx];
-                      return Card(
-                        margin: EdgeInsets.only(bottom: 12.h),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          side: const BorderSide(color: AppColors.border),
-                        ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(12.r),
-                          leading: CircleAvatar(
-                            backgroundColor: AppColors.accent.withOpacity(0.1),
-                            child: Icon(
-                              Icons.badge_outlined,
-                              color: AppColors.accent,
-                            ),
-                          ),
-                          title: Text(
-                            stf.name ?? '',
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                          subtitle: Text(stf.staffRole ?? 'Support Staff'),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.visibility_outlined,
-                                  color: AppColors.primary,
-                                ),
-                                onPressed: () {
-                                  context.push(
-                                    '/admin/doctor-staff/detail',
-                                    extra: stf,
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.edit_outlined,
-                                  color: AppColors.warning,
-                                ),
-                                onPressed: () async {
-                                  final res = await context.push(
-                                    '/admin/doctor-staff/edit',
-                                    extra: stf,
-                                  );
-                                  if (res == true) _refreshStaff();
-                                },
-                              ),
-                            ],
-                          ),
+                  } else if (state is DoctorStaffLoaded) {
+                    final staff = state.staff;
+                    if (staff.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No staff members registered in this department.",
+                          style: AppTextStyles.bodyMedium,
                         ),
                       );
-                    },
-                  );
+                    }
+
+                    final filtered = staff.where((stf) {
+                      final matchesSearch =
+                          (stf.name ?? '').toLowerCase().contains(
+                            _searchQuery.toLowerCase(),
+                          ) ||
+                          (stf.staffRole ?? '').toLowerCase().contains(
+                            _searchQuery.toLowerCase(),
+                          );
+                      return matchesSearch;
+                    }).toList();
+
+                    if (filtered.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No matching staff members found.",
+                          style: AppTextStyles.bodyMedium,
+                        ),
+                      );
+                    }
+
+                    return ListView.builder(
+                      itemCount: filtered.length,
+                      itemBuilder: (context, idx) {
+                        final stf = filtered[idx];
+                        return Card(
+                          margin: EdgeInsets.only(bottom: 12.h),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                            side: const BorderSide(color: AppColors.border),
+                          ),
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(12.r),
+                            leading: CircleAvatar(
+                              backgroundColor: AppColors.accent.withOpacity(
+                                0.1,
+                              ),
+                              child: Icon(
+                                Icons.badge_outlined,
+                                color: AppColors.accent,
+                              ),
+                            ),
+                            title: Text(
+                              stf.name ?? '',
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                            subtitle: Text(stf.staffRole ?? 'Support Staff'),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.visibility_outlined,
+                                    color: AppColors.primary,
+                                  ),
+                                  onPressed: () {
+                                    context.push(
+                                      '/admin/doctor-staff/detail',
+                                      extra: stf,
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.edit_outlined,
+                                    color: AppColors.warning,
+                                  ),
+                                  onPressed: () async {
+                                    final res = await context.push(
+                                      '/admin/doctor-staff/edit',
+                                      extra: stf,
+                                    );
+                                    if (res == true) {
+                                      if (mounted) {
+                                        context.read<DoctorStaffBloc>().add(
+                                          LoadDoctorStaff(
+                                            widget.department.name,
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return const SizedBox.shrink();
                 },
               ),
             ),
@@ -250,5 +278,60 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
         ],
       ),
     );
+  }
+
+  Widget? _getWidgetDetailPage(String name) {
+    switch (name.trim()) {
+      case 'Biomedical Engineering':
+        return const BiomedicalEngineeringDetailPage();
+      case 'Casuality':
+        return const CasualityDetailPage();
+      case 'CSSD':
+        return const CssdDetailPage();
+      case 'Customer Care':
+        return const CustomerCareDetailPage();
+      case 'Dyalisis':
+        return const DyalisisDetailPage();
+      case 'EMRD':
+        return const EmrdDetailPage();
+      case 'Finance':
+        return const FinanceDetailPage();
+      case 'Fire Safety':
+        return const FireSafetyDetailPage();
+      case 'General Store':
+        return const GeneralStoreDetailPage();
+      case 'Human Resource':
+        return const HumanResourceDetailPage();
+      case 'ICU':
+        return const IcuDetailPage();
+      case 'Information Technology':
+        return const InformationTechnologyDetailPage();
+      case 'Laboratory':
+        return const LaboratoryDetailPage();
+      case 'Management Information System':
+        return const ManagementInformationSystemDetailPage();
+      case 'Marketing':
+        return const MarketingDetailPage();
+      case 'MEP Engineer':
+        return const MepEngineerDetailPage();
+      case 'Nursing':
+        return const NursingDetailPage();
+      case 'Nutrition and Diabetics':
+        return const NutritionAndDiabeticsDetailPage();
+      case 'Operation Theatre':
+        return const OperationTheatreDetailPage();
+      case 'Pharmacy':
+        return const PharmacyDetailPage();
+      case 'Physio Therapy':
+        return const PhysioTherapyDetailPage();
+      case 'Purchase':
+        return const PurchaseDetailPage();
+      case 'Radiology':
+        return const RadiologyDetailPage();
+      case 'Ward':
+        return const WardDetailPage();
+      default:
+        return null;
+    }
   }
 }

@@ -1,0 +1,59 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:medi_connect/core/common_models/exceptions/exceptions.dart';
+import 'package:medi_connect/core/common_models/failures/failure.dart';
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/patient/data/data_source/patient_remote_datasource.dart';
+import 'package:medi_connect/features/patient/domain/repositories/patient_repository.dart';
+
+class PatientRepositoryImpl implements PatientRepository {
+  final PatientRemoteDataSource _remoteDataSource;
+  PatientRepositoryImpl(this._remoteDataSource);
+
+  @override
+  Future<Either<Failure, List<UserModel>>> getPatients() async {
+    try {
+      final list = await _remoteDataSource.getPatients();
+      return Right(list);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> createPatient(UserModel patient) async {
+    try {
+      final res = await _remoteDataSource.createPatient(patient);
+      return Right(res);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> updatePatient(UserModel patient) async {
+    try {
+      final res = await _remoteDataSource.updatePatient(patient);
+      return Right(res);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deletePatient(String patientId) async {
+    try {
+      await _remoteDataSource.deletePatient(patientId);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+}

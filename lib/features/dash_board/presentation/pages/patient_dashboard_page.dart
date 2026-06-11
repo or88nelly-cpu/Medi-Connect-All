@@ -20,6 +20,9 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawe
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/department/presentation/widgets/department_horizontal_list.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 
 class PatientDashboardPage extends StatefulWidget {
@@ -465,23 +468,6 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
     },
   ];
 
-  Future<List<UserModel>> _fetchDoctorsList() async {
-    try {
-      final response = await Supabase.instance.client
-          .from('users')
-          .select()
-          .eq('role', 'doctor')
-          .isFilter('deleted_at', null);
-
-      return (response as List<dynamic>)
-          .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      // Return empty list if query fails or table empty
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -575,6 +561,7 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
   }
 
   void _showBookDoctorDialog(BuildContext context) {
+    context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -585,49 +572,52 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
         ),
       ),
       builder: (ctx) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.8,
-          padding: EdgeInsets.all(20.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Find & Choose Doctor", style: AppTextStyles.titleLarge),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(ctx),
-                  ),
-                ],
-              ),
-              const Divider(color: AppColors.border),
-              SizedBox(height: 12.h),
-              Expanded(
-                child: FutureBuilder<List<UserModel>>(
-                  future: _fetchDoctorsList(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError ||
-                        !snapshot.hasData ||
-                        snapshot.data!.isEmpty) {
-                      // Return a fallback list of doctors if database empty
-                      return _buildFallbackDoctorsList(ctx);
-                    }
-
-                    final doctors = snapshot.data!;
-                    return ListView.builder(
-                      itemCount: doctors.length,
-                      itemBuilder: (context, idx) {
-                        final doc = doctors[idx];
-                        return _buildDoctorBookingTile(ctx, doc);
-                      },
-                    );
-                  },
+        return BlocProvider.value(
+          value: context.read<DoctorStaffBloc>(),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.8,
+            padding: EdgeInsets.all(20.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Find & Choose Doctor", style: AppTextStyles.titleLarge),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(ctx),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const Divider(color: AppColors.border),
+                SizedBox(height: 12.h),
+                Expanded(
+                  child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
+                    builder: (context, state) {
+                      if (state is DoctorStaffLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is DoctorStaffError || state is! DoctorStaffLoaded) {
+                        return _buildFallbackDoctorsList(ctx);
+                      }
+
+                      final doctors = state.doctors;
+                      if (doctors.isEmpty) {
+                        return _buildFallbackDoctorsList(ctx);
+                      }
+
+                      return ListView.builder(
+                        itemCount: doctors.length,
+                        itemBuilder: (context, idx) {
+                          final doc = doctors[idx];
+                          return _buildDoctorBookingTile(ctx, doc);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

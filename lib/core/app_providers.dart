@@ -5,6 +5,8 @@ import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_analytics_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/core/departments_config.dart';
+import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
 
 class AppProviders {
   static List<BlocProvider> getProviders() {
@@ -17,6 +19,10 @@ class AppProviders {
       ),
       BlocProvider<DepartmentBloc>(create: (_) => sl<DepartmentBloc>()),
       BlocProvider<DoctorStaffBloc>(create: (_) => sl<DoctorStaffBloc>()),
+      BlocProvider<PatientBloc>(create: (_) => sl<PatientBloc>()),
+      ...getAllDepartmentsProviders(sl),
     ];
   }
 }
+
+

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -126,7 +128,11 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
             } else if (state is DepartmentActionSuccess) {
               departments = state.updatedDepartments;
             }
-
+            String departmentName = "";
+            for (final dept in departments) {
+              departmentName += "${dept.name},";
+            }
+            log("dpats $departmentName");
             return SingleChildScrollView(
               padding: EdgeInsets.all(12.r),
               child: Column(

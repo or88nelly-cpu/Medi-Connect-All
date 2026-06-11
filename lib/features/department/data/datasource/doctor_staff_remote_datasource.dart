@@ -14,15 +14,19 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
   @override
   Future<List<UserModel>> getDoctorStaff(String departmentName) async {
-    final response = await _supabase
-        .from('users')
-        .select()
-        .eq('department', departmentName)
-        .isFilter('deleted_at', null);
+    final query = _supabase.from('users').select().isFilter('deleted_at', null);
+    final response = await (departmentName.isNotEmpty && departmentName != 'All'
+        ? query.eq('department', departmentName)
+        : query);
 
-    return (response as List<dynamic>)
+    final list = (response as List<dynamic>)
         .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
         .toList();
+
+    if (departmentName.isEmpty || departmentName == 'All') {
+      return list.where((u) => u.role == 'doctor' || u.role == 'staff').toList();
+    }
+    return list;
   }
 
   @override

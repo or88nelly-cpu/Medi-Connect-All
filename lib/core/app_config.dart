@@ -32,6 +32,11 @@ import 'package:medi_connect/features/department/domain/use_cases/get_department
 import 'package:medi_connect/features/department/domain/use_cases/update_department_usecase.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/core/departments_config.dart';
+import 'package:medi_connect/features/patient/data/data_source/patient_remote_datasource.dart';
+import 'package:medi_connect/features/patient/data/repository/patient_repository_impl.dart';
+import 'package:medi_connect/features/patient/domain/repositories/patient_repository.dart';
+import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -185,4 +190,26 @@ void configureDepartmentDependencies(GetIt sl) {
       () => DoctorStaffBloc(sl<DoctorStaffRepository>()),
     );
   }
+  
+  // Register all 24 departments
+  configureAllDepartmentsDependencies(sl);
 }
+
+void configurePatientDependencies(GetIt sl) {
+  if (!sl.isRegistered<PatientRemoteDataSource>()) {
+    sl.registerLazySingleton<PatientRemoteDataSource>(
+      () => PatientRemoteDataSourceImpl(sl<SupabaseService>()),
+    );
+  }
+  if (!sl.isRegistered<PatientRepository>()) {
+    sl.registerLazySingleton<PatientRepository>(
+      () => PatientRepositoryImpl(sl<PatientRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<PatientBloc>()) {
+    sl.registerFactory<PatientBloc>(
+      () => PatientBloc(sl<PatientRepository>()),
+    );
+  }
+}
+
