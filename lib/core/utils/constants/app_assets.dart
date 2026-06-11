@@ -11,6 +11,8 @@ class AppAssets {
   static const String splashBgWebPng = "assets/images/splash_screen_bg_web.png";
   static const String commonBgMobPng = "assets/images/common_bg_mob.png";
   static const String commonBgWebPng = "assets/images/common_bg_web.png";
+  static const String commonBgMobPngDark = "assets/images/common_bg_mob_dark.png";
+  static const String commonBgWebPngDark = "assets/images/common_bg_web_dark.png";
 
   // Patient & General Avatars
   static const String babyBoyAvatarPng = "assets/images/baby_boy_avatar.png";

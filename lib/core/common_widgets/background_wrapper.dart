@@ -16,25 +16,16 @@ class BackgroundWrapper extends StatelessWidget {
         defaultTargetPlatform == TargetPlatform.macOS ||
         defaultTargetPlatform == TargetPlatform.linux;
 
-    final bgImage = isWebOrDesktop
-        ? AppAssets.commonBgWebPng
-        : AppAssets.commonBgMobPng;
-
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final bgImage = isWebOrDesktop
+        ? (isDark ? AppAssets.commonBgWebPngDark : AppAssets.commonBgWebPng)
+        : (isDark ? AppAssets.commonBgMobPngDark : AppAssets.commonBgMobPng);
 
     return Container(
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF121212) : AppColors.background,
-        image: DecorationImage(
-          image: AssetImage(bgImage),
-          fit: BoxFit.cover,
-          colorFilter: isDark
-              ? ColorFilter.mode(
-                  const Color(0xFF121212).withOpacity(0.95),
-                  BlendMode.srcOver,
-                )
-              : null,
-        ),
+        image: DecorationImage(image: AssetImage(bgImage), fit: BoxFit.cover),
       ),
       child: child,
     );

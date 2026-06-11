@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: AppProviders.getProviders(),
       child: ScreenUtilInit(
-        designSize: const Size(375, 812), // Premium device base reference
+        designSize: const Size(390, 884), // Premium device base reference
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {

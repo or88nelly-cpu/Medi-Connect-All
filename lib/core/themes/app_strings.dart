@@ -314,5 +314,37 @@ class AppStrings {
   static const staffQuickActions = "Quick Actions";
   static const noTasksAssigned = "No tasks assigned.";
 
+  // Terminal theme strings
+  static const authRequired = "Authentication Required";
+  static const terminalIdLabel = "@ TERMINAL_ID (EMAIL)";
+  static const terminalIdHint = "user@clinicalops.system";
+  static const accessKeyLabel = "ACCESS_KEY (PASSWORD)";
+  static const passwordHintDots = "•••••••••••••";
+  static const forgotLabel = "FORGOT?";
+  static const persistentSession = "Persistent session";
+  static const initializeAccess = "Initialize Access";
+  static const terminalLocationNode = "Authorized use only. Terminal location:\nNODE_92.168.1.1";
+  static const unregisteredRequestAccess = "UNREGISTERED? REQUEST_ACCESS (SIGN UP)";
+  static const unregistered = "UNREGISTERED? ";
+  static const requestAccessSignUp = "REQUEST_ACCESS (SIGN UP)";
+  static const opsStable = "OPS_STABLE";
+  static const createAccountTitle = "Create Account";
+  static const registerSubtitleTerminal = "Register your credentials to access the secure medical operations dashboard.";
+  static const selectYourRole = "SELECT YOUR ROLE";
+  static const legalNameLabel = "FULL LEGAL NAME";
+  static const legalNameHint = "Johnathan Doe";
+  static const clinicalEmailLabel = "CLINICAL EMAIL ADDRESS";
+  static const clinicalEmailHint = "j.doe@clinic.org";
+  static const securityPasswordLabel = "SECURITY PASSWORD";
+  static const hipaaAcknowledgePrefix = "I acknowledge and agree to the ";
+  static const hipaaComplianceTerms = "HIPAA Compliance Terms";
+  static const andGeneral = " and general ";
+  static const privacyProtocol = "Privacy Protocol";
+  static const forMedicalDataHandling = " for medical data handling.";
+  static const finalizeRegistration = "Finalize Registration";
+  static const clinicalOpsVersion = "Clinical Operations v4.2.1-stable";
+  static const secureEncryptedEnv = "SECURE END-TO-END ENCRYPTED ENVIRONMENT";
+  static const hipaaAgreementError = "Please agree to the HIPAA Compliance Terms & Privacy Protocol to continue.";
+
   AppStrings._();
 }

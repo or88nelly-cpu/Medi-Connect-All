@@ -58,6 +58,7 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
             user.gender,
           );
         }
+        bool isDark = Theme.of(context).brightness == Brightness.dark;
 
         return InkWell(
           splashColor: AppColors.surface,
@@ -66,8 +67,15 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
             context.read<DashboardTabCubit>().setTab(4);
           },
           child: Container(
-            padding: EdgeInsets.all(20.r).copyWith(left: 60.r),
+            padding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 8.h,
+            ).copyWith(left: 60.w),
+            decoration: BoxDecoration(
+              color: isDark ? Color(0xff171F33) : Color(0xffF7F9FB),
+            ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,37 +84,19 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
                       DashboardUtils.getWelcomeMessage(),
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontFamily: AppFonts.inter,
-                        fontSize: 12.sp,
-
-                        color: AppColors.textPrimary,
+                        fontSize: 10.sp,
+                        height: 1,
                       ),
                     ),
                     Text(
                       name,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontFamily: AppFonts.inter,
-                        fontSize: 14.sp,
+                        fontSize: 13.sp,
+                        height: 1.5,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.admin_panel_settings,
-                          size: 15.r,
-                          color: AppColors.primary,
-                        ),
-                        Text(
-                          accessLevel,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            fontFamily: AppFonts.inter,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -121,27 +111,46 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
                           imagePath: profileImage ?? "",
                           borderRadius: 100.r,
                           fit: BoxFit.cover,
-                          width: 60.r,
-                          height: 60.r,
+                          width: 40.r,
+                          height: 40.r,
                         ),
                       ],
                     ),
-                    Text(
-                      DashboardUtils.getCurrentDate(),
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontFamily: AppFonts.inter,
-                        fontSize: 10.sp,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.admin_panel_settings,
+                          size: 12.r,
+                          color: AppColors.primary,
+                        ),
+                        Text(
+                          accessLevel,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontFamily: AppFonts.inter,
+                            fontSize: 10.sp,
+                            height: 1,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // Text(
+                    //   DashboardUtils.getCurrentDate(),
+                    //   style: AppTextStyles.bodyMedium.copyWith(
+                    //     fontFamily: AppFonts.inter,
+                    //     fontSize: 10.sp,
 
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    Text(
-                      DashboardUtils.getCurrentTime(),
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontFamily: AppFonts.inter,
-                        fontSize: 10.sp,
-                      ),
-                    ),
+                    //     color: AppColors.textPrimary,
+                    //   ),
+                    // ),
+                    // Text(
+                    //   DashboardUtils.getCurrentTime(),
+                    //   style: AppTextStyles.bodyMedium.copyWith(
+                    //     fontFamily: AppFonts.inter,
+                    //     fontSize: 10.sp,
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
@@ -156,14 +165,14 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(isDashoard ? 144.h : 80.h);
+  Size get preferredSize => Size.fromHeight(75.h);
   Widget _loader() {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: Container(
         width: double.infinity,
-        height: 120.h,
+        height: 70.h,
         color: Colors.white,
       ),
     );

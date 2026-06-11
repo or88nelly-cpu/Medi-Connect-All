@@ -49,6 +49,33 @@ class AppColors {
   static const infoOrange = Color(0xFFFF9800);
   static const infoPurple = Color(0xFF9C27B0);
 
+  // Terminal theme colors
+  static const terminalDarkBg = Color(0xFF03070E);
+  static const terminalLightBg = Color(0xFFF4F7FA);
+  static const terminalDarkBgGrad1 = Color(0xFF0A1E3F);
+  static const terminalDarkBgGrad2 = Color(0xFF030914);
+  static const terminalLightBgGrad1 = Color(0xFFE2EAF4);
+  static const terminalLightBgGrad2 = Color(0xFFF3F7FD);
+  static const terminalDarkCard = Color(0xFF09121F);
+  static const terminalLightCard = Colors.white;
+  static const terminalDarkBorder = Color(0xFF16253B);
+  static const terminalLightBorder = Color(0xFFD3E0EE);
+  static const terminalDarkText = Colors.white;
+  static const terminalLightText = Color(0xFF0C192E);
+  static const terminalDarkLabel = Color(0xFF5E98C7);
+  static const terminalLightLabel = Color(0xFF3F6D94);
+  static const terminalDarkFieldFill = Color(0xFF050C16);
+  static const terminalLightFieldFill = Color(0xFFEDF2F7);
+  static const terminalDarkFieldBorder = Color(0xFF16253B);
+  static const terminalLightFieldBorder = Color(0xFFD0DCEB);
+  static const terminalDarkFieldHint = Color(0xFF334354);
+  static const terminalLightFieldHint = Color(0xFF94A3B8);
+  static const terminalDarkCheckboxText = Color(0xFF8FA2B6);
+  static const terminalLightCheckboxText = Color(0xFF4A5568);
+  static const terminalDarkFooterText = Color(0xFF5A6E85);
+  static const terminalLightFooterText = Color(0xFF718096);
+  static const terminalAccentCyan = Color(0xFF37B0F1);
+
   // Private constructor to prevent instantiation.
   AppColors._();
 }
