@@ -6,6 +6,7 @@ import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
+import 'package:medi_connect/features/department/presentation/widgets/section_detail/section_detail_header.dart';
 
 /// A single department card shown in the horizontal list.
 /// Shows a [CustomImageView] with the department image (or a gradient icon fallback),
@@ -116,10 +117,28 @@ class _DefaultDepartmentImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageAsset = getDepartmentImageAsset(name);
+    if (imageAsset != null) {
+      return Container(
+        width: 44.r,
+        height: 44.r,
+        padding: EdgeInsets.all(8.r),
+        decoration: BoxDecoration(
+          color: AppColors.primary.withValues(alpha: 0.15),
+          shape: BoxShape.circle,
+        ),
+        child: CustomImageView(
+          imagePath: imageAsset,
+          fit: BoxFit.contain,
+          color: AppColors.primary,
+        ),
+      );
+    }
+
     final initial = name.isNotEmpty ? name[0].toUpperCase() : 'D';
     return Container(
-      width: 50.r,
-      height: 50.r,
+      width: 44.r,
+      height: 44.r,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.primary, AppColors.secondary],
@@ -132,7 +151,7 @@ class _DefaultDepartmentImage extends StatelessWidget {
         initial,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 28.sp,
+          fontSize: 24.sp,
           fontWeight: FontWeight.bold,
           fontFamily: 'Inter',
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
+import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
@@ -58,11 +59,11 @@ class SectionStaffGridCard extends StatelessWidget {
                 itemBuilder: (ctx) => [
                   PopupMenuItem(
                     value: 'view',
-                    child: Text("View Profile", style: TextStyle(color: textColor)),
+                    child: Text(AppStrings.viewProfile, style: TextStyle(color: textColor)),
                   ),
                   PopupMenuItem(
                     value: 'edit',
-                    child: Text("Edit Staff", style: TextStyle(color: textColor)),
+                    child: Text(AppStrings.editStaff, style: TextStyle(color: textColor)),
                   ),
                 ],
               ),
@@ -110,7 +111,7 @@ class SectionStaffGridCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
-                      stf.staffRole ?? 'Support Staff',
+                      stf.staffRole ?? AppStrings.supportStaff,
                       style: TextStyle(
                         color: AppColors.secondary,
                         fontSize: 9.sp,
@@ -122,7 +123,7 @@ class SectionStaffGridCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "Shift: Rotational",
+                    "${AppStrings.shiftPrefix}${AppStrings.rotational}",
                     style: TextStyle(
                       color: labelColor,
                       fontSize: 10.sp,
@@ -144,16 +145,16 @@ class SectionStaffGridCard extends StatelessWidget {
   Widget _buildStatusPill(String status) {
     Color dotColor = AppColors.success;
     Color bgPillColor = AppColors.success.withValues(alpha: 0.1);
-    String label = "Active";
+    String label = AppStrings.active;
 
     if (status.toLowerCase().contains("away")) {
       dotColor = AppColors.accent;
       bgPillColor = AppColors.accent.withValues(alpha: 0.1);
-      label = "Away";
+      label = AppStrings.away;
     } else if (status.toLowerCase().contains("inactive")) {
       dotColor = AppColors.error;
       bgPillColor = AppColors.error.withValues(alpha: 0.1);
-      label = "Inactive";
+      label = AppStrings.inactive;
     }
 
     return Container(

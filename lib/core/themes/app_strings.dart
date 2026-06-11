@@ -373,5 +373,17 @@ class AppStrings {
   static const absent = "Absent";
   static const onLeave = "On Leave";
 
+  // Section Detail Strings
+  static const viewProfile = "View Profile";
+  static const editStaff = "Edit Staff";
+  static const editDoctor = "Edit Doctor";
+  static const supportStaff = "Support Staff";
+  static const shiftPrefix = "Shift: ";
+  static const yrsExpSuffix = "+ Yrs Exp";
+  static const general = "General";
+  static const active = "Active";
+  static const away = "Away";
+  static const inactive = "Inactive";
+
   AppStrings._();
 }
