@@ -5,14 +5,18 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_state.dart';
-import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/utils/profile_image_helper.dart';
+
+// Extracted sub-widgets
+import 'package:medi_connect/features/dash_board/presentation/widgets/common/directory_pagination.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/admin_doctors/doctors_header.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/admin_doctors/doctors_search_bar.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/admin_doctors/doctors_filter_sort_row.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/admin_doctors/doctor_card.dart';
 
 class AdminDoctorsPage extends StatefulWidget {
   const AdminDoctorsPage({super.key});
@@ -24,6 +28,8 @@ class AdminDoctorsPage extends StatefulWidget {
 class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
   final ValueNotifier<String> _searchNotifier = ValueNotifier<String>('');
   final ValueNotifier<String> _selectedSectionNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _sortByNotifier = ValueNotifier<String>('None');
+  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>('All');
   final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(1);
   final int _itemsPerPage = 5;
 
@@ -37,6 +43,8 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
   void dispose() {
     _searchNotifier.dispose();
     _selectedSectionNotifier.dispose();
+    _sortByNotifier.dispose();
+    _statusFilterNotifier.dispose();
     _currentPageNotifier.dispose();
     super.dispose();
   }
@@ -45,8 +53,9 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
     final state = context.read<DepartmentBloc>().state;
     List<String> list = [];
     if (state is DepartmentsLoaded) {
-      list.addAll(state.sections.map((e) => e.name));
-      list.addAll(state.departments.map((e) => e.name));
+      list.addAll(state.sections.map((e) => e.name).where((name) => name.isNotEmpty));
+      list.addAll(state.departments.map((e) => e.name).where((name) => name.isNotEmpty));
+      list = list.toSet().toList();
     }
 
     if (list.isEmpty) {
@@ -100,9 +109,6 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
     final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
 
     return BlocProvider(
@@ -118,138 +124,37 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 1. Custom Header
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Doctors",
-                              style: AppTextStyles.titleLarge.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: textColor,
-                                fontSize: 24.sp,
-                              ),
-                            ),
-                            SizedBox(height: 2.h),
-                            Text(
-                              "Manage and view all doctors",
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: labelColor,
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            _buildRoundHeaderButton(Icons.search, () {}),
-                            SizedBox(width: 8.w),
-                            _buildRoundHeaderButton(Icons.filter_list, () {}),
-                            SizedBox(width: 8.w),
-                            _buildRoundHeaderButton(Icons.more_vert, () {}),
-                          ],
-                        ),
-                      ],
-                    ),
+                    const DoctorsHeader(),
                     SizedBox(height: 16.h),
 
-                    // 2. Dropdowns Row
+                    // 2. Dropdowns/Filters Row
                     BlocBuilder<DepartmentBloc, DepartmentState>(
                       builder: (context, state) {
                         final List<String> sections = ['All'];
                         if (state is DepartmentsLoaded) {
-                          sections.addAll(state.sections.map((e) => e.name));
+                          sections.addAll(state.sections.map((e) => e.name).where((name) => name.isNotEmpty));
                         }
+                        final uniqueSections = sections.toSet().toList();
 
-                        return Row(
-                          children: [
-                            Expanded(
-                              flex: 4,
-                              child: ValueListenableBuilder<String>(
-                                valueListenable: _selectedSectionNotifier,
-                                builder: (context, selectedSection, _) {
-                                  return Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                    decoration: BoxDecoration(
-                                      color: cardBg,
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      border: Border.all(color: borderColor, width: 1.2),
-                                    ),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        value: sections.contains(selectedSection) ? selectedSection : 'All',
-                                        icon: Icon(Icons.keyboard_arrow_down, color: labelColor),
-                                        isExpanded: true,
-                                        dropdownColor: cardBg,
-                                        items: sections.map((sec) {
-                                          return DropdownMenuItem(
-                                            value: sec,
-                                            child: Text(
-                                              sec == 'All' ? 'All Categories' : sec,
-                                              style: TextStyle(
-                                                color: textColor,
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          );
-                                        }).toList(),
-                                        onChanged: (val) {
-                                          if (val != null) {
-                                            _selectedSectionNotifier.value = val;
-                                            _currentPageNotifier.value = 1;
-                                            context.read<DoctorStaffBloc>().add(LoadDoctorStaff(val));
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              flex: 3,
-                              child: _buildFilterSortButton("Filters", Icons.tune, () {}),
-                            ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              flex: 3,
-                              child: _buildFilterSortButton("Sort", Icons.swap_vert, () {}),
-                            ),
-                          ],
+                        return DoctorsFilterSortRow(
+                          selectedSectionNotifier: _selectedSectionNotifier,
+                          sortByNotifier: _sortByNotifier,
+                          statusFilterNotifier: _statusFilterNotifier,
+                          currentPageNotifier: _currentPageNotifier,
+                          sections: uniqueSections,
                         );
                       },
                     ),
                     SizedBox(height: 12.h),
 
                     // 3. Search Bar
-                    Container(
-                      decoration: BoxDecoration(
-                        color: cardBg,
-                        borderRadius: BorderRadius.circular(8.r),
-                        border: Border.all(color: borderColor, width: 1.2),
-                      ),
-                      child: TextField(
-                        onChanged: (val) {
-                          _searchNotifier.value = val;
-                          _currentPageNotifier.value = 1;
-                        },
-                        style: TextStyle(color: textColor, fontSize: 13.sp),
-                        decoration: InputDecoration(
-                          hintText: "Search doctors by name, email or phone...",
-                          hintStyle: TextStyle(color: labelColor.withValues(alpha: 0.7)),
-                          prefixIcon: Icon(Icons.search, color: labelColor),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12.h),
-                        ),
-                      ),
+                    DoctorsSearchBar(
+                      searchNotifier: _searchNotifier,
+                      currentPageNotifier: _currentPageNotifier,
                     ),
                     SizedBox(height: 16.h),
 
-                    // 4. Doctors List (Paginated & Filtered)
+                    // 4. Doctors List (Paginated, Filtered & Sorted)
                     Expanded(
                       child: Stack(
                         children: [
@@ -260,7 +165,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                               } else if (state is DoctorStaffError) {
                                 return Center(
                                   child: Text(
-                                    "Error: ${state.message}",
+                                    state.message,
                                     style: TextStyle(color: AppColors.error),
                                   ),
                                 );
@@ -268,13 +173,13 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
 
                               List<UserModel> doctorsList = [];
                               if (state is DoctorStaffLoaded) {
-                                doctorsList = state.doctors;
+                                doctorsList = state.doctors.where((u) => u.role == 'doctor').toList();
                               }
 
                               if (doctorsList.isEmpty) {
                                 return Center(
                                   child: Text(
-                                    "No doctors registered.",
+                                    "No doctors found.",
                                     style: TextStyle(color: labelColor),
                                   ),
                                 );
@@ -286,149 +191,89 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                   return ValueListenableBuilder<String>(
                                     valueListenable: _selectedSectionNotifier,
                                     builder: (context, selectedSection, _) {
-                                      final filtered = doctorsList.where((doc) {
-                                        final matchesSearch = (doc.name ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
-                                            (doc.specialization ?? '').toLowerCase().contains(searchQuery.toLowerCase());
-                                        final matchesSection = selectedSection == 'All' ||
-                                            (doc.department ?? '').toLowerCase() == selectedSection.toLowerCase();
-                                        return matchesSearch && matchesSection;
-                                      }).toList();
+                                      return ValueListenableBuilder<String>(
+                                        valueListenable: _sortByNotifier,
+                                        builder: (context, sortBy, _) {
+                                          return ValueListenableBuilder<String>(
+                                            valueListenable: _statusFilterNotifier,
+                                            builder: (context, statusFilter, _) {
+                                              // 1. Filter
+                                              final filtered = doctorsList.where((doc) {
+                                                final matchesSearch = (doc.name ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
+                                                    (doc.specialization ?? '').toLowerCase().contains(searchQuery.toLowerCase());
+                                                final matchesSection = selectedSection == 'All' || doc.department == selectedSection;
+                                                final matchesStatus = statusFilter == 'All' ||
+                                                    doc.status.toLowerCase() == statusFilter.toLowerCase();
+                                                return matchesSearch && matchesSection && matchesStatus;
+                                              }).toList();
 
-                                      if (filtered.isEmpty) {
-                                        return Center(
-                                          child: Text(
-                                            "No matching doctors found.",
-                                            style: TextStyle(color: labelColor),
-                                          ),
-                                        );
-                                      }
+                                              // 2. Sort
+                                              if (sortBy == 'Name (A-Z)') {
+                                                filtered.sort((a, b) => (a.name ?? '').compareTo(b.name ?? ''));
+                                              } else if (sortBy == 'Name (Z-A)') {
+                                                filtered.sort((a, b) => (b.name ?? '').compareTo(a.name ?? ''));
+                                              } else if (sortBy == 'Experience (High-Low)') {
+                                                filtered.sort((a, b) {
+                                                  final expA = (a.age ?? 35) - 25;
+                                                  final expB = (b.age ?? 35) - 25;
+                                                  return expB.compareTo(expA);
+                                                });
+                                              }
 
-                                      return ValueListenableBuilder<int>(
-                                        valueListenable: _currentPageNotifier,
-                                        builder: (context, currentPage, _) {
-                                          final totalPages = (filtered.length / _itemsPerPage).ceil();
-                                          final startIndex = (currentPage - 1) * _itemsPerPage;
-                                          final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
-                                          final paginatedList = filtered.sublist(startIndex, endIndex);
+                                              if (filtered.isEmpty) {
+                                                return Center(
+                                                  child: Text(
+                                                    "No matching doctors found.",
+                                                    style: TextStyle(color: labelColor),
+                                                  ),
+                                                );
+                                              }
 
-                                          return Column(
-                                            children: [
-                                              Expanded(
-                                                child: ListView.builder(
-                                                  itemCount: paginatedList.length,
-                                                  itemBuilder: (context, idx) {
-                                                    final doc = paginatedList[idx];
-                                                    final yearsExp = (doc.age ?? 35) - 25;
-                                                    final status = doc.status;
+                                              return ValueListenableBuilder<int>(
+                                                valueListenable: _currentPageNotifier,
+                                                builder: (context, currentPage, _) {
+                                                  final totalPages = (filtered.length / _itemsPerPage).ceil();
+                                                  final startIndex = (currentPage - 1) * _itemsPerPage;
+                                                  final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
+                                                  final paginatedList = filtered.sublist(startIndex, endIndex);
 
-                                                    return Container(
-                                                      margin: EdgeInsets.only(bottom: 12.h),
-                                                      padding: EdgeInsets.all(12.r),
-                                                      decoration: BoxDecoration(
-                                                        color: cardBg,
-                                                        borderRadius: BorderRadius.circular(12.r),
-                                                        border: Border.all(color: borderColor, width: 1.2),
+                                                  return Column(
+                                                    children: [
+                                                      Expanded(
+                                                        child: ListView.builder(
+                                                          itemCount: paginatedList.length,
+                                                          itemBuilder: (context, idx) {
+                                                            final doc = paginatedList[idx];
+                                                            return DoctorCard(
+                                                              doc: doc,
+                                                              onTap: () {
+                                                                context.push('/admin/doctor-staff/detail', extra: doc);
+                                                              },
+                                                              onView: () {
+                                                                context.push('/admin/doctor-staff/detail', extra: doc);
+                                                              },
+                                                              onEdit: () async {
+                                                                final res = await context.push('/admin/doctor-staff/edit', extra: doc);
+                                                                if (res == true && context.mounted) {
+                                                                  context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+                                                                }
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
-                                                      child: Row(
-                                                        children: [
-                                                          CircleAvatar(
-                                                            radius: 24.r,
-                                                            backgroundColor: isDark ? Colors.white12 : Colors.black12,
-                                                            child: ClipOval(
-                                                              child: CustomImageView(
-                                                                imagePath: ProfileImageHelper.resolveImagePath(
-                                                                  doc.profileImage,
-                                                                  'doctor',
-                                                                  doc.gender,
-                                                                ),
-                                                                width: 48.r,
-                                                                height: 48.r,
-                                                                fit: BoxFit.cover,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(width: 12.w),
-                                                          Expanded(
-                                                            child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                Text(
-                                                                  doc.name ?? '',
-                                                                  style: AppTextStyles.bodyMedium.copyWith(
-                                                                    fontWeight: FontWeight.bold,
-                                                                    color: textColor,
-                                                                    fontSize: 14.sp,
-                                                                  ),
-                                                                ),
-                                                                SizedBox(height: 4.h),
-                                                                Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                                                                      decoration: BoxDecoration(
-                                                                        color: AppColors.primary.withValues(alpha: 0.15),
-                                                                        borderRadius: BorderRadius.circular(4.r),
-                                                                      ),
-                                                                      child: Text(
-                                                                        doc.department ?? 'General',
-                                                                        style: TextStyle(
-                                                                          color: AppColors.primary,
-                                                                          fontSize: 10.sp,
-                                                                          fontWeight: FontWeight.bold,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                SizedBox(height: 4.h),
-                                                                Text(
-                                                                  "$yearsExp+ Years Experience",
-                                                                  style: TextStyle(
-                                                                    color: labelColor,
-                                                                    fontSize: 11.sp,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              _buildStatusPill(status),
-                                                              PopupMenuButton<String>(
-                                                                icon: Icon(Icons.more_vert, color: labelColor),
-                                                                color: cardBg,
-                                                                onSelected: (action) async {
-                                                                  if (action == 'view') {
-                                                                    context.push('/admin/doctor-staff/detail', extra: doc);
-                                                                  } else if (action == 'edit') {
-                                                                    final res = await context.push('/admin/doctor-staff/edit', extra: doc);
-                                                                    if (res == true && context.mounted) {
-                                                                      context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
-                                                                    }
-                                                                  }
-                                                                },
-                                                                itemBuilder: (ctx) => [
-                                                                  PopupMenuItem(
-                                                                    value: 'view',
-                                                                    child: Text("View Profile", style: TextStyle(color: textColor)),
-                                                                  ),
-                                                                  PopupMenuItem(
-                                                                    value: 'edit',
-                                                                    child: Text("Edit Doctor", style: TextStyle(color: textColor)),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
+                                                      DirectoryPagination(
+                                                        currentPage: currentPage,
+                                                        totalPages: totalPages,
+                                                        onPageChanged: (page) {
+                                                          _currentPageNotifier.value = page;
+                                                        },
                                                       ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              // 5. Pagination controls
-                                              _buildPaginationControls(currentPage, totalPages),
-                                            ],
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
                                           );
                                         },
                                       );
@@ -472,194 +317,6 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
             ),
           );
         }
-      ),
-    );
-  }
-
-  Widget _buildRoundHeaderButton(IconData icon, VoidCallback onTap) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final btnBg = isDark ? Colors.white.withValues(alpha: 0.08) : Colors.black.withValues(alpha: 0.05);
-    final iconColor = isDark ? Colors.white : AppColors.terminalLightText;
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20.r),
-      child: Container(
-        padding: EdgeInsets.all(8.r),
-        decoration: BoxDecoration(
-          color: btnBg,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, color: iconColor, size: 18.r),
-      ),
-    );
-  }
-
-  Widget _buildFilterSortButton(String label, IconData icon, VoidCallback onTap) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(8.r),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.h),
-        decoration: BoxDecoration(
-          color: cardBg,
-          borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: borderColor, width: 1.2),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: labelColor, size: 16.r),
-            SizedBox(width: 6.w),
-            Text(
-              label,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusPill(String status) {
-    Color dotColor = AppColors.success;
-    Color bgPillColor = AppColors.success.withValues(alpha: 0.1);
-    String label = "Active";
-
-    if (status.toLowerCase().contains("away")) {
-      dotColor = AppColors.accent;
-      bgPillColor = AppColors.accent.withValues(alpha: 0.1);
-      label = "Away";
-    } else if (status.toLowerCase().contains("inactive")) {
-      dotColor = AppColors.error;
-      bgPillColor = AppColors.error.withValues(alpha: 0.1);
-      label = "Inactive";
-    }
-
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: bgPillColor,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: dotColor.withValues(alpha: 0.3), width: 1),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 6.r,
-            height: 6.r,
-            decoration: BoxDecoration(
-              color: dotColor,
-              shape: BoxShape.circle,
-            ),
-          ),
-          SizedBox(width: 6.w),
-          Text(
-            label,
-            style: TextStyle(
-              color: dotColor,
-              fontSize: 10.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPaginationControls(int currentPage, int totalPages) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final activeBg = AppColors.primary;
-    final inactiveBg = isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05);
-
-    return Padding(
-      padding: EdgeInsets.only(top: 12.h, bottom: 4.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "$currentPage of ${totalPages > 0 ? totalPages : 1}",
-            style: TextStyle(color: labelColor, fontSize: 12.sp, fontWeight: FontWeight.bold),
-          ),
-          Row(
-            children: [
-              // Back arrow
-              _buildPaginationArrow(Icons.chevron_left, currentPage > 1 ? () {
-                _currentPageNotifier.value = currentPage - 1;
-              } : null),
-              SizedBox(width: 6.w),
-
-              // Page Numbers
-              ...List.generate(totalPages, (index) {
-                final pageNum = index + 1;
-                final isActive = pageNum == currentPage;
-                return GestureDetector(
-                  onTap: () {
-                    _currentPageNotifier.value = pageNum;
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 3.w),
-                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                    decoration: BoxDecoration(
-                      color: isActive ? activeBg : inactiveBg,
-                      borderRadius: BorderRadius.circular(4.r),
-                    ),
-                    child: Text(
-                      pageNum.toString(),
-                      style: TextStyle(
-                        color: isActive ? Colors.white : textColor,
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                );
-              }),
-
-              SizedBox(width: 6.w),
-              // Next arrow
-              _buildPaginationArrow(Icons.chevron_right, currentPage < totalPages ? () {
-                _currentPageNotifier.value = currentPage + 1;
-              } : null),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPaginationArrow(IconData icon, VoidCallback? onTap) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final iconColor = onTap != null
-        ? (isDark ? Colors.white : AppColors.terminalLightText)
-        : (isDark ? Colors.white30 : Colors.black26);
-
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(4.r),
-      child: Container(
-        padding: EdgeInsets.all(4.r),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4.r),
-          border: Border.all(
-            color: isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder,
-            width: 1,
-          ),
-        ),
-        child: Icon(icon, color: iconColor, size: 16.r),
       ),
     );
   }
