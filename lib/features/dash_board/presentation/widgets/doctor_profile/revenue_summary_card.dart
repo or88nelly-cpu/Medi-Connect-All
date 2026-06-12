@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
+
 class RevenueSummaryCard extends StatefulWidget {
-  const RevenueSummaryCard({super.key});
+  final UserModel user;
+  const RevenueSummaryCard({super.key, required this.user});
 
   @override
   State<RevenueSummaryCard> createState() => _RevenueSummaryCardState();
@@ -20,6 +23,37 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
     final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
     final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
     final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
+    final double fee = widget.user.consultationFee ?? 800.0;
+
+    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final List<Map<String, dynamic>> consultations = [];
+    if (metadataConsultations != null) {
+      for (var item in metadataConsultations) {
+        if (item is Map) {
+          consultations.add({
+            'status': (item['status'] ?? '').toString(),
+          });
+        }
+      }
+    } else {
+      consultations.addAll([
+        {"status": "Completed"},
+        {"status": "Completed"},
+        {"status": "Completed"},
+        {"status": "Booked"},
+        {"status": "Pending"},
+        {"status": "Booked"},
+        {"status": "Pending"},
+      ]);
+    }
+
+    final completedCount = consultations.where((c) => c['status'] == 'Completed').length;
+    final pendingCount = consultations.where((c) => c['status'] == 'Pending' || c['status'] == 'Booked').length;
+
+    double todayRev = completedCount * fee;
+    double monthlyRev = completedCount * fee * 20;
+    double pendingRev = pendingCount * fee;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -59,13 +93,13 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
           ),
           SizedBox(height: 12.h),
           // Stats list
-          _buildStatRow(Icons.payments_outlined, "Consultation Fee", "₹800", const Color(0xFF00C2A8), labelColor, textColor),
+          _buildStatRow(Icons.payments_outlined, "Consultation Fee", "₹${fee.toStringAsFixed(0)}", const Color(0xFF00C2A8), labelColor, textColor),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.monetization_on_outlined, "Today's Revenue", "₹24,000", const Color(0xFF0F9F58), labelColor, textColor),
+          _buildStatRow(Icons.monetization_on_outlined, "Today's Revenue", "₹${todayRev.toStringAsFixed(0)}", const Color(0xFF0F9F58), labelColor, textColor),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.account_balance_wallet_outlined, "Monthly Revenue", "₹5,20,000", AppColors.primary, labelColor, textColor),
+          _buildStatRow(Icons.account_balance_wallet_outlined, "Monthly Revenue", "₹${monthlyRev.toStringAsFixed(0)}", AppColors.primary, labelColor, textColor),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.history_toggle_off, "Pending Payments", "₹12,000", AppColors.warning, labelColor, textColor),
+          _buildStatRow(Icons.history_toggle_off, "Pending Payments", "₹${pendingRev.toStringAsFixed(0)}", AppColors.warning, labelColor, textColor),
           SizedBox(height: 16.h),
           // View link
           Center(

@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
+
 class PatientFeedbackCard extends StatefulWidget {
-  const PatientFeedbackCard({super.key});
+  final UserModel user;
+  const PatientFeedbackCard({super.key, required this.user});
 
   @override
   State<PatientFeedbackCard> createState() => _PatientFeedbackCardState();

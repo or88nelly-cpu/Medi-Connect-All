@@ -30,196 +30,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
 
   final int _itemsPerPage = 5;
 
-  // Local Staff list (mocked to match the 18 staff members requested/shown in the screenshot)
-  late List<UserModel> _localStaff;
-
-  final List<UserModel> _defaultMockStaff = [
-    UserModel(
-      id: 'mock-1',
-      name: 'John Smith',
-      staffRole: 'HR Manager',
-      department: 'Management',
-      email: 'john.smith@hospital.com',
-      status: 'Active',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-2',
-      name: 'Emily Johnson',
-      staffRole: 'HR Executive',
-      department: 'Recruitment',
-      email: 'emily.j@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-3',
-      name: 'Michael Brown',
-      staffRole: 'Payroll Specialist',
-      department: 'Payroll',
-      email: 'michael.b@hospital.com',
-      status: 'Active',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-4',
-      name: 'Sophia Williams',
-      staffRole: 'HR Generalist',
-      department: 'Employee Relations',
-      email: 'sophia.w@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-5',
-      name: 'David Miller',
-      staffRole: 'Training Coordinator',
-      department: 'Training & Development',
-      email: 'david.m@hospital.com',
-      status: 'Away',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-6',
-      name: 'Olivia Jones',
-      staffRole: 'Recruitment Specialist',
-      department: 'Recruitment',
-      email: 'olivia.j@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-7',
-      name: 'James Davis',
-      staffRole: 'HR Assistant',
-      department: 'HR Operations',
-      email: 'james.d@hospital.com',
-      status: 'Active',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-8',
-      name: 'Isabella Garcia',
-      staffRole: 'Benefits Specialist',
-      department: 'Payroll & Benefits',
-      email: 'isabella.g@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-9',
-      name: 'Robert Martinez',
-      staffRole: 'Training Specialist',
-      department: 'Training & Development',
-      email: 'robert.m@hospital.com',
-      status: 'Inactive',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-10',
-      name: 'Mia Rodriguez',
-      staffRole: 'HR Generalist',
-      department: 'Employee Relations',
-      email: 'mia.r@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-11',
-      name: 'William Wilson',
-      staffRole: 'HR Manager (Compensation)',
-      department: 'Management',
-      email: 'william.w@hospital.com',
-      status: 'Active',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-12',
-      name: 'Abigail Anderson',
-      staffRole: 'Talent Acquisition Partner',
-      department: 'Recruitment',
-      email: 'abigail.a@hospital.com',
-      status: 'Away',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-13',
-      name: 'Joseph Thomas',
-      staffRole: 'HR Specialist',
-      department: 'HR Operations',
-      email: 'joseph.t@hospital.com',
-      status: 'Active',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-14',
-      name: 'Elizabeth Taylor',
-      staffRole: 'Payroll Coordinator',
-      department: 'Payroll',
-      email: 'elizabeth.t@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-15',
-      name: 'Charles Moore',
-      staffRole: 'Onboarding Coordinator',
-      department: 'Recruitment',
-      email: 'charles.m@hospital.com',
-      status: 'Active',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-16',
-      name: 'Margaret Jackson',
-      staffRole: 'Employee Relations Specialist',
-      department: 'Employee Relations',
-      email: 'margaret.j@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-17',
-      name: 'Richard Martin',
-      staffRole: 'HR Systems Analyst',
-      department: 'HR Operations',
-      email: 'richard.m@hospital.com',
-      status: 'Active',
-      gender: 'male',
-      role: 'staff',
-    ),
-    UserModel(
-      id: 'mock-18',
-      name: 'Dorothy Lee',
-      staffRole: 'Compliance Officer',
-      department: 'Legal & Compliance',
-      email: 'dorothy.l@hospital.com',
-      status: 'Active',
-      gender: 'female',
-      role: 'staff',
-    ),
-  ];
-
   @override
   void initState() {
     super.initState();
-    _localStaff = List.from(_defaultMockStaff);
     // Fetch from Supabase
     context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('Human Resource'));
   }
@@ -256,21 +69,12 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
         title: "Delete Profile",
         message: "Are you sure you want to delete ${user.name ?? 'this user'}? This action cannot be undone.",
         onConfirm: () {
-          if (user.id.startsWith('mock-')) {
-            setState(() {
-              _localStaff.removeWhere((e) => e.id == user.id);
-            });
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Mock staff profile deleted.")),
-            );
-          } else {
-            context.read<DoctorStaffBloc>().add(
-              DeleteDoctorStaffMember(
-                userId: user.id,
-                departmentName: 'Human Resource',
-              ),
-            );
-          }
+          context.read<DoctorStaffBloc>().add(
+            DeleteDoctorStaffMember(
+              userId: user.id,
+              departmentName: 'Human Resource',
+            ),
+          );
         },
       ),
     );
@@ -615,11 +419,18 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
   Widget _buildStaffSection(bool isDark, Color textColor, Color labelColor) {
     return BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
       builder: (context, state) {
-        List<UserModel> sourceList = _localStaff;
-        if (state is DoctorStaffLoaded && state.staff.isNotEmpty) {
-          final serverIds = state.staff.map((e) => e.id).toSet();
-          final uniqueMocks = _localStaff.where((e) => !serverIds.contains(e.id)).toList();
-          sourceList = [...state.staff, ...uniqueMocks];
+        if (state is DoctorStaffLoading) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+
+        List<UserModel> sourceList = [];
+        if (state is DoctorStaffLoaded) {
+          sourceList = state.staff;
         }
 
         return ValueListenableBuilder<String>(
@@ -892,7 +703,7 @@ class _StaffListCard extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  "${staff.department ?? 'Staff'} • ${staff.email}",
+                  "${staff.metadata?['sub_department'] ?? staff.department ?? 'Staff'} • ${staff.email}",
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: labelColor,

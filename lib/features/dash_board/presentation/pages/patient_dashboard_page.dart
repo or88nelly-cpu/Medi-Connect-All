@@ -24,6 +24,8 @@ import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
+import 'package:get_it/get_it.dart';
+import 'package:medi_connect/features/department/data/datasource/doctor_staff_remote_datasource.dart';
 
 class PatientDashboardPage extends StatefulWidget {
   const PatientDashboardPage({super.key});
@@ -262,29 +264,49 @@ class _PatientWelcomeBanner extends StatelessWidget {
 class _PatientQuickStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _QuickStatCard(
-          icon: Icons.calendar_today,
-          label: 'Appointments',
-          value: '3',
-          color: AppColors.primary,
-        ),
-        SizedBox(width: 12.w),
-        _QuickStatCard(
-          icon: Icons.folder_open,
-          label: 'Records',
-          value: '12',
-          color: AppColors.secondary,
-        ),
-        SizedBox(width: 12.w),
-        _QuickStatCard(
-          icon: Icons.medical_services_outlined,
-          label: 'Prescriptions',
-          value: '5',
-          color: AppColors.accent,
-        ),
-      ],
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        int aptCount = 3;
+        int recCount = 12;
+        int presCount = 5;
+
+        if (state is Authenticated) {
+          final user = state.user;
+          final apts = user.metadata?['appointments'] as List<dynamic>?;
+          if (apts != null) aptCount = apts.length;
+
+          final recs = user.metadata?['records'] as List<dynamic>?;
+          if (recs != null) recCount = recs.length;
+
+          final prescriptions = user.metadata?['prescriptions'] as List<dynamic>?;
+          if (prescriptions != null) presCount = prescriptions.length;
+        }
+
+        return Row(
+          children: [
+            _QuickStatCard(
+              icon: Icons.calendar_today,
+              label: 'Appointments',
+              value: '$aptCount',
+              color: AppColors.primary,
+            ),
+            SizedBox(width: 12.w),
+            _QuickStatCard(
+              icon: Icons.folder_open,
+              label: 'Records',
+              value: '$recCount',
+              color: AppColors.secondary,
+            ),
+            SizedBox(width: 12.w),
+            _QuickStatCard(
+              icon: Icons.medical_services_outlined,
+              label: 'Prescriptions',
+              value: '$presCount',
+              color: AppColors.accent,
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -339,37 +361,72 @@ class _QuickStatCard extends StatelessWidget {
 class _UpcomingAppointmentsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.r),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14.r),
-        border: Border.all(color: AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withOpacity(0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final List<Map<String, String>> appointments = [];
+        if (state is Authenticated) {
+          final user = state.user;
+          final metadataApts = user.metadata?['appointments'] as List<dynamic>?;
+          if (metadataApts != null) {
+            for (var item in metadataApts) {
+              if (item is Map) {
+                appointments.add({
+                  'doctorName': (item['doctor'] ?? '').toString(),
+                  'specialty': (item['specialty'] ?? '').toString(),
+                  'time': (item['time'] ?? '').toString(),
+                });
+              }
+            }
+          }
+        }
+
+        if (appointments.isEmpty) {
+          appointments.addAll([
+            {
+              'doctorName': 'Dr. Sarah Johnson',
+              'specialty': 'Cardiologist',
+              'time': 'Today, 10:30 AM',
+            },
+            {
+              'doctorName': 'Dr. Michael Chen',
+              'specialty': 'Neurologist',
+              'time': 'Tomorrow, 2:00 PM',
+            },
+          ]);
+        }
+
+        return Container(
+          padding: EdgeInsets.all(16.r),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(14.r),
+            border: Border.all(color: AppColors.border),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withOpacity(0.04),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _AppointmentRow(
-            doctorName: 'Dr. Sarah Johnson',
-            specialty: 'Cardiologist',
-            time: 'Today, 10:30 AM',
-            color: AppColors.primary,
+          child: Column(
+            children: List.generate(appointments.length > 2 ? 2 : appointments.length, (idx) {
+              final apt = appointments[idx];
+              return Column(
+                children: [
+                  if (idx > 0) Divider(color: AppColors.border, height: 20.h),
+                  _AppointmentRow(
+                    doctorName: apt['doctorName']!,
+                    specialty: apt['specialty']!,
+                    time: apt['time']!,
+                    color: idx == 0 ? AppColors.primary : AppColors.secondary,
+                  ),
+                ],
+              );
+            }),
           ),
-          Divider(color: AppColors.border, height: 20.h),
-          _AppointmentRow(
-            doctorName: 'Dr. Michael Chen',
-            specialty: 'Neurologist',
-            time: 'Tomorrow, 2:00 PM',
-            color: AppColors.secondary,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -453,110 +510,133 @@ class _PatientAppointmentsTab extends StatefulWidget {
 }
 
 class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
-  final List<Map<String, String>> _myAppointments = [
-    {
-      'doctor': 'Dr. Sarah Johnson',
-      'specialty': 'Cardiologist',
-      'time': 'June 12, 10:30 AM',
-      'type': 'Cardiology Clinic',
-    },
-    {
-      'doctor': 'Dr. Michael Chen',
-      'specialty': 'Neurologist',
-      'time': 'June 15, 02:00 PM',
-      'type': 'Neurology Clinic',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(20.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is! Authenticated) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final user = UserModel.fromEntity(state.user);
+        final metadataApts = user.metadata?['appointments'] as List<dynamic>?;
+        final List<Map<String, String>> appointments = [];
+        if (metadataApts != null) {
+          for (var item in metadataApts) {
+            if (item is Map) {
+              appointments.add({
+                'doctor': (item['doctor'] ?? '').toString(),
+                'specialty': (item['specialty'] ?? '').toString(),
+                'time': (item['time'] ?? '').toString(),
+                'type': (item['type'] ?? '').toString(),
+              });
+            }
+          }
+        } else {
+          appointments.addAll([
+            {
+              'doctor': 'Dr. Sarah Johnson',
+              'specialty': 'Cardiologist',
+              'time': 'June 12, 10:30 AM',
+              'type': 'Cardiology Clinic',
+            },
+            {
+              'doctor': 'Dr. Michael Chen',
+              'specialty': 'Neurologist',
+              'time': 'June 15, 02:00 PM',
+              'type': 'Neurology Clinic',
+            },
+          ]);
+        }
+
+        return Padding(
+          padding: EdgeInsets.all(20.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                AppStrings.appointments,
-                style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
-              ),
-              ElevatedButton.icon(
-                onPressed: () => _showBookDoctorDialog(context),
-                icon: const Icon(Icons.search, color: Colors.white),
-                label: const Text(
-                  "Book Doctor",
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppStrings.appointments,
+                    style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
                   ),
+                  ElevatedButton.icon(
+                    onPressed: () => _showBookDoctorDialog(context),
+                    icon: const Icon(Icons.search, color: Colors.white),
+                    label: const Text(
+                      "Book Doctor",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h),
+              Text(
+                "My Scheduled Bookings",
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 12.h),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: appointments.length,
+                  itemBuilder: (context, idx) {
+                    final apt = appointments[idx];
+                    return Card(
+                      margin: EdgeInsets.only(bottom: 12.h),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                        side: const BorderSide(color: AppColors.border),
+                      ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(16.r),
+                        leading: CircleAvatar(
+                          backgroundColor: AppColors.primary.withOpacity(0.1),
+                          child: Icon(Icons.person, color: AppColors.primary),
+                        ),
+                        title: Text(
+                          apt['doctor']!,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        subtitle: Text("${apt['specialty']!} | ${apt['type']!}"),
+                        trailing: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 4.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(6.r),
+                          ),
+                          child: Text(
+                            apt['time']!,
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
-          Text(
-            "My Scheduled Bookings",
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 12.h),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _myAppointments.length,
-              itemBuilder: (context, idx) {
-                final apt = _myAppointments[idx];
-                return Card(
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16.r),
-                    leading: CircleAvatar(
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
-                      child: Icon(Icons.person, color: AppColors.primary),
-                    ),
-                    title: Text(
-                      apt['doctor']!,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    subtitle: Text("${apt['specialty']!} | ${apt['type']!}"),
-                    trailing: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8.w,
-                        vertical: 4.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(6.r),
-                      ),
-                      child: Text(
-                        apt['time']!,
-                        style: TextStyle(
-                          color: AppColors.primary,
-                          fontSize: 9.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -733,15 +813,46 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
             child: const Text("Cancel"),
           ),
           ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _myAppointments.insert(0, {
+            onPressed: () async {
+              final authState = context.read<AuthBloc>().state;
+              if (authState is Authenticated) {
+                final user = UserModel.fromEntity(authState.user);
+                final updatedMetadata = Map<String, dynamic>.from(user.metadata ?? {});
+                final currentApts = List<dynamic>.from(updatedMetadata['appointments'] ?? [
+                  {
+                    'doctor': 'Dr. Sarah Johnson',
+                    'specialty': 'Cardiologist',
+                    'time': 'June 12, 10:30 AM',
+                    'type': 'Cardiology Clinic',
+                  },
+                  {
+                    'doctor': 'Dr. Michael Chen',
+                    'specialty': 'Neurologist',
+                    'time': 'June 15, 02:00 PM',
+                    'type': 'Neurology Clinic',
+                  },
+                ]);
+                
+                final newApt = {
                   'doctor': doc.name ?? 'Dr. Specialist',
                   'specialty': doc.specialization ?? 'General Medicine',
                   'time': 'June 18, 09:30 AM',
                   'type': doc.department ?? 'General Clinic',
-                });
-              });
+                };
+                
+                currentApts.insert(0, newApt);
+                updatedMetadata['appointments'] = currentApts;
+                
+                final updatedUser = user.copyWith(metadata: updatedMetadata);
+                
+                // Save to database
+                await GetIt.instance<DoctorStaffRemoteDataSource>().updateDoctorStaffMember(updatedUser);
+                
+                // Update local auth state
+                if (context.mounted) {
+                  context.read<AuthBloc>().add(UserUpdated(updatedUser));
+                }
+              }
               Navigator.pop(ctx);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -767,86 +878,110 @@ class _PatientRecordsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> records = [
-      {
-        'title': 'CBC Blood Test Report',
-        'date': 'June 08, 2026',
-        'type': 'Lab Report',
-        'doctor': 'Dr. Sarah Johnson',
-      },
-      {
-        'title': 'ECG Assessment Report',
-        'date': 'May 20, 2026',
-        'type': 'Lab Report',
-        'doctor': 'Dr. Sarah Johnson',
-      },
-      {
-        'title': 'Neurological Symptoms Assessment',
-        'date': 'May 12, 2026',
-        'type': 'Prescription',
-        'doctor': 'Dr. Michael Chen',
-      },
-    ];
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final List<Map<String, String>> records = [];
+        if (state is Authenticated) {
+          final user = state.user;
+          final metadataRecs = user.metadata?['records'] as List<dynamic>?;
+          if (metadataRecs != null) {
+            for (var item in metadataRecs) {
+              if (item is Map) {
+                records.add({
+                  'title': (item['title'] ?? '').toString(),
+                  'date': (item['date'] ?? '').toString(),
+                  'type': (item['type'] ?? '').toString(),
+                  'doctor': (item['doctor'] ?? '').toString(),
+                });
+              }
+            }
+          }
+        }
 
-    return Padding(
-      padding: EdgeInsets.all(20.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppStrings.medicalRecords,
-            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
-          ),
-          SizedBox(height: 16.h),
-          Expanded(
-            child: ListView.builder(
-              itemCount: records.length,
-              itemBuilder: (context, idx) {
-                final rec = records[idx];
-                final isLab = rec['type'] == 'Lab Report';
+        if (records.isEmpty) {
+          records.addAll([
+            {
+              'title': 'CBC Blood Test Report',
+              'date': 'June 08, 2026',
+              'type': 'Lab Report',
+              'doctor': 'Dr. Sarah Johnson',
+            },
+            {
+              'title': 'ECG Assessment Report',
+              'date': 'May 20, 2026',
+              'type': 'Lab Report',
+              'doctor': 'Dr. Sarah Johnson',
+            },
+            {
+              'title': 'Neurological Symptoms Assessment',
+              'date': 'May 12, 2026',
+              'type': 'Prescription',
+              'doctor': 'Dr. Michael Chen',
+            },
+          ]);
+        }
 
-                return Card(
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16.r),
-                    leading: Container(
-                      padding: EdgeInsets.all(10.r),
-                      decoration: BoxDecoration(
-                        color: (isLab ? AppColors.secondary : AppColors.accent)
-                            .withOpacity(0.1),
-                        shape: BoxShape.circle,
+        return Padding(
+          padding: EdgeInsets.all(20.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppStrings.medicalRecords,
+                style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+              ),
+              SizedBox(height: 16.h),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: records.length,
+                  itemBuilder: (context, idx) {
+                    final rec = records[idx];
+                    final isLab = rec['type'] == 'Lab Report';
+
+                    return Card(
+                      margin: EdgeInsets.only(bottom: 12.h),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                        side: const BorderSide(color: AppColors.border),
                       ),
-                      child: Icon(
-                        isLab
-                            ? Icons.science_outlined
-                            : Icons.description_outlined,
-                        color: isLab ? AppColors.secondary : AppColors.accent,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(16.r),
+                        leading: Container(
+                          padding: EdgeInsets.all(10.r),
+                          decoration: BoxDecoration(
+                            color: (isLab ? AppColors.secondary : AppColors.accent)
+                                .withOpacity(0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            isLab
+                                ? Icons.science_outlined
+                                : Icons.description_outlined,
+                            color: isLab ? AppColors.secondary : AppColors.accent,
+                          ),
+                        ),
+                        title: Text(
+                          rec['title']!,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "Doctor: ${rec['doctor']!} \nDate: ${rec['date']!}",
+                        ),
+                        trailing: const Icon(Icons.download_outlined),
+                        isThreeLine: true,
                       ),
-                    ),
-                    title: Text(
-                      rec['title']!,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    subtitle: Text(
-                      "Doctor: ${rec['doctor']!} \nDate: ${rec['date']!}",
-                    ),
-                    trailing: const Icon(Icons.download_outlined),
-                    isThreeLine: true,
-                  ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -859,84 +994,108 @@ class _PatientChatTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> chats = [
-      {
-        'doctor': 'Dr. Sarah Johnson',
-        'specialty': 'Cardiologist',
-        'lastMsg': 'Your ECG looks normal, please continue the medication.',
-        'time': 'Yesterday',
-      },
-      {
-        'doctor': 'Dr. Michael Chen',
-        'specialty': 'Neurologist',
-        'lastMsg': 'Let\'s schedule a checkup next week if headache persists.',
-        'time': '3 days ago',
-      },
-    ];
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final List<Map<String, String>> chats = [];
+        if (state is Authenticated) {
+          final user = state.user;
+          final metadataChats = user.metadata?['chats'] as List<dynamic>?;
+          if (metadataChats != null) {
+            for (var item in metadataChats) {
+              if (item is Map) {
+                chats.add({
+                  'doctor': (item['doctor'] ?? '').toString(),
+                  'specialty': (item['specialty'] ?? '').toString(),
+                  'lastMsg': (item['lastMsg'] ?? '').toString(),
+                  'time': (item['time'] ?? '').toString(),
+                });
+              }
+            }
+          }
+        }
 
-    return Padding(
-      padding: EdgeInsets.all(20.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppStrings.chat,
-            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+        if (chats.isEmpty) {
+          chats.addAll([
+            {
+              'doctor': 'Dr. Sarah Johnson',
+              'specialty': 'Cardiologist',
+              'lastMsg': 'Your ECG looks normal, please continue the medication.',
+              'time': 'Yesterday',
+            },
+            {
+              'doctor': 'Dr. Michael Chen',
+              'specialty': 'Neurologist',
+              'lastMsg': 'Let\'s schedule a checkup next week if headache persists.',
+              'time': '3 days ago',
+            },
+          ]);
+        }
+
+        return Padding(
+          padding: EdgeInsets.all(20.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppStrings.chat,
+                style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+              ),
+              SizedBox(height: 16.h),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: chats.length,
+                  itemBuilder: (context, idx) {
+                    final ch = chats[idx];
+                    return Card(
+                      margin: EdgeInsets.only(bottom: 12.h),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                        side: const BorderSide(color: AppColors.border),
+                      ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(16.r),
+                        leading: CircleAvatar(
+                          backgroundColor: AppColors.primary.withOpacity(0.1),
+                          child: Icon(Icons.person, color: AppColors.primary),
+                        ),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              ch['doctor']!,
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                            Text(ch['time']!, style: AppTextStyles.bodySmall),
+                          ],
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 2.h),
+                            Text(
+                              ch['specialty']!,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              ch['lastMsg']!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
-          Expanded(
-            child: ListView.builder(
-              itemCount: chats.length,
-              itemBuilder: (context, idx) {
-                final ch = chats[idx];
-                return Card(
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16.r),
-                    leading: CircleAvatar(
-                      backgroundColor: AppColors.primary.withOpacity(0.1),
-                      child: Icon(Icons.person, color: AppColors.primary),
-                    ),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          ch['doctor']!,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                        Text(ch['time']!, style: AppTextStyles.bodySmall),
-                      ],
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 2.h),
-                        Text(
-                          ch['specialty']!,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          ch['lastMsg']!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

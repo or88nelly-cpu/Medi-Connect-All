@@ -8,6 +8,9 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:get_it/get_it.dart';
+import 'package:medi_connect/features/department/data/datasource/doctor_staff_remote_datasource.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/staff_bottom_nav_bar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
@@ -211,49 +214,75 @@ class _StaffWelcomeBanner extends StatelessWidget {
 class _StaffShiftCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        side: const BorderSide(color: AppColors.border),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(16.r),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        String currentShift = "Day Shift (08:00 AM - 04:00 PM)";
+        String statusLabel = "Active";
+
+        if (state is Authenticated) {
+          final user = UserModel.fromEntity(state.user);
+          final roster = user.metadata?['roster'] as List<dynamic>?;
+          if (roster != null && roster.isNotEmpty) {
+            final days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            final currentDayName = days[DateTime.now().weekday - 1];
+            final shiftItem = roster.firstWhere(
+              (item) => item is Map && item['day'] == currentDayName,
+              orElse: () => null,
+            );
+            if (shiftItem != null && shiftItem is Map) {
+              currentShift = (shiftItem['shift'] ?? '').toString();
+              if (currentShift.toLowerCase().contains("off")) {
+                statusLabel = "Off";
+              }
+            }
+          }
+        }
+
+        return Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            side: const BorderSide(color: AppColors.border),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16.r),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Current Shift", style: AppTextStyles.bodySmall),
-                SizedBox(height: 4.h),
-                Text(
-                  "Day Shift (08:00 AM - 04:00 PM)",
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Current Shift", style: AppTextStyles.bodySmall),
+                    SizedBox(height: 4.h),
+                    Text(
+                      currentShift,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                  decoration: BoxDecoration(
+                    color: statusLabel == "Off" ? AppColors.error.withOpacity(0.1) : AppColors.accent.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6.r),
+                  ),
+                  child: Text(
+                    statusLabel,
+                    style: TextStyle(
+                      color: statusLabel == "Off" ? AppColors.error : AppColors.accent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10.sp,
+                    ),
                   ),
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-              decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(6.r),
-              ),
-              child: Text(
-                "Active",
-                style: TextStyle(
-                  color: AppColors.accent,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 10.sp,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -261,54 +290,79 @@ class _StaffShiftCard extends StatelessWidget {
 class _StaffTasksOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> tasks = [
-      {'title': 'Sanitize consultation room 3', 'status': 'Pending'},
-      {'title': 'Verify outpatient logs', 'status': 'Completed'},
-      {'title': 'Update stock checklist in Block A', 'status': 'Pending'},
-    ];
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final List<Map<String, dynamic>> tasks = [];
+        if (state is Authenticated) {
+          final user = state.user;
+          final metadataTasks = user.metadata?['tasks'] as List<dynamic>?;
+          if (metadataTasks != null) {
+            for (var item in metadataTasks) {
+              if (item is Map) {
+                tasks.add({
+                  'title': (item['title'] ?? '').toString(),
+                  'status': (item['status'] ?? '').toString(),
+                });
+              }
+            }
+          }
+        }
 
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14.r),
-        side: const BorderSide(color: AppColors.border),
-      ),
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: tasks.length,
-        separatorBuilder: (context, idx) =>
-            const Divider(color: AppColors.border, height: 1),
-        itemBuilder: (context, idx) {
-          final t = tasks[idx];
-          final isCompleted = t['status'] == 'Completed';
-          return ListTile(
-            contentPadding: EdgeInsets.all(16.r),
-            leading: Icon(
-              isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
-              color: isCompleted ? AppColors.success : AppColors.textSecondary,
-            ),
-            title: Text(
-              t['title']!,
-              style: AppTextStyles.bodyMedium.copyWith(
-                decoration: isCompleted ? TextDecoration.lineThrough : null,
-                color: isCompleted
-                    ? AppColors.textSecondary
-                    : AppColors.textPrimary,
-                fontWeight: isCompleted ? FontWeight.normal : FontWeight.bold,
-              ),
-            ),
-            trailing: Text(
-              t['status']!,
-              style: TextStyle(
-                color: isCompleted ? AppColors.success : AppColors.accent,
-                fontWeight: FontWeight.bold,
-                fontSize: 10.sp,
-              ),
-            ),
-          );
-        },
-      ),
+        if (tasks.isEmpty) {
+          tasks.addAll([
+            {'title': 'Sanitize consultation room 3', 'status': 'Pending'},
+            {'title': 'Verify outpatient logs', 'status': 'Completed'},
+            {'title': 'Update stock checklist in Block A', 'status': 'Pending'},
+          ]);
+        }
+
+        // Only show up to 3 tasks in the home overview card
+        final tasksToShow = tasks.length > 3 ? tasks.sublist(0, 3) : tasks;
+
+        return Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14.r),
+            side: const BorderSide(color: AppColors.border),
+          ),
+          child: ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: tasksToShow.length,
+            separatorBuilder: (context, idx) =>
+                const Divider(color: AppColors.border, height: 1),
+            itemBuilder: (context, idx) {
+              final t = tasksToShow[idx];
+              final isCompleted = t['status'] == 'Completed';
+              return ListTile(
+                contentPadding: EdgeInsets.all(16.r),
+                leading: Icon(
+                  isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
+                  color: isCompleted ? AppColors.success : AppColors.textSecondary,
+                ),
+                title: Text(
+                  t['title']!,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    decoration: isCompleted ? TextDecoration.lineThrough : null,
+                    color: isCompleted
+                        ? AppColors.textSecondary
+                        : AppColors.textPrimary,
+                    fontWeight: isCompleted ? FontWeight.normal : FontWeight.bold,
+                  ),
+                ),
+                trailing: Text(
+                  t['status']!,
+                  style: TextStyle(
+                    color: isCompleted ? AppColors.success : AppColors.accent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10.sp,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -316,83 +370,130 @@ class _StaffTasksOverviewCard extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 // Staff Tasks Tab
 // ─────────────────────────────────────────────────────────────────────────────
-class _StaffTasksTab extends StatefulWidget {
+class _StaffTasksTab extends StatelessWidget {
   const _StaffTasksTab();
 
   @override
-  State<_StaffTasksTab> createState() => _StaffTasksTabState();
-}
-
-class _StaffTasksTabState extends State<_StaffTasksTab> {
-  final List<Map<String, dynamic>> _tasks = [
-    {'id': 'T-1', 'title': 'Sanitize consultation room 3', 'status': 'Pending'},
-    {'id': 'T-2', 'title': 'Verify outpatient logs', 'status': 'Completed'},
-    {
-      'id': 'T-3',
-      'title': 'Update stock checklist in Block A',
-      'status': 'Pending',
-    },
-    {
-      'id': 'T-4',
-      'title': 'Confirm receipt of lab reagents',
-      'status': 'Pending',
-    },
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(20.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "My Tasks",
-            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
-          ),
-          SizedBox(height: 16.h),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _tasks.length,
-              itemBuilder: (context, idx) {
-                final t = _tasks[idx];
-                final isCompleted = t['status'] == 'Completed';
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is! Authenticated) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final user = UserModel.fromEntity(state.user);
+        final metadataTasks = user.metadata?['tasks'] as List<dynamic>?;
+        final List<Map<String, dynamic>> tasks = [];
+        if (metadataTasks != null) {
+          for (var item in metadataTasks) {
+            if (item is Map) {
+              tasks.add({
+                'id': (item['id'] ?? '').toString(),
+                'title': (item['title'] ?? '').toString(),
+                'status': (item['status'] ?? '').toString(),
+              });
+            }
+          }
+        } else {
+          tasks.addAll([
+            {'id': 'T-1', 'title': 'Sanitize consultation room 3', 'status': 'Pending'},
+            {'id': 'T-2', 'title': 'Verify outpatient logs', 'status': 'Completed'},
+            {
+              'id': 'T-3',
+              'title': 'Update stock checklist in Block A',
+              'status': 'Pending',
+            },
+            {
+              'id': 'T-4',
+              'title': 'Confirm receipt of lab reagents',
+              'status': 'Pending',
+            },
+          ]);
+        }
 
-                return Card(
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
-                  ),
-                  child: CheckboxListTile(
-                    activeColor: AppColors.primary,
-                    value: isCompleted,
-                    onChanged: (val) {
-                      setState(() {
-                        _tasks[idx]['status'] = val! ? 'Completed' : 'Pending';
-                      });
-                    },
-                    title: Text(
-                      t['title']!,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: isCompleted
-                            ? AppColors.textSecondary
-                            : AppColors.textPrimary,
-                        decoration: isCompleted
-                            ? TextDecoration.lineThrough
-                            : null,
+        return Padding(
+          padding: EdgeInsets.all(20.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "My Tasks",
+                style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+              ),
+              SizedBox(height: 16.h),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, idx) {
+                    final t = tasks[idx];
+                    final isCompleted = t['status'] == 'Completed';
+
+                    return Card(
+                      margin: EdgeInsets.only(bottom: 12.h),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                        side: const BorderSide(color: AppColors.border),
                       ),
-                    ),
-                    subtitle: Text("Task ID: ${t['id']!}"),
-                  ),
-                );
-              },
-            ),
+                      child: CheckboxListTile(
+                        activeColor: AppColors.primary,
+                        value: isCompleted,
+                        onChanged: (val) async {
+                          final updatedMetadata = Map<String, dynamic>.from(user.metadata ?? {});
+                          final updatedTasks = List<dynamic>.from(updatedMetadata['tasks'] ?? [
+                            {'id': 'T-1', 'title': 'Sanitize consultation room 3', 'status': 'Pending'},
+                            {'id': 'T-2', 'title': 'Verify outpatient logs', 'status': 'Completed'},
+                            {
+                              'id': 'T-3',
+                              'title': 'Update stock checklist in Block A',
+                              'status': 'Pending',
+                            },
+                            {
+                              'id': 'T-4',
+                              'title': 'Confirm receipt of lab reagents',
+                              'status': 'Pending',
+                            },
+                          ]);
+
+                          final taskIdx = updatedTasks.indexWhere((item) => item['id'] == t['id']);
+                          if (taskIdx != -1) {
+                            final updatedTask = Map<String, dynamic>.from(updatedTasks[taskIdx]);
+                            updatedTask['status'] = val! ? 'Completed' : 'Pending';
+                            updatedTasks[taskIdx] = updatedTask;
+                          }
+
+                          updatedMetadata['tasks'] = updatedTasks;
+                          final updatedUser = user.copyWith(metadata: updatedMetadata);
+
+                          // Save to DB
+                          await GetIt.instance<DoctorStaffRemoteDataSource>().updateDoctorStaffMember(updatedUser);
+
+                          // Update Auth state
+                          if (context.mounted) {
+                            context.read<AuthBloc>().add(UserUpdated(updatedUser));
+                          }
+                        },
+                        title: Text(
+                          t['title']!,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: isCompleted
+                                ? AppColors.textSecondary
+                                : AppColors.textPrimary,
+                            decoration: isCompleted
+                                ? TextDecoration.lineThrough
+                                : null,
+                          ),
+                        ),
+                        subtitle: Text("Task ID: ${t['id']!}"),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -405,93 +506,200 @@ class _StaffRosterTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> roster = [
-      {
-        'day': 'Monday',
-        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
-        'dept': 'OPD Support',
-      },
-      {
-        'day': 'Tuesday',
-        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
-        'dept': 'OPD Support',
-      },
-      {'day': 'Wednesday', 'shift': 'Off Day', 'dept': '-'},
-      {
-        'day': 'Thursday',
-        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
-        'dept': 'Emergency Wards',
-      },
-      {
-        'day': 'Friday',
-        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
-        'dept': 'Emergency Wards',
-      },
-    ];
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is! Authenticated) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final user = UserModel.fromEntity(state.user);
+        final metadataRoster = user.metadata?['roster'] as List<dynamic>?;
+        final List<Map<String, String>> roster = [];
 
-    return Padding(
-      padding: EdgeInsets.all(20.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Shift Roster",
-            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
-          ),
-          SizedBox(height: 16.h),
-          Expanded(
-            child: ListView.builder(
-              itemCount: roster.length,
-              itemBuilder: (context, idx) {
-                final r = roster[idx];
-                final isOff = r['shift'] == 'Off Day';
+        if (metadataRoster != null) {
+          for (var item in metadataRoster) {
+            if (item is Map) {
+              roster.add({
+                'day': (item['day'] ?? '').toString(),
+                'shift': (item['shift'] ?? '').toString(),
+                'dept': (item['dept'] ?? '').toString(),
+              });
+            }
+          }
+        }
 
-                return Container(
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  padding: EdgeInsets.all(16.r),
-                  decoration: BoxDecoration(
-                    color: isOff ? AppColors.divider : AppColors.surface,
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: AppColors.border),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            r['day']!,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
+        if (roster.isEmpty) {
+          roster.addAll([
+            {
+              'day': 'Monday',
+              'shift': 'Day Shift (08:00 AM - 04:00 PM)',
+              'dept': 'OPD Support',
+            },
+            {
+              'day': 'Tuesday',
+              'shift': 'Day Shift (08:00 AM - 04:00 PM)',
+              'dept': 'OPD Support',
+            },
+            {'day': 'Wednesday', 'shift': 'Off Day', 'dept': '-'},
+            {
+              'day': 'Thursday',
+              'shift': 'Night Shift (08:00 PM - 04:00 AM)',
+              'dept': 'Emergency Wards',
+            },
+            {
+              'day': 'Friday',
+              'shift': 'Night Shift (08:00 PM - 04:00 AM)',
+              'dept': 'Emergency Wards',
+            },
+          ]);
+        }
+
+        return Padding(
+          padding: EdgeInsets.all(20.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Shift Roster",
+                style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+              ),
+              SizedBox(height: 16.h),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: roster.length,
+                  itemBuilder: (context, idx) {
+                    final r = roster[idx];
+                    final isOff = r['shift'] == 'Off Day';
+
+                    return InkWell(
+                      onTap: () {
+                        // Interactive Shift Change dialog
+                        showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            final shiftCtrl = TextEditingController(text: r['shift']);
+                            final deptCtrl = TextEditingController(text: r['dept']);
+
+                            return AlertDialog(
+                              title: Text("Edit Shift for ${r['day']}"),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextField(
+                                    controller: shiftCtrl,
+                                    decoration: const InputDecoration(labelText: "Shift Timing"),
+                                  ),
+                                  TextField(
+                                    controller: deptCtrl,
+                                    decoration: const InputDecoration(labelText: "Department"),
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(ctx),
+                                  child: const Text("Cancel"),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pop(ctx);
+                                    final updatedMetadata = Map<String, dynamic>.from(user.metadata ?? {});
+                                    final updatedRoster = List<dynamic>.from(updatedMetadata['roster'] ?? [
+                                      {
+                                        'day': 'Monday',
+                                        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
+                                        'dept': 'OPD Support',
+                                      },
+                                      {
+                                        'day': 'Tuesday',
+                                        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
+                                        'dept': 'OPD Support',
+                                      },
+                                      {'day': 'Wednesday', 'shift': 'Off Day', 'dept': '-'},
+                                      {
+                                        'day': 'Thursday',
+                                        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
+                                        'dept': 'Emergency Wards',
+                                      },
+                                      {
+                                        'day': 'Friday',
+                                        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
+                                        'dept': 'Emergency Wards',
+                                      },
+                                    ]);
+
+                                    updatedRoster[idx] = {
+                                      'day': r['day']!,
+                                      'shift': shiftCtrl.text,
+                                      'dept': deptCtrl.text,
+                                    };
+
+                                    updatedMetadata['roster'] = updatedRoster;
+                                    final updatedUser = user.copyWith(metadata: updatedMetadata);
+
+                                    // Save changes
+                                    await GetIt.instance<DoctorStaffRemoteDataSource>().updateDoctorStaffMember(updatedUser);
+
+                                    // Trigger session state updates
+                                    if (context.mounted) {
+                                      context.read<AuthBloc>().add(UserUpdated(updatedUser));
+                                    }
+                                  },
+                                  child: const Text("Save"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 12.h),
+                        padding: EdgeInsets.all(16.r),
+                        decoration: BoxDecoration(
+                          color: isOff ? AppColors.divider : AppColors.surface,
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  r['day']!,
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                                SizedBox(height: 2.h),
+                                Text(r['shift']!, style: AppTextStyles.bodySmall),
+                                if (!isOff)
+                                  Text(
+                                    "Dept: ${r['dept']!}",
+                                    style: AppTextStyles.bodySmall,
+                                  ),
+                              ],
                             ),
-                          ),
-                          SizedBox(height: 2.h),
-                          Text(r['shift']!, style: AppTextStyles.bodySmall),
-                          if (!isOff)
-                            Text(
-                              "Dept: ${r['dept']!}",
-                              style: AppTextStyles.bodySmall,
+                            Icon(
+                              isOff
+                                  ? Icons.home_outlined
+                                  : Icons.calendar_month_outlined,
+                              color: isOff
+                                  ? AppColors.textSecondary
+                                  : AppColors.accent,
                             ),
-                        ],
+                          ],
+                        ),
                       ),
-                      Icon(
-                        isOff
-                            ? Icons.home_outlined
-                            : Icons.calendar_month_outlined,
-                        color: isOff
-                            ? AppColors.textSecondary
-                            : AppColors.accent,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

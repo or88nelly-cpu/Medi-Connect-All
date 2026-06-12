@@ -8,6 +8,7 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/doctor_bottom_nav_bar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
@@ -692,6 +693,33 @@ class _DoctorProfileTab extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 24.h),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    if (state is Authenticated) {
+                      final userModel = UserModel.fromEntity(state.user);
+                      final res = await context.push('/admin/doctor-staff/edit', extra: userModel);
+                      if (res == true && context.mounted) {
+                        context.read<AuthBloc>().add(AuthCheckRequested());
+                      }
+                    }
+                  },
+                  icon: const Icon(Icons.edit, color: Colors.white),
+                  label: const Text(
+                    "Edit Profile",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    padding: EdgeInsets.all(16.r),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 12.h),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(

@@ -26,6 +26,14 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
     _currentStatus = widget.initialStatus;
   }
 
+  @override
+  void didUpdateWidget(covariant DoctorAvailabilityCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialStatus != widget.initialStatus) {
+      _currentStatus = widget.initialStatus;
+    }
+  }
+
   final List<Map<String, dynamic>> _statusOptions = [
     {
       "name": "Online",

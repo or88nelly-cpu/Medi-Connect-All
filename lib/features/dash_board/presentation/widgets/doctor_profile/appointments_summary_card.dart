@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
+
 class AppointmentsSummaryCard extends StatefulWidget {
-  const AppointmentsSummaryCard({super.key});
+  final UserModel user;
+  const AppointmentsSummaryCard({super.key, required this.user});
 
   @override
   State<AppointmentsSummaryCard> createState() => _AppointmentsSummaryCardState();
@@ -20,6 +23,52 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
     final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
     final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
     final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
+    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final List<Map<String, dynamic>> consultations = [];
+    if (metadataConsultations != null) {
+      for (var item in metadataConsultations) {
+        if (item is Map) {
+          consultations.add({
+            'status': (item['status'] ?? '').toString(),
+          });
+        }
+      }
+    } else {
+      consultations.addAll([
+        {"status": "Completed"},
+        {"status": "Completed"},
+        {"status": "Completed"},
+        {"status": "Booked"},
+        {"status": "Pending"},
+        {"status": "Booked"},
+        {"status": "Pending"},
+      ]);
+    }
+
+    final completedCount = consultations.where((c) => c['status'] == 'Completed').length;
+    final pendingCount = consultations.where((c) => c['status'] == 'Pending' || c['status'] == 'Booked').length;
+    final totalToday = consultations.length;
+
+    int totalVal;
+    int upcomingVal;
+    int cancelledVal = 0;
+    int noShowVal = 0;
+
+    if (_selectedRange == "Today") {
+      totalVal = totalToday;
+      upcomingVal = pendingCount;
+    } else if (_selectedRange == "This Week") {
+      totalVal = totalToday * 5;
+      upcomingVal = pendingCount * 4;
+      cancelledVal = 1;
+      noShowVal = 1;
+    } else { // This Month
+      totalVal = totalToday * 20;
+      upcomingVal = pendingCount * 15;
+      cancelledVal = 3;
+      noShowVal = 2;
+    }
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -59,13 +108,13 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
           ),
           SizedBox(height: 12.h),
           // Stats list
-          _buildStatRow(Icons.calendar_today_outlined, "Today's Appointments", "42", AppColors.primary, labelColor, textColor),
+          _buildStatRow(Icons.calendar_today_outlined, "Today's Appointments", "$totalVal", AppColors.primary, labelColor, textColor),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.double_arrow, "Upcoming", "18", const Color(0xFF00C2A8), labelColor, textColor),
+          _buildStatRow(Icons.double_arrow, "Upcoming", "$upcomingVal", const Color(0xFF00C2A8), labelColor, textColor),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.cancel_outlined, "Cancelled", "3", AppColors.error, labelColor, textColor),
+          _buildStatRow(Icons.cancel_outlined, "Cancelled", "$cancelledVal", AppColors.error, labelColor, textColor),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.person_off_outlined, "No Show", "2", AppColors.warning, labelColor, textColor),
+          _buildStatRow(Icons.person_off_outlined, "No Show", "$noShowVal", AppColors.warning, labelColor, textColor),
           SizedBox(height: 16.h),
           // View link
           Center(

@@ -48,6 +48,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ForgotPasswordRequested>(_onForgotPasswordRequested);
     on<ResetPasswordRequested>(_onResetPasswordRequested);
     on<LogoutRequested>(_onLogoutRequested);
+    on<UserUpdated>(_onUserUpdated);
+  }
+
+  void _onUserUpdated(UserUpdated event, Emitter<AuthState> emit) {
+    emit(Authenticated(event.user));
   }
 
   Future<void> _onAuthCheckRequested(

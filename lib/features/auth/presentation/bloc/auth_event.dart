@@ -70,3 +70,10 @@ class ResetPasswordRequested extends AuthEvent {
 }
 
 class LogoutRequested extends AuthEvent {}
+
+class UserUpdated extends AuthEvent {
+  final UserEntity user;
+  const UserUpdated(this.user);
+  @override
+  List<Object?> get props => [user];
+}

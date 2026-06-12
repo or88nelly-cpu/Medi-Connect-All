@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 class ConsultationListCard extends StatefulWidget {
-  const ConsultationListCard({super.key});
+  final UserModel user;
+  const ConsultationListCard({super.key, required this.user});
 
   @override
   State<ConsultationListCard> createState() => _ConsultationListCardState();
@@ -14,8 +20,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
   String _selectedDate = "20 May 2025";
   String _selectedMode = "All"; // All, Video, Audio
 
-  // Mock consultations data
-  final List<Map<String, dynamic>> _consultations = [
+  static const List<Map<String, dynamic>> _defaultConsultations = [
     {
       "time": "09:00 AM",
       "name": "Ramesh Kumar",
@@ -80,6 +85,77 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "status": "Pending"
     }
   ];
+
+  List<Map<String, dynamic>> get _consultations {
+    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    if (metadataConsultations != null) {
+      return metadataConsultations.map((item) {
+        final map = item as Map<dynamic, dynamic>;
+        return {
+          "time": (map["time"] ?? "").toString(),
+          "name": (map["name"] ?? "").toString(),
+          "age": int.tryParse(map["age"].toString()) ?? 30,
+          "gender": (map["gender"] ?? "").toString(),
+          "type": (map["type"] ?? "").toString(),
+          "mode": (map["mode"] ?? "").toString(),
+          "status": (map["status"] ?? "").toString(),
+        };
+      }).toList();
+    }
+    return _defaultConsultations;
+  }
+
+  void _showStatusDialog(Map<String, dynamic> consultation) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text("Update Status"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: ["Completed", "Booked", "Pending"].map((status) {
+              return ListTile(
+                title: Text(status),
+                leading: CircleAvatar(
+                  radius: 8,
+                  backgroundColor: _getStatusColor(status),
+                ),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _updateConsultationStatus(consultation, status);
+                },
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
+  }
+
+  void _updateConsultationStatus(Map<String, dynamic> consultation, String newStatus) {
+    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final currentConsultations = List<dynamic>.from(updatedMetadata['consultations'] ?? _defaultConsultations);
+    
+    final idx = currentConsultations.indexWhere((item) =>
+        item['time'] == consultation['time'] &&
+        item['name'] == consultation['name']);
+        
+    if (idx != -1) {
+      final item = Map<String, dynamic>.from(currentConsultations[idx]);
+      item['status'] = newStatus;
+      currentConsultations[idx] = item;
+      
+      updatedMetadata['consultations'] = currentConsultations;
+      final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+      
+      context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+      
+      final authState = context.read<AuthBloc>().state;
+      if (authState is Authenticated && authState.user.id == widget.user.id) {
+        context.read<AuthBloc>().add(UserUpdated(updatedUser));
+      }
+    }
+  }
 
   Color _getStatusColor(String status) {
     switch (status) {
@@ -277,12 +353,8 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                             flex: 1,
                             child: IconButton(
                               icon: Icon(Icons.more_horiz, color: labelColor, size: 14.sp),
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Action clicked for ${item["name"]}")),
-                                );
-                              },
-                              style: IconButton.styleFrom(padding: EdgeInsets.zero, ),
+                              onPressed: () => _showStatusDialog(item),
+                              style: IconButton.styleFrom(padding: EdgeInsets.zero),
                             ),
                           ),
                         ],

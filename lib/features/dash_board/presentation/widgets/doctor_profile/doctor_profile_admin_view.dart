@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
+import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 // Sub-widgets
 import 'doctor_profile_header.dart';
@@ -115,15 +119,15 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
       case 1:
         return SlotManagementCard(user: widget.user);
       case 2:
-        return const ConsultationListCard();
+        return ConsultationListCard(user: widget.user);
       case 3:
-        return const AppointmentsSummaryCard();
+        return AppointmentsSummaryCard(user: widget.user);
       case 4:
-        return const DoctorLeaveCard();
+        return DoctorLeaveCard(user: widget.user);
       case 5:
-        return _buildPlaceholderView("Patients List View", Icons.people_outline);
+        return _buildPatientsTab();
       case 6:
-        return _buildPlaceholderView("Documents & Certificates View", Icons.description_outlined);
+        return _buildDocumentsTab();
       case 7:
         return _buildAnalyticsTab(isWide);
       default:
@@ -147,14 +151,25 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                   children: [
                     DoctorInfoCard(
                       user: widget.user,
-                      onEdit: () => context.push('/admin/doctor-staff/edit', extra: widget.user),
+                      onEdit: () async {
+                        final res = await context.push('/admin/doctor-staff/edit', extra: widget.user);
+                        if (res == true && context.mounted) {
+                          context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.user.department ?? 'All'));
+                        }
+                      },
                     ),
                     SizedBox(height: 16.h),
-                    DoctorAvailabilityCard(initialStatus: widget.user.availabilityStatus ?? 'Available'),
+                    DoctorAvailabilityCard(
+                      initialStatus: widget.user.availabilityStatus ?? 'Available',
+                      onStatusChanged: (newStatus) {
+                        final updated = widget.user.copyWith(availabilityStatus: newStatus);
+                        context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updated));
+                      },
+                    ),
                     SizedBox(height: 16.h),
-                    const DoctorKeyStatisticsCard(),
+                    DoctorKeyStatisticsCard(user: widget.user),
                     SizedBox(height: 16.h),
-                    const DoctorLeaveCard(),
+                    DoctorLeaveCard(user: widget.user),
                   ],
                 ),
               ),
@@ -166,7 +181,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                   children: [
                     SlotManagementCard(user: widget.user),
                     SizedBox(height: 16.h),
-                    const ConsultationListCard(),
+                    ConsultationListCard(user: widget.user),
                   ],
                 ),
               ),
@@ -175,7 +190,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
           SizedBox(height: 20.h),
           _buildAnalyticsSection(isWide),
           SizedBox(height: 20.h),
-          const QuickActionsRow(),
+          QuickActionsRow(user: widget.user),
         ],
       );
     } else {
@@ -184,22 +199,33 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
         children: [
           DoctorInfoCard(
             user: widget.user,
-            onEdit: () => context.push('/admin/doctor-staff/edit', extra: widget.user),
+            onEdit: () async {
+              final res = await context.push('/admin/doctor-staff/edit', extra: widget.user);
+              if (res == true && context.mounted) {
+                context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.user.department ?? 'All'));
+              }
+            },
           ),
           SizedBox(height: 16.h),
-          DoctorAvailabilityCard(initialStatus: widget.user.availabilityStatus ?? 'Available'),
+          DoctorAvailabilityCard(
+            initialStatus: widget.user.availabilityStatus ?? 'Available',
+            onStatusChanged: (newStatus) {
+              final updated = widget.user.copyWith(availabilityStatus: newStatus);
+              context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updated));
+            },
+          ),
           SizedBox(height: 16.h),
           SlotManagementCard(user: widget.user),
           SizedBox(height: 16.h),
-          const ConsultationListCard(),
+          ConsultationListCard(user: widget.user),
           SizedBox(height: 16.h),
-          const DoctorKeyStatisticsCard(),
+          DoctorKeyStatisticsCard(user: widget.user),
           SizedBox(height: 16.h),
-          const DoctorLeaveCard(),
+          DoctorLeaveCard(user: widget.user),
           SizedBox(height: 20.h),
           _buildAnalyticsSection(isWide),
           SizedBox(height: 20.h),
-          const QuickActionsRow(),
+          QuickActionsRow(user: widget.user),
         ],
       );
     }
@@ -211,7 +237,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
       children: [
         _buildAnalyticsSection(isWide),
         SizedBox(height: 20.h),
-        const QuickActionsRow(),
+        QuickActionsRow(user: widget.user),
       ],
     );
   }
@@ -221,68 +247,273 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Expanded(child: AppointmentsSummaryCard()),
+          Expanded(child: AppointmentsSummaryCard(user: widget.user)),
           SizedBox(width: 12.w),
-          const Expanded(child: ConsultationSummaryCard()),
+          Expanded(child: ConsultationSummaryCard(user: widget.user)),
           SizedBox(width: 12.w),
-          const Expanded(child: RevenueSummaryCard()),
+          Expanded(child: RevenueSummaryCard(user: widget.user)),
           SizedBox(width: 12.w),
-          const Expanded(child: PatientFeedbackCard()),
+          Expanded(child: PatientFeedbackCard(user: widget.user)),
         ],
       );
     } else {
       return Column(
         children: [
-          const AppointmentsSummaryCard(),
+          AppointmentsSummaryCard(user: widget.user),
           SizedBox(height: 12.h),
-          const ConsultationSummaryCard(),
+          ConsultationSummaryCard(user: widget.user),
           SizedBox(height: 12.h),
-          const RevenueSummaryCard(),
+          RevenueSummaryCard(user: widget.user),
           SizedBox(height: 12.h),
-          const PatientFeedbackCard(),
+          PatientFeedbackCard(user: widget.user),
         ],
       );
     }
   }
 
-  Widget _buildPlaceholderView(String label, IconData icon) {
+  Widget _buildPatientsTab() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
     final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
 
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 16.w),
-      decoration: BoxDecoration(
-        color: cardBg,
-        border: Border.all(color: borderColor),
+    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final List<Map<String, dynamic>> patients = [];
+    final Set<String> uniqueNames = {};
+
+    if (metadataConsultations != null) {
+      for (var item in metadataConsultations) {
+        if (item is Map) {
+          final name = (item['name'] ?? '').toString();
+          if (name.isNotEmpty && !uniqueNames.contains(name)) {
+            uniqueNames.add(name);
+            patients.add({
+              'name': name,
+              'age': int.tryParse(item['age']?.toString() ?? '') ?? 30,
+              'gender': (item['gender'] ?? 'Male').toString(),
+              'lastVisit': (item['time'] ?? '09:00 AM').toString(),
+              'type': (item['type'] ?? 'Regular').toString(),
+            });
+          }
+        }
+      }
+    }
+
+    if (patients.isEmpty) {
+      patients.addAll([
+        {'name': 'Ramesh Kumar', 'age': 45, 'gender': 'Male', 'lastVisit': '10:00 AM', 'type': 'Follow Up'},
+        {'name': 'Anita Sharma', 'age': 38, 'gender': 'Female', 'lastVisit': '09:20 AM', 'type': 'New Consultation'},
+        {'name': 'Vikram Singh', 'age': 52, 'gender': 'Male', 'lastVisit': '09:40 AM', 'type': 'Follow Up'},
+        {'name': 'Pooja Mehta', 'age': 29, 'gender': 'Female', 'lastVisit': '11:00 AM', 'type': 'New Consultation'},
+      ]);
+    }
+
+    return Card(
+      elevation: 0,
+      color: cardBg,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.r),
+        side: BorderSide(color: borderColor),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 48.sp, color: AppColors.primary.withOpacity(0.5)),
-          SizedBox(height: 16.h),
-          Text(
-            label,
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 14.sp,
+      child: Padding(
+        padding: EdgeInsets.all(16.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Consulted Patients",
+              style: AppTextStyles.titleMedium.copyWith(color: textColor, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 12.h),
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: patients.length,
+              separatorBuilder: (context, idx) => Divider(color: borderColor, height: 1),
+              itemBuilder: (context, idx) {
+                final p = patients[idx];
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                    backgroundColor: isDark ? Colors.white10 : Colors.black12,
+                    child: Icon(
+                      p['gender'] == 'Male' ? Icons.male : Icons.female,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                  title: Text(
+                    p['name']!,
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13.sp),
+                  ),
+                  subtitle: Text(
+                    "Age: ${p['age']} • ${p['gender']} • Last Visit: ${p['lastVisit']}",
+                    style: TextStyle(color: labelColor, fontSize: 11.sp),
+                  ),
+                  trailing: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                    child: Text(
+                      p['type']!,
+                      style: TextStyle(color: AppColors.primary, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDocumentsTab() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
+    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
+    final metadataDocs = widget.user.metadata?['documents'] as List<dynamic>?;
+    final List<Map<String, dynamic>> documents = [];
+    if (metadataDocs != null) {
+      for (var item in metadataDocs) {
+        if (item is Map) {
+          documents.add({
+            'name': (item['name'] ?? '').toString(),
+            'issueDate': (item['issueDate'] ?? '').toString(),
+            'status': (item['status'] ?? '').toString(),
+          });
+        }
+      }
+    }
+
+    if (documents.isEmpty) {
+      documents.addAll([
+        {'name': 'Medical Registration Certificate', 'issueDate': '12 Jan 2018', 'status': 'Verified'},
+        {'name': 'Specialization Degree (MD)', 'issueDate': '24 Jun 2021', 'status': 'Verified'},
+        {'name': 'Board Certification in Medicine', 'issueDate': '15 Aug 2022', 'status': 'Verified'},
+      ]);
+    }
+
+    return Card(
+      elevation: 0,
+      color: cardBg,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        side: BorderSide(color: borderColor),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Verification Documents",
+                  style: AppTextStyles.titleMedium.copyWith(color: textColor, fontWeight: FontWeight.bold),
+                ),
+                TextButton.icon(
+                  onPressed: () => _showUploadDocumentDialog(),
+                  icon: const Icon(Icons.upload, size: 14),
+                  label: const Text("Upload Doc"),
+                  style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                ),
+              ],
+            ),
+            SizedBox(height: 12.h),
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: documents.length,
+              separatorBuilder: (context, idx) => Divider(color: borderColor, height: 1),
+              itemBuilder: (context, idx) {
+                final d = documents[idx];
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(Icons.verified_user, color: AppColors.success, size: 24.sp),
+                  title: Text(
+                    d['name']!,
+                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13.sp),
+                  ),
+                  subtitle: Text(
+                    "Issued: ${d['issueDate']} • Status: ${d['status']}",
+                    style: TextStyle(color: labelColor, fontSize: 11.sp),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.remove_red_eye, color: AppColors.primary, size: 18.sp),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Viewing ${d['name']}...")),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showUploadDocumentDialog() {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text("Upload Verification Document"),
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(
+              labelText: "Document Name",
+              hintText: "e.g. Fellowship Certificate",
             ),
           ),
-          SizedBox(height: 8.h),
-          Text(
-            "This sub-panel is fully integrated into the doctor profile tab manager.",
-            style: TextStyle(
-              color: isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel,
-              fontSize: 11.sp,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Cancel"),
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+            TextButton(
+              onPressed: () async {
+                final docName = controller.text.trim();
+                if (docName.isEmpty) return;
+                Navigator.pop(ctx);
+
+                final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+                final currentDocs = List<dynamic>.from(updatedMetadata['documents'] ?? [
+                  {'name': 'Medical Registration Certificate', 'issueDate': '12 Jan 2018', 'status': 'Verified'},
+                  {'name': 'Specialization Degree (MD)', 'issueDate': '24 Jun 2021', 'status': 'Verified'},
+                  {'name': 'Board Certification in Medicine', 'issueDate': '15 Aug 2022', 'status': 'Verified'},
+                ]);
+
+                final days = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                final now = DateTime.now();
+                final dateStr = "${now.day} ${days[now.month - 1]} ${now.year}";
+
+                currentDocs.add({
+                  'name': docName,
+                  'issueDate': dateStr,
+                  'status': 'Pending Verification',
+                });
+
+                updatedMetadata['documents'] = currentDocs;
+                final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+
+                context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+              },
+              child: const Text("Upload"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

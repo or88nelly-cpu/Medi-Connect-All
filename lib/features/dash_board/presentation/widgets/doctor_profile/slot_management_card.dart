@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 class SlotManagementCard extends StatefulWidget {
   final UserModel user;
@@ -25,55 +29,95 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
   @override
   void initState() {
     super.initState();
-    _resetSlots();
+    _loadSlots();
   }
 
-  void _resetSlots() {
-    _morningSlots = [
-      {"time": "09:00 AM", "status": "Available"},
-      {"time": "09:10 AM", "status": "Booked"},
-      {"time": "09:20 AM", "status": "Available"},
-      {"time": "09:30 AM", "status": "Available"},
-      {"time": "09:40 AM", "status": "Available"},
-      {"time": "09:50 AM", "status": "Blocked"},
-      {"time": "10:00 AM", "status": "Available"},
-      {"time": "10:10 AM", "status": "Available"},
-      {"time": "10:20 AM", "status": "Available"},
-    ];
+  @override
+  void didUpdateWidget(covariant SlotManagementCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.user != widget.user) {
+      _loadSlots();
+    }
+  }
 
-    _afternoonSlots = [
-      {"time": "02:00 PM", "status": "Available"},
-      {"time": "02:10 PM", "status": "Available"},
-      {"time": "02:20 PM", "status": "On Hold"},
-      {"time": "02:30 PM", "status": "Available"},
-      {"time": "02:40 PM", "status": "Available"},
-      {"time": "02:50 PM", "status": "Available"},
-      {"time": "03:00 PM", "status": "Booked"},
-      {"time": "03:10 PM", "status": "Available"},
-      {"time": "03:20 PM", "status": "Available"},
-    ];
+  void _loadSlots() {
+    final metadataMorning = widget.user.metadata?['slots_morning'] as List<dynamic>?;
+    if (metadataMorning != null) {
+      _morningSlots = metadataMorning.map((e) => Map<String, dynamic>.from(e)).toList();
+    } else {
+      _morningSlots = [
+        {"time": "09:00 AM", "status": "Available"},
+        {"time": "09:10 AM", "status": "Booked"},
+        {"time": "09:20 AM", "status": "Available"},
+        {"time": "09:30 AM", "status": "Available"},
+        {"time": "09:40 AM", "status": "Available"},
+        {"time": "09:50 AM", "status": "Blocked"},
+        {"time": "10:00 AM", "status": "Available"},
+        {"time": "10:10 AM", "status": "Available"},
+        {"time": "10:20 AM", "status": "Available"},
+      ];
+    }
+
+    final metadataAfternoon = widget.user.metadata?['slots_afternoon'] as List<dynamic>?;
+    if (metadataAfternoon != null) {
+      _afternoonSlots = metadataAfternoon.map((e) => Map<String, dynamic>.from(e)).toList();
+    } else {
+      _afternoonSlots = [
+        {"time": "02:00 PM", "status": "Available"},
+        {"time": "02:10 PM", "status": "Available"},
+        {"time": "02:20 PM", "status": "On Hold"},
+        {"time": "02:30 PM", "status": "Available"},
+        {"time": "02:40 PM", "status": "Available"},
+        {"time": "02:50 PM", "status": "Available"},
+        {"time": "03:00 PM", "status": "Booked"},
+        {"time": "03:10 PM", "status": "Available"},
+        {"time": "03:20 PM", "status": "Available"},
+      ];
+    }
   }
 
   void _toggleSlotStatus(Map<String, dynamic> slot) {
     // Cycle: Available -> Booked -> On Hold -> Blocked -> Available
-    setState(() {
-      switch (slot["status"]) {
-        case "Available":
-          slot["status"] = "Booked";
-          break;
-        case "Booked":
-          slot["status"] = "On Hold";
-          break;
-        case "On Hold":
-          slot["status"] = "Blocked";
-          break;
-        case "Blocked":
-          slot["status"] = "Available";
-          break;
-        default:
-          slot["status"] = "Available";
+    String newStatus;
+    switch (slot["status"]) {
+      case "Available":
+        newStatus = "Booked";
+        break;
+      case "Booked":
+        newStatus = "On Hold";
+        break;
+      case "On Hold":
+        newStatus = "Blocked";
+        break;
+      case "Blocked":
+        newStatus = "Available";
+        break;
+      default:
+        newStatus = "Available";
+    }
+
+    final morningIdx = _morningSlots.indexWhere((item) => item['time'] == slot['time']);
+    if (morningIdx != -1) {
+      _morningSlots[morningIdx]['status'] = newStatus;
+    } else {
+      final afternoonIdx = _afternoonSlots.indexWhere((item) => item['time'] == slot['time']);
+      if (afternoonIdx != -1) {
+        _afternoonSlots[afternoonIdx]['status'] = newStatus;
       }
-    });
+    }
+
+    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    updatedMetadata['slots_morning'] = _morningSlots;
+    updatedMetadata['slots_afternoon'] = _afternoonSlots;
+    
+    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+    
+    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+    
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated && authState.user.id == widget.user.id) {
+      context.read<AuthBloc>().add(UserUpdated(updatedUser));
+    }
   }
 
   Color _getStatusColor(String status) {

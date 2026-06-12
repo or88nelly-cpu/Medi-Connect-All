@@ -1,30 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 import 'apply_leave_bottom_sheet.dart';
 
 class DoctorLeaveCard extends StatefulWidget {
-  const DoctorLeaveCard({super.key});
+  final UserModel user;
+  const DoctorLeaveCard({super.key, required this.user});
 
   @override
   State<DoctorLeaveCard> createState() => _DoctorLeaveCardState();
 }
 
 class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
-  final List<Map<String, String>> _leaves = [
-    {
-      "type": "Annual Leave",
-      "range": "20 May 2025 - 25 May 2025",
-      "status": "Approved"
-    },
-    {
-      "type": "Casual Leave",
-      "range": "05 Jun 2025",
-      "status": "Pending"
+  List<Map<String, String>> get _leaves {
+    final metadataLeaves = widget.user.metadata?['leaves'] as List<dynamic>?;
+    if (metadataLeaves != null) {
+      return metadataLeaves.map((l) {
+        final map = l as Map<dynamic, dynamic>;
+        return {
+          "type": (map["type"] ?? "").toString(),
+          "range": (map["range"] ?? "").toString(),
+          "status": (map["status"] ?? "").toString(),
+        };
+      }).toList();
     }
-  ];
+    return [
+      {
+        "type": "Annual Leave",
+        "range": "20 May 2025 - 25 May 2025",
+        "status": "Approved"
+      },
+      {
+        "type": "Casual Leave",
+        "range": "05 Jun 2025",
+        "status": "Pending"
+      }
+    ];
+  }
 
   void _showApplyLeaveDialog() {
     showModalBottomSheet(
@@ -33,9 +52,29 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
       backgroundColor: Colors.transparent,
       builder: (ctx) => ApplyLeaveBottomSheet(
         onLeaveApplied: (leave) {
-          setState(() {
-            _leaves.add(leave);
-          });
+          final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+          final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? [
+            {
+              "type": "Annual Leave",
+              "range": "20 May 2025 - 25 May 2025",
+              "status": "Approved"
+            },
+            {
+              "type": "Casual Leave",
+              "range": "05 Jun 2025",
+              "status": "Pending"
+            }
+          ]);
+          currentLeaves.add(leave);
+          updatedMetadata['leaves'] = currentLeaves;
+          final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+          
+          context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+          
+          final authState = context.read<AuthBloc>().state;
+          if (authState is Authenticated && authState.user.id == widget.user.id) {
+            context.read<AuthBloc>().add(UserUpdated(updatedUser));
+          }
         },
       ),
     );
