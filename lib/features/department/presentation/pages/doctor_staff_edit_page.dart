@@ -6,6 +6,7 @@ import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/edit_profile/edit_doctor_profile_view.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_state.dart';
@@ -73,6 +74,10 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.user.role == 'doctor') {
+      return EditDoctorProfileView(user: widget.user);
+    }
+
     final isDoctor = widget.user.role == 'doctor';
 
     return CustomScaffold(

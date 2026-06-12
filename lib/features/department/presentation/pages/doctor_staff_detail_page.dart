@@ -7,6 +7,7 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/doctor_profile/doctor_profile_admin_view.dart';
 
 class DoctorStaffDetailPage extends StatelessWidget {
   const DoctorStaffDetailPage({super.key, required this.user});
@@ -15,6 +16,10 @@ class DoctorStaffDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDoctor = user.role == 'doctor';
+    if (isDoctor) {
+      return DoctorProfileAdminView(user: user);
+    }
+    
     final roleColor = isDoctor ? AppColors.secondary : AppColors.accent;
 
     return CustomScaffold(

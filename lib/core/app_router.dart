@@ -27,6 +27,8 @@ import 'package:medi_connect/features/department/presentation/pages/doctor_staff
 import 'package:medi_connect/features/department/presentation/pages/doctor_staff_edit_page.dart';
 import 'package:medi_connect/features/department/presentation/pages/doctor_staff_create_page.dart';
 import 'package:medi_connect/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_manage_slots_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_add_slot_page.dart';
 
 class AppRouterConfig {
   static GoRouter buildRouter() {
@@ -119,6 +121,16 @@ class AppRouterConfig {
           path: '/admin/doctor-staff/detail',
           builder: (context, state) =>
               DoctorStaffDetailPage(user: state.extra as UserModel),
+        ),
+        GoRoute(
+          path: '/admin/doctor-staff/manage-slots',
+          builder: (context, state) =>
+              AdminManageSlotsPage(user: state.extra as UserModel),
+        ),
+        GoRoute(
+          path: '/admin/doctor-staff/add-slot',
+          builder: (context, state) =>
+              AdminAddSlotPage(user: state.extra as UserModel),
         ),
         GoRoute(
           path: '/admin/doctor-staff/edit',
