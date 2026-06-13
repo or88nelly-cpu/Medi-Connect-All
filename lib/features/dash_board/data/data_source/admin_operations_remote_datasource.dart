@@ -128,12 +128,60 @@ class AdminOperationsRemoteDataSourceImpl
 
   Future<void> _seedPharmacyData() async {
     final seedItems = [
-      {'name': 'Paracetamol 500mg', 'stock': 120, 'category': 'Analgesic'},
-      {'name': 'Amoxicillin 250mg', 'stock': 8, 'category': 'Antibiotic'},
-      {'name': 'Ibuprofen 400mg', 'stock': 45, 'category': 'Analgesic'},
-      {'name': 'Metformin 850mg', 'stock': 0, 'category': 'Antidiabetic'},
-      {'name': 'Atorvastatin 10mg', 'stock': 3, 'category': 'Antihypertensive'},
-      {'name': 'Omeprazole 20mg', 'stock': 230, 'category': 'Antacid'},
+      {
+        'name': 'Paracetamol 500mg',
+        'stock': 120,
+        'category': 'Analgesic',
+        'buy_price': 8.00,
+        'sell_price': 12.00,
+        'dosage': '500mg',
+        'image_url': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60'
+      },
+      {
+        'name': 'Amoxicillin 250mg',
+        'stock': 8,
+        'category': 'Antibiotic',
+        'buy_price': 15.00,
+        'sell_price': 25.00,
+        'dosage': '250mg',
+        'image_url': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&auto=format&fit=crop&q=60'
+      },
+      {
+        'name': 'Ibuprofen 400mg',
+        'stock': 45,
+        'category': 'Analgesic',
+        'buy_price': 10.00,
+        'sell_price': 18.00,
+        'dosage': '400mg',
+        'image_url': 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=500&auto=format&fit=crop&q=60'
+      },
+      {
+        'name': 'Metformin 850mg',
+        'stock': 0,
+        'category': 'Antidiabetic',
+        'buy_price': 12.00,
+        'sell_price': 20.00,
+        'dosage': '850mg',
+        'image_url': 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&auto=format&fit=crop&q=60'
+      },
+      {
+        'name': 'Atorvastatin 10mg',
+        'stock': 3,
+        'category': 'Antihypertensive',
+        'buy_price': 20.00,
+        'sell_price': 35.00,
+        'dosage': '10mg',
+        'image_url': 'https://images.unsplash.com/photo-1587854692152-cbe660dbaba9?w=500&auto=format&fit=crop&q=60'
+      },
+      {
+        'name': 'Omeprazole 20mg',
+        'stock': 230,
+        'category': 'Antacid',
+        'buy_price': 14.00,
+        'sell_price': 22.00,
+        'dosage': '20mg',
+        'image_url': 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&auto=format&fit=crop&q=60'
+      },
     ];
     try {
       await _supabase.from('pharmacy_inventory').insert(seedItems);

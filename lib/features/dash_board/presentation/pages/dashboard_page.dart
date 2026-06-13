@@ -16,6 +16,8 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/admin_dash
 import 'package:medi_connect/features/dash_board/presentation/widgets/admin_drawer.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/admin_bottom_nav_bar.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -37,12 +39,30 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => DashboardTabCubit(),
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state is Unauthenticated) {
-            context.go(RouteNames.login);
-          }
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is Unauthenticated) {
+                context.go(RouteNames.login);
+              }
+            },
+          ),
+          BlocListener<AdminAppointmentsBloc, AdminAppointmentsState>(
+            listener: (context, state) {
+              if (state is AdminAppointmentsLoaded) {
+                context.read<DashboardAnalyticsBloc>().add(LoadDashboardStats());
+              }
+            },
+          ),
+          BlocListener<AdminBillingBloc, AdminBillingState>(
+            listener: (context, state) {
+              if (state is AdminBillingLoaded || state is AdminBillingInvoiceRecorded) {
+                context.read<DashboardAnalyticsBloc>().add(LoadDashboardStats());
+              }
+            },
+          ),
+        ],
         child: BlocBuilder<DashboardTabCubit, int>(
           builder: (context, currentIndex) {
             return CustomScaffold(
@@ -62,7 +82,12 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               bottomNavigationBar: AdminBottomNavBar(
                 currentIndex: currentIndex,
-                onTap: (i) => context.read<DashboardTabCubit>().setTab(i),
+                onTap: (i) {
+                  context.read<DashboardTabCubit>().setTab(i);
+                  if (i == 0) {
+                    context.read<DashboardAnalyticsBloc>().add(LoadDashboardStats());
+                  }
+                },
               ),
             );
           },

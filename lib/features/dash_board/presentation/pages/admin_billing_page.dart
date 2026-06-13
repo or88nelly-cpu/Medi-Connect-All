@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+import 'package:medi_connect/features/dash_board/domain/entities/invoice_entity.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
 
 class AdminBillingPage extends StatefulWidget {
@@ -119,69 +120,73 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                           borderRadius: BorderRadius.circular(12.r),
                           side: const BorderSide(color: AppColors.border),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.all(16.r),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(10.r),
-                                decoration: BoxDecoration(
-                                  color: statusColor.withOpacity(0.1),
-                                  shape: BoxShape.circle,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12.r),
+                          onTap: () => _showInvoiceDetailsDialog(context, inv),
+                          child: Padding(
+                            padding: EdgeInsets.all(16.r),
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10.r),
+                                  decoration: BoxDecoration(
+                                    color: statusColor.withOpacity(0.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(Icons.receipt, color: statusColor),
                                 ),
-                                child: Icon(Icons.receipt, color: statusColor),
-                              ),
-                              SizedBox(width: 16.w),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                SizedBox(width: 16.w),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        inv.patientName,
+                                        style: AppTextStyles.titleMedium.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.sp,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4.h),
+                                      Text("Invoice: ${inv.id} | ${inv.paymentMethod}"),
+                                      Text(dateStr, style: AppTextStyles.bodySmall),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      inv.patientName,
+                                      "₹ ${inv.amount.toStringAsFixed(2)}",
                                       style: AppTextStyles.titleMedium.copyWith(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.sp,
+                                        color: AppColors.textPrimary,
                                       ),
                                     ),
                                     SizedBox(height: 4.h),
-                                    Text("Invoice: ${inv.id} | ${inv.paymentMethod}"),
-                                    Text(dateStr, style: AppTextStyles.bodySmall),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "₹ ${inv.amount.toStringAsFixed(2)}",
-                                    style: AppTextStyles.titleMedium.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14.sp,
-                                      color: AppColors.textPrimary,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.h),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
-                                      vertical: 2.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: statusColor.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(4.r),
-                                    ),
-                                    child: Text(
-                                      inv.status,
-                                      style: TextStyle(
-                                        color: statusColor,
-                                        fontSize: 9.sp,
-                                        fontWeight: FontWeight.bold,
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 6.w,
+                                        vertical: 2.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: statusColor.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(4.r),
+                                      ),
+                                      child: Text(
+                                        inv.status,
+                                        style: TextStyle(
+                                          color: statusColor,
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -226,6 +231,140 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showInvoiceDetailsDialog(BuildContext context, InvoiceEntity invoice) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final statusColor = invoice.status == 'Paid'
+        ? AppColors.success
+        : (invoice.status == 'Pending' ? AppColors.warning : AppColors.error);
+    final formattedDate = "${invoice.date.day}/${invoice.date.month}/${invoice.date.year} ${invoice.date.hour.toString().padLeft(2, '0')}:${invoice.date.minute.toString().padLeft(2, '0')}";
+
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+          backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+          child: Container(
+            padding: EdgeInsets.all(24.r),
+            width: 320.w,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(12.r),
+                  decoration: BoxDecoration(
+                    color: statusColor.withOpacity(0.12),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.receipt_long, color: statusColor, size: 36.r),
+                ),
+                SizedBox(height: 12.h),
+                Text(
+                  "Transaction Receipt",
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                    color: isDark ? Colors.white : AppColors.textPrimary,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  "Invoice Review",
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                const Divider(color: AppColors.border, height: 1),
+                SizedBox(height: 16.h),
+                
+                _buildReceiptRow("Patient Name", invoice.patientName, isDark),
+                _buildReceiptRow("Invoice ID", invoice.id.length > 8 ? invoice.id.substring(0, 8).toUpperCase() : invoice.id.toUpperCase(), isDark),
+                _buildReceiptRow("Date & Time", formattedDate, isDark),
+                _buildReceiptRow("Payment Method", invoice.paymentMethod, isDark),
+                _buildReceiptRow("Status", invoice.status, isDark, valueColor: statusColor, isBold: true),
+                
+                SizedBox(height: 12.h),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(color: isDark ? AppColors.terminalDarkBorder : AppColors.border),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total Paid",
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.white70 : AppColors.textPrimary,
+                        ),
+                      ),
+                      Text(
+                        "₹ ${invoice.amount.toStringAsFixed(2)}",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+                    ),
+                    child: const Text(
+                      "Done",
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildReceiptRow(String label, String value, bool isDark, {Color? valueColor, bool isBold = false}) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 11.sp,
+              color: isDark ? Colors.white54 : AppColors.textSecondary,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 11.sp,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+              color: valueColor ?? (isDark ? Colors.white70 : AppColors.textPrimary),
+            ),
+          ),
+        ],
       ),
     );
   }

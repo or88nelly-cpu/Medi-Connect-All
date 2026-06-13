@@ -14,6 +14,8 @@ import 'package:medi_connect/core/storage/secure_storage_service.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/departments/emrd/presentation/bloc/emrd_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
 
 class EmrdDetailPage extends StatefulWidget {
   const EmrdDetailPage({super.key});
@@ -652,6 +654,13 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   ElevatedButton(
                     onPressed: () async {
                       setDialogState(() => paymentDone = true);
+
+                      final billingBloc = context.read<AdminBillingBloc>();
+                      final pharmacyBloc = context.read<AdminPharmacyBloc>();
+                      final emrdBloc = context.read<EmrdBloc>();
+                      final messenger = ScaffoldMessenger.of(context);
+                      final navigator = Navigator.of(context);
+
                       await Future.delayed(const Duration(seconds: 1));
 
                       // 1. Update Supabase
@@ -663,12 +672,56 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           'payment_method': payMethod == 'Online' ? 'UPI/QR' : 'Cash',
                         }).eq('appointment_id', record['appointment_id']);
 
-                        await supabase.from('invoices').insert({
-                          'patient_name': record['patient_name'],
-                          'amount': amount,
-                          'status': 'Paid',
-                          'payment_method': payMethod == 'Online' ? 'UPI/QR' : 'Cash',
-                        });
+                        if (isMedicine) {
+                          // Decrement stock in pharmacy_inventory
+                          try {
+                            final medicinesText = record['medicines'] as String?;
+                            if (medicinesText != null && medicinesText.trim().isNotEmpty) {
+                              final lines = medicinesText.split('\n');
+                              for (final line in lines) {
+                                if (line.trim().isEmpty) continue;
+                                // Parse the medicine name before the first parenthesis
+                                String medName = line;
+                                if (line.contains('(')) {
+                                  medName = line.split('(').first.trim();
+                                } else {
+                                  medName = line.trim();
+                                }
+
+                                // Fetch the medicine item from database to check current stock and get ID
+                                final response = await supabase
+                                    .from('pharmacy_inventory')
+                                    .select('id, stock')
+                                    .ilike('name', '%$medName%')
+                                    .limit(1)
+                                    .maybeSingle();
+
+                                if (response != null) {
+                                  final currentStock = response['stock'] as int? ?? 0;
+                                  final newStock = (currentStock - 1).clamp(0, 999999);
+                                  await supabase
+                                      .from('pharmacy_inventory')
+                                      .update({'stock': newStock})
+                                      .eq('id', response['id']);
+                                }
+                              }
+                            }
+                          } catch (e) {
+                            debugPrint("Failed to update pharmacy stock from EMRD payment: $e");
+                          }
+                        }
+
+                        if (mounted) {
+                          billingBloc.add(RecordInvoice({
+                            'patient_name': record['patient_name'],
+                            'amount': amount,
+                            'status': 'Paid',
+                            'payment_method': payMethod == 'Online' ? 'UPI/QR' : 'Cash',
+                          }));
+                          if (isMedicine) {
+                            pharmacyBloc.add(LoadPharmacyItems());
+                          }
+                        }
                       } catch (e) {
                         debugPrint("Supabase payment update failed: $e");
                       }
@@ -695,12 +748,12 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         debugPrint("Local storage payment update failed: $e");
                       }
 
-                      if (context.mounted) {
-                        context.read<EmrdBloc>().add(LoadEmrdStats());
+                      if (mounted) {
+                        emrdBloc.add(LoadEmrdStats());
                         Navigator.pop(dialogCtx);
-                        Navigator.pop(context);
+                        navigator.pop();
 
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        messenger.showSnackBar(
                           SnackBar(
                             content: Text('Payment of ₹${amount.toStringAsFixed(2)} confirmed for ${record['patient_name']}'),
                             backgroundColor: AppColors.success,

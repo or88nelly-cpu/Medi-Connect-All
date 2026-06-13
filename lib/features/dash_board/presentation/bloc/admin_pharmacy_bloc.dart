@@ -18,6 +18,12 @@ class UpdatePharmacyItemStock extends AdminPharmacyEvent {
   UpdatePharmacyItemStock(this.id, this.stock);
 }
 
+class EditPharmacyItem extends AdminPharmacyEvent {
+  final String id;
+  final Map<String, dynamic> data;
+  EditPharmacyItem(this.id, this.data);
+}
+
 class DeletePharmacyItem extends AdminPharmacyEvent {
   final String id;
   DeletePharmacyItem(this.id);
@@ -60,6 +66,7 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
     on<LoadPharmacyItems>(_onLoadPharmacyItems);
     on<AddPharmacyItem>(_onAddPharmacyItem);
     on<UpdatePharmacyItemStock>(_onUpdatePharmacyItemStock);
+    on<EditPharmacyItem>(_onEditPharmacyItem);
     on<DeletePharmacyItem>(_onDeletePharmacyItem);
   }
 
@@ -94,6 +101,15 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
   Future<void> _onDeletePharmacyItem(
       DeletePharmacyItem event, Emitter<AdminPharmacyState> emit) async {
     final result = await _deleteItem(event.id);
+    result.fold(
+      (failure) => emit(AdminPharmacyError(failure.message)),
+      (_) => add(LoadPharmacyItems()),
+    );
+  }
+
+  Future<void> _onEditPharmacyItem(
+      EditPharmacyItem event, Emitter<AdminPharmacyState> emit) async {
+    final result = await _updateItem(event.id, event.data);
     result.fold(
       (failure) => emit(AdminPharmacyError(failure.message)),
       (_) => add(LoadPharmacyItems()),

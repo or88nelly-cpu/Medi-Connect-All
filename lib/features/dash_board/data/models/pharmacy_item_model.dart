@@ -8,6 +8,10 @@ class PharmacyItemModel extends PharmacyItemEntity {
     required super.stock,
     required super.category,
     required super.status,
+    super.buyPrice,
+    super.sellPrice,
+    super.dosage,
+    super.imageUrl,
     super.createdAt,
     super.updatedAt,
   });
@@ -28,6 +32,10 @@ class PharmacyItemModel extends PharmacyItemEntity {
       stock: stock,
       category: json['category'] as String? ?? '',
       status: status,
+      buyPrice: (json['buy_price'] ?? json['buyprize'] ?? json['buyPrice'] as num?)?.toDouble() ?? 0.0,
+      sellPrice: (json['sell_price'] ?? json['sellprize'] ?? json['sellPrice'] as num?)?.toDouble() ?? 0.0,
+      dosage: json['dosage'] as String? ?? '',
+      imageUrl: json['image_url'] as String? ?? json['imageUrl'] as String? ?? '',
       createdAt: json['created_at'] != null
           ? DateTime.tryParse(json['created_at'] as String)
           : null,
@@ -41,5 +49,9 @@ class PharmacyItemModel extends PharmacyItemEntity {
         'name': name,
         'stock': stock,
         'category': category,
+        'buy_price': buyPrice,
+        'sell_price': sellPrice,
+        'dosage': dosage,
+        'image_url': imageUrl,
       };
 }

@@ -8,6 +8,10 @@ CREATE TABLE IF NOT EXISTS pharmacy_inventory (
     name TEXT NOT NULL,
     stock INTEGER NOT NULL DEFAULT 0,
     category TEXT NOT NULL,
+    buy_price NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    sell_price NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    dosage TEXT NOT NULL DEFAULT '',
+    image_url TEXT NOT NULL DEFAULT '',
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
 );
@@ -265,5 +269,11 @@ ALTER TABLE appointments ADD COLUMN IF NOT EXISTS height TEXT;
 ALTER TABLE appointments ADD COLUMN IF NOT EXISTS fever TEXT;
 ALTER TABLE appointments ADD COLUMN IF NOT EXISTS head_circumference TEXT;
 ALTER TABLE appointments ADD COLUMN IF NOT EXISTS additional_vitals TEXT;
+
+-- Add pricing and dosage columns to Pharmacy Inventory table
+ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS buy_price NUMERIC(10, 2) NOT NULL DEFAULT 0.00;
+ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS sell_price NUMERIC(10, 2) NOT NULL DEFAULT 0.00;
+ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS dosage TEXT NOT NULL DEFAULT '';
+ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS image_url TEXT NOT NULL DEFAULT '';
 
 

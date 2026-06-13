@@ -30,9 +30,13 @@ class AdminPatientsPage extends StatefulWidget {
 
 class _AdminPatientsPageState extends State<AdminPatientsPage> {
   final ValueNotifier<String> _searchNotifier = ValueNotifier<String>('');
-  final ValueNotifier<String> _selectedBloodNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _selectedBloodNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<String> _sortByNotifier = ValueNotifier<String>('None');
-  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(1);
   final int _itemsPerPage = 5;
 
@@ -88,7 +92,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 TextField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: "Email Address (Optional)"),
+                  decoration: const InputDecoration(
+                    labelText: "Email Address (Optional)",
+                  ),
                 ),
                 TextField(
                   controller: ageController,
@@ -222,7 +228,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     const Text("Gender: "),
                     SizedBox(width: 8.w),
                     DropdownButton<String>(
-                      value: ['Male', 'Female', 'Other'].contains(gender) ? gender : 'Male',
+                      value: ['Male', 'Female', 'Other'].contains(gender)
+                          ? gender
+                          : 'Male',
                       items: ['Male', 'Female', 'Other'].map((g) {
                         return DropdownMenuItem(value: g, child: Text(g));
                       }).toList(),
@@ -237,7 +245,19 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     const Text("Blood: "),
                     SizedBox(width: 8.w),
                     DropdownButton<String>(
-                      value: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].contains(blood) ? blood : 'O+',
+                      value:
+                          [
+                            'A+',
+                            'A-',
+                            'B+',
+                            'B-',
+                            'O+',
+                            'O-',
+                            'AB+',
+                            'AB-',
+                          ].contains(blood)
+                          ? blood
+                          : 'O+',
                       items: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
                           .map((b) {
                             return DropdownMenuItem(value: b, child: Text(b));
@@ -277,7 +297,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     profileImage: patient.profileImage,
                   );
 
-                  context.read<PatientBloc>().add(UpdatePatient(updatedPatient));
+                  context.read<PatientBloc>().add(
+                    UpdatePatient(updatedPatient),
+                  );
                   Navigator.pop(ctx);
                 }
               },
@@ -294,7 +316,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text("Delete Patient"),
-        content: Text("Are you sure you want to delete patient ${patient.name}?"),
+        content: Text(
+          "Are you sure you want to delete patient ${patient.name}?",
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -315,10 +339,18 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
 
   void _showPatientDetailSheet(BuildContext context, UserModel patient) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     showModalBottomSheet(
       context: context,
@@ -354,7 +386,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   ),
                 ),
                 SizedBox(height: 16.h),
-                
+
                 // Patient Main Header Profile
                 Row(
                   children: [
@@ -391,7 +423,10 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w,
+                                  vertical: 3.h,
+                                ),
                                 decoration: BoxDecoration(
                                   color: AppColors.primary.withOpacity(0.15),
                                   borderRadius: BorderRadius.circular(4.r),
@@ -413,7 +448,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(Icons.edit_outlined, color: AppColors.primary, size: 22.sp),
+                      icon: Icon(
+                        Icons.edit_outlined,
+                        color: AppColors.primary,
+                        size: 22.sp,
+                      ),
                       onPressed: () {
                         Navigator.pop(ctx);
                         _showEditPatientDialog(context, patient);
@@ -422,7 +461,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   ],
                 ),
                 SizedBox(height: 20.h),
-                
+
                 // Details Grid
                 Text(
                   "Patient Information",
@@ -435,26 +474,53 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 Container(
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withOpacity(0.02) : Colors.black.withOpacity(0.01),
+                    color: isDark
+                        ? Colors.white.withOpacity(0.02)
+                        : Colors.black.withOpacity(0.01),
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(color: borderColor.withOpacity(0.5)),
                   ),
                   child: Column(
                     children: [
-                      _buildDetailRow("Age", "${patient.age ?? 'N/A'} years", labelColor, textColor),
+                      _buildDetailRow(
+                        "Age",
+                        "${patient.age ?? 'N/A'} years",
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withOpacity(0.3)),
-                      _buildDetailRow("Gender", patient.gender ?? 'N/A', labelColor, textColor),
+                      _buildDetailRow(
+                        "Gender",
+                        patient.gender ?? 'N/A',
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withOpacity(0.3)),
-                      _buildDetailRow("Blood Group", patient.bloodGroup ?? 'N/A', labelColor, textColor),
+                      _buildDetailRow(
+                        "Blood Group",
+                        patient.bloodGroup ?? 'N/A',
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withOpacity(0.3)),
-                      _buildDetailRow("Phone", patient.phoneNumber ?? 'N/A', labelColor, textColor),
+                      _buildDetailRow(
+                        "Phone",
+                        patient.phoneNumber ?? 'N/A',
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withOpacity(0.3)),
-                      _buildDetailRow("Email", patient.email, labelColor, textColor),
+                      _buildDetailRow(
+                        "Email",
+                        patient.email,
+                        labelColor,
+                        textColor,
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(height: 24.h),
-                
+
                 // Recent Appointment and Vitals
                 Text(
                   "Recent Appointment & Vitals",
@@ -464,81 +530,120 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   ),
                 ),
                 SizedBox(height: 10.h),
-                
+
                 BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(
                   builder: (context, state) {
                     if (state is AdminAppointmentsLoading) {
-                      return const Center(child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
-                        child: CircularProgressIndicator(),
-                      ));
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
                     }
-                    
+
                     List<AppointmentEntity> appointments = [];
                     if (state is AdminAppointmentsLoaded) {
-                      appointments = state.appointments.where((a) => a.patientId == patient.id).toList();
+                      appointments = state.appointments
+                          .where((a) => a.patientId == patient.id)
+                          .toList();
                     }
-                    
+
                     if (appointments.isEmpty) {
                       return Container(
                         width: double.infinity,
                         padding: EdgeInsets.all(16.r),
                         decoration: BoxDecoration(
-                          color: isDark ? Colors.white.withOpacity(0.02) : Colors.black.withOpacity(0.01),
+                          color: isDark
+                              ? Colors.white.withOpacity(0.02)
+                              : Colors.black.withOpacity(0.01),
                           borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: borderColor.withOpacity(0.5)),
+                          border: Border.all(
+                            color: borderColor.withOpacity(0.5),
+                          ),
                         ),
                         child: Column(
                           children: [
                             Text(
                               "No appointments found for this patient.",
-                              style: TextStyle(color: labelColor, fontSize: 12.sp, fontStyle: FontStyle.italic),
+                              style: TextStyle(
+                                color: labelColor,
+                                fontSize: 12.sp,
+                                fontStyle: FontStyle.italic,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(height: 12.h),
                             ElevatedButton.icon(
                               onPressed: () {
                                 final now = DateTime.now();
-                                final timeStr = DateFormat('hh:mm a').format(now);
-                                final dateStr = now.toIso8601String().split('T').first;
-                                
-                                context.read<AdminAppointmentsBloc>().add(CreateAppointmentEvent({
-                                  'patient_id': patient.id,
-                                  'patient_name': patient.name,
-                                  'doctor_name': 'General Clinic',
-                                  'specialty': 'OPD',
-                                  'appointment_date': dateStr,
-                                  'appointment_time': timeStr,
-                                  'status': 'Completed',
-                                  'type': 'Consultation',
-                                }));
-                                
+                                final timeStr = DateFormat(
+                                  'hh:mm a',
+                                ).format(now);
+                                final dateStr = now
+                                    .toIso8601String()
+                                    .split('T')
+                                    .first;
+
+                                context.read<AdminAppointmentsBloc>().add(
+                                  CreateAppointmentEvent({
+                                    'patient_id': patient.id,
+                                    'patient_name': patient.name,
+                                    'doctor_name': 'General Clinic',
+                                    'specialty': 'OPD',
+                                    'appointment_date': dateStr,
+                                    'appointment_time': timeStr,
+                                    'status': 'Completed',
+                                    'type': 'Consultation',
+                                  }),
+                                );
+
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Quick checkup session created.")),
+                                  const SnackBar(
+                                    content: Text(
+                                      "Quick checkup session created.",
+                                    ),
+                                  ),
                                 );
                               },
-                              icon: const Icon(Icons.add, color: Colors.white, size: 16),
-                              label: const Text("Create Quick Visit to Add Vitals", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                              label: const Text(
+                                "Create Quick Visit to Add Vitals",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primary,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       );
                     }
-                    
+
                     // Most recent appointment
                     final recent = appointments.first;
-                    final statusColor = recent.status == 'Completed' 
-                        ? AppColors.success 
-                        : (recent.status == 'Cancelled' ? AppColors.error : AppColors.primary);
-                    
+                    final statusColor = recent.status == 'Completed'
+                        ? AppColors.success
+                        : (recent.status == 'Cancelled'
+                              ? AppColors.error
+                              : AppColors.primary);
+
                     return Container(
                       padding: EdgeInsets.all(14.r),
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.white.withOpacity(0.02) : Colors.black.withOpacity(0.01),
+                        color: isDark
+                            ? Colors.white.withOpacity(0.02)
+                            : Colors.black.withOpacity(0.01),
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all(color: borderColor.withOpacity(0.5)),
                       ),
@@ -553,24 +658,41 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                 children: [
                                   Text(
                                     recent.doctorName,
-                                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13.sp),
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13.sp,
+                                    ),
                                   ),
                                   Text(
                                     recent.specialty,
-                                    style: TextStyle(color: labelColor, fontSize: 11.sp),
+                                    style: TextStyle(
+                                      color: labelColor,
+                                      fontSize: 11.sp,
+                                    ),
                                   ),
                                 ],
                               ),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w,
+                                  vertical: 3.h,
+                                ),
                                 decoration: BoxDecoration(
                                   color: statusColor.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12.r),
-                                  border: Border.all(color: statusColor, width: 0.5),
+                                  border: Border.all(
+                                    color: statusColor,
+                                    width: 0.5,
+                                  ),
                                 ),
                                 child: Text(
                                   recent.status,
-                                  style: TextStyle(color: statusColor, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    color: statusColor,
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ],
@@ -578,55 +700,124 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                           SizedBox(height: 6.h),
                           Text(
                             "Date: ${DateFormat('dd MMM yyyy').format(recent.appointmentDate)} | Time: ${recent.appointmentTime}",
-                            style: TextStyle(color: labelColor, fontSize: 11.sp),
+                            style: TextStyle(
+                              color: labelColor,
+                              fontSize: 11.sp,
+                            ),
                           ),
                           SizedBox(height: 12.h),
                           Divider(color: borderColor.withOpacity(0.3)),
                           SizedBox(height: 8.h),
-                          
+
                           // Vitals Display
                           Text(
                             "Vitals:",
-                            style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12.sp),
+                            style: TextStyle(
+                              color: textColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp,
+                            ),
                           ),
                           SizedBox(height: 10.h),
-                          
+
                           Wrap(
                             spacing: 8.w,
                             runSpacing: 8.h,
                             children: [
-                              _buildVitalBadge("BP", recent.bp ?? "--", Icons.favorite_border, Colors.red, isDark),
-                              _buildVitalBadge("Weight", recent.weight != null ? "${recent.weight} kg" : "--", Icons.scale_outlined, Colors.orange, isDark),
-                              _buildVitalBadge("Height", recent.height != null ? "${recent.height} cm" : "--", Icons.height, Colors.blue, isDark),
-                              _buildVitalBadge("Fever", recent.fever != null ? "${recent.fever} °F" : "--", Icons.thermostat_outlined, Colors.teal, isDark),
-                              _buildVitalBadge("Head Circ.", recent.headCircumference != null ? "${recent.headCircumference} cm" : "--", Icons.child_care, Colors.purple, isDark),
+                              _buildVitalBadge(
+                                "BP",
+                                recent.bp ?? "--",
+                                Icons.favorite_border,
+                                Colors.red,
+                                isDark,
+                              ),
+                              _buildVitalBadge(
+                                "Weight",
+                                recent.weight != null
+                                    ? "${recent.weight} kg"
+                                    : "--",
+                                Icons.scale_outlined,
+                                Colors.orange,
+                                isDark,
+                              ),
+                              _buildVitalBadge(
+                                "Height",
+                                recent.height != null
+                                    ? "${recent.height} cm"
+                                    : "--",
+                                Icons.height,
+                                Colors.blue,
+                                isDark,
+                              ),
+                              _buildVitalBadge(
+                                "Fever",
+                                recent.fever != null
+                                    ? "${recent.fever} °F"
+                                    : "--",
+                                Icons.thermostat_outlined,
+                                Colors.teal,
+                                isDark,
+                              ),
+                              _buildVitalBadge(
+                                "Head Circ.",
+                                recent.headCircumference != null
+                                    ? "${recent.headCircumference} cm"
+                                    : "--",
+                                Icons.child_care,
+                                Colors.purple,
+                                isDark,
+                              ),
                             ],
                           ),
-                          
+
                           // Custom Vitals List
-                          if (recent.additionalVitals != null && recent.additionalVitals!.isNotEmpty) ...[
+                          if (recent.additionalVitals != null &&
+                              recent.additionalVitals!.isNotEmpty) ...[
                             SizedBox(height: 12.h),
                             Text(
                               "Additional Vitals:",
-                              style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11.sp),
+                              style: TextStyle(
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11.sp,
+                              ),
                             ),
                             SizedBox(height: 6.h),
-                            _buildCustomVitalsDisplay(recent.additionalVitals!, isDark, borderColor),
+                            _buildCustomVitalsDisplay(
+                              recent.additionalVitals!,
+                              isDark,
+                              borderColor,
+                            ),
                           ],
-                          
+
                           SizedBox(height: 16.h),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton.icon(
                               onPressed: () {
-                                _showVitalsEntryDialog(context, recent.id, recent);
+                                _showVitalsEntryDialog(
+                                  context,
+                                  recent.id,
+                                  recent,
+                                );
                               },
-                              icon: const Icon(Icons.edit_note_outlined, color: Colors.white),
-                              label: const Text("Record / Update Vitals", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              icon: const Icon(
+                                Icons.edit_note_outlined,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
+                                "Record / Update Vitals",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primary,
                                 padding: EdgeInsets.symmetric(vertical: 12.h),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
                               ),
                             ),
                           ),
@@ -644,20 +835,41 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
     );
   }
 
-  Widget _buildDetailRow(String label, String value, Color labelColor, Color valueColor) {
+  Widget _buildDetailRow(
+    String label,
+    String value,
+    Color labelColor,
+    Color valueColor,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(color: labelColor, fontSize: 12.sp)),
-          Text(value, style: TextStyle(color: valueColor, fontWeight: FontWeight.w600, fontSize: 12.sp)),
+          Text(
+            label,
+            style: TextStyle(color: labelColor, fontSize: 12.sp),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              color: valueColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 12.sp,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildVitalBadge(String label, String value, IconData icon, Color color, bool isDark) {
+  Widget _buildVitalBadge(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+    bool isDark,
+  ) {
     final bg = isDark ? color.withOpacity(0.12) : color.withOpacity(0.08);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
@@ -673,18 +885,30 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
           SizedBox(width: 6.w),
           Text(
             "$label: ",
-            style: TextStyle(color: isDark ? Colors.white70 : Colors.black87, fontSize: 11.sp, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              color: isDark ? Colors.white70 : Colors.black87,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           Text(
             value,
-            style: TextStyle(color: color, fontSize: 11.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: color,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCustomVitalsDisplay(String jsonStr, bool isDark, Color borderColor) {
+  Widget _buildCustomVitalsDisplay(
+    String jsonStr,
+    bool isDark,
+    Color borderColor,
+  ) {
     try {
       final Map<String, dynamic> custom = jsonDecode(jsonStr);
       if (custom.isEmpty) return const SizedBox();
@@ -704,11 +928,19 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
               children: [
                 Text(
                   "${entry.key}: ",
-                  style: TextStyle(color: isDark ? Colors.white70 : Colors.black87, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: isDark ? Colors.white70 : Colors.black87,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   entry.value.toString(),
-                  style: TextStyle(color: AppColors.primary, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -720,24 +952,41 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
     }
   }
 
-  void _showVitalsEntryDialog(BuildContext context, String appointmentId, AppointmentEntity? current) {
+  void _showVitalsEntryDialog(
+    BuildContext context,
+    String appointmentId,
+    AppointmentEntity? current,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final bpController = TextEditingController(text: current?.bp);
     final weightController = TextEditingController(text: current?.weight);
     final heightController = TextEditingController(text: current?.height);
     final feverController = TextEditingController(text: current?.fever);
-    final headCircumferenceController = TextEditingController(text: current?.headCircumference);
+    final headCircumferenceController = TextEditingController(
+      text: current?.headCircumference,
+    );
 
     // Parse custom vitals
     final List<MapEntry<String, String>> customVitalsList = [];
-    if (current?.additionalVitals != null && current!.additionalVitals!.isNotEmpty) {
+    if (current?.additionalVitals != null &&
+        current!.additionalVitals!.isNotEmpty) {
       try {
-        final Map<String, dynamic> decoded = jsonDecode(current.additionalVitals!);
+        final Map<String, dynamic> decoded = jsonDecode(
+          current.additionalVitals!,
+        );
         decoded.forEach((key, value) {
           customVitalsList.add(MapEntry(key, value.toString()));
         });
@@ -753,7 +1002,14 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
             children: [
               Icon(Icons.thermostat, color: AppColors.primary),
               SizedBox(width: 8.w),
-              Text("Record Vitals", style: AppTextStyles.titleLarge.copyWith(color: textColor, fontSize: 16.sp, fontWeight: FontWeight.bold)),
+              Text(
+                "Record Vitals",
+                style: AppTextStyles.titleLarge.copyWith(
+                  color: textColor,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           content: SingleChildScrollView(
@@ -770,7 +1026,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 120/80",
                     hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.favorite, color: Colors.red, size: 18.sp),
+                    prefixIcon: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -783,7 +1043,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 70",
                     hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.scale, color: Colors.orange, size: 18.sp),
+                    prefixIcon: Icon(
+                      Icons.scale,
+                      color: Colors.orange,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -796,7 +1060,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 175",
                     hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.height, color: Colors.blue, size: 18.sp),
+                    prefixIcon: Icon(
+                      Icons.height,
+                      color: Colors.blue,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -809,7 +1077,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 98.6",
                     hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.thermostat, color: Colors.teal, size: 18.sp),
+                    prefixIcon: Icon(
+                      Icons.thermostat,
+                      color: Colors.teal,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -822,19 +1094,30 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 42",
                     hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.child_care, color: Colors.purple, size: 18.sp),
+                    prefixIcon: Icon(
+                      Icons.child_care,
+                      color: Colors.purple,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
-                
+
                 SizedBox(height: 20.h),
                 Divider(color: borderColor),
                 SizedBox(height: 8.h),
-                
+
                 // Custom Vitals Section
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Custom Vitals", style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12.sp)),
+                    Text(
+                      "Custom Vitals",
+                      style: TextStyle(
+                        color: textColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.sp,
+                      ),
+                    ),
                     TextButton.icon(
                       onPressed: () {
                         setDialogState(() {
@@ -842,27 +1125,40 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                         });
                       },
                       icon: const Icon(Icons.add, size: 14),
-                      label: Text("Add More", style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.bold)),
-                      style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero),
+                      label: Text(
+                        "Add More",
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size.zero,
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(height: 8.h),
-                
+
                 if (customVitalsList.isEmpty)
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: Text(
                       "No custom vitals added. Tap 'Add More' to record fields like SPO2, Blood Sugar, etc.",
-                      style: TextStyle(color: labelColor, fontSize: 10.sp, fontStyle: FontStyle.italic),
+                      style: TextStyle(
+                        color: labelColor,
+                        fontSize: 10.sp,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
-                
+
                 ...List.generate(customVitalsList.length, (index) {
                   final entry = customVitalsList[index];
                   final nameCtrl = TextEditingController(text: entry.key);
                   final valCtrl = TextEditingController(text: entry.value);
-                  
+
                   return Padding(
                     padding: EdgeInsets.only(bottom: 8.h),
                     child: Row(
@@ -874,10 +1170,16 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                             style: TextStyle(color: textColor, fontSize: 12.sp),
                             decoration: InputDecoration(
                               hintText: "Vital Name (e.g., SPO2)",
-                              contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8.w,
+                                vertical: 8.h,
+                              ),
                             ),
                             onChanged: (val) {
-                              customVitalsList[index] = MapEntry(val.trim(), valCtrl.text.trim());
+                              customVitalsList[index] = MapEntry(
+                                val.trim(),
+                                valCtrl.text.trim(),
+                              );
                             },
                           ),
                         ),
@@ -889,15 +1191,25 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                             style: TextStyle(color: textColor, fontSize: 12.sp),
                             decoration: InputDecoration(
                               hintText: "Value (e.g., 98%)",
-                              contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8.w,
+                                vertical: 8.h,
+                              ),
                             ),
                             onChanged: (val) {
-                              customVitalsList[index] = MapEntry(nameCtrl.text.trim(), val.trim());
+                              customVitalsList[index] = MapEntry(
+                                nameCtrl.text.trim(),
+                                val.trim(),
+                              );
                             },
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete_outline, color: AppColors.error, size: 18.sp),
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: AppColors.error,
+                            size: 18.sp,
+                          ),
                           onPressed: () {
                             setDialogState(() {
                               customVitalsList.removeAt(index);
@@ -924,21 +1236,38 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     customMap[item.key] = item.value;
                   }
                 }
-                
+
                 final vitalsMap = {
-                  'bp': bpController.text.trim().isNotEmpty ? bpController.text.trim() : null,
-                  'weight': weightController.text.trim().isNotEmpty ? weightController.text.trim() : null,
-                  'height': heightController.text.trim().isNotEmpty ? heightController.text.trim() : null,
-                  'fever': feverController.text.trim().isNotEmpty ? feverController.text.trim() : null,
-                  'head_circumference': headCircumferenceController.text.trim().isNotEmpty ? headCircumferenceController.text.trim() : null,
-                  'additional_vitals': customMap.isNotEmpty ? jsonEncode(customMap) : null,
+                  'bp': bpController.text.trim().isNotEmpty
+                      ? bpController.text.trim()
+                      : null,
+                  'weight': weightController.text.trim().isNotEmpty
+                      ? weightController.text.trim()
+                      : null,
+                  'height': heightController.text.trim().isNotEmpty
+                      ? heightController.text.trim()
+                      : null,
+                  'fever': feverController.text.trim().isNotEmpty
+                      ? feverController.text.trim()
+                      : null,
+                  'head_circumference':
+                      headCircumferenceController.text.trim().isNotEmpty
+                      ? headCircumferenceController.text.trim()
+                      : null,
+                  'additional_vitals': customMap.isNotEmpty
+                      ? jsonEncode(customMap)
+                      : null,
                 };
-                
-                context.read<AdminAppointmentsBloc>().add(UpdateAppointmentVitals(appointmentId, vitalsMap));
-                
+
+                context.read<AdminAppointmentsBloc>().add(
+                  UpdateAppointmentVitals(appointmentId, vitalsMap),
+                );
+
                 Navigator.pop(ctx); // Close dialog
-                Navigator.pop(context); // Close bottom sheet to force update/refresh display
-                
+                Navigator.pop(
+                  context,
+                ); // Close bottom sheet to force update/refresh display
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Vitals successfully saved.")),
                 );
@@ -954,8 +1283,20 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final List<String> bloodGroups = ['All', 'A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final List<String> bloodGroups = [
+      'All',
+      'A+',
+      'A-',
+      'B+',
+      'B-',
+      'O+',
+      'O-',
+      'AB+',
+      'AB-',
+    ];
 
     return BlocListener<PatientBloc, PatientState>(
       listener: (context, state) {
@@ -1009,8 +1350,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       BlocBuilder<PatientBloc, PatientState>(
                         builder: (context, state) {
                           if (state is PatientLoading) {
-                            return const Center(child: CircularProgressIndicator());
-                          } else if (state is PatientError && state is! PatientLoaded) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is PatientError &&
+                              state is! PatientLoaded) {
                             return Center(
                               child: Text(
                                 "Error: ${state.message}",
@@ -1025,7 +1369,8 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                           } else {
                             final bloc = context.read<PatientBloc>();
                             if (bloc.state is PatientLoaded) {
-                              patientsList = (bloc.state as PatientLoaded).patients;
+                              patientsList =
+                                  (bloc.state as PatientLoaded).patients;
                             }
                           }
 
@@ -1051,61 +1396,121 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                         valueListenable: _statusFilterNotifier,
                                         builder: (context, statusFilter, _) {
                                           // 1. Filter
-                                          final filtered = patientsList.where((p) {
-                                            final matchesSearch = (p.name ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
-                                                (p.phoneNumber ?? '').contains(searchQuery);
-                                            final matchesBlood = selectedBlood == 'All' ||
-                                                (p.bloodGroup ?? '').toLowerCase() == selectedBlood.toLowerCase();
-                                            final matchesStatus = statusFilter == 'All' ||
-                                                (p.status).toLowerCase() == statusFilter.toLowerCase();
-                                            return matchesSearch && matchesBlood && matchesStatus;
+                                          final filtered = patientsList.where((
+                                            p,
+                                          ) {
+                                            final matchesSearch =
+                                                (p.name ?? '')
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      searchQuery.toLowerCase(),
+                                                    ) ||
+                                                (p.phoneNumber ?? '').contains(
+                                                  searchQuery,
+                                                );
+                                            final matchesBlood =
+                                                selectedBlood == 'All' ||
+                                                (p.bloodGroup ?? '')
+                                                        .toLowerCase() ==
+                                                    selectedBlood.toLowerCase();
+                                            final matchesStatus =
+                                                statusFilter == 'All' ||
+                                                (p.status).toLowerCase() ==
+                                                    statusFilter.toLowerCase();
+                                            return matchesSearch &&
+                                                matchesBlood &&
+                                                matchesStatus;
                                           }).toList();
 
                                           // 2. Sort
                                           if (sortBy == 'Name (A-Z)') {
-                                            filtered.sort((a, b) => (a.name ?? '').compareTo(b.name ?? ''));
+                                            filtered.sort(
+                                              (a, b) => (a.name ?? '')
+                                                  .compareTo(b.name ?? ''),
+                                            );
                                           } else if (sortBy == 'Name (Z-A)') {
-                                            filtered.sort((a, b) => (b.name ?? '').compareTo(a.name ?? ''));
-                                          } else if (sortBy == 'Age (Young-Old)') {
-                                            filtered.sort((a, b) => (a.age ?? 0).compareTo(b.age ?? 0));
-                                          } else if (sortBy == 'Age (Old-Young)') {
-                                            filtered.sort((a, b) => (b.age ?? 0).compareTo(a.age ?? 0));
+                                            filtered.sort(
+                                              (a, b) => (b.name ?? '')
+                                                  .compareTo(a.name ?? ''),
+                                            );
+                                          } else if (sortBy ==
+                                              'Age (Young-Old)') {
+                                            filtered.sort(
+                                              (a, b) => (a.age ?? 0).compareTo(
+                                                b.age ?? 0,
+                                              ),
+                                            );
+                                          } else if (sortBy ==
+                                              'Age (Old-Young)') {
+                                            filtered.sort(
+                                              (a, b) => (b.age ?? 0).compareTo(
+                                                a.age ?? 0,
+                                              ),
+                                            );
                                           }
 
                                           if (filtered.isEmpty) {
                                             return Center(
                                               child: Text(
                                                 "No matching patients found.",
-                                                style: TextStyle(color: labelColor),
+                                                style: TextStyle(
+                                                  color: labelColor,
+                                                ),
                                               ),
                                             );
                                           }
 
                                           return ValueListenableBuilder<int>(
-                                            valueListenable: _currentPageNotifier,
+                                            valueListenable:
+                                                _currentPageNotifier,
                                             builder: (context, currentPage, _) {
-                                              final totalPages = (filtered.length / _itemsPerPage).ceil();
-                                              final startIndex = (currentPage - 1) * _itemsPerPage;
-                                              final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
-                                              final paginatedList = filtered.sublist(startIndex, endIndex);
+                                              final totalPages =
+                                                  (filtered.length /
+                                                          _itemsPerPage)
+                                                      .ceil();
+                                              final startIndex =
+                                                  (currentPage - 1) *
+                                                  _itemsPerPage;
+                                              final endIndex =
+                                                  (startIndex + _itemsPerPage)
+                                                      .clamp(
+                                                        0,
+                                                        filtered.length,
+                                                      );
+                                              final paginatedList = filtered
+                                                  .sublist(
+                                                    startIndex,
+                                                    endIndex,
+                                                  );
 
                                               return Column(
                                                 children: [
                                                   Expanded(
                                                     child: ListView.builder(
-                                                      itemCount: paginatedList.length,
+                                                      itemCount:
+                                                          paginatedList.length,
                                                       itemBuilder: (context, idx) {
-                                                        final patient = paginatedList[idx];
+                                                        final patient =
+                                                            paginatedList[idx];
                                                         return PatientCard(
                                                           patient: patient,
                                                           onTap: () {
-                                                            _showPatientDetailSheet(context, patient);
+                                                            _showPatientDetailSheet(
+                                                              context,
+                                                              patient,
+                                                            );
                                                           },
                                                           onEdit: () {
-                                                            _showEditPatientDialog(context, patient);
+                                                            _showEditPatientDialog(
+                                                              context,
+                                                              patient,
+                                                            );
                                                           },
                                                           onDelete: () {
-                                                            _confirmDeletePatient(context, patient);
+                                                            _confirmDeletePatient(
+                                                              context,
+                                                              patient,
+                                                            );
                                                           },
                                                         );
                                                       },
@@ -1115,7 +1520,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                                     currentPage: currentPage,
                                                     totalPages: totalPages,
                                                     onPageChanged: (page) {
-                                                      _currentPageNotifier.value = page;
+                                                      _currentPageNotifier
+                                                              .value =
+                                                          page;
                                                     },
                                                   ),
                                                 ],
@@ -1164,6 +1571,50 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildStatusPill(String status) {
+    Color dotColor = AppColors.success;
+    Color bgPillColor = AppColors.success.withValues(alpha: 0.1);
+    String label = "Active";
+
+    if (status.toLowerCase().contains("away")) {
+      dotColor = AppColors.accent;
+      bgPillColor = AppColors.accent.withValues(alpha: 0.1);
+      label = "Away";
+    } else if (status.toLowerCase().contains("inactive")) {
+      dotColor = AppColors.error;
+      bgPillColor = AppColors.error.withValues(alpha: 0.1);
+      label = "Inactive";
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: bgPillColor,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: dotColor.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6.r,
+            height: 6.r,
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
+          ),
+          SizedBox(width: 6.w),
+          Text(
+            label,
+            style: TextStyle(
+              color: dotColor,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

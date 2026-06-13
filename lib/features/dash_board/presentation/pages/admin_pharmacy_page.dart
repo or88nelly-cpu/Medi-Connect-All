@@ -26,6 +26,10 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
     final nameController = TextEditingController();
     final categoryController = TextEditingController();
     final stockController = TextEditingController();
+    final buyPriceController = TextEditingController(text: '0.00');
+    final sellPriceController = TextEditingController(text: '0.00');
+    final dosageController = TextEditingController();
+    final imageUrlController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     showDialog(
@@ -35,43 +39,87 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
           title: const Text("Add New Medicine"),
           content: Form(
             key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: "Medicine Name",
-                    hintText: "e.g., Paracetamol 500mg",
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      labelText: "Medicine Name",
+                      hintText: "e.g., Paracetamol 500mg",
+                    ),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? "Required field" : null,
                   ),
-                  validator: (value) =>
-                      value == null || value.isEmpty ? "Required field" : null,
-                ),
-                SizedBox(height: 12.h),
-                TextFormField(
-                  controller: categoryController,
-                  decoration: const InputDecoration(
-                    labelText: "Category",
-                    hintText: "e.g., Analgesic, Antibiotic",
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: categoryController,
+                    decoration: const InputDecoration(
+                      labelText: "Category",
+                      hintText: "e.g., Analgesic, Antibiotic",
+                    ),
+                    validator: (value) =>
+                        value == null || value.isEmpty ? "Required field" : null,
                   ),
-                  validator: (value) =>
-                      value == null || value.isEmpty ? "Required field" : null,
-                ),
-                SizedBox(height: 12.h),
-                TextFormField(
-                  controller: stockController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: "Initial Stock",
-                    hintText: "e.g., 100",
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: dosageController,
+                    decoration: const InputDecoration(
+                      labelText: "Dosage (e.g. 500mg)",
+                      hintText: "e.g., 500mg",
+                    ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) return "Required field";
-                    if (int.tryParse(value) == null) return "Must be a number";
-                    return null;
-                  },
-                ),
-              ],
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: imageUrlController,
+                    decoration: const InputDecoration(
+                      labelText: "Image URL",
+                      hintText: "e.g., https://unsplash.com/...",
+                    ),
+                  ),
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: stockController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Initial Stock",
+                      hintText: "e.g., 100",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return "Required field";
+                      if (int.tryParse(value) == null) return "Must be a number";
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: buyPriceController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Buy Price (₹)",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return "Required field";
+                      if (double.tryParse(value) == null) return "Must be a number";
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: sellPriceController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Sell Price (₹)",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return "Required field";
+                      if (double.tryParse(value) == null) return "Must be a number";
+                      return null;
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           actions: [
@@ -87,6 +135,10 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                           'name': nameController.text.trim(),
                           'category': categoryController.text.trim(),
                           'stock': int.parse(stockController.text),
+                          'buy_price': double.parse(buyPriceController.text),
+                          'sell_price': double.parse(sellPriceController.text),
+                          'dosage': dosageController.text.trim(),
+                          'image_url': imageUrlController.text.trim(),
                         }),
                       );
                   Navigator.pop(ctx);
@@ -100,28 +152,79 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
     );
   }
 
-  void _showUpdateStockDialog(PharmacyItemEntity item) {
+  void _showEditMedicineDialog(PharmacyItemEntity item) {
     final stockController = TextEditingController(text: item.stock.toString());
+    final buyPriceController = TextEditingController(text: item.buyPrice.toStringAsFixed(2));
+    final sellPriceController = TextEditingController(text: item.sellPrice.toStringAsFixed(2));
+    final dosageController = TextEditingController(text: item.dosage);
+    final imageUrlController = TextEditingController(text: item.imageUrl);
     final formKey = GlobalKey<FormState>();
 
     showDialog(
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: Text("Update Stock for ${item.name}"),
+          title: Text("Edit ${item.name}"),
           content: Form(
             key: formKey,
-            child: TextFormField(
-              controller: stockController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Current Stock Level",
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    controller: stockController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Current Stock Level",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return "Required field";
+                      if (int.tryParse(value) == null) return "Must be a number";
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: dosageController,
+                    decoration: const InputDecoration(
+                      labelText: "Dosage (e.g., 500mg)",
+                    ),
+                  ),
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: imageUrlController,
+                    decoration: const InputDecoration(
+                      labelText: "Image URL",
+                    ),
+                  ),
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: buyPriceController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Buy Price (₹)",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return "Required field";
+                      if (double.tryParse(value) == null) return "Must be a number";
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  TextFormField(
+                    controller: sellPriceController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Sell Price (₹)",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) return "Required field";
+                      if (double.tryParse(value) == null) return "Must be a number";
+                      return null;
+                    },
+                  ),
+                ],
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) return "Required field";
-                if (int.tryParse(value) == null) return "Must be a number";
-                return null;
-              },
             ),
           ),
           actions: [
@@ -133,15 +236,21 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   context.read<AdminPharmacyBloc>().add(
-                        UpdatePharmacyItemStock(
+                        EditPharmacyItem(
                           item.id,
-                          int.parse(stockController.text),
+                          {
+                            'stock': int.parse(stockController.text),
+                            'buy_price': double.parse(buyPriceController.text),
+                            'sell_price': double.parse(sellPriceController.text),
+                            'dosage': dosageController.text.trim(),
+                            'image_url': imageUrlController.text.trim(),
+                          },
                         ),
                       );
                   Navigator.pop(ctx);
                 }
               },
-              child: const Text("Update"),
+              child: const Text("Save"),
             ),
           ],
         );
@@ -219,18 +328,32 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12.r),
-                    onTap: () => _showUpdateStockDialog(item),
+                    onTap: () => _showEditMedicineDialog(item),
                     child: Padding(
                       padding: EdgeInsets.all(16.r),
                       child: Row(
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(10.r),
-                            decoration: BoxDecoration(
-                              color: badgeColor.withOpacity(0.1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.medication_outlined, color: badgeColor),
+                           ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: item.imageUrl.isNotEmpty
+                                ? Image.network(
+                                    item.imageUrl,
+                                    width: 48.w,
+                                    height: 48.w,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) => Container(
+                                      width: 48.w,
+                                      height: 48.w,
+                                      color: badgeColor.withOpacity(0.1),
+                                      child: Icon(Icons.medication_outlined, color: badgeColor),
+                                    ),
+                                  )
+                                : Container(
+                                    width: 48.w,
+                                    height: 48.w,
+                                    color: badgeColor.withOpacity(0.1),
+                                    child: Icon(Icons.medication_outlined, color: badgeColor),
+                                  ),
                           ),
                           SizedBox(width: 16.w),
                           Expanded(
@@ -238,7 +361,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  item.name,
+                                  item.name + (item.dosage.isNotEmpty ? " (${item.dosage})" : ""),
                                   style: AppTextStyles.titleMedium.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp,
@@ -247,6 +370,15 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                                 SizedBox(height: 4.h),
                                 Text("Category: ${item.category}"),
                                 Text("Current Stock: ${item.stock} units"),
+                                SizedBox(height: 2.h),
+                                Text(
+                                  "Buy: ₹${item.buyPrice.toStringAsFixed(2)}  ·  Sell: ₹${item.sellPrice.toStringAsFixed(2)}",
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color: AppColors.textSecondary,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

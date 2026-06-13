@@ -7,6 +7,10 @@ class PharmacyItemEntity extends Equatable {
   final int stock;
   final String category;
   final String status;
+  final double buyPrice;
+  final double sellPrice;
+  final String dosage;
+  final String imageUrl;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -16,10 +20,14 @@ class PharmacyItemEntity extends Equatable {
     required this.stock,
     required this.category,
     required this.status,
+    this.buyPrice = 0.0,
+    this.sellPrice = 0.0,
+    this.dosage = '',
+    this.imageUrl = '',
     this.createdAt,
     this.updatedAt,
   });
 
   @override
-  List<Object?> get props => [id, name, stock, category, status];
+  List<Object?> get props => [id, name, stock, category, status, buyPrice, sellPrice, dosage, imageUrl];
 }
