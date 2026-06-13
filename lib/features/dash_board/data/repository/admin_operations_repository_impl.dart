@@ -198,6 +198,18 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
+  Future<Either<Failure, void>> createInvoice(Map<String, dynamic> data) async {
+    try {
+      await _remoteDataSource.createInvoice(data);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, Map<String, dynamic>>> getAdminSettings() async {
     try {
       final settings = await _remoteDataSource.getAdminSettings();

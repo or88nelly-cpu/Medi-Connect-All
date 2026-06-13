@@ -41,6 +41,7 @@ abstract class AdminOperationsRemoteDataSource {
   // Billing / Invoices
   Future<List<InvoiceModel>> getInvoices();
   Future<Map<String, double>> getBillingSummary();
+  Future<void> createInvoice(Map<String, dynamic> data);
 
   // Settings
   Future<Map<String, dynamic>> getAdminSettings();
@@ -592,6 +593,15 @@ class AdminOperationsRemoteDataSourceImpl
     try {
       await _supabase.from('invoices').insert(seedData);
     } catch (_) {}
+  }
+
+  @override
+  Future<void> createInvoice(Map<String, dynamic> data) async {
+    try {
+      await _supabase.from('invoices').insert(data);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 
   // ─── Settings ───────────────────────────────────────────────────────────

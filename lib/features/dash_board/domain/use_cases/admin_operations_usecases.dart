@@ -106,6 +106,12 @@ class GetBillingSummaryUseCase {
   Future<Either<Failure, Map<String, double>>> call() => repository.getBillingSummary();
 }
 
+class CreateInvoiceUseCase {
+  final AdminOperationsRepository repository;
+  CreateInvoiceUseCase(this.repository);
+  Future<Either<Failure, void>> call(Map<String, dynamic> data) => repository.createInvoice(data);
+}
+
 // Settings Use Cases
 class GetAdminSettingsUseCase {
   final AdminOperationsRepository repository;

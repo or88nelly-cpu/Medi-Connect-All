@@ -35,6 +35,7 @@ abstract class AdminOperationsRepository {
   // Billing / Invoices
   Future<Either<Failure, List<InvoiceEntity>>> getInvoices();
   Future<Either<Failure, Map<String, double>>> getBillingSummary();
+  Future<Either<Failure, void>> createInvoice(Map<String, dynamic> data);
 
   // Settings
   Future<Either<Failure, Map<String, dynamic>>> getAdminSettings();

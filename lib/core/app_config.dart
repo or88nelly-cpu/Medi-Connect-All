@@ -263,6 +263,7 @@ void configureAdminOperationsDependencies(GetIt sl) {
 
   sl.registerLazySingleton<GetInvoicesUseCase>(() => GetInvoicesUseCase(sl<AdminOperationsRepository>()));
   sl.registerLazySingleton<GetBillingSummaryUseCase>(() => GetBillingSummaryUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<CreateInvoiceUseCase>(() => CreateInvoiceUseCase(sl<AdminOperationsRepository>()));
 
   sl.registerLazySingleton<GetAdminSettingsUseCase>(() => GetAdminSettingsUseCase(sl<AdminOperationsRepository>()));
   sl.registerLazySingleton<UpdateAdminSettingUseCase>(() => UpdateAdminSettingUseCase(sl<AdminOperationsRepository>()));
@@ -300,6 +301,7 @@ void configureAdminOperationsDependencies(GetIt sl) {
   sl.registerFactory<AdminBillingBloc>(() => AdminBillingBloc(
     getInvoices: sl<GetInvoicesUseCase>(),
     getSummary: sl<GetBillingSummaryUseCase>(),
+    createInvoice: sl<CreateInvoiceUseCase>(),
   ));
 
   sl.registerFactory<AdminSettingsBloc>(() => AdminSettingsBloc(

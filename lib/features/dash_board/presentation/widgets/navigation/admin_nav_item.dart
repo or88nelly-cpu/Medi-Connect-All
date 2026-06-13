@@ -24,28 +24,44 @@ class AdminNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSelected = currentIndex == index;
-    final color = isSelected ? AppColors.primary : AppColors.textSecondary;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final color = isSelected
+        ? AppColors.primary
+        : (isDark ? Colors.white54 : AppColors.textSecondary);
 
     return InkWell(
       onTap: () => onTap(index),
       borderRadius: BorderRadius.circular(16.r),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary.withOpacity(0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12.r),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              isSelected ? solidIcon : outlineIcon,
-              color: color,
-              size: 16.r,
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: Icon(
+                isSelected ? solidIcon : outlineIcon,
+                key: ValueKey(isSelected),
+                color: color,
+                size: 20.r,
+              ),
             ),
-            SizedBox(height: 4.h),
+            SizedBox(height: 3.h),
             Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(
                 color: color,
-                fontSize: 6.sp,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: 9.sp,
+                fontWeight:
+                    isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),
           ],

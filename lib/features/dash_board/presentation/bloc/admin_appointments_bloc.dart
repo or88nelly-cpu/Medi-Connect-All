@@ -17,6 +17,11 @@ class CancelAppointment extends AdminAppointmentsEvent {
   CancelAppointment(this.id);
 }
 
+class CompleteAppointment extends AdminAppointmentsEvent {
+  final String id;
+  CompleteAppointment(this.id);
+}
+
 // States
 abstract class AdminAppointmentsState {}
 
@@ -35,7 +40,8 @@ class AdminAppointmentsError extends AdminAppointmentsState {
 }
 
 // Bloc
-class AdminAppointmentsBloc extends Bloc<AdminAppointmentsEvent, AdminAppointmentsState> {
+class AdminAppointmentsBloc
+    extends Bloc<AdminAppointmentsEvent, AdminAppointmentsState> {
   final GetAppointmentsUseCase _getAppointments;
   final CreateAppointmentUseCase _createAppointment;
   final UpdateAppointmentStatusUseCase _updateStatus;
@@ -51,6 +57,7 @@ class AdminAppointmentsBloc extends Bloc<AdminAppointmentsEvent, AdminAppointmen
     on<LoadAppointments>(_onLoadAppointments);
     on<CreateAppointmentEvent>(_onCreateAppointment);
     on<CancelAppointment>(_onCancelAppointment);
+    on<CompleteAppointment>(_onCompleteAppointment);
   }
 
   Future<void> _onLoadAppointments(
@@ -65,7 +72,6 @@ class AdminAppointmentsBloc extends Bloc<AdminAppointmentsEvent, AdminAppointmen
 
   Future<void> _onCreateAppointment(
       CreateAppointmentEvent event, Emitter<AdminAppointmentsState> emit) async {
-    // Keep loading indicator or let ui know we are inserting
     final result = await _createAppointment(event.data);
     result.fold(
       (failure) => emit(AdminAppointmentsError(failure.message)),
@@ -76,6 +82,15 @@ class AdminAppointmentsBloc extends Bloc<AdminAppointmentsEvent, AdminAppointmen
   Future<void> _onCancelAppointment(
       CancelAppointment event, Emitter<AdminAppointmentsState> emit) async {
     final result = await _updateStatus(event.id, 'Cancelled');
+    result.fold(
+      (failure) => emit(AdminAppointmentsError(failure.message)),
+      (_) => add(LoadAppointments()),
+    );
+  }
+
+  Future<void> _onCompleteAppointment(
+      CompleteAppointment event, Emitter<AdminAppointmentsState> emit) async {
+    final result = await _updateStatus(event.id, 'Completed');
     result.fold(
       (failure) => emit(AdminAppointmentsError(failure.message)),
       (_) => add(LoadAppointments()),

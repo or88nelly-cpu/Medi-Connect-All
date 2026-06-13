@@ -7,6 +7,11 @@ abstract class AdminBillingEvent {}
 
 class LoadBillingDetails extends AdminBillingEvent {}
 
+class RecordInvoice extends AdminBillingEvent {
+  final Map<String, dynamic> data;
+  RecordInvoice(this.data);
+}
+
 // States
 abstract class AdminBillingState {}
 
@@ -25,18 +30,24 @@ class AdminBillingError extends AdminBillingState {
   AdminBillingError(this.message);
 }
 
+class AdminBillingInvoiceRecorded extends AdminBillingState {}
+
 // Bloc
 class AdminBillingBloc extends Bloc<AdminBillingEvent, AdminBillingState> {
   final GetInvoicesUseCase _getInvoices;
   final GetBillingSummaryUseCase _getSummary;
+  final CreateInvoiceUseCase _createInvoice;
 
   AdminBillingBloc({
     required GetInvoicesUseCase getInvoices,
     required GetBillingSummaryUseCase getSummary,
+    required CreateInvoiceUseCase createInvoice,
   })  : _getInvoices = getInvoices,
         _getSummary = getSummary,
+        _createInvoice = createInvoice,
         super(AdminBillingInitial()) {
     on<LoadBillingDetails>(_onLoadBillingDetails);
+    on<RecordInvoice>(_onRecordInvoice);
   }
 
   Future<void> _onLoadBillingDetails(
@@ -50,8 +61,21 @@ class AdminBillingBloc extends Bloc<AdminBillingEvent, AdminBillingState> {
       (invoices) {
         summaryResult.fold(
           (failure) => emit(AdminBillingError(failure.message)),
-          (summary) => emit(AdminBillingLoaded(invoices: invoices, summary: summary)),
+          (summary) =>
+              emit(AdminBillingLoaded(invoices: invoices, summary: summary)),
         );
+      },
+    );
+  }
+
+  Future<void> _onRecordInvoice(
+      RecordInvoice event, Emitter<AdminBillingState> emit) async {
+    final result = await _createInvoice(event.data);
+    result.fold(
+      (failure) => emit(AdminBillingError(failure.message)),
+      (_) {
+        emit(AdminBillingInvoiceRecorded());
+        add(LoadBillingDetails());
       },
     );
   }
