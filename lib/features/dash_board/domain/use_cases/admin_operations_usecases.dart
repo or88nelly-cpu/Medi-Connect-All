@@ -144,3 +144,9 @@ class UpdateAppointmentStatusUseCase {
   Future<Either<Failure, void>> call(String id, String status) => repository.updateAppointmentStatus(id, status);
 }
 
+class UpdateAppointmentVitalsUseCase {
+  final AdminOperationsRepository repository;
+  UpdateAppointmentVitalsUseCase(this.repository);
+  Future<Either<Failure, void>> call(String id, Map<String, dynamic> vitals) => repository.updateAppointmentVitals(id, vitals);
+}
+

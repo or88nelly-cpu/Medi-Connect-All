@@ -22,6 +22,12 @@ class CompleteAppointment extends AdminAppointmentsEvent {
   CompleteAppointment(this.id);
 }
 
+class UpdateAppointmentVitals extends AdminAppointmentsEvent {
+  final String id;
+  final Map<String, dynamic> vitals;
+  UpdateAppointmentVitals(this.id, this.vitals);
+}
+
 // States
 abstract class AdminAppointmentsState {}
 
@@ -45,19 +51,23 @@ class AdminAppointmentsBloc
   final GetAppointmentsUseCase _getAppointments;
   final CreateAppointmentUseCase _createAppointment;
   final UpdateAppointmentStatusUseCase _updateStatus;
+  final UpdateAppointmentVitalsUseCase _updateVitals;
 
   AdminAppointmentsBloc({
     required GetAppointmentsUseCase getAppointments,
     required CreateAppointmentUseCase createAppointment,
     required UpdateAppointmentStatusUseCase updateStatus,
+    required UpdateAppointmentVitalsUseCase updateVitals,
   })  : _getAppointments = getAppointments,
         _createAppointment = createAppointment,
         _updateStatus = updateStatus,
+        _updateVitals = updateVitals,
         super(AdminAppointmentsInitial()) {
     on<LoadAppointments>(_onLoadAppointments);
     on<CreateAppointmentEvent>(_onCreateAppointment);
     on<CancelAppointment>(_onCancelAppointment);
     on<CompleteAppointment>(_onCompleteAppointment);
+    on<UpdateAppointmentVitals>(_onUpdateAppointmentVitals);
   }
 
   Future<void> _onLoadAppointments(
@@ -91,6 +101,15 @@ class AdminAppointmentsBloc
   Future<void> _onCompleteAppointment(
       CompleteAppointment event, Emitter<AdminAppointmentsState> emit) async {
     final result = await _updateStatus(event.id, 'Completed');
+    result.fold(
+      (failure) => emit(AdminAppointmentsError(failure.message)),
+      (_) => add(LoadAppointments()),
+    );
+  }
+
+  Future<void> _onUpdateAppointmentVitals(
+      UpdateAppointmentVitals event, Emitter<AdminAppointmentsState> emit) async {
+    final result = await _updateVitals(event.id, event.vitals);
     result.fold(
       (failure) => emit(AdminAppointmentsError(failure.message)),
       (_) => add(LoadAppointments()),

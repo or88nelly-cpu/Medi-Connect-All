@@ -103,6 +103,12 @@ CREATE TABLE emr_records (
     invoice_number TEXT,
     amount NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
     payment_method TEXT NOT NULL DEFAULT 'Cash',
+    medicine_payment_status TEXT NOT NULL DEFAULT 'Pending',
+    lab_payment_status TEXT NOT NULL DEFAULT 'Pending',
+    medicine_amount NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    lab_amount NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    medicine_invoice_number TEXT,
+    lab_invoice_number TEXT,
     recorded_at TIMESTAMPTZ DEFAULT now(),
     created_at TIMESTAMPTZ DEFAULT now()
 );
@@ -251,4 +257,13 @@ ALTER TABLE invoices DISABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_settings DISABLE ROW LEVEL SECURITY;
 ALTER TABLE appointments DISABLE ROW LEVEL SECURITY;
 ALTER TABLE emr_records DISABLE ROW LEVEL SECURITY;
+
+-- Add Vitals columns to Appointments table
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS bp TEXT;
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS weight TEXT;
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS height TEXT;
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS fever TEXT;
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS head_circumference TEXT;
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS additional_vitals TEXT;
+
 

@@ -271,6 +271,7 @@ void configureAdminOperationsDependencies(GetIt sl) {
   sl.registerLazySingleton<GetAppointmentsUseCase>(() => GetAppointmentsUseCase(sl<AdminOperationsRepository>()));
   sl.registerLazySingleton<CreateAppointmentUseCase>(() => CreateAppointmentUseCase(sl<AdminOperationsRepository>()));
   sl.registerLazySingleton<UpdateAppointmentStatusUseCase>(() => UpdateAppointmentStatusUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<UpdateAppointmentVitalsUseCase>(() => UpdateAppointmentVitalsUseCase(sl<AdminOperationsRepository>()));
 
 
   // Blocs
@@ -317,6 +318,7 @@ void configureAdminOperationsDependencies(GetIt sl) {
     getAppointments: sl<GetAppointmentsUseCase>(),
     createAppointment: sl<CreateAppointmentUseCase>(),
     updateStatus: sl<UpdateAppointmentStatusUseCase>(),
+    updateVitals: sl<UpdateAppointmentVitalsUseCase>(),
   ));
 }
 

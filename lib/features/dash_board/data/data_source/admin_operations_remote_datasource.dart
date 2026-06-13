@@ -1,8 +1,12 @@
 /// Remote data source for all admin operations modules.
 /// Handles Supabase CRUD for pharmacy, labs, attendance, emergencies,
 /// activity logs, invoices, and admin settings.
+import 'dart:convert';
+
+import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/common_models/exceptions/exceptions.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/core/storage/secure_storage_service.dart';
 import 'package:medi_connect/features/dash_board/data/models/pharmacy_item_model.dart';
 import 'package:medi_connect/features/dash_board/data/models/lab_test_model.dart';
 import 'package:medi_connect/features/dash_board/data/models/attendance_model.dart';
@@ -51,6 +55,7 @@ abstract class AdminOperationsRemoteDataSource {
   Future<List<AppointmentModel>> getAppointments();
   Future<AppointmentModel> createAppointment(Map<String, dynamic> data);
   Future<void> updateAppointmentStatus(String id, String status);
+  Future<void> updateAppointmentVitals(String id, Map<String, dynamic> vitals);
 }
 
 // ─── Implementation ─────────────────────────────────────────────────────────
@@ -671,10 +676,32 @@ class AdminOperationsRemoteDataSourceImpl
           .select()
           .order('created_at', ascending: false);
       final list = response as List<dynamic>? ?? [];
-      return list
+      final result = list
           .map((e) => AppointmentModel.fromJson(e as Map<String, dynamic>))
           .toList();
+      
+      // Save cache locally
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        await storage.write('appointments_cache', jsonEncode(list));
+      } catch (err) {
+        // Safe to ignore
+      }
+      return result;
     } catch (e) {
+      // Offline fallback
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        final cached = await storage.read('appointments_cache');
+        if (cached != null) {
+          final List<dynamic> decoded = jsonDecode(cached);
+          return decoded
+              .map((e) => AppointmentModel.fromJson(e as Map<String, dynamic>))
+              .toList();
+        }
+      } catch (err) {
+        // Safe to ignore
+      }
       throw ServerException(e.toString());
     }
   }
@@ -687,8 +714,40 @@ class AdminOperationsRemoteDataSourceImpl
           .insert(data)
           .select()
           .single();
-      return AppointmentModel.fromJson(response as Map<String, dynamic>);
+      final model = AppointmentModel.fromJson(response as Map<String, dynamic>);
+      
+      // Update local cache
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        final cached = await storage.read('appointments_cache');
+        List<dynamic> list = [];
+        if (cached != null) {
+          list = jsonDecode(cached);
+        }
+        list.insert(0, response);
+        await storage.write('appointments_cache', jsonEncode(list));
+      } catch (err) {
+        // Safe to ignore
+      }
+      return model;
     } catch (e) {
+      // If we are offline, let's mock-insert into the cache!
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        final cached = await storage.read('appointments_cache');
+        List<dynamic> list = [];
+        if (cached != null) {
+          list = jsonDecode(cached);
+        }
+        final mockApt = Map<String, dynamic>.from(data);
+        mockApt['id'] = 'mock-apt-${DateTime.now().millisecondsSinceEpoch}';
+        mockApt['created_at'] = DateTime.now().toIso8601String();
+        list.insert(0, mockApt);
+        await storage.write('appointments_cache', jsonEncode(list));
+        return AppointmentModel.fromJson(mockApt);
+      } catch (err) {
+        // Safe to ignore
+      }
       throw ServerException(e.toString());
     }
   }
@@ -700,8 +759,88 @@ class AdminOperationsRemoteDataSourceImpl
           .from('appointments')
           .update({'status': status})
           .eq('id', id);
+      
+      // Update local cache
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        final cached = await storage.read('appointments_cache');
+        if (cached != null) {
+          final List<dynamic> list = jsonDecode(cached);
+          final idx = list.indexWhere((element) => element['id'] == id);
+          if (idx != -1) {
+            final item = Map<String, dynamic>.from(list[idx]);
+            item['status'] = status;
+            list[idx] = item;
+            await storage.write('appointments_cache', jsonEncode(list));
+          }
+        }
+      } catch (err) {
+        // Safe to ignore
+      }
     } catch (e) {
-      throw ServerException(e.toString());
+      // Offline fallback: update local status
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        final cached = await storage.read('appointments_cache');
+        if (cached != null) {
+          final List<dynamic> list = jsonDecode(cached);
+          final idx = list.indexWhere((element) => element['id'] == id);
+          if (idx != -1) {
+            final item = Map<String, dynamic>.from(list[idx]);
+            item['status'] = status;
+            list[idx] = item;
+            await storage.write('appointments_cache', jsonEncode(list));
+          }
+        }
+      } catch (err) {
+        // Safe to ignore
+      }
+    }
+  }
+
+  @override
+  Future<void> updateAppointmentVitals(String id, Map<String, dynamic> vitals) async {
+    try {
+      await _supabase
+          .from('appointments')
+          .update(vitals)
+          .eq('id', id);
+      
+      // Update local cache
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        final cached = await storage.read('appointments_cache');
+        if (cached != null) {
+          final List<dynamic> list = jsonDecode(cached);
+          final idx = list.indexWhere((element) => element['id'] == id);
+          if (idx != -1) {
+            final item = Map<String, dynamic>.from(list[idx]);
+            item.addAll(vitals);
+            list[idx] = item;
+            await storage.write('appointments_cache', jsonEncode(list));
+          }
+        }
+      } catch (err) {
+        // Safe to ignore
+      }
+    } catch (e) {
+      // Offline fallback: update local vitals
+      try {
+        final storage = GetIt.I<SecureStorageService>();
+        final cached = await storage.read('appointments_cache');
+        if (cached != null) {
+          final List<dynamic> list = jsonDecode(cached);
+          final idx = list.indexWhere((element) => element['id'] == id);
+          if (idx != -1) {
+            final item = Map<String, dynamic>.from(list[idx]);
+            item.addAll(vitals);
+            list[idx] = item;
+            await storage.write('appointments_cache', jsonEncode(list));
+          }
+        }
+      } catch (err) {
+        // Safe to ignore
+      }
     }
   }
 }

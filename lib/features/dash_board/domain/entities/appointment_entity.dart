@@ -13,6 +13,14 @@ class AppointmentEntity extends Equatable {
   final String type;
   final DateTime? createdAt;
 
+  // Vitals fields
+  final String? bp;
+  final String? weight;
+  final String? height;
+  final String? fever;
+  final String? headCircumference;
+  final String? additionalVitals;
+
   const AppointmentEntity({
     required this.id,
     this.patientId,
@@ -25,6 +33,12 @@ class AppointmentEntity extends Equatable {
     required this.status,
     required this.type,
     this.createdAt,
+    this.bp,
+    this.weight,
+    this.height,
+    this.fever,
+    this.headCircumference,
+    this.additionalVitals,
   });
 
   @override
@@ -40,5 +54,11 @@ class AppointmentEntity extends Equatable {
         status,
         type,
         createdAt,
+        bp,
+        weight,
+        height,
+        fever,
+        headCircumference,
+        additionalVitals,
       ];
 }

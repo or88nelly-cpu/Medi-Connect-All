@@ -2154,6 +2154,14 @@ class _ConsultationCompleteSheetState
     final paymentMethodStr = _paymentMethod == 'Online' ? 'UPI/QR' : 'Cash';
     final recordedAtStr = DateTime.now().toIso8601String();
 
+    final double medicineAmount = medicines.length * 150.0;
+    final double labAmount = _selectedTests.length * 250.0;
+
+    final medicinePaymentStatus = medicines.isEmpty ? 'Paid' : 'Pending';
+    final labPaymentStatus = _selectedTests.isEmpty ? 'Paid' : 'Pending';
+
+    final suffix = _invoiceNumber.contains('-') ? _invoiceNumber.split('-').last : DateTime.now().millisecondsSinceEpoch.toString().substring(8);
+
     final emrRecordData = {
       'patient_id': apt.patientId,
       'patient_name': apt.patientName,
@@ -2167,6 +2175,12 @@ class _ConsultationCompleteSheetState
       'invoice_number': _invoiceNumber,
       'amount': amount,
       'payment_method': paymentMethodStr,
+      'medicine_payment_status': medicinePaymentStatus,
+      'lab_payment_status': labPaymentStatus,
+      'medicine_amount': medicineAmount,
+      'lab_amount': labAmount,
+      'medicine_invoice_number': medicines.isEmpty ? '' : 'MED-$suffix',
+      'lab_invoice_number': _selectedTests.isEmpty ? '' : 'LAB-$suffix',
       'recorded_at': recordedAtStr,
     };
 

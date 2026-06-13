@@ -268,4 +268,16 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateAppointmentVitals(String id, Map<String, dynamic> vitals) async {
+    try {
+      await _remoteDataSource.updateAppointmentVitals(id, vitals);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

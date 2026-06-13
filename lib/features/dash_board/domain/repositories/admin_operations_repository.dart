@@ -45,4 +45,5 @@ abstract class AdminOperationsRepository {
   Future<Either<Failure, List<AppointmentEntity>>> getAppointments();
   Future<Either<Failure, AppointmentEntity>> createAppointment(Map<String, dynamic> data);
   Future<Either<Failure, void>> updateAppointmentStatus(String id, String status);
+  Future<Either<Failure, void>> updateAppointmentVitals(String id, Map<String, dynamic> vitals);
 }

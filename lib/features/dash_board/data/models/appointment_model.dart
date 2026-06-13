@@ -13,6 +13,12 @@ class AppointmentModel extends AppointmentEntity {
     required super.status,
     required super.type,
     super.createdAt,
+    super.bp,
+    super.weight,
+    super.height,
+    super.fever,
+    super.headCircumference,
+    super.additionalVitals,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +38,12 @@ class AppointmentModel extends AppointmentEntity {
       createdAt: json['created_at'] != null
           ? DateTime.tryParse(json['created_at'] as String)
           : null,
+      bp: json['bp']?.toString(),
+      weight: json['weight']?.toString(),
+      height: json['height']?.toString(),
+      fever: json['fever']?.toString(),
+      headCircumference: json['head_circumference']?.toString(),
+      additionalVitals: json['additional_vitals']?.toString(),
     );
   }
 
@@ -45,5 +57,11 @@ class AppointmentModel extends AppointmentEntity {
         'appointment_time': appointmentTime,
         'status': status,
         'type': type,
+        if (bp != null) 'bp': bp,
+        if (weight != null) 'weight': weight,
+        if (height != null) 'height': height,
+        if (fever != null) 'fever': fever,
+        if (headCircumference != null) 'head_circumference': headCircumference,
+        if (additionalVitals != null) 'additional_vitals': additionalVitals,
       };
 }
