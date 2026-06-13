@@ -30,6 +30,7 @@ class AppInitializer {
     configureAnalyticsDependencies(sl);
     configureDepartmentDependencies(sl);
     configurePatientDependencies(sl);
+    configureAdminOperationsDependencies(sl);
   }
 }
 

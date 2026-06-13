@@ -29,6 +29,11 @@ import 'package:medi_connect/features/department/presentation/pages/doctor_staff
 import 'package:medi_connect/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/admin_manage_slots_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/admin_add_slot_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_slot_config_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_audit_logs_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_notifications_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin_master_data_page.dart';
+
 
 class AppRouterConfig {
   static GoRouter buildRouter() {
@@ -107,6 +112,23 @@ class AppRouterConfig {
           path: '/admin/emergencies',
           builder: (context, state) => const AdminEmergenciesPage(),
         ),
+        GoRoute(
+          path: '/admin/slot-config',
+          builder: (context, state) => const AdminSlotConfigPage(),
+        ),
+        GoRoute(
+          path: '/admin/audit-logs',
+          builder: (context, state) => const AdminAuditLogsPage(),
+        ),
+        GoRoute(
+          path: '/admin/notifications',
+          builder: (context, state) => const AdminNotificationsPage(),
+        ),
+        GoRoute(
+          path: '/admin/master-data',
+          builder: (context, state) => const AdminMasterDataPage(),
+        ),
+
         GoRoute(
           path: "/sectionDetail",
           builder: (context, state) =>

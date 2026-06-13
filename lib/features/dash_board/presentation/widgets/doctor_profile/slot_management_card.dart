@@ -40,44 +40,61 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
     }
   }
 
+  List<Map<String, dynamic>> _generateDefaultSlots(String session, String durationStr) {
+    final int minutes = durationStr.contains("10")
+        ? 10
+        : durationStr.contains("15")
+            ? 15
+            : 30;
+
+    final List<Map<String, dynamic>> list = [];
+    int startHour = session == "morning" ? 9 : 14; 
+    int endHour = session == "morning" ? 13 : 18; 
+
+    int currentMin = startHour * 60;
+    int endMin = endHour * 60;
+
+    int idx = 0;
+    while (currentMin < endMin) {
+      final hour = currentMin ~/ 60;
+      final min = currentMin % 60;
+      final displayHour = hour > 12 ? hour - 12 : hour;
+      final amPm = hour >= 12 ? "PM" : "AM";
+      final timeStr = "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
+      
+      String status = "Available";
+      if (idx % 6 == 1) status = "Booked";
+      if (idx % 8 == 2) status = "On Hold";
+      if (idx % 10 == 3) status = "Blocked";
+
+      list.add({"time": timeStr, "status": status});
+      currentMin += minutes;
+      idx++;
+    }
+    return list;
+  }
+
   void _loadSlots() {
-    final metadataMorning = widget.user.metadata?['slots_morning'] as List<dynamic>?;
-    if (metadataMorning != null) {
-      _morningSlots = metadataMorning.map((e) => Map<String, dynamic>.from(e)).toList();
+    final slotsByDate = widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
+    final dateData = slotsByDate[_selectedDate] as Map<dynamic, dynamic>? ?? {};
+    final durationData = dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
+
+    final morningList = durationData['morning'] as List<dynamic>?;
+    if (morningList != null) {
+      _morningSlots = morningList.map((e) => Map<String, dynamic>.from(e)).toList();
     } else {
-      _morningSlots = [
-        {"time": "09:00 AM", "status": "Available"},
-        {"time": "09:10 AM", "status": "Booked"},
-        {"time": "09:20 AM", "status": "Available"},
-        {"time": "09:30 AM", "status": "Available"},
-        {"time": "09:40 AM", "status": "Available"},
-        {"time": "09:50 AM", "status": "Blocked"},
-        {"time": "10:00 AM", "status": "Available"},
-        {"time": "10:10 AM", "status": "Available"},
-        {"time": "10:20 AM", "status": "Available"},
-      ];
+      _morningSlots = _generateDefaultSlots("morning", _slotDuration);
     }
 
-    final metadataAfternoon = widget.user.metadata?['slots_afternoon'] as List<dynamic>?;
-    if (metadataAfternoon != null) {
-      _afternoonSlots = metadataAfternoon.map((e) => Map<String, dynamic>.from(e)).toList();
+    final afternoonList = durationData['afternoon'] as List<dynamic>?;
+    if (afternoonList != null) {
+      _afternoonSlots = afternoonList.map((e) => Map<String, dynamic>.from(e)).toList();
     } else {
-      _afternoonSlots = [
-        {"time": "02:00 PM", "status": "Available"},
-        {"time": "02:10 PM", "status": "Available"},
-        {"time": "02:20 PM", "status": "On Hold"},
-        {"time": "02:30 PM", "status": "Available"},
-        {"time": "02:40 PM", "status": "Available"},
-        {"time": "02:50 PM", "status": "Available"},
-        {"time": "03:00 PM", "status": "Booked"},
-        {"time": "03:10 PM", "status": "Available"},
-        {"time": "03:20 PM", "status": "Available"},
-      ];
+      _afternoonSlots = _generateDefaultSlots("afternoon", _slotDuration);
     }
   }
 
   void _toggleSlotStatus(Map<String, dynamic> slot) {
-    // Cycle: Available -> Booked -> On Hold -> Blocked -> Available
     String newStatus;
     switch (slot["status"]) {
       case "Available":
@@ -107,6 +124,16 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
     }
 
     final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final slotsByDate = Map<String, dynamic>.from(updatedMetadata['slots_by_date'] ?? {});
+    final dateData = Map<String, dynamic>.from(slotsByDate[_selectedDate] ?? {});
+    final durationData = Map<String, dynamic>.from(dateData[_slotDuration] ?? {});
+
+    durationData['morning'] = _morningSlots;
+    durationData['afternoon'] = _afternoonSlots;
+    dateData[_slotDuration] = durationData;
+    slotsByDate[_selectedDate] = dateData;
+    updatedMetadata['slots_by_date'] = slotsByDate;
+
     updatedMetadata['slots_morning'] = _morningSlots;
     updatedMetadata['slots_afternoon'] = _afternoonSlots;
     
@@ -232,7 +259,10 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
                   textColor: textColor,
                   labelColor: labelColor,
                   borderColor: borderColor,
-                  onChanged: (val) => setState(() => _selectedDate = val!),
+                  onChanged: (val) => setState(() {
+                    _selectedDate = val!;
+                    _loadSlots();
+                  }),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -246,7 +276,10 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
                   textColor: textColor,
                   labelColor: labelColor,
                   borderColor: borderColor,
-                  onChanged: (val) => setState(() => _slotDuration = val!),
+                  onChanged: (val) => setState(() {
+                    _slotDuration = val!;
+                    _loadSlots();
+                  }),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -260,7 +293,10 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
                   textColor: textColor,
                   labelColor: labelColor,
                   borderColor: borderColor,
-                  onChanged: (val) => setState(() => _selectedView = val!),
+                  onChanged: (val) => setState(() {
+                    _selectedView = val!;
+                    _loadSlots();
+                  }),
                 ),
               ),
             ],

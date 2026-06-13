@@ -14,9 +14,11 @@ class DoctorStatsRow extends StatelessWidget {
     final valueColor = isDark ? AppColors.terminalAccentCyan : AppColors.primary;
     final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
 
-    final expString = user.experience != null ? "${user.experience}+" : "12+";
+    final expString = user.experience != null ? "${user.experience} Years" : "12+ Years";
     final qualString = user.qualification ?? "MBBS, MD (Cardiology)";
     final specString = user.specialization ?? "Cardiology";
+    final rating = user.metadata?['rating']?.toString() ?? "4.8";
+    final reviewsCount = user.metadata?['reviews_count']?.toString() ?? "128";
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
@@ -33,13 +35,13 @@ class DoctorStatsRow extends StatelessWidget {
           if (isWide) {
             return Row(
               children: [
-                Expanded(child: _buildStatItem(expString, "Years Experience", valueColor, labelColor)),
+                Expanded(child: _buildStatItem(expString, "Experience", valueColor, labelColor)),
                 _buildDivider(borderColor),
                 Expanded(child: _buildStatItem(qualString, "Qualification", valueColor, labelColor)),
                 _buildDivider(borderColor),
                 Expanded(child: _buildStatItem(specString, "Specialization", valueColor, labelColor)),
                 _buildDivider(borderColor),
-                Expanded(child: _buildRatingItem("4.8", "128", labelColor)),
+                Expanded(child: _buildRatingItem(rating, reviewsCount, labelColor)),
               ],
             );
           } else {
@@ -50,7 +52,7 @@ class DoctorStatsRow extends StatelessWidget {
               children: [
                 SizedBox(
                   width: (constraints.maxWidth - 20.w) / 2,
-                  child: _buildStatItem(expString, "Years Experience", valueColor, labelColor),
+                  child: _buildStatItem(expString, "Experience", valueColor, labelColor),
                 ),
                 SizedBox(
                   width: (constraints.maxWidth - 20.w) / 2,
@@ -62,7 +64,7 @@ class DoctorStatsRow extends StatelessWidget {
                 ),
                 SizedBox(
                   width: (constraints.maxWidth - 20.w) / 2,
-                  child: _buildRatingItem("4.8", "128", labelColor),
+                  child: _buildRatingItem(rating, reviewsCount, labelColor),
                 ),
               ],
             );

@@ -37,6 +37,18 @@ import 'package:medi_connect/features/patient/data/data_source/patient_remote_da
 import 'package:medi_connect/features/patient/data/repository/patient_repository_impl.dart';
 import 'package:medi_connect/features/patient/domain/repositories/patient_repository.dart';
 import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/dash_board/data/data_source/admin_operations_remote_datasource.dart';
+import 'package:medi_connect/features/dash_board/data/repository/admin_operations_repository_impl.dart';
+import 'package:medi_connect/features/dash_board/domain/repositories/admin_operations_repository.dart';
+import 'package:medi_connect/features/dash_board/domain/use_cases/admin_operations_usecases.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_labs_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_attendance_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_emergencies_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_settings_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_recent_activity_bloc.dart';
+
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -212,4 +224,85 @@ void configurePatientDependencies(GetIt sl) {
     );
   }
 }
+
+void configureAdminOperationsDependencies(GetIt sl) {
+  // Remote Datasource
+  if (!sl.isRegistered<AdminOperationsRemoteDataSource>()) {
+    sl.registerLazySingleton<AdminOperationsRemoteDataSource>(
+      () => AdminOperationsRemoteDataSourceImpl(sl<SupabaseService>()),
+    );
+  }
+
+  // Repository
+  if (!sl.isRegistered<AdminOperationsRepository>()) {
+    sl.registerLazySingleton<AdminOperationsRepository>(
+      () => AdminOperationsRepositoryImpl(sl<AdminOperationsRemoteDataSource>()),
+    );
+  }
+
+  // UseCases
+  sl.registerLazySingleton<GetPharmacyItemsUseCase>(() => GetPharmacyItemsUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<AddPharmacyItemUseCase>(() => AddPharmacyItemUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<UpdatePharmacyItemUseCase>(() => UpdatePharmacyItemUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<DeletePharmacyItemUseCase>(() => DeletePharmacyItemUseCase(sl<AdminOperationsRepository>()));
+
+  sl.registerLazySingleton<GetLabTestsUseCase>(() => GetLabTestsUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<AddLabTestUseCase>(() => AddLabTestUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<UpdateLabTestStatusUseCase>(() => UpdateLabTestStatusUseCase(sl<AdminOperationsRepository>()));
+
+  sl.registerLazySingleton<GetStaffAttendanceUseCase>(() => GetStaffAttendanceUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<UpdateAttendanceStatusUseCase>(() => UpdateAttendanceStatusUseCase(sl<AdminOperationsRepository>()));
+
+  sl.registerLazySingleton<GetEmergenciesUseCase>(() => GetEmergenciesUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<TriggerEmergencyUseCase>(() => TriggerEmergencyUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<ResolveEmergencyUseCase>(() => ResolveEmergencyUseCase(sl<AdminOperationsRepository>()));
+
+  sl.registerLazySingleton<GetActivityLogsUseCase>(() => GetActivityLogsUseCase(sl<AdminOperationsRepository>()));
+
+  sl.registerLazySingleton<GetInvoicesUseCase>(() => GetInvoicesUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<GetBillingSummaryUseCase>(() => GetBillingSummaryUseCase(sl<AdminOperationsRepository>()));
+
+  sl.registerLazySingleton<GetAdminSettingsUseCase>(() => GetAdminSettingsUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<UpdateAdminSettingUseCase>(() => UpdateAdminSettingUseCase(sl<AdminOperationsRepository>()));
+
+  // Blocs
+  sl.registerFactory<AdminPharmacyBloc>(() => AdminPharmacyBloc(
+    getItems: sl<GetPharmacyItemsUseCase>(),
+    addItem: sl<AddPharmacyItemUseCase>(),
+    updateItem: sl<UpdatePharmacyItemUseCase>(),
+    deleteItem: sl<DeletePharmacyItemUseCase>(),
+  ));
+
+  sl.registerFactory<AdminLabsBloc>(() => AdminLabsBloc(
+    getTests: sl<GetLabTestsUseCase>(),
+    addTest: sl<AddLabTestUseCase>(),
+    updateStatus: sl<UpdateLabTestStatusUseCase>(),
+  ));
+
+  sl.registerFactory<AdminAttendanceBloc>(() => AdminAttendanceBloc(
+    getAttendance: sl<GetStaffAttendanceUseCase>(),
+    updateStatus: sl<UpdateAttendanceStatusUseCase>(),
+  ));
+
+  sl.registerFactory<AdminEmergenciesBloc>(() => AdminEmergenciesBloc(
+    getEmergencies: sl<GetEmergenciesUseCase>(),
+    trigger: sl<TriggerEmergencyUseCase>(),
+    resolve: sl<ResolveEmergencyUseCase>(),
+  ));
+
+  sl.registerFactory<AdminBillingBloc>(() => AdminBillingBloc(
+    getInvoices: sl<GetInvoicesUseCase>(),
+    getSummary: sl<GetBillingSummaryUseCase>(),
+  ));
+
+  sl.registerFactory<AdminSettingsBloc>(() => AdminSettingsBloc(
+    getSettings: sl<GetAdminSettingsUseCase>(),
+    updateSetting: sl<UpdateAdminSettingUseCase>(),
+  ));
+
+  sl.registerFactory<AdminRecentActivityBloc>(() => AdminRecentActivityBloc(
+    getActivityLogs: sl<GetActivityLogsUseCase>(),
+  ));
+}
+
 

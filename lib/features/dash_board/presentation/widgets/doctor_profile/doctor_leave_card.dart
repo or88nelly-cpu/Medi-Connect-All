@@ -19,6 +19,49 @@ class DoctorLeaveCard extends StatefulWidget {
 }
 
 class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
+  void _approveLeave(Map<String, String> targetLeave) {
+    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? []);
+    
+    final updatedLeaves = currentLeaves.map((l) {
+      final map = Map<String, dynamic>.from(l as Map);
+      if (map['type'] == targetLeave['type'] && map['range'] == targetLeave['range']) {
+        map['status'] = 'Approved';
+      }
+      return map;
+    }).toList();
+    
+    updatedMetadata['leaves'] = updatedLeaves;
+    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+    
+    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+    
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated && authState.user.id == widget.user.id) {
+      context.read<AuthBloc>().add(UserUpdated(updatedUser));
+    }
+  }
+
+  void _rejectLeave(Map<String, String> targetLeave) {
+    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? []);
+    
+    final updatedLeaves = currentLeaves.where((l) {
+      final map = l as Map;
+      return !(map['type'] == targetLeave['type'] && map['range'] == targetLeave['range']);
+    }).toList();
+    
+    updatedMetadata['leaves'] = updatedLeaves;
+    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+    
+    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+    
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated && authState.user.id == widget.user.id) {
+      context.read<AuthBloc>().add(UserUpdated(updatedUser));
+    }
+  }
+
   List<Map<String, String>> get _leaves {
     final metadataLeaves = widget.user.metadata?['leaves'] as List<dynamic>?;
     if (metadataLeaves != null) {
@@ -131,7 +174,11 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
           // Leaves list
           ..._leaves.map((leave) {
             final isApproved = leave["status"] == "Approved";
+            final isPending = leave["status"] == "Pending";
             final statusColor = isApproved ? const Color(0xFF0F9F58) : AppColors.warning;
+
+            final authState = context.watch<AuthBloc>().state;
+            final isAdmin = authState is Authenticated && authState.user.role == 'admin';
 
             return Container(
               margin: EdgeInsets.only(bottom: 12.h),
@@ -165,24 +212,55 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                    decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(20.r),
-                      border: Border.all(
-                        color: statusColor,
-                        width: 0.5,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                        decoration: BoxDecoration(
+                          color: statusColor.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(20.r),
+                          border: Border.all(
+                            color: statusColor,
+                            width: 0.5,
+                          ),
+                        ),
+                        child: Text(
+                          leave["status"]!,
+                          style: TextStyle(
+                            color: statusColor,
+                            fontSize: 9.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      leave["status"]!,
-                      style: TextStyle(
-                        color: statusColor,
-                        fontSize: 9.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                      if (isPending && isAdmin) ...[
+                        SizedBox(width: 8.w),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: Icon(
+                            Icons.check_circle_outline,
+                            color: const Color(0xFF0F9F58),
+                            size: 20.sp,
+                          ),
+                          onPressed: () => _approveLeave(leave),
+                          tooltip: 'Approve Leave',
+                        ),
+                        SizedBox(width: 6.w),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: Icon(
+                            Icons.cancel_outlined,
+                            color: AppColors.error,
+                            size: 20.sp,
+                          ),
+                          onPressed: () => _rejectLeave(leave),
+                          tooltip: 'Reject Leave',
+                        ),
+                      ],
+                    ],
                   ),
                 ],
               ),

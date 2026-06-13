@@ -96,13 +96,9 @@ class AdminOperationsRemoteDataSourceImpl
   }
 
   @override
-  Future<void> updatePharmacyItem(
-      String id, Map<String, dynamic> data) async {
+  Future<void> updatePharmacyItem(String id, Map<String, dynamic> data) async {
     try {
-      await _supabase
-          .from('pharmacy_inventory')
-          .update(data)
-          .eq('id', id);
+      await _supabase.from('pharmacy_inventory').update(data).eq('id', id);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -164,8 +160,11 @@ class AdminOperationsRemoteDataSourceImpl
   @override
   Future<LabTestModel> addLabTest(Map<String, dynamic> data) async {
     try {
-      final response =
-          await _supabase.from('lab_records').insert(data).select().single();
+      final response = await _supabase
+          .from('lab_records')
+          .insert(data)
+          .select()
+          .single();
       return LabTestModel.fromJson(response as Map<String, dynamic>);
     } catch (e) {
       throw ServerException(e.toString());
@@ -175,7 +174,10 @@ class AdminOperationsRemoteDataSourceImpl
   @override
   Future<void> updateLabTestStatus(String id, String status) async {
     try {
-      await _supabase.from('lab_records').update({'status': status}).eq('id', id);
+      await _supabase
+          .from('lab_records')
+          .update({'status': status})
+          .eq('id', id);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -183,11 +185,36 @@ class AdminOperationsRemoteDataSourceImpl
 
   Future<void> _seedLabData() async {
     final seedData = [
-      {'patient_name': 'John Doe', 'test_name': 'Lipid Profile', 'status': 'Completed', 'priority': 'Normal'},
-      {'patient_name': 'Alice Smith', 'test_name': 'CBC & Hemoglobin', 'status': 'Pending', 'priority': 'High'},
-      {'patient_name': 'Robert Johnson', 'test_name': 'Thyroid Panel (T3, T4, TSH)', 'status': 'Completed', 'priority': 'Normal'},
-      {'patient_name': 'Emily Davis', 'test_name': 'Blood Sugar Fasting', 'status': 'Pending', 'priority': 'Critical'},
-      {'patient_name': 'David Miller', 'test_name': 'Kidney Function Test', 'status': 'Completed', 'priority': 'Normal'},
+      {
+        'patient_name': 'John Doe',
+        'test_name': 'Lipid Profile',
+        'status': 'Completed',
+        'priority': 'Normal',
+      },
+      {
+        'patient_name': 'Alice Smith',
+        'test_name': 'CBC & Hemoglobin',
+        'status': 'Pending',
+        'priority': 'High',
+      },
+      {
+        'patient_name': 'Robert Johnson',
+        'test_name': 'Thyroid Panel (T3, T4, TSH)',
+        'status': 'Completed',
+        'priority': 'Normal',
+      },
+      {
+        'patient_name': 'Emily Davis',
+        'test_name': 'Blood Sugar Fasting',
+        'status': 'Pending',
+        'priority': 'Critical',
+      },
+      {
+        'patient_name': 'David Miller',
+        'test_name': 'Kidney Function Test',
+        'status': 'Completed',
+        'priority': 'Normal',
+      },
     ];
     try {
       await _supabase.from('lab_records').insert(seedData);
@@ -242,13 +269,88 @@ class AdminOperationsRemoteDataSourceImpl
   }
 
   Future<void> _seedAttendanceData(String dateStr) async {
+    try {
+      final usersResponse = await _supabase
+          .from('users')
+          .select()
+          .eq('role', 'staff');
+      final list = usersResponse as List<dynamic>? ?? [];
+      
+      if (list.isNotEmpty) {
+        final seedData = list.map((u) {
+          final user = u as Map<String, dynamic>;
+          final name = user['name'] as String? ??
+              (user['first_name'] != null
+                  ? "${user['first_name']} ${user['last_name'] ?? ''}".trim()
+                  : 'Staff Member');
+          final role = user['staff_role'] as String? ?? user['department'] as String? ?? 'Staff';
+          final hash = name.hashCode;
+          String status = 'Absent';
+          String? checkIn;
+          if (hash % 3 == 0) {
+            status = 'Present';
+            checkIn = '08:00';
+          } else if (hash % 3 == 1) {
+            status = 'On Leave';
+          }
+          return {
+            'staff_id': user['id'],
+            'staff_name': name,
+            'role': role,
+            'status': status,
+            'check_in_time': checkIn,
+            'date': dateStr,
+          };
+        }).toList();
+        
+        await _supabase.from('staff_attendance').insert(seedData);
+        return;
+      }
+    } catch (_) {
+      // Fallback below
+    }
+
     final seedData = [
-      {'staff_name': 'Nurse Emma Watson', 'role': 'General Nurse', 'status': 'Present', 'check_in_time': '08:00', 'date': dateStr},
-      {'staff_name': 'Nurse Clara Oswald', 'role': 'ICU Nurse', 'status': 'Present', 'check_in_time': '07:45', 'date': dateStr},
-      {'staff_name': 'Thomas Shelby', 'role': 'Lab Technician', 'status': 'On Leave', 'date': dateStr},
-      {'staff_name': 'Sherlock Holmes', 'role': 'Pharmacist', 'status': 'Present', 'check_in_time': '08:15', 'date': dateStr},
-      {'staff_name': 'John Watson', 'role': 'Assistant Pharmacist', 'status': 'Absent', 'date': dateStr},
-      {'staff_name': 'Rose Tyler', 'role': 'Receptionist', 'status': 'Present', 'check_in_time': '08:00', 'date': dateStr},
+      {
+        'staff_name': 'Nurse Emma Watson',
+        'role': 'General Nurse',
+        'status': 'Present',
+        'check_in_time': '08:00',
+        'date': dateStr,
+      },
+      {
+        'staff_name': 'Nurse Clara Oswald',
+        'role': 'ICU Nurse',
+        'status': 'Present',
+        'check_in_time': '07:45',
+        'date': dateStr,
+      },
+      {
+        'staff_name': 'Thomas Shelby',
+        'role': 'Lab Technician',
+        'status': 'On Leave',
+        'date': dateStr,
+      },
+      {
+        'staff_name': 'Sherlock Holmes',
+        'role': 'Pharmacist',
+        'status': 'Present',
+        'check_in_time': '08:15',
+        'date': dateStr,
+      },
+      {
+        'staff_name': 'John Watson',
+        'role': 'Assistant Pharmacist',
+        'status': 'Absent',
+        'date': dateStr,
+      },
+      {
+        'staff_name': 'Rose Tyler',
+        'role': 'Receptionist',
+        'status': 'Present',
+        'check_in_time': '08:00',
+        'date': dateStr,
+      },
     ];
     try {
       await _supabase.from('staff_attendance').insert(seedData);
@@ -313,10 +415,27 @@ class AdminOperationsRemoteDataSourceImpl
 
   Future<void> _seedEmergencyData() async {
     final seedData = [
-      {'message': 'Code Blue in Emergency Ward - Room 108', 'level': 'Critical', 'is_resolved': false},
-      {'message': 'Intense Patient Influx in ICU - Staff assistance requested', 'level': 'High', 'is_resolved': false},
-      {'message': 'Power Generator Failure - Emergency Backup Active in Block B', 'level': 'High', 'is_resolved': false},
-      {'message': 'Ambulance Out of Service - Unit AMB-04 reported flat tire', 'level': 'Medium', 'is_resolved': false},
+      {
+        'message': 'Code Blue in Emergency Ward - Room 108',
+        'level': 'Critical',
+        'is_resolved': false,
+      },
+      {
+        'message': 'Intense Patient Influx in ICU - Staff assistance requested',
+        'level': 'High',
+        'is_resolved': false,
+      },
+      {
+        'message':
+            'Power Generator Failure - Emergency Backup Active in Block B',
+        'level': 'High',
+        'is_resolved': false,
+      },
+      {
+        'message': 'Ambulance Out of Service - Unit AMB-04 reported flat tire',
+        'level': 'Medium',
+        'is_resolved': false,
+      },
     ];
     try {
       await _supabase.from('emergency_alerts').insert(seedData);
@@ -329,7 +448,7 @@ class AdminOperationsRemoteDataSourceImpl
   Future<List<ActivityLogModel>> getActivityLogs() async {
     try {
       final response = await _supabase
-          .from('activity_logs')
+          .from('audit_logs')
           .select()
           .order('created_at', ascending: false)
           .limit(50);
@@ -337,7 +456,7 @@ class AdminOperationsRemoteDataSourceImpl
       if (list.isEmpty) {
         await _seedActivityLogs();
         final seeded = await _supabase
-            .from('activity_logs')
+            .from('audit_logs')
             .select()
             .order('created_at', ascending: false)
             .limit(50);
@@ -355,13 +474,31 @@ class AdminOperationsRemoteDataSourceImpl
 
   Future<void> _seedActivityLogs() async {
     final seedData = [
-      {'message': 'Dr. Sarah Chen updated patient medical record', 'category': 'Record'},
+      {
+        'message': 'Dr. Sarah Chen updated patient medical record',
+        'category': 'Record',
+      },
       {'message': 'New patient registered: John Doe', 'category': 'Patient'},
-      {'message': 'Lab report uploaded for Cardiology department', 'category': 'Lab'},
-      {'message': 'Appointment booked with Dr. Sarah Chen', 'category': 'Appointment'},
-      {'message': 'Inventory reordered: Amoxicillin (50 units)', 'category': 'Pharmacy'},
-      {'message': 'Doctor schedule updated: Dr. James Wilson', 'category': 'Doctor'},
-      {'message': 'Admin settings modified: Biometrics enabled', 'category': 'System'},
+      {
+        'message': 'Lab report uploaded for Cardiology department',
+        'category': 'Lab',
+      },
+      {
+        'message': 'Appointment booked with Dr. Sarah Chen',
+        'category': 'Appointment',
+      },
+      {
+        'message': 'Inventory reordered: Amoxicillin (50 units)',
+        'category': 'Pharmacy',
+      },
+      {
+        'message': 'Doctor schedule updated: Dr. James Wilson',
+        'category': 'Doctor',
+      },
+      {
+        'message': 'Admin settings modified: Biometrics enabled',
+        'category': 'System',
+      },
     ];
     try {
       await _supabase.from('activity_logs').insert(seedData);
@@ -399,7 +536,9 @@ class AdminOperationsRemoteDataSourceImpl
   @override
   Future<Map<String, double>> getBillingSummary() async {
     try {
-      final response = await _supabase.from('invoices').select('amount, status');
+      final response = await _supabase
+          .from('invoices')
+          .select('amount, status');
       final list = response as List<dynamic>? ?? [];
       double totalRevenue = 0.0;
       double pendingBills = 0.0;
@@ -410,10 +549,7 @@ class AdminOperationsRemoteDataSourceImpl
         totalRevenue += amount;
         if (status == 'Pending') pendingBills += amount;
       }
-      return {
-        'totalRevenue': totalRevenue,
-        'pendingBills': pendingBills,
-      };
+      return {'totalRevenue': totalRevenue, 'pendingBills': pendingBills};
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -421,10 +557,30 @@ class AdminOperationsRemoteDataSourceImpl
 
   Future<void> _seedInvoiceData() async {
     final seedData = [
-      {'patient_name': 'John Doe', 'amount': 1500.00, 'status': 'Paid', 'payment_method': 'UPI'},
-      {'patient_name': 'Alice Smith', 'amount': 800.00, 'status': 'Pending', 'payment_method': 'Card'},
-      {'patient_name': 'Robert Johnson', 'amount': 2400.00, 'status': 'Paid', 'payment_method': 'Cash'},
-      {'patient_name': 'Emily Davis', 'amount': 500.00, 'status': 'Failed', 'payment_method': 'Net Banking'},
+      {
+        'patient_name': 'John Doe',
+        'amount': 1500.00,
+        'status': 'Paid',
+        'payment_method': 'UPI',
+      },
+      {
+        'patient_name': 'Alice Smith',
+        'amount': 800.00,
+        'status': 'Pending',
+        'payment_method': 'Card',
+      },
+      {
+        'patient_name': 'Robert Johnson',
+        'amount': 2400.00,
+        'status': 'Paid',
+        'payment_method': 'Cash',
+      },
+      {
+        'patient_name': 'Emily Davis',
+        'amount': 500.00,
+        'status': 'Failed',
+        'payment_method': 'Net Banking',
+      },
     ];
     try {
       await _supabase.from('invoices').insert(seedData);
