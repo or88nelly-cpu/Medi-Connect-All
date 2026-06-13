@@ -192,7 +192,7 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
       final List<Map<String, dynamic>> recentActivities = [];
       try {
         final logsRes = await _supabase
-            .from('audit_logs')
+            .from('activity_logs')
             .select()
             .order('created_at', ascending: false)
             .limit(4);
@@ -327,8 +327,8 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
   Future<List<Map<String, dynamic>>> getAuditLogs() async {
     try {
       final response = await _supabase
-          .from('audit_logs')
-          .select('*, users!performed_by(name)')
+          .from('activity_logs')
+          .select()
           .order('created_at', ascending: false)
           .limit(100);
       return (response as List).map((e) => e as Map<String, dynamic>).toList();

@@ -3,9 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 
 class SlotsGridSection extends StatefulWidget {
+  final List<Map<String, dynamic>> morningSlots;
+  final List<Map<String, dynamic>> afternoonSlots;
   final Function(List<Map<String, dynamic>> morningSlots, List<Map<String, dynamic>> afternoonSlots)? onSlotsChanged;
 
-  const SlotsGridSection({super.key, this.onSlotsChanged});
+  const SlotsGridSection({
+    super.key,
+    required this.morningSlots,
+    required this.afternoonSlots,
+    this.onSlotsChanged,
+  });
 
   @override
   State<SlotsGridSection> createState() => _SlotsGridSectionState();
@@ -15,99 +22,41 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
   bool _morningExpanded = true;
   bool _afternoonExpanded = true;
 
-  late List<Map<String, dynamic>> _morningSlots;
-  late List<Map<String, dynamic>> _afternoonSlots;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeSlots();
-  }
-
-  void _initializeSlots() {
-    _morningSlots = [
-      {"time": "09:00 AM", "status": "Available"},
-      {"time": "09:10 AM", "status": "Available"},
-      {"time": "09:20 AM", "status": "Available"},
-      {"time": "09:30 AM", "status": "Available"},
-      {"time": "09:40 AM", "status": "Available"},
-      {"time": "09:50 AM", "status": "Available"},
-
-      {"time": "10:00 AM", "status": "Available"},
-      {"time": "10:10 AM", "status": "Available"},
-      {"time": "10:20 AM", "status": "Available"},
-      {"time": "10:30 AM", "status": "Booked"},
-      {"time": "10:40 AM", "status": "Available"},
-      {"time": "10:50 AM", "status": "Available"},
-
-      {"time": "11:00 AM", "status": "Available"},
-      {"time": "11:10 AM", "status": "Available"},
-      {"time": "11:20 AM", "status": "Available"},
-      {"time": "11:30 AM", "status": "Blocked"},
-      {"time": "11:40 AM", "status": "Available"},
-      {"time": "11:50 AM", "status": "Available"},
-
-      {"time": "12:00 PM", "status": "Available"},
-      {"time": "12:10 PM", "status": "Available"},
-      {"time": "12:20 PM", "status": "On Hold"},
-      {"time": "12:30 PM", "status": "Available"},
-      {"time": "12:40 PM", "status": "Available"},
-      {"time": "12:50 PM", "status": "Available"},
-    ];
-
-    _afternoonSlots = [
-      {"time": "02:00 PM", "status": "Available"},
-      {"time": "02:10 PM", "status": "Available"},
-      {"time": "02:20 PM", "status": "Booked"},
-      {"time": "02:30 PM", "status": "Available"},
-      {"time": "02:40 PM", "status": "Available"},
-      {"time": "02:50 PM", "status": "Available"},
-
-      {"time": "03:00 PM", "status": "Available"},
-      {"time": "03:10 PM", "status": "Available"},
-      {"time": "03:20 PM", "status": "On Hold"},
-      {"time": "03:30 PM", "status": "Available"},
-      {"time": "03:40 PM", "status": "Available"},
-      {"time": "03:50 PM", "status": "Blocked"},
-
-      {"time": "04:00 PM", "status": "Available"},
-      {"time": "04:10 PM", "status": "Available"},
-      {"time": "04:20 PM", "status": "Available"},
-      {"time": "04:30 PM", "status": "Booked"},
-      {"time": "04:40 PM", "status": "Available"},
-      {"time": "04:50 PM", "status": "Available"},
-
-      {"time": "05:00 PM", "status": "Available"},
-      {"time": "05:10 PM", "status": "Available"},
-      {"time": "05:20 PM", "status": "Available"},
-      {"time": "05:30 PM", "status": "Available"},
-      {"time": "05:40 PM", "status": "Available"},
-      {"time": "05:50 PM", "status": "Available"},
-    ];
-  }
-
   void _toggleSlot(Map<String, dynamic> slot) {
-    setState(() {
-      switch (slot["status"]) {
-        case "Available":
-          slot["status"] = "Booked";
-          break;
-        case "Booked":
-          slot["status"] = "On Hold";
-          break;
-        case "On Hold":
-          slot["status"] = "Blocked";
-          break;
-        case "Blocked":
-          slot["status"] = "Available";
-          break;
-        default:
-          slot["status"] = "Available";
+    String newStatus;
+    switch (slot["status"]) {
+      case "Available":
+        newStatus = "Booked";
+        break;
+      case "Booked":
+        newStatus = "On Hold";
+        break;
+      case "On Hold":
+        newStatus = "Blocked";
+        break;
+      case "Blocked":
+        newStatus = "Available";
+        break;
+      default:
+        newStatus = "Available";
+    }
+
+    final morningIdx = widget.morningSlots.indexWhere((item) => item['time'] == slot['time']);
+    if (morningIdx != -1) {
+      setState(() {
+        widget.morningSlots[morningIdx]['status'] = newStatus;
+      });
+    } else {
+      final afternoonIdx = widget.afternoonSlots.indexWhere((item) => item['time'] == slot['time']);
+      if (afternoonIdx != -1) {
+        setState(() {
+          widget.afternoonSlots[afternoonIdx]['status'] = newStatus;
+        });
       }
-    });
+    }
 
     if (widget.onSlotsChanged != null) {
-      widget.onSlotsChanged!(_morningSlots, _afternoonSlots);
+      widget.onSlotsChanged!(widget.morningSlots, widget.afternoonSlots);
     }
   }
 
@@ -141,7 +90,7 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
           title: "MORNING",
           timeRange: "(09:00 AM - 01:00 PM)",
           isExpanded: _morningExpanded,
-          slots: _morningSlots,
+          slots: widget.morningSlots,
           onToggleExpand: () => setState(() => _morningExpanded = !_morningExpanded),
           textColor: textColor,
           labelColor: labelColor,
@@ -155,7 +104,7 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
           title: "AFTERNOON",
           timeRange: "(02:00 PM - 06:00 PM)",
           isExpanded: _afternoonExpanded,
-          slots: _afternoonSlots,
+          slots: widget.afternoonSlots,
           onToggleExpand: () => setState(() => _afternoonExpanded = !_afternoonExpanded),
           textColor: textColor,
           labelColor: labelColor,

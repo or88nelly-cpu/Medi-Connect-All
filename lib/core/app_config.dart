@@ -48,6 +48,8 @@ import 'package:medi_connect/features/dash_board/presentation/bloc/admin_emergen
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_settings_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_recent_activity_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
+
 
 
 /// Configures and registers dependencies for the authentication feature package.
@@ -265,6 +267,11 @@ void configureAdminOperationsDependencies(GetIt sl) {
   sl.registerLazySingleton<GetAdminSettingsUseCase>(() => GetAdminSettingsUseCase(sl<AdminOperationsRepository>()));
   sl.registerLazySingleton<UpdateAdminSettingUseCase>(() => UpdateAdminSettingUseCase(sl<AdminOperationsRepository>()));
 
+  sl.registerLazySingleton<GetAppointmentsUseCase>(() => GetAppointmentsUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<CreateAppointmentUseCase>(() => CreateAppointmentUseCase(sl<AdminOperationsRepository>()));
+  sl.registerLazySingleton<UpdateAppointmentStatusUseCase>(() => UpdateAppointmentStatusUseCase(sl<AdminOperationsRepository>()));
+
+
   // Blocs
   sl.registerFactory<AdminPharmacyBloc>(() => AdminPharmacyBloc(
     getItems: sl<GetPharmacyItemsUseCase>(),
@@ -302,6 +309,12 @@ void configureAdminOperationsDependencies(GetIt sl) {
 
   sl.registerFactory<AdminRecentActivityBloc>(() => AdminRecentActivityBloc(
     getActivityLogs: sl<GetActivityLogsUseCase>(),
+  ));
+
+  sl.registerFactory<AdminAppointmentsBloc>(() => AdminAppointmentsBloc(
+    getAppointments: sl<GetAppointmentsUseCase>(),
+    createAppointment: sl<CreateAppointmentUseCase>(),
+    updateStatus: sl<UpdateAppointmentStatusUseCase>(),
   ));
 }
 

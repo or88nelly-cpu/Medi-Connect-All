@@ -70,6 +70,23 @@ CREATE TABLE IF NOT EXISTS admin_settings (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
+-- 8. Appointments
+DROP TABLE IF EXISTS appointments CASCADE;
+CREATE TABLE appointments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    patient_id UUID REFERENCES users(id),
+    patient_name TEXT,
+    doctor_id UUID REFERENCES users(id),
+    doctor_name TEXT,
+    specialty TEXT,
+    appointment_date DATE,
+    appointment_time TEXT,
+    status TEXT DEFAULT 'Pending',
+    type TEXT DEFAULT 'Consultation',
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+
 -- ============================================================================
 -- AUTOMATED ACTIVITY LOGGING TRIGGERS
 -- ============================================================================
@@ -139,6 +156,16 @@ BEGIN
         ELSE
             RETURN NEW;
         END IF;
+        
+    ELSIF TG_TABLE_NAME = 'appointments' THEN
+        log_category := 'Appointment';
+        IF TG_OP = 'INSERT' THEN
+            log_message := 'Appointment booked with ' || NEW.doctor_name || ' for patient ' || NEW.patient_name || ' on ' || NEW.appointment_date || ' at ' || NEW.appointment_time;
+        ELSIF TG_OP = 'UPDATE' AND OLD.status != NEW.status THEN
+            log_message := 'Appointment status for ' || NEW.patient_name || ' with ' || NEW.doctor_name || ' updated to ' || NEW.status;
+        ELSIF TG_OP = 'DELETE' THEN
+            log_message := 'Appointment cancelled for patient ' || OLD.patient_name;
+        END IF;
     END IF;
 
     -- Insert into activity_logs if a message was defined
@@ -185,3 +212,19 @@ DROP TRIGGER IF EXISTS trg_settings_activity ON admin_settings;
 CREATE TRIGGER trg_settings_activity
 AFTER UPDATE ON admin_settings
 FOR EACH ROW EXECUTE FUNCTION automate_activity_logs();
+
+DROP TRIGGER IF EXISTS trg_appointments_activity ON appointments;
+CREATE TRIGGER trg_appointments_activity
+AFTER INSERT OR UPDATE OR DELETE ON appointments
+FOR EACH ROW EXECUTE FUNCTION automate_activity_logs();
+-- ============================================================================
+-- DISABLE ROW LEVEL SECURITY (RLS) FOR DEVELOPMENT
+-- ============================================================================
+ALTER TABLE pharmacy_inventory DISABLE ROW LEVEL SECURITY;
+ALTER TABLE lab_records DISABLE ROW LEVEL SECURITY;
+ALTER TABLE staff_attendance DISABLE ROW LEVEL SECURITY;
+ALTER TABLE emergency_alerts DISABLE ROW LEVEL SECURITY;
+ALTER TABLE activity_logs DISABLE ROW LEVEL SECURITY;
+ALTER TABLE invoices DISABLE ROW LEVEL SECURITY;
+ALTER TABLE admin_settings DISABLE ROW LEVEL SECURITY;
+ALTER TABLE appointments DISABLE ROW LEVEL SECURITY;

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 // Sub-widgets
 import '../widgets/manage_slots/manage_slots_header.dart';
@@ -21,11 +24,79 @@ class AdminManageSlotsPage extends StatefulWidget {
 }
 
 class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
+  String _selectedDate = "20 May 2025";
+  final String _slotDuration = "10 Minutes";
+  
+  late List<Map<String, dynamic>> _morningSlots;
+  late List<Map<String, dynamic>> _afternoonSlots;
+
   // Stats tracked dynamically
   int _totalSlots = 48;
   int _bookedSlots = 6;
   int _onHoldSlots = 2;
   int _blockedSlots = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSlots();
+  }
+
+  void _loadSlots() {
+    final slotsByDate = widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
+    final dateData = slotsByDate[_selectedDate] as Map<dynamic, dynamic>? ?? {};
+    final durationData = dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
+
+    final morningList = durationData['morning'] as List<dynamic>?;
+    if (morningList != null) {
+      _morningSlots = morningList.map((e) => Map<String, dynamic>.from(e)).toList();
+    } else {
+      _morningSlots = _generateDefaultSlots("morning", _slotDuration);
+    }
+
+    final afternoonList = durationData['afternoon'] as List<dynamic>?;
+    if (afternoonList != null) {
+      _afternoonSlots = afternoonList.map((e) => Map<String, dynamic>.from(e)).toList();
+    } else {
+      _afternoonSlots = _generateDefaultSlots("afternoon", _slotDuration);
+    }
+
+    _updateStats(_morningSlots, _afternoonSlots);
+  }
+
+  List<Map<String, dynamic>> _generateDefaultSlots(String session, String durationStr) {
+    final int minutes = durationStr.contains("10")
+        ? 10
+        : durationStr.contains("15")
+            ? 15
+            : 30;
+
+    final List<Map<String, dynamic>> list = [];
+    int startHour = session == "morning" ? 9 : 14; 
+    int endHour = session == "morning" ? 13 : 18; 
+
+    int currentMin = startHour * 60;
+    int endMin = endHour * 60;
+
+    int idx = 0;
+    while (currentMin < endMin) {
+      final hour = currentMin ~/ 60;
+      final min = currentMin % 60;
+      final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
+      final amPm = hour >= 12 ? "PM" : "AM";
+      final timeStr = "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
+      
+      String status = "Available";
+      if (idx % 6 == 1) status = "Booked";
+      if (idx % 8 == 2) status = "On Hold";
+      if (idx % 10 == 3) status = "Blocked";
+
+      list.add({"time": timeStr, "status": status});
+      currentMin += minutes;
+      idx++;
+    }
+    return list;
+  }
 
   void _updateStats(List<Map<String, dynamic>> morning, List<Map<String, dynamic>> afternoon) {
     int total = morning.length + afternoon.length;
@@ -46,11 +117,38 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
     }
 
     setState(() {
+      _morningSlots = morning;
+      _afternoonSlots = afternoon;
       _totalSlots = total;
       _bookedSlots = booked;
       _onHoldSlots = onHold;
       _blockedSlots = blocked;
     });
+  }
+
+  void _saveChanges() {
+    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final slotsByDate = Map<String, dynamic>.from(updatedMetadata['slots_by_date'] ?? {});
+    final dateData = Map<String, dynamic>.from(slotsByDate[_selectedDate] ?? {});
+    final durationData = Map<String, dynamic>.from(dateData[_slotDuration] ?? {});
+
+    durationData['morning'] = _morningSlots;
+    durationData['afternoon'] = _afternoonSlots;
+    dateData[_slotDuration] = durationData;
+    slotsByDate[_selectedDate] = dateData;
+    updatedMetadata['slots_by_date'] = slotsByDate;
+
+    updatedMetadata['slots_morning'] = _morningSlots;
+    updatedMetadata['slots_afternoon'] = _afternoonSlots;
+
+    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+
+    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Changes saved successfully!")),
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -96,17 +194,22 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
 
                       // Week strip
                       DateSelectorStrip(
-                        initialDate: "20 May 2025",
+                        initialDate: _selectedDate,
                         onDateChanged: (dateStr) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Selected Date changed to: $dateStr")),
-                          );
+                          setState(() {
+                            _selectedDate = dateStr;
+                            _loadSlots();
+                          });
                         },
                       ),
                       SizedBox(height: 12.h),
 
                       // Expansions Morning / Afternoon with slots
-                      SlotsGridSection(onSlotsChanged: _updateStats),
+                      SlotsGridSection(
+                        morningSlots: _morningSlots,
+                        afternoonSlots: _afternoonSlots,
+                        onSlotsChanged: _updateStats,
+                      ),
                       SizedBox(height: 12.h),
 
                       // Summary Row
@@ -136,12 +239,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Changes saved successfully!")),
-                    );
-                    Navigator.pop(context);
-                  },
+                  onPressed: _saveChanges,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: EdgeInsets.symmetric(vertical: 14.h),

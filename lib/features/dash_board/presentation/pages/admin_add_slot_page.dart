@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 // Reuse doctor card from manage slots directory
 import '../widgets/manage_slots/manage_slots_doctor_card.dart';
@@ -37,10 +40,76 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
   String _note = "";
 
   void _onCreateSlots() {
+    final int minutes = _duration.contains("10")
+        ? 10
+        : _duration.contains("15")
+            ? 15
+            : 30;
+
+    int startHour = _session.toLowerCase() == "morning" ? 9 : 14;
+    int endHour = _session.toLowerCase() == "morning" ? 13 : 18;
+
+    try {
+      final startParts = _start.split(" ");
+      final startHm = startParts[0].split(":");
+      int h = int.parse(startHm[0]);
+      int m = int.parse(startHm[1]);
+      if (startParts[1].toUpperCase() == "PM" && h != 12) h += 12;
+      if (startParts[1].toUpperCase() == "AM" && h == 12) h = 0;
+      startHour = h;
+    } catch (_) {}
+
+    try {
+      final endParts = _end.split(" ");
+      final endHm = endParts[0].split(":");
+      int h = int.parse(endHm[0]);
+      int m = int.parse(endHm[1]);
+      if (endParts[1].toUpperCase() == "PM" && h != 12) h += 12;
+      if (endParts[1].toUpperCase() == "AM" && h == 12) h = 0;
+      endHour = h;
+    } catch (_) {}
+
+    final List<Map<String, dynamic>> generatedList = [];
+    int currentMin = startHour * 60;
+    int endMin = endHour * 60;
+
+    while (currentMin < endMin) {
+      final hour = currentMin ~/ 60;
+      final min = currentMin % 60;
+      final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
+      final amPm = hour >= 12 ? "PM" : "AM";
+      final timeStr = "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
+
+      generatedList.add({
+        "time": timeStr,
+        "status": _status,
+      });
+      currentMin += minutes;
+    }
+
+    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final slotsByDate = Map<String, dynamic>.from(updatedMetadata['slots_by_date'] ?? {});
+    final dateData = Map<String, dynamic>.from(slotsByDate[_date] ?? {});
+    final durationData = Map<String, dynamic>.from(dateData[_duration] ?? {});
+
+    if (_session.toLowerCase() == "morning") {
+      durationData['morning'] = generatedList;
+    } else {
+      durationData['afternoon'] = generatedList;
+    }
+
+    dateData[_duration] = durationData;
+    slotsByDate[_date] = dateData;
+    updatedMetadata['slots_by_date'] = slotsByDate;
+
+    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+
+    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          "Successfully created $_count $_type slots on $_date for ${widget.user.name ?? 'Doctor'}.",
+          "Successfully created ${generatedList.length} $_type slots on $_date for ${widget.user.name ?? 'Doctor'}.",
         ),
       ),
     );

@@ -9,6 +9,8 @@ import 'package:medi_connect/features/dash_board/domain/entities/invoice_entity.
 import 'package:medi_connect/features/dash_board/domain/entities/lab_test_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/repositories/admin_operations_repository.dart';
+import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
+
 
 class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   final AdminOperationsRemoteDataSource _remoteDataSource;
@@ -211,6 +213,42 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   Future<Either<Failure, void>> updateAdminSetting(String key, dynamic value) async {
     try {
       await _remoteDataSource.updateAdminSetting(key, value);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AppointmentEntity>>> getAppointments() async {
+    try {
+      final list = await _remoteDataSource.getAppointments();
+      return Right(list);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AppointmentEntity>> createAppointment(Map<String, dynamic> data) async {
+    try {
+      final result = await _remoteDataSource.createAppointment(data);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateAppointmentStatus(String id, String status) async {
+    try {
+      await _remoteDataSource.updateAppointmentStatus(id, status);
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));

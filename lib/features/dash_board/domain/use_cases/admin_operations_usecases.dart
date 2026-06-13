@@ -7,6 +7,8 @@ import 'package:medi_connect/features/dash_board/domain/entities/invoice_entity.
 import 'package:medi_connect/features/dash_board/domain/entities/lab_test_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/repositories/admin_operations_repository.dart';
+import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
+
 
 // Pharmacy Use Cases
 class GetPharmacyItemsUseCase {
@@ -116,3 +118,23 @@ class UpdateAdminSettingUseCase {
   UpdateAdminSettingUseCase(this.repository);
   Future<Either<Failure, void>> call(String key, dynamic value) => repository.updateAdminSetting(key, value);
 }
+
+// Appointments Use Cases
+class GetAppointmentsUseCase {
+  final AdminOperationsRepository repository;
+  GetAppointmentsUseCase(this.repository);
+  Future<Either<Failure, List<AppointmentEntity>>> call() => repository.getAppointments();
+}
+
+class CreateAppointmentUseCase {
+  final AdminOperationsRepository repository;
+  CreateAppointmentUseCase(this.repository);
+  Future<Either<Failure, AppointmentEntity>> call(Map<String, dynamic> data) => repository.createAppointment(data);
+}
+
+class UpdateAppointmentStatusUseCase {
+  final AdminOperationsRepository repository;
+  UpdateAppointmentStatusUseCase(this.repository);
+  Future<Either<Failure, void>> call(String id, String status) => repository.updateAppointmentStatus(id, status);
+}
+

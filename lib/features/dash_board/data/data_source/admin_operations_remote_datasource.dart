@@ -9,6 +9,8 @@ import 'package:medi_connect/features/dash_board/data/models/attendance_model.da
 import 'package:medi_connect/features/dash_board/data/models/emergency_model.dart';
 import 'package:medi_connect/features/dash_board/data/models/activity_log_model.dart';
 import 'package:medi_connect/features/dash_board/data/models/invoice_model.dart';
+import 'package:medi_connect/features/dash_board/data/models/appointment_model.dart';
+
 
 // ─── Abstract Interface ─────────────────────────────────────────────────────
 
@@ -43,6 +45,11 @@ abstract class AdminOperationsRemoteDataSource {
   // Settings
   Future<Map<String, dynamic>> getAdminSettings();
   Future<void> updateAdminSetting(String key, dynamic value);
+
+  // Appointments
+  Future<List<AppointmentModel>> getAppointments();
+  Future<AppointmentModel> createAppointment(Map<String, dynamic> data);
+  Future<void> updateAppointmentStatus(String id, String status);
 }
 
 // ─── Implementation ─────────────────────────────────────────────────────────
@@ -448,7 +455,7 @@ class AdminOperationsRemoteDataSourceImpl
   Future<List<ActivityLogModel>> getActivityLogs() async {
     try {
       final response = await _supabase
-          .from('audit_logs')
+          .from('activity_logs')
           .select()
           .order('created_at', ascending: false)
           .limit(50);
@@ -456,7 +463,7 @@ class AdminOperationsRemoteDataSourceImpl
       if (list.isEmpty) {
         await _seedActivityLogs();
         final seeded = await _supabase
-            .from('audit_logs')
+            .from('activity_logs')
             .select()
             .order('created_at', ascending: false)
             .limit(50);
@@ -642,5 +649,49 @@ class AdminOperationsRemoteDataSourceImpl
     try {
       await _supabase.from('admin_settings').insert(seedData);
     } catch (_) {}
+  }
+
+  // ─── Appointments ────────────────────────────────────────────────────────
+
+  @override
+  Future<List<AppointmentModel>> getAppointments() async {
+    try {
+      final response = await _supabase
+          .from('appointments')
+          .select()
+          .order('created_at', ascending: false);
+      final list = response as List<dynamic>? ?? [];
+      return list
+          .map((e) => AppointmentModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<AppointmentModel> createAppointment(Map<String, dynamic> data) async {
+    try {
+      final response = await _supabase
+          .from('appointments')
+          .insert(data)
+          .select()
+          .single();
+      return AppointmentModel.fromJson(response as Map<String, dynamic>);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> updateAppointmentStatus(String id, String status) async {
+    try {
+      await _supabase
+          .from('appointments')
+          .update({'status': status})
+          .eq('id', id);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 }

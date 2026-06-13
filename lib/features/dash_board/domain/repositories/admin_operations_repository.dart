@@ -6,6 +6,7 @@ import 'package:medi_connect/features/dash_board/domain/entities/attendance_enti
 import 'package:medi_connect/features/dash_board/domain/entities/emergency_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/activity_log_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/invoice_entity.dart';
+import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 
 abstract class AdminOperationsRepository {
   // Pharmacy
@@ -38,4 +39,9 @@ abstract class AdminOperationsRepository {
   // Settings
   Future<Either<Failure, Map<String, dynamic>>> getAdminSettings();
   Future<Either<Failure, void>> updateAdminSetting(String key, dynamic value);
+
+  // Appointments
+  Future<Either<Failure, List<AppointmentEntity>>> getAppointments();
+  Future<Either<Failure, AppointmentEntity>> createAppointment(Map<String, dynamic> data);
+  Future<Either<Failure, void>> updateAppointmentStatus(String id, String status);
 }
