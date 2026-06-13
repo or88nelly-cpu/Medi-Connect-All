@@ -86,11 +86,16 @@ class _ConsultationCompleteSheetState
   void _addMedicineRow() {
     final nameCtrl = TextEditingController();
     nameCtrl.addListener(_updateTotalFee);
+    final daysCtrl = TextEditingController(text: '7');
+    daysCtrl.addListener(_updateTotalFee);
+    final freqCtrl = TextEditingController(text: '1-0-1');
+    freqCtrl.addListener(_updateTotalFee);
     setState(() {
       _medicines.add({
         'name': nameCtrl,
         'dosage': TextEditingController(),
-        'frequency': TextEditingController(),
+        'frequency': freqCtrl,
+        'days': daysCtrl,
         'focusNode': FocusNode(),
         'sell_price': 150.0,
       });
@@ -100,9 +105,12 @@ class _ConsultationCompleteSheetState
   void _removeMedicineRow(int index) {
     final row = _medicines[index];
     (row['name'] as TextEditingController?)?.removeListener(_updateTotalFee);
+    (row['days'] as TextEditingController?)?.removeListener(_updateTotalFee);
+    (row['frequency'] as TextEditingController?)?.removeListener(_updateTotalFee);
     (row['name'] as TextEditingController?)?.dispose();
     (row['dosage'] as TextEditingController?)?.dispose();
     (row['frequency'] as TextEditingController?)?.dispose();
+    (row['days'] as TextEditingController?)?.dispose();
     (row['focusNode'] as FocusNode?)?.dispose();
     setState(() {
       _medicines.removeAt(index);
@@ -115,10 +123,12 @@ class _ConsultationCompleteSheetState
       final nameCtrl = row['name'] as TextEditingController;
       final dosageCtrl = row['dosage'] as TextEditingController;
       final freqCtrl = row['frequency'] as TextEditingController;
+      final daysCtrl = row['days'] as TextEditingController;
       return {
         'name': nameCtrl.text.trim(),
         'dosage': dosageCtrl.text.trim(),
         'frequency': freqCtrl.text.trim(),
+        'days': daysCtrl.text.trim(),
       };
     }).where((m) => m['name']!.isNotEmpty).toList();
   }
@@ -154,7 +164,28 @@ class _ConsultationCompleteSheetState
         } else {
           price = row['sell_price'] as double? ?? 150.0;
         }
-        medicineTotal += price;
+
+        final freqCtrl = row['frequency'] as TextEditingController?;
+        final daysCtrl = row['days'] as TextEditingController?;
+        final freqStr = freqCtrl?.text.trim() ?? '';
+        final daysStr = daysCtrl?.text.trim() ?? '';
+
+        int days = int.tryParse(daysStr) ?? 7;
+        double dailyCount = 0.0;
+        if (freqStr.contains('-')) {
+          final parts = freqStr.split('-');
+          double sum = 0.0;
+          for (final part in parts) {
+            sum += double.tryParse(part.trim()) ?? 0.0;
+          }
+          dailyCount = sum;
+        } else {
+          dailyCount = double.tryParse(freqStr) ?? 1.0;
+        }
+
+        double totalPills = dailyCount * days;
+        double rowCost = (totalPills / 10.0) * price;
+        medicineTotal += rowCost;
       }
     }
     double labTotal = _selectedTests.length * 250.0;
@@ -209,7 +240,24 @@ class _ConsultationCompleteSheetState
     for (final row in _medicines) {
       final nameCtrl = row['name'] as TextEditingController;
       if (nameCtrl.text.trim().isNotEmpty) {
-        medicineAmount += row['sell_price'] as double? ?? 150.0;
+        final price = row['sell_price'] as double? ?? 150.0;
+        final freqStr = (row['frequency'] as TextEditingController?)?.text.trim() ?? '';
+        final daysStr = (row['days'] as TextEditingController?)?.text.trim() ?? '';
+        int days = int.tryParse(daysStr) ?? 7;
+        double dailyCount = 0.0;
+        if (freqStr.contains('-')) {
+          final parts = freqStr.split('-');
+          double sum = 0.0;
+          for (final part in parts) {
+            sum += double.tryParse(part.trim()) ?? 0.0;
+          }
+          dailyCount = sum;
+        } else {
+          dailyCount = double.tryParse(freqStr) ?? 1.0;
+        }
+        double totalPills = dailyCount * days;
+        double rowCost = (totalPills / 10.0) * price;
+        medicineAmount += rowCost;
       }
     }
     final double labAmount = _selectedTests.length * 250.0;
@@ -226,7 +274,7 @@ class _ConsultationCompleteSheetState
       'doctor_name': apt.doctorName,
       'specialty': apt.specialty,
       'appointment_id': apt.id,
-      'medicines': medicines.map((m) => '${m['name']} (${m['dosage']}, ${m['frequency']})').join('\n'),
+      'medicines': medicines.map((m) => '${m['name']} (${m['dosage']}, ${m['frequency']}, ${m['days']} Days)').join('\n'),
       'lab_tests': _selectedTests.join(', '),
       'prescription_notes': _prescriptionNotesCtrl.text.trim(),
       'invoice_number': _invoiceNumber,
@@ -261,8 +309,23 @@ class _ConsultationCompleteSheetState
             ),
           );
           if (match.id.isNotEmpty && match.stock > 0) {
+            final days = int.tryParse(med['days'] ?? '7') ?? 7;
+            final freqStr = med['frequency'] ?? '';
+            double dailyCount = 0.0;
+            if (freqStr.contains('-')) {
+              final parts = freqStr.split('-');
+              double sum = 0.0;
+              for (final part in parts) {
+                sum += double.tryParse(part.trim()) ?? 0.0;
+              }
+              dailyCount = sum;
+            } else {
+              dailyCount = double.tryParse(freqStr) ?? 1.0;
+            }
+            final int stripsToDeduct = (dailyCount * days / 10.0).ceil().clamp(1, 999);
+            final newStock = (match.stock - stripsToDeduct).clamp(0, 999999);
             context.read<AdminPharmacyBloc>().add(
-                  UpdatePharmacyItemStock(match.id, match.stock - 1),
+                  UpdatePharmacyItemStock(match.id, newStock),
                 );
           }
         }
@@ -566,10 +629,20 @@ class _ConsultationCompleteSheetState
                                 Row(
                                   children: [
                                     Expanded(
+                                      flex: 2,
                                       child: _buildTextField(
                                           row['frequency']!,
                                           'Frequency (e.g. 1-0-1)',
                                           isDark),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Expanded(
+                                      flex: 1,
+                                      child: _buildTextField(
+                                          row['days']!,
+                                          'Days (e.g. 7)',
+                                          isDark,
+                                          keyboardType: TextInputType.number),
                                     ),
                                     SizedBox(width: 8.w),
                                     IconButton(
@@ -1104,10 +1177,11 @@ class _ConsultationCompleteSheetState
 
   Widget _buildTextField(
       TextEditingController ctrl, String hint, bool isDark,
-      {int maxLines = 1}) {
+      {int maxLines = 1, TextInputType keyboardType = TextInputType.text}) {
     return TextField(
       controller: ctrl,
       maxLines: maxLines,
+      keyboardType: keyboardType,
       style: TextStyle(
           color: isDark ? Colors.white : AppColors.textPrimary,
           fontSize: 13.sp),
