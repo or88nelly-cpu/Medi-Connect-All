@@ -30,6 +30,7 @@ import 'package:medi_connect/features/departments/emrd/data/datasource/emrd_remo
 import 'package:medi_connect/features/departments/emrd/domain/repositories/emrd_repository.dart';
 import 'package:medi_connect/features/departments/emrd/data/repository/emrd_repository_impl.dart';
 import 'package:medi_connect/features/departments/emrd/domain/usecases/get_emrd_stats_usecase.dart';
+import 'package:medi_connect/features/departments/emrd/domain/usecases/get_emr_records_usecase.dart';
 import 'package:medi_connect/features/departments/emrd/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/features/departments/finance/data/datasource/finance_remote_datasource.dart';
 import 'package:medi_connect/features/departments/finance/domain/repositories/finance_repository.dart';
@@ -157,7 +158,8 @@ void configureAllDepartmentsDependencies(GetIt sl) {
   sl.registerLazySingleton<EmrdRemoteDataSource>(() => EmrdRemoteDataSourceImpl());
   sl.registerLazySingleton<EmrdRepository>(() => EmrdRepositoryImpl(sl()));
   sl.registerLazySingleton<GetEmrdStatsUseCase>(() => GetEmrdStatsUseCase(sl()));
-  sl.registerFactory<EmrdBloc>(() => EmrdBloc(sl()));
+  sl.registerLazySingleton<GetEmrRecordsUseCase>(() => GetEmrRecordsUseCase(sl()));
+  sl.registerFactory<EmrdBloc>(() => EmrdBloc(sl(), sl()));
 
   // Finance Department
   sl.registerLazySingleton<FinanceRemoteDataSource>(() => FinanceRemoteDataSourceImpl());

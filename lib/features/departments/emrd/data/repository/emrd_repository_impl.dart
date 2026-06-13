@@ -19,4 +19,16 @@ class EmrdRepositoryImpl implements EmrdRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Map<String, dynamic>>>> getEmrRecords() async {
+    try {
+      final res = await _remoteDataSource.getEmrRecords();
+      return Right(res);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

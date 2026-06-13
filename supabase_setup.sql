@@ -87,6 +87,28 @@ CREATE TABLE appointments (
 );
 
 
+-- 9. EMR Records
+DROP TABLE IF EXISTS emr_records CASCADE;
+CREATE TABLE emr_records (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    patient_id UUID,
+    patient_name TEXT NOT NULL,
+    doctor_id UUID,
+    doctor_name TEXT NOT NULL,
+    specialty TEXT NOT NULL,
+    appointment_id UUID,
+    medicines TEXT,
+    lab_tests TEXT,
+    prescription_notes TEXT,
+    invoice_number TEXT,
+    amount NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+    payment_method TEXT NOT NULL DEFAULT 'Cash',
+    recorded_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+
+
 -- ============================================================================
 -- AUTOMATED ACTIVITY LOGGING TRIGGERS
 -- ============================================================================
@@ -228,3 +250,5 @@ ALTER TABLE activity_logs DISABLE ROW LEVEL SECURITY;
 ALTER TABLE invoices DISABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_settings DISABLE ROW LEVEL SECURITY;
 ALTER TABLE appointments DISABLE ROW LEVEL SECURITY;
+ALTER TABLE emr_records DISABLE ROW LEVEL SECURITY;
+

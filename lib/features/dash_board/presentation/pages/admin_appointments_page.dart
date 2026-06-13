@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/core/storage/secure_storage_service.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
@@ -2143,39 +2147,67 @@ class _ConsultationCompleteSheetState
     );
   }
 
-  void _submitEMR(BuildContext context) {
+  Future<void> _submitEMR(BuildContext context) async {
     final apt = widget.appointment;
     final medicines = _getMedicineList();
+    final amount = double.tryParse(_feeCtrl.text.trim()) ?? 0.0;
+    final paymentMethodStr = _paymentMethod == 'Online' ? 'UPI/QR' : 'Cash';
+    final recordedAtStr = DateTime.now().toIso8601String();
 
-    final emrData = {
+    final emrRecordData = {
       'patient_id': apt.patientId,
       'patient_name': apt.patientName,
+      'doctor_id': apt.doctorId,
       'doctor_name': apt.doctorName,
       'specialty': apt.specialty,
       'appointment_id': apt.id,
-      'medicines': medicines.map((m) => '${m['name']} ${m['dosage']} ${m['frequency']}').join(', '),
+      'medicines': medicines.map((m) => '${m['name']} (${m['dosage']}, ${m['frequency']})').join('\n'),
       'lab_tests': _selectedTests.join(', '),
       'prescription_notes': _prescriptionNotesCtrl.text.trim(),
       'invoice_number': _invoiceNumber,
-      'recorded_at': DateTime.now().toIso8601String(),
+      'amount': amount,
+      'payment_method': paymentMethodStr,
+      'recorded_at': recordedAtStr,
     };
 
-    // Attempt to save to emr_records table
-    // (graceful fallback — table may not exist yet)
-    // ignore: unused_local_variable
-    final _ = emrData;
+    // Attempt to save to emr_records table in Supabase
+    bool savedToSupabase = false;
+    try {
+      final supabase = GetIt.I<SupabaseService>().client;
+      await supabase.from('emr_records').insert(emrRecordData);
+      savedToSupabase = true;
+    } catch (e) {
+      debugPrint("Supabase EMR insert failed, falling back to local storage: $e");
+    }
+
+    // Always save to local storage as a reliable fallback/copy
+    try {
+      final storage = GetIt.I<SecureStorageService>();
+      final localDataStr = await storage.read('emr_records');
+      List<dynamic> list = [];
+      if (localDataStr != null) {
+        list = jsonDecode(localDataStr);
+      }
+      final localRecord = Map<String, dynamic>.from(emrRecordData);
+      localRecord['id'] ??= DateTime.now().millisecondsSinceEpoch.toString();
+      list.add(localRecord);
+      await storage.write('emr_records', jsonEncode(list));
+    } catch (e) {
+      debugPrint("Local EMR storage write failed: $e");
+    }
 
     setState(() => _emrSubmitted = true);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('EMR record submitted for ${apt.patientName}'),
-        backgroundColor: AppColors.secondary,
-        duration: const Duration(seconds: 3),
-      ),
-    );
-
-    Navigator.pop(context);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('EMR record submitted for ${apt.patientName} ${savedToSupabase ? "(Sync'd)" : "(Local)"}'),
+          backgroundColor: AppColors.secondary,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+      Navigator.pop(context);
+    }
   }
 
   @override
