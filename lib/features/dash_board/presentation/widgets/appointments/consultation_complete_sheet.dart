@@ -9,6 +9,7 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_entity.dart';
+import 'package:medi_connect/features/dash_board/data/models/pharmacy_item_model.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
@@ -169,7 +170,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
           final name = med['name']!.toLowerCase();
           final match = pharmacyItems.firstWhere(
             (item) => item.name.toLowerCase() == name,
-            orElse: () => const PharmacyItemEntity(
+            orElse: () => const PharmacyItemModel(
               id: '', name: '', stock: 0, category: '', status: '',
             ),
           );

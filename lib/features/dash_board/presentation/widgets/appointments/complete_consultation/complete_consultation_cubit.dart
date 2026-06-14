@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_entity.dart';
+import 'package:medi_connect/features/dash_board/data/models/pharmacy_item_model.dart';
 
 class CompleteConsultationState {
   final List<Map<String, dynamic>> medicines;
@@ -191,7 +192,7 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
         if (_lastPharmacyItems.isNotEmpty) {
           final match = _lastPharmacyItems.firstWhere(
             (item) => item.name.toLowerCase() == name,
-            orElse: () => const PharmacyItemEntity(
+            orElse: () => const PharmacyItemModel(
               id: '', name: '', stock: 0, category: '', status: '',
               buyPrice: 0.0, sellPrice: -1.0, dosage: '',
             ),

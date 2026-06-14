@@ -236,10 +236,11 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
   }
 
   void _showCreateAppointmentWizard(BuildContext context) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      barrierDismissible: false,
-      builder: (ctx) => const CreateAppointmentWizardDialog(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => const CreateAppointmentWizardBottomSheet(),
     );
   }
 

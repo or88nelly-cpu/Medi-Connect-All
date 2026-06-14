@@ -161,15 +161,24 @@ class AppointmentsOverviewSection extends StatelessWidget {
     required bool isDark,
   }) {
     return Container(
-      width: 130.w,
+      width: 142.w,
       margin: EdgeInsets.only(right: 12.w),
-      padding: EdgeInsets.all(12.r),
+      padding: EdgeInsets.all(14.r),
       decoration: BoxDecoration(
         color: isDark ? AppColors.terminalDarkCard : Colors.white,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
           color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
         ),
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.02),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,30 +187,30 @@ class AppointmentsOverviewSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.all(6.r),
+                padding: EdgeInsets.all(8.r),
                 decoration: BoxDecoration(
                   color: color.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, size: 16.r, color: color),
+                child: Icon(icon, size: 18.r, color: color),
               ),
               Text(
                 value,
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 22.sp,
-                  color: isDark ? Colors.white : AppColors.textPrimary,
+                  fontSize: 26.sp,
+                  color: isDark ? Colors.white : AppColors.terminalLightText,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: 16.h),
           Text(
             title,
             style: AppTextStyles.bodySmall.copyWith(
-              fontSize: 10.sp,
-              color: isDark ? Colors.white38 : AppColors.textSecondary,
-              fontWeight: FontWeight.w500,
+              fontSize: 11.sp,
+              color: isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],

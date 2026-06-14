@@ -20,12 +20,25 @@ class AppointmentsHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          AppStrings.appointments,
-          style: AppTextStyles.headingMedium.copyWith(
-            fontSize: 22.sp,
-            color: isDark ? Colors.white : AppColors.textPrimary,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              AppStrings.appointments,
+              style: AppTextStyles.headingMedium.copyWith(
+                fontSize: 22.sp,
+                color: isDark ? Colors.white : AppColors.textPrimary,
+              ),
+            ),
+            SizedBox(height: 2.h),
+            Text(
+              "Manage and track all patient appointments",
+              style: AppTextStyles.bodySmall.copyWith(
+                color: isDark ? Colors.white54 : AppColors.textSecondary,
+                fontSize: 12.sp,
+              ),
+            ),
+          ],
         ),
         GradientButton(
           text: "Book New",

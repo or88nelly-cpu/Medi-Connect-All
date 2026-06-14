@@ -88,7 +88,7 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
             ),
             child: IconButton(
               icon: Icon(
-                Icons.tune,
+                Icons.filter_alt_outlined,
                 color: isDark ? Colors.white70 : AppColors.textSecondary,
               ),
               onPressed: () {

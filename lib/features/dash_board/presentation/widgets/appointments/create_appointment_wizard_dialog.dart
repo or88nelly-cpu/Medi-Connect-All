@@ -21,16 +21,16 @@ import 'booking_wizard/slot_step.dart';
 import 'booking_wizard/confirm_step.dart';
 import 'booking_wizard/wizard_footer_buttons.dart';
 
-class CreateAppointmentWizardDialog extends StatefulWidget {
-  const CreateAppointmentWizardDialog({super.key});
+class CreateAppointmentWizardBottomSheet extends StatefulWidget {
+  const CreateAppointmentWizardBottomSheet({super.key});
 
   @override
-  State<CreateAppointmentWizardDialog> createState() =>
-      _CreateAppointmentWizardDialogState();
+  State<CreateAppointmentWizardBottomSheet> createState() =>
+      _CreateAppointmentWizardBottomSheetState();
 }
 
-class _CreateAppointmentWizardDialogState
-    extends State<CreateAppointmentWizardDialog> {
+class _CreateAppointmentWizardBottomSheetState
+    extends State<CreateAppointmentWizardBottomSheet> {
   final _patientFormKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -247,6 +247,7 @@ class _CreateAppointmentWizardDialogState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final sheetBg = isDark ? AppColors.terminalDarkCard : Colors.white;
 
     return BlocProvider(
       create: (context) => BookingWizardCubit(),
@@ -286,63 +287,97 @@ class _CreateAppointmentWizardDialogState
                 );
               }
             },
-            child: Dialog(
-              backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              insetPadding: EdgeInsets.all(16.r),
-              child: Container(
-                width: 580.w,
-                height: 600.h,
-                padding: EdgeInsets.all(20.r),
-                child: BlocBuilder<BookingWizardCubit, BookingWizardState>(
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        // Header
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Booking Wizard",
-                              style: AppTextStyles.titleLarge.copyWith(
-                                color: isDark ? Colors.white : AppColors.textPrimary,
+            child: DraggableScrollableSheet(
+              initialChildSize: 0.9,
+              minChildSize: 0.6,
+              maxChildSize: 0.95,
+              expand: false,
+              builder: (ctx, scrollCtrl) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: sheetBg,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+                    border: Border(
+                      top: BorderSide(
+                        color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                        width: 1.5,
+                      ),
+                    ),
+                  ),
+                  child: BlocBuilder<BookingWizardCubit, BookingWizardState>(
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          // Drag handle
+                          SizedBox(height: 12.h),
+                          Center(
+                            child: Container(
+                              width: 40.w,
+                              height: 4.h,
+                              decoration: BoxDecoration(
+                                color: isDark ? Colors.white24 : Colors.grey[300],
+                                borderRadius: BorderRadius.circular(2),
                               ),
                             ),
-                            IconButton(
-                              onPressed: () => Navigator.pop(context),
-                              icon: Icon(
-                                Icons.close,
-                                color: isDark ? Colors.white54 : AppColors.textSecondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12.h),
-
-                        // Steps Indicator Strip
-                        const StepIndicator(),
-                        SizedBox(height: 16.h),
-
-                        // Active Step Content Container
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 4.h),
-                            child: _buildActiveStepContent(state.currentStep),
                           ),
-                        ),
-                        SizedBox(height: 12.h),
+                          SizedBox(height: 12.h),
 
-                        // Footer Navigation Buttons
-                        WizardFooterButtons(
-                          onSubmit: () => _submitAppointment(cubit),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
+                          // Header
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Booking Wizard",
+                                  style: AppTextStyles.titleLarge.copyWith(
+                                    color: isDark ? Colors.white : AppColors.textPrimary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+
+                          // Steps Indicator Strip
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: const StepIndicator(),
+                          ),
+                          SizedBox(height: 12.h),
+                          const Divider(height: 1),
+
+                          // Active Step Content Container
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                              child: _buildActiveStepContent(state.currentStep),
+                            ),
+                          ),
+                          
+                          const Divider(height: 1),
+
+                          // Footer Navigation Buttons
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 20.h),
+                            child: WizardFooterButtons(
+                              onSubmit: () => _submitAppointment(cubit),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           );
         },
