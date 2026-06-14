@@ -45,6 +45,16 @@ class AnalyticsSection extends StatelessWidget {
           final double revenue = (stats['totalRevenue'] as num?)?.toDouble() ?? 0.0;
           final deptStats = stats['departmentStats'] as List<dynamic>? ?? [];
 
+          final List<double> weeklyRevenueTrend = (stats['weeklyRevenueTrend'] as List<dynamic>?)
+                  ?.map((e) => (e as num).toDouble())
+                  .toList() ??
+              [400.0, 600.0, 800.0, 700.0, 900.0, 1100.0, 900.0];
+          
+          final List<int> weeklyAppointmentTrend = (stats['weeklyAppointmentTrend'] as List<dynamic>?)
+                  ?.map((e) => (e as num).toInt())
+                  .toList() ??
+              [30, 35, 40, 38, 45, 48, 42];
+
           final pharmacy = stats['pharmacySummary'] as Map<String, dynamic>? ?? {};
           final lab = stats['labSummary'] as Map<String, dynamic>? ?? {};
           final attendance = stats['staffAttendance'] as Map<String, dynamic>? ?? {};
@@ -72,11 +82,16 @@ class AnalyticsSection extends StatelessWidget {
               SizedBox(height: 16.h),
 
               // 2. Weekly Revenue Trend Card
-              WeeklyRevenueTrendCard(weeklyRevenue: revenue),
+              WeeklyRevenueTrendCard(
+                weeklyRevenue: revenue,
+                dailyRevenues: weeklyRevenueTrend,
+              ),
               SizedBox(height: 16.h),
 
               // 3. Appointment Summary Graph Card
-              const AppointmentSummaryGraphCard(),
+              AppointmentSummaryGraphCard(
+                weeklyAppointments: weeklyAppointmentTrend,
+              ),
               SizedBox(height: 16.h),
 
               // 4. Pharmacy Summary Card

@@ -87,6 +87,7 @@ CREATE TABLE appointments (
     appointment_time TEXT,
     status TEXT DEFAULT 'Pending',
     type TEXT DEFAULT 'Consultation',
+    token TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -275,5 +276,8 @@ ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS buy_price NUMERIC(10, 2)
 ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS sell_price NUMERIC(10, 2) NOT NULL DEFAULT 0.00;
 ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS dosage TEXT NOT NULL DEFAULT '';
 ALTER TABLE pharmacy_inventory ADD COLUMN IF NOT EXISTS image_url TEXT NOT NULL DEFAULT '';
+
+-- Add token column to Appointments table
+ALTER TABLE appointments ADD COLUMN IF NOT EXISTS token TEXT;
 
 

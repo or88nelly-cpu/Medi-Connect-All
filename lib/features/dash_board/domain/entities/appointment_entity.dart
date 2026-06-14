@@ -20,6 +20,7 @@ class AppointmentEntity extends Equatable {
   final String? fever;
   final String? headCircumference;
   final String? additionalVitals;
+  final String? token;
 
   const AppointmentEntity({
     required this.id,
@@ -39,6 +40,7 @@ class AppointmentEntity extends Equatable {
     this.fever,
     this.headCircumference,
     this.additionalVitals,
+    this.token,
   });
 
   @override
@@ -60,5 +62,6 @@ class AppointmentEntity extends Equatable {
         fever,
         headCircumference,
         additionalVitals,
+        token,
       ];
 }

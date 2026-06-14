@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
 class WeeklyRevenueTrendCard extends StatelessWidget {
   final double weeklyRevenue;
+  final List<double> dailyRevenues;
 
   const WeeklyRevenueTrendCard({
     super.key,
     required this.weeklyRevenue,
+    required this.dailyRevenues,
   });
 
   @override
@@ -51,7 +54,7 @@ class WeeklyRevenueTrendCard extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            "₹ $weeklyRevenue",
+            "₹ ${weeklyRevenue.toStringAsFixed(2)}",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: textColor,
@@ -74,6 +77,7 @@ class WeeklyRevenueTrendCard extends StatelessWidget {
                 lineColor: AppColors.primary,
                 fillColor: AppColors.primary.withValues(alpha: 0.15),
                 labelColor: labelColor,
+                dailyRevenues: dailyRevenues,
               ),
             ),
           ),
@@ -88,15 +92,19 @@ class _RevenueChartPainter extends CustomPainter {
   final Color lineColor;
   final Color fillColor;
   final Color labelColor;
+  final List<double> dailyRevenues;
 
   _RevenueChartPainter({
     required this.lineColor,
     required this.fillColor,
     required this.labelColor,
+    required this.dailyRevenues,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (dailyRevenues.isEmpty) return;
+
     final linePaint = Paint()
       ..color = lineColor
       ..style = PaintingStyle.stroke
@@ -120,15 +128,17 @@ class _RevenueChartPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
-    final points = [
-      Offset(0, size.height * 0.8),
-      Offset(size.width * 0.16, size.height * 0.72),
-      Offset(size.width * 0.32, size.height * 0.78),
-      Offset(size.width * 0.48, size.height * 0.62),
-      Offset(size.width * 0.64, size.height * 0.58),
-      Offset(size.width * 0.8, size.height * 0.45),
-      Offset(size.width, size.height * 0.35),
-    ];
+    double maxVal = dailyRevenues.reduce((a, b) => a > b ? a : b);
+    if (maxVal <= 0.0) maxVal = 100.0;
+
+    final List<Offset> points = [];
+    final double stepX = size.width / (dailyRevenues.length - 1);
+    for (int i = 0; i < dailyRevenues.length; i++) {
+      final double x = i * stepX;
+      // Normalizing values: map 0 to maxVal onto height * 0.85 to height * 0.15
+      final double y = size.height * 0.85 - (dailyRevenues[i] / maxVal) * (size.height * 0.7);
+      points.add(Offset(x, y));
+    }
 
     final path = Path()..moveTo(points.first.dx, points.first.dy);
 
@@ -158,8 +168,14 @@ class _RevenueChartPainter extends CustomPainter {
       canvas.drawCircle(pt, 4.0, dotOutlinePaint);
     }
 
-    final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    final textPainter = TextPainter(textDirection: TextDirection.ltr);
+    // Days labels (e.g. last 7 days of week, ending with today)
+    final List<String> days = [];
+    for (int i = 6; i >= 0; i--) {
+      final date = DateTime.now().subtract(Duration(days: i));
+      days.add(DateFormat('E').format(date).substring(0, 1));
+    }
+
+    final textPainter = TextPainter();
 
     for (int i = 0; i < points.length; i++) {
       textPainter.text = TextSpan(
@@ -182,6 +198,7 @@ class _RevenueChartPainter extends CustomPainter {
   bool shouldRepaint(covariant _RevenueChartPainter oldDelegate) {
     return oldDelegate.lineColor != lineColor ||
         oldDelegate.fillColor != fillColor ||
-        oldDelegate.labelColor != labelColor;
+        oldDelegate.labelColor != labelColor ||
+        oldDelegate.dailyRevenues != dailyRevenues;
   }
 }

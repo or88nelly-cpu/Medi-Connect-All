@@ -5,7 +5,12 @@ import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
 class AppointmentSummaryGraphCard extends StatelessWidget {
-  const AppointmentSummaryGraphCard({super.key});
+  final List<int> weeklyAppointments;
+
+  const AppointmentSummaryGraphCard({
+    super.key,
+    required this.weeklyAppointments,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class AppointmentSummaryGraphCard extends StatelessWidget {
               painter: _AppointmentTrendPainter(
                 lineColor: AppColors.secondary,
                 fillColor: AppColors.secondary.withOpacity(0.15),
+                weeklyAppointments: weeklyAppointments,
               ),
             ),
           ),
@@ -61,14 +67,18 @@ class AppointmentSummaryGraphCard extends StatelessWidget {
 class _AppointmentTrendPainter extends CustomPainter {
   final Color lineColor;
   final Color fillColor;
+  final List<int> weeklyAppointments;
 
   _AppointmentTrendPainter({
     required this.lineColor,
     required this.fillColor,
+    required this.weeklyAppointments,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (weeklyAppointments.isEmpty) return;
+
     final linePaint = Paint()
       ..color = lineColor
       ..style = PaintingStyle.stroke
@@ -83,14 +93,17 @@ class _AppointmentTrendPainter extends CustomPainter {
         colors: [fillColor, fillColor.withOpacity(0.0)],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
-    final points = [
-      Offset(0, size.height * 0.8),
-      Offset(size.width * 0.2, size.height * 0.75),
-      Offset(size.width * 0.4, size.height * 0.65),
-      Offset(size.width * 0.6, size.height * 0.45),
-      Offset(size.width * 0.8, size.height * 0.35),
-      Offset(size.width, size.height * 0.38),
-    ];
+    double maxVal = weeklyAppointments.reduce((a, b) => a > b ? a : b).toDouble();
+    if (maxVal <= 0.0) maxVal = 10.0;
+
+    final List<Offset> points = [];
+    final double stepX = size.width / (weeklyAppointments.length - 1);
+    for (int i = 0; i < weeklyAppointments.length; i++) {
+      final double x = i * stepX;
+      // Normalizing values: map 0 to maxVal onto height * 0.85 to height * 0.15
+      final double y = size.height * 0.85 - (weeklyAppointments[i] / maxVal) * (size.height * 0.7);
+      points.add(Offset(x, y));
+    }
 
     final path = Path()..moveTo(points.first.dx, points.first.dy);
 
@@ -118,6 +131,8 @@ class _AppointmentTrendPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AppointmentTrendPainter oldDelegate) {
-    return oldDelegate.lineColor != lineColor || oldDelegate.fillColor != fillColor;
+    return oldDelegate.lineColor != lineColor ||
+        oldDelegate.fillColor != fillColor ||
+        oldDelegate.weeklyAppointments != weeklyAppointments;
   }
 }

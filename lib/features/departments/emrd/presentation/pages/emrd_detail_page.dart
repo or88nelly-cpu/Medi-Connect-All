@@ -16,6 +16,8 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/departments/emrd/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/departments/emrd/presentation/widgets/emrd_list_item_card.dart';
+import 'package:medi_connect/features/departments/emrd/presentation/widgets/emrd_bottom_banner.dart';
 
 class EmrdDetailPage extends StatefulWidget {
   const EmrdDetailPage({super.key});
@@ -50,187 +52,358 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
       if (dateStr.isNotEmpty) {
         try {
           final dt = DateTime.parse(dateStr);
-          formattedDate = DateFormat('dd MMM yyyy, hh:mm a').format(dt);
+          formattedDate = DateFormat('dd/MM/yyyy HH:mm').format(dt);
         } catch (_) {}
       }
 
       final doc = pw.Document();
 
+      // Common styling tokens
+      const primaryColor = PdfColor.fromInt(0xff0284c7); // Aster Sky Blue/Teal
+      const textColor = PdfColor.fromInt(0xff1f2937); // Dark gray
+      const grayLabelColor = PdfColor.fromInt(0xff6b7280); // Light gray
+      const borderColor = PdfColor.fromInt(0xffe5e7eb); // Table borders
+
       if (isPrescription) {
-        // Prescription PDF Layout
+        // --- High-Fidelity PRESCRIPTION Layout (Aster MIMS Hospital style) ---
+        final List<Map<String, String>> medicinesList = [];
+        final rawMedicines = record['medicines'] as String? ?? '';
+        if (rawMedicines.isNotEmpty) {
+          final lines = rawMedicines.split('\n');
+          for (final line in lines) {
+            if (line.trim().isEmpty) continue;
+            String name = line.trim();
+            String dosage = '1 Tablet';
+            String duration = '7 Days';
+            String instructions = 'After Food';
+
+            if (line.contains('(')) {
+              name = line.split('(').first.trim();
+              final inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+              final parts = inner.split(',');
+              if (parts.isNotEmpty) dosage = parts[0].trim();
+              if (parts.length > 1) {
+                final freq = parts[1].trim();
+                instructions = "After Food\n(Freq: $freq)";
+              }
+              if (parts.length > 2) duration = parts[2].trim();
+            }
+            medicinesList.add({
+              'name': name,
+              'dosage': dosage,
+              'duration': duration,
+              'instructions': instructions,
+            });
+          }
+        }
+
         doc.addPage(
           pw.Page(
             pageFormat: PdfPageFormat.a4,
-            margin: const pw.EdgeInsets.all(32),
+            margin: const pw.EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             build: (pw.Context context) {
               return pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
+                  // Header Block
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Row(
+                      pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Container(
-                            width: 36,
-                            height: 36,
-                            decoration: const pw.BoxDecoration(
-                              color: PdfColor.fromInt(0xff0f766e), // Teal
-                              shape: pw.BoxShape.circle,
-                            ),
-                            alignment: pw.Alignment.center,
-                            child: pw.Text(
-                              "+",
-                              style: pw.TextStyle(
-                                color: PdfColors.white,
-                                fontSize: 24,
-                                fontWeight: pw.FontWeight.bold,
-                              ),
+                          pw.Text(
+                            "Aster",
+                            style: pw.TextStyle(
+                              fontSize: 24,
+                              fontWeight: pw.FontWeight.bold,
+                              color: primaryColor,
                             ),
                           ),
-                          pw.SizedBox(width: 10),
-                          pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Text(
-                                "MEDI-CONNECT",
-                                style: pw.TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: pw.FontWeight.bold,
-                                  color: const PdfColor.fromInt(0xff0f766e),
-                                ),
-                              ),
-                              pw.Text(
-                                "Electronic Medical Record System",
-                                style: const pw.TextStyle(
-                                  fontSize: 9,
-                                  color: PdfColors.grey600,
-                                ),
-                              ),
-                            ],
+                          pw.Text(
+                            "MIMS HOSPITAL",
+                            style: pw.TextStyle(
+                              fontSize: 11,
+                              fontWeight: pw.FontWeight.bold,
+                              color: primaryColor,
+                            ),
+                          ),
+                          pw.Text(
+                            "CALICUT",
+                            style: pw.TextStyle(
+                              fontSize: 7,
+                              color: grayLabelColor,
+                            ),
                           ),
                         ],
                       ),
                       pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.end,
+                        crossAxisAlignment: pw.CrossAxisAlignment.center,
                         children: [
+                          pw.SizedBox(height: 4),
                           pw.Text(
                             "PRESCRIPTION",
                             style: pw.TextStyle(
                               fontSize: 18,
                               fontWeight: pw.FontWeight.bold,
-                              color: PdfColors.grey800,
+                              color: textColor,
+                              letterSpacing: 1.2,
                             ),
-                          ),
-                          pw.Text(
-                            "Ref No: $invoiceNum",
-                            style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey600),
                           ),
                         ],
                       ),
+                      // QR Code placeholder on right
+                      pw.Container(
+                        width: 44,
+                        height: 44,
+                        padding: const pw.EdgeInsets.all(3),
+                        decoration: pw.BoxDecoration(
+                          border: pw.Border.all(color: PdfColors.black, width: 1),
+                        ),
+                        child: pw.BarcodeWidget(
+                          barcode: pw.Barcode.qrCode(),
+                          data: 'Prescription-$invoiceNum',
+                          width: 38,
+                          height: 38,
+                        ),
+                      ),
                     ],
                   ),
-                  pw.Divider(thickness: 2, color: const PdfColor.fromInt(0xff0f766e)),
-                  pw.SizedBox(height: 12),
+                  pw.SizedBox(height: 10),
+                  pw.Divider(thickness: 1.5, color: primaryColor),
+                  pw.SizedBox(height: 8),
+
+                  // Patient & Doctor Details Grid
                   pw.Container(
-                    padding: const pw.EdgeInsets.all(12),
+                    padding: const pw.EdgeInsets.all(8),
                     decoration: pw.BoxDecoration(
-                      color: PdfColors.grey100,
-                      borderRadius: const pw.BorderRadius.all(pw.Radius.circular(8)),
+                      border: pw.Border.all(color: borderColor, width: 1),
+                      borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
                     ),
-                    child: pw.Column(
+                    child: pw.Table(
                       children: [
-                        pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        pw.TableRow(
                           children: [
-                            pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text("PATIENT DETAILS", style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfColors.grey600)),
-                                pw.Text(record['patient_name'] ?? 'N/A', style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
-                                pw.Text("Patient ID: ${record['patient_id'] ?? 'N/A'}", style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey600)),
-                              ],
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Patient Name : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: record['patient_name'] ?? 'N/A', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
                             ),
-                            pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.end,
-                              children: [
-                                pw.Text("CONSULTANT", style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfColors.grey600)),
-                                pw.Text("Dr. ${record['doctor_name'] ?? 'N/A'}", style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
-                                pw.Text(record['specialty'] ?? 'N/A', style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey600)),
-                              ],
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Bill No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: 'OP-$invoiceNum', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                        pw.SizedBox(height: 8),
-                        pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        pw.TableRow(
                           children: [
-                            pw.Text("Date: $formattedDate", style: const pw.TextStyle(fontSize: 10)),
-                            pw.Text("Status: Active", style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, color: PdfColors.blue)),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Aster ID : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: record['patient_id'] != null ? record['patient_id'].toString().substring(0, 8).toUpperCase() : 'N/A', style: const pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Bill Date : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: formattedDate, style: const pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Age / Gender : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "28 Y 6 M / Male", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Doctor : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: 'Dr. ${record['doctor_name'] ?? 'N/A'}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Contact No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "9495123456", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Address : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "12/345, West Hill, Calicut, Kerala, India - 673005", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  pw.SizedBox(height: 20),
+                  pw.SizedBox(height: 16),
+
+                  // Section Title
                   pw.Text(
                     "Rx (Prescribed Medicines)",
                     style: pw.TextStyle(
-                      fontSize: 14,
+                      fontSize: 11,
                       fontWeight: pw.FontWeight.bold,
-                      color: const PdfColor.fromInt(0xff0f766e),
+                      color: primaryColor,
                     ),
                   ),
-                  pw.Divider(thickness: 1, color: PdfColors.grey300),
-                  pw.SizedBox(height: 6),
-                  if (record['medicines'] != null && record['medicines'].toString().trim().isNotEmpty)
-                    pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: (record['medicines'] as String).split('\n').map((med) {
-                        return pw.Padding(
-                          padding: const pw.EdgeInsets.symmetric(vertical: 4),
-                          child: pw.Text("• $med", style: const pw.TextStyle(fontSize: 11)),
-                        );
-                      }).toList(),
-                    )
-                  else
-                    pw.Text("No medicines prescribed.", style: pw.TextStyle(fontSize: 11, fontStyle: pw.FontStyle.italic)),
-                  pw.SizedBox(height: 20),
-                  pw.Text(
-                    "Scheduled Lab Tests / Diagnostics",
-                    style: pw.TextStyle(
-                      fontSize: 14,
-                      fontWeight: pw.FontWeight.bold,
-                      color: const PdfColor.fromInt(0xff0f766e),
+                  pw.SizedBox(height: 4),
+
+                  // Rx Table
+                  pw.Table(
+                    border: const pw.TableBorder(
+                      bottom: pw.BorderSide(color: borderColor, width: 1),
+                      horizontalInside: pw.BorderSide(color: borderColor, width: 0.8),
                     ),
+                    columnWidths: const {
+                      0: pw.FractionColumnWidth(0.06), // SN
+                      1: pw.FractionColumnWidth(0.40), // Medicine
+                      2: pw.FractionColumnWidth(0.18), // Dosage
+                      3: pw.FractionColumnWidth(0.16), // Duration
+                      4: pw.FractionColumnWidth(0.20), // Instructions
+                    },
+                    children: [
+                      // Header Row
+                      pw.TableRow(
+                        decoration: const pw.BoxDecoration(color: PdfColors.grey100),
+                        children: [
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Rx", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Medicine", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Dosage", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Duration", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Instructions", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                        ],
+                      ),
+                      // Row Items
+                      if (medicinesList.isNotEmpty)
+                        ...medicinesList.asMap().entries.map((entry) {
+                          final idx = entry.key + 1;
+                          final med = entry.value;
+                          return pw.TableRow(
+                            children: [
+                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text("$idx.", style: const pw.TextStyle(fontSize: 8.5))),
+                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['name'] ?? '', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['dosage'] ?? '', style: const pw.TextStyle(fontSize: 8.5))),
+                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['duration'] ?? '', style: const pw.TextStyle(fontSize: 8.5))),
+                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['instructions'] ?? '', style: const pw.TextStyle(fontSize: 8.5))),
+                            ],
+                          );
+                        })
+                      else
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(8),
+                              child: pw.Text("No medicines prescribed.", style: pw.TextStyle(fontStyle: pw.FontStyle.italic, fontSize: 8.5)),
+                            ),
+                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
+                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
+                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
+                          ],
+                        ),
+                    ],
                   ),
-                  pw.Divider(thickness: 1, color: PdfColors.grey300),
-                  pw.SizedBox(height: 6),
-                  if (record['lab_tests'] != null && record['lab_tests'].toString().trim().isNotEmpty)
+                  pw.SizedBox(height: 16),
+
+                  // Investigations Advised Block
+                  if (record['lab_tests'] != null && record['lab_tests'].toString().trim().isNotEmpty) ...[
                     pw.Text(
-                      record['lab_tests'],
-                      style: pw.TextStyle(fontSize: 11),
-                    )
-                  else
-                    pw.Text("No lab tests scheduled.", style: pw.TextStyle(fontSize: 11, fontStyle: pw.FontStyle.italic)),
-                  pw.SizedBox(height: 20),
-                  pw.Text(
-                    "Instructions & Notes",
-                    style: pw.TextStyle(
-                      fontSize: 14,
-                      fontWeight: pw.FontWeight.bold,
-                      color: const PdfColor.fromInt(0xff0f766e),
+                      "Investigations Advised :",
+                      style: pw.TextStyle(
+                        fontSize: 10,
+                        fontWeight: pw.FontWeight.bold,
+                        color: textColor,
+                      ),
                     ),
-                  ),
-                  pw.Divider(thickness: 1, color: PdfColors.grey300),
-                  pw.SizedBox(height: 6),
-                  pw.Text(
-                    record['prescription_notes'] != null && record['prescription_notes'].toString().trim().isNotEmpty
-                        ? record['prescription_notes']
-                        : 'None',
-                    style: pw.TextStyle(fontSize: 11, color: PdfColors.grey800),
-                  ),
+                    pw.SizedBox(height: 4),
+                    ...record['lab_tests'].toString().split(',').map((test) {
+                      return pw.Padding(
+                        padding: const pw.EdgeInsets.only(left: 10, bottom: 2),
+                        child: pw.Text("• ${test.trim()}", style: const pw.TextStyle(fontSize: 8.5, color: textColor)),
+                      );
+                    }),
+                    pw.SizedBox(height: 16),
+                  ],
+
+                  // Notes / Clinical Advice
+                  if (record['prescription_notes'] != null && record['prescription_notes'].toString().trim().isNotEmpty) ...[
+                    pw.Text(
+                      "Clinical Notes / Advice :",
+                      style: pw.TextStyle(
+                        fontSize: 10,
+                        fontWeight: pw.FontWeight.bold,
+                        color: textColor,
+                      ),
+                    ),
+                    pw.SizedBox(height: 4),
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.only(left: 10),
+                      child: pw.Text(
+                        record['prescription_notes'],
+                        style: const pw.TextStyle(fontSize: 8.5, color: PdfColors.grey800),
+                      ),
+                    ),
+                    pw.SizedBox(height: 16),
+                  ],
+
                   pw.Spacer(),
+
+                  // Bottom signature & details
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: pw.CrossAxisAlignment.end,
@@ -238,54 +411,59 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Container(
-                            width: 60,
-                            height: 60,
-                            decoration: pw.BoxDecoration(
-                              border: pw.Border.all(color: PdfColors.green, width: 1.5),
-                              shape: pw.BoxShape.circle,
-                            ),
-                            alignment: pw.Alignment.center,
-                            child: pw.Column(
-                              mainAxisAlignment: pw.MainAxisAlignment.center,
-                              children: [
-                                pw.Text("VERIFIED", style: pw.TextStyle(fontSize: 7, fontWeight: pw.FontWeight.bold, color: PdfColors.green)),
-                                pw.Text("Medi-Connect", style: const pw.TextStyle(fontSize: 5, color: PdfColors.grey500)),
-                              ],
-                            ),
-                          ),
-                          pw.SizedBox(height: 4),
-                          pw.Text("Hospital Digital Seal", style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey500)),
+                          pw.Text("Date : ${formattedDate.split(' ').first}", style: const pw.TextStyle(fontSize: 8.5)),
+                          pw.SizedBox(height: 2),
+                          pw.Text("Time : ${formattedDate.contains(' ') ? formattedDate.split(' ').last : ''}", style: const pw.TextStyle(fontSize: 8.5)),
                         ],
                       ),
                       pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.end,
                         children: [
+                          // Handwritten cursive simulated signature
                           pw.Text(
-                            "Dr. ${record['doctor_name'] ?? 'N/A'}",
+                            record['doctor_name'] ?? 'Authorized Doctor',
                             style: pw.TextStyle(
                               fontSize: 14,
                               fontWeight: pw.FontWeight.bold,
-                              color: const PdfColor.fromInt(0xff0f766e),
+                              fontStyle: pw.FontStyle.italic,
+                              color: primaryColor,
+                            ),
+                          ),
+                          pw.SizedBox(height: 4),
+                          pw.Text(
+                            "Dr. ${record['doctor_name'] ?? 'N/A'}",
+                            style: pw.TextStyle(
+                              fontSize: 9,
+                              fontWeight: pw.FontWeight.bold,
+                              color: textColor,
                             ),
                           ),
                           pw.Text(
-                            "Authorized Signature",
+                            "MBBS, MD (${record['specialty'] ?? 'Specialist'})",
                             style: pw.TextStyle(
-                              fontSize: 8,
-                              fontStyle: pw.FontStyle.italic,
-                              color: PdfColors.grey600,
+                              fontSize: 7.5,
+                              color: grayLabelColor,
                             ),
                           ),
-                          pw.SizedBox(height: 6),
-                          pw.Container(
-                            width: 100,
-                            height: 1,
-                            color: PdfColors.grey400,
+                          pw.Text(
+                            "Reg. No: 56789",
+                            style: pw.TextStyle(
+                              fontSize: 7.5,
+                              color: grayLabelColor,
+                            ),
                           ),
                         ],
                       ),
                     ],
+                  ),
+                  pw.SizedBox(height: 10),
+                  pw.Divider(thickness: 1, color: borderColor),
+                  pw.SizedBox(height: 4),
+                  pw.Center(
+                    child: pw.Text(
+                      "Note: Please take medicines as advised. Do not stop the medicines in between. In case of any side effects, consult your doctor.",
+                      style: pw.TextStyle(fontSize: 7, color: grayLabelColor, fontStyle: pw.FontStyle.italic),
+                    ),
                   ),
                 ],
               );
@@ -293,177 +471,387 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
           ),
         );
       } else {
-        // Invoice PDF Layout
+        // --- High-Fidelity INVOICE / BILL OF SUPPLY Layout (Aster MIMS Hospital style) ---
         final isMedicine = customTitle?.contains("Medicine") == true;
         final isLab = customTitle?.contains("Lab") == true;
-        final amountVal = isMedicine 
-            ? (record['medicine_amount'] ?? 0.0) 
-            : (isLab ? (record['lab_amount'] ?? 0.0) : (record['amount'] ?? 0.0));
-        final itemDesc = isMedicine
-            ? "Prescription Medicines Payment"
-            : (isLab ? "CBC and Diagnostics Lab Tests" : "Doctor Consultation Fee");
+        final double consultationFee = 500.00;
+        final double medicineAmount = record['medicine_amount'] != null ? (record['medicine_amount'] as num).toDouble() : 0.0;
+        final double labAmount = record['lab_amount'] != null ? (record['lab_amount'] as num).toDouble() : 0.0;
+
+        final double selectedAmt = isMedicine ? medicineAmount : (isLab ? labAmount : consultationFee);
+        final double grandTotal = selectedAmt;
 
         doc.addPage(
           pw.Page(
             pageFormat: PdfPageFormat.a4,
-            margin: const pw.EdgeInsets.all(32),
+            margin: const pw.EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             build: (pw.Context context) {
               return pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
+                  // Header Block
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Row(
+                      pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Container(
-                            width: 36,
-                            height: 36,
-                            decoration: const pw.BoxDecoration(
-                              color: PdfColor.fromInt(0xff16a34a), // Green
-                              shape: pw.BoxShape.circle,
-                            ),
-                            alignment: pw.Alignment.center,
-                            child: pw.Text(
-                              "₹",
-                              style: pw.TextStyle(
-                                color: PdfColors.white,
-                                fontSize: 20,
-                                fontWeight: pw.FontWeight.bold,
-                              ),
+                          pw.Text(
+                            "Aster",
+                            style: pw.TextStyle(
+                              fontSize: 24,
+                              fontWeight: pw.FontWeight.bold,
+                              color: primaryColor,
                             ),
                           ),
-                          pw.SizedBox(width: 10),
-                          pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Text(
-                                "MEDI-CONNECT",
-                                style: pw.TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: pw.FontWeight.bold,
-                                  color: const PdfColor.fromInt(0xff16a34a),
-                                ),
-                              ),
-                              pw.Text(
-                                "Billing & Accounts Department",
-                                style: const pw.TextStyle(
-                                  fontSize: 9,
-                                  color: PdfColors.grey600,
-                                ),
-                              ),
-                            ],
+                          pw.Text(
+                            "MIMS HOSPITAL",
+                            style: pw.TextStyle(
+                              fontSize: 11,
+                              fontWeight: pw.FontWeight.bold,
+                              color: primaryColor,
+                            ),
+                          ),
+                          pw.Text(
+                            "CALICUT",
+                            style: const pw.TextStyle(
+                              fontSize: 7,
+                              color: grayLabelColor,
+                            ),
                           ),
                         ],
                       ),
                       pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.end,
+                        crossAxisAlignment: pw.CrossAxisAlignment.center,
                         children: [
+                          pw.SizedBox(height: 4),
                           pw.Text(
-                            "OFFICIAL INVOICE",
+                            "BILL OF SUPPLY",
                             style: pw.TextStyle(
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: pw.FontWeight.bold,
-                              color: PdfColors.grey800,
+                              color: textColor,
+                              letterSpacing: 1.2,
                             ),
                           ),
                           pw.Text(
-                            "Invoice No: $invoiceNum",
-                            style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey700),
+                            "Duplicate",
+                            style: pw.TextStyle(fontSize: 8, fontStyle: pw.FontStyle.italic, color: grayLabelColor),
                           ),
                         ],
                       ),
+                      pw.SizedBox(width: 50), // alignment helper
                     ],
                   ),
-                  pw.Divider(thickness: 2, color: const PdfColor.fromInt(0xff16a34a)),
-                  pw.SizedBox(height: 12),
+                  pw.SizedBox(height: 8),
+
+                  // GSTIN Row
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text("GSTIN : 32AACCM3480H2ZO", style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: textColor)),
+                      pw.Text("HSN Code: 9993", style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: textColor)),
+                    ],
+                  ),
+                  pw.Divider(thickness: 1.5, color: primaryColor),
+                  pw.SizedBox(height: 6),
+
+                  // Bill Details Grid
                   pw.Container(
-                    padding: const pw.EdgeInsets.all(12),
+                    padding: const pw.EdgeInsets.all(8),
                     decoration: pw.BoxDecoration(
-                      color: PdfColors.grey100,
-                      borderRadius: const pw.BorderRadius.all(pw.Radius.circular(8)),
+                      border: pw.Border.all(color: borderColor, width: 1),
+                      borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
                     ),
-                    child: pw.Row(
-                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    child: pw.Table(
                       children: [
-                        pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        pw.TableRow(
                           children: [
-                            pw.Text("BILLED TO", style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: PdfColors.grey600)),
-                            pw.Text(record['patient_name'] ?? 'N/A', style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Patient ID: ${record['patient_id'] ?? 'N/A'}", style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey600)),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Bill No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: invoiceNum, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Bill Date : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: formattedDate, style: const pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Presc. Doctor : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: 'Dr. ${record['doctor_name'] ?? 'N/A'}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-                        pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.end,
+                        pw.TableRow(
                           children: [
-                            pw.Text("INVOICE DATE", style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: PdfColors.grey600)),
-                            pw.Text(formattedDate, style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold)),
-                            pw.Text("Payment Mode: ${record['payment_method'] ?? 'Cash'}", style: const pw.TextStyle(fontSize: 9, color: PdfColors.grey600)),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Aster ID : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: record['patient_id'] != null ? record['patient_id'].toString().substring(0, 8).toUpperCase() : 'N/A', style: const pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Gender/Age : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "Male/28 Y 6 M", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Refered By : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "Self", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Patient Name : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: record['patient_name'] ?? 'N/A', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Contact No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "9495123456", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Patient Address : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "West Hill, Calicut", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Payer : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    pw.TextSpan(text: "SELF PAY", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "State Code : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "32", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(text: "Payer Address : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
+                                    const pw.TextSpan(text: "Calicut, Kerala", style: pw.TextStyle(fontSize: 8.5)),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  pw.SizedBox(height: 20),
+                  pw.SizedBox(height: 14),
+
+                  // Service Particulars Table
                   pw.Table(
                     border: const pw.TableBorder(
-                      bottom: pw.BorderSide(color: PdfColors.grey300, width: 1),
-                      horizontalInside: pw.BorderSide(color: PdfColors.grey200, width: 1),
+                      bottom: pw.BorderSide(color: borderColor, width: 1),
+                      horizontalInside: pw.BorderSide(color: borderColor, width: 0.8),
                     ),
+                    columnWidths: const {
+                      0: pw.FractionColumnWidth(0.05), // SN
+                      1: pw.FractionColumnWidth(0.12), // SrCode
+                      2: pw.FractionColumnWidth(0.12), // SAC
+                      3: pw.FractionColumnWidth(0.35), // Service Particulars
+                      4: pw.FractionColumnWidth(0.12), // Rate
+                      5: pw.FractionColumnWidth(0.08), // Unit
+                      6: pw.FractionColumnWidth(0.16), // Total
+                    },
                     children: [
+                      // Header Row
                       pw.TableRow(
-                        decoration: const pw.BoxDecoration(color: PdfColor.fromInt(0xfff3f4f6)),
+                        decoration: const pw.BoxDecoration(color: PdfColors.grey100),
                         children: [
-                          pw.Padding(
-                            padding: const pw.EdgeInsets.all(8),
-                            child: pw.Text("Item Description", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10)),
-                          ),
-                          pw.Padding(
-                            padding: const pw.EdgeInsets.all(8),
-                            child: pw.Text("Price", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 10), textAlign: pw.TextAlign.right),
-                          ),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("SN", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("SrCode", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("SAC", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Service Particulars", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Rate (R)", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5), textAlign: pw.TextAlign.right)),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Unit", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5), textAlign: pw.TextAlign.center)),
+                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Net Amt", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5), textAlign: pw.TextAlign.right)),
                         ],
                       ),
+                      // Service Row
                       pw.TableRow(
                         children: [
+                          pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text("1", style: const pw.TextStyle(fontSize: 8.5))),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(10),
-                            child: pw.Text(itemDesc, style: const pw.TextStyle(fontSize: 10)),
+                            padding: const pw.EdgeInsets.all(6),
+                            child: pw.Text(
+                              isMedicine ? "11858" : (isLab ? "11950" : "10101"),
+                              style: const pw.TextStyle(fontSize: 8.5),
+                            ),
+                          ),
+                          pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text("999311", style: const pw.TextStyle(fontSize: 8.5))),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(6),
+                            child: pw.Text(
+                              isMedicine
+                                  ? "MEDICINE & CONSUMABLE"
+                                  : (isLab ? "LAB - CBC DIAGNOSTICS" : "CONSULTATION CHARGE"),
+                              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5),
+                            ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(10),
-                            child: pw.Text("₹${amountVal.toStringAsFixed(2)}", style: pw.TextStyle(fontSize: 10), textAlign: pw.TextAlign.right),
+                            padding: const pw.EdgeInsets.all(6),
+                            child: pw.Text(selectedAmt.toStringAsFixed(2), style: const pw.TextStyle(fontSize: 8.5), textAlign: pw.TextAlign.right),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(6),
+                            child: pw.Text("1", style: const pw.TextStyle(fontSize: 8.5), textAlign: pw.TextAlign.center),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(6),
+                            child: pw.Text(selectedAmt.toStringAsFixed(2), style: const pw.TextStyle(fontSize: 8.5), textAlign: pw.TextAlign.right),
                           ),
                         ],
                       ),
                     ],
                   ),
                   pw.SizedBox(height: 12),
+
+                  // Total & Summary Panel
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.end,
                     children: [
-                      pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.end,
-                        children: [
-                          pw.Row(
-                            children: [
-                              pw.Text("Subtotal:  ", style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey600)),
-                              pw.Text("₹${amountVal.toStringAsFixed(2)}", style: const pw.TextStyle(fontSize: 10)),
-                            ],
-                          ),
-                          pw.SizedBox(height: 4),
-                          pw.Row(
-                            children: [
-                              pw.Text("Grand Total:  ", style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: const PdfColor.fromInt(0xff16a34a))),
-                              pw.Text("₹${amountVal.toStringAsFixed(2)}", style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: const PdfColor.fromInt(0xff16a34a))),
-                            ],
-                          ),
-                        ],
+                      pw.Container(
+                        width: 200,
+                        padding: const pw.EdgeInsets.all(6),
+                        decoration: pw.BoxDecoration(
+                          border: pw.Border.all(color: borderColor, width: 1),
+                          borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
+                        ),
+                        child: pw.Column(
+                          children: [
+                            pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              children: [
+                                pw.Text("Total Amount:", style: const pw.TextStyle(fontSize: 8.5)),
+                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                              ],
+                            ),
+                            pw.SizedBox(height: 3),
+                            pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              children: [
+                                pw.Text("Net Amount:", style: const pw.TextStyle(fontSize: 8.5)),
+                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                              ],
+                            ),
+                            pw.SizedBox(height: 3),
+                            pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              children: [
+                                pw.Text("Patient Amount:", style: const pw.TextStyle(fontSize: 8.5)),
+                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                              ],
+                            ),
+                            pw.SizedBox(height: 3),
+                            pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              children: [
+                                pw.Text("Amt Received:", style: const pw.TextStyle(fontSize: 8.5)),
+                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, color: primaryColor, fontSize: 9)),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
+                  pw.SizedBox(height: 16),
+
+                  // Transaction Method
+                  pw.Text(
+                    "By UPI: ${grandTotal.toStringAsFixed(2)} State Bank of India 123456789012",
+                    style: pw.TextStyle(fontSize: 8, fontStyle: pw.FontStyle.italic, color: textColor),
+                  ),
+                  pw.SizedBox(height: 4),
+                  pw.Text(
+                    "Received from ${record['patient_name'] ?? 'Mr. Rohan Kumar'}, an amount of (INR) ${NumberFormat.simpleCurrency(name: 'INR').format(grandTotal).replaceAll('₹', '')} Only",
+                    style: pw.TextStyle(fontSize: 8.5, fontWeight: pw.FontWeight.bold, color: textColor),
+                  ),
+
                   pw.Spacer(),
+
+                  // Bottom footer elements
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: pw.CrossAxisAlignment.end,
@@ -471,46 +859,48 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Container(
-                            padding: const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                            decoration: pw.BoxDecoration(
-                              border: pw.Border.all(color: PdfColors.green, width: 1.5),
-                              borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
-                            ),
-                            child: pw.Text("PAID & STAMPED", style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfColors.green)),
-                          ),
-                          pw.SizedBox(height: 4),
-                          pw.Text("Medi-Connect Accounts Division", style: const pw.TextStyle(fontSize: 7, color: PdfColors.grey500)),
+                          pw.Text("Printed By: Admin", style: pw.TextStyle(fontSize: 7.5, color: grayLabelColor)),
+                          pw.Text("Prepared By: Staff (Billing)", style: pw.TextStyle(fontSize: 7.5, color: grayLabelColor)),
                         ],
                       ),
                       pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.end,
+                        crossAxisAlignment: pw.CrossAxisAlignment.center,
                         children: [
                           pw.Text(
-                            "Dr. ${record['doctor_name'] ?? 'N/A'}",
+                            "(Sruthi C)",
                             style: pw.TextStyle(
-                              fontSize: 12,
+                              fontSize: 9,
                               fontWeight: pw.FontWeight.bold,
-                              color: const PdfColor.fromInt(0xff16a34a),
+                              color: textColor,
                             ),
                           ),
                           pw.Text(
-                            "Authorized Signature",
+                            "(Signature)",
                             style: pw.TextStyle(
-                              fontSize: 8,
-                              fontStyle: pw.FontStyle.italic,
-                              color: PdfColors.grey600,
+                              fontSize: 7.5,
+                              color: grayLabelColor,
                             ),
-                          ),
-                          pw.SizedBox(height: 6),
-                          pw.Container(
-                            width: 100,
-                            height: 1,
-                            color: PdfColors.grey400,
                           ),
                         ],
                       ),
                     ],
+                  ),
+                  pw.SizedBox(height: 10),
+                  pw.Divider(thickness: 1, color: borderColor),
+                  pw.SizedBox(height: 4),
+                  pw.Center(
+                    child: pw.Column(
+                      children: [
+                        pw.Text(
+                          "Malabar Institute of Medical Sciences Ltd.",
+                          style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: textColor),
+                        ),
+                        pw.Text(
+                          "Mini By-pass Road, Govindapuram P.O, Calicut - 673 016, Kerala | E-mail: mimsclt@asterhospital.com | Tel: 91-495-2488 000",
+                          style: pw.TextStyle(fontSize: 6.5, color: grayLabelColor),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               );
@@ -785,10 +1175,11 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
       margin: EdgeInsets.only(top: 16.h),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
-        borderRadius: BorderRadius.circular(8.r),
+        color: isDark ? const Color(0xFF1B3B22) : const Color(0xFFF0FDF4),
+        borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
-          color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+          color: isDark ? const Color(0xFF2E7D32).withOpacity(0.5) : const Color(0xFFBBF7D0),
+          width: 1.5,
         ),
       ),
       child: Row(
@@ -799,7 +1190,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
               Container(
                 padding: EdgeInsets.all(6.r),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
+                  color: Colors.green.withOpacity(0.15),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.verified_user, color: Colors.green, size: 18),
@@ -809,7 +1200,8 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                 "Authorized invoice",
                 style: AppTextStyles.bodySmall.copyWith(
                   fontStyle: FontStyle.italic,
-                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                  color: isDark ? Colors.green[200] : Colors.green[800],
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -821,9 +1213,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                 doctorName,
                 style: const TextStyle(
                   fontFamily: 'Cursive',
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.blue,
                 ),
               ),
               SizedBox(height: 2.h),
@@ -949,17 +1342,123 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           isDark: isDark,
                           children: [
                             if (record['medicines'] != null && record['medicines'].toString().trim().isNotEmpty) ...[
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 4.h),
-                                child: Text(
-                                  record['medicines'],
-                                  style: AppTextStyles.bodyMedium.copyWith(
-                                    height: 1.4,
-                                    color: isDark ? Colors.white70 : AppColors.textPrimary,
-                                  ),
-                                ),
-                              ),
-                              const Divider(height: 16),
+                              ...() {
+                                final List<Map<String, String>> parsedMeds = [];
+                                final rawMedicines = record['medicines'] as String? ?? '';
+                                if (rawMedicines.isNotEmpty) {
+                                  final lines = rawMedicines.split('\n');
+                                  for (final line in lines) {
+                                    if (line.trim().isEmpty) continue;
+                                    String name = line.trim();
+                                    String dosage = '1 Tablet';
+                                    String duration = '7 Days';
+                                    String instructions = 'After Food';
+
+                                    if (line.contains('(')) {
+                                      name = line.split('(').first.trim();
+                                      final inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+                                      final parts = inner.split(',');
+                                      if (parts.isNotEmpty) dosage = parts[0].trim();
+                                      if (parts.length > 1) {
+                                        instructions = parts[1].trim();
+                                      }
+                                      if (parts.length > 2) duration = parts[2].trim();
+                                    }
+                                    parsedMeds.add({
+                                      'name': name,
+                                      'dosage': dosage,
+                                      'duration': duration,
+                                      'instructions': instructions,
+                                    });
+                                  }
+                                }
+                                return parsedMeds.map<Widget>((med) {
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 8.h),
+                                    padding: EdgeInsets.all(12.r),
+                                    decoration: BoxDecoration(
+                                      color: isDark ? Colors.white.withOpacity(0.02) : Colors.white,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      border: Border.all(
+                                        color: isDark ? Colors.white10 : Colors.grey[200]!,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(8.r),
+                                          decoration: BoxDecoration(
+                                            color: Colors.teal.withOpacity(0.1),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(Icons.medication_outlined, color: Colors.teal, size: 18),
+                                        ),
+                                        SizedBox(width: 12.w),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                med['name'] ?? '',
+                                                style: AppTextStyles.bodyMedium.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: isDark ? Colors.white : AppColors.textPrimary,
+                                                ),
+                                              ),
+                                              SizedBox(height: 4.h),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.teal.withOpacity(0.08),
+                                                      borderRadius: BorderRadius.circular(4.r),
+                                                    ),
+                                                    child: Text(
+                                                      "Dosage: ${med['dosage']}",
+                                                      style: AppTextStyles.bodySmall.copyWith(
+                                                        fontSize: 10.sp,
+                                                        color: Colors.teal,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 8.w),
+                                                  Container(
+                                                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.blue.withOpacity(0.08),
+                                                      borderRadius: BorderRadius.circular(4.r),
+                                                    ),
+                                                    child: Text(
+                                                      "Duration: ${med['duration']}",
+                                                      style: AppTextStyles.bodySmall.copyWith(
+                                                        fontSize: 10.sp,
+                                                        color: Colors.blue[600],
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 6.h),
+                                              Text(
+                                                "Instructions: ${med['instructions']}",
+                                                style: AppTextStyles.bodySmall.copyWith(
+                                                  fontSize: 10.sp,
+                                                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList();
+                              }(),
+                              const Divider(height: 24),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -1029,17 +1528,51 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           isDark: isDark,
                           children: [
                             if (record['lab_tests'] != null && record['lab_tests'].toString().trim().isNotEmpty) ...[
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 4.h),
-                                child: Text(
-                                  record['lab_tests'],
-                                  style: AppTextStyles.bodyMedium.copyWith(
-                                    height: 1.4,
-                                    color: isDark ? Colors.white70 : AppColors.textPrimary,
-                                  ),
-                                ),
-                              ),
-                              const Divider(height: 16),
+                              ...() {
+                                final rawLab = record['lab_tests'] as String? ?? '';
+                                final List<String> tests = rawLab
+                                    .split(RegExp(r'[,\n]'))
+                                    .map((t) => t.trim())
+                                    .where((t) => t.isNotEmpty)
+                                    .toList();
+
+                                return tests.map<Widget>((test) {
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 8.h),
+                                    padding: EdgeInsets.all(12.r),
+                                    decoration: BoxDecoration(
+                                      color: isDark ? Colors.white.withOpacity(0.02) : Colors.white,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      border: Border.all(
+                                        color: isDark ? Colors.white10 : Colors.grey[200]!,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(8.r),
+                                          decoration: BoxDecoration(
+                                            color: Colors.orange.withOpacity(0.1),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(Icons.biotech_outlined, color: Colors.orange, size: 18),
+                                        ),
+                                        SizedBox(width: 12.w),
+                                        Expanded(
+                                          child: Text(
+                                            test,
+                                            style: AppTextStyles.bodyMedium.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                              color: isDark ? Colors.white : AppColors.textPrimary,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList();
+                              }(),
+                              const Divider(height: 24),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -1409,94 +1942,23 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         itemCount: emrRecords.length,
                         itemBuilder: (context, index) {
                           final record = emrRecords[index];
-                          final dateStr = record['recorded_at'] ?? record['created_at'] ?? '';
-                          String formattedDate = 'N/A';
-                          if (dateStr.isNotEmpty) {
-                            try {
-                              final dt = DateTime.parse(dateStr);
-                              formattedDate = DateFormat('dd MMM yyyy, hh:mm a').format(dt);
-                            } catch (_) {}
-                          }
-
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 12.h),
-                            decoration: BoxDecoration(
-                              color: isDark ? AppColors.terminalDarkCard : Colors.white,
-                              borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(
-                                color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.02),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(12.r),
-                                onTap: () => _showRecordDetailsSheet(context, record),
-                                child: Padding(
-                                  padding: EdgeInsets.all(16.r),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(10.r),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.primary.withOpacity(0.1),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          Icons.folder_shared_outlined,
-                                          color: AppColors.primary,
-                                          size: 24.r,
-                                        ),
-                                      ),
-                                      SizedBox(width: 14.w),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              record['patient_name'] ?? 'Unknown Patient',
-                                              style: AppTextStyles.bodyMedium.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(height: 4.h),
-                                            Text(
-                                              'Dr. ${record['doctor_name'] ?? "Unknown"} · ${record['specialty'] ?? "General"}',
-                                              style: AppTextStyles.bodySmall.copyWith(
-                                                color: isDark ? Colors.white54 : AppColors.textSecondary,
-                                              ),
-                                            ),
-                                            SizedBox(height: 2.h),
-                                            Text(
-                                              formattedDate,
-                                              style: AppTextStyles.bodySmall.copyWith(
-                                                fontSize: 10.sp,
-                                                color: isDark ? Colors.white30 : AppColors.textSecondary.withOpacity(0.6),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 14.r,
-                                        color: isDark ? Colors.white24 : AppColors.textSecondary.withOpacity(0.4),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                          return EmrdListItemCard(
+                            record: record,
+                            onTap: () => _showRecordDetailsSheet(context, record),
                           );
                         },
                       ),
+                    SizedBox(height: 20.h),
+                    EmrdBottomBanner(
+                      onCreateEMR: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Please complete a consultation from the Appointments page to generate a new EMR record."),
+                            backgroundColor: AppColors.primary,
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               );

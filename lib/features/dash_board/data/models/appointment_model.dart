@@ -19,6 +19,7 @@ class AppointmentModel extends AppointmentEntity {
     super.fever,
     super.headCircumference,
     super.additionalVitals,
+    super.token,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -44,6 +45,7 @@ class AppointmentModel extends AppointmentEntity {
       fever: json['fever']?.toString(),
       headCircumference: json['head_circumference']?.toString(),
       additionalVitals: json['additional_vitals']?.toString(),
+      token: json['token']?.toString(),
     );
   }
 
@@ -63,5 +65,6 @@ class AppointmentModel extends AppointmentEntity {
         if (fever != null) 'fever': fever,
         if (headCircumference != null) 'head_circumference': headCircumference,
         if (additionalVitals != null) 'additional_vitals': additionalVitals,
+        if (token != null) 'token': token,
       };
 }
