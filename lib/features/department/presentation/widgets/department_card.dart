@@ -20,6 +20,7 @@ class DepartmentCard extends StatelessWidget {
   final double? width;
   final bool isHorizontal;
   final bool isSection;
+  final Color? color;
 
   const DepartmentCard({
     super.key,
@@ -27,6 +28,7 @@ class DepartmentCard extends StatelessWidget {
     this.isAdmin = false,
     this.onEdit,
     this.onDelete,
+    this.color,
 
     this.width,
     this.isHorizontal = false,
@@ -35,6 +37,15 @@ class DepartmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.transparent;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+
     return GestureDetector(
       onTap: () => context.push(
         isSection ? RouteNames.sectionDetail : RouteNames.departmentDetail,
@@ -48,10 +59,9 @@ class DepartmentCard extends StatelessWidget {
         decoration: isHorizontal
             ? null
             : BoxDecoration(
+                color: cardBg,
                 borderRadius: BorderRadius.circular(12.r),
-                border: Border.all(
-                  color: AppColors.textSecondary.withValues(alpha: 0.1),
-                ),
+                border: Border.all(color: borderColor, width: 1.2),
               ),
         // padding: EdgeInsets.all(12.r),
         child: Center(
@@ -65,13 +75,15 @@ class DepartmentCard extends StatelessWidget {
                           imagePath: department.imageUrl!,
                           width: 40.r,
                           height: 40.r,
+                          color: isDark ? color : null,
                           fit: BoxFit.cover,
                         )
                       : _DefaultDepartmentImage(name: department.name),
+                  SizedBox(height: 3.r),
                   Text(
                     department.name,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.textPrimary,
+                      color: textColor,
                       fontWeight: FontWeight.w600,
                       fontSize: isAdmin ? 11.sp : 8.sp,
                     ),

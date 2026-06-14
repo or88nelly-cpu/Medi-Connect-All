@@ -64,6 +64,13 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
       return customPage;
     }
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.border;
+    final textColor = isDark ? AppColors.terminalDarkText : AppColors.textPrimary;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary;
+    final fieldFillColor = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
+
     return CustomScaffold(
       customAppbar: CommonAppBar(title: widget.department.name),
       floatingActionButton: FloatingActionButton.extended(
@@ -132,18 +139,35 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.sp,
+                    color: textColor,
                   ),
                 ),
                 SizedBox(height: 8.h),
                 TextField(
                   onChanged: (val) => setState(() => _searchQuery = val),
+                  style: TextStyle(color: textColor),
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: fieldFillColor,
                     hintText: "Search staff in ${widget.department.name}...",
-                    prefixIcon: const Icon(Icons.search),
+                    hintStyle: TextStyle(
+                      color: isDark
+                          ? AppColors.terminalDarkFieldHint
+                          : AppColors.terminalLightFieldHint,
+                    ),
+                    prefixIcon: Icon(Icons.search, color: labelColor),
                     contentPadding: EdgeInsets.all(12.r),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.r),
-                      borderSide: const BorderSide(color: AppColors.border),
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                      borderSide: const BorderSide(color: AppColors.primary),
                     ),
                   ),
                 ),
@@ -172,7 +196,9 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                       return Center(
                         child: Text(
                           "No staff members registered in this department.",
-                          style: AppTextStyles.bodyMedium,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: labelColor,
+                          ),
                         ),
                       );
                     }
@@ -192,7 +218,9 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                       return Center(
                         child: Text(
                           "No matching staff members found.",
-                          style: AppTextStyles.bodyMedium,
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: labelColor,
+                          ),
                         ),
                       );
                     }
@@ -202,11 +230,12 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                       itemBuilder: (context, idx) {
                         final stf = filtered[idx];
                         return Card(
+                          color: cardBg,
                           margin: EdgeInsets.only(bottom: 12.h),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r),
-                            side: const BorderSide(color: AppColors.border),
+                            side: BorderSide(color: borderColor),
                           ),
                           child: ListTile(
                             contentPadding: EdgeInsets.all(12.r),
@@ -223,10 +252,13 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                               stf.name ?? '',
                               style: AppTextStyles.bodyMedium.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.textPrimary,
+                                color: textColor,
                               ),
                             ),
-                            subtitle: Text(stf.staffRole ?? 'Support Staff'),
+                            subtitle: Text(
+                              stf.staffRole ?? 'Support Staff',
+                              style: TextStyle(color: labelColor),
+                            ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [

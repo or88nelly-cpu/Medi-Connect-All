@@ -62,12 +62,18 @@ class _NavCardMini extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
+    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
     return Card(
-      color: AppColors.surface,
+      color: cardBg,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.r),
-        side: const BorderSide(color: AppColors.border),
+        side: BorderSide(color: borderColor),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.r),
@@ -88,6 +94,7 @@ class _NavCardMini extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 10.sp,
+                        color: textColor,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -99,7 +106,7 @@ class _NavCardMini extends StatelessWidget {
               Text(
                 subtitle,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: labelColor,
                   fontSize: 10.sp,
                 ),
                 maxLines: 2,

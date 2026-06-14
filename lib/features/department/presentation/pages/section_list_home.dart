@@ -66,6 +66,7 @@ class SectionListHome extends StatelessWidget {
         return DepartmentHorizontalList(
           departments: departments,
           title: AppStrings.sections,
+          color: AppColors.surface,
         );
       },
     );

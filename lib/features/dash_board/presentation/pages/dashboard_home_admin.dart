@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/analytics_section.dart';
@@ -13,15 +14,17 @@ class DashboardHomeAdmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 20.r),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const AnalyticsSection(),
           SectionListHome(),
-          SizedBox(height: 24.h),
+          SizedBox(height: 8.r),
           DepartmentListHome(),
-          SizedBox(height: 24.h),
+          SizedBox(height: 8.r),
           // Text(
           //   AppStrings.managementConsole,
           //   style: AppTextStyles.titleMedium.copyWith(
@@ -35,6 +38,7 @@ class DashboardHomeAdmin extends StatelessWidget {
             AppStrings.systemOperations,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
+              color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
             ),
           ),
           SizedBox(height: 16.h),

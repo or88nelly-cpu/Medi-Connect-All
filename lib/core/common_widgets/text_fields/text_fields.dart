@@ -35,6 +35,7 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -42,21 +43,28 @@ class AppTextField extends StatelessWidget {
       readOnly: readOnly,
       onTap: onTap,
       obscureText: obscureText,
-      style: AppTextStyles.bodyLarge,
+      style: AppTextStyles.bodyLarge.copyWith(
+        color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+      ),
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: AppColors.background,
+        fillColor: isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill,
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        labelStyle: AppTextStyles.bodyMedium,
+        labelStyle: AppTextStyles.bodyMedium.copyWith(
+          color: isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel,
+        ),
         hintStyle: AppTextStyles.bodyMedium.copyWith(
-          color: AppColors.textSecondary,
+          color: isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint,
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.border, width: 1.w),
+          borderSide: BorderSide(
+            color: isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder,
+            width: 1.w,
+          ),
           borderRadius: BorderRadius.circular(8.r),
         ),
         focusedBorder: OutlineInputBorder(
@@ -211,6 +219,7 @@ class OtpField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
@@ -222,16 +231,22 @@ class OtpField extends StatelessWidget {
             controller: controllers[index],
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
-            style: AppTextStyles.headingMedium.copyWith(fontSize: 20.sp),
+            style: AppTextStyles.headingMedium.copyWith(
+              fontSize: 20.sp,
+              color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+            ),
             maxLength: 1,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               counterText: "",
               filled: true,
-              fillColor: AppColors.background,
+              fillColor: isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill,
               contentPadding: EdgeInsets.zero,
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.border, width: 1.w),
+                borderSide: BorderSide(
+                  color: isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder,
+                  width: 1.w,
+                ),
                 borderRadius: BorderRadius.circular(8.r),
               ),
               focusedBorder: OutlineInputBorder(

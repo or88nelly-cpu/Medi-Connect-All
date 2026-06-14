@@ -198,12 +198,19 @@ class _StatCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 50.r,
-                      height: 50.r,
+                    Container(
+                      width: 52.r,
+                      height: 52.r,
+                      padding: EdgeInsets.all(4.r),
+                      decoration: BoxDecoration(
+                        // shape: BoxShape.circle,
+                        color: AppColors.primary.withAlpha(80),
+                        borderRadius: BorderRadius.circular(100.r),
+                      ),
                       child: CustomImageView(
                         imagePath: iconPath,
                         fit: BoxFit.contain,
+                        borderRadius: 100.r,
                       ),
                     ),
                     SizedBox(width: 20.r),

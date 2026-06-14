@@ -118,9 +118,15 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
   @override
   Widget build(BuildContext context) {
     final bottomPad = MediaQuery.of(context).viewInsets.bottom;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
+    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: cardBg,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
       padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 20.h + bottomPad),
@@ -137,7 +143,7 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                   width: 40.w,
                   height: 4.h,
                   decoration: BoxDecoration(
-                    color: AppColors.border,
+                    color: borderColor,
                     borderRadius: BorderRadius.circular(2.r),
                   ),
                 ),
@@ -151,7 +157,7 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                     : AppStrings.addDepartment,
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: textColor,
                 ),
               ),
               SizedBox(height: 20.h),
@@ -161,9 +167,9 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                 controller: _nameController,
                 labelText: AppStrings.departmentNameLabel,
                 hintText: AppStrings.departmentNameHint,
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.local_hospital_outlined,
-                  color: AppColors.textSecondary,
+                  color: labelColor,
                 ),
                 validator: (val) {
                   if (val == null || val.trim().isEmpty) {
@@ -179,10 +185,9 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                 controller: _descController,
                 labelText: AppStrings.departmentDescLabel,
                 hintText: AppStrings.departmentDescHint,
-                //  maxLines: 2,
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.description_outlined,
-                  color: AppColors.textSecondary,
+                  color: labelColor,
                 ),
               ),
               SizedBox(height: 12.h),
@@ -192,9 +197,9 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                 controller: _imageController,
                 labelText: AppStrings.departmentImageLabel,
                 hintText: AppStrings.departmentImageHint,
-                prefixIcon: const Icon(
+                prefixIcon: Icon(
                   Icons.image_outlined,
-                  color: AppColors.textSecondary,
+                  color: labelColor,
                 ),
               ),
               SizedBox(height: 12.h),
@@ -214,11 +219,11 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                       errorWidget: Container(
                         height: 120.h,
                         alignment: Alignment.center,
-                        color: AppColors.background,
+                        color: isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg,
                         child: Text(
                           'Invalid image URL',
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textSecondary,
+                            color: labelColor,
                           ),
                         ),
                       ),

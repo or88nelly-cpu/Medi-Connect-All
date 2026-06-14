@@ -80,6 +80,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return CustomScaffold(
       appBarNeeded: true,
       customAppbar: AppBar(
@@ -87,13 +88,20 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
         backgroundColor: Colors.transparent,
         title: Text(
           AppStrings.departmentsTitle,
-          style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleLarge.copyWith(
+            fontWeight: FontWeight.bold,
+            color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+          ),
         ),
         actions: [
           BlocBuilder<DepartmentBloc, DepartmentState>(
             builder: (context, state) {
               return IconButton(
-                icon: Icon(Icons.refresh, size: 22.r),
+                icon: Icon(
+                  Icons.refresh,
+                  size: 22.r,
+                  color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+                ),
                 onPressed: () =>
                     context.read<DepartmentBloc>().add(const LoadDepartments()),
               );
@@ -226,6 +234,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
 class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Column(
         children: [
@@ -233,13 +242,13 @@ class _EmptyState extends StatelessWidget {
           Icon(
             Icons.local_hospital_outlined,
             size: 64.r,
-            color: AppColors.border,
+            color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
           ),
           SizedBox(height: 16.h),
           Text(
             AppStrings.noDepartments,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary,
             ),
           ),
         ],

@@ -15,6 +15,7 @@ import 'package:medi_connect/features/department/presentation/widgets/department
 class DepartmentHorizontalList extends StatelessWidget {
   final bool isAdmin;
   final String title;
+  final Color? color;
   final List<DepartmentEntity> departments;
 
   const DepartmentHorizontalList({
@@ -22,10 +23,12 @@ class DepartmentHorizontalList extends StatelessWidget {
     required this.departments,
     this.isAdmin = false,
     required this.title,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     bool isSection = title.toLowerCase().contains("section");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,6 +42,9 @@ class DepartmentHorizontalList extends StatelessWidget {
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.sp,
+                color: isDark
+                    ? AppColors.terminalDarkText
+                    : AppColors.terminalLightText,
               ),
             ),
             TextButton(
@@ -77,6 +83,7 @@ class DepartmentHorizontalList extends StatelessWidget {
                         isHorizontal: true,
                         department: dept,
                         isSection: true,
+                        color: color,
                         isAdmin: isAdmin,
                         width: 80.r,
                         onEdit: isAdmin
@@ -99,8 +106,8 @@ class DepartmentHorizontalList extends StatelessWidget {
                   itemCount: departments.length.clamp(0, 12),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    crossAxisSpacing: 8.w,
-                    mainAxisSpacing: 8.h,
+                    crossAxisSpacing: 8.r,
+                    mainAxisSpacing: 8.r,
                     childAspectRatio: 1,
                   ),
                   itemBuilder: (context, index) {
@@ -109,6 +116,7 @@ class DepartmentHorizontalList extends StatelessWidget {
                       department: dept,
                       isSection: isSection,
                       isAdmin: false,
+                      color: color,
                       onEdit: isAdmin
                           ? () => DepartmentFormDialog.show(
                               context,
@@ -169,18 +177,21 @@ class DepartmentHorizontalList extends StatelessWidget {
 class _EmptyDepartmentsStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       height: 80.h,
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.background,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(
+          color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+        ),
       ),
       alignment: Alignment.center,
       child: Text(
         AppStrings.noDepartments,
         style: AppTextStyles.bodyMedium.copyWith(
-          color: AppColors.textSecondary,
+          color: isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary,
         ),
       ),
     );
