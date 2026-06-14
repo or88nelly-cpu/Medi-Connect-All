@@ -7,6 +7,7 @@ import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/storage/secure_storage_service.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+import 'package:medi_connect/core/utils/constants/app_assets.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
@@ -129,18 +130,26 @@ class AppointmentCard extends StatelessWidget {
                       horizontal: 16.r,
                       vertical: 8.r,
                     ),
-                    leading: CircleAvatar(
-                      radius: 22.r,
-                      backgroundColor: Colors.blue.withOpacity(0.1),
+                    leading: Container(
+                      width: 44.r,
+                      height: 44.r,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isDark
+                            ? Colors.white12
+                            : const Color(0xFFF3F4F6),
+                        border: Border.all(
+                          color: isDark
+                              ? AppColors.terminalDarkBorder
+                              : AppColors.border,
+                          width: 1,
+                        ),
+                      ),
                       child: ClipOval(
                         child: CustomImageView(
-                          imagePath: ProfileImageHelper.resolveImagePath(
-                            'https://api.dicebear.com/7.x/adventurer/png?seed=${Uri.encodeComponent(appointment.patientName)}',
-                            'patient',
-                            null,
-                          ),
-                          width: 44.r,
-                          height: 44.r,
+                          imagePath: AppAssets.femaleAvatarPng,
+                          width: 60.r,
+                          height: 60.r,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -157,12 +166,13 @@ class AppointmentCard extends StatelessWidget {
                                 appointment.patientName,
                                 style: AppTextStyles.titleMedium.copyWith(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 13.sp,
                                   color: isDark
                                       ? Colors.white
                                       : AppColors.textPrimary,
                                 ),
                               ),
-                              SizedBox(height: 4.h),
+
                               // Patient ID Chip
                               Container(
                                 padding: EdgeInsets.symmetric(
@@ -177,9 +187,9 @@ class AppointmentCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(4.r),
                                 ),
                                 child: Text(
-                                  "Patient ID: PAT-$shortId",
+                                  "PATIENT ID: PAT-$shortId",
                                   style: TextStyle(
-                                    fontSize: 9.sp,
+                                    fontSize: 6.sp,
                                     color: _getChipTextColor(
                                       appointment.patientId ?? "",
                                       isDark,
@@ -205,7 +215,7 @@ class AppointmentCard extends StatelessWidget {
                             appointment.status,
                             style: TextStyle(
                               color: badgeTextColor,
-                              fontSize: 10.sp,
+                              fontSize: 8.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -234,7 +244,7 @@ class AppointmentCard extends StatelessWidget {
                           Row(
                             children: [
                               Icon(
-                                Icons.person,
+                                Icons.person_outline,
                                 size: 12.r,
                                 color: isDark
                                     ? Colors.white54
@@ -259,11 +269,13 @@ class AppointmentCard extends StatelessWidget {
                           Row(
                             children: [
                               Icon(
-                                Icons.calendar_today,
+                                Icons.calendar_today_outlined,
                                 size: 11.r,
                                 color: isDark
                                     ? Colors.white30
-                                    : AppColors.textSecondary.withOpacity(0.5),
+                                    : AppColors.textSecondary.withValues(
+                                        alpha: 0.5,
+                                      ),
                               ),
                               SizedBox(width: 4.w),
                               Text(
@@ -277,11 +289,13 @@ class AppointmentCard extends StatelessWidget {
                               ),
                               SizedBox(width: 12.w),
                               Icon(
-                                Icons.access_time,
+                                Icons.access_time_outlined,
                                 size: 11.r,
                                 color: isDark
                                     ? Colors.white30
-                                    : AppColors.textSecondary.withOpacity(0.5),
+                                    : AppColors.textSecondary.withValues(
+                                        alpha: 0.5,
+                                      ),
                               ),
                               SizedBox(width: 4.w),
                               Text(
@@ -300,70 +314,9 @@ class AppointmentCard extends StatelessWidget {
                     ),
                     children: [
                       const Divider(height: 16),
-                      // Consultation type
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                appointment.type == 'Video'
-                                    ? Icons.video_call
-                                    : Icons.local_hospital_outlined,
-                                size: 14.r,
-                                color: isDark
-                                    ? Colors.white54
-                                    : AppColors.textSecondary,
-                              ),
-                              SizedBox(width: 6.w),
-                              Text(
-                                appointment.type,
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: isDark
-                                      ? Colors.white70
-                                      : AppColors.textPrimary,
-                                ),
-                              ),
-                            ],
-                          ),
-                          // Outlined Call Button
-                          OutlinedButton.icon(
-                            onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Calling ${appointment.patientName} at +91 9495123456...',
-                                  ),
-                                  backgroundColor: AppColors.primary,
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.phone_outlined, size: 14),
-                            label: const Text(
-                              'Call',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: AppColors.primary,
-                              side: const BorderSide(color: AppColors.primary),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14.w,
-                                vertical: 6.h,
-                              ),
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6.r),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 12.h),
                       // Expandable actions based on status
-                      if (appointment.status == 'Confirmed' || appointment.status == 'Pending')
+                      if (appointment.status == 'Confirmed' ||
+                          appointment.status == 'Pending')
                         Row(
                           children: [
                             Expanded(
@@ -371,15 +324,26 @@ class AppointmentCard extends StatelessWidget {
                                 onPressed: () {
                                   _showAppointmentDetailsDialog(context);
                                 },
-                                icon: const Icon(Icons.info_outline, size: 16, color: Colors.blue),
-                                label: const Text(
+                                icon: Icon(
+                                  Icons.info_outline,
+                                  size: 16.r,
+                                  color: Colors.blue,
+                                ),
+                                label: Text(
                                   'View Details',
-                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue,
+                                  ),
                                 ),
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor: Colors.blue,
+                                  backgroundColor: isDark
+                                      ? AppColors.terminalDarkCard
+                                      : Colors.white,
                                   side: const BorderSide(color: Colors.blue),
-                                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                                  padding: EdgeInsets.symmetric(vertical: 6.h),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.r),
                                   ),
@@ -390,19 +354,34 @@ class AppointmentCard extends StatelessWidget {
                             Expanded(
                               child: ElevatedButton.icon(
                                 onPressed: onComplete,
-                                icon: const Icon(Icons.check_circle_outline, size: 16, color: Colors.green),
-                                label: const Text(
+                                icon: Icon(
+                                  Icons.check_circle_outlined,
+                                  size: 16.r,
+                                  color: Colors.green,
+                                ),
+                                label: Text(
                                   'Mark as Completed',
-                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                    fontSize: 12.sp,
+                                  ),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green.withOpacity(0.1),
+                                  backgroundColor: isDark
+                                      ? const Color(
+                                          0xFF064E3B,
+                                        ).withValues(alpha: 0.2)
+                                      : const Color(0xFFE8F5E9),
                                   elevation: 0,
                                   foregroundColor: Colors.green,
                                   padding: EdgeInsets.symmetric(vertical: 10.h),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.r),
-                                    side: const BorderSide(color: Colors.green, width: 0.5),
+                                    side: const BorderSide(
+                                      color: Colors.green,
+                                      width: 0.5,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -416,14 +395,29 @@ class AppointmentCard extends StatelessWidget {
                             onPressed: () {
                               _showCompletedSummarySheet(context);
                             },
-                            icon: const Icon(Icons.article_outlined, size: 16, color: Colors.purple),
+                            icon: const Icon(
+                              Icons.article_outlined,
+                              size: 16,
+                              color: Colors.purple,
+                            ),
                             label: const Text(
                               'View Summary',
-                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.purple),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
                             ),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.purple,
-                              side: const BorderSide(color: Colors.purple),
+                              backgroundColor: isDark
+                                  ? const Color(
+                                      0xFF3B0764,
+                                    ).withValues(alpha: 0.2)
+                                  : const Color(0xFFF3E8FF),
+                              side: const BorderSide(
+                                color: Colors.purple,
+                                width: 0.5,
+                              ),
                               padding: EdgeInsets.symmetric(vertical: 10.h),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.r),
@@ -444,8 +438,10 @@ class AppointmentCard extends StatelessWidget {
 
   void _showAppointmentDetailsDialog(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final formattedDate = DateFormat('dd MMM yyyy').format(appointment.appointmentDate);
-    
+    final formattedDate = DateFormat(
+      'dd MMM yyyy',
+    ).format(appointment.appointmentDate);
+
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -456,7 +452,9 @@ class AppointmentCard extends StatelessWidget {
             SizedBox(width: 8.w),
             Text(
               "Appointment Details",
-              style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -465,25 +463,77 @@ class AppointmentCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildInfoRow("Patient Name", appointment.patientName, isDark),
-            _buildInfoRow("Patient ID", "PAT-${(appointment.patientId?.length ?? 0) > 8 ? appointment.patientId?.substring(0, 8).toUpperCase() : appointment.patientId?.toUpperCase()}", isDark),
-            _buildInfoRow("Doctor Name", _cleanDoctorName(appointment.doctorName), isDark),
+            _buildInfoRow(
+              "Patient ID",
+              "PAT-${(appointment.patientId?.length ?? 0) > 8 ? appointment.patientId?.substring(0, 8).toUpperCase() : appointment.patientId?.toUpperCase()}",
+              isDark,
+            ),
+            _buildInfoRow(
+              "Doctor Name",
+              _cleanDoctorName(appointment.doctorName),
+              isDark,
+            ),
             _buildInfoRow("Specialty", appointment.specialty, isDark),
             _buildInfoRow("Date", formattedDate, isDark),
             _buildInfoRow("Time", appointment.appointmentTime, isDark),
             if (appointment.token != null && appointment.token!.isNotEmpty)
-              _buildInfoRow("Token No", appointment.token!, isDark, valueColor: AppColors.accent, valueFontWeight: FontWeight.bold),
+              _buildInfoRow(
+                "Token No",
+                appointment.token!,
+                isDark,
+                valueColor: AppColors.accent,
+                valueFontWeight: FontWeight.bold,
+              ),
             const Divider(height: 20),
-            Text("Vitals Information", style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold, color: isDark ? Colors.white70 : AppColors.textPrimary)),
+            Text(
+              "Vitals Information",
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white70 : AppColors.textPrimary,
+              ),
+            ),
             SizedBox(height: 8.h),
             _buildInfoRow("Blood Pressure", appointment.bp ?? "N/A", isDark),
-            _buildInfoRow("Weight", appointment.weight != null && appointment.weight!.isNotEmpty ? "${appointment.weight} kg" : "N/A", isDark),
-            _buildInfoRow("Height", appointment.height != null && appointment.height!.isNotEmpty ? "${appointment.height} cm" : "N/A", isDark),
-            _buildInfoRow("Temperature", appointment.fever != null && appointment.fever!.isNotEmpty ? "${appointment.fever} °F" : "N/A", isDark),
-            _buildInfoRow("Head Circumference", appointment.headCircumference ?? "N/A", isDark),
-            if (appointment.additionalVitals != null && appointment.additionalVitals!.isNotEmpty) ...[
+            _buildInfoRow(
+              "Weight",
+              appointment.weight != null && appointment.weight!.isNotEmpty
+                  ? "${appointment.weight} kg"
+                  : "N/A",
+              isDark,
+            ),
+            _buildInfoRow(
+              "Height",
+              appointment.height != null && appointment.height!.isNotEmpty
+                  ? "${appointment.height} cm"
+                  : "N/A",
+              isDark,
+            ),
+            _buildInfoRow(
+              "Temperature",
+              appointment.fever != null && appointment.fever!.isNotEmpty
+                  ? "${appointment.fever} °F"
+                  : "N/A",
+              isDark,
+            ),
+            _buildInfoRow(
+              "Head Circumference",
+              appointment.headCircumference ?? "N/A",
+              isDark,
+            ),
+            if (appointment.additionalVitals != null &&
+                appointment.additionalVitals!.isNotEmpty) ...[
               SizedBox(height: 8.h),
-              Text("Additional Notes:", style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold, color: isDark ? Colors.white38 : AppColors.textSecondary)),
-              Text(appointment.additionalVitals!, style: AppTextStyles.bodySmall),
+              Text(
+                "Additional Notes:",
+                style: AppTextStyles.bodySmall.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white38 : AppColors.textSecondary,
+                ),
+              ),
+              Text(
+                appointment.additionalVitals!,
+                style: AppTextStyles.bodySmall,
+              ),
             ],
           ],
         ),
@@ -499,7 +549,7 @@ class AppointmentCard extends StatelessWidget {
 
   void _showCompletedSummarySheet(BuildContext context) async {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     // Show loading
     showDialog(
       context: context,
@@ -556,7 +606,9 @@ class AppointmentCard extends StatelessWidget {
         builder: (ctx) => AlertDialog(
           backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
           title: const Text("No Summary Available"),
-          content: const Text("Could not retrieve the EMR summary for this completed appointment. It might not have been recorded yet."),
+          content: const Text(
+            "Could not retrieve the EMR summary for this completed appointment. It might not have been recorded yet.",
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
@@ -568,7 +620,11 @@ class AppointmentCard extends StatelessWidget {
     }
   }
 
-  void _showRecordDetailsSheet(BuildContext context, Map<String, dynamic> record, bool isDark) {
+  void _showRecordDetailsSheet(
+    BuildContext context,
+    Map<String, dynamic> record,
+    bool isDark,
+  ) {
     final dateStr = record['recorded_at'] ?? record['created_at'] ?? '';
     String formattedDate = 'N/A';
     if (dateStr.isNotEmpty) {
@@ -578,8 +634,12 @@ class AppointmentCard extends StatelessWidget {
       } catch (_) {}
     }
 
-    final double medAmount = record['medicine_amount'] != null ? (record['medicine_amount'] as num).toDouble() : 0.0;
-    final double labAmount = record['lab_amount'] != null ? (record['lab_amount'] as num).toDouble() : 0.0;
+    final double medAmount = record['medicine_amount'] != null
+        ? (record['medicine_amount'] as num).toDouble()
+        : 0.0;
+    final double labAmount = record['lab_amount'] != null
+        ? (record['lab_amount'] as num).toDouble()
+        : 0.0;
     final medInvoice = record['medicine_invoice_number'] ?? '';
     final labInvoice = record['lab_invoice_number'] ?? '';
 
@@ -596,7 +656,9 @@ class AppointmentCard extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                 color: isDark ? AppColors.terminalDarkCard : Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(24),
+                ),
               ),
               child: Column(
                 children: [
@@ -623,14 +685,18 @@ class AppointmentCard extends StatelessWidget {
                                 "Consultation EMR Record",
                                 style: AppTextStyles.titleLarge.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: isDark ? Colors.white : AppColors.textPrimary,
+                                  color: isDark
+                                      ? Colors.white
+                                      : AppColors.textPrimary,
                                 ),
                               ),
                               SizedBox(height: 2.h),
                               Text(
                                 "Date: $formattedDate",
                                 style: AppTextStyles.bodySmall.copyWith(
-                                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                  color: isDark
+                                      ? Colors.white54
+                                      : AppColors.textSecondary,
                                 ),
                               ),
                             ],
@@ -655,10 +721,26 @@ class AppointmentCard extends StatelessWidget {
                           iconColor: AppColors.primary,
                           isDark: isDark,
                           children: [
-                            _buildInfoRow("Patient Name", record['patient_name'] ?? 'N/A', isDark),
-                            _buildInfoRow("Doctor Name", 'Dr. ${record['doctor_name'] ?? "N/A"}', isDark),
-                            _buildInfoRow("Specialty", record['specialty'] ?? 'N/A', isDark),
-                            _buildInfoRow("Invoice Number", record['invoice_number'] ?? 'N/A', isDark),
+                            _buildInfoRow(
+                              "Patient Name",
+                              record['patient_name'] ?? 'N/A',
+                              isDark,
+                            ),
+                            _buildInfoRow(
+                              "Doctor Name",
+                              'Dr. ${record['doctor_name'] ?? "N/A"}',
+                              isDark,
+                            ),
+                            _buildInfoRow(
+                              "Specialty",
+                              record['specialty'] ?? 'N/A',
+                              isDark,
+                            ),
+                            _buildInfoRow(
+                              "Invoice Number",
+                              record['invoice_number'] ?? 'N/A',
+                              isDark,
+                            ),
                           ],
                         ),
                         SizedBox(height: 16.h),
@@ -668,13 +750,32 @@ class AppointmentCard extends StatelessWidget {
                           iconColor: Colors.teal,
                           isDark: isDark,
                           children: [
-                            if (record['medicines'] != null && record['medicines'].toString().trim().isNotEmpty) ...[
-                              Text(record['medicines'] as String, style: AppTextStyles.bodySmall.copyWith(color: isDark ? Colors.white70 : AppColors.textPrimary)),
+                            if (record['medicines'] != null &&
+                                record['medicines']
+                                    .toString()
+                                    .trim()
+                                    .isNotEmpty) ...[
+                              Text(
+                                record['medicines'] as String,
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: isDark
+                                      ? Colors.white70
+                                      : AppColors.textPrimary,
+                                ),
+                              ),
                               const Divider(height: 24),
                             ],
-                            _buildInfoRow("Medicine Total", "₹${medAmount.toStringAsFixed(2)}", isDark),
+                            _buildInfoRow(
+                              "Medicine Total",
+                              "₹${medAmount.toStringAsFixed(2)}",
+                              isDark,
+                            ),
                             if (medInvoice.isNotEmpty)
-                              _buildInfoRow("Med Invoice No", medInvoice, isDark),
+                              _buildInfoRow(
+                                "Med Invoice No",
+                                medInvoice,
+                                isDark,
+                              ),
                           ],
                         ),
                         SizedBox(height: 16.h),
@@ -684,16 +785,39 @@ class AppointmentCard extends StatelessWidget {
                           iconColor: Colors.purple,
                           isDark: isDark,
                           children: [
-                            if (record['lab_tests'] != null && record['lab_tests'].toString().trim().isNotEmpty) ...[
-                              Text(record['lab_tests'] as String, style: AppTextStyles.bodySmall.copyWith(color: isDark ? Colors.white70 : AppColors.textPrimary)),
+                            if (record['lab_tests'] != null &&
+                                record['lab_tests']
+                                    .toString()
+                                    .trim()
+                                    .isNotEmpty) ...[
+                              Text(
+                                record['lab_tests'] as String,
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: isDark
+                                      ? Colors.white70
+                                      : AppColors.textPrimary,
+                                ),
+                              ),
                               const Divider(height: 24),
                             ],
-                            _buildInfoRow("Lab Tests Total", "₹${labAmount.toStringAsFixed(2)}", isDark),
+                            _buildInfoRow(
+                              "Lab Tests Total",
+                              "₹${labAmount.toStringAsFixed(2)}",
+                              isDark,
+                            ),
                             if (labInvoice.isNotEmpty)
-                              _buildInfoRow("Lab Invoice No", labInvoice, isDark),
+                              _buildInfoRow(
+                                "Lab Invoice No",
+                                labInvoice,
+                                isDark,
+                              ),
                           ],
                         ),
-                        if (record['prescription_notes'] != null && record['prescription_notes'].toString().trim().isNotEmpty) ...[
+                        if (record['prescription_notes'] != null &&
+                            record['prescription_notes']
+                                .toString()
+                                .trim()
+                                .isNotEmpty) ...[
                           SizedBox(height: 16.h),
                           _buildDetailCard(
                             title: "Doctor's Advice & Notes",
@@ -705,7 +829,9 @@ class AppointmentCard extends StatelessWidget {
                                 record['prescription_notes'] as String,
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontStyle: FontStyle.italic,
-                                  color: isDark ? Colors.white70 : AppColors.textPrimary,
+                                  color: isDark
+                                      ? Colors.white70
+                                      : AppColors.textPrimary,
                                 ),
                               ),
                             ],
@@ -784,7 +910,9 @@ class AppointmentCard extends StatelessWidget {
             value,
             style: AppTextStyles.bodySmall.copyWith(
               fontWeight: valueFontWeight ?? FontWeight.w500,
-              color: valueColor ?? (isDark ? Colors.white70 : AppColors.textPrimary),
+              color:
+                  valueColor ??
+                  (isDark ? Colors.white70 : AppColors.textPrimary),
             ),
           ),
         ],

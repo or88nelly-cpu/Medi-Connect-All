@@ -31,7 +31,10 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return BlocListener<AdminAppointmentsFilterCubit, AdminAppointmentsFilterState>(
+    return BlocListener<
+      AdminAppointmentsFilterCubit,
+      AdminAppointmentsFilterState
+    >(
       listenWhen: (prev, curr) => prev.searchQuery != curr.searchQuery,
       listener: (context, state) {
         if (_controller.text != state.searchQuery) {
@@ -44,14 +47,18 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
             child: TextField(
               controller: _controller,
               onChanged: (val) {
-                context.read<AdminAppointmentsFilterCubit>().changeSearchQuery(val);
+                context.read<AdminAppointmentsFilterCubit>().changeSearchQuery(
+                  val,
+                );
               },
               style: TextStyle(
                 color: isDark ? Colors.white : AppColors.textPrimary,
+                fontSize: 12.sp,
               ),
               decoration: InputDecoration(
                 hintText: "Search patient, doctor, or specialty...",
                 hintStyle: TextStyle(
+                  fontSize: 12.sp,
                   color: isDark ? Colors.white54 : AppColors.textSecondary,
                 ),
                 prefixIcon: Icon(
@@ -60,11 +67,16 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
                 ),
                 filled: true,
                 fillColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-                contentPadding: EdgeInsets.all(12.r),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 12.r,
+                  vertical: 6.r,
+                ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.r),
                   borderSide: BorderSide(
-                    color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                    color: isDark
+                        ? AppColors.terminalDarkBorder
+                        : AppColors.border,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -75,31 +87,6 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
                   ),
                 ),
               ),
-            ),
-          ),
-          SizedBox(width: 8.w),
-          Container(
-            decoration: BoxDecoration(
-              color: isDark ? AppColors.terminalDarkCard : Colors.white,
-              borderRadius: BorderRadius.circular(10.r),
-              border: Border.all(
-                color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-              ),
-            ),
-            child: IconButton(
-              icon: Icon(
-                Icons.filter_alt_outlined,
-                color: isDark ? Colors.white70 : AppColors.textSecondary,
-              ),
-              onPressed: () {
-                context.read<AdminAppointmentsFilterCubit>().resetFilters();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Search and filters reset to today."),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
             ),
           ),
         ],

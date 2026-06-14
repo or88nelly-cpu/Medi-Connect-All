@@ -8,10 +8,7 @@ import 'package:medi_connect/core/common_widgets/buttons/gradient_button.dart';
 class AppointmentsHeader extends StatelessWidget {
   final VoidCallback onBookNew;
 
-  const AppointmentsHeader({
-    super.key,
-    required this.onBookNew,
-  });
+  const AppointmentsHeader({super.key, required this.onBookNew});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +23,11 @@ class AppointmentsHeader extends StatelessWidget {
             Text(
               AppStrings.appointments,
               style: AppTextStyles.headingMedium.copyWith(
-                fontSize: 22.sp,
+                fontSize: 16.sp,
                 color: isDark ? Colors.white : AppColors.textPrimary,
               ),
             ),
-            SizedBox(height: 2.h),
+
             Text(
               "Manage and track all patient appointments",
               style: AppTextStyles.bodySmall.copyWith(
@@ -39,18 +36,6 @@ class AppointmentsHeader extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        GradientButton(
-          text: "Book New",
-          onPressed: onBookNew,
-          width: 120.w,
-          height: 40.h,
-          borderRadius: 10.r,
-          textStyle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 12.sp,
-          ),
         ),
       ],
     );

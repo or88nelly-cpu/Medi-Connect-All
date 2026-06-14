@@ -44,16 +44,19 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
         builder: (context) {
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.r,
+              vertical: 16.r,
+            ).copyWith(top: 0.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppointmentsHeader(
                   onBookNew: () => _showCreateAppointmentWizard(context),
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 12.r),
                 const AppointmentsSearchBar(),
-                SizedBox(height: 12.h),
+                SizedBox(height: 8.r),
                 BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(
                   builder: (context, appointmentsState) {
                     if (appointmentsState is AdminAppointmentsLoading) {
@@ -82,7 +85,10 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                 ),
                               ),
                               SizedBox(height: 4.h),
-                              Text(appointmentsState.message, style: AppTextStyles.bodyMedium),
+                              Text(
+                                appointmentsState.message,
+                                style: AppTextStyles.bodyMedium,
+                              ),
                               SizedBox(height: 16.h),
                               ElevatedButton(
                                 onPressed: () {
@@ -123,13 +129,17 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                         'Cancelled': cancelledCount,
                       };
 
-                      return BlocBuilder<AdminAppointmentsFilterCubit, AdminAppointmentsFilterState>(
+                      return BlocBuilder<
+                        AdminAppointmentsFilterCubit,
+                        AdminAppointmentsFilterState
+                      >(
                         builder: (context, filterState) {
                           // Filter list for selected date + status + search query
                           final filteredList = appointments.where((apt) {
                             final matchesStatus =
                                 filterState.filterStatus == 'All' ||
-                                apt.status.toLowerCase() == filterState.filterStatus.toLowerCase();
+                                apt.status.toLowerCase() ==
+                                    filterState.filterStatus.toLowerCase();
                             final matchesDate = _isSameDay(
                               apt.appointmentDate,
                               filterState.selectedDate,
@@ -144,13 +154,17 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                 apt.specialty.toLowerCase().contains(
                                   filterState.searchQuery.toLowerCase(),
                                 );
-                            return matchesStatus && matchesDate && matchesSearch;
+                            return matchesStatus &&
+                                matchesDate &&
+                                matchesSearch;
                           }).toList();
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppointmentsStatusFilter(statusCounts: statusCounts),
+                              AppointmentsStatusFilter(
+                                statusCounts: statusCounts,
+                              ),
                               SizedBox(height: 16.h),
                               AppointmentsOverviewSection(
                                 appointments: appointments,
@@ -167,41 +181,43 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                       height: 200.h,
                                       alignment: Alignment.center,
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.calendar_today_outlined,
                                             color: isDark
                                                 ? Colors.white30
-                                                : AppColors.textSecondary.withOpacity(
-                                                    0.5,
-                                                  ),
+                                                : AppColors.textSecondary
+                                                      .withOpacity(0.5),
                                             size: 48.r,
                                           ),
                                           SizedBox(height: 12.h),
                                           Text(
                                             AppStrings.noRecords,
-                                            style: AppTextStyles.titleMedium.copyWith(
-                                              color: isDark
-                                                  ? Colors.white54
-                                                  : AppColors.textSecondary,
-                                            ),
+                                            style: AppTextStyles.titleMedium
+                                                .copyWith(
+                                                  color: isDark
+                                                      ? Colors.white54
+                                                      : AppColors.textSecondary,
+                                                ),
                                           ),
                                         ],
                                       ),
                                     )
                                   : ListView.builder(
                                       shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       itemCount: filteredList.length,
                                       itemBuilder: (context, idx) {
                                         final apt = filteredList[idx];
                                         return AppointmentCard(
                                           appointment: apt,
                                           onCancel: () {
-                                            context.read<AdminAppointmentsBloc>().add(
-                                              CancelAppointment(apt.id),
-                                            );
+                                            context
+                                                .read<AdminAppointmentsBloc>()
+                                                .add(CancelAppointment(apt.id));
                                           },
                                           onComplete: () {
                                             _showConsultationCompleteSheet(
@@ -214,7 +230,8 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                     ),
                               SizedBox(height: 12.h),
                               AppointmentsBottomBanner(
-                                onBookNew: () => _showCreateAppointmentWizard(context),
+                                onBookNew: () =>
+                                    _showCreateAppointmentWizard(context),
                               ),
                             ],
                           );

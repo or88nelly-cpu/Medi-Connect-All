@@ -104,7 +104,7 @@ class AppointmentsStatusFilter extends StatelessWidget {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: statusColor.withOpacity(0.08),
+                    color: statusColor.withValues(alpha: 0.08),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   )
@@ -128,7 +128,7 @@ class AppointmentsStatusFilter extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
               decoration: BoxDecoration(
-                color: count > 0 ? statusColor.withOpacity(0.12) : (isDark ? Colors.white12 : Colors.grey[100]),
+                color: count > 0 ? statusColor.withValues(alpha: 0.12) : (isDark ? Colors.white12 : Colors.grey[100]),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Text(

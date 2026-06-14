@@ -208,7 +208,9 @@ class _SectionListContentState extends State<_SectionListContent> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
               AppStrings.cancel,
-              style: const TextStyle(color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
           ),
           TextButton(
@@ -220,7 +222,7 @@ class _SectionListContentState extends State<_SectionListContent> {
             },
             child: Text(
               AppStrings.deleteDepartment,
-              style: const TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.error,
                 fontWeight: FontWeight.bold,
               ),
