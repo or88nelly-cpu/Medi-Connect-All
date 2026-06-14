@@ -17,10 +17,18 @@ class StaffAttendanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final int present = (attendance['present'] as num?)?.toInt() ?? 1;
     final int absent = (attendance['absent'] as num?)?.toInt() ?? 0;
@@ -43,9 +51,9 @@ class StaffAttendanceCard extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.badge_outlined,
+                    Icons.edit_document,
                     color: AppColors.primary,
-                    size: 20.r,
+                    size: 16.r,
                   ),
                   SizedBox(width: 8.w),
                   Text(
@@ -53,7 +61,7 @@ class StaffAttendanceCard extends StatelessWidget {
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textColor,
-                      fontSize: 15.sp,
+                      fontSize: 12.sp,
                     ),
                   ),
                 ],
@@ -66,17 +74,17 @@ class StaffAttendanceCard extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  AppStrings.runAll,
+                  AppStrings.viewAll,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 8.h),
           Row(
             children: [
               Expanded(
@@ -88,11 +96,20 @@ class StaffAttendanceCard extends StatelessWidget {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        CircularProgressIndicator(
-                          value: total > 0 ? present / total : 0,
-                          strokeWidth: 8.r,
-                          backgroundColor: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-                          valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                        SizedBox(
+                          height: 80.r,
+                          width: 80.r,
+                          child: CircularProgressIndicator(
+                            value: total > 0 ? present / total : 0,
+                            strokeWidth: 8.r,
+
+                            backgroundColor: isDark
+                                ? AppColors.terminalDarkBorder
+                                : AppColors.border,
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              AppColors.primary,
+                            ),
+                          ),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +119,7 @@ class StaffAttendanceCard extends StatelessWidget {
                               style: AppTextStyles.titleMedium.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: textColor,
-                                fontSize: 18.sp,
+                                fontSize: 14.sp,
                                 height: 1.1,
                               ),
                             ),
@@ -110,7 +127,7 @@ class StaffAttendanceCard extends StatelessWidget {
                               "Total",
                               style: AppTextStyles.bodySmall.copyWith(
                                 color: labelColor,
-                                fontSize: 9.sp,
+                                fontSize: 10.sp,
                               ),
                             ),
                           ],
@@ -166,10 +183,7 @@ class StaffAttendanceCard extends StatelessWidget {
             Container(
               width: 8.r,
               height: 8.r,
-              decoration: BoxDecoration(
-                color: color,
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             ),
             SizedBox(width: 8.w),
             Text(

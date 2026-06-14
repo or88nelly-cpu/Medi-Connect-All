@@ -8,18 +8,20 @@ class LabSummaryCard extends StatelessWidget {
   final Map<String, dynamic> lab;
   final VoidCallback? onViewAll;
 
-  const LabSummaryCard({
-    super.key,
-    required this.lab,
-    this.onViewAll,
-  });
+  const LabSummaryCard({super.key, required this.lab, this.onViewAll});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     final totalTests = lab['totalTests']?.toString() ?? '185';
     final pending = lab['pending']?.toString() ?? '12';
@@ -43,7 +45,7 @@ class LabSummaryCard extends StatelessWidget {
                   Icon(
                     Icons.biotech_outlined,
                     color: AppColors.primary,
-                    size: 20.r,
+                    size: 16.r,
                   ),
                   SizedBox(width: 8.w),
                   Text(
@@ -51,7 +53,7 @@ class LabSummaryCard extends StatelessWidget {
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textColor,
-                      fontSize: 15.sp,
+                      fontSize: 12.sp,
                     ),
                   ),
                 ],
@@ -64,17 +66,17 @@ class LabSummaryCard extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  AppStrings.runAll,
+                  AppStrings.viewAll,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -110,7 +112,9 @@ class LabSummaryCard extends StatelessWidget {
     required Color color,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Column(
       children: [
@@ -119,14 +123,14 @@ class LabSummaryCard extends StatelessWidget {
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.bold,
             color: color,
-            fontSize: 22.sp,
+            fontSize: 12.sp,
           ),
         ),
-        SizedBox(height: 4.h),
+
         Text(
           label.toUpperCase(),
           style: AppTextStyles.bodySmall.copyWith(
-            fontSize: 9.sp,
+            fontSize: 8.sp,
             fontWeight: FontWeight.bold,
             color: labelColor,
             letterSpacing: 0.8,

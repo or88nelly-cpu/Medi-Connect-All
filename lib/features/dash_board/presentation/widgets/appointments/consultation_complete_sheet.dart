@@ -12,6 +12,7 @@ import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_e
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
 
 import 'complete_consultation/complete_consultation_cubit.dart';
 import 'complete_consultation/consultation_step_view.dart';
@@ -32,6 +33,14 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
   final TextEditingController _prescriptionNotesCtrl = TextEditingController();
   final TextEditingController _labNotesCtrl = TextEditingController();
   final TextEditingController _feeCtrl = TextEditingController(text: '500.00');
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AdminAppointmentsBloc>().add(LoadAppointments());
+    context.read<AdminPharmacyBloc>().add(LoadPharmacyItems());
+    context.read<PatientBloc>().add(LoadPatients());
+  }
 
   @override
   void dispose() {

@@ -39,8 +39,12 @@ class AnalyticsOverviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final titleColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final titleColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +62,7 @@ class AnalyticsOverviewSection extends StatelessWidget {
             Text(
               AppStrings.realTime,
               style: AppTextStyles.bodySmall.copyWith(
-                fontSize: 10.sp,
+                fontSize: 9.sp,
                 fontWeight: FontWeight.bold,
                 color: labelColor,
                 letterSpacing: 1.1,
@@ -68,12 +72,12 @@ class AnalyticsOverviewSection extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
         GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisSpacing: 12.w,
-          mainAxisSpacing: 12.h,
-          childAspectRatio: 1.6,
+          crossAxisSpacing: 12.r,
+          mainAxisSpacing: 12.r,
+          childAspectRatio: MediaQuery.of(context).size.width > 600 ? 2.5 : 5,
           children: [
             _StatCard(
               label: AppStrings.patients,
@@ -89,7 +93,11 @@ class AnalyticsOverviewSection extends StatelessWidget {
               iconPath: AppAssets.appointments,
               lineColor: AppColors.textSecondary,
               onTap: onAppointmentsTap,
-              painter: _HorizontalLinePainter(isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel),
+              painter: _HorizontalLinePainter(
+                isDark
+                    ? AppColors.terminalDarkLabel
+                    : AppColors.terminalLightLabel,
+              ),
             ),
             _StatCard(
               label: AppStrings.availableBeds,
@@ -150,63 +158,81 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12.r),
       child: Container(
-        padding: EdgeInsets.all(12.r),
+        padding: EdgeInsets.all(10.r),
         decoration: BoxDecoration(
           color: cardBg,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: borderColor, width: 1.2),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 32.r,
-                  height: 32.r,
-                  child: CustomImageView(imagePath: iconPath, fit: BoxFit.contain),
-                ),
-                SizedBox(
-                  width: 50.w,
-                  height: 20.h,
-                  child: CustomPaint(painter: painter),
-                ),
-              ],
+            Align(
+              alignment: Alignment.bottomRight,
+              child: SizedBox(
+                width: 100.r,
+                height: 30.r,
+                child: CustomPaint(painter: painter),
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  value,
-                  style: AppTextStyles.titleLarge.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                    fontSize: 18.sp,
-                    height: 1.1,
-                  ),
-                ),
-                SizedBox(height: 2.h),
-                Text(
-                  label.toUpperCase(),
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: labelColor,
-                    fontSize: 8.5.sp,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.8,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 50.r,
+                      height: 50.r,
+                      child: CustomImageView(
+                        imagePath: iconPath,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(width: 20.r),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          label.toUpperCase(),
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: labelColor,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.8,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          value,
+                          style: AppTextStyles.titleLarge.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: textColor,
+                            fontSize: 14.sp,
+                            height: 1.1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

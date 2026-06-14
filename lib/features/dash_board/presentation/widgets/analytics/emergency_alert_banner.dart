@@ -18,12 +18,8 @@ class EmergencyAlertBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final first = emergencies.isNotEmpty
         ? emergencies.first
-        : {
-            'message': 'CODE RED',
-            'time': '7m ago',
-          };
+        : {'message': 'CODE RED', 'time': '7m ago'};
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final alertMessage = first['message'] as String? ?? 'CODE RED';
     final alertTime = first['time'] as String? ?? '7m ago';
 
@@ -31,43 +27,46 @@ class EmergencyAlertBanner extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: isDark ? 0.15 : 0.08),
+        gradient: LinearGradient(
+          colors: [
+            AppColors.adminSecondary.withAlpha(80),
+            AppColors.error.withAlpha(200),
+          ],
+        ),
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.error, width: 1.5),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: EdgeInsets.all(8.r),
-            decoration: BoxDecoration(
-              color: AppColors.error,
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            child: Icon(
-              Icons.gpp_bad,
-              color: Colors.white,
-              size: 24.r,
-            ),
-          ),
-          SizedBox(width: 12.w),
+          Icon(Icons.gpp_bad, color: Colors.white, size: 40.r),
+          SizedBox(width: 8.r),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "EMERGENCY ALERT: $alertMessage",
+                  "EMERGENCY ALERT",
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.error,
+                    color: AppColors.surface,
                     fontSize: 12.sp,
+                  ),
+                ),
+                Text(
+                  alertMessage,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.surface,
+                    fontSize: 8.sp,
                   ),
                 ),
                 SizedBox(height: 2.h),
                 Text(
                   "Emergency Ward • Room 502 • Triggered $alertTime",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white70 : AppColors.textSecondary,
-                    fontSize: 10.sp,
+                    color: Colors.white70,
+                    fontSize: 7.sp,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -75,7 +74,7 @@ class EmergencyAlertBanner extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 8.w),
+          SizedBox(width: 8.r),
           TextButton(
             onPressed: onViewAll,
             style: TextButton.styleFrom(
@@ -86,9 +85,9 @@ class EmergencyAlertBanner extends StatelessWidget {
             child: Text(
               AppStrings.viewAll.toUpperCase(),
               style: TextStyle(
-                color: AppColors.error,
+                color: AppColors.surface,
                 fontWeight: FontWeight.bold,
-                fontSize: 11.sp,
+                fontSize: 8.sp,
               ),
             ),
           ),

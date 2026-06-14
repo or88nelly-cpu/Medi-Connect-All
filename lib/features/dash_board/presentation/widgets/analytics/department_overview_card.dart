@@ -7,18 +7,23 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 class DepartmentOverviewCard extends StatelessWidget {
   final List<dynamic> deptStats;
 
-  const DepartmentOverviewCard({
-    super.key,
-    required this.deptStats,
-  });
+  const DepartmentOverviewCard({super.key, required this.deptStats});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     // We can map mock progress capacity metrics as shown in the mockup:
     // General Medicine: 52% capacity (or dynamic stats, defaults to 52%)
@@ -46,7 +51,7 @@ class DepartmentOverviewCard extends StatelessWidget {
     ];
 
     return Container(
-      padding: EdgeInsets.all(16.r),
+      padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(12.r),
@@ -60,7 +65,7 @@ class DepartmentOverviewCard extends StatelessWidget {
               Icon(
                 Icons.add_box_outlined,
                 color: AppColors.primary,
-                size: 20.r,
+                size: 16.r,
               ),
               SizedBox(width: 8.w),
               Text(
@@ -68,20 +73,20 @@ class DepartmentOverviewCard extends StatelessWidget {
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: textColor,
-                  fontSize: 15.sp,
+                  fontSize: 12.sp,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 4.h),
+
           Text(
             AppStrings.capacityUtilization,
             style: AppTextStyles.bodySmall.copyWith(
               color: labelColor,
-              fontSize: 11.sp,
+              fontSize: 8.sp,
             ),
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -112,17 +117,19 @@ class DepartmentOverviewCard extends StatelessWidget {
                         capText,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: labelColor,
-                          fontSize: 11.sp,
+                          fontSize: 8.sp,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 6.h),
+                  SizedBox(height: 4.h),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(4.r),
                     child: LinearProgressIndicator(
                       value: val,
-                      backgroundColor: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                      backgroundColor: isDark
+                          ? AppColors.terminalDarkBorder
+                          : AppColors.border,
                       valueColor: AlwaysStoppedAnimation<Color>(color),
                       minHeight: 8.h,
                     ),

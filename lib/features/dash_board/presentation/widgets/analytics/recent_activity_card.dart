@@ -17,22 +17,31 @@ class RecentActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final displayActivities = activities.isNotEmpty
         ? activities
         : [
             {
-              'message': 'Dr. Sarah Dixon updated patient medical record for John Doe...',
+              'message':
+                  'Dr. Sarah Dixon updated patient medical record for John Doe...',
               'time': '10m ago',
             },
             {
               'message': 'New lab report uploaded for Cardiology Department',
               'time': '2h ago',
-            }
+            },
           ];
 
     return Container(
@@ -50,18 +59,14 @@ class RecentActivityCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.history,
-                    color: AppColors.primary,
-                    size: 20.r,
-                  ),
+                  Icon(Icons.history, color: AppColors.primary, size: 16.r),
                   SizedBox(width: 8.w),
                   Text(
                     AppStrings.recentActivity,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textColor,
-                      fontSize: 15.sp,
+                      fontSize: 13.sp,
                     ),
                   ),
                 ],
@@ -78,17 +83,17 @@ class RecentActivityCard extends StatelessWidget {
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: displayActivities.length,
+            itemCount: displayActivities.length.clamp(0, 3),
             itemBuilder: (context, idx) {
               final act = displayActivities[idx];
               final msg = act['message'] as String? ?? '';
@@ -113,7 +118,9 @@ class RecentActivityCard extends StatelessWidget {
                           Expanded(
                             child: Container(
                               width: 1.5.w,
-                              color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                              color: isDark
+                                  ? AppColors.terminalDarkBorder
+                                  : AppColors.border,
                             ),
                           ),
                       ],
@@ -129,7 +136,7 @@ class RecentActivityCard extends StatelessWidget {
                               msg,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 color: textColor,
-                                fontSize: 12.sp,
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -138,7 +145,7 @@ class RecentActivityCard extends StatelessWidget {
                               time,
                               style: AppTextStyles.bodySmall.copyWith(
                                 color: labelColor,
-                                fontSize: 10.sp,
+                                fontSize: 8.sp,
                               ),
                             ),
                           ],

@@ -15,13 +15,21 @@ class AppointmentSummaryGraphCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
-      padding: EdgeInsets.all(16.r),
+      padding: EdgeInsets.all(8.r),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(12.r),
@@ -35,21 +43,21 @@ class AppointmentSummaryGraphCard extends StatelessWidget {
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: textColor,
-              fontSize: 16.sp,
+              fontSize: 7.sp,
             ),
           ),
-          SizedBox(height: 4.h),
+          SizedBox(height: 2.h),
           Text(
             AppStrings.weeklyConsultationAppointments,
             style: AppTextStyles.bodySmall.copyWith(
               color: labelColor,
-              fontSize: 11.sp,
+              fontSize: 8.sp,
             ),
           ),
           SizedBox(height: 20.h),
           SizedBox(
-            height: 120.h,
-            width: double.infinity,
+            height: 100.h,
+            width: MediaQuery.of(context).size.width * 0.4,
             child: CustomPaint(
               painter: _AppointmentTrendPainter(
                 lineColor: AppColors.secondary,
@@ -93,7 +101,9 @@ class _AppointmentTrendPainter extends CustomPainter {
         colors: [fillColor, fillColor.withOpacity(0.0)],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
-    double maxVal = weeklyAppointments.reduce((a, b) => a > b ? a : b).toDouble();
+    double maxVal = weeklyAppointments
+        .reduce((a, b) => a > b ? a : b)
+        .toDouble();
     if (maxVal <= 0.0) maxVal = 10.0;
 
     final List<Offset> points = [];
@@ -101,7 +111,9 @@ class _AppointmentTrendPainter extends CustomPainter {
     for (int i = 0; i < weeklyAppointments.length; i++) {
       final double x = i * stepX;
       // Normalizing values: map 0 to maxVal onto height * 0.85 to height * 0.15
-      final double y = size.height * 0.85 - (weeklyAppointments[i] / maxVal) * (size.height * 0.7);
+      final double y =
+          size.height * 0.85 -
+          (weeklyAppointments[i] / maxVal) * (size.height * 0.7);
       points.add(Offset(x, y));
     }
 

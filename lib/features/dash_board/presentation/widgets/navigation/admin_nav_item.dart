@@ -35,7 +35,7 @@ class AdminNavItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.r),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withOpacity(0.1)
@@ -51,7 +51,7 @@ class AdminNavItem extends StatelessWidget {
                 isSelected ? solidIcon : outlineIcon,
                 key: ValueKey(isSelected),
                 color: color,
-                size: 20.r,
+                size: 16.r,
               ),
             ),
             SizedBox(height: 3.h),
@@ -59,7 +59,7 @@ class AdminNavItem extends StatelessWidget {
               label,
               style: AppTextStyles.bodySmall.copyWith(
                 color: color,
-                fontSize: 9.sp,
+                fontSize: 7.sp,
                 fontWeight:
                     isSelected ? FontWeight.bold : FontWeight.normal,
               ),

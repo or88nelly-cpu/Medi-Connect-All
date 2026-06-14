@@ -18,13 +18,21 @@ class WeeklyRevenueTrendCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
-      padding: EdgeInsets.all(16.r),
+      padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(12.r),
@@ -41,31 +49,27 @@ class WeeklyRevenueTrendCard extends StatelessWidget {
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: labelColor,
-                  fontSize: 10.sp,
+                  fontSize: 7.sp,
                   letterSpacing: 0.8,
                 ),
               ),
-              Icon(
-                Icons.info_outline,
-                color: labelColor,
-                size: 16.r,
-              ),
+              Icon(Icons.info_outline, color: labelColor, size: 12.r),
             ],
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 4.h),
           Text(
             "₹ ${weeklyRevenue.toStringAsFixed(2)}",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: textColor,
-              fontSize: 22.sp,
+              fontSize: 13.sp,
             ),
           ),
           Text(
             AppStrings.totalThisWeek,
             style: AppTextStyles.bodySmall.copyWith(
               color: labelColor,
-              fontSize: 10.sp,
+              fontSize: 7.sp,
             ),
           ),
           SizedBox(height: 16.h),
@@ -136,7 +140,9 @@ class _RevenueChartPainter extends CustomPainter {
     for (int i = 0; i < dailyRevenues.length; i++) {
       final double x = i * stepX;
       // Normalizing values: map 0 to maxVal onto height * 0.85 to height * 0.15
-      final double y = size.height * 0.85 - (dailyRevenues[i] / maxVal) * (size.height * 0.7);
+      final double y =
+          size.height * 0.85 -
+          (dailyRevenues[i] / maxVal) * (size.height * 0.7);
       points.add(Offset(x, y));
     }
 
@@ -187,10 +193,7 @@ class _RevenueChartPainter extends CustomPainter {
         ),
       );
       textPainter.layout();
-      textPainter.paint(
-        canvas,
-        Offset(points[i].dx - 4.w, size.height + 6.h),
-      );
+      textPainter.paint(canvas, Offset(points[i].dx - 4.w, size.height + 6.h));
     }
   }
 

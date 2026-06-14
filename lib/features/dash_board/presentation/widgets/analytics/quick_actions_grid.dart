@@ -7,40 +7,33 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 class QuickActionsGrid extends StatelessWidget {
   final Function(String action)? onActionTap;
 
-  const QuickActionsGrid({
-    super.key,
-    this.onActionTap,
-  });
+  const QuickActionsGrid({super.key, this.onActionTap});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final titleColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final titleColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final actions = [
-      {
-        'label': 'MAP',
-        'icon': Icons.map_outlined,
-        'action': 'map',
-      },
-      {
-        'label': 'LAB TEST',
-        'icon': Icons.science_outlined,
-        'action': 'lab',
-      },
+      {'label': 'MAP', 'icon': Icons.map_outlined, 'action': 'map'},
+      {'label': 'LAB TEST', 'icon': Icons.science_outlined, 'action': 'lab'},
       {
         'label': 'ADMIT',
         'icon': Icons.person_add_alt_1_outlined,
         'action': 'admit',
       },
-      {
-        'label': 'MORE',
-        'icon': Icons.more_horiz_outlined,
-        'action': 'more',
-      },
+      {'label': 'MORE', 'icon': Icons.more_horiz_outlined, 'action': 'more'},
     ];
 
     return Column(
@@ -66,6 +59,8 @@ class QuickActionsGrid extends StatelessWidget {
               child: Card(
                 color: cardBg,
                 elevation: 0,
+                
+
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
                   side: BorderSide(color: borderColor, width: 1.2),
@@ -79,16 +74,12 @@ class QuickActionsGrid extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          icon,
-                          color: AppColors.primary,
-                          size: 24.r,
-                        ),
-                        SizedBox(height: 6.h),
+                        Icon(icon, color: AppColors.primary, size: 18.r),
+                        SizedBox(height: 4.h),
                         Text(
                           label,
                           style: AppTextStyles.bodySmall.copyWith(
-                            fontSize: 10.sp,
+                            fontSize: 8.sp,
                             fontWeight: FontWeight.bold,
                             color: labelColor,
                           ),

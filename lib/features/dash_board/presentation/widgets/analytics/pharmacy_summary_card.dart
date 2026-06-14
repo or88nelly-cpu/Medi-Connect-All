@@ -17,9 +17,15 @@ class PharmacySummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     final totalMeds = pharmacy['totalMedicines']?.toString() ?? '420';
     final lowStock = pharmacy['lowStock']?.toString() ?? '8';
@@ -41,17 +47,17 @@ class PharmacySummaryCard extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.link,
+                    Icons.medical_services_sharp,
                     color: AppColors.primary,
                     size: 20.r,
                   ),
-                  SizedBox(width: 8.w),
+                  SizedBox(width: 8.r),
                   Text(
                     AppStrings.pharmacySummary,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textColor,
-                      fontSize: 15.sp,
+                      fontSize: 12.sp,
                     ),
                   ),
                 ],
@@ -64,17 +70,17 @@ class PharmacySummaryCard extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  AppStrings.runAll,
+                  AppStrings.viewAll,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -110,7 +116,9 @@ class PharmacySummaryCard extends StatelessWidget {
     required Color color,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Column(
       children: [
@@ -119,14 +127,14 @@ class PharmacySummaryCard extends StatelessWidget {
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.bold,
             color: color,
-            fontSize: 22.sp,
+            fontSize: 16.sp,
           ),
         ),
-        SizedBox(height: 4.h),
+        //  SizedBox(height: 4.h),
         Text(
           label.toUpperCase(),
           style: AppTextStyles.bodySmall.copyWith(
-            fontSize: 9.sp,
+            fontSize: 8.sp,
             fontWeight: FontWeight.bold,
             color: labelColor,
             letterSpacing: 0.8,
