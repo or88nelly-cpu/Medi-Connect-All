@@ -385,5 +385,41 @@ class AppStrings {
   static const away = "Away";
   static const inactive = "Inactive";
 
+  // Appointment Details & EMR
+  static const patientIdLabel = "Patient ID";
+  static const patientNameLabel = "Patient Name";
+  static const doctorNameLabel = "Doctor Name";
+  static const specialtyLabel = "Specialty";
+  static const dateLabel = "Date";
+  static const timeLabel = "Time";
+  static const tokenNoLabel = "Token No";
+  static const viewDetails = "View Details";
+  static const markAsCompleted = "Mark as Completed";
+  static const viewSummary = "View Summary";
+  static const appointmentDetails = "Appointment Details";
+  static const ageLabel = "Age";
+  static const close = "Close";
+  static const vitalsInformation = "Vitals Information";
+  static const bloodPressure = "Blood Pressure";
+  static const weightLabel = "Weight";
+  static const heightLabel = "Height";
+  static const temperature = "Temperature";
+  static const headCircumference = "Head Circumference";
+  static const additionalNotesLabel = "Additional Notes:";
+  static const noSummaryAvailable = "No Summary Available";
+  static const couldNotRetrieveEmr = "Could not retrieve the EMR summary for this completed appointment. It might not have been recorded yet.";
+  static const consultationEmrRecord = "Consultation EMR Record";
+  static const datePrefix = "Date: ";
+  static const generalInformation = "General Information";
+  static const invoiceNumber = "Invoice Number";
+  static const prescribedMedicines = "Prescribed Medicines";
+  static const medicineTotal = "Medicine Total";
+  static const medInvoiceNo = "Med Invoice No";
+  static const diagnosticLabTests = "Diagnostic Lab Tests";
+  static const labTestsTotal = "Lab Tests Total";
+  static const labInvoiceNo = "Lab Invoice No";
+  static const doctorsAdviceNotes = "Doctor's Advice & Notes";
+  static const patientIdPrefix = "PATIENT ID: PAT-";
+
   AppStrings._();
 }

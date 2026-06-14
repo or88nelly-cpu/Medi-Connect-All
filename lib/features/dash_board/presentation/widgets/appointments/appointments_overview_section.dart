@@ -26,12 +26,18 @@ class AppointmentsOverviewSection extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Filter appointments for the selected date
-    final targetDateApts = appointments.where((a) => _isSameDay(a.appointmentDate, selectedDate)).toList();
+    final targetDateApts = appointments
+        .where((a) => _isSameDay(a.appointmentDate, selectedDate))
+        .toList();
 
     final total = targetDateApts.length;
-    final confirmed = targetDateApts.where((a) => a.status == 'Confirmed').length;
+    final confirmed = targetDateApts
+        .where((a) => a.status == 'Confirmed')
+        .length;
     final pending = targetDateApts.where((a) => a.status == 'Pending').length;
-    final completed = targetDateApts.where((a) => a.status == 'Completed').length;
+    final completed = targetDateApts
+        .where((a) => a.status == 'Completed')
+        .length;
 
     final formattedDate = DateFormat('dd MMM yyyy').format(selectedDate);
 
@@ -46,16 +52,18 @@ class AppointmentsOverviewSection extends StatelessWidget {
               "Today's Overview",
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 14.sp,
+                fontSize: 12.sp,
                 color: isDark ? Colors.white : AppColors.textPrimary,
               ),
             ),
             Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.chevron_left, size: 20.r),
+                  icon: Icon(Icons.chevron_left, size: 16.r),
                   onPressed: () {
-                    onDateChanged(selectedDate.subtract(const Duration(days: 1)));
+                    onDateChanged(
+                      selectedDate.subtract(const Duration(days: 1)),
+                    );
                   },
                 ),
                 InkWell(
@@ -71,24 +79,35 @@ class AppointmentsOverviewSection extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 6.h,
+                    ),
                     decoration: BoxDecoration(
                       color: isDark ? AppColors.terminalDarkCard : Colors.white,
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
-                        color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                        color: isDark
+                            ? AppColors.terminalDarkBorder
+                            : AppColors.border,
                       ),
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.calendar_today, size: 12.r, color: AppColors.primary),
-                        SizedBox(width: 6.w),
+                        Icon(
+                          Icons.calendar_today,
+                          size: 12.r,
+                          color: AppColors.primary,
+                        ),
+                        SizedBox(width: 4.w),
                         Text(
                           formattedDate,
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.w600,
-                            color: isDark ? Colors.white70 : AppColors.textPrimary,
+                            color: isDark
+                                ? Colors.white70
+                                : AppColors.textPrimary,
                           ),
                         ),
                       ],
@@ -96,7 +115,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.chevron_right, size: 20.r),
+                  icon: Icon(Icons.chevron_right, size: 16.r),
                   onPressed: () {
                     onDateChanged(selectedDate.add(const Duration(days: 1)));
                   },
@@ -105,7 +124,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 12.h),
+        SizedBox(height: 8.h),
 
         // Overview Cards Row
         SingleChildScrollView(
@@ -115,7 +134,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
             children: [
               _buildOverviewCard(
                 context,
-                title: "Total Appointments",
+                title: "Appointments",
                 value: total.toString(),
                 icon: Icons.calendar_today_outlined,
                 color: Colors.blue,
@@ -161,9 +180,9 @@ class AppointmentsOverviewSection extends StatelessWidget {
     required bool isDark,
   }) {
     return Container(
-      width: 142.w,
+      width: 120.w,
       margin: EdgeInsets.only(right: 12.w),
-      padding: EdgeInsets.all(14.r),
+      padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
         color: isDark ? AppColors.terminalDarkCard : Colors.white,
         borderRadius: BorderRadius.circular(12.r),
@@ -198,18 +217,20 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 value,
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 26.sp,
+                  fontSize: 16.sp,
                   color: isDark ? Colors.white : AppColors.terminalLightText,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           Text(
             title,
             style: AppTextStyles.bodySmall.copyWith(
-              fontSize: 11.sp,
-              color: isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel,
+              fontSize: 10.sp,
+              color: isDark
+                  ? AppColors.terminalDarkLabel
+                  : AppColors.terminalLightLabel,
               fontWeight: FontWeight.bold,
             ),
           ),

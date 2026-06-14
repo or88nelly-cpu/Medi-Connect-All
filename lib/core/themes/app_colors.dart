@@ -76,6 +76,33 @@ class AppColors {
   static const terminalLightFooterText = Color(0xFF718096);
   static const terminalAccentCyan = Color(0xFF37B0F1);
 
+  // Status background & text variants
+  static const statusConfirmedBgDark = Color(0xFF064E3B);
+  static const statusConfirmedBgLight = Color(0xFFDCFCE7);
+  static const statusConfirmedTextDark = Color(0xFF4ADE80);
+  static const statusConfirmedTextLight = Color(0xFF15803D);
+
+  static const statusPendingBgDark = Color(0xFF7C2D12);
+  static const statusPendingBgLight = Color(0xFFFFEDD5);
+  static const statusPendingTextDark = Color(0xFFFDBA74);
+  static const statusPendingTextLight = Color(0xFFC2410C);
+
+  static const statusCompletedBgDark = Color(0xFF3B0764);
+  static const statusCompletedBgLight = Color(0xFFF3E8FF);
+  static const statusCompletedTextDark = Color(0xFFC084FC);
+  static const statusCompletedTextLight = Color(0xFF7E22CE);
+
+  static const statusCancelledBgDark = Color(0xFF7F1D1D);
+  static const statusCancelledBgLight = Color(0xFFFEE2E2);
+  static const statusCancelledTextDark = Color(0xFFFCA5A5);
+  static const statusCancelledTextLight = Color(0xFFB91C1C);
+
+  // Chip colors
+  static const patientChipBgDark = Color(0xFF0F2C59);
+  static const patientChipBgLight = Color(0xFFE0F2FE);
+  static const patientChipTextDark = Color(0xFF38BDF8);
+  static const patientChipTextLight = Color(0xFF0369A1);
+
   // Private constructor to prevent instantiation.
   AppColors._();
 }

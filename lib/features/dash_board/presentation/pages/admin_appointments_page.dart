@@ -15,6 +15,7 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/appointmen
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/appointments_bottom_banner.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/consultation_complete_sheet.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
+import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
 
 class AdminAppointmentsPage extends StatefulWidget {
   const AdminAppointmentsPage({super.key});
@@ -28,6 +29,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
   void initState() {
     super.initState();
     context.read<AdminAppointmentsBloc>().add(LoadAppointments());
+    context.read<PatientBloc>().add(LoadPatients());
   }
 
   bool _isSameDay(DateTime d1, DateTime d2) {
@@ -165,7 +167,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                               AppointmentsStatusFilter(
                                 statusCounts: statusCounts,
                               ),
-                              SizedBox(height: 16.h),
+                              SizedBox(height: 8.h),
                               AppointmentsOverviewSection(
                                 appointments: appointments,
                                 selectedDate: filterState.selectedDate,
