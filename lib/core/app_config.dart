@@ -49,6 +49,7 @@ import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_settings_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_recent_activity_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 
 
 
@@ -315,6 +316,13 @@ void configureAdminOperationsDependencies(GetIt sl) {
   ));
 
   sl.registerFactory<AdminAppointmentsBloc>(() => AdminAppointmentsBloc(
+    getAppointments: sl<GetAppointmentsUseCase>(),
+    createAppointment: sl<CreateAppointmentUseCase>(),
+    updateStatus: sl<UpdateAppointmentStatusUseCase>(),
+    updateVitals: sl<UpdateAppointmentVitalsUseCase>(),
+  ));
+
+  sl.registerFactory<DoctorAppointmentsBloc>(() => DoctorAppointmentsBloc(
     getAppointments: sl<GetAppointmentsUseCase>(),
     createAppointment: sl<CreateAppointmentUseCase>(),
     updateStatus: sl<UpdateAppointmentStatusUseCase>(),

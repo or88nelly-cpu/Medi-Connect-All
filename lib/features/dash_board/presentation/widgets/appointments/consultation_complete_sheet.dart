@@ -14,6 +14,8 @@ import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appoint
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
 import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 
 import 'complete_consultation/complete_consultation_cubit.dart';
 import 'complete_consultation/consultation_step_view.dart';
@@ -38,7 +40,12 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
   @override
   void initState() {
     super.initState();
-    context.read<AdminAppointmentsBloc>().add(LoadAppointments());
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated && authState.user.role == 'doctor') {
+      context.read<DoctorAppointmentsBloc>().add(LoadDoctorAppointments());
+    } else {
+      context.read<AdminAppointmentsBloc>().add(LoadAppointments());
+    }
     context.read<AdminPharmacyBloc>().add(LoadPharmacyItems());
     context.read<PatientBloc>().add(LoadPatients());
   }
@@ -56,7 +63,12 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     final apt = widget.appointment;
     final patientName = apt.patientName;
 
-    context.read<AdminAppointmentsBloc>().add(CompleteAppointment(apt.id));
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated && authState.user.role == 'doctor') {
+      context.read<DoctorAppointmentsBloc>().add(CompleteDoctorAppointment(apt.id));
+    } else {
+      context.read<AdminAppointmentsBloc>().add(CompleteAppointment(apt.id));
+    }
 
     context.read<AdminBillingBloc>().add(RecordInvoice({
       'patient_name': patientName,
@@ -511,7 +523,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text('Next: Review & Payment', style: TextStyle(fontWeight: FontWeight.bold)),
+                                      const Text('Next', style: TextStyle(fontWeight: FontWeight.bold)),
                                       SizedBox(width: 6.w),
                                       const Icon(Icons.arrow_forward, size: 16),
                                     ],

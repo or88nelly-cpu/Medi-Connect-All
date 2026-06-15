@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/router/route_names.dart';
@@ -18,6 +19,7 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/navigation
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -89,6 +91,33 @@ class _DashboardPageState extends State<DashboardPage> {
                   }
                 },
               ),
+              floatingActionButton: currentIndex == 1
+                  ? FloatingActionButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (ctx) => const CreateAppointmentWizardBottomSheet(),
+                        );
+                      },
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      child: Container(
+                        width: 56.r,
+                        height: 56.r,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [Color(0xFF0F6FFF), Color(0xFF8B5CF6)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        child: const Icon(Icons.add, color: Colors.white, size: 28),
+                      ),
+                    )
+                  : null,
             );
           },
         ),

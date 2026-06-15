@@ -15,6 +15,7 @@ import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_settings_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_recent_activity_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 
 class AppProviders {
   static List<BlocProvider> getProviders() {
@@ -36,6 +37,7 @@ class AppProviders {
       BlocProvider<AdminSettingsBloc>(create: (_) => sl<AdminSettingsBloc>()),
       BlocProvider<AdminRecentActivityBloc>(create: (_) => sl<AdminRecentActivityBloc>()),
       BlocProvider<AdminAppointmentsBloc>(create: (_) => sl<AdminAppointmentsBloc>()),
+      BlocProvider<DoctorAppointmentsBloc>(create: (_) => sl<DoctorAppointmentsBloc>()),
       ...getAllDepartmentsProviders(sl),
     ];
   }

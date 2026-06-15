@@ -36,6 +36,7 @@ class AppAssets {
   static const String maleStaffAvatarPng =
       "assets/images/male_staff_avatar.png";
   static const String appointments = "assets/images/appointment.png";
+  static const String calendar3d = "assets/images/calendar_3d.png";
   static const String revenue = "assets/images/revenue.png";
   static const String bed = "assets/images/department/ward.png";
   static const String present = "assets/images/present.png";
