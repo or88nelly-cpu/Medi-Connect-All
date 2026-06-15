@@ -33,4 +33,3 @@ class AppInitializer {
     configureAdminOperationsDependencies(sl);
   }
 }
-

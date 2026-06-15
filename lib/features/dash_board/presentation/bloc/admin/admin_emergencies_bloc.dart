@@ -42,20 +42,19 @@ class AdminEmergenciesBloc
   final ResolveEmergencyUseCase _resolve;
 
   AdminEmergenciesBloc({
-    required GetEmergenciesUseCase getEmergencies,
-    required TriggerEmergencyUseCase trigger,
-    required ResolveEmergencyUseCase resolve,
-  })  : _getEmergencies = getEmergencies,
-        _trigger = trigger,
-        _resolve = resolve,
-        super(AdminEmergenciesInitial()) {
+    required this._getEmergencies,
+    required this._trigger,
+    required this._resolve,
+  }) : super(AdminEmergenciesInitial()) {
     on<LoadEmergencies>(_onLoadEmergencies);
     on<TriggerEmergency>(_onTriggerEmergency);
     on<ResolveEmergency>(_onResolveEmergency);
   }
 
   Future<void> _onLoadEmergencies(
-      LoadEmergencies event, Emitter<AdminEmergenciesState> emit) async {
+    LoadEmergencies event,
+    Emitter<AdminEmergenciesState> emit,
+  ) async {
     emit(AdminEmergenciesLoading());
     final result = await _getEmergencies();
     result.fold(
@@ -65,7 +64,9 @@ class AdminEmergenciesBloc
   }
 
   Future<void> _onTriggerEmergency(
-      TriggerEmergency event, Emitter<AdminEmergenciesState> emit) async {
+    TriggerEmergency event,
+    Emitter<AdminEmergenciesState> emit,
+  ) async {
     final result = await _trigger(event.data);
     result.fold(
       (failure) => emit(AdminEmergenciesError(failure.message)),
@@ -74,7 +75,9 @@ class AdminEmergenciesBloc
   }
 
   Future<void> _onResolveEmergency(
-      ResolveEmergency event, Emitter<AdminEmergenciesState> emit) async {
+    ResolveEmergency event,
+    Emitter<AdminEmergenciesState> emit,
+  ) async {
     final result = await _resolve(event.id);
     result.fold(
       (failure) => emit(AdminEmergenciesError(failure.message)),

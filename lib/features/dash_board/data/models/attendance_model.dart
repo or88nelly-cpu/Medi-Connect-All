@@ -1,4 +1,6 @@
 /// Data model for staff attendance records with JSON serialization.
+library;
+
 import 'package:medi_connect/features/dash_board/domain/entities/attendance_entity.dart';
 
 class AttendanceModel extends AttendanceEntity {
@@ -29,12 +31,12 @@ class AttendanceModel extends AttendanceEntity {
   }
 
   Map<String, dynamic> toJson() => {
-        'staff_id': staffId,
-        'staff_name': staffName,
-        'role': role,
-        'status': status,
-        'check_in_time': checkInTime,
-        'check_out_time': checkOutTime,
-        'date': date.toIso8601String().split('T').first,
-      };
+    'staff_id': staffId,
+    'staff_name': staffName,
+    'role': role,
+    'status': status,
+    'check_in_time': checkInTime,
+    'check_out_time': checkOutTime,
+    'date': date.toIso8601String().split('T').first,
+  };
 }

@@ -17,20 +17,58 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
   String _selectedRange = "This Month";
 
   final List<Map<String, dynamic>> _ratingDistribution = [
-    {"stars": "5 Stars", "count": 98, "pct": "76%", "val": 0.76, "color": const Color(0xFF0F9F58)},
-    {"stars": "4 Stars", "count": 22, "pct": "17%", "val": 0.17, "color": const Color(0xFF0F9F58)},
-    {"stars": "3 Stars", "count": 6, "pct": "05%", "val": 0.05, "color": const Color(0xFF00C2A8)},
-    {"stars": "2 Stars", "count": 2, "pct": "02%", "val": 0.02, "color": AppColors.warning},
-    {"stars": "1 Star", "count": 0, "pct": "00%", "val": 0.0, "color": AppColors.error},
+    {
+      "stars": "5 Stars",
+      "count": 98,
+      "pct": "76%",
+      "val": 0.76,
+      "color": const Color(0xFF0F9F58),
+    },
+    {
+      "stars": "4 Stars",
+      "count": 22,
+      "pct": "17%",
+      "val": 0.17,
+      "color": const Color(0xFF0F9F58),
+    },
+    {
+      "stars": "3 Stars",
+      "count": 6,
+      "pct": "05%",
+      "val": 0.05,
+      "color": const Color(0xFF00C2A8),
+    },
+    {
+      "stars": "2 Stars",
+      "count": 2,
+      "pct": "02%",
+      "val": 0.02,
+      "color": AppColors.warning,
+    },
+    {
+      "stars": "1 Star",
+      "count": 0,
+      "pct": "00%",
+      "val": 0.0,
+      "color": AppColors.error,
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -58,11 +96,22 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
                 child: DropdownButton<String>(
                   value: _selectedRange,
                   dropdownColor: cardBg,
-                  icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-                  style: TextStyle(color: textColor, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: labelColor,
+                    size: 14.sp,
+                  ),
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                   onChanged: (val) => setState(() => _selectedRange = val!),
                   items: ["This Month", "This Week", "Today"].map((val) {
-                    return DropdownMenuItem<String>(value: val, child: Text(val));
+                    return DropdownMenuItem<String>(
+                      value: val,
+                      child: Text(val),
+                    );
                   }).toList(),
                 ),
               ),
@@ -93,7 +142,9 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
                       children: List.generate(5, (index) {
                         return Icon(
                           Icons.star,
-                          color: index < 4 ? Colors.amber : Colors.grey.shade400,
+                          color: index < 4
+                              ? Colors.amber
+                              : Colors.grey.shade400,
                           size: 14.sp,
                         );
                       }),
@@ -101,10 +152,7 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
                     SizedBox(height: 6.h),
                     Text(
                       "Based on 128 reviews",
-                      style: TextStyle(
-                        color: labelColor,
-                        fontSize: 9.sp,
-                      ),
+                      style: TextStyle(color: labelColor, fontSize: 9.sp),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -124,7 +172,10 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
                             width: 36.w,
                             child: Text(
                               item["stars"] as String,
-                              style: TextStyle(color: labelColor, fontSize: 8.sp),
+                              style: TextStyle(
+                                color: labelColor,
+                                fontSize: 8.sp,
+                              ),
                             ),
                           ),
                           SizedBox(width: 4.w),
@@ -136,7 +187,9 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
                                 child: LinearProgressIndicator(
                                   value: item["val"] as double,
                                   backgroundColor: borderColor,
-                                  valueColor: AlwaysStoppedAnimation<Color>(item["color"] as Color),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    item["color"] as Color,
+                                  ),
                                 ),
                               ),
                             ),
@@ -146,7 +199,10 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
                             width: 38.w,
                             child: Text(
                               "${item["count"]} (${item["pct"]})",
-                              style: TextStyle(color: labelColor, fontSize: 8.sp),
+                              style: TextStyle(
+                                color: labelColor,
+                                fontSize: 8.sp,
+                              ),
                               textAlign: TextAlign.end,
                             ),
                           ),
@@ -164,7 +220,9 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Loading all patient feedback reviews...")),
+                  const SnackBar(
+                    content: Text("Loading all patient feedback reviews..."),
+                  ),
                 );
               },
               child: Text(

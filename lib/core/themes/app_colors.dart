@@ -1,5 +1,7 @@
 /// Standard palette definition for the Healthcare Platform.
 /// All colors utilized across applications must reside here.
+library;
+
 import 'package:flutter/material.dart';
 
 class AppColors {

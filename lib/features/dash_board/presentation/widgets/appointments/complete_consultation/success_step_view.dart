@@ -21,7 +21,9 @@ class SuccessStepView extends StatelessWidget {
   });
 
   String _cleanDoctorName(String name) {
-    String cleaned = name.replaceAll(RegExp(r'^(Dr\.\s*)+', caseSensitive: false), '').trim();
+    String cleaned = name
+        .replaceAll(RegExp(r'^(Dr\.\s*)+', caseSensitive: false), '')
+        .trim();
     return 'Dr. $cleaned';
   }
 
@@ -32,10 +34,14 @@ class SuccessStepView extends StatelessWidget {
     final state = cubit.state;
 
     final docName = _cleanDoctorName(appointment.doctorName);
-    final formattedDate = DateFormat('dd MMM yyyy, hh:mm a').format(DateTime.now());
+    final formattedDate = DateFormat(
+      'dd MMM yyyy, hh:mm a',
+    ).format(DateTime.now());
 
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.border;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.border;
 
     return Column(
       children: [
@@ -50,7 +56,7 @@ class SuccessStepView extends StatelessWidget {
                 width: 90.r,
                 height: 90.r,
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.12),
+                  color: AppColors.success.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -59,7 +65,7 @@ class SuccessStepView extends StatelessWidget {
                 width: 72.r,
                 height: 72.r,
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.25),
+                  color: AppColors.success.withValues(alpha: 0.25),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -71,11 +77,7 @@ class SuccessStepView extends StatelessWidget {
                   color: AppColors.success,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
-                  Icons.check,
-                  color: Colors.white,
-                  size: 36,
-                ),
+                child: const Icon(Icons.check, color: Colors.white, size: 36),
               ),
               // Confetti mockup dots
               Positioned(
@@ -132,11 +134,37 @@ class SuccessStepView extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _buildSummaryRow(Icons.person_outline, 'Patient', appointment.patientName, isDark),
-              _buildSummaryRow(Icons.local_hospital_outlined, 'Doctor', '$docName (${appointment.specialty})', isDark),
-              _buildSummaryRow(Icons.calendar_today_outlined, 'Date & Time', formattedDate, isDark),
-              _buildSummaryRow(Icons.receipt_long_outlined, 'Invoice Number', state.invoiceNumber, isDark),
-              _buildSummaryRow(Icons.payments_outlined, 'Amount Paid', '₹${state.totalFee.toStringAsFixed(2)}', isDark, isLast: true),
+              _buildSummaryRow(
+                Icons.person_outline,
+                'Patient',
+                appointment.patientName,
+                isDark,
+              ),
+              _buildSummaryRow(
+                Icons.local_hospital_outlined,
+                'Doctor',
+                '$docName (${appointment.specialty})',
+                isDark,
+              ),
+              _buildSummaryRow(
+                Icons.calendar_today_outlined,
+                'Date & Time',
+                formattedDate,
+                isDark,
+              ),
+              _buildSummaryRow(
+                Icons.receipt_long_outlined,
+                'Invoice Number',
+                state.invoiceNumber,
+                isDark,
+              ),
+              _buildSummaryRow(
+                Icons.payments_outlined,
+                'Amount Paid',
+                '₹${state.totalFee.toStringAsFixed(2)}',
+                isDark,
+                isLast: true,
+              ),
             ],
           ),
         ),
@@ -146,16 +174,18 @@ class SuccessStepView extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(14.r),
           decoration: BoxDecoration(
-            color: AppColors.success.withOpacity(0.06),
+            color: AppColors.success.withValues(alpha: 0.06),
             borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: AppColors.success.withOpacity(0.25)),
+            border: Border.all(
+              color: AppColors.success.withValues(alpha: 0.25),
+            ),
           ),
           child: Row(
             children: [
               Container(
                 padding: EdgeInsets.all(6.r),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.12),
+                  color: AppColors.success.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -180,7 +210,9 @@ class SuccessStepView extends StatelessWidget {
                     Text(
                       'You can view the record in EMR Department.',
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: isDark ? Colors.white54 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white54
+                            : AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -219,10 +251,7 @@ class SuccessStepView extends StatelessWidget {
                 onPressed: onBackToAppointments,
                 height: 48.h,
                 borderRadius: 10.r,
-                gradientColors: const [
-                  AppColors.primary,
-                  Colors.blueAccent,
-                ],
+                gradientColors: const [AppColors.primary, Colors.blueAccent],
                 textStyle: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -242,15 +271,18 @@ class SuccessStepView extends StatelessWidget {
       child: Container(
         width: size.r,
         height: size.r,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       ),
     );
   }
 
-  Widget _buildSummaryRow(IconData icon, String label, String value, bool isDark, {bool isLast = false}) {
+  Widget _buildSummaryRow(
+    IconData icon,
+    String label,
+    String value,
+    bool isDark, {
+    bool isLast = false,
+  }) {
     return Padding(
       padding: EdgeInsets.only(bottom: isLast ? 0 : 12.h),
       child: Row(
@@ -258,7 +290,9 @@ class SuccessStepView extends StatelessWidget {
           Icon(
             icon,
             size: 16.r,
-            color: isDark ? Colors.white38 : AppColors.textSecondary.withOpacity(0.7),
+            color: isDark
+                ? Colors.white38
+                : AppColors.textSecondary.withValues(alpha: 0.7),
           ),
           SizedBox(width: 10.w),
           SizedBox(

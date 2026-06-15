@@ -9,8 +9,7 @@ import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-
-import '../bloc/dashboard_tab_cubit.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/common/dashboard_tab_cubit.dart';
 
 class AdminDrawer extends StatelessWidget {
   const AdminDrawer({super.key});
@@ -18,8 +17,12 @@ class AdminDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final drawerBg = isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg;
-    final dividerColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final drawerBg = isDark
+        ? AppColors.terminalDarkBg
+        : AppColors.terminalLightBg;
+    final dividerColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
 
     return Drawer(
       backgroundColor: drawerBg,
@@ -191,7 +194,9 @@ class AdminDrawer extends StatelessWidget {
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
     final subColor = isDark ? Colors.white70 : AppColors.terminalLightLabel;
     final iconColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final borderCol = isDark ? AppColors.terminalAccentCyan.withOpacity(0.5) : AppColors.primary.withOpacity(0.3);
+    final borderCol = isDark
+        ? AppColors.terminalAccentCyan.withValues(alpha: 0.5)
+        : AppColors.primary.withValues(alpha: 0.3);
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
@@ -300,7 +305,9 @@ class AdminDrawer extends StatelessWidget {
 
   Widget _buildSectionHeader(BuildContext context, String title) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -324,15 +331,15 @@ class AdminDrawer extends StatelessWidget {
     Color? textColor,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final defaultTextColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final defaultLabelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final defaultTextColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final defaultLabelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return ListTile(
-      leading: Icon(
-        icon,
-        color: iconColor ?? defaultLabelColor,
-        size: 22.r,
-      ),
+      leading: Icon(icon, color: iconColor ?? defaultLabelColor, size: 22.r),
       title: Text(
         title,
         style: AppTextStyles.bodyMedium.copyWith(

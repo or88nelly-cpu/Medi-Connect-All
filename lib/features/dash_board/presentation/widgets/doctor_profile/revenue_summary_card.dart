@@ -19,21 +19,28 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final double fee = widget.user.consultationFee ?? 800.0;
 
-    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations =
+        widget.user.metadata?['consultations'] as List<dynamic>?;
     final List<Map<String, dynamic>> consultations = [];
     if (metadataConsultations != null) {
       for (var item in metadataConsultations) {
         if (item is Map) {
-          consultations.add({
-            'status': (item['status'] ?? '').toString(),
-          });
+          consultations.add({'status': (item['status'] ?? '').toString()});
         }
       }
     } else {
@@ -48,8 +55,12 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
       ]);
     }
 
-    final completedCount = consultations.where((c) => c['status'] == 'Completed').length;
-    final pendingCount = consultations.where((c) => c['status'] == 'Pending' || c['status'] == 'Booked').length;
+    final completedCount = consultations
+        .where((c) => c['status'] == 'Completed')
+        .length;
+    final pendingCount = consultations
+        .where((c) => c['status'] == 'Pending' || c['status'] == 'Booked')
+        .length;
 
     double todayRev = completedCount * fee;
     double monthlyRev = completedCount * fee * 20;
@@ -81,11 +92,22 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
                 child: DropdownButton<String>(
                   value: _selectedRange,
                   dropdownColor: cardBg,
-                  icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-                  style: TextStyle(color: textColor, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: labelColor,
+                    size: 14.sp,
+                  ),
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                   onChanged: (val) => setState(() => _selectedRange = val!),
                   items: ["This Month", "This Week", "Today"].map((val) {
-                    return DropdownMenuItem<String>(value: val, child: Text(val));
+                    return DropdownMenuItem<String>(
+                      value: val,
+                      child: Text(val),
+                    );
                   }).toList(),
                 ),
               ),
@@ -93,20 +115,50 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
           ),
           SizedBox(height: 12.h),
           // Stats list
-          _buildStatRow(Icons.payments_outlined, "Consultation Fee", "₹${fee.toStringAsFixed(0)}", const Color(0xFF00C2A8), labelColor, textColor),
+          _buildStatRow(
+            Icons.payments_outlined,
+            "Consultation Fee",
+            "₹${fee.toStringAsFixed(0)}",
+            const Color(0xFF00C2A8),
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.monetization_on_outlined, "Today's Revenue", "₹${todayRev.toStringAsFixed(0)}", const Color(0xFF0F9F58), labelColor, textColor),
+          _buildStatRow(
+            Icons.monetization_on_outlined,
+            "Today's Revenue",
+            "₹${todayRev.toStringAsFixed(0)}",
+            const Color(0xFF0F9F58),
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.account_balance_wallet_outlined, "Monthly Revenue", "₹${monthlyRev.toStringAsFixed(0)}", AppColors.primary, labelColor, textColor),
+          _buildStatRow(
+            Icons.account_balance_wallet_outlined,
+            "Monthly Revenue",
+            "₹${monthlyRev.toStringAsFixed(0)}",
+            AppColors.primary,
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.history_toggle_off, "Pending Payments", "₹${pendingRev.toStringAsFixed(0)}", AppColors.warning, labelColor, textColor),
+          _buildStatRow(
+            Icons.history_toggle_off,
+            "Pending Payments",
+            "₹${pendingRev.toStringAsFixed(0)}",
+            AppColors.warning,
+            labelColor,
+            textColor,
+          ),
           SizedBox(height: 16.h),
           // View link
           Center(
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Loading financial statement details...")),
+                  const SnackBar(
+                    content: Text("Loading financial statement details..."),
+                  ),
                 );
               },
               child: Text(
@@ -150,7 +202,11 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
         const Spacer(),
         Text(
           value,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12.sp),
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 12.sp,
+          ),
         ),
       ],
     );

@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/analytics/custom_line_chart.dart';
-import 'package:medi_connect/features/dash_board/presentation/widgets/analytics/line_chart_painter.dart';
 
 class StatCard extends StatelessWidget {
   final String label;

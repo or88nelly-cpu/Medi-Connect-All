@@ -23,10 +23,18 @@ class PatientCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final status = patient.status;
 
@@ -77,7 +85,10 @@ class PatientCard extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 2.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(4.r),
@@ -96,10 +107,7 @@ class PatientCard extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Text(
                       "Age: ${patient.age ?? 'N/A'} | Blood: ${patient.bloodGroup ?? 'N/A'} | Phone: ${patient.phoneNumber ?? 'N/A'}",
-                      style: TextStyle(
-                        color: labelColor,
-                        fontSize: 11.sp,
-                      ),
+                      style: TextStyle(color: labelColor, fontSize: 11.sp),
                     ),
                   ],
                 ),
@@ -120,11 +128,17 @@ class PatientCard extends StatelessWidget {
                     itemBuilder: (ctx) => [
                       PopupMenuItem(
                         value: 'edit',
-                        child: Text("Edit Patient", style: TextStyle(color: textColor)),
+                        child: Text(
+                          "Edit Patient",
+                          style: TextStyle(color: textColor),
+                        ),
                       ),
                       PopupMenuItem(
                         value: 'delete',
-                        child: Text("Delete Patient", style: TextStyle(color: AppColors.error)),
+                        child: Text(
+                          "Delete Patient",
+                          style: TextStyle(color: AppColors.error),
+                        ),
                       ),
                     ],
                   ),
@@ -165,10 +179,7 @@ class PatientCard extends StatelessWidget {
           Container(
             width: 6.r,
             height: 6.r,
-            decoration: BoxDecoration(
-              color: dotColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
           SizedBox(width: 6.w),
           Text(

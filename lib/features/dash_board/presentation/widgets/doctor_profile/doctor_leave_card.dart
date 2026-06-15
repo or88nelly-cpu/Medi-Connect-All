@@ -20,22 +20,25 @@ class DoctorLeaveCard extends StatefulWidget {
 
 class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
   void _approveLeave(Map<String, String> targetLeave) {
-    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final updatedMetadata = Map<String, dynamic>.from(
+      widget.user.metadata ?? {},
+    );
     final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? []);
-    
+
     final updatedLeaves = currentLeaves.map((l) {
       final map = Map<String, dynamic>.from(l as Map);
-      if (map['type'] == targetLeave['type'] && map['range'] == targetLeave['range']) {
+      if (map['type'] == targetLeave['type'] &&
+          map['range'] == targetLeave['range']) {
         map['status'] = 'Approved';
       }
       return map;
     }).toList();
-    
+
     updatedMetadata['leaves'] = updatedLeaves;
     final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-    
+
     context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-    
+
     final authState = context.read<AuthBloc>().state;
     if (authState is Authenticated && authState.user.id == widget.user.id) {
       context.read<AuthBloc>().add(UserUpdated(updatedUser));
@@ -43,19 +46,22 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
   }
 
   void _rejectLeave(Map<String, String> targetLeave) {
-    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+    final updatedMetadata = Map<String, dynamic>.from(
+      widget.user.metadata ?? {},
+    );
     final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? []);
-    
+
     final updatedLeaves = currentLeaves.where((l) {
       final map = l as Map;
-      return !(map['type'] == targetLeave['type'] && map['range'] == targetLeave['range']);
+      return !(map['type'] == targetLeave['type'] &&
+          map['range'] == targetLeave['range']);
     }).toList();
-    
+
     updatedMetadata['leaves'] = updatedLeaves;
     final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-    
+
     context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-    
+
     final authState = context.read<AuthBloc>().state;
     if (authState is Authenticated && authState.user.id == widget.user.id) {
       context.read<AuthBloc>().add(UserUpdated(updatedUser));
@@ -78,13 +84,9 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
       {
         "type": "Annual Leave",
         "range": "20 May 2025 - 25 May 2025",
-        "status": "Approved"
+        "status": "Approved",
       },
-      {
-        "type": "Casual Leave",
-        "range": "05 Jun 2025",
-        "status": "Pending"
-      }
+      {"type": "Casual Leave", "range": "05 Jun 2025", "status": "Pending"},
     ];
   }
 
@@ -95,27 +97,35 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
       backgroundColor: Colors.transparent,
       builder: (ctx) => ApplyLeaveBottomSheet(
         onLeaveApplied: (leave) {
-          final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
-          final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? [
-            {
-              "type": "Annual Leave",
-              "range": "20 May 2025 - 25 May 2025",
-              "status": "Approved"
-            },
-            {
-              "type": "Casual Leave",
-              "range": "05 Jun 2025",
-              "status": "Pending"
-            }
-          ]);
+          final updatedMetadata = Map<String, dynamic>.from(
+            widget.user.metadata ?? {},
+          );
+          final currentLeaves = List<dynamic>.from(
+            updatedMetadata['leaves'] ??
+                [
+                  {
+                    "type": "Annual Leave",
+                    "range": "20 May 2025 - 25 May 2025",
+                    "status": "Approved",
+                  },
+                  {
+                    "type": "Casual Leave",
+                    "range": "05 Jun 2025",
+                    "status": "Pending",
+                  },
+                ],
+          );
           currentLeaves.add(leave);
           updatedMetadata['leaves'] = currentLeaves;
           final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-          
-          context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-          
+
+          context.read<DoctorStaffBloc>().add(
+            UpdateDoctorStaffMember(updatedUser),
+          );
+
           final authState = context.read<AuthBloc>().state;
-          if (authState is Authenticated && authState.user.id == widget.user.id) {
+          if (authState is Authenticated &&
+              authState.user.id == widget.user.id) {
             context.read<AuthBloc>().add(UserUpdated(updatedUser));
           }
         },
@@ -126,10 +136,18 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -175,10 +193,13 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
           ..._leaves.map((leave) {
             final isApproved = leave["status"] == "Approved";
             final isPending = leave["status"] == "Pending";
-            final statusColor = isApproved ? const Color(0xFF0F9F58) : AppColors.warning;
+            final statusColor = isApproved
+                ? const Color(0xFF0F9F58)
+                : AppColors.warning;
 
             final authState = context.watch<AuthBloc>().state;
-            final isAdmin = authState is Authenticated && authState.user.role == 'admin';
+            final isAdmin =
+                authState is Authenticated && authState.user.role == 'admin';
 
             return Container(
               margin: EdgeInsets.only(bottom: 12.h),
@@ -204,10 +225,7 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
                         SizedBox(height: 4.h),
                         Text(
                           leave["range"]!,
-                          style: TextStyle(
-                            color: labelColor,
-                            fontSize: 11.sp,
-                          ),
+                          style: TextStyle(color: labelColor, fontSize: 11.sp),
                         ),
                       ],
                     ),
@@ -216,14 +234,14 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 2.h,
+                        ),
                         decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.1),
+                          color: statusColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(20.r),
-                          border: Border.all(
-                            color: statusColor,
-                            width: 0.5,
-                          ),
+                          border: Border.all(color: statusColor, width: 0.5),
                         ),
                         child: Text(
                           leave["status"]!,
@@ -272,11 +290,7 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
             width: double.infinity,
             child: OutlinedButton.icon(
               onPressed: _showApplyLeaveDialog,
-              icon: Icon(
-                Icons.add,
-                size: 14.sp,
-                color: AppColors.primary,
-              ),
+              icon: Icon(Icons.add, size: 14.sp, color: AppColors.primary),
               label: Text(
                 "Apply Leave",
                 style: TextStyle(

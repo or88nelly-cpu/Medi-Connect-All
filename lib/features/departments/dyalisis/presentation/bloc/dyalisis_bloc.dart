@@ -20,13 +20,16 @@ abstract class DyalisisState extends Equatable {
 }
 
 class DyalisisInitial extends DyalisisState {}
+
 class DyalisisLoading extends DyalisisState {}
+
 class DyalisisLoaded extends DyalisisState {
   final Map<String, dynamic> stats;
   const DyalisisLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class DyalisisError extends DyalisisState {
   final String message;
   const DyalisisError(this.message);
@@ -42,7 +45,10 @@ class DyalisisBloc extends Bloc<DyalisisEvent, DyalisisState> {
     on<LoadDyalisisStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadDyalisisStats event, Emitter<DyalisisState> emit) async {
+  Future<void> _onLoadStats(
+    LoadDyalisisStats event,
+    Emitter<DyalisisState> emit,
+  ) async {
     emit(DyalisisLoading());
     final result = await _useCase(const NoParams());
     result.fold(

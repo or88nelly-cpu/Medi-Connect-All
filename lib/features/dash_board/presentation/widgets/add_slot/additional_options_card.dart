@@ -38,9 +38,13 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
             style: TextStyle(color: textColor),
             decoration: InputDecoration(
               hintText: "Enter slot description / admin notes...",
-              hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38),
+              hintStyle: TextStyle(
+                color: isDark ? Colors.white38 : Colors.black38,
+              ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
+                borderSide: BorderSide(
+                  color: isDark ? Colors.white24 : Colors.black12,
+                ),
               ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.primary),
@@ -77,10 +81,18 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -104,7 +116,11 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
           // Set as Recurring Slot
           Row(
             children: [
-              Icon(Icons.calendar_month_outlined, size: 18.sp, color: labelColor),
+              Icon(
+                Icons.calendar_month_outlined,
+                size: 18.sp,
+                color: labelColor,
+              ),
               SizedBox(width: 12.w),
               Expanded(
                 child: Column(
@@ -112,7 +128,11 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
                   children: [
                     Text(
                       "Set as Recurring Slot",
-                      style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11.sp),
+                      style: TextStyle(
+                        color: textColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11.sp,
+                      ),
                     ),
                     Text(
                       "Repeat this slot on multiple days",
@@ -142,7 +162,11 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
             onTap: _showNoteDialog,
             child: Row(
               children: [
-                Icon(Icons.description_outlined, size: 18.sp, color: labelColor),
+                Icon(
+                  Icons.description_outlined,
+                  size: 18.sp,
+                  color: labelColor,
+                ),
                 SizedBox(width: 12.w),
                 Expanded(
                   child: Column(
@@ -150,10 +174,16 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
                     children: [
                       Text(
                         "Add Note (Optional)",
-                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11.sp),
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11.sp,
+                        ),
                       ),
                       Text(
-                        _noteText.isEmpty ? "Add a note for this slot" : _noteText,
+                        _noteText.isEmpty
+                            ? "Add a note for this slot"
+                            : _noteText,
                         style: TextStyle(color: labelColor, fontSize: 9.sp),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

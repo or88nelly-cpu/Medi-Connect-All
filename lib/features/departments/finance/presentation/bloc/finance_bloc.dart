@@ -20,13 +20,16 @@ abstract class FinanceState extends Equatable {
 }
 
 class FinanceInitial extends FinanceState {}
+
 class FinanceLoading extends FinanceState {}
+
 class FinanceLoaded extends FinanceState {
   final Map<String, dynamic> stats;
   const FinanceLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class FinanceError extends FinanceState {
   final String message;
   const FinanceError(this.message);
@@ -42,7 +45,10 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
     on<LoadFinanceStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadFinanceStats event, Emitter<FinanceState> emit) async {
+  Future<void> _onLoadStats(
+    LoadFinanceStats event,
+    Emitter<FinanceState> emit,
+  ) async {
     emit(FinanceLoading());
     final result = await _useCase(const NoParams());
     result.fold(

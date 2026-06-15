@@ -2,7 +2,8 @@ abstract class PhysioTherapyRemoteDataSource {
   Future<Map<String, dynamic>> getPhysioTherapyStats();
 }
 
-class PhysioTherapyRemoteDataSourceImpl implements PhysioTherapyRemoteDataSource {
+class PhysioTherapyRemoteDataSourceImpl
+    implements PhysioTherapyRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getPhysioTherapyStats() async {
     return {

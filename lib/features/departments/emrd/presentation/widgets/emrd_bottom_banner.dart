@@ -6,15 +6,12 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 class EmrdBottomBanner extends StatelessWidget {
   final VoidCallback onCreateEMR;
 
-  const EmrdBottomBanner({
-    super.key,
-    required this.onCreateEMR,
-  });
+  const EmrdBottomBanner({super.key, required this.onCreateEMR});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -31,13 +28,13 @@ class EmrdBottomBanner extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10.r),
             decoration: BoxDecoration(
-              color: isDark ? Colors.blue.withOpacity(0.1) : Colors.white,
+              color: isDark ? Colors.blue.withValues(alpha: 0.1) : Colors.white,
               shape: BoxShape.circle,
               boxShadow: isDark
                   ? null
                   : [
                       BoxShadow(
-                        color: Colors.blue.withOpacity(0.06),
+                        color: Colors.blue.withValues(alpha: 0.06),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),

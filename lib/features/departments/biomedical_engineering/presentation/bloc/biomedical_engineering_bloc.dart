@@ -20,13 +20,16 @@ abstract class BiomedicalEngineeringState extends Equatable {
 }
 
 class BiomedicalEngineeringInitial extends BiomedicalEngineeringState {}
+
 class BiomedicalEngineeringLoading extends BiomedicalEngineeringState {}
+
 class BiomedicalEngineeringLoaded extends BiomedicalEngineeringState {
   final Map<String, dynamic> stats;
   const BiomedicalEngineeringLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class BiomedicalEngineeringError extends BiomedicalEngineeringState {
   final String message;
   const BiomedicalEngineeringError(this.message);
@@ -35,14 +38,19 @@ class BiomedicalEngineeringError extends BiomedicalEngineeringState {
 }
 
 // BLOC
-class BiomedicalEngineeringBloc extends Bloc<BiomedicalEngineeringEvent, BiomedicalEngineeringState> {
+class BiomedicalEngineeringBloc
+    extends Bloc<BiomedicalEngineeringEvent, BiomedicalEngineeringState> {
   final GetBiomedicalEngineeringStatsUseCase _useCase;
 
-  BiomedicalEngineeringBloc(this._useCase) : super(BiomedicalEngineeringInitial()) {
+  BiomedicalEngineeringBloc(this._useCase)
+    : super(BiomedicalEngineeringInitial()) {
     on<LoadBiomedicalEngineeringStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadBiomedicalEngineeringStats event, Emitter<BiomedicalEngineeringState> emit) async {
+  Future<void> _onLoadStats(
+    LoadBiomedicalEngineeringStats event,
+    Emitter<BiomedicalEngineeringState> emit,
+  ) async {
     emit(BiomedicalEngineeringLoading());
     final result = await _useCase(const NoParams());
     result.fold(

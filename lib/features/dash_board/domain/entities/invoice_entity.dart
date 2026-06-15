@@ -1,4 +1,6 @@
 /// Domain entity for a billing invoice.
+library;
+
 import 'package:equatable/equatable.dart';
 
 class InvoiceEntity extends Equatable {

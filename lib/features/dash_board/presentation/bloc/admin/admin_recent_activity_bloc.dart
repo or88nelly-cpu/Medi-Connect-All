@@ -29,15 +29,15 @@ class AdminRecentActivityBloc
     extends Bloc<AdminRecentActivityEvent, AdminRecentActivityState> {
   final GetActivityLogsUseCase _getActivityLogs;
 
-  AdminRecentActivityBloc({
-    required GetActivityLogsUseCase getActivityLogs,
-  })  : _getActivityLogs = getActivityLogs,
-        super(AdminRecentActivityInitial()) {
+  AdminRecentActivityBloc({required this._getActivityLogs})
+    : super(AdminRecentActivityInitial()) {
     on<LoadRecentActivity>(_onLoadRecentActivity);
   }
 
   Future<void> _onLoadRecentActivity(
-      LoadRecentActivity event, Emitter<AdminRecentActivityState> emit) async {
+    LoadRecentActivity event,
+    Emitter<AdminRecentActivityState> emit,
+  ) async {
     emit(AdminRecentActivityLoading());
     final result = await _getActivityLogs();
     result.fold(

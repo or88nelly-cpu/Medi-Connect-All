@@ -10,7 +10,8 @@ class AppointmentsSummaryCard extends StatefulWidget {
   const AppointmentsSummaryCard({super.key, required this.user});
 
   @override
-  State<AppointmentsSummaryCard> createState() => _AppointmentsSummaryCardState();
+  State<AppointmentsSummaryCard> createState() =>
+      _AppointmentsSummaryCardState();
 }
 
 class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
@@ -19,19 +20,26 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
-    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations =
+        widget.user.metadata?['consultations'] as List<dynamic>?;
     final List<Map<String, dynamic>> consultations = [];
     if (metadataConsultations != null) {
       for (var item in metadataConsultations) {
         if (item is Map) {
-          consultations.add({
-            'status': (item['status'] ?? '').toString(),
-          });
+          consultations.add({'status': (item['status'] ?? '').toString()});
         }
       }
     } else {
@@ -46,8 +54,12 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
       ]);
     }
 
-    final completedCount = consultations.where((c) => c['status'] == 'Completed').length;
-    final pendingCount = consultations.where((c) => c['status'] == 'Pending' || c['status'] == 'Booked').length;
+    final completedCount = consultations
+        .where((c) => c['status'] == 'Completed')
+        .length;
+    final pendingCount = consultations
+        .where((c) => c['status'] == 'Pending' || c['status'] == 'Booked')
+        .length;
     final totalToday = consultations.length;
 
     int totalVal;
@@ -63,7 +75,8 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
       upcomingVal = pendingCount * 4;
       cancelledVal = 1;
       noShowVal = 1;
-    } else { // This Month
+    } else {
+      // This Month
       totalVal = totalToday * 20;
       upcomingVal = pendingCount * 15;
       cancelledVal = 3;
@@ -96,11 +109,22 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
                 child: DropdownButton<String>(
                   value: _selectedRange,
                   dropdownColor: cardBg,
-                  icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-                  style: TextStyle(color: textColor, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: labelColor,
+                    size: 14.sp,
+                  ),
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                   onChanged: (val) => setState(() => _selectedRange = val!),
                   items: ["Today", "This Week", "This Month"].map((val) {
-                    return DropdownMenuItem<String>(value: val, child: Text(val));
+                    return DropdownMenuItem<String>(
+                      value: val,
+                      child: Text(val),
+                    );
                   }).toList(),
                 ),
               ),
@@ -108,13 +132,41 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
           ),
           SizedBox(height: 12.h),
           // Stats list
-          _buildStatRow(Icons.calendar_today_outlined, "Today's Appointments", "$totalVal", AppColors.primary, labelColor, textColor),
+          _buildStatRow(
+            Icons.calendar_today_outlined,
+            "Today's Appointments",
+            "$totalVal",
+            AppColors.primary,
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.double_arrow, "Upcoming", "$upcomingVal", const Color(0xFF00C2A8), labelColor, textColor),
+          _buildStatRow(
+            Icons.double_arrow,
+            "Upcoming",
+            "$upcomingVal",
+            const Color(0xFF00C2A8),
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.cancel_outlined, "Cancelled", "$cancelledVal", AppColors.error, labelColor, textColor),
+          _buildStatRow(
+            Icons.cancel_outlined,
+            "Cancelled",
+            "$cancelledVal",
+            AppColors.error,
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.person_off_outlined, "No Show", "$noShowVal", AppColors.warning, labelColor, textColor),
+          _buildStatRow(
+            Icons.person_off_outlined,
+            "No Show",
+            "$noShowVal",
+            AppColors.warning,
+            labelColor,
+            textColor,
+          ),
           SizedBox(height: 16.h),
           // View link
           Center(
@@ -165,7 +217,11 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
         const Spacer(),
         Text(
           value,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12.sp),
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 12.sp,
+          ),
         ),
       ],
     );

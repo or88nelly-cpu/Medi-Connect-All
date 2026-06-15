@@ -1,4 +1,6 @@
 /// Data model for activity log entries with JSON serialization.
+library;
+
 import 'dart:developer';
 
 import 'package:medi_connect/features/dash_board/domain/entities/activity_log_entity.dart';
@@ -24,7 +26,9 @@ class ActivityLogModel extends ActivityLogEntity {
   }
 
   static String _generateMessage(Map<String, dynamic> json) {
-    if (json.containsKey('message') && json['message'] != null && (json['message'] as String).isNotEmpty) {
+    if (json.containsKey('message') &&
+        json['message'] != null &&
+        (json['message'] as String).isNotEmpty) {
       return json['message'] as String;
     }
 
@@ -74,12 +78,13 @@ class ActivityLogModel extends ActivityLogEntity {
     final values = (rawAction == 'DELETE') ? oldValues : newValues;
     String target = '';
     if (values != null) {
-      target = values['name']?.toString() ?? 
-               values['staff_name']?.toString() ?? 
-               values['patient_name']?.toString() ?? 
-               values['message']?.toString() ?? 
-               values['key']?.toString() ?? 
-               '';
+      target =
+          values['name']?.toString() ??
+          values['staff_name']?.toString() ??
+          values['patient_name']?.toString() ??
+          values['message']?.toString() ??
+          values['key']?.toString() ??
+          '';
     }
 
     String details = '';
@@ -103,7 +108,7 @@ class ActivityLogModel extends ActivityLogEntity {
         }
       });
       if (changes.isNotEmpty) {
-        details = ': ' + changes.join(', ');
+        details = ': ${changes.join(', ')}';
       }
     }
 
@@ -117,14 +122,18 @@ class ActivityLogModel extends ActivityLogEntity {
   static String _formatFieldName(String field) {
     if (field.isEmpty) return '';
     final words = field.split('_');
-    return words.map((w) {
-      if (w.isEmpty) return '';
-      return w[0].toUpperCase() + w.substring(1);
-    }).join(' ');
+    return words
+        .map((w) {
+          if (w.isEmpty) return '';
+          return w[0].toUpperCase() + w.substring(1);
+        })
+        .join(' ');
   }
 
   static String _generateCategory(Map<String, dynamic> json) {
-    if (json.containsKey('category') && json['category'] != null && (json['category'] as String).isNotEmpty) {
+    if (json.containsKey('category') &&
+        json['category'] != null &&
+        (json['category'] as String).isNotEmpty) {
       return json['category'] as String;
     }
 

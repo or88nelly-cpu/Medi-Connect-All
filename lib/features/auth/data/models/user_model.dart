@@ -1,5 +1,7 @@
 /// Data model for User extending UserEntity.
 /// Handles JSON deserialization and serialization for network payloads.
+library;
+
 import '../../domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -215,7 +217,8 @@ class UserModel extends UserEntity {
       name: name ?? this.name,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       role: role ?? this.role,
-      profileCompletionStatus: profileCompletionStatus ?? this.profileCompletionStatus,
+      profileCompletionStatus:
+          profileCompletionStatus ?? this.profileCompletionStatus,
       status: status ?? this.status,
       department: department ?? this.department,
       qualification: qualification ?? this.qualification,
@@ -232,7 +235,8 @@ class UserModel extends UserEntity {
       maritalStatus: maritalStatus ?? this.maritalStatus,
       employeeId: employeeId ?? this.employeeId,
       patientId: patientId ?? this.patientId,
-      medicalRegistrationNumber: medicalRegistrationNumber ?? this.medicalRegistrationNumber,
+      medicalRegistrationNumber:
+          medicalRegistrationNumber ?? this.medicalRegistrationNumber,
       experience: experience ?? this.experience,
       specialization: specialization ?? this.specialization,
       consultationFee: consultationFee ?? this.consultationFee,

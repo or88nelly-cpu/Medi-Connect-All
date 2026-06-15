@@ -3,7 +3,8 @@ import 'package:medi_connect/core/common_models/failures/failure.dart';
 import 'package:medi_connect/core/usecases/usecase.dart';
 import 'package:medi_connect/features/departments/laboratory/domain/repositories/laboratory_repository.dart';
 
-class GetLaboratoryStatsUseCase extends UseCase<Map<String, dynamic>, NoParams> {
+class GetLaboratoryStatsUseCase
+    extends UseCase<Map<String, dynamic>, NoParams> {
   final LaboratoryRepository _repository;
   GetLaboratoryStatsUseCase(this._repository);
 

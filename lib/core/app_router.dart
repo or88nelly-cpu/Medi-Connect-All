@@ -8,16 +8,16 @@ import 'package:medi_connect/features/auth/presentation/pages/admin_login_page.d
 import 'package:medi_connect/features/auth/presentation/pages/admin_signup_page.dart';
 import 'package:medi_connect/features/auth/presentation/pages/splash_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/dashboard_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/patient_dashboard_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/doctor_dashboard_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/staff_dashboard_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_pharmacy_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_labs_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_staff_attendance_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_recent_activity_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_emergencies_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_doctors_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_staff_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/patient/patient_dashboard_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/doctor/doctor_dashboard_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/staff/staff_dashboard_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_pharmacy_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_labs_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_staff_attendance_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_recent_activity_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_emergencies_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_doctors_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_staff_page.dart';
 import 'package:medi_connect/features/department/data/models/department_model.dart';
 import 'package:medi_connect/features/department/presentation/pages/department_detail.dart';
 import 'package:medi_connect/features/department/presentation/pages/department_list_page.dart';
@@ -27,13 +27,12 @@ import 'package:medi_connect/features/department/presentation/pages/doctor_staff
 import 'package:medi_connect/features/department/presentation/pages/doctor_staff_edit_page.dart';
 import 'package:medi_connect/features/department/presentation/pages/doctor_staff_create_page.dart';
 import 'package:medi_connect/features/onboarding/presentation/pages/onboarding_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_manage_slots_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_add_slot_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_slot_config_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_audit_logs_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_notifications_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_master_data_page.dart';
-
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_manage_slots_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_add_slot_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_slot_config_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_audit_logs_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_notifications_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_master_data_page.dart';
 
 class AppRouterConfig {
   static GoRouter buildRouter() {

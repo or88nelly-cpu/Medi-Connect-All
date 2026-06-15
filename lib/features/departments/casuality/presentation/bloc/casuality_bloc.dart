@@ -20,13 +20,16 @@ abstract class CasualityState extends Equatable {
 }
 
 class CasualityInitial extends CasualityState {}
+
 class CasualityLoading extends CasualityState {}
+
 class CasualityLoaded extends CasualityState {
   final Map<String, dynamic> stats;
   const CasualityLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class CasualityError extends CasualityState {
   final String message;
   const CasualityError(this.message);
@@ -42,7 +45,10 @@ class CasualityBloc extends Bloc<CasualityEvent, CasualityState> {
     on<LoadCasualityStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadCasualityStats event, Emitter<CasualityState> emit) async {
+  Future<void> _onLoadStats(
+    LoadCasualityStats event,
+    Emitter<CasualityState> emit,
+  ) async {
     emit(CasualityLoading());
     final result = await _useCase(const NoParams());
     result.fold(

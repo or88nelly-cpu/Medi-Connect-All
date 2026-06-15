@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/features/dash_board/domain/use_cases/admin_operations_usecases.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_appointments_bloc.dart';
 
 // Events
 abstract class DoctorAppointmentsEvent {}
@@ -54,15 +56,11 @@ class DoctorAppointmentsBloc
   final UpdateAppointmentVitalsUseCase _updateVitals;
 
   DoctorAppointmentsBloc({
-    required GetAppointmentsUseCase getAppointments,
-    required CreateAppointmentUseCase createAppointment,
-    required UpdateAppointmentStatusUseCase updateStatus,
-    required UpdateAppointmentVitalsUseCase updateVitals,
-  })  : _getAppointments = getAppointments,
-        _createAppointment = createAppointment,
-        _updateStatus = updateStatus,
-        _updateVitals = updateVitals,
-        super(DoctorAppointmentsInitial()) {
+    required this._getAppointments,
+    required this._createAppointment,
+    required this._updateStatus,
+    required this._updateVitals,
+  }) : super(DoctorAppointmentsInitial()) {
     on<LoadDoctorAppointments>(_onLoadDoctorAppointments);
     on<CreateDoctorAppointmentEvent>(_onCreateDoctorAppointment);
     on<CancelDoctorAppointment>(_onCancelDoctorAppointment);
@@ -71,7 +69,9 @@ class DoctorAppointmentsBloc
   }
 
   Future<void> _onLoadDoctorAppointments(
-      LoadDoctorAppointments event, Emitter<DoctorAppointmentsState> emit) async {
+    LoadDoctorAppointments event,
+    Emitter<DoctorAppointmentsState> emit,
+  ) async {
     emit(DoctorAppointmentsLoading());
     final result = await _getAppointments();
     result.fold(
@@ -81,38 +81,70 @@ class DoctorAppointmentsBloc
   }
 
   Future<void> _onCreateDoctorAppointment(
-      CreateDoctorAppointmentEvent event, Emitter<DoctorAppointmentsState> emit) async {
+    CreateDoctorAppointmentEvent event,
+    Emitter<DoctorAppointmentsState> emit,
+  ) async {
     final result = await _createAppointment(event.data);
-    result.fold(
-      (failure) => emit(DoctorAppointmentsError(failure.message)),
-      (_) => add(LoadDoctorAppointments()),
-    );
+    result.fold((failure) => emit(DoctorAppointmentsError(failure.message)), (
+      _,
+    ) {
+      add(LoadDoctorAppointments());
+      try {
+        GetIt.instance<AdminAppointmentsBloc>().add(LoadAppointments());
+      } catch (e) {
+        // Fallback if not registered yet
+      }
+    });
   }
 
   Future<void> _onCancelDoctorAppointment(
-      CancelDoctorAppointment event, Emitter<DoctorAppointmentsState> emit) async {
+    CancelDoctorAppointment event,
+    Emitter<DoctorAppointmentsState> emit,
+  ) async {
     final result = await _updateStatus(event.id, 'Cancelled');
-    result.fold(
-      (failure) => emit(DoctorAppointmentsError(failure.message)),
-      (_) => add(LoadDoctorAppointments()),
-    );
+    result.fold((failure) => emit(DoctorAppointmentsError(failure.message)), (
+      _,
+    ) {
+      add(LoadDoctorAppointments());
+      try {
+        GetIt.instance<AdminAppointmentsBloc>().add(LoadAppointments());
+      } catch (e) {
+        // Fallback
+      }
+    });
   }
 
   Future<void> _onCompleteDoctorAppointment(
-      CompleteDoctorAppointment event, Emitter<DoctorAppointmentsState> emit) async {
+    CompleteDoctorAppointment event,
+    Emitter<DoctorAppointmentsState> emit,
+  ) async {
     final result = await _updateStatus(event.id, 'Completed');
-    result.fold(
-      (failure) => emit(DoctorAppointmentsError(failure.message)),
-      (_) => add(LoadDoctorAppointments()),
-    );
+    result.fold((failure) => emit(DoctorAppointmentsError(failure.message)), (
+      _,
+    ) {
+      add(LoadDoctorAppointments());
+      try {
+        GetIt.instance<AdminAppointmentsBloc>().add(LoadAppointments());
+      } catch (e) {
+        // Fallback
+      }
+    });
   }
 
   Future<void> _onUpdateDoctorAppointmentVitals(
-      UpdateDoctorAppointmentVitals event, Emitter<DoctorAppointmentsState> emit) async {
+    UpdateDoctorAppointmentVitals event,
+    Emitter<DoctorAppointmentsState> emit,
+  ) async {
     final result = await _updateVitals(event.id, event.vitals);
-    result.fold(
-      (failure) => emit(DoctorAppointmentsError(failure.message)),
-      (_) => add(LoadDoctorAppointments()),
-    );
+    result.fold((failure) => emit(DoctorAppointmentsError(failure.message)), (
+      _,
+    ) {
+      add(LoadDoctorAppointments());
+      try {
+        GetIt.instance<AdminAppointmentsBloc>().add(LoadAppointments());
+      } catch (e) {
+        // Fallback
+      }
+    });
   }
 }

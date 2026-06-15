@@ -54,13 +54,27 @@ class _SignUpFormState extends State<SignUpForm> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Theme-based colors from AppColors
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final textfieldBgColor = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
-    final textfieldBorderColor = isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder;
-    final textfieldHintColor = isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint;
-    final checkboxTextColor = isDark ? AppColors.terminalDarkCheckboxText : AppColors.terminalLightCheckboxText;
-    final footerTextColor = isDark ? AppColors.terminalDarkFooterText : AppColors.terminalLightFooterText;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final textfieldBgColor = isDark
+        ? AppColors.terminalDarkFieldFill
+        : AppColors.terminalLightFieldFill;
+    final textfieldBorderColor = isDark
+        ? AppColors.terminalDarkFieldBorder
+        : AppColors.terminalLightFieldBorder;
+    final textfieldHintColor = isDark
+        ? AppColors.terminalDarkFieldHint
+        : AppColors.terminalLightFieldHint;
+    final checkboxTextColor = isDark
+        ? AppColors.terminalDarkCheckboxText
+        : AppColors.terminalLightCheckboxText;
+    final footerTextColor = isDark
+        ? AppColors.terminalDarkFooterText
+        : AppColors.terminalLightFooterText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,10 +105,8 @@ class _SignUpFormState extends State<SignUpForm> {
           borderColor: textfieldBorderColor,
           hintColor: textfieldHintColor,
           prefixIcon: Icons.person_outline,
-          validator: (val) => ValidationUtils.validateRequired(
-            val,
-            AppStrings.requiredField,
-          ),
+          validator: (val) =>
+              ValidationUtils.validateRequired(val, AppStrings.requiredField),
         ),
         SizedBox(height: 16.h),
 
@@ -141,9 +153,7 @@ class _SignUpFormState extends State<SignUpForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Theme(
-              data: ThemeData(
-                unselectedWidgetColor: textfieldBorderColor,
-              ),
+              data: ThemeData(unselectedWidgetColor: textfieldBorderColor),
               child: SizedBox(
                 width: 20.r,
                 height: 20.r,
@@ -151,10 +161,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   value: widget.isAgreed,
                   activeColor: AppColors.terminalAccentCyan,
                   checkColor: isDark ? AppColors.terminalDarkBg : Colors.white,
-                  side: BorderSide(
-                    color: textfieldBorderColor,
-                    width: 1.5,
-                  ),
+                  side: BorderSide(color: textfieldBorderColor, width: 1.5),
                   onChanged: (val) {
                     widget.onAgreedChanged(val ?? false);
                   },
@@ -213,7 +220,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   borderRadius: BorderRadius.circular(6.r),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.terminalAccentCyan.withOpacity(0.3),
+                      color: AppColors.terminalAccentCyan.withValues(
+                        alpha: 0.3,
+                      ),
                       blurRadius: 10,
                       spreadRadius: 1,
                     ),
@@ -225,7 +234,9 @@ class _SignUpFormState extends State<SignUpForm> {
                         width: 20.r,
                         height: 20.r,
                         child: CircularProgressIndicator(
-                          color: isDark ? AppColors.terminalDarkBg : Colors.white,
+                          color: isDark
+                              ? AppColors.terminalDarkBg
+                              : Colors.white,
                           strokeWidth: 2.0,
                         ),
                       )
@@ -235,7 +246,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           Text(
                             AppStrings.finalizeRegistration,
                             style: AppTextStyles.labelMedium.copyWith(
-                              color: isDark ? AppColors.terminalDarkBg : Colors.white,
+                              color: isDark
+                                  ? AppColors.terminalDarkBg
+                                  : Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 15.sp,
                             ),
@@ -243,7 +256,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           SizedBox(width: 8.w),
                           Icon(
                             Icons.arrow_forward,
-                            color: isDark ? AppColors.terminalDarkBg : Colors.white,
+                            color: isDark
+                                ? AppColors.terminalDarkBg
+                                : Colors.white,
                             size: 18.r,
                           ),
                         ],
@@ -342,9 +357,15 @@ class _SignUpFormState extends State<SignUpForm> {
     required VoidCallback onTap,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBgColor = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final cardBorderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final cardTextColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final cardBgColor = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final cardBorderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final cardTextColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     return Expanded(
       child: GestureDetector(
@@ -356,14 +377,16 @@ class _SignUpFormState extends State<SignUpForm> {
             color: cardBgColor,
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(
-              color: isSelected ? AppColors.terminalAccentCyan : cardBorderColor,
+              color: isSelected
+                  ? AppColors.terminalAccentCyan
+                  : cardBorderColor,
               width: isSelected ? 1.5 : 1.0,
             ),
             boxShadow: isDark
                 ? null
                 : [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withValues(alpha: 0.03),
                       blurRadius: 10,
                       offset: const Offset(0, 3),
                     ),
@@ -395,7 +418,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   children: [
                     Icon(
                       icon,
-                      color: isSelected ? AppColors.terminalAccentCyan : labelColor,
+                      color: isSelected
+                          ? AppColors.terminalAccentCyan
+                          : labelColor,
                       size: 20.r,
                     ),
                     SizedBox(height: 6.h),

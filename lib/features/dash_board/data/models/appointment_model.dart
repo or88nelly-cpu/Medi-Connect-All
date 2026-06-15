@@ -31,7 +31,8 @@ class AppointmentModel extends AppointmentEntity {
       doctorName: json['doctor_name'] as String? ?? '',
       specialty: json['specialty'] as String? ?? '',
       appointmentDate: json['appointment_date'] != null
-          ? DateTime.tryParse(json['appointment_date'] as String) ?? DateTime.now()
+          ? DateTime.tryParse(json['appointment_date'] as String) ??
+                DateTime.now()
           : DateTime.now(),
       appointmentTime: json['appointment_time'] as String? ?? '',
       status: json['status'] as String? ?? 'Pending',
@@ -50,21 +51,21 @@ class AppointmentModel extends AppointmentEntity {
   }
 
   Map<String, dynamic> toJson() => {
-        if (patientId != null) 'patient_id': patientId,
-        'patient_name': patientName,
-        if (doctorId != null) 'doctor_id': doctorId,
-        'doctor_name': doctorName,
-        'specialty': specialty,
-        'appointment_date': appointmentDate.toIso8601String().split('T').first,
-        'appointment_time': appointmentTime,
-        'status': status,
-        'type': type,
-        if (bp != null) 'bp': bp,
-        if (weight != null) 'weight': weight,
-        if (height != null) 'height': height,
-        if (fever != null) 'fever': fever,
-        if (headCircumference != null) 'head_circumference': headCircumference,
-        if (additionalVitals != null) 'additional_vitals': additionalVitals,
-        if (token != null) 'token': token,
-      };
+    if (patientId != null) 'patient_id': patientId,
+    'patient_name': patientName,
+    if (doctorId != null) 'doctor_id': doctorId,
+    'doctor_name': doctorName,
+    'specialty': specialty,
+    'appointment_date': appointmentDate.toIso8601String().split('T').first,
+    'appointment_time': appointmentTime,
+    'status': status,
+    'type': type,
+    if (bp != null) 'bp': bp,
+    if (weight != null) 'weight': weight,
+    if (height != null) 'height': height,
+    if (fever != null) 'fever': fever,
+    if (headCircumference != null) 'head_circumference': headCircumference,
+    if (additionalVitals != null) 'additional_vitals': additionalVitals,
+    if (token != null) 'token': token,
+  };
 }

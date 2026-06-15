@@ -1,5 +1,7 @@
 /// Configuration and builder for GoRouter.
 /// Integrates custom guards and observers to enable secure role-based navigation.
+library;
+
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'route_guards.dart';

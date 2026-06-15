@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
 class FormTab extends StatelessWidget {
@@ -24,7 +23,7 @@ class FormTab extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: AppColors.textDarkNavy.withOpacity(0.1),
+            color: AppColors.textDarkNavy.withValues(alpha: 0.1),
             offset: Offset(0, 4),
             blurRadius: 8,
           ),

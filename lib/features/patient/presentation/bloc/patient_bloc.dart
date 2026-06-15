@@ -41,14 +41,18 @@ abstract class PatientState extends Equatable {
 }
 
 class PatientInitial extends PatientState {}
+
 class PatientLoading extends PatientState {}
+
 class PatientLoaded extends PatientState {
   final List<UserModel> patients;
   const PatientLoaded(this.patients);
   @override
   List<Object?> get props => [patients];
 }
+
 class PatientActionSuccess extends PatientState {}
+
 class PatientError extends PatientState {
   final String message;
   const PatientError(this.message);
@@ -67,7 +71,10 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
     on<DeletePatient>(_onDeletePatient);
   }
 
-  Future<void> _onLoadPatients(LoadPatients event, Emitter<PatientState> emit) async {
+  Future<void> _onLoadPatients(
+    LoadPatients event,
+    Emitter<PatientState> emit,
+  ) async {
     emit(PatientLoading());
     final result = await _repository.getPatients();
     result.fold(
@@ -76,39 +83,39 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
     );
   }
 
-  Future<void> _onCreatePatient(CreatePatient event, Emitter<PatientState> emit) async {
+  Future<void> _onCreatePatient(
+    CreatePatient event,
+    Emitter<PatientState> emit,
+  ) async {
     emit(PatientLoading());
     final result = await _repository.createPatient(event.patient);
-    result.fold(
-      (failure) => emit(PatientError(failure.message)),
-      (patient) {
-        emit(PatientActionSuccess());
-        add(LoadPatients());
-      },
-    );
+    result.fold((failure) => emit(PatientError(failure.message)), (patient) {
+      emit(PatientActionSuccess());
+      add(LoadPatients());
+    });
   }
 
-  Future<void> _onUpdatePatient(UpdatePatient event, Emitter<PatientState> emit) async {
+  Future<void> _onUpdatePatient(
+    UpdatePatient event,
+    Emitter<PatientState> emit,
+  ) async {
     emit(PatientLoading());
     final result = await _repository.updatePatient(event.patient);
-    result.fold(
-      (failure) => emit(PatientError(failure.message)),
-      (patient) {
-        emit(PatientActionSuccess());
-        add(LoadPatients());
-      },
-    );
+    result.fold((failure) => emit(PatientError(failure.message)), (patient) {
+      emit(PatientActionSuccess());
+      add(LoadPatients());
+    });
   }
 
-  Future<void> _onDeletePatient(DeletePatient event, Emitter<PatientState> emit) async {
+  Future<void> _onDeletePatient(
+    DeletePatient event,
+    Emitter<PatientState> emit,
+  ) async {
     emit(PatientLoading());
     final result = await _repository.deletePatient(event.patientId);
-    result.fold(
-      (failure) => emit(PatientError(failure.message)),
-      (_) {
-        emit(PatientActionSuccess());
-        add(LoadPatients());
-      },
-    );
+    result.fold((failure) => emit(PatientError(failure.message)), (_) {
+      emit(PatientActionSuccess());
+      add(LoadPatients());
+    });
   }
 }

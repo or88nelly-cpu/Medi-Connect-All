@@ -45,19 +45,29 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
     setState(() {
       _documents.removeAt(index);
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Document removed.")),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text("Document removed.")));
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -95,7 +105,11 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.picture_as_pdf_outlined, color: Colors.red, size: 20.sp),
+                  Icon(
+                    Icons.picture_as_pdf_outlined,
+                    color: Colors.red,
+                    size: 20.sp,
+                  ),
                   SizedBox(width: 12.w),
                   Expanded(
                     child: Column(
@@ -114,10 +128,7 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                         SizedBox(height: 2.h),
                         Text(
                           doc["type"] as String,
-                          style: TextStyle(
-                            color: labelColor,
-                            fontSize: 9.sp,
-                          ),
+                          style: TextStyle(color: labelColor, fontSize: 9.sp),
                         ),
                       ],
                     ),
@@ -126,15 +137,22 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                   // Verified badge
                   if (isVerified) ...[
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6.w,
+                        vertical: 2.h,
+                      ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F9F58).withOpacity(0.1),
+                        color: const Color(0xFF0F9F58).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.verified_outlined, color: const Color(0xFF0F9F58), size: 10.sp),
+                          Icon(
+                            Icons.verified_outlined,
+                            color: const Color(0xFF0F9F58),
+                            size: 10.sp,
+                          ),
                           SizedBox(width: 4.w),
                           Text(
                             "Verified",
@@ -149,9 +167,12 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                     ),
                   ] else ...[
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6.w,
+                        vertical: 2.h,
+                      ),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
+                        color: AppColors.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: Text(
@@ -166,7 +187,11 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                   ],
                   IconButton(
                     onPressed: () => _deleteDocument(idx),
-                    icon: Icon(Icons.delete_outline, color: AppColors.error, size: 16.sp),
+                    icon: Icon(
+                      Icons.delete_outline,
+                      color: AppColors.error,
+                      size: 16.sp,
+                    ),
                     style: IconButton.styleFrom(
                       padding: EdgeInsets.zero,
                       minimumSize: Size(28.r, 28.r),
@@ -187,7 +212,7 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 border: Border.all(
-                  color: AppColors.primary.withOpacity(0.4),
+                  color: AppColors.primary.withValues(alpha: 0.4),
                   width: 1,
                 ),
                 borderRadius: BorderRadius.circular(8.r),
@@ -195,7 +220,11 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.cloud_upload_outlined, size: 20.sp, color: AppColors.primary),
+                  Icon(
+                    Icons.cloud_upload_outlined,
+                    size: 20.sp,
+                    color: AppColors.primary,
+                  ),
                   SizedBox(height: 6.h),
                   Text(
                     "Upload More Documents",
@@ -207,10 +236,7 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                   ),
                   Text(
                     "PDF, JPG, PNG (Max. 10 MB per file)",
-                    style: TextStyle(
-                      color: labelColor,
-                      fontSize: 9.sp,
-                    ),
+                    style: TextStyle(color: labelColor, fontSize: 9.sp),
                   ),
                 ],
               ),

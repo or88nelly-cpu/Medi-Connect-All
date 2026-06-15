@@ -1,4 +1,6 @@
 /// Data model for lab test records with JSON serialization.
+library;
+
 import 'package:medi_connect/features/dash_board/domain/entities/lab_test_entity.dart';
 
 class LabTestModel extends LabTestEntity {
@@ -25,9 +27,9 @@ class LabTestModel extends LabTestEntity {
   }
 
   Map<String, dynamic> toJson() => {
-        'patient_name': patientName,
-        'test_name': testName,
-        'status': status,
-        'priority': priority,
-      };
+    'patient_name': patientName,
+    'test_name': testName,
+    'status': status,
+    'priority': priority,
+  };
 }

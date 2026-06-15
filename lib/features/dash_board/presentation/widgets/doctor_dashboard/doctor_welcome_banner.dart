@@ -21,7 +21,9 @@ class DoctorWelcomeBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           profileImage = user.profileImage;
           specialty = user.specialization ?? 'General Practitioner';
         }
@@ -38,7 +40,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00C2A8).withOpacity(0.25),
+                color: const Color(0xFF00C2A8).withValues(alpha: 0.25),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -53,7 +55,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                     Text(
                       AppStrings.welcomeUser,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -80,7 +82,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                         Text(
                           specialty,
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -98,7 +100,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                   border: Border.all(color: Colors.white, width: 2.5),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
+                      color: Colors.black.withValues(alpha: 0.08),
                       blurRadius: 8,
                       offset: const Offset(0, 3),
                     ),

@@ -1,4 +1,6 @@
 /// Implementation of AnalyticsRepository interface contract.
+library;
+
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/common_models/exceptions/exceptions.dart';
 

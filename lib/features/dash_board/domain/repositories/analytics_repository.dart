@@ -1,4 +1,6 @@
 /// Analytics repository interface contract.
+library;
+
 import 'package:fpdart/fpdart.dart';
 
 import 'package:medi_connect/core/common_models/failures/failure.dart';

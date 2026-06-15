@@ -26,9 +26,13 @@ class DoctorTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final activeColor = AppColors.primary;
-    final inactiveTextColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final inactiveTextColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       height: 48.h,
@@ -58,17 +62,15 @@ class DoctorTabBar extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    tab["icon"] as IconData,
-                    size: 16.sp,
-                    color: color,
-                  ),
+                  Icon(tab["icon"] as IconData, size: 16.sp, color: color),
                   SizedBox(width: 6.w),
                   Text(
                     tab["label"] as String,
                     style: TextStyle(
                       color: color,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                       fontSize: 12.sp,
                     ),
                   ),

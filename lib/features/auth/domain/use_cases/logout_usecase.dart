@@ -1,4 +1,6 @@
 /// Signs out the user session from the application.
+library;
+
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
 import '../repositories/auth_repository.dart';

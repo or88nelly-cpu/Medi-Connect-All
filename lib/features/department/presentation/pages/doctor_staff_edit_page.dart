@@ -148,8 +148,9 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                       return DropdownMenuItem(value: s, child: Text(s));
                     }).toList(),
                     onChanged: (val) {
-                      if (val != null)
+                      if (val != null) {
                         setState(() => _availabilityStatus = val);
+                      }
                     },
                   ),
                 ],

@@ -61,7 +61,7 @@ class AppointmentSummaryGraphCard extends StatelessWidget {
             child: CustomPaint(
               painter: _AppointmentTrendPainter(
                 lineColor: AppColors.secondary,
-                fillColor: AppColors.secondary.withOpacity(0.15),
+                fillColor: AppColors.secondary.withValues(alpha: 0.15),
                 weeklyAppointments: weeklyAppointments,
               ),
             ),
@@ -98,7 +98,7 @@ class _AppointmentTrendPainter extends CustomPainter {
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [fillColor, fillColor.withOpacity(0.0)],
+        colors: [fillColor, fillColor.withValues(alpha: 0.0)],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     double maxVal = weeklyAppointments

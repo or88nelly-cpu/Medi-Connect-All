@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/doctor_dashboard/patient_details_sheet.dart';
 
 class DoctorPatientsTab extends StatelessWidget {
   const DoctorPatientsTab({super.key});
@@ -18,44 +20,68 @@ class DoctorPatientsTab extends StatelessWidget {
           return const Center(child: Text("Please login to see patients"));
         }
         final doctor = authState.user;
-        final docDisplayName = doctor.name ?? "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName =
+            doctor.name ??
+            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, aptState) {
             return BlocBuilder<PatientBloc, PatientState>(
               builder: (context, patientState) {
-                if (aptState is DoctorAppointmentsLoading || patientState is PatientLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                if (aptState is DoctorAppointmentsLoading ||
+                    patientState is PatientLoading) {
+                  return const Center(child: CircularProgressIndicator());
                 }
-                if (aptState is DoctorAppointmentsError || patientState is PatientError) {
+                if (aptState is DoctorAppointmentsError ||
+                    patientState is PatientError) {
                   return Center(
                     child: Text(
                       "Error loading patients data",
-                      style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.error,
+                      ),
                     ),
                   );
                 }
-                if (aptState is DoctorAppointmentsLoaded && patientState is PatientLoaded) {
+                if (aptState is DoctorAppointmentsLoaded &&
+                    patientState is PatientLoaded) {
                   final appointments = aptState.appointments;
                   final allPatients = patientState.patients;
 
                   // Filter appointments for this doctor
-                  final List<AppointmentEntity> doctorApts = appointments.where((a) {
-                    final matchId = a.doctorId == doctor.id;
-                    final matchName = a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
-                        docDisplayName.toLowerCase().replaceAll("dr.", "").trim();
-                    return matchId || matchName;
-                  }).cast<AppointmentEntity>().toList();
+                  final List<AppointmentEntity> doctorApts =
+                      List<AppointmentEntity>.from(
+                        appointments.where((a) {
+                          final matchId = a.doctorId == doctor.id;
+                          final matchName =
+                              a.doctorName
+                                  .toLowerCase()
+                                  .replaceAll("dr.", "")
+                                  .trim() ==
+                              docDisplayName
+                                  .toLowerCase()
+                                  .replaceAll("dr.", "")
+                                  .trim();
+                          return matchId || matchName;
+                        }),
+                      );
 
                   // Get unique patients
                   final patientIds = doctorApts.map((a) => a.patientId).toSet();
-                  final patientNames = doctorApts.map((a) => a.patientName.toLowerCase().trim()).toSet();
+                  final patientNames = doctorApts
+                      .map((a) => a.patientName.toLowerCase().trim())
+                      .toSet();
 
                   final myPatients = allPatients.where((p) {
-                    final matchId = patientIds.contains(p.id) || (p.patientId != null && patientIds.contains(p.patientId));
-                    final displayName = (p.name ?? "${p.firstName ?? ''} ${p.lastName ?? ''}".trim()).toLowerCase();
+                    final matchId =
+                        patientIds.contains(p.id) ||
+                        (p.patientId != null &&
+                            patientIds.contains(p.patientId));
+                    final displayName =
+                        (p.name ??
+                                "${p.firstName ?? ''} ${p.lastName ?? ''}"
+                                    .trim())
+                            .toLowerCase();
                     final matchName = patientNames.contains(displayName);
                     return matchId || matchName;
                   }).toList();
@@ -68,7 +94,9 @@ class DoctorPatientsTab extends StatelessWidget {
                         children: [
                           Text(
                             "My Patients",
-                            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+                            style: AppTextStyles.headingMedium.copyWith(
+                              fontSize: 22.sp,
+                            ),
                           ),
                           Expanded(
                             child: Center(
@@ -83,7 +111,9 @@ class DoctorPatientsTab extends StatelessWidget {
                                   SizedBox(height: 12.h),
                                   Text(
                                     "No patients under your care",
-                                    style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
+                                    style: AppTextStyles.bodyMedium.copyWith(
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -101,7 +131,9 @@ class DoctorPatientsTab extends StatelessWidget {
                       children: [
                         Text(
                           "My Patients",
-                          style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+                          style: AppTextStyles.headingMedium.copyWith(
+                            fontSize: 22.sp,
+                          ),
                         ),
                         SizedBox(height: 16.h),
                         Expanded(
@@ -110,29 +142,48 @@ class DoctorPatientsTab extends StatelessWidget {
                             itemCount: myPatients.length,
                             itemBuilder: (context, idx) {
                               final p = myPatients[idx];
-                              final displayName = p.name ?? "${p.firstName ?? ''} ${p.lastName ?? ''}".trim();
+                              final displayName =
+                                  p.name ??
+                                  "${p.firstName ?? ''} ${p.lastName ?? ''}"
+                                      .trim();
                               final gender = p.gender ?? "Not Specified";
-                              final age = p.age != null ? "${p.age} years" : "N/A";
-                              
+                              final age = p.age != null
+                                  ? "${p.age} years"
+                                  : "N/A";
+
                               // Find appointment specialty/reason or fallback to chronic diseases
-                              final issue = p.chronicDiseases ?? 
-                                  doctorApts.firstWhere(
-                                    (a) => a.patientName.toLowerCase().trim() == displayName.toLowerCase(),
-                                    orElse: () => doctorApts.first,
-                                  ).specialty;
+                              final AppointmentEntity? matchingApt = doctorApts
+                                  .cast<AppointmentEntity?>()
+                                  .firstWhere(
+                                    (a) =>
+                                        a?.patientName.toLowerCase().trim() ==
+                                        displayName.toLowerCase(),
+                                    orElse: () => null,
+                                  );
+                              final issue =
+                                  p.chronicDiseases ??
+                                  matchingApt?.specialty ??
+                                  "General Consultation";
 
                               return Card(
                                 margin: EdgeInsets.only(bottom: 12.h),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.r),
-                                  side: const BorderSide(color: AppColors.border),
+                                  side: const BorderSide(
+                                    color: AppColors.border,
+                                  ),
                                 ),
                                 child: ListTile(
                                   contentPadding: EdgeInsets.all(16.r),
                                   leading: CircleAvatar(
-                                    backgroundColor: const Color(0xFF00C2A8).withOpacity(0.1),
-                                    child: const Icon(Icons.person, color: Color(0xFF00C2A8)),
+                                    backgroundColor: const Color(
+                                      0xFF00C2A8,
+                                    ).withValues(alpha: 0.1),
+                                    child: const Icon(
+                                      Icons.person,
+                                      color: Color(0xFF00C2A8),
+                                    ),
                                   ),
                                   title: Text(
                                     displayName,
@@ -143,10 +194,24 @@ class DoctorPatientsTab extends StatelessWidget {
                                   ),
                                   subtitle: Text(
                                     "Age: $age | Gender: $gender \nIssue: $issue",
-                                    style: AppTextStyles.bodySmall.copyWith(color: Colors.grey[600]),
+                                    style: AppTextStyles.bodySmall.copyWith(
+                                      color: Colors.grey[600],
+                                    ),
                                   ),
                                   trailing: const Icon(Icons.chevron_right),
                                   isThreeLine: true,
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (_) => PatientDetailsSheet(
+                                        patient: p,
+                                        doctorApts: doctorApts,
+                                        doctor: doctor,
+                                      ),
+                                    );
+                                  },
                                 ),
                               );
                             },

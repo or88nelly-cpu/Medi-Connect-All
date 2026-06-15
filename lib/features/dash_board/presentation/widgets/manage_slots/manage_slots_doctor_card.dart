@@ -13,12 +13,24 @@ class ManageSlotsDoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
-    final imgPath = ProfileImageHelper.resolveImagePath(user.profileImage, user.role, user.gender);
+    final imgPath = ProfileImageHelper.resolveImagePath(
+      user.profileImage,
+      user.role,
+      user.gender,
+    );
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
@@ -39,14 +51,11 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: AppColors.primary.withOpacity(0.3),
+                    color: AppColors.primary.withValues(alpha: 0.3),
                     width: 1.5.r,
                   ),
                 ),
-                child: CustomImageView(
-                  imagePath: imgPath,
-                  borderRadius: 25.r,
-                ),
+                child: CustomImageView(imagePath: imgPath, borderRadius: 25.r),
               ),
               Positioned(
                 bottom: 2.h,
@@ -75,7 +84,9 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim(),
+                        user.name ??
+                            "${user.firstName ?? ''} ${user.lastName ?? ''}"
+                                .trim(),
                         style: AppTextStyles.titleMedium.copyWith(
                           color: textColor,
                           fontWeight: FontWeight.bold,
@@ -85,11 +96,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 4.w),
-                    Icon(
-                      Icons.verified,
-                      color: AppColors.primary,
-                      size: 13.sp,
-                    ),
+                    Icon(Icons.verified, color: AppColors.primary, size: 13.sp),
                   ],
                 ),
                 SizedBox(height: 2.h),
@@ -104,7 +111,11 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                 SizedBox(height: 2.h),
                 Row(
                   children: [
-                    Icon(Icons.local_hospital_outlined, size: 10.sp, color: labelColor),
+                    Icon(
+                      Icons.local_hospital_outlined,
+                      size: 10.sp,
+                      color: labelColor,
+                    ),
                     SizedBox(width: 4.w),
                     Text(
                       user.department ?? "Cardiology Department",
@@ -122,11 +133,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
           ),
           SizedBox(width: 8.w),
           // Arrow right
-          Icon(
-            Icons.chevron_right,
-            color: labelColor,
-            size: 20.sp,
-          ),
+          Icon(Icons.chevron_right, color: labelColor, size: 20.sp),
         ],
       ),
     );

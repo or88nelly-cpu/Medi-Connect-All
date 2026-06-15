@@ -20,13 +20,16 @@ abstract class FireSafetyState extends Equatable {
 }
 
 class FireSafetyInitial extends FireSafetyState {}
+
 class FireSafetyLoading extends FireSafetyState {}
+
 class FireSafetyLoaded extends FireSafetyState {
   final Map<String, dynamic> stats;
   const FireSafetyLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class FireSafetyError extends FireSafetyState {
   final String message;
   const FireSafetyError(this.message);
@@ -42,7 +45,10 @@ class FireSafetyBloc extends Bloc<FireSafetyEvent, FireSafetyState> {
     on<LoadFireSafetyStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadFireSafetyStats event, Emitter<FireSafetyState> emit) async {
+  Future<void> _onLoadStats(
+    LoadFireSafetyStats event,
+    Emitter<FireSafetyState> emit,
+  ) async {
     emit(FireSafetyLoading());
     final result = await _useCase(const NoParams());
     result.fold(

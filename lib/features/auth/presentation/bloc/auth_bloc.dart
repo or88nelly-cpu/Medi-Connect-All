@@ -26,21 +26,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetCurrentUserUseCase _getCurrentUserUseCase;
 
   AuthBloc({
-    required LoginUseCase loginUseCase,
-    required RegisterUseCase registerUseCase,
-    required VerifyOtpUseCase verifyOtpUseCase,
-    required ForgotPasswordUseCase forgotPasswordUseCase,
-    required ResetPasswordUseCase resetPasswordUseCase,
-    required LogoutUseCase logoutUseCase,
-    required GetCurrentUserUseCase getCurrentUserUseCase,
-  }) : _loginUseCase = loginUseCase,
-       _registerUseCase = registerUseCase,
-       _verifyOtpUseCase = verifyOtpUseCase,
-       _forgotPasswordUseCase = forgotPasswordUseCase,
-       _resetPasswordUseCase = resetPasswordUseCase,
-       _logoutUseCase = logoutUseCase,
-       _getCurrentUserUseCase = getCurrentUserUseCase,
-       super(AuthInitial()) {
+    required this._loginUseCase,
+    required this._registerUseCase,
+    required this._verifyOtpUseCase,
+    required this._forgotPasswordUseCase,
+    required this._resetPasswordUseCase,
+    required this._logoutUseCase,
+    required this._getCurrentUserUseCase,
+  }) : super(AuthInitial()) {
     on<AuthCheckRequested>(_onAuthCheckRequested);
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);

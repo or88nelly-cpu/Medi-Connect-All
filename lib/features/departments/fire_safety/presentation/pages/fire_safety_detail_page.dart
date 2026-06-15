@@ -19,7 +19,8 @@ class _FireSafetyDetailPageState extends State<FireSafetyDetailPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.I<FireSafetyBloc>()..add(LoadFireSafetyStats()),
+      create: (context) =>
+          GetIt.I<FireSafetyBloc>()..add(LoadFireSafetyStats()),
       child: CustomScaffold(
         customAppbar: const CommonAppBar(title: "Fire Safety Department"),
         body: BlocBuilder<FireSafetyBloc, FireSafetyState>(
@@ -30,7 +31,9 @@ class _FireSafetyDetailPageState extends State<FireSafetyDetailPage> {
               return Center(
                 child: Text(
                   state.message,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.error,
+                  ),
                 ),
               );
             } else if (state is FireSafetyLoaded) {
@@ -61,11 +64,16 @@ class _FireSafetyDetailPageState extends State<FireSafetyDetailPage> {
                       itemBuilder: (context, index) {
                         final key = stats.keys.elementAt(index);
                         final val = stats[key];
-                        final displayKey = key.split('_').map((word) {
-                          if (word == 'pct') return '%';
-                          if (word == 'min' || word == 'mins') return 'Mins';
-                          return word[0].toUpperCase() + word.substring(1);
-                        }).join(' ');
+                        final displayKey = key
+                            .split('_')
+                            .map((word) {
+                              if (word == 'pct') return '%';
+                              if (word == 'min' || word == 'mins') {
+                                return 'Mins';
+                              }
+                              return word[0].toUpperCase() + word.substring(1);
+                            })
+                            .join(' ');
 
                         return Card(
                           elevation: 0,

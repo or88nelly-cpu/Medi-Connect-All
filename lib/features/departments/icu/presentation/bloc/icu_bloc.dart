@@ -20,13 +20,16 @@ abstract class IcuState extends Equatable {
 }
 
 class IcuInitial extends IcuState {}
+
 class IcuLoading extends IcuState {}
+
 class IcuLoaded extends IcuState {
   final Map<String, dynamic> stats;
   const IcuLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class IcuError extends IcuState {
   final String message;
   const IcuError(this.message);

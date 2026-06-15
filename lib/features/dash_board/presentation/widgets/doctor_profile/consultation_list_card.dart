@@ -8,9 +8,8 @@ import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_appointments_bloc.dart';
 
 class ConsultationListCard extends StatefulWidget {
   final UserModel user;
@@ -32,7 +31,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "gender": "Male",
       "type": "Follow Up",
       "mode": "Video",
-      "status": "Completed"
+      "status": "Completed",
     },
     {
       "time": "09:20 AM",
@@ -41,7 +40,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "gender": "Female",
       "type": "New Consultation",
       "mode": "Audio",
-      "status": "Completed"
+      "status": "Completed",
     },
     {
       "time": "09:40 AM",
@@ -50,7 +49,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "gender": "Male",
       "type": "Follow Up",
       "mode": "Video",
-      "status": "Completed"
+      "status": "Completed",
     },
     {
       "time": "10:00 AM",
@@ -59,7 +58,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "gender": "Female",
       "type": "New Consultation",
       "mode": "Video",
-      "status": "Booked"
+      "status": "Booked",
     },
     {
       "time": "10:20 AM",
@@ -68,7 +67,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "gender": "Male",
       "type": "Follow Up",
       "mode": "Audio",
-      "status": "Pending"
+      "status": "Pending",
     },
     {
       "time": "10:40 AM",
@@ -77,7 +76,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "gender": "Male",
       "type": "New Consultation",
       "mode": "Video",
-      "status": "Booked"
+      "status": "Booked",
     },
     {
       "time": "11:00 AM",
@@ -86,12 +85,13 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       "gender": "Female",
       "type": "Follow Up",
       "mode": "Audio",
-      "status": "Pending"
-    }
+      "status": "Pending",
+    },
   ];
 
   List<Map<String, dynamic>> get _consultations {
-    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations =
+        widget.user.metadata?['consultations'] as List<dynamic>?;
     if (metadataConsultations != null) {
       return metadataConsultations.map((item) {
         final map = item as Map<dynamic, dynamic>;
@@ -136,34 +136,47 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
     );
   }
 
-  void _updateConsultationStatus(Map<String, dynamic> consultation, String newStatus) {
+  void _updateConsultationStatus(
+    Map<String, dynamic> consultation,
+    String newStatus,
+  ) {
     final isReal = consultation['isReal'] == true;
     if (isReal) {
       final appointmentId = consultation['id'].toString();
-      context.read<AdminAppointmentsBloc>().add(CancelAppointment(appointmentId));
+      context.read<AdminAppointmentsBloc>().add(
+        CancelAppointment(appointmentId),
+      );
       if (newStatus == 'Completed') {
-        context.read<AdminAppointmentsBloc>().add(CompleteAppointment(appointmentId));
+        context.read<AdminAppointmentsBloc>().add(
+          CompleteAppointment(appointmentId),
+        );
       }
       return;
     }
 
-    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
-    final currentConsultations = List<dynamic>.from(updatedMetadata['consultations'] ?? _defaultConsultations);
-    
-    final idx = currentConsultations.indexWhere((item) =>
-        item['time'] == consultation['time'] &&
-        item['name'] == consultation['name']);
-        
+    final updatedMetadata = Map<String, dynamic>.from(
+      widget.user.metadata ?? {},
+    );
+    final currentConsultations = List<dynamic>.from(
+      updatedMetadata['consultations'] ?? _defaultConsultations,
+    );
+
+    final idx = currentConsultations.indexWhere(
+      (item) =>
+          item['time'] == consultation['time'] &&
+          item['name'] == consultation['name'],
+    );
+
     if (idx != -1) {
       final item = Map<String, dynamic>.from(currentConsultations[idx]);
       item['status'] = newStatus;
       currentConsultations[idx] = item;
-      
+
       updatedMetadata['consultations'] = currentConsultations;
       final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-      
+
       context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-      
+
       final authState = context.read<AuthBloc>().state;
       if (authState is Authenticated && authState.user.id == widget.user.id) {
         context.read<AuthBloc>().add(UserUpdated(updatedUser));
@@ -171,14 +184,23 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
     }
   }
 
-  void _updateConsultationVitals(Map<String, dynamic> consultation, Map<String, dynamic> vitals) {
-    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
-    final currentConsultations = List<dynamic>.from(updatedMetadata['consultations'] ?? _defaultConsultations);
-    
-    final idx = currentConsultations.indexWhere((item) =>
-        item['time'] == consultation['time'] &&
-        item['name'] == consultation['name']);
-        
+  void _updateConsultationVitals(
+    Map<String, dynamic> consultation,
+    Map<String, dynamic> vitals,
+  ) {
+    final updatedMetadata = Map<String, dynamic>.from(
+      widget.user.metadata ?? {},
+    );
+    final currentConsultations = List<dynamic>.from(
+      updatedMetadata['consultations'] ?? _defaultConsultations,
+    );
+
+    final idx = currentConsultations.indexWhere(
+      (item) =>
+          item['time'] == consultation['time'] &&
+          item['name'] == consultation['name'],
+    );
+
     if (idx != -1) {
       final item = Map<String, dynamic>.from(currentConsultations[idx]);
       item['bp'] = vitals['bp'];
@@ -188,12 +210,12 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
       item['head_circumference'] = vitals['head_circumference'];
       item['additional_vitals'] = vitals['additional_vitals'];
       currentConsultations[idx] = item;
-      
+
       updatedMetadata['consultations'] = currentConsultations;
       final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-      
+
       context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-      
+
       final authState = context.read<AuthBloc>().state;
       if (authState is Authenticated && authState.user.id == widget.user.id) {
         context.read<AuthBloc>().add(UserUpdated(updatedUser));
@@ -201,10 +223,17 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
     }
   }
 
-  void _showConsultationOptions(BuildContext context, Map<String, dynamic> consultation) {
+  void _showConsultationOptions(
+    BuildContext context,
+    Map<String, dynamic> consultation,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     showModalBottomSheet(
       context: context,
@@ -221,15 +250,30 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
             children: [
               ListTile(
                 leading: Icon(Icons.info_outline, color: AppColors.primary),
-                title: Text("View Details & Vitals", style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+                title: Text(
+                  "View Details & Vitals",
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onTap: () {
                   Navigator.pop(ctx);
                   _showConsultationDetailSheet(context, consultation);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.edit_road_outlined, color: AppColors.success),
-                title: Text("Update Status", style: TextStyle(color: textColor, fontWeight: FontWeight.bold)),
+                leading: Icon(
+                  Icons.edit_road_outlined,
+                  color: AppColors.success,
+                ),
+                title: Text(
+                  "Update Status",
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onTap: () {
                   Navigator.pop(ctx);
                   _showStatusDialog(consultation);
@@ -242,15 +286,26 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
     );
   }
 
-  void _showConsultationDetailSheet(BuildContext context, Map<String, dynamic> item) {
+  void _showConsultationDetailSheet(
+    BuildContext context,
+    Map<String, dynamic> item,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final statusColor = _getStatusColor(item["status"]);
-    
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -278,7 +333,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     width: 40.w,
                     height: 5.h,
                     decoration: BoxDecoration(
-                      color: labelColor.withOpacity(0.3),
+                      color: labelColor.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(2.5.r),
                     ),
                   ),
@@ -296,34 +351,74 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                 Container(
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withOpacity(0.02) : Colors.black.withOpacity(0.01),
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.02)
+                        : Colors.black.withValues(alpha: 0.01),
                     borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: borderColor.withOpacity(0.5)),
+                    border: Border.all(
+                      color: borderColor.withValues(alpha: 0.5),
+                    ),
                   ),
                   child: Column(
                     children: [
-                      _buildDetailRow("Patient Name", item["name"].toString(), labelColor, textColor),
-                      Divider(color: borderColor.withOpacity(0.3)),
-                      _buildDetailRow("Age & Gender", "${item["age"]} Years, ${item["gender"]}", labelColor, textColor),
-                      Divider(color: borderColor.withOpacity(0.3)),
-                      _buildDetailRow("Consultation Type", item["type"].toString(), labelColor, textColor),
-                      Divider(color: borderColor.withOpacity(0.3)),
-                      _buildDetailRow("Time & Mode", "${item["time"]} (${item["mode"]})", labelColor, textColor),
-                      Divider(color: borderColor.withOpacity(0.3)),
+                      _buildDetailRow(
+                        "Patient Name",
+                        item["name"].toString(),
+                        labelColor,
+                        textColor,
+                      ),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
+                      _buildDetailRow(
+                        "Age & Gender",
+                        "${item["age"]} Years, ${item["gender"]}",
+                        labelColor,
+                        textColor,
+                      ),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
+                      _buildDetailRow(
+                        "Consultation Type",
+                        item["type"].toString(),
+                        labelColor,
+                        textColor,
+                      ),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
+                      _buildDetailRow(
+                        "Time & Mode",
+                        "${item["time"]} (${item["mode"]})",
+                        labelColor,
+                        textColor,
+                      ),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Status", style: TextStyle(color: labelColor, fontSize: 12.sp)),
+                          Text(
+                            "Status",
+                            style: TextStyle(
+                              color: labelColor,
+                              fontSize: 12.sp,
+                            ),
+                          ),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 3.h,
+                            ),
                             decoration: BoxDecoration(
-                              color: statusColor.withOpacity(0.1),
+                              color: statusColor.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(color: statusColor, width: 0.5),
+                              border: Border.all(
+                                color: statusColor,
+                                width: 0.5,
+                              ),
                             ),
                             child: Text(
                               item["status"].toString(),
-                              style: TextStyle(color: statusColor, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                color: statusColor,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -332,7 +427,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                
+
                 // Vitals section
                 Text(
                   "Recorded Vitals",
@@ -342,29 +437,70 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                   ),
                 ),
                 SizedBox(height: 10.h),
-                
+
                 Wrap(
                   spacing: 8.w,
                   runSpacing: 8.h,
                   children: [
-                    _buildVitalBadge("BP", item["bp"]?.toString() ?? "--", Icons.favorite_border, Colors.red, isDark),
-                    _buildVitalBadge("Weight", item["weight"] != null ? "${item["weight"]} kg" : "--", Icons.scale_outlined, Colors.orange, isDark),
-                    _buildVitalBadge("Height", item["height"] != null ? "${item["height"]} cm" : "--", Icons.height, Colors.blue, isDark),
-                    _buildVitalBadge("Fever", item["fever"] != null ? "${item["fever"]} °F" : "--", Icons.thermostat_outlined, Colors.teal, isDark),
-                    _buildVitalBadge("Head Circ.", item["head_circumference"] != null ? "${item["head_circumference"]} cm" : "--", Icons.child_care, Colors.purple, isDark),
+                    _buildVitalBadge(
+                      "BP",
+                      item["bp"]?.toString() ?? "--",
+                      Icons.favorite_border,
+                      Colors.red,
+                      isDark,
+                    ),
+                    _buildVitalBadge(
+                      "Weight",
+                      item["weight"] != null ? "${item["weight"]} kg" : "--",
+                      Icons.scale_outlined,
+                      Colors.orange,
+                      isDark,
+                    ),
+                    _buildVitalBadge(
+                      "Height",
+                      item["height"] != null ? "${item["height"]} cm" : "--",
+                      Icons.height,
+                      Colors.blue,
+                      isDark,
+                    ),
+                    _buildVitalBadge(
+                      "Fever",
+                      item["fever"] != null ? "${item["fever"]} °F" : "--",
+                      Icons.thermostat_outlined,
+                      Colors.teal,
+                      isDark,
+                    ),
+                    _buildVitalBadge(
+                      "Head Circ.",
+                      item["head_circumference"] != null
+                          ? "${item["head_circumference"]} cm"
+                          : "--",
+                      Icons.child_care,
+                      Colors.purple,
+                      isDark,
+                    ),
                   ],
                 ),
-                
-                if (item["additional_vitals"] != null && item["additional_vitals"].toString().isNotEmpty) ...[
+
+                if (item["additional_vitals"] != null &&
+                    item["additional_vitals"].toString().isNotEmpty) ...[
                   SizedBox(height: 12.h),
                   Text(
                     "Additional Vitals:",
-                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11.sp),
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.sp,
+                    ),
                   ),
                   SizedBox(height: 6.h),
-                  _buildCustomVitalsDisplay(item["additional_vitals"].toString(), isDark, borderColor),
+                  _buildCustomVitalsDisplay(
+                    item["additional_vitals"].toString(),
+                    isDark,
+                    borderColor,
+                  ),
                 ],
-                
+
                 SizedBox(height: 24.h),
                 SizedBox(
                   width: double.infinity,
@@ -372,12 +508,23 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     onPressed: () {
                       _showVitalsEntryDialog(context, item);
                     },
-                    icon: const Icon(Icons.add_moderator_outlined, color: Colors.white),
-                    label: const Text("Record / Update Vitals", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    icon: const Icon(
+                      Icons.add_moderator_outlined,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      "Record / Update Vitals",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       padding: EdgeInsets.symmetric(vertical: 12.h),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
                     ),
                   ),
                 ),
@@ -390,27 +537,50 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
     );
   }
 
-  Widget _buildDetailRow(String label, String value, Color labelColor, Color valueColor) {
+  Widget _buildDetailRow(
+    String label,
+    String value,
+    Color labelColor,
+    Color valueColor,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(color: labelColor, fontSize: 12.sp)),
-          Text(value, style: TextStyle(color: valueColor, fontWeight: FontWeight.w600, fontSize: 12.sp)),
+          Text(
+            label,
+            style: TextStyle(color: labelColor, fontSize: 12.sp),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              color: valueColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 12.sp,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildVitalBadge(String label, String value, IconData icon, Color color, bool isDark) {
-    final bg = isDark ? color.withOpacity(0.12) : color.withOpacity(0.08);
+  Widget _buildVitalBadge(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+    bool isDark,
+  ) {
+    final bg = isDark
+        ? color.withValues(alpha: 0.12)
+        : color.withValues(alpha: 0.08);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: color.withOpacity(0.3), width: 0.8),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 0.8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -419,18 +589,30 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
           SizedBox(width: 6.w),
           Text(
             "$label: ",
-            style: TextStyle(color: isDark ? Colors.white70 : Colors.black87, fontSize: 11.sp, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              color: isDark ? Colors.white70 : Colors.black87,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           Text(
             value,
-            style: TextStyle(color: color, fontSize: 11.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: color,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCustomVitalsDisplay(String jsonStr, bool isDark, Color borderColor) {
+  Widget _buildCustomVitalsDisplay(
+    String jsonStr,
+    bool isDark,
+    Color borderColor,
+  ) {
     try {
       final Map<String, dynamic> custom = jsonDecode(jsonStr);
       if (custom.isEmpty) return const SizedBox();
@@ -441,20 +623,30 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white12 : Colors.black.withOpacity(0.05),
+              color: isDark
+                  ? Colors.white12
+                  : Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(6.r),
-              border: Border.all(color: borderColor.withOpacity(0.4)),
+              border: Border.all(color: borderColor.withValues(alpha: 0.4)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   "${entry.key}: ",
-                  style: TextStyle(color: isDark ? Colors.white70 : Colors.black87, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: isDark ? Colors.white70 : Colors.black87,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   entry.value.toString(),
-                  style: TextStyle(color: AppColors.primary, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -466,18 +658,39 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
     }
   }
 
-  void _showVitalsEntryDialog(BuildContext context, Map<String, dynamic> consultation) {
+  void _showVitalsEntryDialog(
+    BuildContext context,
+    Map<String, dynamic> consultation,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
-    final bpController = TextEditingController(text: consultation['bp']?.toString());
-    final weightController = TextEditingController(text: consultation['weight']?.toString());
-    final heightController = TextEditingController(text: consultation['height']?.toString());
-    final feverController = TextEditingController(text: consultation['fever']?.toString());
-    final headCircumferenceController = TextEditingController(text: consultation['head_circumference']?.toString());
+    final bpController = TextEditingController(
+      text: consultation['bp']?.toString(),
+    );
+    final weightController = TextEditingController(
+      text: consultation['weight']?.toString(),
+    );
+    final heightController = TextEditingController(
+      text: consultation['height']?.toString(),
+    );
+    final feverController = TextEditingController(
+      text: consultation['fever']?.toString(),
+    );
+    final headCircumferenceController = TextEditingController(
+      text: consultation['head_circumference']?.toString(),
+    );
 
     // Parse custom vitals
     final List<MapEntry<String, String>> customVitalsList = [];
@@ -500,7 +713,14 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
             children: [
               Icon(Icons.thermostat, color: AppColors.primary),
               SizedBox(width: 8.w),
-              Text("Record Vitals", style: AppTextStyles.titleLarge.copyWith(color: textColor, fontSize: 16.sp, fontWeight: FontWeight.bold)),
+              Text(
+                "Record Vitals",
+                style: AppTextStyles.titleLarge.copyWith(
+                  color: textColor,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           content: SingleChildScrollView(
@@ -516,8 +736,14 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     labelText: "Blood Pressure (mmHg)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 120/80",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.favorite, color: Colors.red, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -529,8 +755,14 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     labelText: "Weight (kg)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 70",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.scale, color: Colors.orange, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.scale,
+                      color: Colors.orange,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -542,8 +774,14 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     labelText: "Height (cm)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 175",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.height, color: Colors.blue, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.height,
+                      color: Colors.blue,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -555,8 +793,14 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     labelText: "Fever / Temp (°F)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 98.6",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.thermostat, color: Colors.teal, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.thermostat,
+                      color: Colors.teal,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -568,19 +812,32 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     labelText: "Circumference Head (cm) [Baby]",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 42",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.child_care, color: Colors.purple, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.child_care,
+                      color: Colors.purple,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.h),
                 Divider(color: borderColor),
                 SizedBox(height: 8.h),
-                
+
                 // Custom Vitals Section
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Custom Vitals", style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12.sp)),
+                    Text(
+                      "Custom Vitals",
+                      style: TextStyle(
+                        color: textColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.sp,
+                      ),
+                    ),
                     TextButton.icon(
                       onPressed: () {
                         setDialogState(() {
@@ -588,27 +845,40 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                         });
                       },
                       icon: const Icon(Icons.add, size: 14),
-                      label: Text("Add More", style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.bold)),
-                      style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero),
+                      label: Text(
+                        "Add More",
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size.zero,
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(height: 8.h),
-                
+
                 if (customVitalsList.isEmpty)
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: Text(
                       "No custom vitals added. Tap 'Add More' to record fields like SPO2, Blood Sugar, etc.",
-                      style: TextStyle(color: labelColor, fontSize: 10.sp, fontStyle: FontStyle.italic),
+                      style: TextStyle(
+                        color: labelColor,
+                        fontSize: 10.sp,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
-                
+
                 ...List.generate(customVitalsList.length, (index) {
                   final entry = customVitalsList[index];
                   final nameCtrl = TextEditingController(text: entry.key);
                   final valCtrl = TextEditingController(text: entry.value);
-                  
+
                   return Padding(
                     padding: EdgeInsets.only(bottom: 8.h),
                     child: Row(
@@ -620,10 +890,16 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                             style: TextStyle(color: textColor, fontSize: 12.sp),
                             decoration: InputDecoration(
                               hintText: "Vital Name (e.g., SPO2)",
-                              contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8.w,
+                                vertical: 8.h,
+                              ),
                             ),
                             onChanged: (val) {
-                              customVitalsList[index] = MapEntry(val.trim(), valCtrl.text.trim());
+                              customVitalsList[index] = MapEntry(
+                                val.trim(),
+                                valCtrl.text.trim(),
+                              );
                             },
                           ),
                         ),
@@ -635,15 +911,25 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                             style: TextStyle(color: textColor, fontSize: 12.sp),
                             decoration: InputDecoration(
                               hintText: "Value (e.g., 98%)",
-                              contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8.w,
+                                vertical: 8.h,
+                              ),
                             ),
                             onChanged: (val) {
-                              customVitalsList[index] = MapEntry(nameCtrl.text.trim(), val.trim());
+                              customVitalsList[index] = MapEntry(
+                                nameCtrl.text.trim(),
+                                val.trim(),
+                              );
                             },
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete_outline, color: AppColors.error, size: 18.sp),
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: AppColors.error,
+                            size: 18.sp,
+                          ),
                           onPressed: () {
                             setDialogState(() {
                               customVitalsList.removeAt(index);
@@ -670,27 +956,44 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     customMap[item.key] = item.value;
                   }
                 }
-                
+
                 final vitalsMap = {
-                  'bp': bpController.text.trim().isNotEmpty ? bpController.text.trim() : null,
-                  'weight': weightController.text.trim().isNotEmpty ? weightController.text.trim() : null,
-                  'height': heightController.text.trim().isNotEmpty ? heightController.text.trim() : null,
-                  'fever': feverController.text.trim().isNotEmpty ? feverController.text.trim() : null,
-                  'head_circumference': headCircumferenceController.text.trim().isNotEmpty ? headCircumferenceController.text.trim() : null,
-                  'additional_vitals': customMap.isNotEmpty ? jsonEncode(customMap) : null,
+                  'bp': bpController.text.trim().isNotEmpty
+                      ? bpController.text.trim()
+                      : null,
+                  'weight': weightController.text.trim().isNotEmpty
+                      ? weightController.text.trim()
+                      : null,
+                  'height': heightController.text.trim().isNotEmpty
+                      ? heightController.text.trim()
+                      : null,
+                  'fever': feverController.text.trim().isNotEmpty
+                      ? feverController.text.trim()
+                      : null,
+                  'head_circumference':
+                      headCircumferenceController.text.trim().isNotEmpty
+                      ? headCircumferenceController.text.trim()
+                      : null,
+                  'additional_vitals': customMap.isNotEmpty
+                      ? jsonEncode(customMap)
+                      : null,
                 };
-                
+
                 final isReal = consultation['isReal'] == true;
                 if (isReal) {
                   final appointmentId = consultation['id'].toString();
-                  context.read<AdminAppointmentsBloc>().add(UpdateAppointmentVitals(appointmentId, vitalsMap));
+                  context.read<AdminAppointmentsBloc>().add(
+                    UpdateAppointmentVitals(appointmentId, vitalsMap),
+                  );
                 } else {
                   _updateConsultationVitals(consultation, vitalsMap);
                 }
-                
+
                 Navigator.pop(ctx); // Close dialog
-                Navigator.pop(context); // Close details sheet to trigger refresh
-                
+                Navigator.pop(
+                  context,
+                ); // Close details sheet to trigger refresh
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Vitals successfully saved.")),
                 );
@@ -719,22 +1022,32 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(
       builder: (context, state) {
         // Load real appointments for this doctor
         List<AppointmentEntity> realAppointments = [];
         if (state is AdminAppointmentsLoaded) {
-          realAppointments = state.appointments.where((a) => a.doctorId == widget.user.id).toList();
+          realAppointments = state.appointments
+              .where((a) => a.doctorId == widget.user.id)
+              .toList();
         }
 
         // Merge real appointments with default/metadata consultations to preserve mock data
         final List<Map<String, dynamic>> consultationsList = [];
-        
+
         // Add real appointments first
         for (final apt in realAppointments) {
           consultationsList.add({
@@ -756,24 +1069,24 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
             "additional_vitals": apt.additionalVitals,
           });
         }
-        
+
         // Add mock consultations if no real ones exist, or append them
         final mockList = _consultations;
         for (final item in mockList) {
           // Check if we already added a real appointment with similar patient name to avoid duplicates in mock views
-          final isDuplicate = consultationsList.any((e) => e["name"] == item["name"] && e["time"] == item["time"]);
+          final isDuplicate = consultationsList.any(
+            (e) => e["name"] == item["name"] && e["time"] == item["time"],
+          );
           if (!isDuplicate) {
-            consultationsList.add({
-              "isReal": false,
-              ...item,
-            });
+            consultationsList.add({"isReal": false, ...item});
           }
         }
-        
+
         // Filter consultations based on selected mode
         final filteredConsultations = consultationsList.where((item) {
           if (_selectedMode == "All") return true;
-          return item["mode"].toString().toLowerCase() == _selectedMode.toLowerCase();
+          return item["mode"].toString().toLowerCase() ==
+              _selectedMode.toLowerCase();
         }).toList();
 
         return Container(
@@ -811,34 +1124,105 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                       child: DropdownButton<String>(
                         value: _selectedDate,
                         dropdownColor: cardBg,
-                        icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-                        style: TextStyle(color: textColor, fontSize: 10.sp, fontWeight: FontWeight.w600),
-                        onChanged: (val) => setState(() => _selectedDate = val!),
-                        items: ["20 May 2025", "21 May 2025", "22 May 2025"].map((date) {
-                          return DropdownMenuItem<String>(
-                            value: date,
-                            child: Text(date),
-                          );
-                        }).toList(),
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: labelColor,
+                          size: 14.sp,
+                        ),
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        onChanged: (val) =>
+                            setState(() => _selectedDate = val!),
+                        items: ["20 May 2025", "21 May 2025", "22 May 2025"]
+                            .map((date) {
+                              return DropdownMenuItem<String>(
+                                value: date,
+                                child: Text(date),
+                              );
+                            })
+                            .toList(),
                       ),
                     ),
                   ),
                   SizedBox(width: 8.w),
                   // Video / Audio toggles
-                  _buildModeToggleButton("Video", Icons.videocam_outlined, AppColors.primary),
+                  _buildModeToggleButton(
+                    "Video",
+                    Icons.videocam_outlined,
+                    AppColors.primary,
+                  ),
                   SizedBox(width: 4.w),
-                  _buildModeToggleButton("Audio", Icons.phone_outlined, const Color(0xFF9C27B0)),
+                  _buildModeToggleButton(
+                    "Audio",
+                    Icons.phone_outlined,
+                    const Color(0xFF9C27B0),
+                  ),
                 ],
               ),
               SizedBox(height: 16.h),
               // Consultation table / headers
               Row(
                 children: [
-                  Expanded(flex: 2, child: Text("Time", style: TextStyle(color: labelColor, fontSize: 10.sp, fontWeight: FontWeight.bold))),
-                  Expanded(flex: 4, child: Text("Patient Name", style: TextStyle(color: labelColor, fontSize: 10.sp, fontWeight: FontWeight.bold))),
-                  Expanded(flex: 3, child: Text("Type", style: TextStyle(color: labelColor, fontSize: 10.sp, fontWeight: FontWeight.bold))),
-                  Expanded(flex: 2, child: Text("Mode", style: TextStyle(color: labelColor, fontSize: 10.sp, fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
-                  Expanded(flex: 2, child: Text("Status", style: TextStyle(color: labelColor, fontSize: 10.sp, fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "Time",
+                      style: TextStyle(
+                        color: labelColor,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Text(
+                      "Patient Name",
+                      style: TextStyle(
+                        color: labelColor,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      "Type",
+                      style: TextStyle(
+                        color: labelColor,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "Mode",
+                      style: TextStyle(
+                        color: labelColor,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "Status",
+                      style: TextStyle(
+                        color: labelColor,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                   Expanded(flex: 1, child: Container()),
                 ],
               ),
@@ -848,19 +1232,24 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                   ? Padding(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
                       child: Center(
-                        child: Text("No consultations found for selected mode.", style: TextStyle(color: labelColor, fontSize: 12.sp)),
+                        child: Text(
+                          "No consultations found for selected mode.",
+                          style: TextStyle(color: labelColor, fontSize: 12.sp),
+                        ),
                       ),
                     )
                   : ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: filteredConsultations.length,
-                      separatorBuilder: (context, idx) => Divider(color: borderColor, height: 1),
+                      separatorBuilder: (context, idx) =>
+                          Divider(color: borderColor, height: 1),
                       itemBuilder: (context, idx) {
                         final item = filteredConsultations[idx];
                         final isVideo = item["mode"] == "Video";
                         final statusColor = _getStatusColor(item["status"]);
-                        final avatarUrl = "https://ui-avatars.com/api/?name=${Uri.encodeComponent(item["name"])}&background=random";
+                        final avatarUrl =
+                            "https://ui-avatars.com/api/?name=${Uri.encodeComponent(item["name"])}&background=random";
 
                         return InkWell(
                           onTap: () => _showConsultationOptions(context, item),
@@ -873,7 +1262,11 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                                   flex: 2,
                                   child: Text(
                                     item["time"],
-                                    style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 11.sp),
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 11.sp,
+                                    ),
                                   ),
                                 ),
                                 // Patient Info
@@ -883,21 +1276,31 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                                     children: [
                                       CircleAvatar(
                                         radius: 12.r,
-                                        backgroundImage: NetworkImage(avatarUrl),
+                                        backgroundImage: NetworkImage(
+                                          avatarUrl,
+                                        ),
                                       ),
                                       SizedBox(width: 8.w),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               item["name"],
-                                              style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11.sp),
+                                              style: TextStyle(
+                                                color: textColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 11.sp,
+                                              ),
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
                                               "${item["age"]} Years, ${item["gender"]}",
-                                              style: TextStyle(color: labelColor, fontSize: 9.sp),
+                                              style: TextStyle(
+                                                color: labelColor,
+                                                fontSize: 9.sp,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -910,7 +1313,10 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                                   flex: 3,
                                   child: Text(
                                     item["type"],
-                                    style: TextStyle(color: labelColor, fontSize: 11.sp),
+                                    style: TextStyle(
+                                      color: labelColor,
+                                      fontSize: 11.sp,
+                                    ),
                                   ),
                                 ),
                                 // Mode
@@ -920,7 +1326,9 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                                     child: Icon(
                                       isVideo ? Icons.videocam : Icons.phone,
                                       size: 14.sp,
-                                      color: isVideo ? AppColors.primary : const Color(0xFF9C27B0),
+                                      color: isVideo
+                                          ? AppColors.primary
+                                          : const Color(0xFF9C27B0),
                                     ),
                                   ),
                                 ),
@@ -929,15 +1337,29 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                                   flex: 2,
                                   child: Center(
                                     child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 6.w,
+                                        vertical: 2.h,
+                                      ),
                                       decoration: BoxDecoration(
-                                        color: statusColor.withOpacity(0.1),
-                                        borderRadius: BorderRadius.circular(12.r),
-                                        border: Border.all(color: statusColor, width: 0.5),
+                                        color: statusColor.withValues(
+                                          alpha: 0.1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          12.r,
+                                        ),
+                                        border: Border.all(
+                                          color: statusColor,
+                                          width: 0.5,
+                                        ),
                                       ),
                                       child: Text(
                                         item["status"],
-                                        style: TextStyle(color: statusColor, fontSize: 9.sp, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                          color: statusColor,
+                                          fontSize: 9.sp,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -946,9 +1368,16 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                                 Expanded(
                                   flex: 1,
                                   child: IconButton(
-                                    icon: Icon(Icons.more_horiz, color: labelColor, size: 14.sp),
-                                    onPressed: () => _showConsultationOptions(context, item),
-                                    style: IconButton.styleFrom(padding: EdgeInsets.zero),
+                                    icon: Icon(
+                                      Icons.more_horiz,
+                                      color: labelColor,
+                                      size: 14.sp,
+                                    ),
+                                    onPressed: () =>
+                                        _showConsultationOptions(context, item),
+                                    style: IconButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -964,17 +1393,29 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                 children: [
                   Text(
                     "Total ${filteredConsultations.length} consultations",
-                    style: TextStyle(color: labelColor, fontSize: 10.sp, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      color: labelColor,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   InkWell(
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Opening consultation report details...")),
+                        const SnackBar(
+                          content: Text(
+                            "Opening consultation report details...",
+                          ),
+                        ),
                       );
                     },
                     child: Text(
                       "View All",
-                      style: TextStyle(color: AppColors.primary, fontSize: 11.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -1001,7 +1442,11 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
           color: isSelected ? color : Colors.transparent,
-          border: Border.all(color: isSelected ? color : AppColors.terminalDarkBorder.withOpacity(0.2)),
+          border: Border.all(
+            color: isSelected
+                ? color
+                : AppColors.terminalDarkBorder.withValues(alpha: 0.2),
+          ),
           borderRadius: BorderRadius.circular(4.r),
         ),
         child: Row(

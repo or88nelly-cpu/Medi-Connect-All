@@ -20,13 +20,16 @@ abstract class CustomerCareState extends Equatable {
 }
 
 class CustomerCareInitial extends CustomerCareState {}
+
 class CustomerCareLoading extends CustomerCareState {}
+
 class CustomerCareLoaded extends CustomerCareState {
   final Map<String, dynamic> stats;
   const CustomerCareLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class CustomerCareError extends CustomerCareState {
   final String message;
   const CustomerCareError(this.message);
@@ -42,7 +45,10 @@ class CustomerCareBloc extends Bloc<CustomerCareEvent, CustomerCareState> {
     on<LoadCustomerCareStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadCustomerCareStats event, Emitter<CustomerCareState> emit) async {
+  Future<void> _onLoadStats(
+    LoadCustomerCareStats event,
+    Emitter<CustomerCareState> emit,
+  ) async {
     emit(CustomerCareLoading());
     final result = await _useCase(const NoParams());
     result.fold(

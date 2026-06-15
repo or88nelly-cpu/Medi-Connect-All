@@ -64,9 +64,15 @@ class QuickActionsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,47 +117,66 @@ class QuickActionsRow extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           builder: (ctx) => ApplyLeaveBottomSheet(
                             onLeaveApplied: (leave) {
-                              final updatedMetadata = Map<String, dynamic>.from(user.metadata ?? {});
-                              final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? [
-                                {
-                                  "type": "Annual Leave",
-                                  "range": "20 May 2025 - 25 May 2025",
-                                  "status": "Approved"
-                                },
-                                {
-                                  "type": "Casual Leave",
-                                  "range": "05 Jun 2025",
-                                  "status": "Pending"
-                                }
-                              ]);
+                              final updatedMetadata = Map<String, dynamic>.from(
+                                user.metadata ?? {},
+                              );
+                              final currentLeaves = List<dynamic>.from(
+                                updatedMetadata['leaves'] ??
+                                    [
+                                      {
+                                        "type": "Annual Leave",
+                                        "range": "20 May 2025 - 25 May 2025",
+                                        "status": "Approved",
+                                      },
+                                      {
+                                        "type": "Casual Leave",
+                                        "range": "05 Jun 2025",
+                                        "status": "Pending",
+                                      },
+                                    ],
+                              );
                               currentLeaves.add(leave);
                               updatedMetadata['leaves'] = currentLeaves;
-                              final updatedUser = user.copyWith(metadata: updatedMetadata);
-                              
-                              context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-                              
+                              final updatedUser = user.copyWith(
+                                metadata: updatedMetadata,
+                              );
+
+                              context.read<DoctorStaffBloc>().add(
+                                UpdateDoctorStaffMember(updatedUser),
+                              );
+
                               final authState = context.read<AuthBloc>().state;
-                              if (authState is Authenticated && authState.user.id == user.id) {
-                                context.read<AuthBloc>().add(UserUpdated(updatedUser));
+                              if (authState is Authenticated &&
+                                  authState.user.id == user.id) {
+                                context.read<AuthBloc>().add(
+                                  UserUpdated(updatedUser),
+                                );
                               }
                             },
                           ),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Triggering Action: ${action["label"].toString().replaceAll('\n', ' ')}")),
+                          SnackBar(
+                            content: Text(
+                              "Triggering Action: ${action["label"].toString().replaceAll('\n', ' ')}",
+                            ),
+                          ),
                         );
                       }
                     },
                     borderRadius: BorderRadius.circular(8.r),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 8.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6.w,
+                        vertical: 8.h,
+                      ),
                       child: Row(
                         children: [
                           Container(
                             padding: EdgeInsets.all(6.r),
                             decoration: BoxDecoration(
-                              color: actColor.withOpacity(0.1),
+                              color: actColor.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(6.r),
                             ),
                             child: Icon(

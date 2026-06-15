@@ -49,7 +49,8 @@ class CompleteConsultationState {
 
 class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
   CompleteConsultationCubit()
-      : super(CompleteConsultationState(
+    : super(
+        CompleteConsultationState(
           medicines: [],
           selectedTests: [],
           paymentMethod: 'Cash',
@@ -58,7 +59,8 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
           emrSubmitted: false,
           totalFee: 500.0,
           currentStep: 1,
-        )) {
+        ),
+      ) {
     _init();
   }
 
@@ -106,7 +108,9 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
     final row = state.medicines[index];
     (row['name'] as TextEditingController?)?.removeListener(updateTotalFee);
     (row['days'] as TextEditingController?)?.removeListener(updateTotalFee);
-    (row['frequency'] as TextEditingController?)?.removeListener(updateTotalFee);
+    (row['frequency'] as TextEditingController?)?.removeListener(
+      updateTotalFee,
+    );
 
     (row['name'] as TextEditingController?)?.dispose();
     (row['dosage'] as TextEditingController?)?.dispose();
@@ -114,7 +118,8 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
     (row['days'] as TextEditingController?)?.dispose();
     (row['focusNode'] as FocusNode?)?.dispose();
 
-    final list = List<Map<String, dynamic>>.from(state.medicines)..removeAt(index);
+    final list = List<Map<String, dynamic>>.from(state.medicines)
+      ..removeAt(index);
     emit(state.copyWith(medicines: list));
     updateTotalFee();
   }
@@ -123,9 +128,13 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
     final row = state.medicines[index];
     (row['dosage'] as TextEditingController).text = selection.dosage;
     row['sell_price'] = selection.sellPrice;
-    
+
     // Trigger update of state to refresh the UI text
-    emit(state.copyWith(medicines: List<Map<String, dynamic>>.from(state.medicines)));
+    emit(
+      state.copyWith(
+        medicines: List<Map<String, dynamic>>.from(state.medicines),
+      ),
+    );
     updateTotalFee();
   }
 
@@ -193,8 +202,14 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
           final match = _lastPharmacyItems.firstWhere(
             (item) => item.name.toLowerCase() == name,
             orElse: () => const PharmacyItemModel(
-              id: '', name: '', stock: 0, category: '', status: '',
-              buyPrice: 0.0, sellPrice: -1.0, dosage: '',
+              id: '',
+              name: '',
+              stock: 0,
+              category: '',
+              status: '',
+              buyPrice: 0.0,
+              sellPrice: -1.0,
+              dosage: '',
             ),
           );
           if (match.sellPrice >= 0) {
@@ -240,7 +255,9 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
     for (final row in state.medicines) {
       (row['name'] as TextEditingController?)?.removeListener(updateTotalFee);
       (row['days'] as TextEditingController?)?.removeListener(updateTotalFee);
-      (row['frequency'] as TextEditingController?)?.removeListener(updateTotalFee);
+      (row['frequency'] as TextEditingController?)?.removeListener(
+        updateTotalFee,
+      );
 
       (row['name'] as TextEditingController?)?.dispose();
       (row['dosage'] as TextEditingController?)?.dispose();

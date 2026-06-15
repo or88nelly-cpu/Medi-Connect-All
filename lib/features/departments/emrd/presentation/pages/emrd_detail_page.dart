@@ -14,8 +14,8 @@ import 'package:medi_connect/core/storage/secure_storage_service.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/departments/emrd/presentation/bloc/emrd_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_billing_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_pharmacy_bloc.dart';
 import 'package:medi_connect/features/departments/emrd/presentation/widgets/emrd_list_item_card.dart';
 import 'package:medi_connect/features/departments/emrd/presentation/widgets/emrd_bottom_banner.dart';
 
@@ -34,15 +34,21 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
   }) async {
     try {
       final userProfile = Platform.environment['USERPROFILE'];
-      final downloadsDirPath = userProfile != null ? '$userProfile\\Downloads' : Directory.current.path;
+      final downloadsDirPath = userProfile != null
+          ? '$userProfile\\Downloads'
+          : Directory.current.path;
       final typeStr = isPrescription ? 'prescription' : 'invoice';
       final invoiceNum = isPrescription
           ? (record['invoice_number'] ?? 'N_A')
           : (customTitle?.contains("Medicine") == true
-              ? (record['medicine_invoice_number'] ?? record['invoice_number'] ?? 'N_A')
-              : (customTitle?.contains("Lab") == true
-                  ? (record['lab_invoice_number'] ?? record['invoice_number'] ?? 'N_A')
-                  : (record['invoice_number'] ?? 'N_A')));
+                ? (record['medicine_invoice_number'] ??
+                      record['invoice_number'] ??
+                      'N_A')
+                : (customTitle?.contains("Lab") == true
+                      ? (record['lab_invoice_number'] ??
+                            record['invoice_number'] ??
+                            'N_A')
+                      : (record['invoice_number'] ?? 'N_A')));
 
       final fileName = '${typeStr}_$invoiceNum.pdf';
       final file = File('$downloadsDirPath\\$fileName');
@@ -79,7 +85,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
 
             if (line.contains('(')) {
               name = line.split('(').first.trim();
-              final inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+              final inner = line.substring(
+                line.indexOf('(') + 1,
+                line.lastIndexOf(')'),
+              );
               final parts = inner.split(',');
               if (parts.isNotEmpty) dosage = parts[0].trim();
               if (parts.length > 1) {
@@ -159,7 +168,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         height: 44,
                         padding: const pw.EdgeInsets.all(3),
                         decoration: pw.BoxDecoration(
-                          border: pw.Border.all(color: PdfColors.black, width: 1),
+                          border: pw.Border.all(
+                            color: PdfColors.black,
+                            width: 1,
+                          ),
                         ),
                         child: pw.BarcodeWidget(
                           barcode: pw.Barcode.qrCode(),
@@ -179,82 +191,60 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     padding: const pw.EdgeInsets.all(8),
                     decoration: pw.BoxDecoration(
                       border: pw.Border.all(color: borderColor, width: 1),
-                      borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
+                      borderRadius: const pw.BorderRadius.all(
+                        pw.Radius.circular(6),
+                      ),
                     ),
                     child: pw.Table(
                       children: [
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Patient Name : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: record['patient_name'] ?? 'N/A', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Patient Name : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: record['patient_name'] ?? 'N/A',
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Bill No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: 'OP-$invoiceNum', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
-                                  ],
-                                ),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
                               ),
-                            ),
-                          ],
-                        ),
-                        pw.TableRow(
-                          children: [
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Aster ID : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: record['patient_id'] != null ? record['patient_id'].toString().substring(0, 8).toUpperCase() : 'N/A', style: const pw.TextStyle(fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Bill Date : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: formattedDate, style: const pw.TextStyle(fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        pw.TableRow(
-                          children: [
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Age / Gender : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "28 Y 6 M / Male", style: pw.TextStyle(fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Doctor : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: 'Dr. ${record['doctor_name'] ?? 'N/A'}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Bill No : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: 'OP-$invoiceNum',
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -264,23 +254,151 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Contact No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "9495123456", style: pw.TextStyle(fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Aster ID : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: record['patient_id'] != null
+                                          ? record['patient_id']
+                                                .toString()
+                                                .substring(0, 8)
+                                                .toUpperCase()
+                                          : 'N/A',
+                                      style: const pw.TextStyle(fontSize: 8.5),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Address : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "12/345, West Hill, Calicut, Kerala, India - 673005", style: pw.TextStyle(fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Bill Date : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: formattedDate,
+                                      style: const pw.TextStyle(fontSize: 8.5),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Age / Gender : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "28 Y 6 M / Male",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Doctor : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text:
+                                          'Dr. ${record['doctor_name'] ?? 'N/A'}',
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Contact No : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "9495123456",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Address : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text:
+                                          "12/345, West Hill, Calicut, Kerala, India - 673005",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -307,7 +425,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   pw.Table(
                     border: const pw.TableBorder(
                       bottom: pw.BorderSide(color: borderColor, width: 1),
-                      horizontalInside: pw.BorderSide(color: borderColor, width: 0.8),
+                      horizontalInside: pw.BorderSide(
+                        color: borderColor,
+                        width: 0.8,
+                      ),
                     ),
                     columnWidths: const {
                       0: pw.FractionColumnWidth(0.06), // SN
@@ -319,13 +440,60 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     children: [
                       // Header Row
                       pw.TableRow(
-                        decoration: const pw.BoxDecoration(color: PdfColors.grey100),
+                        decoration: const pw.BoxDecoration(
+                          color: PdfColors.grey100,
+                        ),
                         children: [
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Rx", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Medicine", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Dosage", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Duration", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Instructions", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Rx",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Medicine",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Dosage",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Duration",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Instructions",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       // Row Items
@@ -335,25 +503,76 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           final med = entry.value;
                           return pw.TableRow(
                             children: [
-                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text("$idx.", style: const pw.TextStyle(fontSize: 8.5))),
-                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['name'] ?? '', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['dosage'] ?? '', style: const pw.TextStyle(fontSize: 8.5))),
-                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['duration'] ?? '', style: const pw.TextStyle(fontSize: 8.5))),
-                              pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text(med['instructions'] ?? '', style: const pw.TextStyle(fontSize: 8.5))),
+                              pw.Padding(
+                                padding: const pw.EdgeInsets.all(6),
+                                child: pw.Text(
+                                  "$idx.",
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                              ),
+                              pw.Padding(
+                                padding: const pw.EdgeInsets.all(6),
+                                child: pw.Text(
+                                  med['name'] ?? '',
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                    fontSize: 8.5,
+                                  ),
+                                ),
+                              ),
+                              pw.Padding(
+                                padding: const pw.EdgeInsets.all(6),
+                                child: pw.Text(
+                                  med['dosage'] ?? '',
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                              ),
+                              pw.Padding(
+                                padding: const pw.EdgeInsets.all(6),
+                                child: pw.Text(
+                                  med['duration'] ?? '',
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                              ),
+                              pw.Padding(
+                                padding: const pw.EdgeInsets.all(6),
+                                child: pw.Text(
+                                  med['instructions'] ?? '',
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                              ),
                             ],
                           );
                         })
                       else
                         pw.TableRow(
                           children: [
-                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
                             pw.Padding(
                               padding: const pw.EdgeInsets.all(8),
-                              child: pw.Text("No medicines prescribed.", style: pw.TextStyle(fontStyle: pw.FontStyle.italic, fontSize: 8.5)),
+                              child: pw.Text(""),
                             ),
-                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
-                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
-                            pw.Padding(padding: const pw.EdgeInsets.all(8), child: pw.Text("")),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(8),
+                              child: pw.Text(
+                                "No medicines prescribed.",
+                                style: pw.TextStyle(
+                                  fontStyle: pw.FontStyle.italic,
+                                  fontSize: 8.5,
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(8),
+                              child: pw.Text(""),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(8),
+                              child: pw.Text(""),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(8),
+                              child: pw.Text(""),
+                            ),
                           ],
                         ),
                     ],
@@ -361,7 +580,8 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   pw.SizedBox(height: 16),
 
                   // Investigations Advised Block
-                  if (record['lab_tests'] != null && record['lab_tests'].toString().trim().isNotEmpty) ...[
+                  if (record['lab_tests'] != null &&
+                      record['lab_tests'].toString().trim().isNotEmpty) ...[
                     pw.Text(
                       "Investigations Advised :",
                       style: pw.TextStyle(
@@ -374,14 +594,24 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     ...record['lab_tests'].toString().split(',').map((test) {
                       return pw.Padding(
                         padding: const pw.EdgeInsets.only(left: 10, bottom: 2),
-                        child: pw.Text("• ${test.trim()}", style: const pw.TextStyle(fontSize: 8.5, color: textColor)),
+                        child: pw.Text(
+                          "• ${test.trim()}",
+                          style: const pw.TextStyle(
+                            fontSize: 8.5,
+                            color: textColor,
+                          ),
+                        ),
                       );
                     }),
                     pw.SizedBox(height: 16),
                   ],
 
                   // Notes / Clinical Advice
-                  if (record['prescription_notes'] != null && record['prescription_notes'].toString().trim().isNotEmpty) ...[
+                  if (record['prescription_notes'] != null &&
+                      record['prescription_notes']
+                          .toString()
+                          .trim()
+                          .isNotEmpty) ...[
                     pw.Text(
                       "Clinical Notes / Advice :",
                       style: pw.TextStyle(
@@ -395,7 +625,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       padding: const pw.EdgeInsets.only(left: 10),
                       child: pw.Text(
                         record['prescription_notes'],
-                        style: const pw.TextStyle(fontSize: 8.5, color: PdfColors.grey800),
+                        style: const pw.TextStyle(
+                          fontSize: 8.5,
+                          color: PdfColors.grey800,
+                        ),
                       ),
                     ),
                     pw.SizedBox(height: 16),
@@ -411,9 +644,15 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Text("Date : ${formattedDate.split(' ').first}", style: const pw.TextStyle(fontSize: 8.5)),
+                          pw.Text(
+                            "Date : ${formattedDate.split(' ').first}",
+                            style: const pw.TextStyle(fontSize: 8.5),
+                          ),
                           pw.SizedBox(height: 2),
-                          pw.Text("Time : ${formattedDate.contains(' ') ? formattedDate.split(' ').last : ''}", style: const pw.TextStyle(fontSize: 8.5)),
+                          pw.Text(
+                            "Time : ${formattedDate.contains(' ') ? formattedDate.split(' ').last : ''}",
+                            style: const pw.TextStyle(fontSize: 8.5),
+                          ),
                         ],
                       ),
                       pw.Column(
@@ -462,7 +701,11 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   pw.Center(
                     child: pw.Text(
                       "Note: Please take medicines as advised. Do not stop the medicines in between. In case of any side effects, consult your doctor.",
-                      style: pw.TextStyle(fontSize: 7, color: grayLabelColor, fontStyle: pw.FontStyle.italic),
+                      style: pw.TextStyle(
+                        fontSize: 7,
+                        color: grayLabelColor,
+                        fontStyle: pw.FontStyle.italic,
+                      ),
                     ),
                   ),
                 ],
@@ -475,10 +718,16 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
         final isMedicine = customTitle?.contains("Medicine") == true;
         final isLab = customTitle?.contains("Lab") == true;
         final double consultationFee = 500.00;
-        final double medicineAmount = record['medicine_amount'] != null ? (record['medicine_amount'] as num).toDouble() : 0.0;
-        final double labAmount = record['lab_amount'] != null ? (record['lab_amount'] as num).toDouble() : 0.0;
+        final double medicineAmount = record['medicine_amount'] != null
+            ? (record['medicine_amount'] as num).toDouble()
+            : 0.0;
+        final double labAmount = record['lab_amount'] != null
+            ? (record['lab_amount'] as num).toDouble()
+            : 0.0;
 
-        final double selectedAmt = isMedicine ? medicineAmount : (isLab ? labAmount : consultationFee);
+        final double selectedAmt = isMedicine
+            ? medicineAmount
+            : (isLab ? labAmount : consultationFee);
         final double grandTotal = selectedAmt;
 
         doc.addPage(
@@ -537,7 +786,11 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           ),
                           pw.Text(
                             "Duplicate",
-                            style: pw.TextStyle(fontSize: 8, fontStyle: pw.FontStyle.italic, color: grayLabelColor),
+                            style: pw.TextStyle(
+                              fontSize: 8,
+                              fontStyle: pw.FontStyle.italic,
+                              color: grayLabelColor,
+                            ),
                           ),
                         ],
                       ),
@@ -550,8 +803,22 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      pw.Text("GSTIN : 32AACCM3480H2ZO", style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: textColor)),
-                      pw.Text("HSN Code: 9993", style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: textColor)),
+                      pw.Text(
+                        "GSTIN : 32AACCM3480H2ZO",
+                        style: pw.TextStyle(
+                          fontSize: 8,
+                          fontWeight: pw.FontWeight.bold,
+                          color: textColor,
+                        ),
+                      ),
+                      pw.Text(
+                        "HSN Code: 9993",
+                        style: pw.TextStyle(
+                          fontSize: 8,
+                          fontWeight: pw.FontWeight.bold,
+                          color: textColor,
+                        ),
+                      ),
                     ],
                   ),
                   pw.Divider(thickness: 1.5, color: primaryColor),
@@ -562,115 +829,83 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     padding: const pw.EdgeInsets.all(8),
                     decoration: pw.BoxDecoration(
                       border: pw.Border.all(color: borderColor, width: 1),
-                      borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
+                      borderRadius: const pw.BorderRadius.all(
+                        pw.Radius.circular(6),
+                      ),
                     ),
                     child: pw.Table(
                       children: [
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Bill No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: invoiceNum, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Bill No : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: invoiceNum,
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Bill Date : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: formattedDate, style: const pw.TextStyle(fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Bill Date : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: formattedDate,
+                                      style: const pw.TextStyle(fontSize: 8.5),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Presc. Doctor : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: 'Dr. ${record['doctor_name'] ?? 'N/A'}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
-                                  ],
-                                ),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
                               ),
-                            ),
-                          ],
-                        ),
-                        pw.TableRow(
-                          children: [
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Aster ID : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: record['patient_id'] != null ? record['patient_id'].toString().substring(0, 8).toUpperCase() : 'N/A', style: const pw.TextStyle(fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Gender/Age : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "Male/28 Y 6 M", style: pw.TextStyle(fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Refered By : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "Self", style: pw.TextStyle(fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        pw.TableRow(
-                          children: [
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Patient Name : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: record['patient_name'] ?? 'N/A', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Contact No : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "9495123456", style: pw.TextStyle(fontSize: 8.5)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
-                              child: pw.RichText(
-                                text: pw.TextSpan(
-                                  children: [
-                                    pw.TextSpan(text: "Patient Address : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "West Hill, Calicut", style: pw.TextStyle(fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Presc. Doctor : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text:
+                                          'Dr. ${record['doctor_name'] ?? 'N/A'}',
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -680,34 +915,218 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Payer : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    pw.TextSpan(text: "SELF PAY", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Aster ID : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: record['patient_id'] != null
+                                          ? record['patient_id']
+                                                .toString()
+                                                .substring(0, 8)
+                                                .toUpperCase()
+                                          : 'N/A',
+                                      style: const pw.TextStyle(fontSize: 8.5),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "State Code : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "32", style: pw.TextStyle(fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Gender/Age : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "Male/28 Y 6 M",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
-                                    pw.TextSpan(text: "Payer Address : ", style: pw.TextStyle(color: grayLabelColor, fontSize: 8.5)),
-                                    const pw.TextSpan(text: "Calicut, Kerala", style: pw.TextStyle(fontSize: 8.5)),
+                                    pw.TextSpan(
+                                      text: "Refered By : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "Self",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Patient Name : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: record['patient_name'] ?? 'N/A',
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Contact No : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "9495123456",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Patient Address : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "West Hill, Calicut",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.TableRow(
+                          children: [
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Payer : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    pw.TextSpan(
+                                      text: "SELF PAY",
+                                      style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "State Code : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "32",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              child: pw.RichText(
+                                text: pw.TextSpan(
+                                  children: [
+                                    pw.TextSpan(
+                                      text: "Payer Address : ",
+                                      style: pw.TextStyle(
+                                        color: grayLabelColor,
+                                        fontSize: 8.5,
+                                      ),
+                                    ),
+                                    const pw.TextSpan(
+                                      text: "Calicut, Kerala",
+                                      style: pw.TextStyle(fontSize: 8.5),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -723,7 +1142,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   pw.Table(
                     border: const pw.TableBorder(
                       bottom: pw.BorderSide(color: borderColor, width: 1),
-                      horizontalInside: pw.BorderSide(color: borderColor, width: 0.8),
+                      horizontalInside: pw.BorderSide(
+                        color: borderColor,
+                        width: 0.8,
+                      ),
                     ),
                     columnWidths: const {
                       0: pw.FractionColumnWidth(0.05), // SN
@@ -737,49 +1159,148 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     children: [
                       // Header Row
                       pw.TableRow(
-                        decoration: const pw.BoxDecoration(color: PdfColors.grey100),
+                        decoration: const pw.BoxDecoration(
+                          color: PdfColors.grey100,
+                        ),
                         children: [
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("SN", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("SrCode", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("SAC", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Service Particulars", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5))),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Rate (R)", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5), textAlign: pw.TextAlign.right)),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Unit", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5), textAlign: pw.TextAlign.center)),
-                          pw.Padding(padding: const pw.EdgeInsets.all(5), child: pw.Text("Net Amt", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5), textAlign: pw.TextAlign.right)),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "SN",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "SrCode",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "SAC",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Service Particulars",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Rate (R)",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                              textAlign: pw.TextAlign.right,
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Unit",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                              textAlign: pw.TextAlign.center,
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(5),
+                            child: pw.Text(
+                              "Net Amt",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
+                              textAlign: pw.TextAlign.right,
+                            ),
+                          ),
                         ],
                       ),
                       // Service Row
                       pw.TableRow(
                         children: [
-                          pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text("1", style: const pw.TextStyle(fontSize: 8.5))),
                           pw.Padding(
                             padding: const pw.EdgeInsets.all(6),
                             child: pw.Text(
-                              isMedicine ? "11858" : (isLab ? "11950" : "10101"),
+                              "1",
                               style: const pw.TextStyle(fontSize: 8.5),
                             ),
                           ),
-                          pw.Padding(padding: const pw.EdgeInsets.all(6), child: pw.Text("999311", style: const pw.TextStyle(fontSize: 8.5))),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(6),
+                            child: pw.Text(
+                              isMedicine
+                                  ? "11858"
+                                  : (isLab ? "11950" : "10101"),
+                              style: const pw.TextStyle(fontSize: 8.5),
+                            ),
+                          ),
+                          pw.Padding(
+                            padding: const pw.EdgeInsets.all(6),
+                            child: pw.Text(
+                              "999311",
+                              style: const pw.TextStyle(fontSize: 8.5),
+                            ),
+                          ),
                           pw.Padding(
                             padding: const pw.EdgeInsets.all(6),
                             child: pw.Text(
                               isMedicine
                                   ? "MEDICINE & CONSUMABLE"
-                                  : (isLab ? "LAB - CBC DIAGNOSTICS" : "CONSULTATION CHARGE"),
-                              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5),
+                                  : (isLab
+                                        ? "LAB - CBC DIAGNOSTICS"
+                                        : "CONSULTATION CHARGE"),
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 8.5,
+                              ),
                             ),
                           ),
                           pw.Padding(
                             padding: const pw.EdgeInsets.all(6),
-                            child: pw.Text(selectedAmt.toStringAsFixed(2), style: const pw.TextStyle(fontSize: 8.5), textAlign: pw.TextAlign.right),
+                            child: pw.Text(
+                              selectedAmt.toStringAsFixed(2),
+                              style: const pw.TextStyle(fontSize: 8.5),
+                              textAlign: pw.TextAlign.right,
+                            ),
                           ),
                           pw.Padding(
                             padding: const pw.EdgeInsets.all(6),
-                            child: pw.Text("1", style: const pw.TextStyle(fontSize: 8.5), textAlign: pw.TextAlign.center),
+                            child: pw.Text(
+                              "1",
+                              style: const pw.TextStyle(fontSize: 8.5),
+                              textAlign: pw.TextAlign.center,
+                            ),
                           ),
                           pw.Padding(
                             padding: const pw.EdgeInsets.all(6),
-                            child: pw.Text(selectedAmt.toStringAsFixed(2), style: const pw.TextStyle(fontSize: 8.5), textAlign: pw.TextAlign.right),
+                            child: pw.Text(
+                              selectedAmt.toStringAsFixed(2),
+                              style: const pw.TextStyle(fontSize: 8.5),
+                              textAlign: pw.TextAlign.right,
+                            ),
                           ),
                         ],
                       ),
@@ -796,39 +1317,82 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         padding: const pw.EdgeInsets.all(6),
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: borderColor, width: 1),
-                          borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
+                          borderRadius: const pw.BorderRadius.all(
+                            pw.Radius.circular(4),
+                          ),
                         ),
                         child: pw.Column(
                           children: [
                             pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  pw.MainAxisAlignment.spaceBetween,
                               children: [
-                                pw.Text("Total Amount:", style: const pw.TextStyle(fontSize: 8.5)),
-                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                pw.Text(
+                                  "Total Amount:",
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                                pw.Text(
+                                  "R ${grandTotal.toStringAsFixed(2)}",
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                    fontSize: 8.5,
+                                  ),
+                                ),
                               ],
                             ),
                             pw.SizedBox(height: 3),
                             pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  pw.MainAxisAlignment.spaceBetween,
                               children: [
-                                pw.Text("Net Amount:", style: const pw.TextStyle(fontSize: 8.5)),
-                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                pw.Text(
+                                  "Net Amount:",
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                                pw.Text(
+                                  "R ${grandTotal.toStringAsFixed(2)}",
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                    fontSize: 8.5,
+                                  ),
+                                ),
                               ],
                             ),
                             pw.SizedBox(height: 3),
                             pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  pw.MainAxisAlignment.spaceBetween,
                               children: [
-                                pw.Text("Patient Amount:", style: const pw.TextStyle(fontSize: 8.5)),
-                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8.5)),
+                                pw.Text(
+                                  "Patient Amount:",
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                                pw.Text(
+                                  "R ${grandTotal.toStringAsFixed(2)}",
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                    fontSize: 8.5,
+                                  ),
+                                ),
                               ],
                             ),
                             pw.SizedBox(height: 3),
                             pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  pw.MainAxisAlignment.spaceBetween,
                               children: [
-                                pw.Text("Amt Received:", style: const pw.TextStyle(fontSize: 8.5)),
-                                pw.Text("R ${grandTotal.toStringAsFixed(2)}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, color: primaryColor, fontSize: 9)),
+                                pw.Text(
+                                  "Amt Received:",
+                                  style: const pw.TextStyle(fontSize: 8.5),
+                                ),
+                                pw.Text(
+                                  "R ${grandTotal.toStringAsFixed(2)}",
+                                  style: pw.TextStyle(
+                                    fontWeight: pw.FontWeight.bold,
+                                    color: primaryColor,
+                                    fontSize: 9,
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -841,12 +1405,20 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   // Transaction Method
                   pw.Text(
                     "By UPI: ${grandTotal.toStringAsFixed(2)} State Bank of India 123456789012",
-                    style: pw.TextStyle(fontSize: 8, fontStyle: pw.FontStyle.italic, color: textColor),
+                    style: pw.TextStyle(
+                      fontSize: 8,
+                      fontStyle: pw.FontStyle.italic,
+                      color: textColor,
+                    ),
                   ),
                   pw.SizedBox(height: 4),
                   pw.Text(
                     "Received from ${record['patient_name'] ?? 'Mr. Rohan Kumar'}, an amount of (INR) ${NumberFormat.simpleCurrency(name: 'INR').format(grandTotal).replaceAll('₹', '')} Only",
-                    style: pw.TextStyle(fontSize: 8.5, fontWeight: pw.FontWeight.bold, color: textColor),
+                    style: pw.TextStyle(
+                      fontSize: 8.5,
+                      fontWeight: pw.FontWeight.bold,
+                      color: textColor,
+                    ),
                   ),
 
                   pw.Spacer(),
@@ -859,8 +1431,20 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
-                          pw.Text("Printed By: Admin", style: pw.TextStyle(fontSize: 7.5, color: grayLabelColor)),
-                          pw.Text("Prepared By: Staff (Billing)", style: pw.TextStyle(fontSize: 7.5, color: grayLabelColor)),
+                          pw.Text(
+                            "Printed By: Admin",
+                            style: pw.TextStyle(
+                              fontSize: 7.5,
+                              color: grayLabelColor,
+                            ),
+                          ),
+                          pw.Text(
+                            "Prepared By: Staff (Billing)",
+                            style: pw.TextStyle(
+                              fontSize: 7.5,
+                              color: grayLabelColor,
+                            ),
+                          ),
                         ],
                       ),
                       pw.Column(
@@ -893,11 +1477,18 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       children: [
                         pw.Text(
                           "Malabar Institute of Medical Sciences Ltd.",
-                          style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: textColor),
+                          style: pw.TextStyle(
+                            fontSize: 8,
+                            fontWeight: pw.FontWeight.bold,
+                            color: textColor,
+                          ),
                         ),
                         pw.Text(
                           "Mini By-pass Road, Govindapuram P.O, Calicut - 673 016, Kerala | E-mail: mimsclt@asterhospital.com | Tel: 91-495-2488 000",
-                          style: pw.TextStyle(fontSize: 6.5, color: grayLabelColor),
+                          style: pw.TextStyle(
+                            fontSize: 6.5,
+                            color: grayLabelColor,
+                          ),
                         ),
                       ],
                     ),
@@ -914,7 +1505,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${customTitle ?? (isPrescription ? "Prescription" : "Invoice")} PDF generated in Downloads folder.'),
+            content: Text(
+              '${customTitle ?? (isPrescription ? "Prescription" : "Invoice")} PDF generated in Downloads folder.',
+            ),
             backgroundColor: AppColors.success,
             duration: const Duration(seconds: 5),
             action: SnackBarAction(
@@ -959,10 +1552,14 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
           builder: (stCtx, setDialogState) {
             final isDark = Theme.of(context).brightness == Brightness.dark;
             return AlertDialog(
-              backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+              backgroundColor: isDark
+                  ? AppColors.terminalDarkCard
+                  : Colors.white,
               title: Text(
                 'Payment for ${isMedicine ? "Medicines" : "Lab Tests"}',
-                style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -972,11 +1569,17 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                   SizedBox(height: 8.h),
                   Text(
                     'Total Amount: ₹${amount.toStringAsFixed(2)}',
-                    style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.bold, color: Colors.green),
+                    style: AppTextStyles.bodyLarge.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   if (!paymentDone) ...[
-                    Text('Select Payment Method:', style: AppTextStyles.bodySmall),
+                    Text(
+                      'Select Payment Method:',
+                      style: AppTextStyles.bodySmall,
+                    ),
                     SizedBox(height: 8.h),
                     Row(
                       children: [
@@ -995,7 +1598,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                             label: const Text('Online/QR'),
                             selected: payMethod == 'Online',
                             onSelected: (val) {
-                              if (val) setDialogState(() => payMethod = 'Online');
+                              if (val) {
+                                setDialogState(() => payMethod = 'Online');
+                              }
                             },
                           ),
                         ),
@@ -1009,16 +1614,24 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8.r),
-                            border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                            border: Border.all(
+                              color: AppColors.primary.withValues(alpha: 0.3),
+                            ),
                           ),
-                          child: Icon(Icons.qr_code_scanner, size: 100.r, color: Colors.black),
+                          child: Icon(
+                            Icons.qr_code_scanner,
+                            size: 100.r,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       SizedBox(height: 4.h),
                       Center(
                         child: Text(
                           'Scan to Pay ₹${amount.toStringAsFixed(2)}',
-                          style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp),
+                          style: AppTextStyles.bodySmall.copyWith(
+                            fontSize: 10.sp,
+                          ),
                         ),
                       ),
                     ],
@@ -1026,9 +1639,18 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     Center(
                       child: Column(
                         children: [
-                          const Icon(Icons.check_circle, color: AppColors.success, size: 48),
+                          const Icon(
+                            Icons.check_circle,
+                            color: AppColors.success,
+                            size: 48,
+                          ),
                           SizedBox(height: 8.h),
-                          Text('Payment Confirmed!', style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold)),
+                          Text(
+                            'Payment Confirmed!',
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -1056,17 +1678,26 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       // 1. Update Supabase
                       try {
                         final supabase = GetIt.I<SupabaseService>().client;
-                        final fieldToUpdate = isMedicine ? 'medicine_payment_status' : 'lab_payment_status';
-                        await supabase.from('emr_records').update({
-                          fieldToUpdate: 'Paid',
-                          'payment_method': payMethod == 'Online' ? 'UPI/QR' : 'Cash',
-                        }).eq('appointment_id', record['appointment_id']);
+                        final fieldToUpdate = isMedicine
+                            ? 'medicine_payment_status'
+                            : 'lab_payment_status';
+                        await supabase
+                            .from('emr_records')
+                            .update({
+                              fieldToUpdate: 'Paid',
+                              'payment_method': payMethod == 'Online'
+                                  ? 'UPI/QR'
+                                  : 'Cash',
+                            })
+                            .eq('appointment_id', record['appointment_id']);
 
                         if (isMedicine) {
                           // Decrement stock in pharmacy_inventory
                           try {
-                            final medicinesText = record['medicines'] as String?;
-                            if (medicinesText != null && medicinesText.trim().isNotEmpty) {
+                            final medicinesText =
+                                record['medicines'] as String?;
+                            if (medicinesText != null &&
+                                medicinesText.trim().isNotEmpty) {
                               final lines = medicinesText.split('\n');
                               for (final line in lines) {
                                 if (line.trim().isEmpty) continue;
@@ -1087,8 +1718,12 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                     .maybeSingle();
 
                                 if (response != null) {
-                                  final currentStock = response['stock'] as int? ?? 0;
-                                  final newStock = (currentStock - 1).clamp(0, 999999);
+                                  final currentStock =
+                                      response['stock'] as int? ?? 0;
+                                  final newStock = (currentStock - 1).clamp(
+                                    0,
+                                    999999,
+                                  );
                                   await supabase
                                       .from('pharmacy_inventory')
                                       .update({'stock': newStock})
@@ -1097,17 +1732,23 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                               }
                             }
                           } catch (e) {
-                            debugPrint("Failed to update pharmacy stock from EMRD payment: $e");
+                            debugPrint(
+                              "Failed to update pharmacy stock from EMRD payment: $e",
+                            );
                           }
                         }
 
                         if (mounted) {
-                          billingBloc.add(RecordInvoice({
-                            'patient_name': record['patient_name'],
-                            'amount': amount,
-                            'status': 'Paid',
-                            'payment_method': payMethod == 'Online' ? 'UPI/QR' : 'Cash',
-                          }));
+                          billingBloc.add(
+                            RecordInvoice({
+                              'patient_name': record['patient_name'],
+                              'amount': amount,
+                              'status': 'Paid',
+                              'payment_method': payMethod == 'Online'
+                                  ? 'UPI/QR'
+                                  : 'Cash',
+                            }),
+                          );
                           if (isMedicine) {
                             pharmacyBloc.add(LoadPharmacyItems());
                           }
@@ -1123,13 +1764,16 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         if (localDataStr != null) {
                           final List<dynamic> list = jsonDecode(localDataStr);
                           for (final item in list) {
-                            if (item['appointment_id'] == record['appointment_id']) {
+                            if (item['appointment_id'] ==
+                                record['appointment_id']) {
                               if (isMedicine) {
                                 item['medicine_payment_status'] = 'Paid';
                               } else {
                                 item['lab_payment_status'] = 'Paid';
                               }
-                              item['payment_method'] = payMethod == 'Online' ? 'UPI/QR' : 'Cash';
+                              item['payment_method'] = payMethod == 'Online'
+                                  ? 'UPI/QR'
+                                  : 'Cash';
                             }
                           }
                           await storage.write('emr_records', jsonEncode(list));
@@ -1145,7 +1789,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
 
                         messenger.showSnackBar(
                           SnackBar(
-                            content: Text('Payment of ₹${amount.toStringAsFixed(2)} confirmed for ${record['patient_name']}'),
+                            content: Text(
+                              'Payment of ₹${amount.toStringAsFixed(2)} confirmed for ${record['patient_name']}',
+                            ),
                             backgroundColor: AppColors.success,
                           ),
                         );
@@ -1154,7 +1800,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                     ),
-                    child: const Text('Confirm Pay', style: TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Confirm Pay',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ] else ...[
                   TextButton(
@@ -1178,7 +1827,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
         color: isDark ? const Color(0xFF1B3B22) : const Color(0xFFF0FDF4),
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
-          color: isDark ? const Color(0xFF2E7D32).withOpacity(0.5) : const Color(0xFFBBF7D0),
+          color: isDark
+              ? const Color(0xFF2E7D32).withValues(alpha: 0.5)
+              : const Color(0xFFBBF7D0),
           width: 1.5,
         ),
       ),
@@ -1190,10 +1841,14 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
               Container(
                 padding: EdgeInsets.all(6.r),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.15),
+                  color: Colors.green.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.verified_user, color: Colors.green, size: 18),
+                child: const Icon(
+                  Icons.verified_user,
+                  color: Colors.green,
+                  size: 18,
+                ),
               ),
               SizedBox(width: 8.w),
               Text(
@@ -1224,7 +1879,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                 "Authorized Signature",
                 style: AppTextStyles.bodySmall.copyWith(
                   fontSize: 9.sp,
-                  color: isDark ? Colors.white30 : AppColors.textSecondary.withOpacity(0.6),
+                  color: isDark
+                      ? Colors.white30
+                      : AppColors.textSecondary.withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -1234,7 +1891,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
     );
   }
 
-  void _showRecordDetailsSheet(BuildContext context, Map<String, dynamic> record) {
+  void _showRecordDetailsSheet(
+    BuildContext context,
+    Map<String, dynamic> record,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final dateStr = record['recorded_at'] ?? record['created_at'] ?? '';
     String formattedDate = 'N/A';
@@ -1247,8 +1907,12 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
 
     final medPaid = record['medicine_payment_status'] == 'Paid';
     final labPaid = record['lab_payment_status'] == 'Paid';
-    final double medAmount = record['medicine_amount'] != null ? (record['medicine_amount'] as num).toDouble() : 0.0;
-    final double labAmount = record['lab_amount'] != null ? (record['lab_amount'] as num).toDouble() : 0.0;
+    final double medAmount = record['medicine_amount'] != null
+        ? (record['medicine_amount'] as num).toDouble()
+        : 0.0;
+    final double labAmount = record['lab_amount'] != null
+        ? (record['lab_amount'] as num).toDouble()
+        : 0.0;
     final medInvoice = record['medicine_invoice_number'] ?? '';
     final labInvoice = record['lab_invoice_number'] ?? '';
 
@@ -1265,7 +1929,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
             return Container(
               decoration: BoxDecoration(
                 color: isDark ? AppColors.terminalDarkCard : Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(24),
+                ),
               ),
               child: Column(
                 children: [
@@ -1300,7 +1966,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                               Text(
                                 "Date: $formattedDate",
                                 style: AppTextStyles.bodySmall.copyWith(
-                                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                  color: isDark
+                                      ? Colors.white54
+                                      : AppColors.textSecondary,
                                 ),
                               ),
                             ],
@@ -1326,10 +1994,26 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           iconColor: AppColors.primary,
                           isDark: isDark,
                           children: [
-                            _buildInfoRow("Patient Name", record['patient_name'] ?? 'N/A', isDark),
-                            _buildInfoRow("Doctor Name", 'Dr. ${record['doctor_name'] ?? "N/A"}', isDark),
-                            _buildInfoRow("Specialty", record['specialty'] ?? 'N/A', isDark),
-                            _buildInfoRow("Invoice Number", record['invoice_number'] ?? 'N/A', isDark),
+                            _buildInfoRow(
+                              "Patient Name",
+                              record['patient_name'] ?? 'N/A',
+                              isDark,
+                            ),
+                            _buildInfoRow(
+                              "Doctor Name",
+                              'Dr. ${record['doctor_name'] ?? "N/A"}',
+                              isDark,
+                            ),
+                            _buildInfoRow(
+                              "Specialty",
+                              record['specialty'] ?? 'N/A',
+                              isDark,
+                            ),
+                            _buildInfoRow(
+                              "Invoice Number",
+                              record['invoice_number'] ?? 'N/A',
+                              isDark,
+                            ),
                           ],
                         ),
                         SizedBox(height: 16.h),
@@ -1341,10 +2025,15 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           iconColor: Colors.teal,
                           isDark: isDark,
                           children: [
-                            if (record['medicines'] != null && record['medicines'].toString().trim().isNotEmpty) ...[
+                            if (record['medicines'] != null &&
+                                record['medicines']
+                                    .toString()
+                                    .trim()
+                                    .isNotEmpty) ...[
                               ...() {
                                 final List<Map<String, String>> parsedMeds = [];
-                                final rawMedicines = record['medicines'] as String? ?? '';
+                                final rawMedicines =
+                                    record['medicines'] as String? ?? '';
                                 if (rawMedicines.isNotEmpty) {
                                   final lines = rawMedicines.split('\n');
                                   for (final line in lines) {
@@ -1356,13 +2045,20 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
 
                                     if (line.contains('(')) {
                                       name = line.split('(').first.trim();
-                                      final inner = line.substring(line.indexOf('(') + 1, line.lastIndexOf(')'));
+                                      final inner = line.substring(
+                                        line.indexOf('(') + 1,
+                                        line.lastIndexOf(')'),
+                                      );
                                       final parts = inner.split(',');
-                                      if (parts.isNotEmpty) dosage = parts[0].trim();
+                                      if (parts.isNotEmpty) {
+                                        dosage = parts[0].trim();
+                                      }
                                       if (parts.length > 1) {
                                         instructions = parts[1].trim();
                                       }
-                                      if (parts.length > 2) duration = parts[2].trim();
+                                      if (parts.length > 2) {
+                                        duration = parts[2].trim();
+                                      }
                                     }
                                     parsedMeds.add({
                                       'name': name,
@@ -1377,67 +2073,111 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                     margin: EdgeInsets.only(bottom: 8.h),
                                     padding: EdgeInsets.all(12.r),
                                     decoration: BoxDecoration(
-                                      color: isDark ? Colors.white.withOpacity(0.02) : Colors.white,
+                                      color: isDark
+                                          ? Colors.white.withValues(alpha: 0.02)
+                                          : Colors.white,
                                       borderRadius: BorderRadius.circular(8.r),
                                       border: Border.all(
-                                        color: isDark ? Colors.white10 : Colors.grey[200]!,
+                                        color: isDark
+                                            ? Colors.white10
+                                            : Colors.grey[200]!,
                                       ),
                                     ),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           padding: EdgeInsets.all(8.r),
                                           decoration: BoxDecoration(
-                                            color: Colors.teal.withOpacity(0.1),
+                                            color: Colors.teal.withValues(
+                                              alpha: 0.1,
+                                            ),
                                             shape: BoxShape.circle,
                                           ),
-                                          child: const Icon(Icons.medication_outlined, color: Colors.teal, size: 18),
+                                          child: const Icon(
+                                            Icons.medication_outlined,
+                                            color: Colors.teal,
+                                            size: 18,
+                                          ),
                                         ),
                                         SizedBox(width: 12.w),
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 med['name'] ?? '',
-                                                style: AppTextStyles.bodyMedium.copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: isDark ? Colors.white : AppColors.textPrimary,
-                                                ),
+                                                style: AppTextStyles.bodyMedium
+                                                    .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: isDark
+                                                          ? Colors.white
+                                                          : AppColors
+                                                                .textPrimary,
+                                                    ),
                                               ),
                                               SizedBox(height: 4.h),
                                               Row(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                          horizontal: 6.w,
+                                                          vertical: 2.h,
+                                                        ),
                                                     decoration: BoxDecoration(
-                                                      color: Colors.teal.withOpacity(0.08),
-                                                      borderRadius: BorderRadius.circular(4.r),
+                                                      color: Colors.teal
+                                                          .withValues(
+                                                            alpha: 0.08,
+                                                          ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            4.r,
+                                                          ),
                                                     ),
                                                     child: Text(
                                                       "Dosage: ${med['dosage']}",
-                                                      style: AppTextStyles.bodySmall.copyWith(
-                                                        fontSize: 10.sp,
-                                                        color: Colors.teal,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
+                                                      style: AppTextStyles
+                                                          .bodySmall
+                                                          .copyWith(
+                                                            fontSize: 10.sp,
+                                                            color: Colors.teal,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
                                                     ),
                                                   ),
                                                   SizedBox(width: 8.w),
                                                   Container(
-                                                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                          horizontal: 6.w,
+                                                          vertical: 2.h,
+                                                        ),
                                                     decoration: BoxDecoration(
-                                                      color: Colors.blue.withOpacity(0.08),
-                                                      borderRadius: BorderRadius.circular(4.r),
+                                                      color: Colors.blue
+                                                          .withValues(
+                                                            alpha: 0.08,
+                                                          ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            4.r,
+                                                          ),
                                                     ),
                                                     child: Text(
                                                       "Duration: ${med['duration']}",
-                                                      style: AppTextStyles.bodySmall.copyWith(
-                                                        fontSize: 10.sp,
-                                                        color: Colors.blue[600],
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
+                                                      style: AppTextStyles
+                                                          .bodySmall
+                                                          .copyWith(
+                                                            fontSize: 10.sp,
+                                                            color: Colors
+                                                                .blue[600],
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
                                                     ),
                                                   ),
                                                 ],
@@ -1445,10 +2185,14 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                               SizedBox(height: 6.h),
                                               Text(
                                                 "Instructions: ${med['instructions']}",
-                                                style: AppTextStyles.bodySmall.copyWith(
-                                                  fontSize: 10.sp,
-                                                  color: isDark ? Colors.white54 : AppColors.textSecondary,
-                                                ),
+                                                style: AppTextStyles.bodySmall
+                                                    .copyWith(
+                                                      fontSize: 10.sp,
+                                                      color: isDark
+                                                          ? Colors.white54
+                                                          : AppColors
+                                                                .textSecondary,
+                                                    ),
                                               ),
                                             ],
                                           ),
@@ -1460,51 +2204,90 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                               }(),
                               const Divider(height: 24),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Medicine Total: ₹${medAmount.toStringAsFixed(2)}",
-                                        style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold),
+                                        style: AppTextStyles.bodySmall.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       if (medPaid)
                                         Text(
                                           "Invoice: $medInvoice",
-                                          style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp, color: AppColors.textSecondary),
+                                          style: AppTextStyles.bodySmall
+                                              .copyWith(
+                                                fontSize: 10.sp,
+                                                color: AppColors.textSecondary,
+                                              ),
                                         ),
                                     ],
                                   ),
                                   if (medPaid)
                                     Row(
                                       children: [
-                                        const Icon(Icons.check_circle, color: AppColors.success, size: 16),
+                                        const Icon(
+                                          Icons.check_circle,
+                                          color: AppColors.success,
+                                          size: 16,
+                                        ),
                                         SizedBox(width: 4.w),
-                                        Text("Paid", style: AppTextStyles.bodySmall.copyWith(color: AppColors.success, fontWeight: FontWeight.bold)),
+                                        Text(
+                                          "Paid",
+                                          style: AppTextStyles.bodySmall
+                                              .copyWith(
+                                                color: AppColors.success,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
                                         SizedBox(width: 8.w),
                                         IconButton(
-                                          onPressed: () => _downloadFile(record: record, isPrescription: false, customTitle: "Medicine Invoice"),
-                                          icon: const Icon(Icons.download, size: 16, color: Colors.teal),
-                                          tooltip: "Download Medicine Invoice PDF",
+                                          onPressed: () => _downloadFile(
+                                            record: record,
+                                            isPrescription: false,
+                                            customTitle: "Medicine Invoice",
+                                          ),
+                                          icon: const Icon(
+                                            Icons.download,
+                                            size: 16,
+                                            color: Colors.teal,
+                                          ),
+                                          tooltip:
+                                              "Download Medicine Invoice PDF",
                                         ),
                                       ],
                                     )
                                   else
                                     ElevatedButton(
-                                      onPressed: () => _processDepartmentPayment(
-                                        record: record,
-                                        isMedicine: true,
-                                        amount: medAmount,
-                                        invoiceNum: medInvoice,
-                                      ),
+                                      onPressed: () =>
+                                          _processDepartmentPayment(
+                                            record: record,
+                                            isMedicine: true,
+                                            amount: medAmount,
+                                            invoiceNum: medInvoice,
+                                          ),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.teal,
-                                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 12.w,
+                                          vertical: 6.h,
+                                        ),
                                         minimumSize: Size.zero,
-                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
                                       ),
-                                      child: Text("Pay Now", style: AppTextStyles.bodySmall.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                                      child: Text(
+                                        "Pay Now",
+                                        style: AppTextStyles.bodySmall.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                 ],
                               ),
@@ -1513,7 +2296,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                 "No medicines prescribed.",
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontStyle: FontStyle.italic,
-                                  color: isDark ? Colors.white38 : AppColors.textSecondary,
+                                  color: isDark
+                                      ? Colors.white38
+                                      : AppColors.textSecondary,
                                 ),
                               ),
                           ],
@@ -1527,9 +2312,14 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           iconColor: Colors.orange,
                           isDark: isDark,
                           children: [
-                            if (record['lab_tests'] != null && record['lab_tests'].toString().trim().isNotEmpty) ...[
+                            if (record['lab_tests'] != null &&
+                                record['lab_tests']
+                                    .toString()
+                                    .trim()
+                                    .isNotEmpty) ...[
                               ...() {
-                                final rawLab = record['lab_tests'] as String? ?? '';
+                                final rawLab =
+                                    record['lab_tests'] as String? ?? '';
                                 final List<String> tests = rawLab
                                     .split(RegExp(r'[,\n]'))
                                     .map((t) => t.trim())
@@ -1541,10 +2331,14 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                     margin: EdgeInsets.only(bottom: 8.h),
                                     padding: EdgeInsets.all(12.r),
                                     decoration: BoxDecoration(
-                                      color: isDark ? Colors.white.withOpacity(0.02) : Colors.white,
+                                      color: isDark
+                                          ? Colors.white.withValues(alpha: 0.02)
+                                          : Colors.white,
                                       borderRadius: BorderRadius.circular(8.r),
                                       border: Border.all(
-                                        color: isDark ? Colors.white10 : Colors.grey[200]!,
+                                        color: isDark
+                                            ? Colors.white10
+                                            : Colors.grey[200]!,
                                       ),
                                     ),
                                     child: Row(
@@ -1552,19 +2346,28 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                         Container(
                                           padding: EdgeInsets.all(8.r),
                                           decoration: BoxDecoration(
-                                            color: Colors.orange.withOpacity(0.1),
+                                            color: Colors.orange.withValues(
+                                              alpha: 0.1,
+                                            ),
                                             shape: BoxShape.circle,
                                           ),
-                                          child: const Icon(Icons.biotech_outlined, color: Colors.orange, size: 18),
+                                          child: const Icon(
+                                            Icons.biotech_outlined,
+                                            color: Colors.orange,
+                                            size: 18,
+                                          ),
                                         ),
                                         SizedBox(width: 12.w),
                                         Expanded(
                                           child: Text(
                                             test,
-                                            style: AppTextStyles.bodyMedium.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: isDark ? Colors.white : AppColors.textPrimary,
-                                            ),
+                                            style: AppTextStyles.bodyMedium
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: isDark
+                                                      ? Colors.white
+                                                      : AppColors.textPrimary,
+                                                ),
                                           ),
                                         ),
                                       ],
@@ -1574,51 +2377,89 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                               }(),
                               const Divider(height: 24),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Lab Test Total: ₹${labAmount.toStringAsFixed(2)}",
-                                        style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.bold),
+                                        style: AppTextStyles.bodySmall.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       if (labPaid)
                                         Text(
                                           "Invoice: $labInvoice",
-                                          style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp, color: AppColors.textSecondary),
+                                          style: AppTextStyles.bodySmall
+                                              .copyWith(
+                                                fontSize: 10.sp,
+                                                color: AppColors.textSecondary,
+                                              ),
                                         ),
                                     ],
                                   ),
                                   if (labPaid)
                                     Row(
                                       children: [
-                                        const Icon(Icons.check_circle, color: AppColors.success, size: 16),
+                                        const Icon(
+                                          Icons.check_circle,
+                                          color: AppColors.success,
+                                          size: 16,
+                                        ),
                                         SizedBox(width: 4.w),
-                                        Text("Paid", style: AppTextStyles.bodySmall.copyWith(color: AppColors.success, fontWeight: FontWeight.bold)),
+                                        Text(
+                                          "Paid",
+                                          style: AppTextStyles.bodySmall
+                                              .copyWith(
+                                                color: AppColors.success,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
                                         SizedBox(width: 8.w),
                                         IconButton(
-                                          onPressed: () => _downloadFile(record: record, isPrescription: false, customTitle: "Lab Invoice"),
-                                          icon: const Icon(Icons.download, size: 16, color: Colors.orange),
+                                          onPressed: () => _downloadFile(
+                                            record: record,
+                                            isPrescription: false,
+                                            customTitle: "Lab Invoice",
+                                          ),
+                                          icon: const Icon(
+                                            Icons.download,
+                                            size: 16,
+                                            color: Colors.orange,
+                                          ),
                                           tooltip: "Download Lab Invoice PDF",
                                         ),
                                       ],
                                     )
                                   else
                                     ElevatedButton(
-                                      onPressed: () => _processDepartmentPayment(
-                                        record: record,
-                                        isMedicine: false,
-                                        amount: labAmount,
-                                        invoiceNum: labInvoice,
-                                      ),
+                                      onPressed: () =>
+                                          _processDepartmentPayment(
+                                            record: record,
+                                            isMedicine: false,
+                                            amount: labAmount,
+                                            invoiceNum: labInvoice,
+                                          ),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.orange,
-                                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 12.w,
+                                          vertical: 6.h,
+                                        ),
                                         minimumSize: Size.zero,
-                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
                                       ),
-                                      child: Text("Pay Now", style: AppTextStyles.bodySmall.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                                      child: Text(
+                                        "Pay Now",
+                                        style: AppTextStyles.bodySmall.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                 ],
                               ),
@@ -1627,7 +2468,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                 "No lab tests scheduled.",
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontStyle: FontStyle.italic,
-                                  color: isDark ? Colors.white38 : AppColors.textSecondary,
+                                  color: isDark
+                                      ? Colors.white38
+                                      : AppColors.textSecondary,
                                 ),
                               ),
                           ],
@@ -1641,12 +2484,18 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           iconColor: Colors.blueGrey,
                           isDark: isDark,
                           children: [
-                            if (record['prescription_notes'] != null && record['prescription_notes'].toString().trim().isNotEmpty)
+                            if (record['prescription_notes'] != null &&
+                                record['prescription_notes']
+                                    .toString()
+                                    .trim()
+                                    .isNotEmpty)
                               Text(
                                 record['prescription_notes'],
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   height: 1.4,
-                                  color: isDark ? Colors.white70 : AppColors.textPrimary,
+                                  color: isDark
+                                      ? Colors.white70
+                                      : AppColors.textPrimary,
                                 ),
                               )
                             else
@@ -1654,7 +2503,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                 "No additional notes.",
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontStyle: FontStyle.italic,
-                                  color: isDark ? Colors.white38 : AppColors.textSecondary,
+                                  color: isDark
+                                      ? Colors.white38
+                                      : AppColors.textSecondary,
                                 ),
                               ),
                           ],
@@ -1675,9 +2526,22 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                               valueColor: Colors.green,
                               valueFontWeight: FontWeight.bold,
                             ),
-                            _buildInfoRow("Payment Method", record['payment_method'] ?? 'Cash', isDark),
-                            _buildInfoRow("Payment Status", "PAID", isDark, valueColor: AppColors.success, valueFontWeight: FontWeight.bold),
-                            _buildInvoiceSignature(record['doctor_name'] ?? 'Authorized Doctor', isDark),
+                            _buildInfoRow(
+                              "Payment Method",
+                              record['payment_method'] ?? 'Cash',
+                              isDark,
+                            ),
+                            _buildInfoRow(
+                              "Payment Status",
+                              "PAID",
+                              isDark,
+                              valueColor: AppColors.success,
+                              valueFontWeight: FontWeight.bold,
+                            ),
+                            _buildInvoiceSignature(
+                              record['doctor_name'] ?? 'Authorized Doctor',
+                              isDark,
+                            ),
                           ],
                         ),
                         SizedBox(height: 24.h),
@@ -1687,32 +2551,54 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           children: [
                             Expanded(
                               child: ElevatedButton.icon(
-                                onPressed: () => _downloadFile(record: record, isPrescription: true),
-                                icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
+                                onPressed: () => _downloadFile(
+                                  record: record,
+                                  isPrescription: true,
+                                ),
+                                icon: const Icon(
+                                  Icons.picture_as_pdf,
+                                  color: Colors.white,
+                                ),
                                 label: const Text(
                                   "Prescription",
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.teal,
                                   padding: EdgeInsets.symmetric(vertical: 14.h),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
                                 ),
                               ),
                             ),
                             SizedBox(width: 12.w),
                             Expanded(
                               child: ElevatedButton.icon(
-                                onPressed: () => _downloadFile(record: record, isPrescription: false),
-                                icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
+                                onPressed: () => _downloadFile(
+                                  record: record,
+                                  isPrescription: false,
+                                ),
+                                icon: const Icon(
+                                  Icons.picture_as_pdf,
+                                  color: Colors.white,
+                                ),
                                 label: const Text(
                                   "Consultation Inv",
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
                                   padding: EdgeInsets.symmetric(vertical: 14.h),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
                                 ),
                               ),
                             ),
@@ -1792,7 +2678,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
             value,
             style: AppTextStyles.bodySmall.copyWith(
               fontWeight: valueFontWeight ?? FontWeight.w500,
-              color: valueColor ?? (isDark ? Colors.white70 : AppColors.textPrimary),
+              color:
+                  valueColor ??
+                  (isDark ? Colors.white70 : AppColors.textPrimary),
             ),
           ),
         ],
@@ -1816,7 +2704,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
               return Center(
                 child: Text(
                   state.message,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.error,
+                  ),
                 ),
               );
             } else if (state is EmrdLoaded) {
@@ -1849,11 +2739,16 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       itemBuilder: (context, index) {
                         final key = stats.keys.elementAt(index);
                         final val = stats[key];
-                        final displayKey = key.split('_').map((word) {
-                          if (word == 'pct') return '%';
-                          if (word == 'min' || word == 'mins') return 'Mins';
-                          return word[0].toUpperCase() + word.substring(1);
-                        }).join(' ');
+                        final displayKey = key
+                            .split('_')
+                            .map((word) {
+                              if (word == 'pct') return '%';
+                              if (word == 'min' || word == 'mins') {
+                                return 'Mins';
+                              }
+                              return word[0].toUpperCase() + word.substring(1);
+                            })
+                            .join(' ');
 
                         return Card(
                           elevation: 0,
@@ -1893,7 +2788,11 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                     SizedBox(height: 24.h),
                     Row(
                       children: [
-                        Icon(Icons.history_edu_outlined, color: AppColors.primary, size: 22.r),
+                        Icon(
+                          Icons.history_edu_outlined,
+                          color: AppColors.primary,
+                          size: 22.r,
+                        ),
                         SizedBox(width: 8.w),
                         Text(
                           "Completed Consultations (EMR)",
@@ -1913,22 +2812,35 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           side: const BorderSide(color: AppColors.border),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 32.h, horizontal: 16.w),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 32.h,
+                            horizontal: 16.w,
+                          ),
                           child: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.assignment_outlined, size: 48.r, color: AppColors.textSecondary.withOpacity(0.4)),
+                                Icon(
+                                  Icons.assignment_outlined,
+                                  size: 48.r,
+                                  color: AppColors.textSecondary.withValues(
+                                    alpha: 0.4,
+                                  ),
+                                ),
                                 SizedBox(height: 12.h),
                                 Text(
                                   "No EMR Records Found",
-                                  style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 SizedBox(height: 4.h),
                                 Text(
                                   "Completed consultations will be recorded and listed here.",
                                   textAlign: TextAlign.center,
-                                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                                  style: AppTextStyles.bodySmall.copyWith(
+                                    color: AppColors.textSecondary,
+                                  ),
                                 ),
                               ],
                             ),
@@ -1944,7 +2856,8 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           final record = emrRecords[index];
                           return EmrdListItemCard(
                             record: record,
-                            onTap: () => _showRecordDetailsSheet(context, record),
+                            onTap: () =>
+                                _showRecordDetailsSheet(context, record),
                           );
                         },
                       ),
@@ -1953,7 +2866,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                       onCreateEMR: () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("Please complete a consultation from the Appointments page to generate a new EMR record."),
+                            content: Text(
+                              "Please complete a consultation from the Appointments page to generate a new EMR record.",
+                            ),
                             backgroundColor: AppColors.primary,
                           ),
                         );

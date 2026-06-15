@@ -9,8 +9,12 @@ class DoctorsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,9 +66,15 @@ class DoctorsHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildRoundHeaderButton(BuildContext context, IconData icon, VoidCallback onTap) {
+  Widget _buildRoundHeaderButton(
+    BuildContext context,
+    IconData icon,
+    VoidCallback onTap,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final btnBg = isDark ? Colors.white.withValues(alpha: 0.08) : Colors.black.withValues(alpha: 0.05);
+    final btnBg = isDark
+        ? Colors.white.withValues(alpha: 0.08)
+        : Colors.black.withValues(alpha: 0.05);
     final iconColor = isDark ? Colors.white : AppColors.terminalLightText;
 
     return InkWell(
@@ -72,10 +82,7 @@ class DoctorsHeader extends StatelessWidget {
       borderRadius: BorderRadius.circular(20.r),
       child: Container(
         padding: EdgeInsets.all(8.r),
-        decoration: BoxDecoration(
-          color: btnBg,
-          shape: BoxShape.circle,
-        ),
+        decoration: BoxDecoration(color: btnBg, shape: BoxShape.circle),
         child: Icon(icon, color: iconColor, size: 18.r),
       ),
     );

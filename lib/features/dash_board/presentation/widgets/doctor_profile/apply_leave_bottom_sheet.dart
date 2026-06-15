@@ -19,10 +19,17 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
   String? _selectedLeaveType;
   String _fromDate = "20 May 2025";
   String _toDate = "20 May 2025";
-  String _selectedSession = "Full Day"; // Full Day, Morning Half, Afternoon Half
+  String _selectedSession =
+      "Full Day"; // Full Day, Morning Half, Afternoon Half
   String? _uploadedFileName;
 
-  final List<String> _leaveTypes = ["Annual Leave", "Casual Leave", "Sick Leave", "Maternity Leave", "Paternity Leave"];
+  final List<String> _leaveTypes = [
+    "Annual Leave",
+    "Casual Leave",
+    "Sick Leave",
+    "Maternity Leave",
+    "Paternity Leave",
+  ];
   int _charCount = 0;
 
   @override
@@ -50,10 +57,24 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
       lastDate: DateTime(2030, 12, 31),
     );
     if (picked != null) {
-      final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      final months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
       setState(() {
         if (isFrom) {
-          _fromDate = "${picked.day} ${months[picked.month - 1]} ${picked.year}";
+          _fromDate =
+              "${picked.day} ${months[picked.month - 1]} ${picked.year}";
         } else {
           _toDate = "${picked.day} ${months[picked.month - 1]} ${picked.year}";
         }
@@ -88,7 +109,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
       widget.onLeaveApplied!({
         "type": _selectedLeaveType!,
         "range": _fromDate == _toDate ? _fromDate : "$_fromDate - $_toDate",
-        "status": "Pending"
+        "status": "Pending",
       });
     }
 
@@ -102,10 +123,16 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : Colors.grey.shade300;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : Colors.grey.shade300;
     final textColor = isDark ? AppColors.terminalDarkText : Colors.black87;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : Colors.grey.shade600;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : Colors.grey.shade600;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
 
     return Container(
       padding: EdgeInsets.only(
@@ -122,7 +149,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 10.r,
             offset: const Offset(0, -2),
           ),
@@ -177,7 +204,14 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Leave Type dropdown
-                  Text("Leave Type*", style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 11.sp)),
+                  Text(
+                    "Leave Type*",
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                   SizedBox(height: 6.h),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -192,21 +226,44 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                         isExpanded: true,
                         hint: Row(
                           children: [
-                            Icon(Icons.calendar_month_outlined, size: 14.sp, color: Colors.green),
+                            Icon(
+                              Icons.calendar_month_outlined,
+                              size: 14.sp,
+                              color: Colors.green,
+                            ),
                             SizedBox(width: 8.w),
-                            Text("Select Leave Type", style: TextStyle(color: labelColor, fontSize: 11.sp)),
+                            Text(
+                              "Select Leave Type",
+                              style: TextStyle(
+                                color: labelColor,
+                                fontSize: 11.sp,
+                              ),
+                            ),
                           ],
                         ),
                         dropdownColor: cardBg,
-                        icon: Icon(Icons.keyboard_arrow_down, color: labelColor, size: 16.sp),
-                        style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
-                        onChanged: (val) => setState(() => _selectedLeaveType = val),
+                        icon: Icon(
+                          Icons.keyboard_arrow_down,
+                          color: labelColor,
+                          size: 16.sp,
+                        ),
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        onChanged: (val) =>
+                            setState(() => _selectedLeaveType = val),
                         items: _leaveTypes.map((type) {
                           return DropdownMenuItem<String>(
                             value: type,
                             child: Row(
                               children: [
-                                Icon(Icons.calendar_month_outlined, size: 14.sp, color: Colors.green),
+                                Icon(
+                                  Icons.calendar_month_outlined,
+                                  size: 14.sp,
+                                  color: Colors.green,
+                                ),
                                 SizedBox(width: 8.w),
                                 Text(type),
                               ],
@@ -219,7 +276,14 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                   SizedBox(height: 12.h),
 
                   // Leave Date From / To
-                  Text("Leave Date*", style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 11.sp)),
+                  Text(
+                    "Leave Date*",
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                   SizedBox(height: 6.h),
                   Row(
                     children: [
@@ -228,7 +292,10 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                         child: GestureDetector(
                           onTap: () => _selectDate(true),
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 10.h,
+                            ),
                             decoration: BoxDecoration(
                               color: fieldBg,
                               border: Border.all(color: borderColor),
@@ -240,12 +307,29 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("From Date", style: TextStyle(color: labelColor, fontSize: 8.sp)),
+                                    Text(
+                                      "From Date",
+                                      style: TextStyle(
+                                        color: labelColor,
+                                        fontSize: 8.sp,
+                                      ),
+                                    ),
                                     SizedBox(height: 2.h),
-                                    Text(_fromDate, style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600)),
+                                    Text(
+                                      _fromDate,
+                                      style: TextStyle(
+                                        color: textColor,
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                Icon(Icons.calendar_month_outlined, size: 14.sp, color: labelColor),
+                                Icon(
+                                  Icons.calendar_month_outlined,
+                                  size: 14.sp,
+                                  color: labelColor,
+                                ),
                               ],
                             ),
                           ),
@@ -253,14 +337,21 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: Icon(Icons.arrow_forward, size: 14.sp, color: labelColor),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          size: 14.sp,
+                          color: labelColor,
+                        ),
                       ),
                       // To Date
                       Expanded(
                         child: GestureDetector(
                           onTap: () => _selectDate(false),
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 10.h,
+                            ),
                             decoration: BoxDecoration(
                               color: fieldBg,
                               border: Border.all(color: borderColor),
@@ -272,12 +363,29 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("To Date", style: TextStyle(color: labelColor, fontSize: 8.sp)),
+                                    Text(
+                                      "To Date",
+                                      style: TextStyle(
+                                        color: labelColor,
+                                        fontSize: 8.sp,
+                                      ),
+                                    ),
                                     SizedBox(height: 2.h),
-                                    Text(_toDate, style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600)),
+                                    Text(
+                                      _toDate,
+                                      style: TextStyle(
+                                        color: textColor,
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                Icon(Icons.calendar_month_outlined, size: 14.sp, color: labelColor),
+                                Icon(
+                                  Icons.calendar_month_outlined,
+                                  size: 14.sp,
+                                  color: labelColor,
+                                ),
                               ],
                             ),
                           ),
@@ -288,24 +396,56 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                   SizedBox(height: 12.h),
 
                   // Session Toggles
-                  Text("Session", style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 11.sp)),
+                  Text(
+                    "Session",
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                   SizedBox(height: 6.h),
                   Row(
                     children: [
-                      _buildSessionButton("Full Day", fieldBg, borderColor, labelColor),
+                      _buildSessionButton(
+                        "Full Day",
+                        fieldBg,
+                        borderColor,
+                        labelColor,
+                      ),
                       SizedBox(width: 4.w),
-                      _buildSessionButton("Morning Half", fieldBg, borderColor, labelColor),
+                      _buildSessionButton(
+                        "Morning Half",
+                        fieldBg,
+                        borderColor,
+                        labelColor,
+                      ),
                       SizedBox(width: 4.w),
-                      _buildSessionButton("Afternoon Half", fieldBg, borderColor, labelColor),
+                      _buildSessionButton(
+                        "Afternoon Half",
+                        fieldBg,
+                        borderColor,
+                        labelColor,
+                      ),
                     ],
                   ),
                   SizedBox(height: 12.h),
 
                   // Reason for Leave
-                  Text("Reason for Leave*", style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 11.sp)),
+                  Text(
+                    "Reason for Leave*",
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                   SizedBox(height: 6.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: fieldBg,
                       border: Border.all(color: borderColor),
@@ -319,7 +459,11 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(top: 8.h),
-                              child: Icon(Icons.description_outlined, size: 14.sp, color: labelColor),
+                              child: Icon(
+                                Icons.description_outlined,
+                                size: 14.sp,
+                                color: labelColor,
+                              ),
                             ),
                             SizedBox(width: 8.w),
                             Expanded(
@@ -327,14 +471,28 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                                 controller: _reasonController,
                                 maxLines: 3,
                                 maxLength: 250,
-                                style: TextStyle(color: textColor, fontSize: 11.sp),
-                                buildCounter: (context, {required currentLength, required isFocused, maxLength}) => null,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 11.sp,
+                                ),
+                                buildCounter:
+                                    (
+                                      context, {
+                                      required currentLength,
+                                      required isFocused,
+                                      maxLength,
+                                    }) => null,
                                 decoration: InputDecoration(
                                   hintText: "Enter reason for leave",
-                                  hintStyle: TextStyle(color: labelColor, fontSize: 11.sp),
+                                  hintStyle: TextStyle(
+                                    color: labelColor,
+                                    fontSize: 11.sp,
+                                  ),
                                   border: InputBorder.none,
                                   isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(vertical: 8.h),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: 8.h,
+                                  ),
                                 ),
                               ),
                             ),
@@ -350,7 +508,14 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                   SizedBox(height: 12.h),
 
                   // Contact Number
-                  Text("Contact Number During Leave (Optional)", style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 11.sp)),
+                  Text(
+                    "Contact Number During Leave (Optional)",
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                   SizedBox(height: 6.h),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -364,9 +529,16 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                       keyboardType: TextInputType.phone,
                       style: TextStyle(color: textColor, fontSize: 11.sp),
                       decoration: InputDecoration(
-                        icon: Icon(Icons.phone_outlined, size: 14.sp, color: labelColor),
+                        icon: Icon(
+                          Icons.phone_outlined,
+                          size: 14.sp,
+                          color: labelColor,
+                        ),
                         hintText: "Enter contact number",
-                        hintStyle: TextStyle(color: labelColor, fontSize: 11.sp),
+                        hintStyle: TextStyle(
+                          color: labelColor,
+                          fontSize: 11.sp,
+                        ),
                         border: InputBorder.none,
                         isDense: true,
                       ),
@@ -375,7 +547,14 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                   SizedBox(height: 12.h),
 
                   // Supporting Document
-                  Text("Supporting Document (Optional)", style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 11.sp)),
+                  Text(
+                    "Supporting Document (Optional)",
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                   SizedBox(height: 6.h),
                   GestureDetector(
                     onTap: _simulateUpload,
@@ -385,9 +564,10 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                       decoration: BoxDecoration(
                         color: Colors.transparent,
                         border: Border.all(
-                          color: AppColors.primary.withOpacity(0.4),
+                          color: AppColors.primary.withValues(alpha: 0.4),
                           width: 1,
-                          style: BorderStyle.solid, // Use simple solid borders if dash border is too complex, styled premium
+                          style: BorderStyle
+                              .solid, // Use simple solid borders if dash border is too complex, styled premium
                         ),
                         borderRadius: BorderRadius.circular(6.r),
                       ),
@@ -395,9 +575,13 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            _uploadedFileName == null ? Icons.cloud_upload_outlined : Icons.check_circle_outline,
+                            _uploadedFileName == null
+                                ? Icons.cloud_upload_outlined
+                                : Icons.check_circle_outline,
                             size: 20.sp,
-                            color: _uploadedFileName == null ? AppColors.primary : Colors.green,
+                            color: _uploadedFileName == null
+                                ? AppColors.primary
+                                : Colors.green,
                           ),
                           SizedBox(height: 6.h),
                           Text(
@@ -410,10 +594,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                           ),
                           Text(
                             "PDF, JPG, PNG (Max. 5 MB)",
-                            style: TextStyle(
-                              color: labelColor,
-                              fontSize: 9.sp,
-                            ),
+                            style: TextStyle(color: labelColor, fontSize: 9.sp),
                           ),
                         ],
                       ),
@@ -454,7 +635,9 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                      side: BorderSide(
+                        color: AppColors.primary.withValues(alpha: 0.5),
+                      ),
                       padding: EdgeInsets.symmetric(vertical: 12.h),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.r),
@@ -478,7 +661,12 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
     );
   }
 
-  Widget _buildSessionButton(String session, Color fieldBg, Color borderColor, Color labelColor) {
+  Widget _buildSessionButton(
+    String session,
+    Color fieldBg,
+    Color borderColor,
+    Color labelColor,
+  ) {
     final isSelected = _selectedSession == session;
     final activeBg = AppColors.primary;
 

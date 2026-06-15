@@ -1,4 +1,6 @@
 /// Domain entity for an emergency alert.
+library;
+
 import 'package:equatable/equatable.dart';
 
 class EmergencyEntity extends Equatable {

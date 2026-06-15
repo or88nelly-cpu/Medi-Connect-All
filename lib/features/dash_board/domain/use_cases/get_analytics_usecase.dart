@@ -1,4 +1,6 @@
 /// Executes fetching analytics data.
+library;
+
 import 'package:fpdart/fpdart.dart';
 // import 'package:core/core.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';

@@ -1,12 +1,10 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/auth/data/models/user_model.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
@@ -96,30 +94,52 @@ class _CreateAppointmentWizardBottomSheetState
     }
 
     final dateStr = state.selectedDate.toIso8601String().split('T').first;
-    final patientName = state.selectedPatient!.name ??
-        '${state.selectedPatient!.firstName} ${state.selectedPatient!.lastName}'.trim();
-    final doctorName = state.selectedDoctor!.name ??
-        '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'.trim();
+    final patientName =
+        state.selectedPatient!.name ??
+        '${state.selectedPatient!.firstName} ${state.selectedPatient!.lastName}'
+            .trim();
+    final doctorName =
+        state.selectedDoctor!.name ??
+        '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
+            .trim();
 
-    final isLikhin = doctorName == "Likhin Nelliyotan" ||
-        (doctorName.contains("Likhin") && doctorName.contains("Nelliyotan"));
+    final cleanName = doctorName
+        .replaceAll(RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false), '')
+        .trim();
+    final parts = cleanName
+        .split(RegExp(r'\s+'))
+        .where((s) => s.isNotEmpty)
+        .toList();
+    String initials = 'DR';
+    if (parts.isNotEmpty) {
+      if (parts.length == 1) {
+        initials = parts[0]
+            .substring(0, parts[0].length >= 2 ? 2 : 1)
+            .toUpperCase();
+      } else {
+        initials =
+            '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
+      }
+    }
 
     String? token;
-    if (isLikhin) {
-      if (state.isWaitingList) {
-        if (state.currentWaitingCount >= 10) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Error: Waiting list is full (maximum 10 waiting list slots reached)."),
-              backgroundColor: AppColors.error,
+    if (state.isWaitingList) {
+      if (state.currentWaitingCount >= 10) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Error: Waiting list is full (maximum 10 waiting list slots reached).",
             ),
-          );
-          return;
-        }
-        token = 'LNW${(state.currentWaitingCount + 1).toString().padLeft(2, '0')}';
-      } else {
-        token = 'LNA${(state.currentNormalCount + 1).toString().padLeft(2, '0')}';
+            backgroundColor: AppColors.error,
+          ),
+        );
+        return;
       }
+      token =
+          '${initials}W${(state.currentWaitingCount + 1).toString().padLeft(3, '0')}';
+    } else {
+      token =
+          '${initials}A${(state.currentNormalCount + 1).toString().padLeft(3, '0')}';
     }
 
     // 1. Dispatch CreateAppointmentEvent to AdminAppointmentsBloc
@@ -134,7 +154,7 @@ class _CreateAppointmentWizardBottomSheetState
         'appointment_time': state.selectedSlotTime!,
         'status': 'Confirmed',
         'type': state.selectedType,
-        if (token != null) 'token': token,
+        'token': token,
       }),
     );
 
@@ -205,7 +225,9 @@ class _CreateAppointmentWizardBottomSheetState
     slotsByDate[formattedDate] = dateData;
     updatedMetadata['slots_by_date'] = slotsByDate;
 
-    final updatedDoctor = state.selectedDoctor!.copyWith(metadata: updatedMetadata);
+    final updatedDoctor = state.selectedDoctor!.copyWith(
+      metadata: updatedMetadata,
+    );
     context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedDoctor));
 
     // 3. Show confirmation snackbar and pop wizard
@@ -264,7 +286,8 @@ class _CreateAppointmentWizardBottomSheetState
                     backgroundColor: AppColors.success,
                   ),
                 );
-              } else if (patientState is PatientLoaded && _emailController.text.isNotEmpty) {
+              } else if (patientState is PatientLoaded &&
+                  _emailController.text.isNotEmpty) {
                 final registered = patientState.patients.where(
                   (p) =>
                       p.email.toLowerCase() ==
@@ -296,10 +319,14 @@ class _CreateAppointmentWizardBottomSheetState
                 return Container(
                   decoration: BoxDecoration(
                     color: sheetBg,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(24.r),
+                    ),
                     border: Border(
                       top: BorderSide(
-                        color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                        color: isDark
+                            ? AppColors.terminalDarkBorder
+                            : AppColors.border,
                         width: 1.5,
                       ),
                     ),
@@ -315,7 +342,9 @@ class _CreateAppointmentWizardBottomSheetState
                               width: 40.w,
                               height: 4.h,
                               decoration: BoxDecoration(
-                                color: isDark ? Colors.white24 : Colors.grey[300],
+                                color: isDark
+                                    ? Colors.white24
+                                    : Colors.grey[300],
                                 borderRadius: BorderRadius.circular(2),
                               ),
                             ),
@@ -331,7 +360,9 @@ class _CreateAppointmentWizardBottomSheetState
                                 Text(
                                   "Booking Wizard",
                                   style: AppTextStyles.titleLarge.copyWith(
-                                    color: isDark ? Colors.white : AppColors.textPrimary,
+                                    color: isDark
+                                        ? Colors.white
+                                        : AppColors.textPrimary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -339,7 +370,9 @@ class _CreateAppointmentWizardBottomSheetState
                                   onPressed: () => Navigator.pop(context),
                                   icon: Icon(
                                     Icons.close,
-                                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                    color: isDark
+                                        ? Colors.white54
+                                        : AppColors.textSecondary,
                                   ),
                                 ),
                               ],
@@ -358,16 +391,24 @@ class _CreateAppointmentWizardBottomSheetState
                           // Active Step Content Container
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 12.h,
+                              ),
                               child: _buildActiveStepContent(state.currentStep),
                             ),
                           ),
-                          
+
                           const Divider(height: 1),
 
                           // Footer Navigation Buttons
                           Padding(
-                            padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 20.h),
+                            padding: EdgeInsets.fromLTRB(
+                              20.w,
+                              12.h,
+                              20.w,
+                              20.h,
+                            ),
                             child: WizardFooterButtons(
                               onSubmit: () => _submitAppointment(cubit),
                             ),

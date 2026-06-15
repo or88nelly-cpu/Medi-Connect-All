@@ -24,10 +24,18 @@ class SectionDoctorGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final yearsExp = (doc.age ?? 35) - 25;
     final status = doc.status;
@@ -60,11 +68,17 @@ class SectionDoctorGridCard extends StatelessWidget {
                 itemBuilder: (ctx) => [
                   PopupMenuItem(
                     value: 'view',
-                    child: Text(AppStrings.viewProfile, style: TextStyle(color: textColor)),
+                    child: Text(
+                      AppStrings.viewProfile,
+                      style: TextStyle(color: textColor),
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'edit',
-                    child: Text(AppStrings.editDoctor, style: TextStyle(color: textColor)),
+                    child: Text(
+                      AppStrings.editDoctor,
+                      style: TextStyle(color: textColor),
+                    ),
                   ),
                 ],
               ),
@@ -106,7 +120,10 @@ class SectionDoctorGridCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 6.w,
+                      vertical: 2.h,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(4.r),
@@ -125,10 +142,7 @@ class SectionDoctorGridCard extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Text(
                     "$yearsExp${AppStrings.yrsExpSuffix}",
-                    style: TextStyle(
-                      color: labelColor,
-                      fontSize: 10.sp,
-                    ),
+                    style: TextStyle(color: labelColor, fontSize: 10.sp),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -171,10 +185,7 @@ class SectionDoctorGridCard extends StatelessWidget {
           Container(
             width: 5.r,
             height: 5.r,
-            decoration: BoxDecoration(
-              color: dotColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
           SizedBox(width: 4.w),
           Text(

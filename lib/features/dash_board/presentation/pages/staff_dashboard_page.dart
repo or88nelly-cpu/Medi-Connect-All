@@ -10,8 +10,8 @@ import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:get_it/get_it.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/common/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/department/data/datasource/doctor_staff_remote_datasource.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/staff_bottom_nav_bar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
@@ -148,7 +148,7 @@ class _StaffWelcomeBanner extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
-                color: AppColors.accent.withOpacity(0.25),
+                color: AppColors.accent.withValues(alpha: 0.25),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -178,7 +178,7 @@ class _StaffWelcomeBanner extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      roleLabel!,
+                      roleLabel,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: Colors.white70,
                       ),
@@ -223,7 +223,15 @@ class _StaffShiftCard extends StatelessWidget {
           final user = UserModel.fromEntity(state.user);
           final roster = user.metadata?['roster'] as List<dynamic>?;
           if (roster != null && roster.isNotEmpty) {
-            final days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            final days = [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ];
             final currentDayName = days[DateTime.now().weekday - 1];
             final shiftItem = roster.firstWhere(
               (item) => item is Map && item['day'] == currentDayName,
@@ -264,15 +272,22 @@ class _StaffShiftCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 6.h,
+                  ),
                   decoration: BoxDecoration(
-                    color: statusLabel == "Off" ? AppColors.error.withOpacity(0.1) : AppColors.accent.withOpacity(0.1),
+                    color: statusLabel == "Off"
+                        ? AppColors.error.withValues(alpha: 0.1)
+                        : AppColors.accent.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6.r),
                   ),
                   child: Text(
                     statusLabel,
                     style: TextStyle(
-                      color: statusLabel == "Off" ? AppColors.error : AppColors.accent,
+                      color: statusLabel == "Off"
+                          ? AppColors.error
+                          : AppColors.accent,
                       fontWeight: FontWeight.bold,
                       fontSize: 10.sp,
                     ),
@@ -337,8 +352,12 @@ class _StaffTasksOverviewCard extends StatelessWidget {
               return ListTile(
                 contentPadding: EdgeInsets.all(16.r),
                 leading: Icon(
-                  isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
-                  color: isCompleted ? AppColors.success : AppColors.textSecondary,
+                  isCompleted
+                      ? Icons.check_circle
+                      : Icons.radio_button_unchecked,
+                  color: isCompleted
+                      ? AppColors.success
+                      : AppColors.textSecondary,
                 ),
                 title: Text(
                   t['title']!,
@@ -347,7 +366,9 @@ class _StaffTasksOverviewCard extends StatelessWidget {
                     color: isCompleted
                         ? AppColors.textSecondary
                         : AppColors.textPrimary,
-                    fontWeight: isCompleted ? FontWeight.normal : FontWeight.bold,
+                    fontWeight: isCompleted
+                        ? FontWeight.normal
+                        : FontWeight.bold,
                   ),
                 ),
                 trailing: Text(
@@ -395,8 +416,16 @@ class _StaffTasksTab extends StatelessWidget {
           }
         } else {
           tasks.addAll([
-            {'id': 'T-1', 'title': 'Sanitize consultation room 3', 'status': 'Pending'},
-            {'id': 'T-2', 'title': 'Verify outpatient logs', 'status': 'Completed'},
+            {
+              'id': 'T-1',
+              'title': 'Sanitize consultation room 3',
+              'status': 'Pending',
+            },
+            {
+              'id': 'T-2',
+              'title': 'Verify outpatient logs',
+              'status': 'Completed',
+            },
             {
               'id': 'T-3',
               'title': 'Update stock checklist in Block A',
@@ -438,38 +467,63 @@ class _StaffTasksTab extends StatelessWidget {
                         activeColor: AppColors.primary,
                         value: isCompleted,
                         onChanged: (val) async {
-                          final updatedMetadata = Map<String, dynamic>.from(user.metadata ?? {});
-                          final updatedTasks = List<dynamic>.from(updatedMetadata['tasks'] ?? [
-                            {'id': 'T-1', 'title': 'Sanitize consultation room 3', 'status': 'Pending'},
-                            {'id': 'T-2', 'title': 'Verify outpatient logs', 'status': 'Completed'},
-                            {
-                              'id': 'T-3',
-                              'title': 'Update stock checklist in Block A',
-                              'status': 'Pending',
-                            },
-                            {
-                              'id': 'T-4',
-                              'title': 'Confirm receipt of lab reagents',
-                              'status': 'Pending',
-                            },
-                          ]);
+                          final updatedMetadata = Map<String, dynamic>.from(
+                            user.metadata ?? {},
+                          );
+                          final updatedTasks = List<dynamic>.from(
+                            updatedMetadata['tasks'] ??
+                                [
+                                  {
+                                    'id': 'T-1',
+                                    'title': 'Sanitize consultation room 3',
+                                    'status': 'Pending',
+                                  },
+                                  {
+                                    'id': 'T-2',
+                                    'title': 'Verify outpatient logs',
+                                    'status': 'Completed',
+                                  },
+                                  {
+                                    'id': 'T-3',
+                                    'title':
+                                        'Update stock checklist in Block A',
+                                    'status': 'Pending',
+                                  },
+                                  {
+                                    'id': 'T-4',
+                                    'title': 'Confirm receipt of lab reagents',
+                                    'status': 'Pending',
+                                  },
+                                ],
+                          );
 
-                          final taskIdx = updatedTasks.indexWhere((item) => item['id'] == t['id']);
+                          final taskIdx = updatedTasks.indexWhere(
+                            (item) => item['id'] == t['id'],
+                          );
                           if (taskIdx != -1) {
-                            final updatedTask = Map<String, dynamic>.from(updatedTasks[taskIdx]);
-                            updatedTask['status'] = val! ? 'Completed' : 'Pending';
+                            final updatedTask = Map<String, dynamic>.from(
+                              updatedTasks[taskIdx],
+                            );
+                            updatedTask['status'] = val!
+                                ? 'Completed'
+                                : 'Pending';
                             updatedTasks[taskIdx] = updatedTask;
                           }
 
                           updatedMetadata['tasks'] = updatedTasks;
-                          final updatedUser = user.copyWith(metadata: updatedMetadata);
+                          final updatedUser = user.copyWith(
+                            metadata: updatedMetadata,
+                          );
 
                           // Save to DB
-                          await GetIt.instance<DoctorStaffRemoteDataSource>().updateDoctorStaffMember(updatedUser);
+                          await GetIt.instance<DoctorStaffRemoteDataSource>()
+                              .updateDoctorStaffMember(updatedUser);
 
                           // Update Auth state
                           if (context.mounted) {
-                            context.read<AuthBloc>().add(UserUpdated(updatedUser));
+                            context.read<AuthBloc>().add(
+                              UserUpdated(updatedUser),
+                            );
                           }
                         },
                         title: Text(
@@ -576,8 +630,12 @@ class _StaffRosterTab extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (ctx) {
-                            final shiftCtrl = TextEditingController(text: r['shift']);
-                            final deptCtrl = TextEditingController(text: r['dept']);
+                            final shiftCtrl = TextEditingController(
+                              text: r['shift'],
+                            );
+                            final deptCtrl = TextEditingController(
+                              text: r['dept'],
+                            );
 
                             return AlertDialog(
                               title: Text("Edit Shift for ${r['day']}"),
@@ -586,11 +644,15 @@ class _StaffRosterTab extends StatelessWidget {
                                 children: [
                                   TextField(
                                     controller: shiftCtrl,
-                                    decoration: const InputDecoration(labelText: "Shift Timing"),
+                                    decoration: const InputDecoration(
+                                      labelText: "Shift Timing",
+                                    ),
                                   ),
                                   TextField(
                                     controller: deptCtrl,
-                                    decoration: const InputDecoration(labelText: "Department"),
+                                    decoration: const InputDecoration(
+                                      labelText: "Department",
+                                    ),
                                   ),
                                 ],
                               ),
@@ -602,30 +664,44 @@ class _StaffRosterTab extends StatelessWidget {
                                 TextButton(
                                   onPressed: () async {
                                     Navigator.pop(ctx);
-                                    final updatedMetadata = Map<String, dynamic>.from(user.metadata ?? {});
-                                    final updatedRoster = List<dynamic>.from(updatedMetadata['roster'] ?? [
-                                      {
-                                        'day': 'Monday',
-                                        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
-                                        'dept': 'OPD Support',
-                                      },
-                                      {
-                                        'day': 'Tuesday',
-                                        'shift': 'Day Shift (08:00 AM - 04:00 PM)',
-                                        'dept': 'OPD Support',
-                                      },
-                                      {'day': 'Wednesday', 'shift': 'Off Day', 'dept': '-'},
-                                      {
-                                        'day': 'Thursday',
-                                        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
-                                        'dept': 'Emergency Wards',
-                                      },
-                                      {
-                                        'day': 'Friday',
-                                        'shift': 'Night Shift (08:00 PM - 04:00 AM)',
-                                        'dept': 'Emergency Wards',
-                                      },
-                                    ]);
+                                    final updatedMetadata =
+                                        Map<String, dynamic>.from(
+                                          user.metadata ?? {},
+                                        );
+                                    final updatedRoster = List<dynamic>.from(
+                                      updatedMetadata['roster'] ??
+                                          [
+                                            {
+                                              'day': 'Monday',
+                                              'shift':
+                                                  'Day Shift (08:00 AM - 04:00 PM)',
+                                              'dept': 'OPD Support',
+                                            },
+                                            {
+                                              'day': 'Tuesday',
+                                              'shift':
+                                                  'Day Shift (08:00 AM - 04:00 PM)',
+                                              'dept': 'OPD Support',
+                                            },
+                                            {
+                                              'day': 'Wednesday',
+                                              'shift': 'Off Day',
+                                              'dept': '-',
+                                            },
+                                            {
+                                              'day': 'Thursday',
+                                              'shift':
+                                                  'Night Shift (08:00 PM - 04:00 AM)',
+                                              'dept': 'Emergency Wards',
+                                            },
+                                            {
+                                              'day': 'Friday',
+                                              'shift':
+                                                  'Night Shift (08:00 PM - 04:00 AM)',
+                                              'dept': 'Emergency Wards',
+                                            },
+                                          ],
+                                    );
 
                                     updatedRoster[idx] = {
                                       'day': r['day']!,
@@ -634,14 +710,21 @@ class _StaffRosterTab extends StatelessWidget {
                                     };
 
                                     updatedMetadata['roster'] = updatedRoster;
-                                    final updatedUser = user.copyWith(metadata: updatedMetadata);
+                                    final updatedUser = user.copyWith(
+                                      metadata: updatedMetadata,
+                                    );
 
                                     // Save changes
-                                    await GetIt.instance<DoctorStaffRemoteDataSource>().updateDoctorStaffMember(updatedUser);
+                                    await GetIt.instance<
+                                          DoctorStaffRemoteDataSource
+                                        >()
+                                        .updateDoctorStaffMember(updatedUser);
 
                                     // Trigger session state updates
                                     if (context.mounted) {
-                                      context.read<AuthBloc>().add(UserUpdated(updatedUser));
+                                      context.read<AuthBloc>().add(
+                                        UserUpdated(updatedUser),
+                                      );
                                     }
                                   },
                                   child: const Text("Save"),
@@ -673,7 +756,10 @@ class _StaffRosterTab extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 2.h),
-                                Text(r['shift']!, style: AppTextStyles.bodySmall),
+                                Text(
+                                  r['shift']!,
+                                  style: AppTextStyles.bodySmall,
+                                ),
                                 if (!isOff)
                                   Text(
                                     "Dept: ${r['dept']!}",
@@ -749,7 +835,7 @@ class _StaffAlertsTab extends StatelessWidget {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side: BorderSide(color: levelColor.withOpacity(0.4)),
+                    side: BorderSide(color: levelColor.withValues(alpha: 0.4)),
                   ),
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16.r),
@@ -832,7 +918,7 @@ class _StaffProfileTab extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: AppColors.accent.withOpacity(0.1),
+                  color: AppColors.accent.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(

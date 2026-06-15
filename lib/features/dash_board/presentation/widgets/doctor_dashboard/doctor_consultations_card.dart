@@ -5,7 +5,6 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
-import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 
 class DoctorConsultationsCard extends StatelessWidget {
   const DoctorConsultationsCard({super.key});
@@ -24,7 +23,9 @@ class DoctorConsultationsCard extends StatelessWidget {
           return const SizedBox.shrink();
         }
         final doctor = authState.user;
-        final docDisplayName = doctor.name ?? "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName =
+            doctor.name ??
+            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, state) {
@@ -42,7 +43,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     "Error loading schedule",
-                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.error,
+                    ),
                   ),
                 ),
               );
@@ -53,16 +56,21 @@ class DoctorConsultationsCard extends StatelessWidget {
               // Filter for current logged-in doctor
               final doctorApts = appointments.where((a) {
                 final matchId = a.doctorId == doctor.id;
-                final matchName = a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
+                final matchName =
+                    a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
                     docDisplayName.toLowerCase().replaceAll("dr.", "").trim();
                 return matchId || matchName;
               }).toList();
 
               // Filter for today
-              final todayApts = doctorApts.where((a) => _isSameDay(a.appointmentDate, DateTime.now())).toList();
+              final todayApts = doctorApts
+                  .where((a) => _isSameDay(a.appointmentDate, DateTime.now()))
+                  .toList();
 
               // Sort chronologically
-              todayApts.sort((a, b) => a.appointmentTime.compareTo(b.appointmentTime));
+              todayApts.sort(
+                (a, b) => a.appointmentTime.compareTo(b.appointmentTime),
+              );
 
               if (todayApts.isEmpty) {
                 return Card(
@@ -86,7 +94,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                           SizedBox(height: 8.h),
                           Text(
                             "No appointments scheduled for today",
-                            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              color: Colors.grey,
+                            ),
                           ),
                         ],
                       ),
@@ -117,7 +127,8 @@ class DoctorConsultationsCard extends StatelessWidget {
                     final timePeriod = timeParts.length > 1 ? timeParts[1] : "";
 
                     // Determine leading avatar background and icon
-                    final isVideo = apt.type.toLowerCase().contains("video") ||
+                    final isVideo =
+                        apt.type.toLowerCase().contains("video") ||
                         apt.type.toLowerCase().contains("virtual") ||
                         apt.specialty.toLowerCase().contains("video");
 
@@ -126,26 +137,47 @@ class DoctorConsultationsCard extends StatelessWidget {
                     IconData icon;
 
                     if (isVideo) {
-                      avatarBg = isDark ? const Color(0xFF143A24) : const Color(0xFFE6F4EA);
-                      iconColor = isDark ? const Color(0xFF34D399) : const Color(0xFF137333);
+                      avatarBg = isDark
+                          ? const Color(0xFF143A24)
+                          : const Color(0xFFE6F4EA);
+                      iconColor = isDark
+                          ? const Color(0xFF34D399)
+                          : const Color(0xFF137333);
                       icon = Icons.videocam;
                     } else {
                       final useBlue = idx % 2 == 0;
                       avatarBg = useBlue
-                          ? (isDark ? const Color(0xFF1A365D) : const Color(0xFFE8F0FE))
-                          : (isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF));
-                      iconColor = useBlue 
-                          ? (isDark ? const Color(0xFF60A5FA) : const Color(0xFF1A73E8)) 
-                          : (isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE));
+                          ? (isDark
+                                ? const Color(0xFF1A365D)
+                                : const Color(0xFFE8F0FE))
+                          : (isDark
+                                ? const Color(0xFF3B0764)
+                                : const Color(0xFFF3E8FF));
+                      iconColor = useBlue
+                          ? (isDark
+                                ? const Color(0xFF60A5FA)
+                                : const Color(0xFF1A73E8))
+                          : (isDark
+                                ? const Color(0xFFC084FC)
+                                : const Color(0xFF7E22CE));
                       icon = Icons.person;
                     }
 
                     // Dynamically check if this is a new patient based on appointment count
-                    final isNewPatient = doctorApts.where((a) => a.patientId == apt.patientId).length <= 1;
-                    final patientType = isNewPatient ? "New Patient" : "Follow up";
+                    final isNewPatient =
+                        doctorApts
+                            .where((a) => a.patientId == apt.patientId)
+                            .length <=
+                        1;
+                    final patientType = isNewPatient
+                        ? "New Patient"
+                        : "Follow up";
 
                     return ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 12.h,
+                      ),
                       leading: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -159,7 +191,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                                 Text(
                                   timeVal,
                                   style: TextStyle(
-                                    color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF1A73E8),
+                                    color: isDark
+                                        ? const Color(0xFF60A5FA)
+                                        : const Color(0xFF1A73E8),
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -167,7 +201,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                                 Text(
                                   timePeriod,
                                   style: TextStyle(
-                                    color: isDark ? Colors.white30 : Colors.grey[400],
+                                    color: isDark
+                                        ? Colors.white30
+                                        : Colors.grey[400],
                                     fontSize: 9.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -199,7 +235,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                             Text(
                               apt.type,
                               style: TextStyle(
-                                color: isDark ? Colors.white60 : Colors.grey[600],
+                                color: isDark
+                                    ? Colors.white60
+                                    : Colors.grey[600],
                                 fontSize: 11.sp,
                               ),
                             ),
@@ -207,7 +245,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                             Text(
                               patientType,
                               style: TextStyle(
-                                color: isDark ? Colors.white30 : Colors.grey[400],
+                                color: isDark
+                                    ? Colors.white30
+                                    : Colors.grey[400],
                                 fontSize: 9.sp,
                                 fontWeight: FontWeight.w500,
                               ),

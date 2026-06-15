@@ -3,7 +3,8 @@ import 'package:medi_connect/core/common_models/failures/failure.dart';
 import 'package:medi_connect/core/usecases/usecase.dart';
 import 'package:medi_connect/features/departments/customer_care/domain/repositories/customer_care_repository.dart';
 
-class GetCustomerCareStatsUseCase extends UseCase<Map<String, dynamic>, NoParams> {
+class GetCustomerCareStatsUseCase
+    extends UseCase<Map<String, dynamic>, NoParams> {
   final CustomerCareRepository _repository;
   GetCustomerCareStatsUseCase(this._repository);
 

@@ -1,6 +1,8 @@
 /// Remote data source for all admin operations modules.
 /// Handles Supabase CRUD for pharmacy, labs, attendance, emergencies,
 /// activity logs, invoices, and admin settings.
+library;
+
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
@@ -14,7 +16,6 @@ import 'package:medi_connect/features/dash_board/data/models/emergency_model.dar
 import 'package:medi_connect/features/dash_board/data/models/activity_log_model.dart';
 import 'package:medi_connect/features/dash_board/data/models/invoice_model.dart';
 import 'package:medi_connect/features/dash_board/data/models/appointment_model.dart';
-
 
 // ─── Abstract Interface ─────────────────────────────────────────────────────
 
@@ -102,7 +103,7 @@ class AdminOperationsRemoteDataSourceImpl
           .insert(data)
           .select()
           .single();
-      return PharmacyItemModel.fromJson(response as Map<String, dynamic>);
+      return PharmacyItemModel.fromJson(response);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -135,7 +136,8 @@ class AdminOperationsRemoteDataSourceImpl
         'buy_price': 8.00,
         'sell_price': 12.00,
         'dosage': '500mg',
-        'image_url': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60'
+        'image_url':
+            'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60',
       },
       {
         'name': 'Amoxicillin 250mg',
@@ -144,7 +146,8 @@ class AdminOperationsRemoteDataSourceImpl
         'buy_price': 15.00,
         'sell_price': 25.00,
         'dosage': '250mg',
-        'image_url': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&auto=format&fit=crop&q=60'
+        'image_url':
+            'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&auto=format&fit=crop&q=60',
       },
       {
         'name': 'Ibuprofen 400mg',
@@ -153,7 +156,8 @@ class AdminOperationsRemoteDataSourceImpl
         'buy_price': 10.00,
         'sell_price': 18.00,
         'dosage': '400mg',
-        'image_url': 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=500&auto=format&fit=crop&q=60'
+        'image_url':
+            'https://images.unsplash.com/photo-1550572017-edd951b55104?w=500&auto=format&fit=crop&q=60',
       },
       {
         'name': 'Metformin 850mg',
@@ -162,7 +166,8 @@ class AdminOperationsRemoteDataSourceImpl
         'buy_price': 12.00,
         'sell_price': 20.00,
         'dosage': '850mg',
-        'image_url': 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&auto=format&fit=crop&q=60'
+        'image_url':
+            'https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&auto=format&fit=crop&q=60',
       },
       {
         'name': 'Atorvastatin 10mg',
@@ -171,7 +176,8 @@ class AdminOperationsRemoteDataSourceImpl
         'buy_price': 20.00,
         'sell_price': 35.00,
         'dosage': '10mg',
-        'image_url': 'https://images.unsplash.com/photo-1587854692152-cbe660dbaba9?w=500&auto=format&fit=crop&q=60'
+        'image_url':
+            'https://images.unsplash.com/photo-1587854692152-cbe660dbaba9?w=500&auto=format&fit=crop&q=60',
       },
       {
         'name': 'Omeprazole 20mg',
@@ -180,7 +186,8 @@ class AdminOperationsRemoteDataSourceImpl
         'buy_price': 14.00,
         'sell_price': 22.00,
         'dosage': '20mg',
-        'image_url': 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&auto=format&fit=crop&q=60'
+        'image_url':
+            'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&auto=format&fit=crop&q=60',
       },
     ];
     try {
@@ -226,7 +233,7 @@ class AdminOperationsRemoteDataSourceImpl
           .insert(data)
           .select()
           .single();
-      return LabTestModel.fromJson(response as Map<String, dynamic>);
+      return LabTestModel.fromJson(response);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -336,15 +343,19 @@ class AdminOperationsRemoteDataSourceImpl
           .select()
           .eq('role', 'staff');
       final list = usersResponse as List<dynamic>? ?? [];
-      
+
       if (list.isNotEmpty) {
         final seedData = list.map((u) {
           final user = u as Map<String, dynamic>;
-          final name = user['name'] as String? ??
+          final name =
+              user['name'] as String? ??
               (user['first_name'] != null
                   ? "${user['first_name']} ${user['last_name'] ?? ''}".trim()
                   : 'Staff Member');
-          final role = user['staff_role'] as String? ?? user['department'] as String? ?? 'Staff';
+          final role =
+              user['staff_role'] as String? ??
+              user['department'] as String? ??
+              'Staff';
           final hash = name.hashCode;
           String status = 'Absent';
           String? checkIn;
@@ -363,7 +374,7 @@ class AdminOperationsRemoteDataSourceImpl
             'date': dateStr,
           };
         }).toList();
-        
+
         await _supabase.from('staff_attendance').insert(seedData);
         return;
       }
@@ -456,7 +467,7 @@ class AdminOperationsRemoteDataSourceImpl
           .insert(data)
           .select()
           .single();
-      return EmergencyModel.fromJson(response as Map<String, dynamic>);
+      return EmergencyModel.fromJson(response);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -727,7 +738,7 @@ class AdminOperationsRemoteDataSourceImpl
       final result = list
           .map((e) => AppointmentModel.fromJson(e as Map<String, dynamic>))
           .toList();
-      
+
       // Save cache locally
       try {
         final storage = GetIt.I<SecureStorageService>();
@@ -762,8 +773,8 @@ class AdminOperationsRemoteDataSourceImpl
           .insert(data)
           .select()
           .single();
-      final model = AppointmentModel.fromJson(response as Map<String, dynamic>);
-      
+      final model = AppointmentModel.fromJson(response);
+
       // Update local cache
       try {
         final storage = GetIt.I<SecureStorageService>();
@@ -807,7 +818,7 @@ class AdminOperationsRemoteDataSourceImpl
           .from('appointments')
           .update({'status': status})
           .eq('id', id);
-      
+
       // Update local cache
       try {
         final storage = GetIt.I<SecureStorageService>();
@@ -847,13 +858,13 @@ class AdminOperationsRemoteDataSourceImpl
   }
 
   @override
-  Future<void> updateAppointmentVitals(String id, Map<String, dynamic> vitals) async {
+  Future<void> updateAppointmentVitals(
+    String id,
+    Map<String, dynamic> vitals,
+  ) async {
     try {
-      await _supabase
-          .from('appointments')
-          .update(vitals)
-          .eq('id', id);
-      
+      await _supabase.from('appointments').update(vitals).eq('id', id);
+
       // Update local cache
       try {
         final storage = GetIt.I<SecureStorageService>();

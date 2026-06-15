@@ -20,13 +20,16 @@ abstract class LaboratoryState extends Equatable {
 }
 
 class LaboratoryInitial extends LaboratoryState {}
+
 class LaboratoryLoading extends LaboratoryState {}
+
 class LaboratoryLoaded extends LaboratoryState {
   final Map<String, dynamic> stats;
   const LaboratoryLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class LaboratoryError extends LaboratoryState {
   final String message;
   const LaboratoryError(this.message);
@@ -42,7 +45,10 @@ class LaboratoryBloc extends Bloc<LaboratoryEvent, LaboratoryState> {
     on<LoadLaboratoryStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadLaboratoryStats event, Emitter<LaboratoryState> emit) async {
+  Future<void> _onLoadStats(
+    LoadLaboratoryStats event,
+    Emitter<LaboratoryState> emit,
+  ) async {
     emit(LaboratoryLoading());
     final result = await _useCase(const NoParams());
     result.fold(

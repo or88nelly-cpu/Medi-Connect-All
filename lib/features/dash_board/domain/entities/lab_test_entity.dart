@@ -1,4 +1,6 @@
 /// Domain entity for a lab test record.
+library;
+
 import 'package:equatable/equatable.dart';
 
 class LabTestEntity extends Equatable {

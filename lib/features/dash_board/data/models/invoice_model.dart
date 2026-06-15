@@ -1,4 +1,6 @@
 /// Data model for billing invoices with JSON serialization.
+library;
+
 import 'package:medi_connect/features/dash_board/domain/entities/invoice_entity.dart';
 
 class InvoiceModel extends InvoiceEntity {
@@ -25,9 +27,9 @@ class InvoiceModel extends InvoiceEntity {
   }
 
   Map<String, dynamic> toJson() => {
-        'patient_name': patientName,
-        'amount': amount,
-        'status': status,
-        'payment_method': paymentMethod,
-      };
+    'patient_name': patientName,
+    'amount': amount,
+    'status': status,
+    'payment_method': paymentMethod,
+  };
 }

@@ -29,11 +29,17 @@ class ConfirmStep extends StatelessWidget {
       );
     }
 
-    final formattedDate = DateFormat('EEEE, dd MMM yyyy').format(state.selectedDate);
-    final patientName = state.selectedPatient!.name ??
-        '${state.selectedPatient!.firstName} ${state.selectedPatient!.lastName}'.trim();
-    final doctorName = state.selectedDoctor!.name ??
-        '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'.trim();
+    final formattedDate = DateFormat(
+      'EEEE, dd MMM yyyy',
+    ).format(state.selectedDate);
+    final patientName =
+        state.selectedPatient!.name ??
+        '${state.selectedPatient!.firstName} ${state.selectedPatient!.lastName}'
+            .trim();
+    final doctorName =
+        state.selectedDoctor!.name ??
+        '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
+            .trim();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,12 +66,14 @@ class ConfirmStep extends StatelessWidget {
                 onSelected: (val) {
                   if (val) cubit.selectType('Consultation');
                 },
-                selectedColor: AppColors.primary.withOpacity(0.2),
+                selectedColor: AppColors.primary.withValues(alpha: 0.2),
                 checkmarkColor: AppColors.primary,
                 side: BorderSide(
                   color: state.selectedType == 'Consultation'
                       ? AppColors.primary
-                      : (isDark ? AppColors.terminalDarkBorder : AppColors.border),
+                      : (isDark
+                            ? AppColors.terminalDarkBorder
+                            : AppColors.border),
                 ),
               ),
             ),
@@ -82,12 +90,14 @@ class ConfirmStep extends StatelessWidget {
                 onSelected: (val) {
                   if (val) cubit.selectType('Video');
                 },
-                selectedColor: AppColors.primary.withOpacity(0.2),
+                selectedColor: AppColors.primary.withValues(alpha: 0.2),
                 checkmarkColor: AppColors.primary,
                 side: BorderSide(
                   color: state.selectedType == 'Video'
                       ? AppColors.primary
-                      : (isDark ? AppColors.terminalDarkBorder : AppColors.border),
+                      : (isDark
+                            ? AppColors.terminalDarkBorder
+                            : AppColors.border),
                 ),
               ),
             ),
@@ -127,7 +137,12 @@ class ConfirmStep extends StatelessWidget {
     );
   }
 
-  Widget _buildReviewRow(String label, String value, bool isDark, {bool isLast = false}) {
+  Widget _buildReviewRow(
+    String label,
+    String value,
+    bool isDark, {
+    bool isLast = false,
+  }) {
     return Padding(
       padding: EdgeInsets.only(bottom: isLast ? 0 : 8.h),
       child: Row(

@@ -77,13 +77,15 @@ class SpecialtyStep extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         cubit.selectSection(dept);
-                        context.read<DoctorStaffBloc>().add(LoadDoctorStaff(dept.name));
+                        context.read<DoctorStaffBloc>().add(
+                          LoadDoctorStaff(dept.name),
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.all(10.r),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? AppColors.primary.withOpacity(0.08)
+                              ? AppColors.primary.withValues(alpha: 0.08)
                               : (isDark
                                     ? AppColors.terminalDarkBg
                                     : Colors.grey[50]),
@@ -99,7 +101,9 @@ class SpecialtyStep extends StatelessWidget {
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: AppColors.primary.withOpacity(0.1),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.1,
+                                    ),
                                     blurRadius: 8,
                                     offset: const Offset(0, 2),
                                   ),
@@ -113,7 +117,7 @@ class SpecialtyStep extends StatelessWidget {
                               height: 44.r,
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? AppColors.primary.withOpacity(0.15)
+                                    ? AppColors.primary.withValues(alpha: 0.15)
                                     : (isDark
                                           ? AppColors.terminalDarkBorder
                                           : Colors.grey[200]),

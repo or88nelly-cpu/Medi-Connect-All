@@ -53,8 +53,8 @@ class AdminNotificationsPage extends StatelessWidget {
           final typeIcon = log['type'] == 'Email'
               ? Icons.email_outlined
               : log['type'] == 'SMS'
-                  ? Icons.sms_outlined
-                  : Icons.notifications_active_outlined;
+              ? Icons.sms_outlined
+              : Icons.notifications_active_outlined;
 
           return Card(
             margin: EdgeInsets.only(bottom: 12.h),
@@ -70,7 +70,7 @@ class AdminNotificationsPage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(10.r),
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.08),
+                      color: statusColor.withValues(alpha: 0.08),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(typeIcon, color: statusColor),
@@ -94,9 +94,12 @@ class AdminNotificationsPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.08),
+                      color: statusColor.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(6.r),
                     ),
                     child: Text(

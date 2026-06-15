@@ -323,13 +323,16 @@ class AppStrings {
   static const forgotLabel = "FORGOT?";
   static const persistentSession = "Persistent session";
   static const initializeAccess = "Initialize Access";
-  static const terminalLocationNode = "Authorized use only. Terminal location:\nNODE_92.168.1.1";
-  static const unregisteredRequestAccess = "UNREGISTERED? REQUEST_ACCESS (SIGN UP)";
+  static const terminalLocationNode =
+      "Authorized use only. Terminal location:\nNODE_92.168.1.1";
+  static const unregisteredRequestAccess =
+      "UNREGISTERED? REQUEST_ACCESS (SIGN UP)";
   static const unregistered = "UNREGISTERED? ";
   static const requestAccessSignUp = "REQUEST_ACCESS (SIGN UP)";
   static const opsStable = "OPS_STABLE";
   static const createAccountTitle = "Create Account";
-  static const registerSubtitleTerminal = "Register your credentials to access the secure medical operations dashboard.";
+  static const registerSubtitleTerminal =
+      "Register your credentials to access the secure medical operations dashboard.";
   static const selectYourRole = "SELECT YOUR ROLE";
   static const legalNameLabel = "FULL LEGAL NAME";
   static const legalNameHint = "Johnathan Doe";
@@ -344,7 +347,8 @@ class AppStrings {
   static const finalizeRegistration = "Finalize Registration";
   static const clinicalOpsVersion = "Clinical Operations v4.2.1-stable";
   static const secureEncryptedEnv = "SECURE END-TO-END ENCRYPTED ENVIRONMENT";
-  static const hipaaAgreementError = "Please agree to the HIPAA Compliance Terms & Privacy Protocol to continue.";
+  static const hipaaAgreementError =
+      "Please agree to the HIPAA Compliance Terms & Privacy Protocol to continue.";
 
   // New dashboard and operations strings
   static const realTime = "REAL-TIME";
@@ -357,13 +361,15 @@ class AppStrings {
   static const criticalAlerts = "CRITICAL ALERTS";
   static const capacityUtilization = "Capacity utilization by department";
   static const totalThisWeek = "Total this week";
-  static const weeklyConsultationAppointments = "Weekly consultation appointments count trend";
+  static const weeklyConsultationAppointments =
+      "Weekly consultation appointments count trend";
   static const appointmentSummaryGraph = "Appointment Summary Graph";
   static const pharmacySummary = "Pharmacy Summary";
   static const recentActivity = "Recent Activity";
   static const quickActions = "Quick Actions";
   static const emergencyAlertCodeRed = "EMERGENCY ALERT: CODE RED";
-  static const emergencyAlertDesc = "Emergency Ward • Room 502 • Triggered 7m ago";
+  static const emergencyAlertDesc =
+      "Emergency Ward • Room 502 • Triggered 7m ago";
   static const deptTuning = "DEPT TUNING";
   static const deptTuningDesc = "Adjust parameters of active clinics.";
   static const maintenance = "MAINTENANCE";
@@ -407,7 +413,8 @@ class AppStrings {
   static const headCircumference = "Head Circumference";
   static const additionalNotesLabel = "Additional Notes:";
   static const noSummaryAvailable = "No Summary Available";
-  static const couldNotRetrieveEmr = "Could not retrieve the EMR summary for this completed appointment. It might not have been recorded yet.";
+  static const couldNotRetrieveEmr =
+      "Could not retrieve the EMR summary for this completed appointment. It might not have been recorded yet.";
   static const consultationEmrRecord = "Consultation EMR Record";
   static const datePrefix = "Date: ";
   static const generalInformation = "General Information";
@@ -420,6 +427,21 @@ class AppStrings {
   static const labInvoiceNo = "Lab Invoice No";
   static const doctorsAdviceNotes = "Doctor's Advice & Notes";
   static const patientIdPrefix = "PATIENT ID: PAT-";
+
+  // Patient Profile bottom sheet
+  static const patientProfile = "Patient Profile";
+  static const recentVitals = "Recent Vitals";
+  static const recentConsultation = "Recent Consultation";
+  static const emrPrescription = "EMR & Prescription";
+  static const allergiesPrefix = "Allergies: ";
+  static const bloodPrefix = "Blood: ";
+  static const agePrefix = "Age: ";
+  static const genderPrefix = "Gender: ";
+  static const timeSlot = "Time Slot";
+  static const typeLabel = "Type";
+  static const invoicePdf = "Invoice PDF";
+  static const shareRx = "Share Rx";
+  static const consultationHistory = "Consultation History";
 
   AppStrings._();
 }

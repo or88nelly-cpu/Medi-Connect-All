@@ -9,7 +9,7 @@ import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/common/dashboard_tab_cubit.dart';
 
 /// Patient-role side drawer.
 class PatientDrawer extends StatelessWidget {

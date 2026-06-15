@@ -2,7 +2,8 @@ abstract class OperationTheatreRemoteDataSource {
   Future<Map<String, dynamic>> getOperationTheatreStats();
 }
 
-class OperationTheatreRemoteDataSourceImpl implements OperationTheatreRemoteDataSource {
+class OperationTheatreRemoteDataSourceImpl
+    implements OperationTheatreRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getOperationTheatreStats() async {
     return {

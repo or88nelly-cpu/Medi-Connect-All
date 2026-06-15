@@ -1,4 +1,6 @@
 /// Remote data source for analytics.
+library;
+
 import 'package:medi_connect/core/common_models/exceptions/exceptions.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/features/dash_board/data/models/analytics_model.dart';
@@ -51,7 +53,11 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
       final totalStaff = (staffRes as List).length;
       final totalPatients = (patientsRes as List).length;
 
-      final sevenDaysAgoStr = DateTime.now().subtract(const Duration(days: 7)).toIso8601String().split('T').first;
+      final sevenDaysAgoStr = DateTime.now()
+          .subtract(const Duration(days: 7))
+          .toIso8601String()
+          .split('T')
+          .first;
 
       double totalRevenue = 0.0;
       List<double> dailyRevenues = List.filled(7, 0.0);
@@ -118,7 +124,7 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
             .eq('type', 'Video');
         onlineConsultations = (videosRes as List).length;
       } catch (_) {
-        onlineConsultations = 18; 
+        onlineConsultations = 18;
       }
 
       // Dynamic Department stats
@@ -141,7 +147,9 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
       int lowStock = 0;
       int outOfStock = 0;
       try {
-        final pharmRes = await _supabase.from('pharmacy_inventory').select('stock');
+        final pharmRes = await _supabase
+            .from('pharmacy_inventory')
+            .select('stock');
         for (final p in pharmRes as List) {
           final stock = (p['stock'] as num?)?.toInt() ?? 0;
           totalMedicines++;
@@ -160,7 +168,7 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
         'totalMedicines': totalMedicines,
         'lowStock': lowStock,
         'outOfStock': outOfStock,
-        'pendingOrders': outOfStock + 2, 
+        'pendingOrders': outOfStock + 2,
       };
 
       // Dynamic Lab Summary
@@ -169,7 +177,9 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
       int completedTests = 0;
       int criticalAlerts = 0;
       try {
-        final labRes = await _supabase.from('lab_records').select('status, priority');
+        final labRes = await _supabase
+            .from('lab_records')
+            .select('status, priority');
         for (final l in labRes as List) {
           totalTests++;
           final status = l['status'] as String? ?? '';
@@ -203,7 +213,10 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
       int attLeave = 0;
       try {
         final dateStr = DateTime.now().toIso8601String().split('T').first;
-        final attRes = await _supabase.from('staff_attendance').select('status').eq('date', dateStr);
+        final attRes = await _supabase
+            .from('staff_attendance')
+            .select('status')
+            .eq('date', dateStr);
         for (final a in attRes as List) {
           attTotal++;
           final status = a['status'] as String? ?? '';
@@ -211,7 +224,8 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
             attPresent++;
           } else if (status.toLowerCase() == 'absent') {
             attAbsent++;
-          } else if (status.toLowerCase() == 'on leave' || status.toLowerCase() == 'leave') {
+          } else if (status.toLowerCase() == 'on leave' ||
+              status.toLowerCase() == 'leave') {
             attLeave++;
           }
         }
@@ -268,7 +282,7 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
           });
         }
       } catch (_) {}
-      
+
       if (recentActivities.isEmpty) {
         recentActivities.addAll([
           {
@@ -343,7 +357,8 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
           },
           {
             'id': '2',
-            'message': 'Intense Patient Influx in ICU - Staff assistance requested',
+            'message':
+                'Intense Patient Influx in ICU - Staff assistance requested',
             'level': 'High',
             'time': '15m ago',
           },

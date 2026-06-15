@@ -119,10 +119,18 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
   Widget build(BuildContext context) {
     final bottomPad = MediaQuery.of(context).viewInsets.bottom;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       decoration: BoxDecoration(
@@ -185,10 +193,7 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                 controller: _descController,
                 labelText: AppStrings.departmentDescLabel,
                 hintText: AppStrings.departmentDescHint,
-                prefixIcon: Icon(
-                  Icons.description_outlined,
-                  color: labelColor,
-                ),
+                prefixIcon: Icon(Icons.description_outlined, color: labelColor),
               ),
               SizedBox(height: 12.h),
 
@@ -197,10 +202,7 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                 controller: _imageController,
                 labelText: AppStrings.departmentImageLabel,
                 hintText: AppStrings.departmentImageHint,
-                prefixIcon: Icon(
-                  Icons.image_outlined,
-                  color: labelColor,
-                ),
+                prefixIcon: Icon(Icons.image_outlined, color: labelColor),
               ),
               SizedBox(height: 12.h),
 
@@ -219,7 +221,9 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
                       errorWidget: Container(
                         height: 120.h,
                         alignment: Alignment.center,
-                        color: isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg,
+                        color: isDark
+                            ? AppColors.terminalDarkBg
+                            : AppColors.terminalLightBg,
                         child: Text(
                           'Invalid image URL',
                           style: AppTextStyles.bodySmall.copyWith(

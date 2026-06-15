@@ -13,7 +13,6 @@ class EditProfileDoctorCard extends StatefulWidget {
 }
 
 class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
-
   void _simulatePhotoUpload() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Profile photo updated successfully!")),
@@ -23,10 +22,18 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -42,7 +49,9 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
             children: [
               CircleAvatar(
                 radius: 40.r,
-                backgroundColor: isDark ? AppColors.terminalDarkBorder : Colors.grey.shade200,
+                backgroundColor: isDark
+                    ? AppColors.terminalDarkBorder
+                    : Colors.grey.shade200,
                 backgroundImage: widget.user.profileImage != null
                     ? NetworkImage(widget.user.profileImage!)
                     : null,
@@ -93,11 +102,17 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 2.h,
+                      ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F9F58).withOpacity(0.1),
+                        color: const Color(0xFF0F9F58).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20.r),
-                        border: Border.all(color: const Color(0xFF0F9F58), width: 0.5),
+                        border: Border.all(
+                          color: const Color(0xFF0F9F58),
+                          width: 0.5,
+                        ),
                       ),
                       child: Text(
                         widget.user.availabilityStatus ?? "Active",
@@ -113,18 +128,12 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                 SizedBox(height: 4.h),
                 Text(
                   widget.user.specialization ?? "General Physician",
-                  style: TextStyle(
-                    color: labelColor,
-                    fontSize: 11.sp,
-                  ),
+                  style: TextStyle(color: labelColor, fontSize: 11.sp),
                 ),
                 SizedBox(height: 2.h),
                 Text(
                   widget.user.department ?? "Cardiology",
-                  style: TextStyle(
-                    color: labelColor,
-                    fontSize: 11.sp,
-                  ),
+                  style: TextStyle(color: labelColor, fontSize: 11.sp),
                 ),
                 SizedBox(height: 6.h),
                 Text(

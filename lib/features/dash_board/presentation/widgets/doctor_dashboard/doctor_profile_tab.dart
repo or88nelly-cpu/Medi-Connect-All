@@ -29,13 +29,17 @@ class DoctorProfileTab extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name =
+              user.name ??
+              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           email = user.email;
           phone = user.phoneNumber;
           specialty = user.specialization;
           profileImage = user.profileImage;
           regNumber = user.medicalRegistrationNumber ?? "REG-DOC-2819";
-          experience = user.experience != null ? "${user.experience} Years" : "8 Years";
+          experience = user.experience != null
+              ? "${user.experience} Years"
+              : "8 Years";
         }
 
         return SingleChildScrollView(
@@ -71,7 +75,7 @@ class DoctorProfileTab extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: AppColors.secondary.withOpacity(0.1),
+                  color: AppColors.secondary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
@@ -146,7 +150,10 @@ class DoctorProfileTab extends StatelessWidget {
                   onPressed: () async {
                     if (state is Authenticated) {
                       final userModel = UserModel.fromEntity(state.user);
-                      final res = await context.push('/admin/doctor-staff/edit', extra: userModel);
+                      final res = await context.push(
+                        '/admin/doctor-staff/edit',
+                        extra: userModel,
+                      );
                       if (res == true && context.mounted) {
                         context.read<AuthBloc>().add(AuthCheckRequested());
                       }

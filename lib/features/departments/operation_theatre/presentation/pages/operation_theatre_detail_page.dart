@@ -12,14 +12,17 @@ class OperationTheatreDetailPage extends StatefulWidget {
   const OperationTheatreDetailPage({super.key});
 
   @override
-  State<OperationTheatreDetailPage> createState() => _OperationTheatreDetailPageState();
+  State<OperationTheatreDetailPage> createState() =>
+      _OperationTheatreDetailPageState();
 }
 
-class _OperationTheatreDetailPageState extends State<OperationTheatreDetailPage> {
+class _OperationTheatreDetailPageState
+    extends State<OperationTheatreDetailPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.I<OperationTheatreBloc>()..add(LoadOperationTheatreStats()),
+      create: (context) =>
+          GetIt.I<OperationTheatreBloc>()..add(LoadOperationTheatreStats()),
       child: CustomScaffold(
         customAppbar: const CommonAppBar(title: "Operation Theatre Department"),
         body: BlocBuilder<OperationTheatreBloc, OperationTheatreState>(
@@ -30,7 +33,9 @@ class _OperationTheatreDetailPageState extends State<OperationTheatreDetailPage>
               return Center(
                 child: Text(
                   state.message,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.error,
+                  ),
                 ),
               );
             } else if (state is OperationTheatreLoaded) {
@@ -61,11 +66,16 @@ class _OperationTheatreDetailPageState extends State<OperationTheatreDetailPage>
                       itemBuilder: (context, index) {
                         final key = stats.keys.elementAt(index);
                         final val = stats[key];
-                        final displayKey = key.split('_').map((word) {
-                          if (word == 'pct') return '%';
-                          if (word == 'min' || word == 'mins') return 'Mins';
-                          return word[0].toUpperCase() + word.substring(1);
-                        }).join(' ');
+                        final displayKey = key
+                            .split('_')
+                            .map((word) {
+                              if (word == 'pct') return '%';
+                              if (word == 'min' || word == 'mins') {
+                                return 'Mins';
+                              }
+                              return word[0].toUpperCase() + word.substring(1);
+                            })
+                            .join(' ');
 
                         return Card(
                           elevation: 0,

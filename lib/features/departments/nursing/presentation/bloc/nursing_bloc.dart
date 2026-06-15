@@ -20,13 +20,16 @@ abstract class NursingState extends Equatable {
 }
 
 class NursingInitial extends NursingState {}
+
 class NursingLoading extends NursingState {}
+
 class NursingLoaded extends NursingState {
   final Map<String, dynamic> stats;
   const NursingLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class NursingError extends NursingState {
   final String message;
   const NursingError(this.message);
@@ -42,7 +45,10 @@ class NursingBloc extends Bloc<NursingEvent, NursingState> {
     on<LoadNursingStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadNursingStats event, Emitter<NursingState> emit) async {
+  Future<void> _onLoadStats(
+    LoadNursingStats event,
+    Emitter<NursingState> emit,
+  ) async {
     emit(NursingLoading());
     final result = await _useCase(const NoParams());
     result.fold(

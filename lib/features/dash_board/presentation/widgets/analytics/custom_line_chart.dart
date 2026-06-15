@@ -24,7 +24,10 @@ class CustomLineChartPainter extends CustomPainter {
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [shadowColor.withOpacity(0.3), shadowColor.withOpacity(0)],
+        colors: [
+          shadowColor.withValues(alpha: 0.3),
+          shadowColor.withValues(alpha: 0),
+        ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     final points = [

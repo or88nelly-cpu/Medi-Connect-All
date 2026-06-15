@@ -7,6 +7,8 @@ import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
 class LoginFooter extends StatelessWidget {
+  const LoginFooter({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(

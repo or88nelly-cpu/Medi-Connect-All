@@ -40,9 +40,23 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
       lastDate: DateTime.now(),
     );
     if (picked != null) {
-      final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      final months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
       setState(() {
-        widget.dobController.text = "${picked.day} ${months[picked.month - 1]} ${picked.year}";
+        widget.dobController.text =
+            "${picked.day} ${months[picked.month - 1]} ${picked.year}";
       });
     }
   }
@@ -50,11 +64,21 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
 
     final genders = ["Male", "Female", "Other"];
     final bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -87,7 +111,8 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
             hintText: "Enter full name",
             icon: Icons.person_outline,
             isDark: isDark,
-            validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+            validator: (val) =>
+                val == null || val.isEmpty ? AppStrings.requiredField : null,
           ),
           SizedBox(height: 12.h),
 
@@ -108,7 +133,9 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
                           hintText: "Select DOB",
                           icon: Icons.calendar_today_outlined,
                           isDark: isDark,
-                          validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                          validator: (val) => val == null || val.isEmpty
+                              ? AppStrings.requiredField
+                              : null,
                         ),
                       ),
                     ),
@@ -132,11 +159,21 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: genders.contains(widget.gender) ? widget.gender : genders.first,
+                          value: genders.contains(widget.gender)
+                              ? widget.gender
+                              : genders.first,
                           isExpanded: true,
                           dropdownColor: cardBg,
-                          icon: Icon(Icons.keyboard_arrow_down, color: labelColor, size: 16.sp),
-                          style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: labelColor,
+                            size: 16.sp,
+                          ),
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                           onChanged: widget.onGenderChanged,
                           items: genders.map((g) {
                             return DropdownMenuItem<String>(
@@ -173,11 +210,21 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: bloodGroups.contains(widget.bloodGroup) ? widget.bloodGroup : bloodGroups.first,
+                          value: bloodGroups.contains(widget.bloodGroup)
+                              ? widget.bloodGroup
+                              : bloodGroups.first,
                           isExpanded: true,
                           dropdownColor: cardBg,
-                          icon: Icon(Icons.keyboard_arrow_down, color: labelColor, size: 16.sp),
-                          style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: labelColor,
+                            size: 16.sp,
+                          ),
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                           onChanged: widget.onBloodGroupChanged,
                           items: bloodGroups.map((b) {
                             return DropdownMenuItem<String>(
@@ -205,7 +252,9 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
                       keyboardType: TextInputType.emailAddress,
                       isDark: isDark,
                       validator: (val) {
-                        if (val == null || val.isEmpty) return AppStrings.requiredField;
+                        if (val == null || val.isEmpty) {
+                          return AppStrings.requiredField;
+                        }
                         if (!val.contains('@')) return "Invalid email address";
                         return null;
                       },
@@ -233,7 +282,9 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
                       keyboardType: TextInputType.phone,
                       isDark: isDark,
                       prefixText: "+91 ", // Flag indicator simulation
-                      validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                   ],
                 ),
@@ -282,10 +333,18 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
     String? prefixText,
     String? Function(String?)? validator,
   }) {
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : Colors.grey.shade300;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : Colors.grey.shade300;
 
     return Container(
       height: 40.h,
@@ -302,7 +361,11 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
           if (prefixText != null) ...[
             Text(
               prefixText,
-              style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 11.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
           Expanded(
@@ -310,10 +373,18 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
               controller: controller,
               keyboardType: keyboardType,
               validator: validator,
-              style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+              ),
               decoration: InputDecoration(
                 hintText: hintText,
-                hintStyle: TextStyle(color: labelColor, fontSize: 11.sp, fontWeight: FontWeight.normal),
+                hintStyle: TextStyle(
+                  color: labelColor,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.normal,
+                ),
                 border: InputBorder.none,
                 isDense: true,
                 contentPadding: EdgeInsets.zero,

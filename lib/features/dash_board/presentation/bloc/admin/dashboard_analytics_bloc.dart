@@ -42,10 +42,8 @@ class DashboardAnalyticsBloc
     extends Bloc<DashboardAnalyticsEvent, DashboardAnalyticsState> {
   final GetDashboardStatsUseCase _getDashboardStatsUseCase;
 
-  DashboardAnalyticsBloc({
-    required GetDashboardStatsUseCase getDashboardStatsUseCase,
-  }) : _getDashboardStatsUseCase = getDashboardStatsUseCase,
-       super(DashboardAnalyticsInitial()) {
+  DashboardAnalyticsBloc({required this._getDashboardStatsUseCase})
+    : super(DashboardAnalyticsInitial()) {
     on<LoadDashboardStats>(_onLoadDashboardStats);
   }
 

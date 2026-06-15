@@ -1,5 +1,7 @@
 /// Navigation observer that logs routing transitions.
 /// Integrates directly with AppLogger to capture navigation history.
+library;
+
 import 'package:flutter/widgets.dart';
 import 'package:medi_connect/core/common_models/logger/app_logger.dart';
 

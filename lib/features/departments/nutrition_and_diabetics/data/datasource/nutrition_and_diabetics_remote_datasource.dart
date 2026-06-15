@@ -2,7 +2,8 @@ abstract class NutritionAndDiabeticsRemoteDataSource {
   Future<Map<String, dynamic>> getNutritionAndDiabeticsStats();
 }
 
-class NutritionAndDiabeticsRemoteDataSourceImpl implements NutritionAndDiabeticsRemoteDataSource {
+class NutritionAndDiabeticsRemoteDataSourceImpl
+    implements NutritionAndDiabeticsRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getNutritionAndDiabeticsStats() async {
     return {

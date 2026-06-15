@@ -7,7 +7,6 @@ import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/department/data/models/department_model.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
@@ -66,10 +65,18 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.border;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.textPrimary;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary;
-    final fieldFillColor = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.border;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.textPrimary;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.textSecondary;
+    final fieldFillColor = isDark
+        ? AppColors.terminalDarkFieldFill
+        : AppColors.terminalLightFieldFill;
 
     return CustomScaffold(
       customAppbar: CommonAppBar(title: widget.department.name),
@@ -240,8 +247,8 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                           child: ListTile(
                             contentPadding: EdgeInsets.all(12.r),
                             leading: CircleAvatar(
-                              backgroundColor: AppColors.accent.withOpacity(
-                                0.1,
+                              backgroundColor: AppColors.accent.withValues(
+                                alpha: 0.1,
                               ),
                               child: Icon(
                                 Icons.badge_outlined,

@@ -7,14 +7,14 @@ import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 // Reuse doctor card from manage slots directory
-import '../widgets/manage_slots/manage_slots_doctor_card.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/manage_slots_doctor_card.dart';
 
 // Sub-widgets
-import '../widgets/add_slot/add_slot_header.dart';
-import '../widgets/add_slot/slot_information_card.dart';
-import '../widgets/add_slot/slot_type_card.dart';
-import '../widgets/add_slot/slot_status_card.dart';
-import '../widgets/add_slot/additional_options_card.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/add_slot/add_slot_header.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/add_slot/slot_information_card.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/add_slot/slot_type_card.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/add_slot/slot_status_card.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/add_slot/additional_options_card.dart';
 
 class AdminAddSlotPage extends StatefulWidget {
   final UserModel user;
@@ -43,8 +43,8 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
     final int minutes = _duration.contains("10")
         ? 10
         : _duration.contains("15")
-            ? 15
-            : 30;
+        ? 15
+        : 30;
 
     int startHour = _session.toLowerCase() == "morning" ? 9 : 14;
     int endHour = _session.toLowerCase() == "morning" ? 13 : 18;
@@ -78,17 +78,19 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
       final min = currentMin % 60;
       final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
       final amPm = hour >= 12 ? "PM" : "AM";
-      final timeStr = "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
+      final timeStr =
+          "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
 
-      generatedList.add({
-        "time": timeStr,
-        "status": _status,
-      });
+      generatedList.add({"time": timeStr, "status": _status});
       currentMin += minutes;
     }
 
-    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
-    final slotsByDate = Map<String, dynamic>.from(updatedMetadata['slots_by_date'] ?? {});
+    final updatedMetadata = Map<String, dynamic>.from(
+      widget.user.metadata ?? {},
+    );
+    final slotsByDate = Map<String, dynamic>.from(
+      updatedMetadata['slots_by_date'] ?? {},
+    );
     final dateData = Map<String, dynamic>.from(slotsByDate[_date] ?? {});
     final durationData = Map<String, dynamic>.from(dateData[_duration] ?? {});
 
@@ -155,15 +157,16 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
 
                       // Slot Information timings configuration
                       SlotInformationCard(
-                        onConfigChanged: (date, session, start, end, duration, gap, count) {
-                          _date = date;
-                          _session = session;
-                          _start = start;
-                          _end = end;
-                          _duration = duration;
-                          _gap = gap;
-                          _count = count;
-                        },
+                        onConfigChanged:
+                            (date, session, start, end, duration, gap, count) {
+                              _date = date;
+                              _session = session;
+                              _start = start;
+                              _end = end;
+                              _duration = duration;
+                              _gap = gap;
+                              _count = count;
+                            },
                       ),
                       SizedBox(height: 12.h),
 
@@ -202,7 +205,11 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
                 decoration: BoxDecoration(
                   color: isDark ? AppColors.terminalDarkCard : Colors.white,
                   border: Border(
-                    top: BorderSide(color: isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder),
+                    top: BorderSide(
+                      color: isDark
+                          ? AppColors.terminalDarkBorder
+                          : AppColors.terminalLightBorder,
+                    ),
                   ),
                 ),
                 child: Column(
@@ -235,7 +242,11 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
                       child: OutlinedButton(
                         onPressed: () => Navigator.pop(context),
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder),
+                          side: BorderSide(
+                            color: isDark
+                                ? AppColors.terminalDarkBorder
+                                : AppColors.terminalLightBorder,
+                          ),
                           padding: EdgeInsets.symmetric(vertical: 14.h),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.r),

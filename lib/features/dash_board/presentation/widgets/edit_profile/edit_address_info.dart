@@ -29,13 +29,34 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
 
-    final states = ["Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", "Telangana", "Punjab", "Haryana", "Uttar Pradesh", "West Bengal", "Kerala"];
+    final states = [
+      "Maharashtra",
+      "Delhi",
+      "Karnataka",
+      "Tamil Nadu",
+      "Telangana",
+      "Punjab",
+      "Haryana",
+      "Uttar Pradesh",
+      "West Bengal",
+      "Kerala",
+    ];
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -65,7 +86,8 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
             hintText: "Flat / House No. / Street",
             icon: Icons.home_outlined,
             isDark: isDark,
-            validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+            validator: (val) =>
+                val == null || val.isEmpty ? AppStrings.requiredField : null,
           ),
           SizedBox(height: 12.h),
 
@@ -94,7 +116,9 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
                       hintText: "City name",
                       icon: Icons.location_city_outlined,
                       isDark: isDark,
-                      validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                   ],
                 ),
@@ -116,11 +140,21 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: states.contains(widget.selectedState) ? widget.selectedState : states.first,
+                          value: states.contains(widget.selectedState)
+                              ? widget.selectedState
+                              : states.first,
                           isExpanded: true,
                           dropdownColor: cardBg,
-                          icon: Icon(Icons.keyboard_arrow_down, color: labelColor, size: 16.sp),
-                          style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: labelColor,
+                            size: 16.sp,
+                          ),
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                           onChanged: widget.onStateChanged,
                           items: states.map((state) {
                             return DropdownMenuItem<String>(
@@ -154,7 +188,9 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
                       keyboardType: TextInputType.number,
                       isDark: isDark,
                       validator: (val) {
-                        if (val == null || val.isEmpty) return AppStrings.requiredField;
+                        if (val == null || val.isEmpty) {
+                          return AppStrings.requiredField;
+                        }
                         if (val.length != 6) return "Must be 6 digits";
                         return null;
                       },
@@ -162,7 +198,9 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
                   ],
                 ),
               ),
-              const Expanded(child: SizedBox()), // spacer to keep row symmetrical
+              const Expanded(
+                child: SizedBox(),
+              ), // spacer to keep row symmetrical
             ],
           ),
         ],
@@ -189,10 +227,18 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
     TextInputType? keyboardType,
     String? Function(String?)? validator,
   }) {
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : Colors.grey.shade300;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : Colors.grey.shade300;
 
     return Container(
       height: 40.h,
@@ -211,10 +257,18 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
               controller: controller,
               keyboardType: keyboardType,
               validator: validator,
-              style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+              ),
               decoration: InputDecoration(
                 hintText: hintText,
-                hintStyle: TextStyle(color: labelColor, fontSize: 11.sp, fontWeight: FontWeight.normal),
+                hintStyle: TextStyle(
+                  color: labelColor,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.normal,
+                ),
                 border: InputBorder.none,
                 isDense: true,
                 contentPadding: EdgeInsets.zero,

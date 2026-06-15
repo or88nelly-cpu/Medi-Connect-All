@@ -10,19 +10,19 @@ class AddSlotHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         IconButton(
           onPressed: () => context.pop(),
-          icon: Icon(
-            Icons.arrow_back,
-            color: textColor,
-            size: 24.sp,
-          ),
+          icon: Icon(Icons.arrow_back, color: textColor, size: 24.sp),
           style: IconButton.styleFrom(
             padding: EdgeInsets.zero,
             minimumSize: Size(40.r, 40.r),

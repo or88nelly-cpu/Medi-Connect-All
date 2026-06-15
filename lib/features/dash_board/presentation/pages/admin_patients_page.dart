@@ -7,12 +7,12 @@ import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
 import 'dart:math';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
 
 // Extracted sub-widgets
 import 'package:medi_connect/features/dash_board/presentation/widgets/common/directory_pagination.dart';
@@ -380,7 +380,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     width: 40.w,
                     height: 5.h,
                     decoration: BoxDecoration(
-                      color: labelColor.withOpacity(0.3),
+                      color: labelColor.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(2.5.r),
                     ),
                   ),
@@ -428,7 +428,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                   vertical: 3.h,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.15),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.15,
+                                  ),
                                   borderRadius: BorderRadius.circular(4.r),
                                 ),
                                 child: Text(
@@ -475,10 +477,12 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
                     color: isDark
-                        ? Colors.white.withOpacity(0.02)
-                        : Colors.black.withOpacity(0.01),
+                        ? Colors.white.withValues(alpha: 0.02)
+                        : Colors.black.withValues(alpha: 0.01),
                     borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: borderColor.withOpacity(0.5)),
+                    border: Border.all(
+                      color: borderColor.withValues(alpha: 0.5),
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -488,28 +492,28 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                         labelColor,
                         textColor,
                       ),
-                      Divider(color: borderColor.withOpacity(0.3)),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Gender",
                         patient.gender ?? 'N/A',
                         labelColor,
                         textColor,
                       ),
-                      Divider(color: borderColor.withOpacity(0.3)),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Blood Group",
                         patient.bloodGroup ?? 'N/A',
                         labelColor,
                         textColor,
                       ),
-                      Divider(color: borderColor.withOpacity(0.3)),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Phone",
                         patient.phoneNumber ?? 'N/A',
                         labelColor,
                         textColor,
                       ),
-                      Divider(color: borderColor.withOpacity(0.3)),
+                      Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Email",
                         patient.email,
@@ -555,11 +559,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                         padding: EdgeInsets.all(16.r),
                         decoration: BoxDecoration(
                           color: isDark
-                              ? Colors.white.withOpacity(0.02)
-                              : Colors.black.withOpacity(0.01),
+                              ? Colors.white.withValues(alpha: 0.02)
+                              : Colors.black.withValues(alpha: 0.01),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
-                            color: borderColor.withOpacity(0.5),
+                            color: borderColor.withValues(alpha: 0.5),
                           ),
                         ),
                         child: Column(
@@ -642,10 +646,12 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       padding: EdgeInsets.all(14.r),
                       decoration: BoxDecoration(
                         color: isDark
-                            ? Colors.white.withOpacity(0.02)
-                            : Colors.black.withOpacity(0.01),
+                            ? Colors.white.withValues(alpha: 0.02)
+                            : Colors.black.withValues(alpha: 0.01),
                         borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(color: borderColor.withOpacity(0.5)),
+                        border: Border.all(
+                          color: borderColor.withValues(alpha: 0.5),
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -679,7 +685,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                   vertical: 3.h,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: statusColor.withOpacity(0.1),
+                                  color: statusColor.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12.r),
                                   border: Border.all(
                                     color: statusColor,
@@ -706,7 +712,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                             ),
                           ),
                           SizedBox(height: 12.h),
-                          Divider(color: borderColor.withOpacity(0.3)),
+                          Divider(color: borderColor.withValues(alpha: 0.3)),
                           SizedBox(height: 8.h),
 
                           // Vitals Display
@@ -870,13 +876,15 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
     Color color,
     bool isDark,
   ) {
-    final bg = isDark ? color.withOpacity(0.12) : color.withOpacity(0.08);
+    final bg = isDark
+        ? color.withValues(alpha: 0.12)
+        : color.withValues(alpha: 0.08);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: color.withOpacity(0.3), width: 0.8),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 0.8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -919,9 +927,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white12 : Colors.black.withOpacity(0.05),
+              color: isDark
+                  ? Colors.white12
+                  : Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(6.r),
-              border: Border.all(color: borderColor.withOpacity(0.4)),
+              border: Border.all(color: borderColor.withValues(alpha: 0.4)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -1025,7 +1035,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelText: "Blood Pressure (mmHg)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 120/80",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
                     prefixIcon: Icon(
                       Icons.favorite,
                       color: Colors.red,
@@ -1042,7 +1054,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelText: "Weight (kg)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 70",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
                     prefixIcon: Icon(
                       Icons.scale,
                       color: Colors.orange,
@@ -1059,7 +1073,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelText: "Height (cm)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 175",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
                     prefixIcon: Icon(
                       Icons.height,
                       color: Colors.blue,
@@ -1076,7 +1092,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelText: "Fever / Temp (°F)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 98.6",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
                     prefixIcon: Icon(
                       Icons.thermostat,
                       color: Colors.teal,
@@ -1093,7 +1111,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     labelText: "Circumference Head (cm) [Baby]",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 42",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
                     prefixIcon: Icon(
                       Icons.child_care,
                       color: Colors.purple,

@@ -1,4 +1,6 @@
 /// Data model for emergency alerts with JSON serialization.
+library;
+
 import 'package:medi_connect/features/dash_board/domain/entities/emergency_entity.dart';
 
 class EmergencyModel extends EmergencyEntity {
@@ -23,8 +25,8 @@ class EmergencyModel extends EmergencyEntity {
   }
 
   Map<String, dynamic> toJson() => {
-        'message': message,
-        'level': level,
-        'is_resolved': isResolved,
-      };
+    'message': message,
+    'level': level,
+    'is_resolved': isResolved,
+  };
 }

@@ -3,7 +3,8 @@ import 'package:medi_connect/core/common_models/failures/failure.dart';
 import 'package:medi_connect/core/usecases/usecase.dart';
 import 'package:medi_connect/features/departments/mep_engineer/domain/repositories/mep_engineer_repository.dart';
 
-class GetMepEngineerStatsUseCase extends UseCase<Map<String, dynamic>, NoParams> {
+class GetMepEngineerStatsUseCase
+    extends UseCase<Map<String, dynamic>, NoParams> {
   final MepEngineerRepository _repository;
   GetMepEngineerStatsUseCase(this._repository);
 

@@ -10,9 +10,15 @@ class DoctorProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,11 +26,7 @@ class DoctorProfileHeader extends StatelessWidget {
         // Back Button
         IconButton(
           onPressed: () => context.pop(),
-          icon: Icon(
-            Icons.arrow_back,
-            color: textColor,
-            size: 24.sp,
-          ),
+          icon: Icon(Icons.arrow_back, color: textColor, size: 24.sp),
           style: IconButton.styleFrom(
             padding: EdgeInsets.zero,
             minimumSize: Size(40.r, 40.r),
@@ -66,7 +68,9 @@ class DoctorProfileHeader extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Redirecting to Public Profile...")),
+                  const SnackBar(
+                    content: Text("Redirecting to Public Profile..."),
+                  ),
                 );
               },
               icon: Icon(
@@ -105,11 +109,7 @@ class DoctorProfileHeader extends StatelessWidget {
                     const SnackBar(content: Text("More Options Clicked")),
                   );
                 },
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: textColor,
-                  size: 16.sp,
-                ),
+                icon: Icon(Icons.more_horiz, color: textColor, size: 16.sp),
                 style: IconButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: Size(36.r, 36.r),

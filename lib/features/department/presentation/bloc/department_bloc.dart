@@ -17,15 +17,11 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
   final DeleteDepartmentUseCase _deleteDepartment;
 
   DepartmentBloc({
-    required GetDepartmentsUseCase getDepartments,
-    required AddDepartmentUseCase addDepartment,
-    required UpdateDepartmentUseCase updateDepartment,
-    required DeleteDepartmentUseCase deleteDepartment,
-  }) : _getDepartments = getDepartments,
-       _addDepartment = addDepartment,
-       _updateDepartment = updateDepartment,
-       _deleteDepartment = deleteDepartment,
-       super(DepartmentInitial()) {
+    required this._getDepartments,
+    required this._addDepartment,
+    required this._updateDepartment,
+    required this._deleteDepartment,
+  }) : super(DepartmentInitial()) {
     on<LoadDepartments>(_onLoad);
     on<LoadConsultDepartments>(_onLoadConsult);
     on<AddDepartmentEvent>(_onAdd);

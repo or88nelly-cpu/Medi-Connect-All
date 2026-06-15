@@ -9,10 +9,18 @@ class WorkingHoursCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -39,7 +47,9 @@ class WorkingHoursCard extends StatelessWidget {
               InkWell(
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Editing working hours timings...")),
+                    const SnackBar(
+                      content: Text("Editing working hours timings..."),
+                    ),
                   );
                 },
                 child: Row(
@@ -127,11 +137,7 @@ class WorkingHoursCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          icon,
-          size: 18.sp,
-          color: iconColor,
-        ),
+        Icon(icon, size: 18.sp, color: iconColor),
         SizedBox(width: 6.w),
         Expanded(
           child: Column(
@@ -140,10 +146,7 @@ class WorkingHoursCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  color: labelColor,
-                  fontSize: 9.sp,
-                ),
+                style: TextStyle(color: labelColor, fontSize: 9.sp),
               ),
               SizedBox(height: 2.h),
               Text(

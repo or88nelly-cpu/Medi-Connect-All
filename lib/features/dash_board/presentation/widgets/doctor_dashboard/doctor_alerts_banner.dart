@@ -25,7 +25,9 @@ class DoctorAlertsBanner extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFFE11D48).withOpacity(0.2) : const Color(0xFFFEE2E2),
+              color: isDark
+                  ? const Color(0xFFE11D48).withValues(alpha: 0.2)
+                  : const Color(0xFFFEE2E2),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -63,7 +65,9 @@ class DoctorAlertsBanner extends StatelessWidget {
           InkWell(
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Redirecting to pending lab reports...")),
+                const SnackBar(
+                  content: Text("Redirecting to pending lab reports..."),
+                ),
               );
             },
             child: Padding(

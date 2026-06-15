@@ -33,14 +33,38 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
 
-    final departments = ["Cardiology", "Dermatology", "Orthopedics", "Pediatrics", "Neurology", "General Medicine"];
-    final specializations = ["Cardiologist", "Dermatologist", "Orthopedic Surgeon", "Pediatrician", "Neurologist", "General Physician"];
+    final departments = [
+      "Cardiology",
+      "Dermatology",
+      "Orthopedics",
+      "Pediatrics",
+      "Neurology",
+      "General Medicine",
+    ];
+    final specializations = [
+      "Cardiologist",
+      "Dermatologist",
+      "Orthopedic Surgeon",
+      "Pediatrician",
+      "Neurologist",
+      "General Physician",
+    ];
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -81,11 +105,21 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: departments.contains(widget.selectedDepartment) ? widget.selectedDepartment : departments.first,
+                          value: departments.contains(widget.selectedDepartment)
+                              ? widget.selectedDepartment
+                              : departments.first,
                           isExpanded: true,
                           dropdownColor: cardBg,
-                          icon: Icon(Icons.keyboard_arrow_down, color: labelColor, size: 16.sp),
-                          style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: labelColor,
+                            size: 16.sp,
+                          ),
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                           onChanged: widget.onDepartmentChanged,
                           items: departments.map((dept) {
                             return DropdownMenuItem<String>(
@@ -116,11 +150,24 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
-                          value: specializations.contains(widget.selectedSpecialization) ? widget.selectedSpecialization : specializations.first,
+                          value:
+                              specializations.contains(
+                                widget.selectedSpecialization,
+                              )
+                              ? widget.selectedSpecialization
+                              : specializations.first,
                           isExpanded: true,
                           dropdownColor: cardBg,
-                          icon: Icon(Icons.keyboard_arrow_down, color: labelColor, size: 16.sp),
-                          style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            color: labelColor,
+                            size: 16.sp,
+                          ),
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                           onChanged: widget.onSpecializationChanged,
                           items: specializations.map((spec) {
                             return DropdownMenuItem<String>(
@@ -152,7 +199,9 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
                       hintText: "e.g. MBBS, MD",
                       icon: Icons.school_outlined,
                       isDark: isDark,
-                      validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                   ],
                 ),
@@ -170,7 +219,9 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
                       icon: Icons.work_outline,
                       keyboardType: TextInputType.number,
                       isDark: isDark,
-                      validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                   ],
                 ),
@@ -193,7 +244,9 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
                       hintText: "Registration No.",
                       icon: Icons.badge_outlined,
                       isDark: isDark,
-                      validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                   ],
                 ),
@@ -211,7 +264,9 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
                       icon: Icons.currency_rupee,
                       keyboardType: TextInputType.number,
                       isDark: isDark,
-                      validator: (val) => val == null || val.isEmpty ? AppStrings.requiredField : null,
+                      validator: (val) => val == null || val.isEmpty
+                          ? AppStrings.requiredField
+                          : null,
                     ),
                   ],
                 ),
@@ -242,10 +297,18 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
     TextInputType? keyboardType,
     String? Function(String?)? validator,
   }) {
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : Colors.grey.shade300;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : Colors.grey.shade300;
 
     return Container(
       height: 40.h,
@@ -264,10 +327,18 @@ class _EditProfessionalInfoState extends State<EditProfessionalInfo> {
               controller: controller,
               keyboardType: keyboardType,
               validator: validator,
-              style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+              ),
               decoration: InputDecoration(
                 hintText: hintText,
-                hintStyle: TextStyle(color: labelColor, fontSize: 11.sp, fontWeight: FontWeight.normal),
+                hintStyle: TextStyle(
+                  color: labelColor,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.normal,
+                ),
                 border: InputBorder.none,
                 isDense: true,
                 contentPadding: EdgeInsets.zero,

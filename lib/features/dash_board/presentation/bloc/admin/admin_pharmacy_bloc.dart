@@ -54,15 +54,11 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
   final DeletePharmacyItemUseCase _deleteItem;
 
   AdminPharmacyBloc({
-    required GetPharmacyItemsUseCase getItems,
-    required AddPharmacyItemUseCase addItem,
-    required UpdatePharmacyItemUseCase updateItem,
-    required DeletePharmacyItemUseCase deleteItem,
-  })  : _getItems = getItems,
-        _addItem = addItem,
-        _updateItem = updateItem,
-        _deleteItem = deleteItem,
-        super(AdminPharmacyInitial()) {
+    required this._getItems,
+    required this._addItem,
+    required this._updateItem,
+    required this._deleteItem,
+  }) : super(AdminPharmacyInitial()) {
     on<LoadPharmacyItems>(_onLoadPharmacyItems);
     on<AddPharmacyItem>(_onAddPharmacyItem);
     on<UpdatePharmacyItemStock>(_onUpdatePharmacyItemStock);
@@ -71,7 +67,9 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
   }
 
   Future<void> _onLoadPharmacyItems(
-      LoadPharmacyItems event, Emitter<AdminPharmacyState> emit) async {
+    LoadPharmacyItems event,
+    Emitter<AdminPharmacyState> emit,
+  ) async {
     emit(AdminPharmacyLoading());
     final result = await _getItems();
     result.fold(
@@ -81,7 +79,9 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
   }
 
   Future<void> _onAddPharmacyItem(
-      AddPharmacyItem event, Emitter<AdminPharmacyState> emit) async {
+    AddPharmacyItem event,
+    Emitter<AdminPharmacyState> emit,
+  ) async {
     final result = await _addItem(event.data);
     result.fold(
       (failure) => emit(AdminPharmacyError(failure.message)),
@@ -90,7 +90,9 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
   }
 
   Future<void> _onUpdatePharmacyItemStock(
-      UpdatePharmacyItemStock event, Emitter<AdminPharmacyState> emit) async {
+    UpdatePharmacyItemStock event,
+    Emitter<AdminPharmacyState> emit,
+  ) async {
     final result = await _updateItem(event.id, {'stock': event.stock});
     result.fold(
       (failure) => emit(AdminPharmacyError(failure.message)),
@@ -99,7 +101,9 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
   }
 
   Future<void> _onDeletePharmacyItem(
-      DeletePharmacyItem event, Emitter<AdminPharmacyState> emit) async {
+    DeletePharmacyItem event,
+    Emitter<AdminPharmacyState> emit,
+  ) async {
     final result = await _deleteItem(event.id);
     result.fold(
       (failure) => emit(AdminPharmacyError(failure.message)),
@@ -108,7 +112,9 @@ class AdminPharmacyBloc extends Bloc<AdminPharmacyEvent, AdminPharmacyState> {
   }
 
   Future<void> _onEditPharmacyItem(
-      EditPharmacyItem event, Emitter<AdminPharmacyState> emit) async {
+    EditPharmacyItem event,
+    Emitter<AdminPharmacyState> emit,
+  ) async {
     final result = await _updateItem(event.id, event.data);
     result.fold(
       (failure) => emit(AdminPharmacyError(failure.message)),

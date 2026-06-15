@@ -2,7 +2,8 @@ abstract class ManagementInformationSystemRemoteDataSource {
   Future<Map<String, dynamic>> getManagementInformationSystemStats();
 }
 
-class ManagementInformationSystemRemoteDataSourceImpl implements ManagementInformationSystemRemoteDataSource {
+class ManagementInformationSystemRemoteDataSourceImpl
+    implements ManagementInformationSystemRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getManagementInformationSystemStats() async {
     return {

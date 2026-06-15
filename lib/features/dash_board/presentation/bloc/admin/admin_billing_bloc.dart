@@ -39,44 +39,41 @@ class AdminBillingBloc extends Bloc<AdminBillingEvent, AdminBillingState> {
   final CreateInvoiceUseCase _createInvoice;
 
   AdminBillingBloc({
-    required GetInvoicesUseCase getInvoices,
-    required GetBillingSummaryUseCase getSummary,
-    required CreateInvoiceUseCase createInvoice,
-  })  : _getInvoices = getInvoices,
-        _getSummary = getSummary,
-        _createInvoice = createInvoice,
-        super(AdminBillingInitial()) {
+    required this._getInvoices,
+    required this._getSummary,
+    required this._createInvoice,
+  }) : super(AdminBillingInitial()) {
     on<LoadBillingDetails>(_onLoadBillingDetails);
     on<RecordInvoice>(_onRecordInvoice);
   }
 
   Future<void> _onLoadBillingDetails(
-      LoadBillingDetails event, Emitter<AdminBillingState> emit) async {
+    LoadBillingDetails event,
+    Emitter<AdminBillingState> emit,
+  ) async {
     emit(AdminBillingLoading());
     final invoicesResult = await _getInvoices();
     final summaryResult = await _getSummary();
 
-    invoicesResult.fold(
-      (failure) => emit(AdminBillingError(failure.message)),
-      (invoices) {
-        summaryResult.fold(
-          (failure) => emit(AdminBillingError(failure.message)),
-          (summary) =>
-              emit(AdminBillingLoaded(invoices: invoices, summary: summary)),
-        );
-      },
-    );
+    invoicesResult.fold((failure) => emit(AdminBillingError(failure.message)), (
+      invoices,
+    ) {
+      summaryResult.fold(
+        (failure) => emit(AdminBillingError(failure.message)),
+        (summary) =>
+            emit(AdminBillingLoaded(invoices: invoices, summary: summary)),
+      );
+    });
   }
 
   Future<void> _onRecordInvoice(
-      RecordInvoice event, Emitter<AdminBillingState> emit) async {
+    RecordInvoice event,
+    Emitter<AdminBillingState> emit,
+  ) async {
     final result = await _createInvoice(event.data);
-    result.fold(
-      (failure) => emit(AdminBillingError(failure.message)),
-      (_) {
-        emit(AdminBillingInvoiceRecorded());
-        add(LoadBillingDetails());
-      },
-    );
+    result.fold((failure) => emit(AdminBillingError(failure.message)), (_) {
+      emit(AdminBillingInvoiceRecorded());
+      add(LoadBillingDetails());
+    });
   }
 }

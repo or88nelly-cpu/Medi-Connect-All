@@ -2,7 +2,8 @@ abstract class BiomedicalEngineeringRemoteDataSource {
   Future<Map<String, dynamic>> getBiomedicalEngineeringStats();
 }
 
-class BiomedicalEngineeringRemoteDataSourceImpl implements BiomedicalEngineeringRemoteDataSource {
+class BiomedicalEngineeringRemoteDataSourceImpl
+    implements BiomedicalEngineeringRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getBiomedicalEngineeringStats() async {
     return {

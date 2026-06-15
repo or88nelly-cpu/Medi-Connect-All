@@ -41,7 +41,9 @@ class DoctorStaffDetailPage extends StatelessWidget {
         final roleColor = isDoctor ? AppColors.secondary : AppColors.accent;
 
         return CustomScaffold(
-          customAppbar: CommonAppBar(title: "${currentUser.role.toUpperCase()} Details"),
+          customAppbar: CommonAppBar(
+            title: "${currentUser.role.toUpperCase()} Details",
+          ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(20.r),
             child: Column(
@@ -68,7 +70,8 @@ class DoctorStaffDetailPage extends StatelessWidget {
                       SizedBox(height: 12.h),
                       Text(
                         currentUser.name ??
-                            "${currentUser.firstName ?? ''} ${currentUser.lastName ?? ''}".trim(),
+                            "${currentUser.firstName ?? ''} ${currentUser.lastName ?? ''}"
+                                .trim(),
                         style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -81,7 +84,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
                           vertical: 4.h,
                         ),
                         decoration: BoxDecoration(
-                          color: roleColor.withOpacity(0.1),
+                          color: roleColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
@@ -106,7 +109,10 @@ class DoctorStaffDetailPage extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _buildInfoRow("Phone", currentUser.phoneNumber ?? "Not Set"),
+                      _buildInfoRow(
+                        "Phone",
+                        currentUser.phoneNumber ?? "Not Set",
+                      ),
                       const Divider(color: AppColors.border, height: 1),
                       _buildInfoRow("Gender", currentUser.gender ?? "Not Set"),
                       const Divider(color: AppColors.border, height: 1),
@@ -127,9 +133,15 @@ class DoctorStaffDetailPage extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _buildInfoRow("Staff Role", currentUser.staffRole ?? "Not Set"),
+                      _buildInfoRow(
+                        "Staff Role",
+                        currentUser.staffRole ?? "Not Set",
+                      ),
                       const Divider(color: AppColors.border, height: 1),
-                      _buildInfoRow("Designation", currentUser.designation ?? "Not Set"),
+                      _buildInfoRow(
+                        "Designation",
+                        currentUser.designation ?? "Not Set",
+                      ),
                       const Divider(color: AppColors.border, height: 1),
                       _buildInfoRow(
                         "Shift",

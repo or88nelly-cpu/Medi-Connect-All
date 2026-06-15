@@ -7,13 +7,13 @@ import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_
 import 'package:medi_connect/features/department/presentation/bloc/doctor_staff_event.dart';
 
 // Sub-widgets
-import '../widgets/manage_slots/manage_slots_header.dart';
-import '../widgets/manage_slots/manage_slots_doctor_card.dart';
-import '../widgets/manage_slots/working_hours_card.dart';
-import '../widgets/manage_slots/date_selector_strip.dart';
-import '../widgets/manage_slots/slots_grid_section.dart';
-import '../widgets/manage_slots/slots_summary_row.dart';
-import '../widgets/manage_slots/manage_slots_actions.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/manage_slots_header.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/manage_slots_doctor_card.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/working_hours_card.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/date_selector_strip.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/slots_grid_section.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/slots_summary_row.dart';
+import 'package:medi_connect/features/dash_board/presentation/widgets/manage_slots/manage_slots_actions.dart';
 
 class AdminManageSlotsPage extends StatefulWidget {
   final UserModel user;
@@ -26,7 +26,7 @@ class AdminManageSlotsPage extends StatefulWidget {
 class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
   String _selectedDate = "20 May 2025";
   final String _slotDuration = "10 Minutes";
-  
+
   late List<Map<String, dynamic>> _morningSlots;
   late List<Map<String, dynamic>> _afternoonSlots;
 
@@ -43,20 +43,26 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
   }
 
   void _loadSlots() {
-    final slotsByDate = widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
+    final slotsByDate =
+        widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
     final dateData = slotsByDate[_selectedDate] as Map<dynamic, dynamic>? ?? {};
-    final durationData = dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
+    final durationData =
+        dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
 
     final morningList = durationData['morning'] as List<dynamic>?;
     if (morningList != null) {
-      _morningSlots = morningList.map((e) => Map<String, dynamic>.from(e)).toList();
+      _morningSlots = morningList
+          .map((e) => Map<String, dynamic>.from(e))
+          .toList();
     } else {
       _morningSlots = _generateDefaultSlots("morning", _slotDuration);
     }
 
     final afternoonList = durationData['afternoon'] as List<dynamic>?;
     if (afternoonList != null) {
-      _afternoonSlots = afternoonList.map((e) => Map<String, dynamic>.from(e)).toList();
+      _afternoonSlots = afternoonList
+          .map((e) => Map<String, dynamic>.from(e))
+          .toList();
     } else {
       _afternoonSlots = _generateDefaultSlots("afternoon", _slotDuration);
     }
@@ -64,16 +70,19 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
     _updateStats(_morningSlots, _afternoonSlots);
   }
 
-  List<Map<String, dynamic>> _generateDefaultSlots(String session, String durationStr) {
+  List<Map<String, dynamic>> _generateDefaultSlots(
+    String session,
+    String durationStr,
+  ) {
     final int minutes = durationStr.contains("10")
         ? 10
         : durationStr.contains("15")
-            ? 15
-            : 30;
+        ? 15
+        : 30;
 
     final List<Map<String, dynamic>> list = [];
-    int startHour = session == "morning" ? 9 : 14; 
-    int endHour = session == "morning" ? 13 : 18; 
+    int startHour = session == "morning" ? 9 : 14;
+    int endHour = session == "morning" ? 13 : 18;
 
     int currentMin = startHour * 60;
     int endMin = endHour * 60;
@@ -84,8 +93,9 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
       final min = currentMin % 60;
       final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
       final amPm = hour >= 12 ? "PM" : "AM";
-      final timeStr = "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
-      
+      final timeStr =
+          "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
+
       String status = "Available";
       if (idx % 6 == 1) status = "Booked";
       if (idx % 8 == 2) status = "On Hold";
@@ -98,7 +108,10 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
     return list;
   }
 
-  void _updateStats(List<Map<String, dynamic>> morning, List<Map<String, dynamic>> afternoon) {
+  void _updateStats(
+    List<Map<String, dynamic>> morning,
+    List<Map<String, dynamic>> afternoon,
+  ) {
     int total = morning.length + afternoon.length;
     int booked = 0;
     int onHold = 0;
@@ -127,10 +140,18 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
   }
 
   void _saveChanges() {
-    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
-    final slotsByDate = Map<String, dynamic>.from(updatedMetadata['slots_by_date'] ?? {});
-    final dateData = Map<String, dynamic>.from(slotsByDate[_selectedDate] ?? {});
-    final durationData = Map<String, dynamic>.from(dateData[_slotDuration] ?? {});
+    final updatedMetadata = Map<String, dynamic>.from(
+      widget.user.metadata ?? {},
+    );
+    final slotsByDate = Map<String, dynamic>.from(
+      updatedMetadata['slots_by_date'] ?? {},
+    );
+    final dateData = Map<String, dynamic>.from(
+      slotsByDate[_selectedDate] ?? {},
+    );
+    final durationData = Map<String, dynamic>.from(
+      dateData[_slotDuration] ?? {},
+    );
 
     durationData['morning'] = _morningSlots;
     durationData['afternoon'] = _afternoonSlots;
@@ -235,7 +256,11 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
                 decoration: BoxDecoration(
                   color: isDark ? AppColors.terminalDarkCard : Colors.white,
                   border: Border(
-                    top: BorderSide(color: isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder),
+                    top: BorderSide(
+                      color: isDark
+                          ? AppColors.terminalDarkBorder
+                          : AppColors.terminalLightBorder,
+                    ),
                   ),
                 ),
                 child: ElevatedButton(

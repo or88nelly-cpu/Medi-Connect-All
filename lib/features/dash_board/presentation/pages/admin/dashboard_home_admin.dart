@@ -4,7 +4,6 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/analytics_section.dart';
-import 'package:medi_connect/features/dash_board/presentation/widgets/management_grid.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/operations_grid.dart';
 import 'package:medi_connect/features/department/presentation/pages/department_list_home.dart';
 import 'package:medi_connect/features/department/presentation/pages/section_list_home.dart';
@@ -38,7 +37,9 @@ class DashboardHomeAdmin extends StatelessWidget {
             AppStrings.systemOperations,
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+              color: isDark
+                  ? AppColors.terminalDarkText
+                  : AppColors.terminalLightText,
             ),
           ),
           SizedBox(height: 16.h),

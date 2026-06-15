@@ -1,4 +1,6 @@
 /// Domain entity for a pharmacy inventory item.
+library;
+
 import 'package:equatable/equatable.dart';
 
 class PharmacyItemEntity extends Equatable {
@@ -29,5 +31,15 @@ class PharmacyItemEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, name, stock, category, status, buyPrice, sellPrice, dosage, imageUrl];
+  List<Object?> get props => [
+    id,
+    name,
+    stock,
+    category,
+    status,
+    buyPrice,
+    sellPrice,
+    dosage,
+    imageUrl,
+  ];
 }

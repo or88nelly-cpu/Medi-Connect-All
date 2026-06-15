@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/common/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
 import 'doctor_welcome_banner.dart';
@@ -35,7 +35,9 @@ class DoctorHomeTab extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         final doctor = authState.user;
-        final docDisplayName = doctor.name ?? "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName =
+            doctor.name ??
+            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, state) {
@@ -50,15 +52,23 @@ class DoctorHomeTab extends StatelessWidget {
               // Filter for current logged-in doctor
               final doctorApts = appointments.where((a) {
                 final matchId = a.doctorId == doctor.id;
-                final matchName = a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
+                final matchName =
+                    a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
                     docDisplayName.toLowerCase().replaceAll("dr.", "").trim();
                 return matchId || matchName;
               }).toList();
 
               totalAptsCount = doctorApts.length;
-              completedAptsCount = doctorApts.where((a) => a.status == 'Completed').length;
-              newPatientsCount = doctorApts.map((a) => a.patientId).toSet().length;
-              pendingFollowUpsCount = doctorApts.where((a) => a.status == 'Pending').length;
+              completedAptsCount = doctorApts
+                  .where((a) => a.status == 'Completed')
+                  .length;
+              newPatientsCount = doctorApts
+                  .map((a) => a.patientId)
+                  .toSet()
+                  .length;
+              pendingFollowUpsCount = doctorApts
+                  .where((a) => a.status == 'Pending')
+                  .length;
             }
 
             return SingleChildScrollView(
@@ -86,7 +96,7 @@ class DoctorHomeTab extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
                     child: SizedBox(
-                      height: 125.h,
+                      height: 100.r,
                       child: Row(
                         children: [
                           DoctorStatCard(
@@ -183,8 +193,8 @@ class DoctorHomeTab extends StatelessWidget {
                     crossAxisCount: 4,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    mainAxisSpacing: 10.h,
-                    crossAxisSpacing: 10.w,
+                    mainAxisSpacing: 10.r,
+                    crossAxisSpacing: 10.r,
                     childAspectRatio: 0.95,
                     children: [
                       DoctorActionButton(
@@ -197,13 +207,15 @@ class DoctorHomeTab extends StatelessWidget {
                         icon: Icons.search_outlined,
                         label: "Patient Search",
                         color: const Color(0xFF137333),
-                        onTap: () => context.read<DashboardTabCubit>().setTab(2),
+                        onTap: () =>
+                            context.read<DashboardTabCubit>().setTab(2),
                       ),
                       DoctorActionButton(
                         icon: Icons.description_outlined,
                         label: "Prescription",
                         color: const Color(0xFF7E22CE),
-                        onTap: () => context.read<DashboardTabCubit>().setTab(3),
+                        onTap: () =>
+                            context.read<DashboardTabCubit>().setTab(3),
                       ),
                       DoctorActionButton(
                         icon: Icons.science_outlined,
@@ -229,13 +241,15 @@ class DoctorHomeTab extends StatelessWidget {
                         icon: Icons.people_alt_outlined,
                         label: "My Patients",
                         color: const Color(0xFF06B6D4),
-                        onTap: () => context.read<DashboardTabCubit>().setTab(2),
+                        onTap: () =>
+                            context.read<DashboardTabCubit>().setTab(2),
                       ),
                       DoctorActionButton(
                         icon: Icons.calendar_month_outlined,
                         label: "Calendar",
                         color: const Color(0xFF6366F1),
-                        onTap: () => context.read<DashboardTabCubit>().setTab(1),
+                        onTap: () =>
+                            context.read<DashboardTabCubit>().setTab(1),
                       ),
                       DoctorActionButton(
                         icon: Icons.more_horiz_outlined,

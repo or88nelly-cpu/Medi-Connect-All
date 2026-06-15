@@ -30,15 +30,19 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
           .order('recorded_at', ascending: false);
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
-      debugPrint("Supabase getEmrRecords query failed, falling back to local storage: $e");
+      debugPrint(
+        "Supabase getEmrRecords query failed, falling back to local storage: $e",
+      );
       try {
         final storage = GetIt.I<SecureStorageService>();
         final localDataStr = await storage.read('emr_records');
         if (localDataStr != null) {
           final List<dynamic> decoded = jsonDecode(localDataStr);
           decoded.sort((a, b) {
-            final aDate = DateTime.tryParse(a['recorded_at'] ?? '') ?? DateTime.now();
-            final bDate = DateTime.tryParse(b['recorded_at'] ?? '') ?? DateTime.now();
+            final aDate =
+                DateTime.tryParse(a['recorded_at'] ?? '') ?? DateTime.now();
+            final bDate =
+                DateTime.tryParse(b['recorded_at'] ?? '') ?? DateTime.now();
             return bDate.compareTo(aDate);
           });
           return decoded.map((e) => Map<String, dynamic>.from(e)).toList();

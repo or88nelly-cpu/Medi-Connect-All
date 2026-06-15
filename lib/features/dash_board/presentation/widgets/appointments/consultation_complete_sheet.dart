@@ -8,11 +8,10 @@ import 'package:medi_connect/core/storage/secure_storage_service.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_entity.dart';
 import 'package:medi_connect/features/dash_board/data/models/pharmacy_item_model.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_billing_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_pharmacy_bloc.dart';
 import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
@@ -65,17 +64,23 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
 
     final authState = context.read<AuthBloc>().state;
     if (authState is Authenticated && authState.user.role == 'doctor') {
-      context.read<DoctorAppointmentsBloc>().add(CompleteDoctorAppointment(apt.id));
+      context.read<DoctorAppointmentsBloc>().add(
+        CompleteDoctorAppointment(apt.id),
+      );
     } else {
       context.read<AdminAppointmentsBloc>().add(CompleteAppointment(apt.id));
     }
 
-    context.read<AdminBillingBloc>().add(RecordInvoice({
-      'patient_name': patientName,
-      'amount': amount,
-      'status': 'Paid',
-      'payment_method': cubit.state.paymentMethod == 'Online' ? 'UPI/QR' : 'Cash',
-    }));
+    context.read<AdminBillingBloc>().add(
+      RecordInvoice({
+        'patient_name': patientName,
+        'amount': amount,
+        'status': 'Paid',
+        'payment_method': cubit.state.paymentMethod == 'Online'
+            ? 'UPI/QR'
+            : 'Cash',
+      }),
+    );
 
     cubit.confirmPaymentSuccess();
 
@@ -90,27 +95,37 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     );
   }
 
-  List<Map<String, String>> _getMedicineList(List<Map<String, dynamic>> medicines) {
-    return medicines.map((row) {
-      final nameCtrl = row['name'] as TextEditingController;
-      final dosageCtrl = row['dosage'] as TextEditingController;
-      final freqCtrl = row['frequency'] as TextEditingController;
-      final daysCtrl = row['days'] as TextEditingController;
-      return {
-        'name': nameCtrl.text.trim(),
-        'dosage': dosageCtrl.text.trim(),
-        'frequency': freqCtrl.text.trim(),
-        'days': daysCtrl.text.trim(),
-      };
-    }).where((m) => m['name']!.isNotEmpty).toList();
+  List<Map<String, String>> _getMedicineList(
+    List<Map<String, dynamic>> medicines,
+  ) {
+    return medicines
+        .map((row) {
+          final nameCtrl = row['name'] as TextEditingController;
+          final dosageCtrl = row['dosage'] as TextEditingController;
+          final freqCtrl = row['frequency'] as TextEditingController;
+          final daysCtrl = row['days'] as TextEditingController;
+          return {
+            'name': nameCtrl.text.trim(),
+            'dosage': dosageCtrl.text.trim(),
+            'frequency': freqCtrl.text.trim(),
+            'days': daysCtrl.text.trim(),
+          };
+        })
+        .where((m) => m['name']!.isNotEmpty)
+        .toList();
   }
 
-  Future<void> _submitEMR(BuildContext context, CompleteConsultationCubit cubit) async {
+  Future<void> _submitEMR(
+    BuildContext context,
+    CompleteConsultationCubit cubit,
+  ) async {
     final apt = widget.appointment;
     final state = cubit.state;
     final medicines = _getMedicineList(state.medicines);
     final amount = double.tryParse(_feeCtrl.text.trim()) ?? 0.0;
-    final paymentMethodStr = state.paymentMethod == 'Online' ? 'UPI/QR' : 'Cash';
+    final paymentMethodStr = state.paymentMethod == 'Online'
+        ? 'UPI/QR'
+        : 'Cash';
     final recordedAtStr = DateTime.now().toIso8601String();
 
     double medicineAmount = 0.0;
@@ -118,8 +133,10 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
       final nameCtrl = row['name'] as TextEditingController;
       if (nameCtrl.text.trim().isNotEmpty) {
         final price = row['sell_price'] as double? ?? 150.0;
-        final freqStr = (row['frequency'] as TextEditingController?)?.text.trim() ?? '';
-        final daysStr = (row['days'] as TextEditingController?)?.text.trim() ?? '';
+        final freqStr =
+            (row['frequency'] as TextEditingController?)?.text.trim() ?? '';
+        final daysStr =
+            (row['days'] as TextEditingController?)?.text.trim() ?? '';
         int days = int.tryParse(daysStr) ?? 7;
         double dailyCount = 0.0;
         if (freqStr.contains('-')) {
@@ -153,7 +170,12 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
       'doctor_name': apt.doctorName,
       'specialty': apt.specialty,
       'appointment_id': apt.id,
-      'medicines': medicines.map((m) => '${m['name']} (${m['dosage']}, ${m['frequency']}, ${m['days']} Days)').join('\n'),
+      'medicines': medicines
+          .map(
+            (m) =>
+                '${m['name']} (${m['dosage']}, ${m['frequency']}, ${m['days']} Days)',
+          )
+          .join('\n'),
       'lab_tests': state.selectedTests.join(', '),
       'prescription_notes': _prescriptionNotesCtrl.text.trim(),
       'invoice_number': state.invoiceNumber,
@@ -183,7 +205,11 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
           final match = pharmacyItems.firstWhere(
             (item) => item.name.toLowerCase() == name,
             orElse: () => const PharmacyItemModel(
-              id: '', name: '', stock: 0, category: '', status: '',
+              id: '',
+              name: '',
+              stock: 0,
+              category: '',
+              status: '',
             ),
           );
           if (match.id.isNotEmpty && match.stock > 0) {
@@ -200,11 +226,14 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
             } else {
               dailyCount = double.tryParse(freqStr) ?? 1.0;
             }
-            final int stripsToDeduct = (dailyCount * days / 10.0).ceil().clamp(1, 999);
+            final int stripsToDeduct = (dailyCount * days / 10.0).ceil().clamp(
+              1,
+              999,
+            );
             final newStock = (match.stock - stripsToDeduct).clamp(0, 999999);
             context.read<AdminPharmacyBloc>().add(
-                  UpdatePharmacyItemStock(match.id, newStock),
-                );
+              UpdatePharmacyItemStock(match.id, newStock),
+            );
           }
         }
       }
@@ -263,9 +292,21 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildStepCircle(1, 'Consultation', currentStep == 1, currentStep > 1, isDark),
+          _buildStepCircle(
+            1,
+            'Consultation',
+            currentStep == 1,
+            currentStep > 1,
+            isDark,
+          ),
           _buildStepLine(currentStep > 1, isDark),
-          _buildStepCircle(2, 'Review', currentStep == 2, currentStep > 2, isDark),
+          _buildStepCircle(
+            2,
+            'Review',
+            currentStep == 2,
+            currentStep > 2,
+            isDark,
+          ),
           _buildStepLine(currentStep > 2, isDark),
           _buildStepCircle(3, 'Payment', currentStep == 3, false, isDark),
         ],
@@ -273,7 +314,13 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     );
   }
 
-  Widget _buildStepCircle(int step, String label, bool isActive, bool isCompleted, bool isDark) {
+  Widget _buildStepCircle(
+    int step,
+    String label,
+    bool isActive,
+    bool isCompleted,
+    bool isDark,
+  ) {
     final activeColor = AppColors.primary;
     final completedColor = AppColors.success;
     final inactiveColor = isDark ? Colors.white24 : Colors.grey[300]!;
@@ -291,7 +338,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     );
 
     if (isActive) {
-      circleBg = activeColor.withOpacity(0.12);
+      circleBg = activeColor.withValues(alpha: 0.12);
       borderCol = activeColor;
       textCol = activeColor;
       child = Text(
@@ -375,7 +422,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
               return Container(
                 decoration: BoxDecoration(
                   color: sheetBg,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(24),
+                  ),
                 ),
                 child: Column(
                   children: [
@@ -389,7 +438,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                               width: 40.w,
                               height: 4.h,
                               decoration: BoxDecoration(
-                                color: isDark ? Colors.white24 : Colors.grey[300],
+                                color: isDark
+                                    ? Colors.white24
+                                    : Colors.grey[300],
                                 borderRadius: BorderRadius.circular(2),
                               ),
                             ),
@@ -402,9 +453,13 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    emrSubmitted ? 'Consultation Completed' : 'Complete Consultation',
+                                    emrSubmitted
+                                        ? 'Consultation Completed'
+                                        : 'Complete Consultation',
                                     style: AppTextStyles.titleLarge.copyWith(
-                                      color: isDark ? Colors.white : AppColors.textPrimary,
+                                      color: isDark
+                                          ? Colors.white
+                                          : AppColors.textPrimary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -412,7 +467,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   Text(
                                     'Patient: ${apt.patientName} · Dr. $cleanDocName',
                                     style: AppTextStyles.bodySmall.copyWith(
-                                      color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                      color: isDark
+                                          ? Colors.white54
+                                          : AppColors.textSecondary,
                                     ),
                                   ),
                                 ],
@@ -421,7 +478,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                 onPressed: () => Navigator.pop(context),
                                 icon: Icon(
                                   Icons.close,
-                                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                  color: isDark
+                                      ? Colors.white54
+                                      : AppColors.textSecondary,
                                 ),
                               ),
                             ],
@@ -448,12 +507,15 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                               onViewInvoice: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Generating PDF invoice: ${state.invoiceNumber}...'),
+                                    content: Text(
+                                      'Generating PDF invoice: ${state.invoiceNumber}...',
+                                    ),
                                     backgroundColor: AppColors.primary,
                                   ),
                                 );
                               },
-                              onBackToAppointments: () => Navigator.pop(context),
+                              onBackToAppointments: () =>
+                                  Navigator.pop(context),
                             )
                           else if (currentStep == 1)
                             ConsultationStepView(
@@ -470,7 +532,8 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                               appointment: apt,
                               feeCtrl: _feeCtrl,
                               prescriptionNotesCtrl: _prescriptionNotesCtrl,
-                              onConfirmPayment: () => _confirmPayment(context, cubit),
+                              onConfirmPayment: () =>
+                                  _confirmPayment(context, cubit),
                               onSubmitEMR: () => _submitEMR(context, cubit),
                             ),
                           SizedBox(height: 24.h),
@@ -481,12 +544,17 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                     // Bottom Wizard Controls (only visible if EMR is not submitted)
                     if (!emrSubmitted)
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 12.h,
+                        ),
                         decoration: BoxDecoration(
                           color: sheetBg,
                           border: Border(
                             top: BorderSide(
-                              color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                              color: isDark
+                                  ? AppColors.terminalDarkBorder
+                                  : AppColors.border,
                             ),
                           ),
                         ),
@@ -498,14 +566,27 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                 child: OutlinedButton(
                                   onPressed: () => Navigator.pop(context),
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: isDark ? Colors.white70 : AppColors.textSecondary,
-                                    side: BorderSide(color: isDark ? Colors.white24 : AppColors.border),
-                                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                                    foregroundColor: isDark
+                                        ? Colors.white70
+                                        : AppColors.textSecondary,
+                                    side: BorderSide(
+                                      color: isDark
+                                          ? Colors.white24
+                                          : AppColors.border,
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 14.h,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.bold)),
+                                  child: const Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 12.w),
@@ -515,7 +596,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primary,
                                     foregroundColor: Colors.white,
-                                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 14.h,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
@@ -523,7 +606,12 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text('Next', style: TextStyle(fontWeight: FontWeight.bold)),
+                                      const Text(
+                                        'Next',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       SizedBox(width: 6.w),
                                       const Icon(Icons.arrow_forward, size: 16),
                                     ],
@@ -535,14 +623,27 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                 child: OutlinedButton(
                                   onPressed: () => cubit.previousStep(),
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: isDark ? Colors.white70 : AppColors.textSecondary,
-                                    side: BorderSide(color: isDark ? Colors.white24 : AppColors.border),
-                                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                                    foregroundColor: isDark
+                                        ? Colors.white70
+                                        : AppColors.textSecondary,
+                                    side: BorderSide(
+                                      color: isDark
+                                          ? Colors.white24
+                                          : AppColors.border,
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 14.h,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  child: const Text('Back', style: TextStyle(fontWeight: FontWeight.bold)),
+                                  child: const Text(
+                                    'Back',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 12.w),
@@ -552,7 +653,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primary,
                                     foregroundColor: Colors.white,
-                                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 14.h,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
@@ -560,7 +663,12 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text('Proceed to Payment', style: TextStyle(fontWeight: FontWeight.bold)),
+                                      const Text(
+                                        'Proceed to Payment',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       SizedBox(width: 6.w),
                                       const Icon(Icons.arrow_forward, size: 16),
                                     ],
@@ -572,14 +680,27 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                 child: OutlinedButton(
                                   onPressed: () => cubit.previousStep(),
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: isDark ? Colors.white70 : AppColors.textSecondary,
-                                    side: BorderSide(color: isDark ? Colors.white24 : AppColors.border),
-                                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                                    foregroundColor: isDark
+                                        ? Colors.white70
+                                        : AppColors.textSecondary,
+                                    side: BorderSide(
+                                      color: isDark
+                                          ? Colors.white24
+                                          : AppColors.border,
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 14.h,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  child: const Text('Back', style: TextStyle(fontWeight: FontWeight.bold)),
+                                  child: const Text(
+                                    'Back',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
                               // Note: No Next button in step 3 as the actions are inline ("Pay & Confirm" and "Submit to EMR").

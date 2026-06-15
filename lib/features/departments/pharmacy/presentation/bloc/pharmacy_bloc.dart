@@ -20,13 +20,16 @@ abstract class PharmacyState extends Equatable {
 }
 
 class PharmacyInitial extends PharmacyState {}
+
 class PharmacyLoading extends PharmacyState {}
+
 class PharmacyLoaded extends PharmacyState {
   final Map<String, dynamic> stats;
   const PharmacyLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class PharmacyError extends PharmacyState {
   final String message;
   const PharmacyError(this.message);
@@ -42,7 +45,10 @@ class PharmacyBloc extends Bloc<PharmacyEvent, PharmacyState> {
     on<LoadPharmacyStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadPharmacyStats event, Emitter<PharmacyState> emit) async {
+  Future<void> _onLoadStats(
+    LoadPharmacyStats event,
+    Emitter<PharmacyState> emit,
+  ) async {
     emit(PharmacyLoading());
     final result = await _useCase(const NoParams());
     result.fold(

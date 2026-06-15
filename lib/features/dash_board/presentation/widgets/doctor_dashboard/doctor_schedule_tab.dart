@@ -11,7 +11,6 @@ import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/premium_appointment_card.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/appointment_summary_card.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/consultation_complete_sheet.dart';
-import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
 
 class DoctorScheduleTab extends StatefulWidget {
   const DoctorScheduleTab({super.key});
@@ -68,7 +67,10 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     return "Good Evening";
   }
 
-  void _showConsultationCompleteSheet(BuildContext context, AppointmentEntity apt) {
+  void _showConsultationCompleteSheet(
+    BuildContext context,
+    AppointmentEntity apt,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -101,7 +103,9 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
           return const Center(child: Text("Please login to see schedule"));
         }
         final doctor = authState.user;
-        final docDisplayName = doctor.name ?? "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName =
+            doctor.name ??
+            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, aptState) {
@@ -114,13 +118,22 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.error_outline, color: AppColors.error, size: 48.r),
+                    Icon(
+                      Icons.error_outline,
+                      color: AppColors.error,
+                      size: 48.r,
+                    ),
                     SizedBox(height: 12.h),
-                    Text("Error loading appointments", style: AppTextStyles.titleMedium),
+                    Text(
+                      "Error loading appointments",
+                      style: AppTextStyles.titleMedium,
+                    ),
                     Text(aptState.message, style: AppTextStyles.bodyMedium),
                     SizedBox(height: 16.h),
                     ElevatedButton(
-                      onPressed: () => context.read<DoctorAppointmentsBloc>().add(LoadDoctorAppointments()),
+                      onPressed: () => context
+                          .read<DoctorAppointmentsBloc>()
+                          .add(LoadDoctorAppointments()),
                       child: const Text("Retry"),
                     ),
                   ],
@@ -134,31 +147,48 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
               // Filter for current logged-in doctor
               final doctorApts = appointments.where((a) {
                 final matchId = a.doctorId == doctor.id;
-                final matchName = a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
+                final matchName =
+                    a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
                     docDisplayName.toLowerCase().replaceAll("dr.", "").trim();
                 return matchId || matchName;
               }).toList();
 
               // Compute counts for TODAY'S SCHEDULE card
-              final targetDateApts = doctorApts.where((a) => _isSameDay(a.appointmentDate, _selectedDate)).toList();
+              final targetDateApts = doctorApts
+                  .where((a) => _isSameDay(a.appointmentDate, _selectedDate))
+                  .toList();
               final totalCount = targetDateApts.length;
-              final completedCount = targetDateApts.where((a) => a.status == 'Completed').length;
-              final pendingCount = targetDateApts.where((a) => a.status == 'Pending').length;
-              final cancelledCount = targetDateApts.where((a) => a.status == 'Cancelled').length;
+              final completedCount = targetDateApts
+                  .where((a) => a.status == 'Completed')
+                  .length;
+              final pendingCount = targetDateApts
+                  .where((a) => a.status == 'Pending')
+                  .length;
+              final cancelledCount = targetDateApts
+                  .where((a) => a.status == 'Cancelled')
+                  .length;
 
               // Filter current appointments list
               final filteredApts = targetDateApts.where((a) {
-                final matchesStatus = _selectedStatus == 'All' ||
+                final matchesStatus =
+                    _selectedStatus == 'All' ||
                     a.status.toLowerCase() == _selectedStatus.toLowerCase();
 
-                final matchesSearch = a.patientName.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-                    a.specialty.toLowerCase().contains(_searchQuery.toLowerCase());
+                final matchesSearch =
+                    a.patientName.toLowerCase().contains(
+                      _searchQuery.toLowerCase(),
+                    ) ||
+                    a.specialty.toLowerCase().contains(
+                      _searchQuery.toLowerCase(),
+                    );
 
                 return matchesStatus && matchesSearch;
               }).toList();
 
               // Sort by chronological time
-              filteredApts.sort((a, b) => _compareTimes(a.appointmentTime, b.appointmentTime));
+              filteredApts.sort(
+                (a, b) => _compareTimes(a.appointmentTime, b.appointmentTime),
+              );
 
               return SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -168,34 +198,46 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                   children: [
                     // Greeting Header
                     Text(
-                      "${_greetingMessage()}, Dr. ${docDisplayName.replaceAll("Dr.", "").replaceAll("dr.", "").trim()} 👋",
+                      "${_greetingMessage()}, Dr. ${docDisplayName.replaceAll("Dr", "").replaceAll("dr.", "").trim()} 👋",
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary,
+                        color: isDark
+                            ? AppColors.terminalDarkLabel
+                            : AppColors.textSecondary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 4.h),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           AppStrings.appointments,
                           style: AppTextStyles.headingMedium.copyWith(
-                            color: isDark ? Colors.white : AppColors.textPrimary,
+                            color: isDark
+                                ? Colors.white
+                                : AppColors.textPrimary,
                             fontWeight: FontWeight.bold,
-                            fontSize: 24.sp,
+                            fontSize: 18.sp,
                           ),
                         ),
                         IconButton(
                           icon: Icon(
                             Icons.refresh,
-                            color: isDark ? Colors.white70 : AppColors.textSecondary,
+                            color: isDark
+                                ? Colors.white70
+                                : AppColors.textSecondary,
                             size: 24.r,
                           ),
                           onPressed: () {
-                            context.read<DoctorAppointmentsBloc>().add(LoadDoctorAppointments());
+                            context.read<DoctorAppointmentsBloc>().add(
+                              LoadDoctorAppointments(),
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Refreshing appointments list...")),
+                              const SnackBar(
+                                content: Text(
+                                  "Refreshing appointments list...",
+                                ),
+                              ),
                             );
                           },
                         ),
@@ -204,38 +246,13 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                     SizedBox(height: 12.h),
 
                     // Selected Date indicator
-                    InkWell(
-                      onTap: () => _selectDate(context),
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 4.h),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.calendar_today_outlined,
-                              size: 16.r,
-                              color: AppColors.primary,
-                            ),
-                            SizedBox(width: 8.w),
-                            Text(
-                              DateFormat('dd MMMM yyyy, EEEE').format(_selectedDate),
-                              style: AppTextStyles.bodyMedium.copyWith(
-                                color: isDark ? Colors.white70 : AppColors.textPrimary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
 
                     // Gradient summary card
                     AppointmentSummaryCard(
                       totalCount: totalCount,
                       completedCount: completedCount,
                       pendingCount: pendingCount,
+                      date: _selectedDate,
                       cancelledCount: cancelledCount,
                       onViewCalendar: () => _selectDate(context),
                     ),
@@ -246,50 +263,72 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                       children: [
                         Expanded(
                           child: Container(
+                            height: 40.h,
                             decoration: BoxDecoration(
-                              color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                              color: isDark
+                                  ? AppColors.terminalDarkCard
+                                  : Colors.white,
                               borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
-                                color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                                color: isDark
+                                    ? AppColors.terminalDarkBorder
+                                    : AppColors.border,
                               ),
                             ),
                             child: TextField(
                               controller: _searchController,
-                              onChanged: (val) => setState(() => _searchQuery = val),
+                              onChanged: (val) =>
+                                  setState(() => _searchQuery = val),
                               style: TextStyle(
-                                color: isDark ? Colors.white : AppColors.textPrimary,
-                                fontSize: 13.sp,
+                                color: isDark
+                                    ? Colors.white
+                                    : AppColors.textPrimary,
+                                fontSize: 12.sp,
                               ),
                               decoration: InputDecoration(
                                 hintText: "Search patient, or specialty...",
                                 hintStyle: TextStyle(
-                                  color: isDark ? AppColors.terminalDarkFieldHint : Colors.grey,
-                                  fontSize: 13.sp,
+                                  color: isDark
+                                      ? AppColors.terminalDarkFieldHint
+                                      : Colors.grey,
+                                  fontSize: 12.sp,
                                 ),
                                 prefixIcon: Icon(
                                   Icons.search,
-                                  color: isDark ? Colors.white54 : AppColors.textSecondary,
-                                  size: 20.r,
+                                  color: isDark
+                                      ? Colors.white54
+                                      : AppColors.textSecondary,
+                                  size: 16.r,
                                 ),
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(vertical: 12.h),
+                                contentPadding: EdgeInsets.symmetric(
+                                  //  vertical: 6.h,
+                                  horizontal: 12.w,
+                                ),
                               ),
                             ),
                           ),
                         ),
                         SizedBox(width: 12.w),
                         Container(
-                          padding: EdgeInsets.all(12.r),
+                          padding: EdgeInsets.symmetric(horizontal: 12.r),
+                          height: 40.h,
                           decoration: BoxDecoration(
-                            color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                            color: isDark
+                                ? AppColors.terminalDarkCard
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(12.r),
                             border: Border.all(
-                              color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                              color: isDark
+                                  ? AppColors.terminalDarkBorder
+                                  : AppColors.border,
                             ),
                           ),
                           child: Icon(
                             Icons.filter_list,
-                            color: isDark ? Colors.white70 : AppColors.textPrimary,
+                            color: isDark
+                                ? Colors.white70
+                                : AppColors.textPrimary,
                             size: 20.r,
                           ),
                         ),
@@ -302,41 +341,53 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                       scrollDirection: Axis.horizontal,
                       physics: const BouncingScrollPhysics(),
                       child: Row(
-                        children: ['All', 'Confirmed', 'Pending', 'Completed', 'Cancelled'].map((status) {
-                          final isSelected = _selectedStatus == status;
-                          return Padding(
-                            padding: EdgeInsets.only(right: 8.w),
-                            child: ChoiceChip(
-                              label: Text(
-                                status,
-                                style: TextStyle(
-                                  color: isSelected
-                                      ? Colors.white
-                                      : _getChipTextColor(status, isDark),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12.sp,
+                        children:
+                            [
+                              'All',
+                              'Confirmed',
+                              'Pending',
+                              'Completed',
+                              'Cancelled',
+                            ].map((status) {
+                              final isSelected = _selectedStatus == status;
+                              return Padding(
+                                padding: EdgeInsets.only(right: 8.w),
+                                child: ChoiceChip(
+                                  label: Text(
+                                    status,
+                                    style: TextStyle(
+                                      color: isSelected
+                                          ? Colors.white
+                                          : _getChipTextColor(status, isDark),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                  selected: isSelected,
+                                  selectedColor: const Color(0xFF0F6FFF),
+                                  backgroundColor: _getChipBgColor(
+                                    status,
+                                    isDark,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    side: BorderSide(
+                                      color: isSelected
+                                          ? Colors.transparent
+                                          : _getChipBorderColor(status, isDark),
+                                    ),
+                                  ),
+                                  showCheckmark: false,
+                                  onSelected: (selected) {
+                                    if (selected) {
+                                      setState(() {
+                                        _selectedStatus = status;
+                                      });
+                                    }
+                                  },
                                 ),
-                              ),
-                              selected: isSelected,
-                              selectedColor: const Color(0xFF0F6FFF),
-                              backgroundColor: _getChipBgColor(status, isDark),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.r),
-                                side: BorderSide(
-                                  color: isSelected ? Colors.transparent : _getChipBorderColor(status, isDark),
-                                ),
-                              ),
-                              showCheckmark: false,
-                              onSelected: (selected) {
-                                if (selected) {
-                                  setState(() {
-                                    _selectedStatus = status;
-                                  });
-                                }
-                              },
-                            ),
-                          );
-                        }).toList(),
+                              );
+                            }).toList(),
                       ),
                     ),
                     SizedBox(height: 20.h),
@@ -364,14 +415,20 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                               children: [
                                 Icon(
                                   Icons.calendar_today_outlined,
-                                  color: isDark ? Colors.white30 : AppColors.textSecondary.withOpacity(0.5),
+                                  color: isDark
+                                      ? Colors.white30
+                                      : AppColors.textSecondary.withValues(
+                                          alpha: 0.5,
+                                        ),
                                   size: 40.r,
                                 ),
                                 SizedBox(height: 12.h),
                                 Text(
                                   "No appointments found",
                                   style: AppTextStyles.titleMedium.copyWith(
-                                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                    color: isDark
+                                        ? Colors.white54
+                                        : AppColors.textSecondary,
                                   ),
                                 ),
                               ],
@@ -385,11 +442,14 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                               final apt = filteredApts[idx];
                               final timeParts = apt.appointmentTime.split(" ");
                               final timeVal = timeParts[0];
-                              final timePeriod = timeParts.length > 1 ? timeParts[1] : "";
+                              final timePeriod = timeParts.length > 1
+                                  ? timeParts[1]
+                                  : "";
 
                               return IntrinsicHeight(
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     // Time Indicator
                                     SizedBox(
@@ -397,12 +457,15 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                       child: Padding(
                                         padding: EdgeInsets.only(top: 14.h),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               timeVal,
                                               style: TextStyle(
-                                                color: isDark ? Colors.white : AppColors.textPrimary,
+                                                color: isDark
+                                                    ? Colors.white
+                                                    : AppColors.textPrimary,
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -410,7 +473,10 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                             Text(
                                               timePeriod,
                                               style: TextStyle(
-                                                color: isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary,
+                                                color: isDark
+                                                    ? AppColors
+                                                          .terminalDarkLabel
+                                                    : AppColors.textSecondary,
                                                 fontSize: 10.sp,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -432,12 +498,17 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                       child: PremiumAppointmentCard(
                                         appointment: apt,
                                         onCancel: () {
-                                          context.read<DoctorAppointmentsBloc>().add(
+                                          context
+                                              .read<DoctorAppointmentsBloc>()
+                                              .add(
                                                 CancelDoctorAppointment(apt.id),
                                               );
                                         },
                                         onComplete: () {
-                                          _showConsultationCompleteSheet(context, apt);
+                                          _showConsultationCompleteSheet(
+                                            context,
+                                            apt,
+                                          );
                                         },
                                       ),
                                     ),
@@ -471,7 +542,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
               bottom: index == totalCount - 1 ? 24.h : 0,
               child: Container(
                 width: 2.w,
-                color: AppColors.border.withOpacity(0.5),
+                color: AppColors.border.withValues(alpha: 0.5),
               ),
             ),
           // Dot
@@ -486,7 +557,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                 border: Border.all(color: Colors.white, width: 2),
                 boxShadow: [
                   BoxShadow(
-                    color: color.withOpacity(0.4),
+                    color: color.withValues(alpha: 0.4),
                     blurRadius: 4,
                     spreadRadius: 1,
                   ),
@@ -500,32 +571,40 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
   }
 
   Color _getChipBgColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withOpacity(0.1);
+    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.1);
     switch (status) {
       case 'Confirmed':
-        return isDark ? AppColors.statusConfirmedBgDark.withOpacity(0.3) : AppColors.statusConfirmedBgLight;
+        return isDark
+            ? AppColors.statusConfirmedBgDark.withValues(alpha: 0.3)
+            : AppColors.statusConfirmedBgLight;
       case 'Pending':
-        return isDark ? AppColors.statusPendingBgDark.withOpacity(0.3) : AppColors.statusPendingBgLight;
+        return isDark
+            ? AppColors.statusPendingBgDark.withValues(alpha: 0.3)
+            : AppColors.statusPendingBgLight;
       case 'Completed':
-        return isDark ? AppColors.statusCompletedBgDark.withOpacity(0.3) : AppColors.statusCompletedBgLight;
+        return isDark
+            ? AppColors.statusCompletedBgDark.withValues(alpha: 0.3)
+            : AppColors.statusCompletedBgLight;
       case 'Cancelled':
       default:
-        return isDark ? AppColors.statusCancelledBgDark.withOpacity(0.3) : AppColors.statusCancelledBgLight;
+        return isDark
+            ? AppColors.statusCancelledBgDark.withValues(alpha: 0.3)
+            : AppColors.statusCancelledBgLight;
     }
   }
 
   Color _getChipBorderColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withOpacity(0.3);
+    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.3);
     switch (status) {
       case 'Confirmed':
-        return AppColors.success.withOpacity(0.3);
+        return AppColors.success.withValues(alpha: 0.3);
       case 'Pending':
-        return AppColors.warning.withOpacity(0.3);
+        return AppColors.warning.withValues(alpha: 0.3);
       case 'Completed':
-        return AppColors.infoPurple.withOpacity(0.3);
+        return AppColors.infoPurple.withValues(alpha: 0.3);
       case 'Cancelled':
       default:
-        return AppColors.error.withOpacity(0.3);
+        return AppColors.error.withValues(alpha: 0.3);
     }
   }
 
@@ -533,14 +612,22 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     if (status == 'All') return const Color(0xFF0F6FFF);
     switch (status) {
       case 'Confirmed':
-        return isDark ? AppColors.statusConfirmedTextDark : AppColors.statusConfirmedTextLight;
+        return isDark
+            ? AppColors.statusConfirmedTextDark
+            : AppColors.statusConfirmedTextLight;
       case 'Pending':
-        return isDark ? AppColors.statusPendingTextDark : AppColors.statusPendingTextLight;
+        return isDark
+            ? AppColors.statusPendingTextDark
+            : AppColors.statusPendingTextLight;
       case 'Completed':
-        return isDark ? AppColors.statusCompletedTextDark : AppColors.statusCompletedTextLight;
+        return isDark
+            ? AppColors.statusCompletedTextDark
+            : AppColors.statusCompletedTextLight;
       case 'Cancelled':
       default:
-        return isDark ? AppColors.statusCancelledTextDark : AppColors.statusCancelledTextLight;
+        return isDark
+            ? AppColors.statusCancelledTextDark
+            : AppColors.statusCancelledTextLight;
     }
   }
 }

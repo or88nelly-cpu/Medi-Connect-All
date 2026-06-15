@@ -19,7 +19,8 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.I<CustomerCareBloc>()..add(LoadCustomerCareStats()),
+      create: (context) =>
+          GetIt.I<CustomerCareBloc>()..add(LoadCustomerCareStats()),
       child: CustomScaffold(
         customAppbar: const CommonAppBar(title: "Customer Care Department"),
         body: BlocBuilder<CustomerCareBloc, CustomerCareState>(
@@ -30,7 +31,9 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
               return Center(
                 child: Text(
                   state.message,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.error,
+                  ),
                 ),
               );
             } else if (state is CustomerCareLoaded) {
@@ -61,11 +64,16 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                       itemBuilder: (context, index) {
                         final key = stats.keys.elementAt(index);
                         final val = stats[key];
-                        final displayKey = key.split('_').map((word) {
-                          if (word == 'pct') return '%';
-                          if (word == 'min' || word == 'mins') return 'Mins';
-                          return word[0].toUpperCase() + word.substring(1);
-                        }).join(' ');
+                        final displayKey = key
+                            .split('_')
+                            .map((word) {
+                              if (word == 'pct') return '%';
+                              if (word == 'min' || word == 'mins') {
+                                return 'Mins';
+                              }
+                              return word[0].toUpperCase() + word.substring(1);
+                            })
+                            .join(' ');
 
                         return Card(
                           elevation: 0,

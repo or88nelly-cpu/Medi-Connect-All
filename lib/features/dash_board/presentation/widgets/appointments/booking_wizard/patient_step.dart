@@ -34,6 +34,7 @@ class PatientStep extends StatelessWidget {
         (_) => random.nextInt(16).toRadixString(16),
       ).join();
     }
+
     return '${hex(8)}-${hex(4)}-4${hex(3)}-${(random.nextInt(4) + 8).toRadixString(16)}${hex(3)}-${hex(12)}';
   }
 
@@ -194,7 +195,9 @@ class PatientStep extends StatelessWidget {
                           Text(
                             g,
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: isDark ? Colors.white70 : AppColors.textPrimary,
+                              color: isDark
+                                  ? Colors.white70
+                                  : AppColors.textPrimary,
                             ),
                           ),
                           SizedBox(width: 8.w),
@@ -227,8 +230,7 @@ class PatientStep extends StatelessWidget {
                           metadata: {
                             'first_name': firstNameController.text.trim(),
                             'last_name': lastNameController.text.trim(),
-                            'age':
-                                int.tryParse(ageController.text.trim()) ?? 0,
+                            'age': int.tryParse(ageController.text.trim()) ?? 0,
                             'gender': state.gender,
                           },
                         );
@@ -325,7 +327,9 @@ class PatientStep extends StatelessWidget {
                     child: Text(
                       "No patients found. Create one!",
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: isDark ? Colors.white54 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white54
+                            : AppColors.textSecondary,
                       ),
                     ),
                   );
@@ -342,17 +346,17 @@ class PatientStep extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 8.h),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? AppColors.primary.withOpacity(0.1)
+                              ? AppColors.primary.withValues(alpha: 0.1)
                               : (isDark
-                                  ? AppColors.terminalDarkBg
-                                  : Colors.grey[50]),
+                                    ? AppColors.terminalDarkBg
+                                    : Colors.grey[50]),
                           borderRadius: BorderRadius.circular(10.r),
                           border: Border.all(
                             color: isSelected
                                 ? AppColors.primary
                                 : (isDark
-                                    ? AppColors.terminalDarkBorder
-                                    : AppColors.border),
+                                      ? AppColors.terminalDarkBorder
+                                      : AppColors.border),
                             width: isSelected ? 1.5 : 1,
                           ),
                         ),
@@ -365,13 +369,15 @@ class PatientStep extends StatelessWidget {
                             backgroundColor: isSelected
                                 ? AppColors.primary
                                 : (isDark
-                                    ? AppColors.terminalDarkBorder
-                                    : Colors.grey[300]),
+                                      ? AppColors.terminalDarkBorder
+                                      : Colors.grey[300]),
                             child: Icon(
                               isSelected ? Icons.check : Icons.person,
                               color: isSelected
                                   ? Colors.white
-                                  : (isDark ? Colors.white54 : Colors.grey[600]),
+                                  : (isDark
+                                        ? Colors.white54
+                                        : Colors.grey[600]),
                             ),
                           ),
                           title: Text(
@@ -399,13 +405,17 @@ class PatientStep extends StatelessWidget {
                                 "Age: ${p.age ?? p.metadata?['age'] ?? 'N/A'}",
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: isDark ? Colors.white70 : AppColors.textPrimary,
+                                  color: isDark
+                                      ? Colors.white70
+                                      : AppColors.textPrimary,
                                 ),
                               ),
                               Text(
                                 p.gender ?? p.metadata?['gender'] ?? 'N/A',
                                 style: AppTextStyles.bodySmall.copyWith(
-                                  color: isDark ? Colors.white38 : AppColors.textSecondary,
+                                  color: isDark
+                                      ? Colors.white38
+                                      : AppColors.textSecondary,
                                 ),
                               ),
                             ],

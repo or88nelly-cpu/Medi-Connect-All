@@ -20,13 +20,16 @@ abstract class CssdState extends Equatable {
 }
 
 class CssdInitial extends CssdState {}
+
 class CssdLoading extends CssdState {}
+
 class CssdLoaded extends CssdState {
   final Map<String, dynamic> stats;
   const CssdLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class CssdError extends CssdState {
   final String message;
   const CssdError(this.message);
@@ -42,7 +45,10 @@ class CssdBloc extends Bloc<CssdEvent, CssdState> {
     on<LoadCssdStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadCssdStats event, Emitter<CssdState> emit) async {
+  Future<void> _onLoadStats(
+    LoadCssdStats event,
+    Emitter<CssdState> emit,
+  ) async {
     emit(CssdLoading());
     final result = await _useCase(const NoParams());
     result.fold(

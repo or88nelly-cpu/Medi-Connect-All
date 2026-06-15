@@ -7,16 +7,16 @@ import 'package:medi_connect/features/dash_board/presentation/widgets/appointmen
 class AppointmentsStatusFilter extends StatelessWidget {
   final Map<String, int> statusCounts;
 
-  const AppointmentsStatusFilter({
-    super.key,
-    required this.statusCounts,
-  });
+  const AppointmentsStatusFilter({super.key, required this.statusCounts});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return BlocBuilder<AdminAppointmentsFilterCubit, AdminAppointmentsFilterState>(
+    return BlocBuilder<
+      AdminAppointmentsFilterCubit,
+      AdminAppointmentsFilterState
+    >(
       buildWhen: (prev, curr) => prev.filterStatus != curr.filterStatus,
       builder: (context, state) {
         final currentFilter = state.filterStatus;
@@ -25,26 +25,22 @@ class AppointmentsStatusFilter extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
-            children: [
-              'All',
-              'Confirmed',
-              'Pending',
-              'Completed',
-              'Cancelled',
-            ].map((status) {
-              final isSelected = currentFilter == status;
-              final count = statusCounts[status] ?? 0;
-              return Padding(
-                padding: EdgeInsets.only(right: 8.w),
-                child: _buildStatusFilterCard(
-                  context,
-                  status: status,
-                  isSelected: isSelected,
-                  count: count,
-                  isDark: isDark,
-                ),
-              );
-            }).toList(),
+            children: ['All', 'Confirmed', 'Pending', 'Completed', 'Cancelled']
+                .map((status) {
+                  final isSelected = currentFilter == status;
+                  final count = statusCounts[status] ?? 0;
+                  return Padding(
+                    padding: EdgeInsets.only(right: 8.w),
+                    child: _buildStatusFilterCard(
+                      context,
+                      status: status,
+                      isSelected: isSelected,
+                      count: count,
+                      isDark: isDark,
+                    ),
+                  );
+                })
+                .toList(),
           ),
         );
       },
@@ -107,7 +103,7 @@ class AppointmentsStatusFilter extends StatelessWidget {
                     color: statusColor.withValues(alpha: 0.08),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
-                  )
+                  ),
                 ]
               : null,
         ),
@@ -128,7 +124,9 @@ class AppointmentsStatusFilter extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
               decoration: BoxDecoration(
-                color: count > 0 ? statusColor.withValues(alpha: 0.12) : (isDark ? Colors.white12 : Colors.grey[100]),
+                color: count > 0
+                    ? statusColor.withValues(alpha: 0.12)
+                    : (isDark ? Colors.white12 : Colors.grey[100]),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Text(
@@ -136,7 +134,9 @@ class AppointmentsStatusFilter extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 9.sp,
                   fontWeight: FontWeight.bold,
-                  color: count > 0 ? statusColor : (isDark ? Colors.white38 : AppColors.textSecondary),
+                  color: count > 0
+                      ? statusColor
+                      : (isDark ? Colors.white38 : AppColors.textSecondary),
                 ),
               ),
             ),

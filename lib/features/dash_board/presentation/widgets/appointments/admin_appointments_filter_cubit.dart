@@ -26,11 +26,13 @@ class AdminAppointmentsFilterState {
 
 class AdminAppointmentsFilterCubit extends Cubit<AdminAppointmentsFilterState> {
   AdminAppointmentsFilterCubit()
-      : super(AdminAppointmentsFilterState(
+    : super(
+        AdminAppointmentsFilterState(
           searchQuery: '',
           filterStatus: 'All',
           selectedDate: DateTime.now(),
-        ));
+        ),
+      );
 
   void changeSearchQuery(String query) {
     emit(state.copyWith(searchQuery: query));
@@ -45,10 +47,12 @@ class AdminAppointmentsFilterCubit extends Cubit<AdminAppointmentsFilterState> {
   }
 
   void resetFilters() {
-    emit(AdminAppointmentsFilterState(
-      searchQuery: '',
-      filterStatus: 'All',
-      selectedDate: DateTime.now(),
-    ));
+    emit(
+      AdminAppointmentsFilterState(
+        searchQuery: '',
+        filterStatus: 'All',
+        selectedDate: DateTime.now(),
+      ),
+    );
   }
 }

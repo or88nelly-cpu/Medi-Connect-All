@@ -23,9 +23,15 @@ class SectionOverviewStats extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final cardBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final cardBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     // Generate stable mock stats based on department name hash to look realistic
     final hash = departmentName.hashCode.abs();
@@ -54,15 +60,21 @@ class SectionOverviewStats extends StatelessWidget {
       {
         'title': 'Doctors Available',
         'value': '$activeDoctors',
-        'subText': doctorsOnLeave > 0 ? '$doctorsOnLeave on leave' : 'All available',
-        'subColor': doctorsOnLeave > 0 ? AppColors.warning : AppColors.secondary,
+        'subText': doctorsOnLeave > 0
+            ? '$doctorsOnLeave on leave'
+            : 'All available',
+        'subColor': doctorsOnLeave > 0
+            ? AppColors.warning
+            : AppColors.secondary,
         'icon': Icons.local_hospital_outlined,
         'iconColor': AppColors.secondary,
       },
       {
         'title': 'Staff Available',
         'value': '$activeStaff',
-        'subText': staffOnLeave > 0 ? '$staffOnLeave on leave' : 'All available',
+        'subText': staffOnLeave > 0
+            ? '$staffOnLeave on leave'
+            : 'All available',
         'subColor': staffOnLeave > 0 ? AppColors.warning : AppColors.accent,
         'icon': Icons.badge_outlined,
         'iconColor': AppColors.accent,

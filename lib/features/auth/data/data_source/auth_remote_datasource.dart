@@ -1,5 +1,6 @@
 /// Remote data source interface and implementation for authentication.
 /// Integrates with Supabase API for authentication operations.
+library;
 
 import 'dart:developer';
 

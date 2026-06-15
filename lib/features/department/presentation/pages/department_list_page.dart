@@ -90,7 +90,9 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
           AppStrings.departmentsTitle,
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+            color: isDark
+                ? AppColors.terminalDarkText
+                : AppColors.terminalLightText,
           ),
         ),
         actions: [
@@ -100,7 +102,9 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
                 icon: Icon(
                   Icons.refresh,
                   size: 22.r,
-                  color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+                  color: isDark
+                      ? AppColors.terminalDarkText
+                      : AppColors.terminalLightText,
                 ),
                 onPressed: () =>
                     context.read<DepartmentBloc>().add(const LoadDepartments()),
@@ -248,7 +252,9 @@ class _EmptyState extends StatelessWidget {
           Text(
             AppStrings.noDepartments,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary,
+              color: isDark
+                  ? AppColors.terminalDarkLabel
+                  : AppColors.textSecondary,
             ),
           ),
         ],

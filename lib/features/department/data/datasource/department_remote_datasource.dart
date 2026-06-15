@@ -55,7 +55,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
         })
         .select()
         .single();
-    return DepartmentModel.fromJson(response as Map<String, dynamic>);
+    return DepartmentModel.fromJson(response);
   }
 
   @override
@@ -75,7 +75,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
         .eq('id', id)
         .select()
         .single();
-    return DepartmentModel.fromJson(response as Map<String, dynamic>);
+    return DepartmentModel.fromJson(response);
   }
 
   @override

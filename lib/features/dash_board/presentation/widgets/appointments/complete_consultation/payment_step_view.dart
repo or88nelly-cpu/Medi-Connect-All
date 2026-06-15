@@ -25,10 +25,7 @@ class PaymentStepView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PaymentSection(
-          feeCtrl: feeCtrl,
-          onConfirmPayment: onConfirmPayment,
-        ),
+        PaymentSection(feeCtrl: feeCtrl, onConfirmPayment: onConfirmPayment),
         SizedBox(height: 24.h),
         SubmitEmrSection(
           appointment: appointment,

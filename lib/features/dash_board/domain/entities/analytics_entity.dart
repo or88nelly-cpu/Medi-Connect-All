@@ -1,4 +1,6 @@
 /// Analytics entity definition.
+library;
+
 import 'package:equatable/equatable.dart';
 
 class AnalyticsEntity extends Equatable {

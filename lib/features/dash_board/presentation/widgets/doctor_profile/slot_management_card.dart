@@ -40,16 +40,19 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
     }
   }
 
-  List<Map<String, dynamic>> _generateDefaultSlots(String session, String durationStr) {
+  List<Map<String, dynamic>> _generateDefaultSlots(
+    String session,
+    String durationStr,
+  ) {
     final int minutes = durationStr.contains("10")
         ? 10
         : durationStr.contains("15")
-            ? 15
-            : 30;
+        ? 15
+        : 30;
 
     final List<Map<String, dynamic>> list = [];
-    int startHour = session == "morning" ? 9 : 14; 
-    int endHour = session == "morning" ? 13 : 18; 
+    int startHour = session == "morning" ? 9 : 14;
+    int endHour = session == "morning" ? 13 : 18;
 
     int currentMin = startHour * 60;
     int endMin = endHour * 60;
@@ -60,8 +63,9 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
       final min = currentMin % 60;
       final displayHour = hour > 12 ? hour - 12 : hour;
       final amPm = hour >= 12 ? "PM" : "AM";
-      final timeStr = "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
-      
+      final timeStr =
+          "${displayHour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')} $amPm";
+
       String status = "Available";
       if (idx % 6 == 1) status = "Booked";
       if (idx % 8 == 2) status = "On Hold";
@@ -75,20 +79,26 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
   }
 
   void _loadSlots() {
-    final slotsByDate = widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
+    final slotsByDate =
+        widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
     final dateData = slotsByDate[_selectedDate] as Map<dynamic, dynamic>? ?? {};
-    final durationData = dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
+    final durationData =
+        dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
 
     final morningList = durationData['morning'] as List<dynamic>?;
     if (morningList != null) {
-      _morningSlots = morningList.map((e) => Map<String, dynamic>.from(e)).toList();
+      _morningSlots = morningList
+          .map((e) => Map<String, dynamic>.from(e))
+          .toList();
     } else {
       _morningSlots = _generateDefaultSlots("morning", _slotDuration);
     }
 
     final afternoonList = durationData['afternoon'] as List<dynamic>?;
     if (afternoonList != null) {
-      _afternoonSlots = afternoonList.map((e) => Map<String, dynamic>.from(e)).toList();
+      _afternoonSlots = afternoonList
+          .map((e) => Map<String, dynamic>.from(e))
+          .toList();
     } else {
       _afternoonSlots = _generateDefaultSlots("afternoon", _slotDuration);
     }
@@ -113,20 +123,32 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
         newStatus = "Available";
     }
 
-    final morningIdx = _morningSlots.indexWhere((item) => item['time'] == slot['time']);
+    final morningIdx = _morningSlots.indexWhere(
+      (item) => item['time'] == slot['time'],
+    );
     if (morningIdx != -1) {
       _morningSlots[morningIdx]['status'] = newStatus;
     } else {
-      final afternoonIdx = _afternoonSlots.indexWhere((item) => item['time'] == slot['time']);
+      final afternoonIdx = _afternoonSlots.indexWhere(
+        (item) => item['time'] == slot['time'],
+      );
       if (afternoonIdx != -1) {
         _afternoonSlots[afternoonIdx]['status'] = newStatus;
       }
     }
 
-    final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
-    final slotsByDate = Map<String, dynamic>.from(updatedMetadata['slots_by_date'] ?? {});
-    final dateData = Map<String, dynamic>.from(slotsByDate[_selectedDate] ?? {});
-    final durationData = Map<String, dynamic>.from(dateData[_slotDuration] ?? {});
+    final updatedMetadata = Map<String, dynamic>.from(
+      widget.user.metadata ?? {},
+    );
+    final slotsByDate = Map<String, dynamic>.from(
+      updatedMetadata['slots_by_date'] ?? {},
+    );
+    final dateData = Map<String, dynamic>.from(
+      slotsByDate[_selectedDate] ?? {},
+    );
+    final durationData = Map<String, dynamic>.from(
+      dateData[_slotDuration] ?? {},
+    );
 
     durationData['morning'] = _morningSlots;
     durationData['afternoon'] = _afternoonSlots;
@@ -136,11 +158,11 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
 
     updatedMetadata['slots_morning'] = _morningSlots;
     updatedMetadata['slots_afternoon'] = _afternoonSlots;
-    
+
     final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-    
+
     context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-    
+
     final authState = context.read<AuthBloc>().state;
     if (authState is Authenticated && authState.user.id == widget.user.id) {
       context.read<AuthBloc>().add(UserUpdated(updatedUser));
@@ -178,10 +200,18 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -208,16 +238,26 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  context.push('/admin/doctor-staff/manage-slots', extra: widget.user);
+                  context.push(
+                    '/admin/doctor-staff/manage-slots',
+                    extra: widget.user,
+                  );
                 },
                 icon: Icon(Icons.tune, size: 12.sp, color: Colors.white),
                 label: Text(
                   "Manage Slots",
-                  style: TextStyle(color: Colors.white, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 6.h,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6.r),
                   ),
@@ -227,17 +267,30 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
               OutlinedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Opening Assign Slot Form...")),
+                    const SnackBar(
+                      content: Text("Opening Assign Slot Form..."),
+                    ),
                   );
                 },
-                icon: Icon(Icons.person_add_alt_1_outlined, size: 12.sp, color: const Color(0xFF9C27B0)),
+                icon: Icon(
+                  Icons.person_add_alt_1_outlined,
+                  size: 12.sp,
+                  color: const Color(0xFF9C27B0),
+                ),
                 label: Text(
                   "Assign Slot",
-                  style: TextStyle(color: const Color(0xFF9C27B0), fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: const Color(0xFF9C27B0),
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFF9C27B0)),
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 6.h,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6.r),
                   ),
@@ -385,7 +438,11 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
           isExpanded: true,
           dropdownColor: cardBg,
           icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-          style: TextStyle(color: textColor, fontSize: 10.sp, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            color: textColor,
+            fontSize: 10.sp,
+            fontWeight: FontWeight.w600,
+          ),
           onChanged: onChanged,
           items: items.map((val) {
             return DropdownMenuItem<String>(
@@ -422,7 +479,11 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
           children: [
             Text(
               title,
-              style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12.sp),
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 12.sp,
+              ),
             ),
             Text(
               timeRange,
@@ -454,8 +515,11 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 150),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(isDark ? 0.05 : 0.1),
-                  border: Border.all(color: statusColor.withOpacity(0.5), width: 1),
+                  color: statusColor.withValues(alpha: isDark ? 0.05 : 0.1),
+                  border: Border.all(
+                    color: statusColor.withValues(alpha: 0.5),
+                    width: 1,
+                  ),
                   borderRadius: BorderRadius.circular(6.r),
                 ),
                 child: Center(
@@ -492,10 +556,7 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
         Container(
           width: 8.r,
           height: 8.r,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         SizedBox(width: 4.w),
         Text(

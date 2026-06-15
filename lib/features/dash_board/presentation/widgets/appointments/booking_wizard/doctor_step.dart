@@ -65,7 +65,9 @@ class DoctorStep extends StatelessWidget {
                     child: Text(
                       "No doctors configured in ${state.selectedSection!.name}.",
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: isDark ? Colors.white54 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white54
+                            : AppColors.textSecondary,
                       ),
                     ),
                   );
@@ -76,26 +78,28 @@ class DoctorStep extends StatelessWidget {
                   itemBuilder: (context, idx) {
                     final doc = list[idx];
                     final isSelected = state.selectedDoctor?.id == doc.id;
-                    final nameStr = doc.name ??
+                    final nameStr =
+                        doc.name ??
                         "${doc.firstName ?? ''} ${doc.lastName ?? ''}".trim();
-                    final avatarUrl = doc.profileImage ??
+                    final avatarUrl =
+                        doc.profileImage ??
                         "https://i.pravatar.cc/150?u=${doc.id}";
 
                     return Container(
                       margin: EdgeInsets.only(bottom: 8.h),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.primary.withOpacity(0.08)
+                            ? AppColors.primary.withValues(alpha: 0.08)
                             : (isDark
-                                ? AppColors.terminalDarkBg
-                                : Colors.grey[50]),
+                                  ? AppColors.terminalDarkBg
+                                  : Colors.grey[50]),
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
                               : (isDark
-                                  ? AppColors.terminalDarkBorder
-                                  : AppColors.border),
+                                    ? AppColors.terminalDarkBorder
+                                    : AppColors.border),
                           width: isSelected ? 1.5 : 1,
                         ),
                       ),
@@ -119,21 +123,30 @@ class DoctorStep extends StatelessWidget {
                           nameStr,
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: isDark ? Colors.white : AppColors.textPrimary,
+                            color: isDark
+                                ? Colors.white
+                                : AppColors.textPrimary,
                           ),
                         ),
                         subtitle: Text(
                           "${doc.specialization ?? 'General Specialist'}  |  Fee: ₹${doc.consultationFee ?? 500}",
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: isDark ? Colors.white70 : AppColors.textSecondary,
+                            color: isDark
+                                ? Colors.white70
+                                : AppColors.textSecondary,
                           ),
                         ),
                         trailing: isSelected
-                            ? const Icon(Icons.check_circle, color: AppColors.primary)
+                            ? const Icon(
+                                Icons.check_circle,
+                                color: AppColors.primary,
+                              )
                             : null,
                         onTap: () {
                           cubit.selectDoctor(doc);
-                          cubit.setStep(3); // Navigate automatically to step 3 (Slots)
+                          cubit.setStep(
+                            3,
+                          ); // Navigate automatically to step 3 (Slots)
                         },
                       ),
                     );

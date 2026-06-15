@@ -25,10 +25,18 @@ class DoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final yearsExp = (doc.age ?? 35) - 25;
     final status = doc.status;
@@ -80,7 +88,10 @@ class DoctorCard extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 2.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(4.r),
@@ -99,10 +110,7 @@ class DoctorCard extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Text(
                       "$yearsExp+ Years Experience",
-                      style: TextStyle(
-                        color: labelColor,
-                        fontSize: 11.sp,
-                      ),
+                      style: TextStyle(color: labelColor, fontSize: 11.sp),
                     ),
                   ],
                 ),
@@ -125,16 +133,25 @@ class DoctorCard extends StatelessWidget {
                     itemBuilder: (ctx) => [
                       PopupMenuItem(
                         value: 'view',
-                        child: Text("View Profile", style: TextStyle(color: textColor)),
+                        child: Text(
+                          "View Profile",
+                          style: TextStyle(color: textColor),
+                        ),
                       ),
                       PopupMenuItem(
                         value: 'edit',
-                        child: Text("Edit Doctor", style: TextStyle(color: textColor)),
+                        child: Text(
+                          "Edit Doctor",
+                          style: TextStyle(color: textColor),
+                        ),
                       ),
                       if (onDelete != null)
                         PopupMenuItem(
                           value: 'delete',
-                          child: Text("Delete", style: TextStyle(color: AppColors.error)),
+                          child: Text(
+                            "Delete",
+                            style: TextStyle(color: AppColors.error),
+                          ),
                         ),
                     ],
                   ),
@@ -175,10 +192,7 @@ class DoctorCard extends StatelessWidget {
           Container(
             width: 6.r,
             height: 6.r,
-            decoration: BoxDecoration(
-              color: dotColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
           SizedBox(width: 6.w),
           Text(

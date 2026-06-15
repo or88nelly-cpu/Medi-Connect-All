@@ -3,7 +3,8 @@ import 'package:medi_connect/core/common_models/failures/failure.dart';
 import 'package:medi_connect/core/usecases/usecase.dart';
 import 'package:medi_connect/features/departments/general_store/domain/repositories/general_store_repository.dart';
 
-class GetGeneralStoreStatsUseCase extends UseCase<Map<String, dynamic>, NoParams> {
+class GetGeneralStoreStatsUseCase
+    extends UseCase<Map<String, dynamic>, NoParams> {
   final GeneralStoreRepository _repository;
   GetGeneralStoreStatsUseCase(this._repository);
 

@@ -12,7 +12,6 @@ import 'package:medi_connect/core/utils/constants/app_assets.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
-import 'package:medi_connect/core/common_widgets/buttons/gradient_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
@@ -46,28 +45,44 @@ class AppointmentCard extends StatelessWidget {
   Color _getStatusBgColor(String status, bool isDark) {
     switch (status) {
       case 'Confirmed':
-        return isDark ? AppColors.statusConfirmedBgDark : AppColors.statusConfirmedBgLight;
+        return isDark
+            ? AppColors.statusConfirmedBgDark
+            : AppColors.statusConfirmedBgLight;
       case 'Pending':
-        return isDark ? AppColors.statusPendingBgDark : AppColors.statusPendingBgLight;
+        return isDark
+            ? AppColors.statusPendingBgDark
+            : AppColors.statusPendingBgLight;
       case 'Completed':
-        return isDark ? AppColors.statusCompletedBgDark : AppColors.statusCompletedBgLight;
+        return isDark
+            ? AppColors.statusCompletedBgDark
+            : AppColors.statusCompletedBgLight;
       case 'Cancelled':
       default:
-        return isDark ? AppColors.statusCancelledBgDark : AppColors.statusCancelledBgLight;
+        return isDark
+            ? AppColors.statusCancelledBgDark
+            : AppColors.statusCancelledBgLight;
     }
   }
 
   Color _getStatusTextColor(String status, bool isDark) {
     switch (status) {
       case 'Confirmed':
-        return isDark ? AppColors.statusConfirmedTextDark : AppColors.statusConfirmedTextLight;
+        return isDark
+            ? AppColors.statusConfirmedTextDark
+            : AppColors.statusConfirmedTextLight;
       case 'Pending':
-        return isDark ? AppColors.statusPendingTextDark : AppColors.statusPendingTextLight;
+        return isDark
+            ? AppColors.statusPendingTextDark
+            : AppColors.statusPendingTextLight;
       case 'Completed':
-        return isDark ? AppColors.statusCompletedTextDark : AppColors.statusCompletedTextLight;
+        return isDark
+            ? AppColors.statusCompletedTextDark
+            : AppColors.statusCompletedTextLight;
       case 'Cancelled':
       default:
-        return isDark ? AppColors.statusCancelledTextDark : AppColors.statusCancelledTextLight;
+        return isDark
+            ? AppColors.statusCancelledTextDark
+            : AppColors.statusCancelledTextLight;
     }
   }
 
@@ -76,7 +91,9 @@ class AppointmentCard extends StatelessWidget {
   }
 
   Color _getChipTextColor(String patientId, bool isDark) {
-    return isDark ? AppColors.patientChipTextDark : AppColors.patientChipTextLight;
+    return isDark
+        ? AppColors.patientChipTextDark
+        : AppColors.patientChipTextLight;
   }
 
   String _cleanDoctorName(String raw) {
@@ -112,7 +129,9 @@ class AppointmentCard extends StatelessWidget {
       final patientState = context.watch<PatientBloc>().state;
       if (patientState is PatientLoaded) {
         final matches = patientState.patients.where(
-          (p) => p.id == appointment.patientId || p.patientId == appointment.patientId,
+          (p) =>
+              p.id == appointment.patientId ||
+              p.patientId == appointment.patientId,
         );
         if (matches.isNotEmpty) {
           patient = matches.first;
@@ -123,19 +142,17 @@ class AppointmentCard extends StatelessWidget {
     }
 
     // Determine the resolved profile image path
-    final patientNameLower = appointment.patientName.toLowerCase();
+    // final patientNameLower = appointment.patientName.toLowerCase();
     String? resolvedImagePath;
-    
+
     if (patient?.profileImage != null && patient!.profileImage!.isNotEmpty) {
       resolvedImagePath = patient.profileImage;
     } else {
-    
-        resolvedImagePath = ProfileImageHelper.resolveImagePath(
-          patient?.profileImage,
-          'patient',
-          patient?.gender,
-        );
-      
+      resolvedImagePath = ProfileImageHelper.resolveImagePath(
+        patient?.profileImage,
+        'patient',
+        patient?.gender,
+      );
     }
 
     return Container(
@@ -183,7 +200,8 @@ class AppointmentCard extends StatelessWidget {
                       ),
                       child: ClipOval(
                         child: CustomImageView(
-                          imagePath: resolvedImagePath ?? AppAssets.femaleAvatarPng,
+                          imagePath:
+                              resolvedImagePath ?? AppAssets.femaleAvatarPng,
                           width: 60.r,
                           height: 60.r,
                           fit: BoxFit.cover,
@@ -354,7 +372,10 @@ class AppointmentCard extends StatelessWidget {
                             Expanded(
                               child: OutlinedButton.icon(
                                 onPressed: () {
-                                  _showAppointmentDetailsDialog(context, patient);
+                                  _showAppointmentDetailsDialog(
+                                    context,
+                                    patient,
+                                  );
                                 },
                                 icon: Icon(
                                   Icons.info_outline,
@@ -374,7 +395,9 @@ class AppointmentCard extends StatelessWidget {
                                   backgroundColor: isDark
                                       ? AppColors.terminalDarkCard
                                       : Colors.white,
-                                  side: const BorderSide(color: AppColors.primary),
+                                  side: const BorderSide(
+                                    color: AppColors.primary,
+                                  ),
                                   padding: EdgeInsets.symmetric(vertical: 6.h),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.r),
@@ -475,11 +498,12 @@ class AppointmentCard extends StatelessWidget {
     ).format(appointment.appointmentDate);
 
     final patientNameLower = appointment.patientName.toLowerCase();
-    final rawGender = patient?.gender ?? (
-        patientNameLower.contains('lajitha') || patientNameLower.contains('aarushi')
+    final rawGender =
+        patient?.gender ??
+        (patientNameLower.contains('lajitha') ||
+                patientNameLower.contains('aarushi')
             ? 'Female'
-            : (patientNameLower.contains('tset') ? 'Male' : 'N/A')
-    );
+            : (patientNameLower.contains('tset') ? 'Male' : 'N/A'));
     final String genderStr;
     if (rawGender.toLowerCase() == 'male') {
       genderStr = 'Male';
@@ -509,7 +533,11 @@ class AppointmentCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildInfoRow(AppStrings.patientNameLabel, appointment.patientName, isDark),
+            _buildInfoRow(
+              AppStrings.patientNameLabel,
+              appointment.patientName,
+              isDark,
+            ),
             _buildInfoRow(
               AppStrings.patientIdLabel,
               "PAT-${(appointment.patientId?.length ?? 0) > 8 ? appointment.patientId?.substring(0, 8).toUpperCase() : appointment.patientId?.toUpperCase()}",
@@ -526,9 +554,17 @@ class AppointmentCard extends StatelessWidget {
               _cleanDoctorName(appointment.doctorName),
               isDark,
             ),
-            _buildInfoRow(AppStrings.specialtyLabel, appointment.specialty, isDark),
+            _buildInfoRow(
+              AppStrings.specialtyLabel,
+              appointment.specialty,
+              isDark,
+            ),
             _buildInfoRow(AppStrings.dateLabel, formattedDate, isDark),
-            _buildInfoRow(AppStrings.timeLabel, appointment.appointmentTime, isDark),
+            _buildInfoRow(
+              AppStrings.timeLabel,
+              appointment.appointmentTime,
+              isDark,
+            ),
             if (appointment.token != null && appointment.token!.isNotEmpty)
               _buildInfoRow(
                 AppStrings.tokenNoLabel,
@@ -546,7 +582,11 @@ class AppointmentCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8.h),
-            _buildInfoRow(AppStrings.bloodPressure, appointment.bp ?? "N/A", isDark),
+            _buildInfoRow(
+              AppStrings.bloodPressure,
+              appointment.bp ?? "N/A",
+              isDark,
+            ),
             _buildInfoRow(
               AppStrings.weightLabel,
               appointment.weight != null && appointment.weight!.isNotEmpty
@@ -619,7 +659,7 @@ class AppointmentCard extends StatelessWidget {
           .eq('appointment_id', appointment.id)
           .maybeSingle();
       if (response != null) {
-        emrRecord = response as Map<String, dynamic>;
+        emrRecord = response;
       }
     } catch (e) {
       debugPrint("Failed to fetch EMR record: $e");
@@ -659,9 +699,7 @@ class AppointmentCard extends StatelessWidget {
         builder: (ctx) => AlertDialog(
           backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
           title: const Text(AppStrings.noSummaryAvailable),
-          content: const Text(
-            AppStrings.couldNotRetrieveEmr,
-          ),
+          content: const Text(AppStrings.couldNotRetrieveEmr),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),

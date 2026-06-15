@@ -11,9 +11,15 @@ class AdminSlotConfigPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     return CustomScaffold(
       customAppbar: const CommonAppBar(title: "Slot Configuration"),
@@ -24,7 +30,10 @@ class AdminSlotConfigPage extends StatelessWidget {
           children: [
             Text(
               "Global Appointment Slot Settings",
-              style: AppTextStyles.titleMedium.copyWith(color: textColor, fontWeight: FontWeight.bold),
+              style: AppTextStyles.titleMedium.copyWith(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 8.h),
             Text(
@@ -87,13 +96,15 @@ class AdminSlotConfigPage extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600),
+              style: AppTextStyles.bodyMedium.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
+              color: AppColors.primary.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(6.r),
             ),
             child: Text(

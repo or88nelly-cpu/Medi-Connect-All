@@ -1,5 +1,7 @@
 /// Application theme definitions combining colors and text styles.
 /// Configures light and dark themes for the platform.
+library;
+
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_text_styles.dart';

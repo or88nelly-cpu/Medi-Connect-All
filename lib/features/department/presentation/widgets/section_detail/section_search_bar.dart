@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
 
 class SectionSearchBar extends StatelessWidget {
   final ValueNotifier<String> searchNotifier;
@@ -18,13 +17,23 @@ class SectionSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final fillFill = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
-    final borderCol = isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder;
-    final hintCol = isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint;
-    final textCol = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final fillFill = isDark
+        ? AppColors.terminalDarkFieldFill
+        : AppColors.terminalLightFieldFill;
+    final borderCol = isDark
+        ? AppColors.terminalDarkFieldBorder
+        : AppColors.terminalLightFieldBorder;
+    final hintCol = isDark
+        ? AppColors.terminalDarkFieldHint
+        : AppColors.terminalLightFieldHint;
+    final textCol = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     final controller = TextEditingController(text: searchNotifier.value);
-    controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
+    controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: controller.text.length),
+    );
 
     return Container(
       decoration: BoxDecoration(
@@ -54,7 +63,10 @@ class SectionSearchBar extends StatelessWidget {
                 )
               : null,
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 14.h,
+          ),
         ),
       ),
     );

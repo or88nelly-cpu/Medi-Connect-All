@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/core/common_widgets/buttons/gradient_button.dart';
 
 class AppointmentsHeader extends StatelessWidget {
   final VoidCallback onBookNew;

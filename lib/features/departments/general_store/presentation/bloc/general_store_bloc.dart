@@ -20,13 +20,16 @@ abstract class GeneralStoreState extends Equatable {
 }
 
 class GeneralStoreInitial extends GeneralStoreState {}
+
 class GeneralStoreLoading extends GeneralStoreState {}
+
 class GeneralStoreLoaded extends GeneralStoreState {
   final Map<String, dynamic> stats;
   const GeneralStoreLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class GeneralStoreError extends GeneralStoreState {
   final String message;
   const GeneralStoreError(this.message);
@@ -42,7 +45,10 @@ class GeneralStoreBloc extends Bloc<GeneralStoreEvent, GeneralStoreState> {
     on<LoadGeneralStoreStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadGeneralStoreStats event, Emitter<GeneralStoreState> emit) async {
+  Future<void> _onLoadStats(
+    LoadGeneralStoreStats event,
+    Emitter<GeneralStoreState> emit,
+  ) async {
     emit(GeneralStoreLoading());
     final result = await _useCase(const NoParams());
     result.fold(

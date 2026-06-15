@@ -18,13 +18,9 @@ class ConsultationStepView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PrescriptionSection(
-          prescriptionNotesCtrl: prescriptionNotesCtrl,
-        ),
+        PrescriptionSection(prescriptionNotesCtrl: prescriptionNotesCtrl),
         SizedBox(height: 24.h),
-        LabTestsSection(
-          labNotesCtrl: labNotesCtrl,
-        ),
+        LabTestsSection(labNotesCtrl: labNotesCtrl),
       ],
     );
   }

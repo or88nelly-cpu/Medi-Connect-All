@@ -1,6 +1,8 @@
 /// Splash page shown on app launch.
 /// Displays a premium heartbeat pulse, concentric cardiac pulse waves, rotating sync animation,
 /// and floating interactive medical crosses. Verifies auth state and routes.
+library;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -266,7 +268,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.blue.withOpacity(0.12),
+                                color: Colors.blue.withValues(alpha: 0.12),
                                 width: 2.w,
                                 style: BorderStyle.solid,
                               ),
@@ -354,7 +356,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                       width: 32.w,
                       height: 32.h,
                       child: CircularProgressIndicator(
-                        color: AppColors.primary.withOpacity(0.6),
+                        color: AppColors.primary.withValues(alpha: 0.6),
                         strokeWidth: 2.5.w,
                       ),
                     ),
@@ -471,7 +473,7 @@ class AnimatedPulseRing extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: AppColors.primary.withOpacity(0.6),
+              color: AppColors.primary.withValues(alpha: 0.6),
               width: 2.w,
             ),
           ),

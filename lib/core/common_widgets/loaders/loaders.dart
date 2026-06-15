@@ -1,5 +1,7 @@
 /// Custom loader and feedback widgets.
 /// Implements: AppLoader, ShimmerLoader, EmptyStateWidget.
+library;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/common_widgets/buttons/buttons.dart';
@@ -130,7 +132,7 @@ class EmptyStateWidget extends StatelessWidget {
             Icon(
               icon,
               size: 72.r,
-              color: AppColors.textSecondary.withOpacity(0.5),
+              color: AppColors.textSecondary.withValues(alpha: 0.5),
             ),
             SizedBox(height: 16.h),
             Text(

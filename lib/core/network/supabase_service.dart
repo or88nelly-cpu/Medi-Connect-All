@@ -1,6 +1,8 @@
 /// Service wrapper around the Supabase Flutter client.
 /// Exposes properties and helpers for Authentication, PostgreSQL, Storage, Realtime,
 /// and facilitates Row Level Security (RLS) policies.
+library;
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:injectable/injectable.dart';
 

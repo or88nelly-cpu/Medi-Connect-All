@@ -22,13 +22,26 @@ class SectionFilterSortRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final statuses = ['All', 'Active', 'Away', 'Inactive'];
-    final docSortOptions = ['None', 'Name (A-Z)', 'Name (Z-A)', 'Experience (High-Low)'];
+    final docSortOptions = [
+      'None',
+      'Name (A-Z)',
+      'Name (Z-A)',
+      'Experience (High-Low)',
+    ];
     final staffSortOptions = ['None', 'Name (A-Z)', 'Name (Z-A)'];
     final sortOptions = isDoctor ? docSortOptions : staffSortOptions;
 
@@ -60,7 +73,9 @@ class SectionFilterSortRow extends StatelessWidget {
                         status == 'All' ? 'All Statuses' : status,
                         style: TextStyle(
                           color: textColor,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                         ),
                       ),
                     ],
@@ -118,7 +133,9 @@ class SectionFilterSortRow extends StatelessWidget {
                         opt,
                         style: TextStyle(
                           color: textColor,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                         ),
                       ),
                     ],
@@ -194,11 +211,7 @@ class SectionFilterSortRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    width: 1.2,
-                    height: 20.h,
-                    color: borderColor,
-                  ),
+                  Container(width: 1.2, height: 20.h, color: borderColor),
                   // Grid Layout Button
                   InkWell(
                     onTap: () => isListViewNotifier.value = false,

@@ -34,18 +34,16 @@ class AdminSettingsBloc extends Bloc<AdminSettingsEvent, AdminSettingsState> {
   final GetAdminSettingsUseCase _getSettings;
   final UpdateAdminSettingUseCase _updateSetting;
 
-  AdminSettingsBloc({
-    required GetAdminSettingsUseCase getSettings,
-    required UpdateAdminSettingUseCase updateSetting,
-  })  : _getSettings = getSettings,
-        _updateSetting = updateSetting,
-        super(AdminSettingsInitial()) {
+  AdminSettingsBloc({required this._getSettings, required this._updateSetting})
+    : super(AdminSettingsInitial()) {
     on<LoadAdminSettings>(_onLoadAdminSettings);
     on<UpdateAdminSetting>(_onUpdateAdminSetting);
   }
 
   Future<void> _onLoadAdminSettings(
-      LoadAdminSettings event, Emitter<AdminSettingsState> emit) async {
+    LoadAdminSettings event,
+    Emitter<AdminSettingsState> emit,
+  ) async {
     emit(AdminSettingsLoading());
     final result = await _getSettings();
     result.fold(
@@ -55,7 +53,9 @@ class AdminSettingsBloc extends Bloc<AdminSettingsEvent, AdminSettingsState> {
   }
 
   Future<void> _onUpdateAdminSetting(
-      UpdateAdminSetting event, Emitter<AdminSettingsState> emit) async {
+    UpdateAdminSetting event,
+    Emitter<AdminSettingsState> emit,
+  ) async {
     final result = await _updateSetting(event.key, event.value);
     result.fold(
       (failure) => emit(AdminSettingsError(failure.message)),

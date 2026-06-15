@@ -5,20 +5,20 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_analytics_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/dashboard_home_admin.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_appointments_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_patients_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_billing_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_settings_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_profile_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/dashboard_analytics_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/common/dashboard_tab_cubit.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/dashboard_home_admin.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_appointments_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_patients_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_billing_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_settings_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_profile_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/admin_dashboard/admin_appbar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/admin_drawer.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/admin_bottom_nav_bar.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_billing_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_billing_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -53,14 +53,19 @@ class _DashboardPageState extends State<DashboardPage> {
           BlocListener<AdminAppointmentsBloc, AdminAppointmentsState>(
             listener: (context, state) {
               if (state is AdminAppointmentsLoaded) {
-                context.read<DashboardAnalyticsBloc>().add(LoadDashboardStats());
+                context.read<DashboardAnalyticsBloc>().add(
+                  LoadDashboardStats(),
+                );
               }
             },
           ),
           BlocListener<AdminBillingBloc, AdminBillingState>(
             listener: (context, state) {
-              if (state is AdminBillingLoaded || state is AdminBillingInvoiceRecorded) {
-                context.read<DashboardAnalyticsBloc>().add(LoadDashboardStats());
+              if (state is AdminBillingLoaded ||
+                  state is AdminBillingInvoiceRecorded) {
+                context.read<DashboardAnalyticsBloc>().add(
+                  LoadDashboardStats(),
+                );
               }
             },
           ),
@@ -87,7 +92,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 onTap: (i) {
                   context.read<DashboardTabCubit>().setTab(i);
                   if (i == 0) {
-                    context.read<DashboardAnalyticsBloc>().add(LoadDashboardStats());
+                    context.read<DashboardAnalyticsBloc>().add(
+                      LoadDashboardStats(),
+                    );
                   }
                 },
               ),
@@ -98,7 +105,8 @@ class _DashboardPageState extends State<DashboardPage> {
                           context: context,
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,
-                          builder: (ctx) => const CreateAppointmentWizardBottomSheet(),
+                          builder: (ctx) =>
+                              const CreateAppointmentWizardBottomSheet(),
                         );
                       },
                       backgroundColor: Colors.transparent,
@@ -114,7 +122,11 @@ class _DashboardPageState extends State<DashboardPage> {
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        child: const Icon(Icons.add, color: Colors.white, size: 28),
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 28,
+                        ),
                       ),
                     )
                   : null,

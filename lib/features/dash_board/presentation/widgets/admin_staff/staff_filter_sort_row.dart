@@ -21,10 +21,18 @@ class StaffFilterSortRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Row(
       children: [
@@ -43,7 +51,9 @@ class StaffFilterSortRow extends StatelessWidget {
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    value: categories.contains(selectedFilter) ? selectedFilter : 'All',
+                    value: categories.contains(selectedFilter)
+                        ? selectedFilter
+                        : 'All',
                     icon: Icon(Icons.keyboard_arrow_down, color: labelColor),
                     isExpanded: true,
                     dropdownColor: cardBg,
@@ -89,19 +99,31 @@ class StaffFilterSortRow extends StatelessWidget {
                 itemBuilder: (ctx) => [
                   PopupMenuItem(
                     value: 'All',
-                    child: Text('All Statuses', style: TextStyle(color: textColor, fontSize: 12.sp)),
+                    child: Text(
+                      'All Statuses',
+                      style: TextStyle(color: textColor, fontSize: 12.sp),
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'Active',
-                    child: Text('Active Only', style: TextStyle(color: textColor, fontSize: 12.sp)),
+                    child: Text(
+                      'Active Only',
+                      style: TextStyle(color: textColor, fontSize: 12.sp),
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'Away',
-                    child: Text('Away Only', style: TextStyle(color: textColor, fontSize: 12.sp)),
+                    child: Text(
+                      'Away Only',
+                      style: TextStyle(color: textColor, fontSize: 12.sp),
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'Inactive',
-                    child: Text('Inactive Only', style: TextStyle(color: textColor, fontSize: 12.sp)),
+                    child: Text(
+                      'Inactive Only',
+                      style: TextStyle(color: textColor, fontSize: 12.sp),
+                    ),
                   ),
                 ],
                 child: _buildFilterSortButton(
@@ -130,11 +152,17 @@ class StaffFilterSortRow extends StatelessWidget {
                 itemBuilder: (ctx) => [
                   PopupMenuItem(
                     value: 'Name (A-Z)',
-                    child: Text('Name (A-Z)', style: TextStyle(color: textColor, fontSize: 12.sp)),
+                    child: Text(
+                      'Name (A-Z)',
+                      style: TextStyle(color: textColor, fontSize: 12.sp),
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'Name (Z-A)',
-                    child: Text('Name (Z-A)', style: TextStyle(color: textColor, fontSize: 12.sp)),
+                    child: Text(
+                      'Name (Z-A)',
+                      style: TextStyle(color: textColor, fontSize: 12.sp),
+                    ),
                   ),
                 ],
                 child: _buildFilterSortButton(
@@ -150,12 +178,24 @@ class StaffFilterSortRow extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterSortButton(BuildContext context, String label, IconData icon) {
+  Widget _buildFilterSortButton(
+    BuildContext context,
+    String label,
+    IconData icon,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.h),

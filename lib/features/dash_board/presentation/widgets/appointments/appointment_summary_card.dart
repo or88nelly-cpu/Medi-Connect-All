@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/themes/app_colors.dart';
+import 'package:intl/intl.dart';
+import 'package:medi_connect/core/common_widgets/dynamic_calender_3d.dart';
+import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/utils/constants/app_assets.dart';
 
@@ -8,6 +10,7 @@ class AppointmentSummaryCard extends StatelessWidget {
   final int totalCount;
   final int completedCount;
   final int pendingCount;
+  final DateTime date;
   final int cancelledCount;
   final VoidCallback onViewCalendar;
 
@@ -18,145 +21,170 @@ class AppointmentSummaryCard extends StatelessWidget {
     required this.pendingCount,
     required this.cancelledCount,
     required this.onViewCalendar,
+    required this.date,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      //height: 280.h,
       width: double.infinity,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24.r),
         gradient: const LinearGradient(
-          colors: [Color(0xFF0F6FFF), Color(0xFF8B5CF6)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
+          colors: [Color(0xFF17153A), Color(0xFF312E81), Color(0xFF5B21B6)],
         ),
-        borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue.withOpacity(0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
+            color: const Color(0xFF6D5DFB).withAlpha(80),
+            blurRadius: 30,
+            spreadRadius: 2,
+            offset: const Offset(0, 15),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(24.r),
         child: Stack(
           children: [
-            // Floating 3D Calendar Asset on the right side
+            // Top Glow
             Positioned(
-              right: -10.w,
-              top: -10.h,
-              child: Image.asset(
-                AppAssets.calendar3d,
-                width: 130.r,
-                height: 130.r,
-                fit: BoxFit.contain,
+              right: -50.w,
+              top: -40.h,
+              child: Container(
+                width: 220.r,
+                height: 220.r,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFFA855F7).withAlpha(51),
+                ),
               ),
             ),
+
+            // Bottom Glow
+            Positioned(
+              left: -70.w,
+              bottom: -70.h,
+              child: Container(
+                width: 180.r,
+                height: 180.r,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blueAccent.withAlpha(25),
+                ),
+              ),
+            ),
+
+            // Calendar PNG
+            Positioned(
+              right: -5.w,
+              top: 0,
+              child: DynamicCalendar3D(date: date, size: 120.r),
+            ),
+
             Padding(
               padding: EdgeInsets.all(20.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "TODAY'S SCHEDULE",
+                    getScheduleTitle(date),
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 10.sp,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 1.2,
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(height: 6.h),
+
+                  SizedBox(height: 8.r),
+
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
                         "$totalCount",
-                        style: AppTextStyles.headingMedium.copyWith(
+                        style: AppTextStyles.bodyLarge.copyWith(
                           color: Colors.white,
-                          fontSize: 36.sp,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
+                          height: 1,
                         ),
                       ),
-                      SizedBox(width: 8.w),
+                      SizedBox(width: 8.r),
                       Text(
                         "Appointments",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 13.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20.h),
-                  // Count row
+
+                  SizedBox(height: 32.r),
+
                   Row(
                     children: [
-                      _buildStatItem(
-                        icon: Icons.check_circle,
-                        count: completedCount,
-                        label: "Completed",
-                        color: const Color(0xFF34C759),
+                      Expanded(
+                        child: _glassStat(
+                          AppAssets.completed,
+                          completedCount,
+                          "Completed",
+                          const Color(0xFF22C55E),
+                        ),
                       ),
-                      Container(
-                        height: 24.h,
-                        width: 1.w,
-                        color: Colors.white24,
-                        margin: EdgeInsets.symmetric(horizontal: 10.w),
+                      SizedBox(width: 10.r),
+                      Expanded(
+                        child: _glassStat(
+                          AppAssets.pending,
+                          pendingCount,
+                          "Pending",
+                          const Color(0xFFF59E0B),
+                        ),
                       ),
-                      _buildStatItem(
-                        icon: Icons.access_time_filled,
-                        count: pendingCount,
-                        label: "Pending",
-                        color: const Color(0xFFFF9500),
-                      ),
-                      Container(
-                        height: 24.h,
-                        width: 1.w,
-                        color: Colors.white24,
-                        margin: EdgeInsets.symmetric(horizontal: 10.w),
-                      ),
-                      _buildStatItem(
-                        icon: Icons.cancel,
-                        count: cancelledCount,
-                        label: "Cancelled",
-                        color: const Color(0xFFFF3B30),
+                      SizedBox(width: 10.r),
+                      Expanded(
+                        child: _glassStat(
+                          AppAssets.cancelled,
+                          cancelledCount,
+                          "Cancelled",
+                          const Color(0xFFEF4444),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20.h),
-                  // View Calendar Button
-                  SizedBox(
-                    height: 36.h,
-                    child: OutlinedButton(
-                      onPressed: onViewCalendar,
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.white60, width: 1.5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.r),
-                        ),
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+                  SizedBox(height: 16.r),
+
+                  GestureDetector(
+                    onTap: onViewCalendar,
+                    child: Container(
+                      height: 35.r,
+                      padding: EdgeInsets.symmetric(horizontal: 18.r),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.r),
+                        color: Colors.white,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             "View Calendar",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 11.sp,
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: const Color(0xFF312E81),
                               fontWeight: FontWeight.bold,
+                              fontSize: 11.sp,
                             ),
                           ),
-                          SizedBox(width: 6.w),
+                          SizedBox(width: 6.r),
                           Icon(
                             Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 14.r,
+                            size: 16.r,
+                            color: Color(0xFF312E81),
                           ),
                         ],
                       ),
@@ -171,39 +199,69 @@ class AppointmentSummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem({
-    required IconData icon,
-    required int count,
-    required String label,
-    required Color color,
-  }) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: Colors.white, size: 14.r),
-        SizedBox(width: 4.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "$count",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
+  Widget _glassStat(String icon, int count, String label, Color color) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 12.r, horizontal: 20.r),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        color: Colors.white.withAlpha(20),
+        border: Border.all(color: Colors.white.withAlpha(20)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CustomImageView(
+                imagePath: icon,
+                height: (label.toLowerCase().contains("pending")) ? 20.r : 25.r,
+                width: (label.toLowerCase().contains("pending")) ? 20.r : 25.r,
+                // color: color,
               ),
-            ),
-            Text(
-              label,
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 8.sp,
-                fontWeight: FontWeight.w500,
+              SizedBox(width: 8.r),
+              Text(
+                "$count",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+            ],
+          ),
+          Text(
+            label,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: Colors.white70,
+              fontSize: 10.sp,
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
+  }
+
+  String getScheduleTitle(DateTime selectedDate) {
+    final now = DateTime.now();
+
+    final today = DateTime(now.year, now.month, now.day);
+    final date = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+    );
+
+    final difference = date.difference(today).inDays;
+
+    switch (difference) {
+      case 0:
+        return "TODAY'S SCHEDULE";
+      case 1:
+        return "TOMORROW'S SCHEDULE";
+      case -1:
+        return "YESTERDAY'S SCHEDULE";
+      default:
+        return "${DateFormat('EEE, dd MMM').format(selectedDate).toUpperCase()} SCHEDULE";
+    }
   }
 }

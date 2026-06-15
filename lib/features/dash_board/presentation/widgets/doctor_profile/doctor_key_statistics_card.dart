@@ -10,7 +10,8 @@ class DoctorKeyStatisticsCard extends StatefulWidget {
   const DoctorKeyStatisticsCard({super.key, required this.user});
 
   @override
-  State<DoctorKeyStatisticsCard> createState() => _DoctorKeyStatisticsCardState();
+  State<DoctorKeyStatisticsCard> createState() =>
+      _DoctorKeyStatisticsCardState();
 }
 
 class _DoctorKeyStatisticsCardState extends State<DoctorKeyStatisticsCard> {
@@ -21,19 +22,26 @@ class _DoctorKeyStatisticsCardState extends State<DoctorKeyStatisticsCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
-    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations =
+        widget.user.metadata?['consultations'] as List<dynamic>?;
     final List<Map<String, dynamic>> consultations = [];
     if (metadataConsultations != null) {
       for (var item in metadataConsultations) {
         if (item is Map) {
-          consultations.add({
-            'status': (item['status'] ?? '').toString(),
-          });
+          consultations.add({'status': (item['status'] ?? '').toString()});
         }
       }
     } else {
@@ -48,8 +56,12 @@ class _DoctorKeyStatisticsCardState extends State<DoctorKeyStatisticsCard> {
       ]);
     }
 
-    final completedCount = consultations.where((c) => c['status'] == 'Completed').length;
-    final pendingCount = consultations.where((c) => c['status'] == 'Pending' || c['status'] == 'Booked').length;
+    final completedCount = consultations
+        .where((c) => c['status'] == 'Completed')
+        .length;
+    final pendingCount = consultations
+        .where((c) => c['status'] == 'Pending' || c['status'] == 'Booked')
+        .length;
     final totalToday = consultations.length;
 
     int totalVal;
@@ -57,9 +69,11 @@ class _DoctorKeyStatisticsCardState extends State<DoctorKeyStatisticsCard> {
     int todayVal = totalToday;
     String todayTrend;
     int completedVal = completedCount;
-    String completedSub = "${(completedCount / (totalToday > 0 ? totalToday : 1) * 100).round()}% of today";
+    String completedSub =
+        "${(completedCount / (totalToday > 0 ? totalToday : 1) * 100).round()}% of today";
     int pendingVal = pendingCount;
-    String pendingSub = "${(pendingCount / (totalToday > 0 ? totalToday : 1) * 100).round()}% of today";
+    String pendingSub =
+        "${(pendingCount / (totalToday > 0 ? totalToday : 1) * 100).round()}% of today";
 
     if (_selectedRange == "Today") {
       totalVal = totalToday;
@@ -73,7 +87,8 @@ class _DoctorKeyStatisticsCardState extends State<DoctorKeyStatisticsCard> {
       completedSub = "83% of total";
       pendingVal = pendingCount * 4;
       pendingSub = "17% of total";
-    } else { // This Month
+    } else {
+      // This Month
       totalVal = totalToday * 20;
       totalTrend = "12% from last month";
       todayTrend = "8% from yesterday";
@@ -109,7 +124,11 @@ class _DoctorKeyStatisticsCardState extends State<DoctorKeyStatisticsCard> {
                 child: DropdownButton<String>(
                   value: _selectedRange,
                   dropdownColor: cardBg,
-                  icon: Icon(Icons.keyboard_arrow_down, color: labelColor, size: 16.sp),
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: labelColor,
+                    size: 16.sp,
+                  ),
                   style: TextStyle(
                     color: textColor,
                     fontSize: 12.sp,
@@ -224,10 +243,7 @@ class _DoctorKeyStatisticsCardState extends State<DoctorKeyStatisticsCard> {
         children: [
           Text(
             title,
-            style: TextStyle(
-              color: labelColor,
-              fontSize: 11.sp,
-            ),
+            style: TextStyle(color: labelColor, fontSize: 11.sp),
           ),
           SizedBox(height: 6.h),
           Text(

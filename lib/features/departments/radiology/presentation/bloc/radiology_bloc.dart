@@ -20,13 +20,16 @@ abstract class RadiologyState extends Equatable {
 }
 
 class RadiologyInitial extends RadiologyState {}
+
 class RadiologyLoading extends RadiologyState {}
+
 class RadiologyLoaded extends RadiologyState {
   final Map<String, dynamic> stats;
   const RadiologyLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class RadiologyError extends RadiologyState {
   final String message;
   const RadiologyError(this.message);
@@ -42,7 +45,10 @@ class RadiologyBloc extends Bloc<RadiologyEvent, RadiologyState> {
     on<LoadRadiologyStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadRadiologyStats event, Emitter<RadiologyState> emit) async {
+  Future<void> _onLoadStats(
+    LoadRadiologyStats event,
+    Emitter<RadiologyState> emit,
+  ) async {
     emit(RadiologyLoading());
     final result = await _useCase(const NoParams());
     result.fold(

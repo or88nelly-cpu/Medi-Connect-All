@@ -20,13 +20,16 @@ abstract class MarketingState extends Equatable {
 }
 
 class MarketingInitial extends MarketingState {}
+
 class MarketingLoading extends MarketingState {}
+
 class MarketingLoaded extends MarketingState {
   final Map<String, dynamic> stats;
   const MarketingLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class MarketingError extends MarketingState {
   final String message;
   const MarketingError(this.message);
@@ -42,7 +45,10 @@ class MarketingBloc extends Bloc<MarketingEvent, MarketingState> {
     on<LoadMarketingStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadMarketingStats event, Emitter<MarketingState> emit) async {
+  Future<void> _onLoadStats(
+    LoadMarketingStats event,
+    Emitter<MarketingState> emit,
+  ) async {
     emit(MarketingLoading());
     final result = await _useCase(const NoParams());
     result.fold(

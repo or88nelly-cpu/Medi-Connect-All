@@ -20,13 +20,16 @@ abstract class HumanResourceState extends Equatable {
 }
 
 class HumanResourceInitial extends HumanResourceState {}
+
 class HumanResourceLoading extends HumanResourceState {}
+
 class HumanResourceLoaded extends HumanResourceState {
   final Map<String, dynamic> stats;
   const HumanResourceLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class HumanResourceError extends HumanResourceState {
   final String message;
   const HumanResourceError(this.message);
@@ -42,7 +45,10 @@ class HumanResourceBloc extends Bloc<HumanResourceEvent, HumanResourceState> {
     on<LoadHumanResourceStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadHumanResourceStats event, Emitter<HumanResourceState> emit) async {
+  Future<void> _onLoadStats(
+    LoadHumanResourceStats event,
+    Emitter<HumanResourceState> emit,
+  ) async {
     emit(HumanResourceLoading());
     final result = await _useCase(const NoParams());
     result.fold(

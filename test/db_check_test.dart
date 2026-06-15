@@ -11,17 +11,20 @@ void main() {
 
     final payload = <String, dynamic>{};
     const uuid = Uuid();
-    
+
     payload['id'] = uuid.v4();
 
     print('Starting column discovery loop...');
     for (int i = 0; i < 20; i++) {
       try {
         print('Trying payload: $payload');
-        final inserted = await client.from('appointments').insert(payload).select();
+        final inserted = await client
+            .from('appointments')
+            .insert(payload)
+            .select();
         print('\nSUCCESS! Found all required columns.');
         print('Inserted record columns: ${inserted.first}');
-        
+
         // Cleanup
         await client.from('appointments').delete().eq('id', payload['id']);
         break;
@@ -33,10 +36,15 @@ void main() {
           if (match != null) {
             final columnName = match.group(1)!;
             print('Discovered required column: $columnName');
-            
-            if (columnName.contains('id') || columnName == 'patient_id' || columnName == 'doctor_id' || columnName == 'section_id') {
+
+            if (columnName.contains('id') ||
+                columnName == 'patient_id' ||
+                columnName == 'doctor_id' ||
+                columnName == 'section_id') {
               payload[columnName] = uuid.v4();
-            } else if (columnName.contains('time') || columnName == 'slot' || columnName == 'date') {
+            } else if (columnName.contains('time') ||
+                columnName == 'slot' ||
+                columnName == 'date') {
               payload[columnName] = '10:30 AM';
             } else if (columnName == 'status') {
               payload[columnName] = 'Confirmed';

@@ -3,17 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
-import 'package:medi_connect/core/common_widgets/buttons/buttons.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'booking_wizard_cubit.dart';
 
 class WizardFooterButtons extends StatelessWidget {
   final VoidCallback onSubmit;
 
-  const WizardFooterButtons({
-    super.key,
-    required this.onSubmit,
-  });
+  const WizardFooterButtons({super.key, required this.onSubmit});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,8 @@ class WizardFooterButtons extends StatelessWidget {
     final cubit = context.watch<BookingWizardCubit>();
     final state = cubit.state;
 
-    final canGoNext = (state.currentStep == 0 &&
+    final canGoNext =
+        (state.currentStep == 0 &&
             state.selectedPatient != null &&
             !state.isCreatingPatient) ||
         (state.currentStep == 1 && state.selectedSection != null) ||
@@ -41,7 +38,9 @@ class WizardFooterButtons extends StatelessWidget {
               onPressed: () => cubit.previousStep(),
               style: OutlinedButton.styleFrom(
                 side: BorderSide(
-                  color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                  color: isDark
+                      ? AppColors.terminalDarkBorder
+                      : AppColors.border,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
@@ -76,7 +75,9 @@ class WizardFooterButtons extends StatelessWidget {
               onPressed: canGoNext ? () => cubit.nextStep() : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
-                disabledBackgroundColor: AppColors.primary.withOpacity(0.3),
+                disabledBackgroundColor: AppColors.primary.withValues(
+                  alpha: 0.3,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
                 ),

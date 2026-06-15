@@ -5,17 +5,14 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/common_widgets/buttons/buttons.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_entity.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_pharmacy_bloc.dart';
 import 'complete_consultation_cubit.dart';
 import 'consultation_section_header.dart';
 
 class PrescriptionSection extends StatelessWidget {
   final TextEditingController prescriptionNotesCtrl;
 
-  const PrescriptionSection({
-    super.key,
-    required this.prescriptionNotesCtrl,
-  });
+  const PrescriptionSection({super.key, required this.prescriptionNotesCtrl});
 
   @override
   Widget build(BuildContext context) {
@@ -112,124 +109,187 @@ class PrescriptionSection extends StatelessWidget {
                           if (textEditingValue.text.isEmpty) {
                             return const Iterable<PharmacyItemEntity>.empty();
                           }
-                          return pharmacyItems.where((PharmacyItemEntity option) {
-                            return option.name
-                                .toLowerCase()
-                                .contains(textEditingValue.text.toLowerCase());
+                          return pharmacyItems.where((
+                            PharmacyItemEntity option,
+                          ) {
+                            return option.name.toLowerCase().contains(
+                              textEditingValue.text.toLowerCase(),
+                            );
                           });
                         },
-                        displayStringForOption: (PharmacyItemEntity option) => option.name,
-                        fieldViewBuilder: (BuildContext context,
-                            TextEditingController fieldTextEditingController,
-                            FocusNode fieldFocusNode,
-                            VoidCallback onFieldSubmitted) {
-                          return TextField(
-                            controller: fieldTextEditingController,
-                            focusNode: fieldFocusNode,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: isDark ? Colors.white : AppColors.textPrimary,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Search medicine...',
-                              hintStyle: AppTextStyles.bodySmall.copyWith(
-                                color: isDark ? Colors.white38 : AppColors.textSecondary,
-                              ),
-                              filled: true,
-                              fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
-                              contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: BorderSide(
-                                  color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                        displayStringForOption: (PharmacyItemEntity option) =>
+                            option.name,
+                        fieldViewBuilder:
+                            (
+                              BuildContext context,
+                              TextEditingController fieldTextEditingController,
+                              FocusNode fieldFocusNode,
+                              VoidCallback onFieldSubmitted,
+                            ) {
+                              return TextField(
+                                controller: fieldTextEditingController,
+                                focusNode: fieldFocusNode,
+                                style: AppTextStyles.bodyMedium.copyWith(
+                                  color: isDark
+                                      ? Colors.white
+                                      : AppColors.textPrimary,
                                 ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                                borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
-                              ),
-                            ),
-                          );
-                        },
-                        optionsViewBuilder: (BuildContext context,
-                            AutocompleteOnSelected<PharmacyItemEntity> onSelected,
-                            Iterable<PharmacyItemEntity> options) {
-                          return Align(
-                            alignment: Alignment.topLeft,
-                            child: Material(
-                              elevation: 4.0,
-                              color: isDark ? AppColors.terminalDarkCard : Colors.white,
-                              borderRadius: BorderRadius.circular(8.r),
-                              child: Container(
-                                width: 250.w,
-                                constraints: BoxConstraints(maxHeight: 200.h),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                                decoration: InputDecoration(
+                                  hintText: 'Search medicine...',
+                                  hintStyle: AppTextStyles.bodySmall.copyWith(
+                                    color: isDark
+                                        ? Colors.white38
+                                        : AppColors.textSecondary,
                                   ),
-                                  borderRadius: BorderRadius.circular(8.r),
+                                  filled: true,
+                                  fillColor: isDark
+                                      ? AppColors.terminalDarkBg
+                                      : Colors.grey[50],
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 10.w,
+                                    vertical: 10.h,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    borderSide: BorderSide(
+                                      color: isDark
+                                          ? AppColors.terminalDarkBorder
+                                          : AppColors.border,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    borderSide: const BorderSide(
+                                      color: AppColors.primary,
+                                      width: 1.5,
+                                    ),
+                                  ),
                                 ),
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount: options.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    final PharmacyItemEntity option = options.elementAt(index);
-                                    return InkWell(
-                                      onTap: () => onSelected(option),
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            bottom: BorderSide(
-                                              color: isDark
-                                                  ? AppColors.terminalDarkBorder.withOpacity(0.5)
-                                                  : AppColors.border.withOpacity(0.5),
+                              );
+                            },
+                        optionsViewBuilder:
+                            (
+                              BuildContext context,
+                              AutocompleteOnSelected<PharmacyItemEntity>
+                              onSelected,
+                              Iterable<PharmacyItemEntity> options,
+                            ) {
+                              return Align(
+                                alignment: Alignment.topLeft,
+                                child: Material(
+                                  elevation: 4.0,
+                                  color: isDark
+                                      ? AppColors.terminalDarkCard
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  child: Container(
+                                    width: 250.w,
+                                    constraints: BoxConstraints(
+                                      maxHeight: 200.h,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: isDark
+                                            ? AppColors.terminalDarkBorder
+                                            : AppColors.border,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.r),
+                                    ),
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount: options.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        final PharmacyItemEntity option =
+                                            options.elementAt(index);
+                                        return InkWell(
+                                          onTap: () => onSelected(option),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 12.w,
+                                              vertical: 10.h,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                  color: isDark
+                                                      ? AppColors
+                                                            .terminalDarkBorder
+                                                            .withValues(
+                                                              alpha: 0.5,
+                                                            )
+                                                      : AppColors.border
+                                                            .withValues(
+                                                              alpha: 0.5,
+                                                            ),
+                                                ),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        option.name,
+                                                        style: AppTextStyles
+                                                            .bodyMedium
+                                                            .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: isDark
+                                                                  ? Colors.white
+                                                                  : AppColors
+                                                                        .textPrimary,
+                                                            ),
+                                                      ),
+                                                      if (option
+                                                          .dosage
+                                                          .isNotEmpty) ...[
+                                                        SizedBox(height: 2.h),
+                                                        Text(
+                                                          'Dosage: ${option.dosage}',
+                                                          style: AppTextStyles
+                                                              .bodySmall
+                                                              .copyWith(
+                                                                color: isDark
+                                                                    ? Colors
+                                                                          .white38
+                                                                    : AppColors
+                                                                          .textSecondary,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ],
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '₹${option.sellPrice}',
+                                                  style: AppTextStyles.bodySmall
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            AppColors.primary,
+                                                      ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    option.name,
-                                                    style: AppTextStyles.bodyMedium.copyWith(
-                                                      fontWeight: FontWeight.bold,
-                                                      color: isDark ? Colors.white : AppColors.textPrimary,
-                                                    ),
-                                                  ),
-                                                  if (option.dosage.isNotEmpty) ...[
-                                                    SizedBox(height: 2.h),
-                                                    Text(
-                                                      'Dosage: ${option.dosage}',
-                                                      style: AppTextStyles.bodySmall.copyWith(
-                                                        color: isDark ? Colors.white38 : AppColors.textSecondary,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ],
-                                              ),
-                                            ),
-                                            Text(
-                                              '₹${option.sellPrice}',
-                                              style: AppTextStyles.bodySmall.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColors.primary,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        },
+                              );
+                            },
                         onSelected: (PharmacyItemEntity selection) {
                           cubit.selectMedicine(i, selection);
                         },
@@ -240,7 +300,9 @@ class PrescriptionSection extends StatelessWidget {
                           child: Text(
                             'Strength: ${dosageCtrl.text}',
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: isDark ? Colors.white38 : AppColors.textSecondary,
+                              color: isDark
+                                  ? Colors.white38
+                                  : AppColors.textSecondary,
                               fontSize: 10.sp,
                             ),
                           ),
@@ -261,20 +323,32 @@ class PrescriptionSection extends StatelessWidget {
                     decoration: InputDecoration(
                       hintText: 'e.g. 1-0-1',
                       hintStyle: AppTextStyles.bodySmall.copyWith(
-                        color: isDark ? Colors.white38 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white38
+                            : AppColors.textSecondary,
                       ),
                       filled: true,
-                      fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                      fillColor: isDark
+                          ? AppColors.terminalDarkBg
+                          : Colors.grey[50],
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 10.h,
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
                         borderSide: BorderSide(
-                          color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                          color: isDark
+                              ? AppColors.terminalDarkBorder
+                              : AppColors.border,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
-                        borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                          width: 1.5,
+                        ),
                       ),
                     ),
                   ),
@@ -293,20 +367,32 @@ class PrescriptionSection extends StatelessWidget {
                     decoration: InputDecoration(
                       hintText: 'Days',
                       hintStyle: AppTextStyles.bodySmall.copyWith(
-                        color: isDark ? Colors.white38 : AppColors.textSecondary,
+                        color: isDark
+                            ? Colors.white38
+                            : AppColors.textSecondary,
                       ),
                       filled: true,
-                      fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                      fillColor: isDark
+                          ? AppColors.terminalDarkBg
+                          : Colors.grey[50],
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 10.h,
+                      ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
                         borderSide: BorderSide(
-                          color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                          color: isDark
+                              ? AppColors.terminalDarkBorder
+                              : AppColors.border,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
-                        borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                          width: 1.5,
+                        ),
                       ),
                     ),
                   ),
@@ -318,7 +404,9 @@ class PrescriptionSection extends StatelessWidget {
                   child: Center(
                     child: AppIconButton(
                       icon: Icons.delete_outline,
-                      color: state.medicines.length > 1 ? AppColors.error : Colors.grey,
+                      color: state.medicines.length > 1
+                          ? AppColors.error
+                          : Colors.grey,
                       onPressed: () {
                         if (state.medicines.length > 1) {
                           cubit.removeMedicineRow(i);
@@ -345,7 +433,9 @@ class PrescriptionSection extends StatelessWidget {
           ),
           style: OutlinedButton.styleFrom(
             side: const BorderSide(color: AppColors.primary),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
+            ),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
           ),
         ),
@@ -365,7 +455,10 @@ class PrescriptionSection extends StatelessWidget {
             ),
             filled: true,
             fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
-            contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 10.h,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
@@ -374,7 +467,10 @@ class PrescriptionSection extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+              borderSide: const BorderSide(
+                color: AppColors.primary,
+                width: 1.5,
+              ),
             ),
           ),
         ),

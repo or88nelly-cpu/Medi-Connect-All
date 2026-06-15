@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
-import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
@@ -47,15 +46,29 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Theme-based colors from AppColors
-    final bgColor1 = isDark ? AppColors.terminalDarkBgGrad1 : AppColors.terminalLightBgGrad1;
-    final bgColor2 = isDark ? AppColors.terminalDarkBgGrad2 : AppColors.terminalLightBgGrad2;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final footerTextColor = isDark ? AppColors.terminalDarkFooterText : AppColors.terminalLightFooterText;
-    final ornamentColor = isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.04);
-    final crossColor = isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.02);
+    final bgColor1 = isDark
+        ? AppColors.terminalDarkBgGrad1
+        : AppColors.terminalLightBgGrad1;
+    final bgColor2 = isDark
+        ? AppColors.terminalDarkBgGrad2
+        : AppColors.terminalLightBgGrad2;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final footerTextColor = isDark
+        ? AppColors.terminalDarkFooterText
+        : AppColors.terminalLightFooterText;
+    final ornamentColor = isDark
+        ? Colors.white.withValues(alpha: 0.1)
+        : Colors.black.withValues(alpha: 0.04);
+    final crossColor = isDark
+        ? Colors.white.withValues(alpha: 0.05)
+        : Colors.black.withValues(alpha: 0.02);
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg,
+      backgroundColor: isDark
+          ? AppColors.terminalDarkBg
+          : AppColors.terminalLightBg,
       body: Stack(
         children: [
           // 1. Background Gradient Ornaments
@@ -109,7 +122,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           Positioned.fill(
             child: CustomPaint(
               painter: BackgroundAccentPainter(
-                lineColor: isDark ? Colors.white.withOpacity(0.03) : Colors.black.withOpacity(0.02),
+                lineColor: isDark
+                    ? Colors.white.withValues(alpha: 0.03)
+                    : Colors.black.withValues(alpha: 0.02),
                 dotColor: AppColors.terminalAccentCyan,
               ),
             ),
@@ -202,17 +217,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   ],
                 ),
                 const Spacer(),
-                Icon(
-                  Icons.language,
-                  color: footerTextColor,
-                  size: 18.r,
-                ),
+                Icon(Icons.language, color: footerTextColor, size: 18.r),
                 SizedBox(width: 16.w),
-                Icon(
-                  Icons.help_outline,
-                  color: footerTextColor,
-                  size: 18.r,
-                ),
+                Icon(Icons.help_outline, color: footerTextColor, size: 18.r),
               ],
             ),
           ),
@@ -269,11 +276,11 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   void _onLoginPressed() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(
-            LoginRequested(
-              email: _usernameController.text.trim(),
-              password: _passwordController.text,
-            ),
-          );
+        LoginRequested(
+          email: _usernameController.text.trim(),
+          password: _passwordController.text,
+        ),
+      );
     }
   }
 

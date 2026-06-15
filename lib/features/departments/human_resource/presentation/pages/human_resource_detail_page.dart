@@ -17,13 +17,16 @@ class HumanResourceDetailPage extends StatefulWidget {
   const HumanResourceDetailPage({super.key});
 
   @override
-  State<HumanResourceDetailPage> createState() => _HumanResourceDetailPageState();
+  State<HumanResourceDetailPage> createState() =>
+      _HumanResourceDetailPageState();
 }
 
 class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
   // Reactive State Notifiers
   final ValueNotifier<String> _searchNotifier = ValueNotifier<String>('');
-  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<String> _sortByNotifier = ValueNotifier<String>('None');
   final ValueNotifier<bool> _isListViewNotifier = ValueNotifier<bool>(true);
   final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(1);
@@ -34,7 +37,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
   void initState() {
     super.initState();
     // Fetch from Supabase
-    context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('Human Resource'));
+    context.read<DoctorStaffBloc>().add(
+      const LoadDoctorStaff('Human Resource'),
+    );
   }
 
   @override
@@ -50,14 +55,13 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
   void _triggerAddStaff() async {
     final res = await context.push(
       '/admin/doctor-staff/create',
-      extra: {
-        'role': 'staff',
-        'department': 'Human Resource',
-      },
+      extra: {'role': 'staff', 'department': 'Human Resource'},
     );
     if (res == true) {
       if (mounted) {
-        context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('Human Resource'));
+        context.read<DoctorStaffBloc>().add(
+          const LoadDoctorStaff('Human Resource'),
+        );
       }
     }
   }
@@ -67,7 +71,8 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
       context: context,
       builder: (ctx) => ConfirmationDialog(
         title: "Delete Profile",
-        message: "Are you sure you want to delete ${user.name ?? 'this user'}? This action cannot be undone.",
+        message:
+            "Are you sure you want to delete ${user.name ?? 'this user'}? This action cannot be undone.",
         onConfirm: () {
           context.read<DoctorStaffBloc>().add(
             DeleteDoctorStaffMember(
@@ -83,11 +88,19 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg;
+    final bgColor = isDark
+        ? AppColors.terminalDarkBg
+        : AppColors.terminalLightBg;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final actionBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final actionBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final actionBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final actionBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
 
     return BlocListener<DoctorStaffBloc, DoctorStaffState>(
       listener: (context, state) {
@@ -95,7 +108,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Action completed successfully.")),
           );
-          context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('Human Resource'));
+          context.read<DoctorStaffBloc>().add(
+            const LoadDoctorStaff('Human Resource'),
+          );
         }
       },
       child: Scaffold(
@@ -108,7 +123,13 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // 1. Custom App Bar matching screenshot
-                  _buildCustomAppBar(context, isDark, textColor, actionBg, actionBorder),
+                  _buildCustomAppBar(
+                    context,
+                    isDark,
+                    textColor,
+                    actionBg,
+                    actionBorder,
+                  ),
                   SizedBox(height: 16.h),
 
                   // 2. Search Bar
@@ -143,7 +164,13 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
     );
   }
 
-  Widget _buildCustomAppBar(BuildContext context, bool isDark, Color textColor, Color actionBg, Color actionBorder) {
+  Widget _buildCustomAppBar(
+    BuildContext context,
+    bool isDark,
+    Color textColor,
+    Color actionBg,
+    Color actionBorder,
+  ) {
     return Row(
       children: [
         // Back Button
@@ -158,11 +185,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
               color: actionBg,
               border: Border.all(color: actionBorder),
             ),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              size: 16.r,
-              color: textColor,
-            ),
+            child: Icon(Icons.arrow_back_ios_new, size: 16.r, color: textColor),
           ),
         ),
         SizedBox(width: 12.w),
@@ -206,7 +229,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
               Text(
                 "Human Resources",
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel,
+                  color: isDark
+                      ? AppColors.terminalDarkLabel
+                      : AppColors.terminalLightLabel,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -217,18 +242,42 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildAppBarAction(Icons.search, textColor, actionBg, actionBorder, () {}),
+            _buildAppBarAction(
+              Icons.search,
+              textColor,
+              actionBg,
+              actionBorder,
+              () {},
+            ),
             SizedBox(width: 8.w),
-            _buildAppBarAction(Icons.tune, textColor, actionBg, actionBorder, () {}),
+            _buildAppBarAction(
+              Icons.tune,
+              textColor,
+              actionBg,
+              actionBorder,
+              () {},
+            ),
             SizedBox(width: 8.w),
-            _buildAppBarAction(Icons.more_vert, textColor, actionBg, actionBorder, () {}),
+            _buildAppBarAction(
+              Icons.more_vert,
+              textColor,
+              actionBg,
+              actionBorder,
+              () {},
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildAppBarAction(IconData icon, Color color, Color bg, Color border, VoidCallback onTap) {
+  Widget _buildAppBarAction(
+    IconData icon,
+    Color color,
+    Color bg,
+    Color border,
+    VoidCallback onTap,
+  ) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(30.r),
@@ -248,10 +297,14 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
   Widget _buildSearchBar(bool isDark, Color labelColor) {
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill,
+        color: isDark
+            ? AppColors.terminalDarkFieldFill
+            : AppColors.terminalLightFieldFill,
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
-          color: isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder,
+          color: isDark
+              ? AppColors.terminalDarkFieldBorder
+              : AppColors.terminalLightFieldBorder,
         ),
       ),
       child: TextField(
@@ -266,24 +319,29 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
         decoration: InputDecoration(
           hintText: "Search staff by name, role, email or phone...",
           hintStyle: TextStyle(
-            color: isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint,
+            color: isDark
+                ? AppColors.terminalDarkFieldHint
+                : AppColors.terminalLightFieldHint,
             fontSize: 13.sp,
           ),
-          prefixIcon: Icon(
-            Icons.search,
-            color: labelColor,
-            size: 20.r,
-          ),
+          prefixIcon: Icon(Icons.search, color: labelColor, size: 20.r),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 12.w,
+            vertical: 12.h,
+          ),
         ),
       ),
     );
   }
 
   Widget _buildFiltersSortRow(bool isDark, Color textColor, Color labelColor) {
-    final activeBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final activeBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final activeBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final activeBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
 
     return Row(
       children: [
@@ -343,9 +401,19 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
           builder: (context, isList, _) {
             return Row(
               children: [
-                _buildToggleIcon(Icons.list, isList, isDark, () => _isListViewNotifier.value = true),
+                _buildToggleIcon(
+                  Icons.list,
+                  isList,
+                  isDark,
+                  () => _isListViewNotifier.value = true,
+                ),
                 SizedBox(width: 4.w),
-                _buildToggleIcon(Icons.grid_view, !isList, isDark, () => _isListViewNotifier.value = false),
+                _buildToggleIcon(
+                  Icons.grid_view,
+                  !isList,
+                  isDark,
+                  () => _isListViewNotifier.value = false,
+                ),
               ],
             );
           },
@@ -392,7 +460,12 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
     );
   }
 
-  Widget _buildToggleIcon(IconData icon, bool isActive, bool isDark, VoidCallback onTap) {
+  Widget _buildToggleIcon(
+    IconData icon,
+    bool isActive,
+    bool isDark,
+    VoidCallback onTap,
+  ) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(6.r),
@@ -400,7 +473,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
         padding: EdgeInsets.all(6.r),
         decoration: BoxDecoration(
           color: isActive
-              ? (isDark ? AppColors.primary.withValues(alpha: 0.2) : AppColors.primary.withValues(alpha: 0.1))
+              ? (isDark
+                    ? AppColors.primary.withValues(alpha: 0.2)
+                    : AppColors.primary.withValues(alpha: 0.1))
               : Colors.transparent,
           borderRadius: BorderRadius.circular(6.r),
           border: Border.all(
@@ -410,7 +485,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
         child: Icon(
           icon,
           size: 18.r,
-          color: isActive ? AppColors.primary : (isDark ? Colors.white54 : Colors.black54),
+          color: isActive
+              ? AppColors.primary
+              : (isDark ? Colors.white54 : Colors.black54),
         ),
       ),
     );
@@ -444,21 +521,36 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                   builder: (context, sortBy, _) {
                     // Filter staff
                     final filtered = sourceList.where((u) {
-                      final nameMatch = (u.name ?? '').toLowerCase().contains(searchQuery.toLowerCase());
-                      final roleMatch = (u.staffRole ?? '').toLowerCase().contains(searchQuery.toLowerCase());
-                      final emailMatch = u.email.toLowerCase().contains(searchQuery.toLowerCase());
-                      final phoneMatch = (u.phoneNumber ?? '').contains(searchQuery);
+                      final nameMatch = (u.name ?? '').toLowerCase().contains(
+                        searchQuery.toLowerCase(),
+                      );
+                      final roleMatch = (u.staffRole ?? '')
+                          .toLowerCase()
+                          .contains(searchQuery.toLowerCase());
+                      final emailMatch = u.email.toLowerCase().contains(
+                        searchQuery.toLowerCase(),
+                      );
+                      final phoneMatch = (u.phoneNumber ?? '').contains(
+                        searchQuery,
+                      );
 
-                      final matchesSearch = nameMatch || roleMatch || emailMatch || phoneMatch;
-                      final matchesStatus = statusFilter == 'All' || u.status.toLowerCase() == statusFilter.toLowerCase();
+                      final matchesSearch =
+                          nameMatch || roleMatch || emailMatch || phoneMatch;
+                      final matchesStatus =
+                          statusFilter == 'All' ||
+                          u.status.toLowerCase() == statusFilter.toLowerCase();
                       return matchesSearch && matchesStatus;
                     }).toList();
 
                     // Sort staff
                     if (sortBy == 'Name (A-Z)') {
-                      filtered.sort((a, b) => (a.name ?? '').compareTo(b.name ?? ''));
+                      filtered.sort(
+                        (a, b) => (a.name ?? '').compareTo(b.name ?? ''),
+                      );
                     } else if (sortBy == 'Name (Z-A)') {
-                      filtered.sort((a, b) => (b.name ?? '').compareTo(a.name ?? ''));
+                      filtered.sort(
+                        (a, b) => (b.name ?? '').compareTo(a.name ?? ''),
+                      );
                     }
 
                     return Column(
@@ -504,10 +596,16 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                           ValueListenableBuilder<int>(
                             valueListenable: _currentPageNotifier,
                             builder: (context, currentPage, _) {
-                              final totalPages = (filtered.length / _itemsPerPage).ceil();
-                              final startIndex = (currentPage - 1) * _itemsPerPage;
-                              final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
-                              final paginatedList = filtered.sublist(startIndex, endIndex);
+                              final totalPages =
+                                  (filtered.length / _itemsPerPage).ceil();
+                              final startIndex =
+                                  (currentPage - 1) * _itemsPerPage;
+                              final endIndex = (startIndex + _itemsPerPage)
+                                  .clamp(0, filtered.length);
+                              final paginatedList = filtered.sublist(
+                                startIndex,
+                                endIndex,
+                              );
 
                               return ValueListenableBuilder<bool>(
                                 valueListenable: _isListViewNotifier,
@@ -517,17 +615,29 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                                       if (isList)
                                         ListView.builder(
                                           shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
                                           itemCount: paginatedList.length,
                                           itemBuilder: (context, idx) {
                                             final stf = paginatedList[idx];
                                             return _StaffListCard(
                                               staff: stf,
-                                              onDelete: () => _confirmDelete(context, stf),
+                                              onDelete: () =>
+                                                  _confirmDelete(context, stf),
                                               onEdit: () async {
-                                                final res = await context.push('/admin/doctor-staff/edit', extra: stf);
-                                                if (res == true && context.mounted) {
-                                                  context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('Human Resource'));
+                                                final res = await context.push(
+                                                  '/admin/doctor-staff/edit',
+                                                  extra: stf,
+                                                );
+                                                if (res == true &&
+                                                    context.mounted) {
+                                                  context
+                                                      .read<DoctorStaffBloc>()
+                                                      .add(
+                                                        const LoadDoctorStaff(
+                                                          'Human Resource',
+                                                        ),
+                                                      );
                                                 }
                                               },
                                             );
@@ -536,23 +646,36 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                                       else
                                         GridView.builder(
                                           shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: 0.8,
-                                            mainAxisSpacing: 10.r,
-                                            crossAxisSpacing: 10.r,
-                                          ),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 0.8,
+                                                mainAxisSpacing: 10.r,
+                                                crossAxisSpacing: 10.r,
+                                              ),
                                           itemCount: paginatedList.length,
                                           itemBuilder: (context, idx) {
                                             final stf = paginatedList[idx];
                                             return _StaffGridCard(
                                               staff: stf,
-                                              onDelete: () => _confirmDelete(context, stf),
+                                              onDelete: () =>
+                                                  _confirmDelete(context, stf),
                                               onEdit: () async {
-                                                final res = await context.push('/admin/doctor-staff/edit', extra: stf);
-                                                if (res == true && context.mounted) {
-                                                  context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('Human Resource'));
+                                                final res = await context.push(
+                                                  '/admin/doctor-staff/edit',
+                                                  extra: stf,
+                                                );
+                                                if (res == true &&
+                                                    context.mounted) {
+                                                  context
+                                                      .read<DoctorStaffBloc>()
+                                                      .add(
+                                                        const LoadDoctorStaff(
+                                                          'Human Resource',
+                                                        ),
+                                                      );
                                                 }
                                               },
                                             );
@@ -633,19 +756,21 @@ class _StaffListCard extends StatelessWidget {
   final VoidCallback? onDelete;
   final VoidCallback? onEdit;
 
-  const _StaffListCard({
-    required this.staff,
-    this.onDelete,
-    this.onEdit,
-  });
+  const _StaffListCard({required this.staff, this.onDelete, this.onEdit});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
@@ -696,7 +821,9 @@ class _StaffListCard extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 11.sp,
-                        color: isDark ? const Color(0xFFB39DDB) : Colors.deepPurple,
+                        color: isDark
+                            ? const Color(0xFFB39DDB)
+                            : Colors.deepPurple,
                       ),
                     ),
                   ],
@@ -704,10 +831,7 @@ class _StaffListCard extends StatelessWidget {
                 SizedBox(height: 4.h),
                 Text(
                   "${staff.metadata?['sub_department'] ?? staff.department ?? 'Staff'} • ${staff.email}",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: labelColor,
-                  ),
+                  style: TextStyle(fontSize: 12.sp, color: labelColor),
                 ),
               ],
             ),
@@ -729,7 +853,10 @@ class _StaffListCard extends StatelessWidget {
               ),
               PopupMenuItem(
                 value: 'delete',
-                child: const Text('Delete Staff', style: TextStyle(color: AppColors.error)),
+                child: const Text(
+                  'Delete Staff',
+                  style: TextStyle(color: AppColors.error),
+                ),
               ),
             ],
           ),
@@ -744,19 +871,21 @@ class _StaffGridCard extends StatelessWidget {
   final VoidCallback? onDelete;
   final VoidCallback? onEdit;
 
-  const _StaffGridCard({
-    required this.staff,
-    this.onDelete,
-    this.onEdit,
-  });
+  const _StaffGridCard({required this.staff, this.onDelete, this.onEdit});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(12.r),
@@ -785,7 +914,10 @@ class _StaffGridCard extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   value: 'delete',
-                  child: const Text('Delete Staff', style: TextStyle(color: AppColors.error)),
+                  child: const Text(
+                    'Delete Staff',
+                    style: TextStyle(color: AppColors.error),
+                  ),
                 ),
               ],
             ),
@@ -837,10 +969,7 @@ class _StaffGridCard extends StatelessWidget {
                 SizedBox(height: 4.h),
                 Text(
                   staff.email,
-                  style: TextStyle(
-                    fontSize: 9.sp,
-                    color: labelColor,
-                  ),
+                  style: TextStyle(fontSize: 9.sp, color: labelColor),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -890,10 +1019,7 @@ class _StatusPill extends StatelessWidget {
           Container(
             width: 5.r,
             height: 5.r,
-            decoration: BoxDecoration(
-              color: dotColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
           SizedBox(width: 4.w),
           Text(
@@ -916,8 +1042,12 @@ class _HRFunctionsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final cardBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final cardBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
     final List<Map<String, dynamic>> functions = [
@@ -1014,11 +1144,7 @@ class _HRFunctionsGrid extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      fn['icon'],
-                      color: fn['color'],
-                      size: 24.r,
-                    ),
+                    Icon(fn['icon'], color: fn['color'], size: 24.r),
                     SizedBox(height: 6.h),
                     Expanded(
                       child: Text(
@@ -1050,10 +1176,16 @@ class _HROverviewCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final cardBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final cardBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final List<Map<String, dynamic>> stats = [
       {
@@ -1180,8 +1312,12 @@ class _HRQuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final cardBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final cardBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
     final List<Map<String, dynamic>> actions = [
@@ -1254,11 +1390,7 @@ class _HRQuickActions extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          act['icon'],
-                          color: act['color'],
-                          size: 18.r,
-                        ),
+                        Icon(act['icon'], color: act['color'], size: 18.r),
                         SizedBox(width: 6.w),
                         Flexible(
                           child: Text(

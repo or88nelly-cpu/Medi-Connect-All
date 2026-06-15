@@ -38,7 +38,7 @@ class AdminNavItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary.withOpacity(0.1)
+              ? AppColors.primary.withValues(alpha: 0.1)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(12.r),
         ),
@@ -60,8 +60,7 @@ class AdminNavItem extends StatelessWidget {
               style: AppTextStyles.bodySmall.copyWith(
                 color: color,
                 fontSize: 7.sp,
-                fontWeight:
-                    isSelected ? FontWeight.bold : FontWeight.normal,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
             ),
           ],

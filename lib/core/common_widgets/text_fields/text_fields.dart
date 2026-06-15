@@ -1,5 +1,7 @@
 /// Custom reusable input text fields complying with design systems.
 /// Implements: AppTextField, PasswordField, SearchField, PhoneField, OtpField.
+library;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +46,9 @@ class AppTextField extends StatelessWidget {
       onTap: onTap,
       obscureText: obscureText,
       style: AppTextStyles.bodyLarge.copyWith(
-        color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+        color: isDark
+            ? AppColors.terminalDarkText
+            : AppColors.terminalLightText,
       ),
       decoration: InputDecoration(
         labelText: labelText,
@@ -52,17 +56,25 @@ class AppTextField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         filled: true,
-        fillColor: isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill,
+        fillColor: isDark
+            ? AppColors.terminalDarkFieldFill
+            : AppColors.terminalLightFieldFill,
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         labelStyle: AppTextStyles.bodyMedium.copyWith(
-          color: isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel,
+          color: isDark
+              ? AppColors.terminalDarkLabel
+              : AppColors.terminalLightLabel,
         ),
         hintStyle: AppTextStyles.bodyMedium.copyWith(
-          color: isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint,
+          color: isDark
+              ? AppColors.terminalDarkFieldHint
+              : AppColors.terminalLightFieldHint,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder,
+            color: isDark
+                ? AppColors.terminalDarkFieldBorder
+                : AppColors.terminalLightFieldBorder,
             width: 1.w,
           ),
           borderRadius: BorderRadius.circular(8.r),
@@ -233,18 +245,24 @@ class OtpField extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.headingMedium.copyWith(
               fontSize: 20.sp,
-              color: isDark ? AppColors.terminalDarkText : AppColors.terminalLightText,
+              color: isDark
+                  ? AppColors.terminalDarkText
+                  : AppColors.terminalLightText,
             ),
             maxLength: 1,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               counterText: "",
               filled: true,
-              fillColor: isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill,
+              fillColor: isDark
+                  ? AppColors.terminalDarkFieldFill
+                  : AppColors.terminalLightFieldFill,
               contentPadding: EdgeInsets.zero,
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder,
+                  color: isDark
+                      ? AppColors.terminalDarkFieldBorder
+                      : AppColors.terminalLightFieldBorder,
                   width: 1.w,
                 ),
                 borderRadius: BorderRadius.circular(8.r),

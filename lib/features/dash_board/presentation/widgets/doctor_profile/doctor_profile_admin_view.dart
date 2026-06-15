@@ -65,10 +65,13 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 children: [
                   // 1. Top Header with Back button and profile options
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 12.h,
+                    ),
                     child: const DoctorProfileHeader(),
                   ),
-                  
+
                   // Scrollable Content
                   Expanded(
                     child: SingleChildScrollView(
@@ -97,7 +100,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
 
                           // 5. Tab Views Content
                           _buildTabContent(isWide),
-                          
+
                           SizedBox(height: 24.h),
                         ],
                       ),
@@ -152,18 +155,28 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                     DoctorInfoCard(
                       user: widget.user,
                       onEdit: () async {
-                        final res = await context.push('/admin/doctor-staff/edit', extra: widget.user);
+                        final res = await context.push(
+                          '/admin/doctor-staff/edit',
+                          extra: widget.user,
+                        );
                         if (res == true && context.mounted) {
-                          context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.user.department ?? 'All'));
+                          context.read<DoctorStaffBloc>().add(
+                            LoadDoctorStaff(widget.user.department ?? 'All'),
+                          );
                         }
                       },
                     ),
                     SizedBox(height: 16.h),
                     DoctorAvailabilityCard(
-                      initialStatus: widget.user.availabilityStatus ?? 'Available',
+                      initialStatus:
+                          widget.user.availabilityStatus ?? 'Available',
                       onStatusChanged: (newStatus) {
-                        final updated = widget.user.copyWith(availabilityStatus: newStatus);
-                        context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updated));
+                        final updated = widget.user.copyWith(
+                          availabilityStatus: newStatus,
+                        );
+                        context.read<DoctorStaffBloc>().add(
+                          UpdateDoctorStaffMember(updated),
+                        );
                       },
                     ),
                     SizedBox(height: 16.h),
@@ -200,9 +213,14 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
           DoctorInfoCard(
             user: widget.user,
             onEdit: () async {
-              final res = await context.push('/admin/doctor-staff/edit', extra: widget.user);
+              final res = await context.push(
+                '/admin/doctor-staff/edit',
+                extra: widget.user,
+              );
               if (res == true && context.mounted) {
-                context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.user.department ?? 'All'));
+                context.read<DoctorStaffBloc>().add(
+                  LoadDoctorStaff(widget.user.department ?? 'All'),
+                );
               }
             },
           ),
@@ -210,8 +228,12 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
           DoctorAvailabilityCard(
             initialStatus: widget.user.availabilityStatus ?? 'Available',
             onStatusChanged: (newStatus) {
-              final updated = widget.user.copyWith(availabilityStatus: newStatus);
-              context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updated));
+              final updated = widget.user.copyWith(
+                availabilityStatus: newStatus,
+              );
+              context.read<DoctorStaffBloc>().add(
+                UpdateDoctorStaffMember(updated),
+              );
             },
           ),
           SizedBox(height: 16.h),
@@ -273,12 +295,19 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
 
   Widget _buildPatientsTab() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
-    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations =
+        widget.user.metadata?['consultations'] as List<dynamic>?;
     final List<Map<String, dynamic>> patients = [];
     final Set<String> uniqueNames = {};
 
@@ -302,10 +331,34 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
 
     if (patients.isEmpty) {
       patients.addAll([
-        {'name': 'Ramesh Kumar', 'age': 45, 'gender': 'Male', 'lastVisit': '10:00 AM', 'type': 'Follow Up'},
-        {'name': 'Anita Sharma', 'age': 38, 'gender': 'Female', 'lastVisit': '09:20 AM', 'type': 'New Consultation'},
-        {'name': 'Vikram Singh', 'age': 52, 'gender': 'Male', 'lastVisit': '09:40 AM', 'type': 'Follow Up'},
-        {'name': 'Pooja Mehta', 'age': 29, 'gender': 'Female', 'lastVisit': '11:00 AM', 'type': 'New Consultation'},
+        {
+          'name': 'Ramesh Kumar',
+          'age': 45,
+          'gender': 'Male',
+          'lastVisit': '10:00 AM',
+          'type': 'Follow Up',
+        },
+        {
+          'name': 'Anita Sharma',
+          'age': 38,
+          'gender': 'Female',
+          'lastVisit': '09:20 AM',
+          'type': 'New Consultation',
+        },
+        {
+          'name': 'Vikram Singh',
+          'age': 52,
+          'gender': 'Male',
+          'lastVisit': '09:40 AM',
+          'type': 'Follow Up',
+        },
+        {
+          'name': 'Pooja Mehta',
+          'age': 29,
+          'gender': 'Female',
+          'lastVisit': '11:00 AM',
+          'type': 'New Consultation',
+        },
       ]);
     }
 
@@ -323,14 +376,18 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
           children: [
             Text(
               "Consulted Patients",
-              style: AppTextStyles.titleMedium.copyWith(color: textColor, fontWeight: FontWeight.bold),
+              style: AppTextStyles.titleMedium.copyWith(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 12.h),
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: patients.length,
-              separatorBuilder: (context, idx) => Divider(color: borderColor, height: 1),
+              separatorBuilder: (context, idx) =>
+                  Divider(color: borderColor, height: 1),
               itemBuilder: (context, idx) {
                 final p = patients[idx];
                 return ListTile(
@@ -344,21 +401,32 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                   ),
                   title: Text(
                     p['name']!,
-                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13.sp),
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.sp,
+                    ),
                   ),
                   subtitle: Text(
                     "Age: ${p['age']} • ${p['gender']} • Last Visit: ${p['lastVisit']}",
                     style: TextStyle(color: labelColor, fontSize: 11.sp),
                   ),
                   trailing: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
                       p['type']!,
-                      style: TextStyle(color: AppColors.primary, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 );
@@ -372,10 +440,16 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
 
   Widget _buildDocumentsTab() {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final metadataDocs = widget.user.metadata?['documents'] as List<dynamic>?;
     final List<Map<String, dynamic>> documents = [];
@@ -393,9 +467,21 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
 
     if (documents.isEmpty) {
       documents.addAll([
-        {'name': 'Medical Registration Certificate', 'issueDate': '12 Jan 2018', 'status': 'Verified'},
-        {'name': 'Specialization Degree (MD)', 'issueDate': '24 Jun 2021', 'status': 'Verified'},
-        {'name': 'Board Certification in Medicine', 'issueDate': '15 Aug 2022', 'status': 'Verified'},
+        {
+          'name': 'Medical Registration Certificate',
+          'issueDate': '12 Jan 2018',
+          'status': 'Verified',
+        },
+        {
+          'name': 'Specialization Degree (MD)',
+          'issueDate': '24 Jun 2021',
+          'status': 'Verified',
+        },
+        {
+          'name': 'Board Certification in Medicine',
+          'issueDate': '15 Aug 2022',
+          'status': 'Verified',
+        },
       ]);
     }
 
@@ -416,13 +502,18 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
               children: [
                 Text(
                   "Verification Documents",
-                  style: AppTextStyles.titleMedium.copyWith(color: textColor, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.titleMedium.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 TextButton.icon(
                   onPressed: () => _showUploadDocumentDialog(),
                   icon: const Icon(Icons.upload, size: 14),
                   label: const Text("Upload Doc"),
-                  style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                  ),
                 ),
               ],
             ),
@@ -431,22 +522,35 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: documents.length,
-              separatorBuilder: (context, idx) => Divider(color: borderColor, height: 1),
+              separatorBuilder: (context, idx) =>
+                  Divider(color: borderColor, height: 1),
               itemBuilder: (context, idx) {
                 final d = documents[idx];
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: Icon(Icons.verified_user, color: AppColors.success, size: 24.sp),
+                  leading: Icon(
+                    Icons.verified_user,
+                    color: AppColors.success,
+                    size: 24.sp,
+                  ),
                   title: Text(
                     d['name']!,
-                    style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 13.sp),
+                    style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13.sp,
+                    ),
                   ),
                   subtitle: Text(
                     "Issued: ${d['issueDate']} • Status: ${d['status']}",
                     style: TextStyle(color: labelColor, fontSize: 11.sp),
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.remove_red_eye, color: AppColors.primary, size: 18.sp),
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color: AppColors.primary,
+                      size: 18.sp,
+                    ),
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Viewing ${d['name']}...")),
@@ -487,14 +591,44 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 if (docName.isEmpty) return;
                 Navigator.pop(ctx);
 
-                final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
-                final currentDocs = List<dynamic>.from(updatedMetadata['documents'] ?? [
-                  {'name': 'Medical Registration Certificate', 'issueDate': '12 Jan 2018', 'status': 'Verified'},
-                  {'name': 'Specialization Degree (MD)', 'issueDate': '24 Jun 2021', 'status': 'Verified'},
-                  {'name': 'Board Certification in Medicine', 'issueDate': '15 Aug 2022', 'status': 'Verified'},
-                ]);
+                final updatedMetadata = Map<String, dynamic>.from(
+                  widget.user.metadata ?? {},
+                );
+                final currentDocs = List<dynamic>.from(
+                  updatedMetadata['documents'] ??
+                      [
+                        {
+                          'name': 'Medical Registration Certificate',
+                          'issueDate': '12 Jan 2018',
+                          'status': 'Verified',
+                        },
+                        {
+                          'name': 'Specialization Degree (MD)',
+                          'issueDate': '24 Jun 2021',
+                          'status': 'Verified',
+                        },
+                        {
+                          'name': 'Board Certification in Medicine',
+                          'issueDate': '15 Aug 2022',
+                          'status': 'Verified',
+                        },
+                      ],
+                );
 
-                final days = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                final days = [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                  "Oct",
+                  "Nov",
+                  "Dec",
+                ];
                 final now = DateTime.now();
                 final dateStr = "${now.day} ${days[now.month - 1]} ${now.year}";
 
@@ -505,9 +639,13 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 });
 
                 updatedMetadata['documents'] = currentDocs;
-                final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+                final updatedUser = widget.user.copyWith(
+                  metadata: updatedMetadata,
+                );
 
-                context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+                context.read<DoctorStaffBloc>().add(
+                  UpdateDoctorStaffMember(updatedUser),
+                );
               },
               child: const Text("Upload"),
             ),

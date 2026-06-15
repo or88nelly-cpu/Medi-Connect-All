@@ -1,4 +1,6 @@
 /// Fetches the currently logged-in user profile, if available.
+library;
+
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
 import 'package:medi_connect/features/auth/domain/entities/user_entity.dart';

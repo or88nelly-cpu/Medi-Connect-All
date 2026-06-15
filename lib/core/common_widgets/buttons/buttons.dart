@@ -1,5 +1,7 @@
 /// Custom reusable button widgets complying with design systems.
 /// Implements: PrimaryButton, SecondaryButton, OutlinedButton, IconButton, LoadingButton.
+library;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';

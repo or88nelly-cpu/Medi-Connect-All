@@ -27,9 +27,13 @@ class AdminStaffPage extends StatefulWidget {
 
 class _AdminStaffPageState extends State<AdminStaffPage> {
   final ValueNotifier<String> _searchNotifier = ValueNotifier<String>('');
-  final ValueNotifier<String> _selectedFilterNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _selectedFilterNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<String> _sortByNotifier = ValueNotifier<String>('None');
-  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(1);
   final int _itemsPerPage = 5;
 
@@ -53,13 +57,24 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
     final state = context.read<DepartmentBloc>().state;
     List<String> list = [];
     if (state is DepartmentsLoaded) {
-      list.addAll(state.sections.map((e) => e.name).where((name) => name.isNotEmpty));
-      list.addAll(state.departments.map((e) => e.name).where((name) => name.isNotEmpty));
+      list.addAll(
+        state.sections.map((e) => e.name).where((name) => name.isNotEmpty),
+      );
+      list.addAll(
+        state.departments.map((e) => e.name).where((name) => name.isNotEmpty),
+      );
       list = list.toSet().toList();
     }
 
     if (list.isEmpty) {
-      list = ['General Medicine', 'Cardiology', 'Neurology', 'Pediatrics', 'Emergency', 'OPD'];
+      list = [
+        'General Medicine',
+        'Cardiology',
+        'Neurology',
+        'Pediatrics',
+        'Emergency',
+        'OPD',
+      ];
     }
 
     String selectedDept = list.first;
@@ -94,7 +109,9 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                     )
                     .then((value) {
                       if (value == true && context.mounted) {
-                        context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+                        context.read<DoctorStaffBloc>().add(
+                          const LoadDoctorStaff('All'),
+                        );
                       }
                     });
               },
@@ -109,10 +126,13 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return BlocProvider(
-      create: (context) => GetIt.I<DoctorStaffBloc>()..add(const LoadDoctorStaff('All')),
+      create: (context) =>
+          GetIt.I<DoctorStaffBloc>()..add(const LoadDoctorStaff('All')),
       child: Builder(
         builder: (context) {
           return CustomScaffold(
@@ -132,8 +152,16 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                       builder: (context, state) {
                         final List<String> categories = ['All'];
                         if (state is DepartmentsLoaded) {
-                          categories.addAll(state.sections.map((e) => e.name).where((name) => name.isNotEmpty));
-                          categories.addAll(state.departments.map((e) => e.name).where((name) => name.isNotEmpty));
+                          categories.addAll(
+                            state.sections
+                                .map((e) => e.name)
+                                .where((name) => name.isNotEmpty),
+                          );
+                          categories.addAll(
+                            state.departments
+                                .map((e) => e.name)
+                                .where((name) => name.isNotEmpty),
+                          );
                         }
                         final uniqueCategories = categories.toSet().toList();
 
@@ -162,7 +190,9 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                           BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
                             builder: (context, state) {
                               if (state is DoctorStaffLoading) {
-                                return const Center(child: CircularProgressIndicator());
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
                               } else if (state is DoctorStaffError) {
                                 return Center(
                                   child: Text(
@@ -174,7 +204,9 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
 
                               List<UserModel> staffList = [];
                               if (state is DoctorStaffLoaded) {
-                                staffList = state.staff.where((u) => u.role == 'staff').toList();
+                                staffList = state.staff
+                                    .where((u) => u.role == 'staff')
+                                    .toList();
                               }
 
                               if (staffList.isEmpty) {
@@ -196,61 +228,135 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                         valueListenable: _sortByNotifier,
                                         builder: (context, sortBy, _) {
                                           return ValueListenableBuilder<String>(
-                                            valueListenable: _statusFilterNotifier,
+                                            valueListenable:
+                                                _statusFilterNotifier,
                                             builder: (context, statusFilter, _) {
                                               // 1. Filter
-                                              final filtered = staffList.where((stf) {
-                                                final matchesSearch = (stf.name ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
-                                                    (stf.staffRole ?? '').toLowerCase().contains(searchQuery.toLowerCase());
-                                                final matchesCategory = selectedFilter == 'All' || stf.department == selectedFilter;
-                                                final matchesStatus = statusFilter == 'All' ||
-                                                    stf.status.toLowerCase() == statusFilter.toLowerCase();
-                                                return matchesSearch && matchesCategory && matchesStatus;
+                                              final filtered = staffList.where((
+                                                stf,
+                                              ) {
+                                                final matchesSearch =
+                                                    (stf.name ?? '')
+                                                        .toLowerCase()
+                                                        .contains(
+                                                          searchQuery
+                                                              .toLowerCase(),
+                                                        ) ||
+                                                    (stf.staffRole ?? '')
+                                                        .toLowerCase()
+                                                        .contains(
+                                                          searchQuery
+                                                              .toLowerCase(),
+                                                        );
+                                                final matchesCategory =
+                                                    selectedFilter == 'All' ||
+                                                    stf.department ==
+                                                        selectedFilter;
+                                                final matchesStatus =
+                                                    statusFilter == 'All' ||
+                                                    stf.status.toLowerCase() ==
+                                                        statusFilter
+                                                            .toLowerCase();
+                                                return matchesSearch &&
+                                                    matchesCategory &&
+                                                    matchesStatus;
                                               }).toList();
 
                                               // 2. Sort
                                               if (sortBy == 'Name (A-Z)') {
-                                                filtered.sort((a, b) => (a.name ?? '').compareTo(b.name ?? ''));
-                                              } else if (sortBy == 'Name (Z-A)') {
-                                                filtered.sort((a, b) => (b.name ?? '').compareTo(a.name ?? ''));
+                                                filtered.sort(
+                                                  (a, b) => (a.name ?? '')
+                                                      .compareTo(b.name ?? ''),
+                                                );
+                                              } else if (sortBy ==
+                                                  'Name (Z-A)') {
+                                                filtered.sort(
+                                                  (a, b) => (b.name ?? '')
+                                                      .compareTo(a.name ?? ''),
+                                                );
                                               }
 
                                               if (filtered.isEmpty) {
                                                 return Center(
                                                   child: Text(
                                                     "No matching staff found.",
-                                                    style: TextStyle(color: labelColor),
+                                                    style: TextStyle(
+                                                      color: labelColor,
+                                                    ),
                                                   ),
                                                 );
                                               }
 
-                                              return ValueListenableBuilder<int>(
-                                                valueListenable: _currentPageNotifier,
+                                              return ValueListenableBuilder<
+                                                int
+                                              >(
+                                                valueListenable:
+                                                    _currentPageNotifier,
                                                 builder: (context, currentPage, _) {
-                                                  final totalPages = (filtered.length / _itemsPerPage).ceil();
-                                                  final startIndex = (currentPage - 1) * _itemsPerPage;
-                                                  final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
-                                                  final paginatedList = filtered.sublist(startIndex, endIndex);
+                                                  final totalPages =
+                                                      (filtered.length /
+                                                              _itemsPerPage)
+                                                          .ceil();
+                                                  final startIndex =
+                                                      (currentPage - 1) *
+                                                      _itemsPerPage;
+                                                  final endIndex =
+                                                      (startIndex +
+                                                              _itemsPerPage)
+                                                          .clamp(
+                                                            0,
+                                                            filtered.length,
+                                                          );
+                                                  final paginatedList = filtered
+                                                      .sublist(
+                                                        startIndex,
+                                                        endIndex,
+                                                      );
 
                                                   return Column(
                                                     children: [
                                                       Expanded(
                                                         child: ListView.builder(
-                                                          itemCount: paginatedList.length,
+                                                          itemCount:
+                                                              paginatedList
+                                                                  .length,
                                                           itemBuilder: (context, idx) {
-                                                            final stf = paginatedList[idx];
+                                                            final stf =
+                                                                paginatedList[idx];
                                                             return StaffCard(
                                                               stf: stf,
                                                               onTap: () {
-                                                                context.push('/admin/doctor-staff/detail', extra: stf);
+                                                                context.push(
+                                                                  '/admin/doctor-staff/detail',
+                                                                  extra: stf,
+                                                                );
                                                               },
                                                               onView: () {
-                                                                context.push('/admin/doctor-staff/detail', extra: stf);
+                                                                context.push(
+                                                                  '/admin/doctor-staff/detail',
+                                                                  extra: stf,
+                                                                );
                                                               },
                                                               onEdit: () async {
-                                                                final res = await context.push('/admin/doctor-staff/edit', extra: stf);
-                                                                if (res == true && context.mounted) {
-                                                                  context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+                                                                final res =
+                                                                    await context.push(
+                                                                      '/admin/doctor-staff/edit',
+                                                                      extra:
+                                                                          stf,
+                                                                    );
+                                                                if (res ==
+                                                                        true &&
+                                                                    context
+                                                                        .mounted) {
+                                                                  context
+                                                                      .read<
+                                                                        DoctorStaffBloc
+                                                                      >()
+                                                                      .add(
+                                                                        const LoadDoctorStaff(
+                                                                          'All',
+                                                                        ),
+                                                                      );
                                                                 }
                                                               },
                                                             );
@@ -258,10 +364,13 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                                         ),
                                                       ),
                                                       DirectoryPagination(
-                                                        currentPage: currentPage,
+                                                        currentPage:
+                                                            currentPage,
                                                         totalPages: totalPages,
                                                         onPageChanged: (page) {
-                                                          _currentPageNotifier.value = page;
+                                                          _currentPageNotifier
+                                                                  .value =
+                                                              page;
                                                         },
                                                       ),
                                                     ],
@@ -287,9 +396,13 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                               children: [
                                 FloatingActionButton(
                                   heroTag: 'add_staff_fab',
-                                  onPressed: () => _showSelectDepartmentAndCreate(context),
+                                  onPressed: () =>
+                                      _showSelectDepartmentAndCreate(context),
                                   backgroundColor: AppColors.primary,
-                                  child: const Icon(Icons.add, color: Colors.white),
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 SizedBox(height: 4.h),
                                 Text(
@@ -311,7 +424,7 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
               ),
             ),
           );
-        }
+        },
       ),
     );
   }

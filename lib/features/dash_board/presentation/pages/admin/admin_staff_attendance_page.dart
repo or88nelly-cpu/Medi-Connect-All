@@ -6,13 +6,14 @@ import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/attendance_entity.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_attendance_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_attendance_bloc.dart';
 
 class AdminStaffAttendancePage extends StatefulWidget {
   const AdminStaffAttendancePage({super.key});
 
   @override
-  State<AdminStaffAttendancePage> createState() => _AdminStaffAttendancePageState();
+  State<AdminStaffAttendancePage> createState() =>
+      _AdminStaffAttendancePageState();
 }
 
 class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
@@ -26,8 +27,8 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
 
   void _loadAttendance() {
     context.read<AdminAttendanceBloc>().add(
-          LoadStaffAttendance(date: _selectedDate),
-        );
+      LoadStaffAttendance(date: _selectedDate),
+    );
   }
 
   void _showStatusDialog(AttendanceEntity staff) {
@@ -40,12 +41,8 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
             return SimpleDialogOption(
               onPressed: () {
                 context.read<AdminAttendanceBloc>().add(
-                      UpdateAttendanceStatus(
-                        staff.id,
-                        status,
-                        date: _selectedDate,
-                      ),
-                    );
+                  UpdateAttendanceStatus(staff.id, status, date: _selectedDate),
+                );
                 Navigator.pop(ctx);
               },
               child: Padding(
@@ -56,13 +53,13 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
                       status == "Present"
                           ? Icons.check_circle_outline
                           : status == "On Leave"
-                              ? Icons.watch_later_outlined
-                              : Icons.cancel_outlined,
+                          ? Icons.watch_later_outlined
+                          : Icons.cancel_outlined,
                       color: status == "Present"
                           ? AppColors.success
                           : status == "On Leave"
-                              ? AppColors.warning
-                              : AppColors.error,
+                          ? AppColors.warning
+                          : AppColors.error,
                     ),
                     SizedBox(width: 12.w),
                     Text(status, style: AppTextStyles.bodyLarge),
@@ -93,7 +90,8 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
 
   @override
   Widget build(BuildContext context) {
-    final dateStr = "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}";
+    final dateStr =
+        "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}";
 
     return CustomScaffold(
       customAppbar: CommonAppBar(
@@ -101,7 +99,11 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
         actions: [
           TextButton.icon(
             onPressed: () => _selectDate(context),
-            icon: const Icon(Icons.calendar_today, size: 16, color: AppColors.primary),
+            icon: const Icon(
+              Icons.calendar_today,
+              size: 16,
+              color: AppColors.primary,
+            ),
             label: Text(
               dateStr,
               style: TextStyle(
@@ -178,10 +180,13 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
                           Container(
                             padding: EdgeInsets.all(10.r),
                             decoration: BoxDecoration(
-                              color: statusColor.withOpacity(0.1),
+                              color: statusColor.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.badge_outlined, color: statusColor),
+                            child: Icon(
+                              Icons.badge_outlined,
+                              color: statusColor,
+                            ),
                           ),
                           SizedBox(width: 16.w),
                           Expanded(
@@ -197,7 +202,8 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
                                 ),
                                 SizedBox(height: 4.h),
                                 Text("Role: ${staff.role}"),
-                                if (staff.status == 'Present' && staff.checkInTime != null)
+                                if (staff.status == 'Present' &&
+                                    staff.checkInTime != null)
                                   Text("Check In: ${staff.checkInTime}"),
                               ],
                             ),
@@ -208,7 +214,7 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
                               vertical: 4.h,
                             ),
                             decoration: BoxDecoration(
-                              color: statusColor.withOpacity(0.1),
+                              color: statusColor.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(6.r),
                             ),
                             child: Text(

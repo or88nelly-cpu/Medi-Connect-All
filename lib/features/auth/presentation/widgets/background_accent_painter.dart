@@ -6,10 +6,7 @@ class BackgroundAccentPainter extends CustomPainter {
   final Color lineColor;
   final Color dotColor;
 
-  BackgroundAccentPainter({
-    required this.lineColor,
-    required this.dotColor,
-  });
+  BackgroundAccentPainter({required this.lineColor, required this.dotColor});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -38,6 +35,7 @@ class BackgroundAccentPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant BackgroundAccentPainter oldDelegate) {
-    return oldDelegate.lineColor != lineColor || oldDelegate.dotColor != dotColor;
+    return oldDelegate.lineColor != lineColor ||
+        oldDelegate.dotColor != dotColor;
   }
 }

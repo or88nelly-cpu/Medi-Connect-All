@@ -19,10 +19,18 @@ class SlotsSummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(12.r),
@@ -82,11 +90,7 @@ class SlotsSummaryRow extends StatelessWidget {
   }
 
   Widget _buildDivider(Color color) {
-    return Container(
-      width: 1.w,
-      height: 28.h,
-      color: color,
-    );
+    return Container(width: 1.w, height: 28.h, color: color);
   }
 
   Widget _buildSummaryItem({
@@ -104,18 +108,11 @@ class SlotsSummaryRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 13.sp,
-              color: iconColor,
-            ),
+            Icon(icon, size: 13.sp, color: iconColor),
             SizedBox(width: 4.w),
             Text(
               label,
-              style: TextStyle(
-                color: labelColor,
-                fontSize: 10.sp,
-              ),
+              style: TextStyle(color: labelColor, fontSize: 10.sp),
             ),
           ],
         ),

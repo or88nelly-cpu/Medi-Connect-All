@@ -10,7 +10,8 @@ class ConsultationSummaryCard extends StatefulWidget {
   const ConsultationSummaryCard({super.key, required this.user});
 
   @override
-  State<ConsultationSummaryCard> createState() => _ConsultationSummaryCardState();
+  State<ConsultationSummaryCard> createState() =>
+      _ConsultationSummaryCardState();
 }
 
 class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
@@ -19,12 +20,21 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
-    final metadataConsultations = widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations =
+        widget.user.metadata?['consultations'] as List<dynamic>?;
     final List<Map<String, dynamic>> consultations = [];
     if (metadataConsultations != null) {
       for (var item in metadataConsultations) {
@@ -48,7 +58,9 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
     }
 
     final totalCount = consultations.length;
-    final completedCount = consultations.where((c) => c['status'] == 'Completed').length;
+    final completedCount = consultations
+        .where((c) => c['status'] == 'Completed')
+        .length;
     final videoCount = consultations.where((c) => c['mode'] == 'Video').length;
     final audioCount = consultations.where((c) => c['mode'] == 'Audio').length;
 
@@ -67,7 +79,8 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
       completedVal = completedCount * 4;
       videoVal = videoCount * 5;
       audioVal = audioCount * 5;
-    } else { // This Month
+    } else {
+      // This Month
       totalVal = totalCount * 20;
       completedVal = completedCount * 18;
       videoVal = videoCount * 20;
@@ -100,11 +113,22 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
                 child: DropdownButton<String>(
                   value: _selectedRange,
                   dropdownColor: cardBg,
-                  icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-                  style: TextStyle(color: textColor, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: labelColor,
+                    size: 14.sp,
+                  ),
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                   onChanged: (val) => setState(() => _selectedRange = val!),
                   items: ["This Month", "This Week", "Today"].map((val) {
-                    return DropdownMenuItem<String>(value: val, child: Text(val));
+                    return DropdownMenuItem<String>(
+                      value: val,
+                      child: Text(val),
+                    );
                   }).toList(),
                 ),
               ),
@@ -112,20 +136,50 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
           ),
           SizedBox(height: 12.h),
           // Stats list
-          _buildStatRow(Icons.people_outline, "Total Consultations", "$totalVal", const Color(0xFF9C27B0), labelColor, textColor),
+          _buildStatRow(
+            Icons.people_outline,
+            "Total Consultations",
+            "$totalVal",
+            const Color(0xFF9C27B0),
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.check_circle_outline, "Completed", "$completedVal", const Color(0xFF0F9F58), labelColor, textColor),
+          _buildStatRow(
+            Icons.check_circle_outline,
+            "Completed",
+            "$completedVal",
+            const Color(0xFF0F9F58),
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.videocam_outlined, "Video Consultations", "$videoVal", AppColors.primary, labelColor, textColor),
+          _buildStatRow(
+            Icons.videocam_outlined,
+            "Video Consultations",
+            "$videoVal",
+            AppColors.primary,
+            labelColor,
+            textColor,
+          ),
           _buildDivider(borderColor),
-          _buildStatRow(Icons.phone_outlined, "Audio Consultations", "$audioVal", const Color(0xFF00C2A8), labelColor, textColor),
+          _buildStatRow(
+            Icons.phone_outlined,
+            "Audio Consultations",
+            "$audioVal",
+            const Color(0xFF00C2A8),
+            labelColor,
+            textColor,
+          ),
           SizedBox(height: 16.h),
           // View link
           Center(
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Loading consultation detailed report...")),
+                  const SnackBar(
+                    content: Text("Loading consultation detailed report..."),
+                  ),
                 );
               },
               child: Text(
@@ -169,7 +223,11 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
         const Spacer(),
         Text(
           value,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12.sp),
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 12.sp,
+          ),
         ),
       ],
     );

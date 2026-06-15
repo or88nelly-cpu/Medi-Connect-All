@@ -41,10 +41,18 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -72,8 +80,16 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
                 child: DropdownButton<String>(
                   value: _selectedDateDropdown,
                   dropdownColor: cardBg,
-                  icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-                  style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.bold),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: labelColor,
+                    size: 14.sp,
+                  ),
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                   onChanged: (val) {
                     if (val != null) {
                       setState(() {
@@ -84,7 +100,9 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
                       }
                     }
                   },
-                  items: ["20 May 2025", "21 May 2025", "22 May 2025"].map((date) {
+                  items: ["20 May 2025", "21 May 2025", "22 May 2025"].map((
+                    date,
+                  ) {
                     return DropdownMenuItem<String>(
                       value: date,
                       child: Text(date),
@@ -118,7 +136,9 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
                     margin: EdgeInsets.symmetric(horizontal: 4.w),
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.primary : Colors.transparent,
+                      color: isSelected
+                          ? AppColors.primary
+                          : Colors.transparent,
                       border: Border.all(
                         color: isSelected ? AppColors.primary : borderColor,
                         width: 1.r,
@@ -141,9 +161,7 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
                         Text(
                           dayInfo["date"]!,
                           style: TextStyle(
-                            color: isSelected
-                                ? Colors.white
-                                : textColor,
+                            color: isSelected ? Colors.white : textColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 12.sp,
                           ),
@@ -180,10 +198,7 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
         Container(
           width: 8.r,
           height: 8.r,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         SizedBox(width: 4.w),
         Text(

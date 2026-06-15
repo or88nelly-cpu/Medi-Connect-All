@@ -2,7 +2,8 @@ abstract class InformationTechnologyRemoteDataSource {
   Future<Map<String, dynamic>> getInformationTechnologyStats();
 }
 
-class InformationTechnologyRemoteDataSourceImpl implements InformationTechnologyRemoteDataSource {
+class InformationTechnologyRemoteDataSourceImpl
+    implements InformationTechnologyRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getInformationTechnologyStats() async {
     return {

@@ -13,12 +13,24 @@ class DoctorHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
-    final imgPath = ProfileImageHelper.resolveImagePath(user.profileImage, user.role, user.gender);
+    final imgPath = ProfileImageHelper.resolveImagePath(
+      user.profileImage,
+      user.role,
+      user.gender,
+    );
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -45,7 +57,7 @@ class DoctorHeroCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: AppColors.primary.withOpacity(0.4),
+                        color: AppColors.primary.withValues(alpha: 0.4),
                         width: 2.r,
                       ),
                     ),
@@ -57,12 +69,19 @@ class DoctorHeroCard extends StatelessWidget {
                   Positioned(
                     bottom: -6.h,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 2.h,
+                      ),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF07271F) : const Color(0xFFE8F5E9),
+                        color: isDark
+                            ? const Color(0xFF07271F)
+                            : const Color(0xFFE8F5E9),
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(
-                          color: isDark ? const Color(0xFF0F9F58) : const Color(0xFF81C784),
+                          color: isDark
+                              ? const Color(0xFF0F9F58)
+                              : const Color(0xFF81C784),
                           width: 1,
                         ),
                       ),
@@ -103,7 +122,9 @@ class DoctorHeroCard extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            user.name ?? "${user.firstName ?? ''} ${user.lastName ?? ''}".trim(),
+                            user.name ??
+                                "${user.firstName ?? ''} ${user.lastName ?? ''}"
+                                    .trim(),
                             style: AppTextStyles.titleMedium.copyWith(
                               color: textColor,
                               fontWeight: FontWeight.bold,
@@ -140,10 +161,7 @@ class DoctorHeroCard extends StatelessWidget {
                         SizedBox(width: 4.w),
                         Text(
                           user.department ?? "Cardiology Department",
-                          style: TextStyle(
-                            color: labelColor,
-                            fontSize: 11.sp,
-                          ),
+                          style: TextStyle(color: labelColor, fontSize: 11.sp),
                         ),
                       ],
                     ),
@@ -151,7 +169,7 @@ class DoctorHeroCard extends StatelessWidget {
                     Text(
                       "EMP ID: ${user.employeeId ?? 'DOC1001'}  •  Reg. No: ${user.medicalRegistrationNumber ?? 'CARD/2012/2456'}",
                       style: TextStyle(
-                        color: labelColor.withOpacity(0.8),
+                        color: labelColor.withValues(alpha: 0.8),
                         fontSize: 10.sp,
                       ),
                     ),
@@ -245,19 +263,12 @@ class DoctorHeroCard extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 14.sp,
-            color: labelColor,
-          ),
+          Icon(icon, size: 14.sp, color: labelColor),
           SizedBox(width: 8.w),
           Expanded(
             child: Text(
               title,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 11.sp,
-              ),
+              style: TextStyle(color: textColor, fontSize: 11.sp),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),

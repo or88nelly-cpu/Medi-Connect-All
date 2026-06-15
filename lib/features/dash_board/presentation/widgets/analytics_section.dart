@@ -6,12 +6,10 @@ import 'package:medi_connect/core/common_widgets/loaders/loaders.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_analytics_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/dashboard_tab_cubit.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/dashboard_analytics_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/common/dashboard_tab_cubit.dart';
 
 import 'analytics/analytics_overview_section.dart';
-import 'analytics/weekly_revenue_trend_card.dart';
-import 'analytics/appointment_summary_graph_card.dart';
 import 'analytics/pharmacy_summary_card.dart';
 import 'analytics/department_overview_card.dart';
 import 'analytics/lab_summary_card.dart';
@@ -46,17 +44,17 @@ class AnalyticsSection extends StatelessWidget {
               (stats['totalRevenue'] as num?)?.toDouble() ?? 0.0;
           final deptStats = stats['departmentStats'] as List<dynamic>? ?? [];
 
-          final List<double> weeklyRevenueTrend =
-              (stats['weeklyRevenueTrend'] as List<dynamic>?)
-                  ?.map((e) => (e as num).toDouble())
-                  .toList() ??
-              [400.0, 600.0, 800.0, 700.0, 900.0, 1100.0, 900.0];
+          // final List<double> weeklyRevenueTrend =
+          //     (stats['weeklyRevenueTrend'] as List<dynamic>?)
+          //         ?.map((e) => (e as num).toDouble())
+          //         .toList() ??
+          //     [400.0, 600.0, 800.0, 700.0, 900.0, 1100.0, 900.0];
 
-          final List<int> weeklyAppointmentTrend =
-              (stats['weeklyAppointmentTrend'] as List<dynamic>?)
-                  ?.map((e) => (e as num).toInt())
-                  .toList() ??
-              [30, 35, 40, 38, 45, 48, 42];
+          // final List<int> weeklyAppointmentTrend =
+          //     (stats['weeklyAppointmentTrend'] as List<dynamic>?)
+          //         ?.map((e) => (e as num).toInt())
+          //         .toList() ??
+          //     [30, 35, 40, 38, 45, 48, 42];
 
           final pharmacy =
               stats['pharmacySummary'] as Map<String, dynamic>? ?? {};

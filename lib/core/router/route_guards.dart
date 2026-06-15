@@ -1,5 +1,7 @@
 /// Router redirection and guard logic.
 /// Handles protected routes and role-based access control using the Supabase session.
+library;
+
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';

@@ -1,5 +1,7 @@
 /// Centralized typography definitions using flutter_screenutil for responsiveness.
 /// Text styling must come from here to maintain visual consistency.
+library;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_colors.dart';
@@ -91,9 +93,8 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle get terminalMonospace => const TextStyle(
-    fontFamily: 'monospace',
-  );
+  static TextStyle get terminalMonospace =>
+      const TextStyle(fontFamily: 'monospace');
 
   static TextStyle get terminalMonospaceLabel => TextStyle(
     fontFamily: 'monospace',
@@ -102,20 +103,14 @@ class AppTextStyles {
     letterSpacing: 0.5,
   );
 
-  static TextStyle get terminalBodyLarge => TextStyle(
-    fontFamily: 'monospace',
-    fontSize: s16,
-  );
+  static TextStyle get terminalBodyLarge =>
+      TextStyle(fontFamily: 'monospace', fontSize: s16);
 
-  static TextStyle get terminalBodyMedium => TextStyle(
-    fontFamily: 'monospace',
-    fontSize: s14,
-  );
+  static TextStyle get terminalBodyMedium =>
+      TextStyle(fontFamily: 'monospace', fontSize: s14);
 
-  static TextStyle get terminalBodySmall => TextStyle(
-    fontFamily: 'monospace',
-    fontSize: s12,
-  );
+  static TextStyle get terminalBodySmall =>
+      TextStyle(fontFamily: 'monospace', fontSize: s12);
 
   AppTextStyles._();
 }

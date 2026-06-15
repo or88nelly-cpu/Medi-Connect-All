@@ -54,15 +54,29 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Theme-based colors from AppColors
-    final bgColor1 = isDark ? AppColors.terminalDarkBgGrad1 : AppColors.terminalLightBgGrad1;
-    final bgColor2 = isDark ? AppColors.terminalDarkBgGrad2 : AppColors.terminalLightBgGrad2;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final checkboxTextColor = isDark ? AppColors.terminalDarkCheckboxText : AppColors.terminalLightCheckboxText;
-    final ornamentColor = isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.04);
-    final crossColor = isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.02);
+    final bgColor1 = isDark
+        ? AppColors.terminalDarkBgGrad1
+        : AppColors.terminalLightBgGrad1;
+    final bgColor2 = isDark
+        ? AppColors.terminalDarkBgGrad2
+        : AppColors.terminalLightBgGrad2;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final checkboxTextColor = isDark
+        ? AppColors.terminalDarkCheckboxText
+        : AppColors.terminalLightCheckboxText;
+    final ornamentColor = isDark
+        ? Colors.white.withValues(alpha: 0.1)
+        : Colors.black.withValues(alpha: 0.04);
+    final crossColor = isDark
+        ? Colors.white.withValues(alpha: 0.05)
+        : Colors.black.withValues(alpha: 0.02);
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg,
+      backgroundColor: isDark
+          ? AppColors.terminalDarkBg
+          : AppColors.terminalLightBg,
       body: Stack(
         children: [
           // 1. Background Gradient Ornaments
@@ -113,7 +127,9 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
           Positioned.fill(
             child: CustomPaint(
               painter: BackgroundAccentPainter(
-                lineColor: isDark ? Colors.white.withOpacity(0.03) : Colors.black.withOpacity(0.02),
+                lineColor: isDark
+                    ? Colors.white.withValues(alpha: 0.03)
+                    : Colors.black.withValues(alpha: 0.02),
                 dotColor: AppColors.terminalAccentCyan,
               ),
             ),
@@ -197,8 +213,10 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                                   passwordController: _passwordController,
                                   selectedRole: selectedRole,
                                   isAgreed: isAgreed,
-                                  onRoleChanged: (role) => _selectedRoleNotifier.value = role,
-                                  onAgreedChanged: (agreed) => _isAgreedNotifier.value = agreed,
+                                  onRoleChanged: (role) =>
+                                      _selectedRoleNotifier.value = role,
+                                  onAgreedChanged: (agreed) =>
+                                      _isAgreedNotifier.value = agreed,
                                   onRegisterPressed: _onRegisterPressed,
                                 );
                               },
@@ -257,21 +275,22 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
     if (!_isAgreedNotifier.value) {
       showDialog(
         context: context,
-        builder: (_) => const ErrorDialog(message: AppStrings.hipaaAgreementError),
+        builder: (_) =>
+            const ErrorDialog(message: AppStrings.hipaaAgreementError),
       );
       return;
     }
 
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(
-            RegisterRequested(
-              email: _emailController.text.trim(),
-              password: _passwordController.text,
-              name: _nameController.text.trim(),
-              role: _selectedRoleNotifier.value,
-              phoneNumber: null,
-            ),
-          );
+        RegisterRequested(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          name: _nameController.text.trim(),
+          role: _selectedRoleNotifier.value,
+          phoneNumber: null,
+        ),
+      );
     }
   }
 

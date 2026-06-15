@@ -36,10 +36,18 @@ class _SlotTypeCardState extends State<SlotTypeCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -62,10 +70,7 @@ class _SlotTypeCardState extends State<SlotTypeCard> {
           SizedBox(height: 2.h),
           Text(
             "Select the type of slot",
-            style: TextStyle(
-              color: labelColor,
-              fontSize: 10.sp,
-            ),
+            style: TextStyle(color: labelColor, fontSize: 10.sp),
           ),
           SizedBox(height: 14.h),
           // Horizontal choices
@@ -91,9 +96,14 @@ class _SlotTypeCardState extends State<SlotTypeCard> {
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 150),
                       margin: EdgeInsets.symmetric(horizontal: 4.w),
-                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 12.h,
+                      ),
                       decoration: BoxDecoration(
-                        color: isSelected ? color.withOpacity(0.1) : Colors.transparent,
+                        color: isSelected
+                            ? color.withValues(alpha: 0.1)
+                            : Colors.transparent,
                         border: Border.all(
                           color: isSelected ? color : borderColor,
                           width: 1.r,
@@ -160,9 +170,7 @@ class _SlotTypeCardState extends State<SlotTypeCard> {
               }).toList();
 
               if (isWide) {
-                return Row(
-                  children: children,
-                );
+                return Row(children: children);
               } else {
                 return Column(
                   children: children.map((c) {

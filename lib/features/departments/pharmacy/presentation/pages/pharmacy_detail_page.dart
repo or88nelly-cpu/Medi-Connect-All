@@ -7,7 +7,7 @@ import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_entity.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_pharmacy_bloc.dart';
 import 'package:medi_connect/features/departments/pharmacy/presentation/bloc/pharmacy_bloc.dart';
 
 class PharmacyDetailPage extends StatefulWidget {
@@ -26,7 +26,10 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
     context.read<AdminPharmacyBloc>().add(LoadPharmacyItems());
   }
 
-  void _showQuickEditStockDialog(BuildContext context, PharmacyItemEntity item) async {
+  void _showQuickEditStockDialog(
+    BuildContext context,
+    PharmacyItemEntity item,
+  ) async {
     final pharmacyBloc = context.read<AdminPharmacyBloc>();
     final messenger = ScaffoldMessenger.of(context);
 
@@ -39,7 +42,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
       pharmacyBloc.add(UpdatePharmacyItemStock(item.id, newStock));
       messenger.showSnackBar(
         SnackBar(
-          content: Text("Updated stock level for ${item.name} to $newStock units."),
+          content: Text(
+            "Updated stock level for ${item.name} to $newStock units.",
+          ),
           backgroundColor: AppColors.success,
         ),
       );
@@ -59,7 +64,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
             title: "Pharmacy Department",
             bottom: TabBar(
               labelColor: AppColors.primary,
-              unselectedLabelColor: isDark ? Colors.white70 : AppColors.textSecondary,
+              unselectedLabelColor: isDark
+                  ? Colors.white70
+                  : AppColors.textSecondary,
               indicatorColor: AppColors.primary,
               tabs: const [
                 Tab(icon: Icon(Icons.analytics_outlined), text: "Insights"),
@@ -78,7 +85,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                     return Center(
                       child: Text(
                         state.message,
-                        style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: AppColors.error,
+                        ),
                       ),
                     );
                   } else if (state is PharmacyLoaded) {
@@ -93,48 +102,64 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                             style: AppTextStyles.titleMedium.copyWith(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp,
-                              color: isDark ? Colors.white : AppColors.textPrimary,
+                              color: isDark
+                                  ? Colors.white
+                                  : AppColors.textPrimary,
                             ),
                           ),
                           SizedBox(height: 16.h),
                           GridView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 16.w,
-                              mainAxisSpacing: 16.h,
-                              childAspectRatio: 1.3,
-                            ),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 16.w,
+                                  mainAxisSpacing: 16.h,
+                                  childAspectRatio: 1.3,
+                                ),
                             itemCount: stats.length,
                             itemBuilder: (context, index) {
                               final key = stats.keys.elementAt(index);
                               final val = stats[key];
-                              final displayKey = key.split('_').map((word) {
-                                if (word == 'pct') return '%';
-                                if (word == 'min' || word == 'mins') return 'Mins';
-                                return word[0].toUpperCase() + word.substring(1);
-                              }).join(' ');
+                              final displayKey = key
+                                  .split('_')
+                                  .map((word) {
+                                    if (word == 'pct') return '%';
+                                    if (word == 'min' || word == 'mins') {
+                                      return 'Mins';
+                                    }
+                                    return word[0].toUpperCase() +
+                                        word.substring(1);
+                                  })
+                                  .join(' ');
 
                               return Card(
                                 elevation: 0,
-                                color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                                color: isDark
+                                    ? AppColors.terminalDarkCard
+                                    : Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.r),
                                   side: BorderSide(
-                                    color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                                    color: isDark
+                                        ? AppColors.terminalDarkBorder
+                                        : AppColors.border,
                                   ),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(12.r),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         displayKey,
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color: isDark ? Colors.white70 : AppColors.textSecondary,
+                                          color: isDark
+                                              ? Colors.white70
+                                              : AppColors.textSecondary,
                                           fontWeight: FontWeight.w500,
                                         ),
                                         maxLines: 2,
@@ -143,10 +168,11 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                       SizedBox(height: 8.h),
                                       Text(
                                         val.toString(),
-                                        style: AppTextStyles.titleLarge.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.primary,
-                                        ),
+                                        style: AppTextStyles.titleLarge
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.primary,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -175,19 +201,27 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                       decoration: InputDecoration(
                         hintText: "Search medicine by name or category...",
                         hintStyle: TextStyle(
-                          color: isDark ? Colors.white54 : AppColors.textSecondary,
+                          color: isDark
+                              ? Colors.white54
+                              : AppColors.textSecondary,
                         ),
                         prefixIcon: Icon(
                           Icons.search,
-                          color: isDark ? Colors.white54 : AppColors.textSecondary,
+                          color: isDark
+                              ? Colors.white54
+                              : AppColors.textSecondary,
                         ),
                         filled: true,
-                        fillColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+                        fillColor: isDark
+                            ? AppColors.terminalDarkCard
+                            : Colors.white,
                         contentPadding: EdgeInsets.all(12.r),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(
-                            color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                            color: isDark
+                                ? AppColors.terminalDarkBorder
+                                : AppColors.border,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -204,7 +238,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                       child: BlocBuilder<AdminPharmacyBloc, AdminPharmacyState>(
                         builder: (context, state) {
                           if (state is AdminPharmacyLoading) {
-                            return const Center(child: CircularProgressIndicator());
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
                           }
 
                           if (state is AdminPharmacyError) {
@@ -214,7 +250,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                 children: [
                                   Text(
                                     state.message,
-                                    style: const TextStyle(color: AppColors.error),
+                                    style: const TextStyle(
+                                      color: AppColors.error,
+                                    ),
                                   ),
                                   SizedBox(height: 12.h),
                                   ElevatedButton(
@@ -240,7 +278,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                 child: Text(
                                   "No matching medicines found.",
                                   style: TextStyle(
-                                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                    color: isDark
+                                        ? Colors.white54
+                                        : AppColors.textSecondary,
                                   ),
                                 ),
                               );
@@ -265,60 +305,97 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                 return Card(
                                   margin: EdgeInsets.only(bottom: 12.h),
                                   elevation: 0,
-                                  color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                                  color: isDark
+                                      ? AppColors.terminalDarkCard
+                                      : Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.r),
                                     side: BorderSide(
-                                      color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                                      color: isDark
+                                          ? AppColors.terminalDarkBorder
+                                          : AppColors.border,
                                     ),
                                   ),
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(12.r),
-                                    onTap: () => _showQuickEditStockDialog(context, item),
+                                    onTap: () => _showQuickEditStockDialog(
+                                      context,
+                                      item,
+                                    ),
                                     child: Padding(
                                       padding: EdgeInsets.all(16.r),
                                       child: Row(
                                         children: [
                                           ClipRRect(
-                                            borderRadius: BorderRadius.circular(8.r),
+                                            borderRadius: BorderRadius.circular(
+                                              8.r,
+                                            ),
                                             child: item.imageUrl.isNotEmpty
                                                 ? Image.network(
                                                     item.imageUrl,
                                                     width: 48.w,
                                                     height: 48.w,
                                                     fit: BoxFit.cover,
-                                                    errorBuilder: (context, error, stackTrace) => Container(
-                                                      width: 48.w,
-                                                      height: 48.w,
-                                                      color: badgeColor.withOpacity(0.1),
-                                                      child: Icon(Icons.medication_outlined, color: badgeColor),
-                                                    ),
+                                                    errorBuilder:
+                                                        (
+                                                          context,
+                                                          error,
+                                                          stackTrace,
+                                                        ) => Container(
+                                                          width: 48.w,
+                                                          height: 48.w,
+                                                          color: badgeColor
+                                                              .withValues(
+                                                                alpha: 0.1,
+                                                              ),
+                                                          child: Icon(
+                                                            Icons
+                                                                .medication_outlined,
+                                                            color: badgeColor,
+                                                          ),
+                                                        ),
                                                   )
                                                 : Container(
                                                     width: 48.w,
                                                     height: 48.w,
-                                                    color: badgeColor.withOpacity(0.1),
-                                                    child: Icon(Icons.medication_outlined, color: badgeColor),
+                                                    color: badgeColor
+                                                        .withValues(alpha: 0.1),
+                                                    child: Icon(
+                                                      Icons.medication_outlined,
+                                                      color: badgeColor,
+                                                    ),
                                                   ),
                                           ),
                                           SizedBox(width: 16.w),
                                           Expanded(
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  item.name + (item.dosage.isNotEmpty ? " (${item.dosage})" : ""),
-                                                  style: AppTextStyles.titleMedium.copyWith(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15.sp,
-                                                    color: isDark ? Colors.white : AppColors.textPrimary,
-                                                  ),
+                                                  item.name +
+                                                      (item.dosage.isNotEmpty
+                                                          ? " (${item.dosage})"
+                                                          : ""),
+                                                  style: AppTextStyles
+                                                      .titleMedium
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15.sp,
+                                                        color: isDark
+                                                            ? Colors.white
+                                                            : AppColors
+                                                                  .textPrimary,
+                                                      ),
                                                 ),
                                                 SizedBox(height: 4.h),
                                                 Text(
                                                   "Category: ${item.category}",
                                                   style: TextStyle(
-                                                    color: isDark ? Colors.white70 : AppColors.textPrimary,
+                                                    color: isDark
+                                                        ? Colors.white70
+                                                        : AppColors.textPrimary,
                                                   ),
                                                 ),
                                                 Text(
@@ -327,7 +404,10 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                                     fontWeight: FontWeight.w600,
                                                     color: item.stock == 0
                                                         ? AppColors.error
-                                                        : (isDark ? Colors.white70 : AppColors.textPrimary),
+                                                        : (isDark
+                                                              ? Colors.white70
+                                                              : AppColors
+                                                                    .textPrimary),
                                                   ),
                                                 ),
                                                 SizedBox(height: 2.h),
@@ -335,7 +415,10 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                                   "Price: ₹${item.sellPrice.toStringAsFixed(2)}",
                                                   style: TextStyle(
                                                     fontSize: 12.sp,
-                                                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                                                    color: isDark
+                                                        ? Colors.white54
+                                                        : AppColors
+                                                              .textSecondary,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
@@ -348,8 +431,11 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                               vertical: 4.h,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: badgeColor.withOpacity(0.1),
-                                              borderRadius: BorderRadius.circular(6.r),
+                                              color: badgeColor.withValues(
+                                                alpha: 0.1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(6.r),
                                             ),
                                             child: Text(
                                               item.status,
@@ -416,9 +502,7 @@ class _StockEditDialogState extends State<_StockEditDialog> {
       backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
       title: Text(
         "Quick Edit Stock",
-        style: TextStyle(
-          color: isDark ? Colors.white : AppColors.textPrimary,
-        ),
+        style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -436,7 +520,11 @@ class _StockEditDialogState extends State<_StockEditDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                icon: const Icon(Icons.remove_circle_outline, size: 36, color: AppColors.error),
+                icon: const Icon(
+                  Icons.remove_circle_outline,
+                  size: 36,
+                  color: AppColors.error,
+                ),
                 onPressed: () {
                   if (_stock > 0) {
                     setState(() {
@@ -470,7 +558,9 @@ class _StockEditDialogState extends State<_StockEditDialog> {
                     contentPadding: EdgeInsets.symmetric(vertical: 8.h),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+                        color: isDark
+                            ? AppColors.terminalDarkBorder
+                            : AppColors.border,
                       ),
                     ),
                   ),
@@ -478,7 +568,11 @@ class _StockEditDialogState extends State<_StockEditDialog> {
               ),
               SizedBox(width: 16.w),
               IconButton(
-                icon: const Icon(Icons.add_circle_outline, size: 36, color: AppColors.success),
+                icon: const Icon(
+                  Icons.add_circle_outline,
+                  size: 36,
+                  color: AppColors.success,
+                ),
                 onPressed: () {
                   setState(() {
                     _stock++;

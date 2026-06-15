@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_appointments_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_patients_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_recent_activity_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin_billing_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_appointments_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_patients_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_recent_activity_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_billing_page.dart';
 
 class SectionQuickAccess extends StatelessWidget {
   const SectionQuickAccess({super.key});
@@ -14,8 +14,12 @@ class SectionQuickAccess extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final cardBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final cardBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
 
     final List<Map<String, dynamic>> items = [
       {
@@ -64,18 +68,22 @@ class SectionQuickAccess extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => Scaffold(
-                        backgroundColor: isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg,
-                        appBar: AppBar(
-                          title: Text(item['label']),
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          iconTheme: IconThemeData(color: textColor),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => Scaffold(
+                          backgroundColor: isDark
+                              ? AppColors.terminalDarkBg
+                              : AppColors.terminalLightBg,
+                          appBar: AppBar(
+                            title: Text(item['label']),
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            iconTheme: IconThemeData(color: textColor),
+                          ),
+                          body: item['page'],
                         ),
-                        body: item['page'],
                       ),
-                    ));
+                    );
                   },
                   borderRadius: BorderRadius.circular(12.r),
                   child: Container(
@@ -88,11 +96,7 @@ class SectionQuickAccess extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          item['icon'],
-                          color: item['color'],
-                          size: 24.r,
-                        ),
+                        Icon(item['icon'], color: item['color'], size: 24.r),
                         SizedBox(height: 8.h),
                         Text(
                           item['label'],

@@ -40,7 +40,9 @@ class _SectionDetailState extends State<SectionDetail>
   // Reactive State Notifiers
   final ValueNotifier<int> _activeTabNotifier = ValueNotifier<int>(0);
   final ValueNotifier<String> _searchNotifier = ValueNotifier<String>('');
-  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<String> _sortByNotifier = ValueNotifier<String>('None');
   final ValueNotifier<bool> _isListViewNotifier = ValueNotifier<bool>(true);
   final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(1);
@@ -105,9 +107,13 @@ class _SectionDetailState extends State<SectionDetail>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bgColor = isDark ? AppColors.terminalDarkBg : AppColors.terminalLightBg;
+    final bgColor = isDark
+        ? AppColors.terminalDarkBg
+        : AppColors.terminalLightBg;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return BlocListener<DoctorStaffBloc, DoctorStaffState>(
       listener: (context, state) {
@@ -115,7 +121,9 @@ class _SectionDetailState extends State<SectionDetail>
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Action completed successfully.")),
           );
-          context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.section.name));
+          context.read<DoctorStaffBloc>().add(
+            LoadDoctorStaff(widget.section.name),
+          );
         } else if (state is DoctorStaffError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -214,7 +222,9 @@ class _SectionDetailState extends State<SectionDetail>
 
                               List<UserModel> sourceList = [];
                               if (state is DoctorStaffLoaded) {
-                                sourceList = isDoctor ? state.doctors : state.staff;
+                                sourceList = isDoctor
+                                    ? state.doctors
+                                    : state.staff;
                               }
 
                               return ValueListenableBuilder<String>(
@@ -227,22 +237,49 @@ class _SectionDetailState extends State<SectionDetail>
                                         valueListenable: _sortByNotifier,
                                         builder: (context, sortBy, _) {
                                           // Filter
-                                          final filtered = sourceList.where((u) {
-                                            final matchesSearch = (u.name ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
-                                                (u.email ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
-                                                (u.phoneNumber ?? '').contains(searchQuery) ||
-                                                (u.staffRole ?? '').toLowerCase().contains(searchQuery.toLowerCase());
-                                            final matchesStatus = statusFilter == 'All' ||
-                                                u.status.toLowerCase() == statusFilter.toLowerCase();
-                                            return matchesSearch && matchesStatus;
+                                          final filtered = sourceList.where((
+                                            u,
+                                          ) {
+                                            final matchesSearch =
+                                                (u.name ?? '')
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      searchQuery.toLowerCase(),
+                                                    ) ||
+                                                (u.email ?? '')
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      searchQuery.toLowerCase(),
+                                                    ) ||
+                                                (u.phoneNumber ?? '').contains(
+                                                  searchQuery,
+                                                ) ||
+                                                (u.staffRole ?? '')
+                                                    .toLowerCase()
+                                                    .contains(
+                                                      searchQuery.toLowerCase(),
+                                                    );
+                                            final matchesStatus =
+                                                statusFilter == 'All' ||
+                                                u.status.toLowerCase() ==
+                                                    statusFilter.toLowerCase();
+                                            return matchesSearch &&
+                                                matchesStatus;
                                           }).toList();
 
                                           // Sort
                                           if (sortBy == 'Name (A-Z)') {
-                                            filtered.sort((a, b) => (a.name ?? '').compareTo(b.name ?? ''));
+                                            filtered.sort(
+                                              (a, b) => (a.name ?? '')
+                                                  .compareTo(b.name ?? ''),
+                                            );
                                           } else if (sortBy == 'Name (Z-A)') {
-                                            filtered.sort((a, b) => (b.name ?? '').compareTo(a.name ?? ''));
-                                          } else if (sortBy == 'Experience (High-Low)') {
+                                            filtered.sort(
+                                              (a, b) => (b.name ?? '')
+                                                  .compareTo(a.name ?? ''),
+                                            );
+                                          } else if (sortBy ==
+                                              'Experience (High-Low)') {
                                             filtered.sort((a, b) {
                                               final expA = (a.age ?? 35) - 25;
                                               final expB = (b.age ?? 35) - 25;
@@ -251,46 +288,78 @@ class _SectionDetailState extends State<SectionDetail>
                                           }
 
                                           // Subtitle Row: Count & Add Button
-                                          final entityName = isDoctor ? "Doctor" : "Staff";
+                                          final entityName = isDoctor
+                                              ? "Doctor"
+                                              : "Staff";
                                           return Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Text(
                                                     "${filtered.length} ${isDoctor ? 'Doctors' : 'Staff'} found",
-                                                    style: AppTextStyles.bodyMedium.copyWith(
-                                                      color: labelColor,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 12.sp,
-                                                    ),
+                                                    style: AppTextStyles
+                                                        .bodyMedium
+                                                        .copyWith(
+                                                          color: labelColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 12.sp,
+                                                        ),
                                                   ),
                                                   TextButton.icon(
                                                     onPressed: () async {
-                                                      final res = await context.push(
-                                                        '/admin/doctor-staff/create',
-                                                        extra: {
-                                                          'role': isDoctor ? 'doctor' : 'staff',
-                                                          'department': widget.section.name,
-                                                        },
-                                                      );
+                                                      final res = await context
+                                                          .push(
+                                                            '/admin/doctor-staff/create',
+                                                            extra: {
+                                                              'role': isDoctor
+                                                                  ? 'doctor'
+                                                                  : 'staff',
+                                                              'department':
+                                                                  widget
+                                                                      .section
+                                                                      .name,
+                                                            },
+                                                          );
                                                       if (res == true) {
                                                         if (context.mounted) {
-                                                          context.read<DoctorStaffBloc>().add(
-                                                            LoadDoctorStaff(widget.section.name),
-                                                          );
+                                                          context
+                                                              .read<
+                                                                DoctorStaffBloc
+                                                              >()
+                                                              .add(
+                                                                LoadDoctorStaff(
+                                                                  widget
+                                                                      .section
+                                                                      .name,
+                                                                ),
+                                                              );
                                                         }
                                                       }
                                                     },
-                                                    icon: const Icon(Icons.add, size: 14),
+                                                    icon: const Icon(
+                                                      Icons.add,
+                                                      size: 14,
+                                                    ),
                                                     label: Text(
                                                       "Add $entityName",
-                                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
                                                     style: TextButton.styleFrom(
-                                                      foregroundColor: AppColors.primary,
-                                                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                                                      foregroundColor:
+                                                          AppColors.primary,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                            horizontal: 8.w,
+                                                          ),
                                                     ),
                                                   ),
                                                 ],
@@ -299,54 +368,127 @@ class _SectionDetailState extends State<SectionDetail>
                                               if (filtered.isEmpty)
                                                 Center(
                                                   child: Padding(
-                                                    padding: EdgeInsets.symmetric(vertical: 24.h),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                          vertical: 24.h,
+                                                        ),
                                                     child: Text(
                                                       "No matching $entityName found.",
-                                                      style: TextStyle(color: labelColor),
+                                                      style: TextStyle(
+                                                        color: labelColor,
+                                                      ),
                                                     ),
                                                   ),
                                                 )
                                               else
                                                 ValueListenableBuilder<int>(
-                                                  valueListenable: _currentPageNotifier,
+                                                  valueListenable:
+                                                      _currentPageNotifier,
                                                   builder: (context, currentPage, _) {
-                                                    final totalPages = (filtered.length / _itemsPerPage).ceil();
-                                                    final startIndex = (currentPage - 1) * _itemsPerPage;
-                                                    final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
-                                                    final paginatedList = filtered.sublist(startIndex, endIndex);
+                                                    final totalPages =
+                                                        (filtered.length /
+                                                                _itemsPerPage)
+                                                            .ceil();
+                                                    final startIndex =
+                                                        (currentPage - 1) *
+                                                        _itemsPerPage;
+                                                    final endIndex =
+                                                        (startIndex +
+                                                                _itemsPerPage)
+                                                            .clamp(
+                                                              0,
+                                                              filtered.length,
+                                                            );
+                                                    final paginatedList =
+                                                        filtered.sublist(
+                                                          startIndex,
+                                                          endIndex,
+                                                        );
 
-                                                    return ValueListenableBuilder<bool>(
-                                                      valueListenable: _isListViewNotifier,
+                                                    return ValueListenableBuilder<
+                                                      bool
+                                                    >(
+                                                      valueListenable:
+                                                          _isListViewNotifier,
                                                       builder: (context, isList, _) {
                                                         return Column(
                                                           children: [
                                                             if (isList)
                                                               ListView.builder(
-                                                                shrinkWrap: true,
-                                                                physics: const NeverScrollableScrollPhysics(),
-                                                                itemCount: paginatedList.length,
+                                                                shrinkWrap:
+                                                                    true,
+                                                                physics:
+                                                                    const NeverScrollableScrollPhysics(),
+                                                                itemCount:
+                                                                    paginatedList
+                                                                        .length,
                                                                 itemBuilder: (context, idx) {
-                                                                  final user = paginatedList[idx];
+                                                                  final user =
+                                                                      paginatedList[idx];
                                                                   return isDoctor
                                                                       ? DoctorCard(
-                                                                          doc: user,
-                                                                          onTap: () => context.push('/admin/doctor-staff/detail', extra: user),
-                                                                          onView: () => context.push('/admin/doctor-staff/detail', extra: user),
+                                                                          doc:
+                                                                              user,
+                                                                          onTap: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
+                                                                          onView: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
                                                                           onEdit: () async {
-                                                                            final res = await context.push('/admin/doctor-staff/edit', extra: user);
-                                                                            if (res == true && context.mounted) {
-                                                                              context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.section.name));
+                                                                            final res = await context.push(
+                                                                              '/admin/doctor-staff/edit',
+                                                                              extra: user,
+                                                                            );
+                                                                            if (res ==
+                                                                                    true &&
+                                                                                context.mounted) {
+                                                                              context
+                                                                                  .read<
+                                                                                    DoctorStaffBloc
+                                                                                  >()
+                                                                                  .add(
+                                                                                    LoadDoctorStaff(
+                                                                                      widget.section.name,
+                                                                                    ),
+                                                                                  );
                                                                             }
                                                                           },
                                                                         )
                                                                       : StaffCard(
-                                                                          stf: user,
-                                                                          onTap: () => context.push('/admin/doctor-staff/detail', extra: user),
-                                                                          onView: () => context.push('/admin/doctor-staff/detail', extra: user),
+                                                                          stf:
+                                                                              user,
+                                                                          onTap: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
+                                                                          onView: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
                                                                           onEdit: () async {
-                                                                            final res = await context.push('/admin/doctor-staff/edit', extra: user);
-                                                                            if (res == true && context.mounted) {
-                                                                              context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.section.name));
+                                                                            final res = await context.push(
+                                                                              '/admin/doctor-staff/edit',
+                                                                              extra: user,
+                                                                            );
+                                                                            if (res ==
+                                                                                    true &&
+                                                                                context.mounted) {
+                                                                              context
+                                                                                  .read<
+                                                                                    DoctorStaffBloc
+                                                                                  >()
+                                                                                  .add(
+                                                                                    LoadDoctorStaff(
+                                                                                      widget.section.name,
+                                                                                    ),
+                                                                                  );
                                                                             }
                                                                           },
                                                                         );
@@ -354,48 +496,107 @@ class _SectionDetailState extends State<SectionDetail>
                                                               )
                                                             else
                                                               GridView.builder(
-                                                                shrinkWrap: true,
-                                                                physics: const NeverScrollableScrollPhysics(),
+                                                                shrinkWrap:
+                                                                    true,
+                                                                physics:
+                                                                    const NeverScrollableScrollPhysics(),
                                                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                                  crossAxisCount: 2,
-                                                                  childAspectRatio: 0.8,
-                                                                  mainAxisSpacing: 10.r,
-                                                                  crossAxisSpacing: 10.r,
+                                                                  crossAxisCount:
+                                                                      2,
+                                                                  childAspectRatio:
+                                                                      0.8,
+                                                                  mainAxisSpacing:
+                                                                      10.r,
+                                                                  crossAxisSpacing:
+                                                                      10.r,
                                                                 ),
-                                                                itemCount: paginatedList.length,
+                                                                itemCount:
+                                                                    paginatedList
+                                                                        .length,
                                                                 itemBuilder: (context, idx) {
-                                                                  final user = paginatedList[idx];
+                                                                  final user =
+                                                                      paginatedList[idx];
                                                                   return isDoctor
                                                                       ? SectionDoctorGridCard(
-                                                                          doc: user,
-                                                                          onTap: () => context.push('/admin/doctor-staff/detail', extra: user),
-                                                                          onView: () => context.push('/admin/doctor-staff/detail', extra: user),
+                                                                          doc:
+                                                                              user,
+                                                                          onTap: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
+                                                                          onView: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
                                                                           onEdit: () async {
-                                                                            final res = await context.push('/admin/doctor-staff/edit', extra: user);
-                                                                            if (res == true && context.mounted) {
-                                                                              context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.section.name));
+                                                                            final res = await context.push(
+                                                                              '/admin/doctor-staff/edit',
+                                                                              extra: user,
+                                                                            );
+                                                                            if (res ==
+                                                                                    true &&
+                                                                                context.mounted) {
+                                                                              context
+                                                                                  .read<
+                                                                                    DoctorStaffBloc
+                                                                                  >()
+                                                                                  .add(
+                                                                                    LoadDoctorStaff(
+                                                                                      widget.section.name,
+                                                                                    ),
+                                                                                  );
                                                                             }
                                                                           },
                                                                         )
                                                                       : SectionStaffGridCard(
-                                                                          stf: user,
-                                                                          onTap: () => context.push('/admin/doctor-staff/detail', extra: user),
-                                                                          onView: () => context.push('/admin/doctor-staff/detail', extra: user),
+                                                                          stf:
+                                                                              user,
+                                                                          onTap: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
+                                                                          onView: () => context.push(
+                                                                            '/admin/doctor-staff/detail',
+                                                                            extra:
+                                                                                user,
+                                                                          ),
                                                                           onEdit: () async {
-                                                                            final res = await context.push('/admin/doctor-staff/edit', extra: user);
-                                                                            if (res == true && context.mounted) {
-                                                                              context.read<DoctorStaffBloc>().add(LoadDoctorStaff(widget.section.name));
+                                                                            final res = await context.push(
+                                                                              '/admin/doctor-staff/edit',
+                                                                              extra: user,
+                                                                            );
+                                                                            if (res ==
+                                                                                    true &&
+                                                                                context.mounted) {
+                                                                              context
+                                                                                  .read<
+                                                                                    DoctorStaffBloc
+                                                                                  >()
+                                                                                  .add(
+                                                                                    LoadDoctorStaff(
+                                                                                      widget.section.name,
+                                                                                    ),
+                                                                                  );
                                                                             }
                                                                           },
                                                                         );
                                                                 },
                                                               ),
-                                                            SizedBox(height: 12.h),
+                                                            SizedBox(
+                                                              height: 12.h,
+                                                            ),
                                                             DirectoryPagination(
-                                                              currentPage: currentPage,
-                                                              totalPages: totalPages,
+                                                              currentPage:
+                                                                  currentPage,
+                                                              totalPages:
+                                                                  totalPages,
                                                               onPageChanged: (page) {
-                                                                _currentPageNotifier.value = page;
+                                                                _currentPageNotifier
+                                                                        .value =
+                                                                    page;
                                                               },
                                                             ),
                                                           ],
@@ -433,10 +634,18 @@ class _SectionDetailState extends State<SectionDetail>
                       int stfLeave = 0;
 
                       if (state is DoctorStaffLoaded) {
-                        activeDocs = state.doctors.where((d) => d.status.toLowerCase() == 'active').length;
-                        activeStf = state.staff.where((s) => s.status.toLowerCase() == 'active').length;
-                        docsLeave = state.doctors.where((d) => d.status.toLowerCase() == 'away').length;
-                        stfLeave = state.staff.where((s) => s.status.toLowerCase() == 'away').length;
+                        activeDocs = state.doctors
+                            .where((d) => d.status.toLowerCase() == 'active')
+                            .length;
+                        activeStf = state.staff
+                            .where((s) => s.status.toLowerCase() == 'active')
+                            .length;
+                        docsLeave = state.doctors
+                            .where((d) => d.status.toLowerCase() == 'away')
+                            .length;
+                        stfLeave = state.staff
+                            .where((s) => s.status.toLowerCase() == 'away')
+                            .length;
                       }
 
                       return SectionOverviewStats(

@@ -37,13 +37,17 @@ String? getDepartmentImageAsset(String name) {
   if (lower.contains('finance')) {
     return 'assets/images/department/finance.png';
   }
-  if (lower.contains('information') || lower.contains('tech') || lower.contains('it')) {
+  if (lower.contains('information') ||
+      lower.contains('tech') ||
+      lower.contains('it')) {
     return 'assets/images/department/it.png';
   }
   if (lower.contains('nutrition') || lower.contains('diabet')) {
     return 'assets/images/department/nutrition.png';
   }
-  if (lower.contains('operation') || lower.contains('theatre') || lower.contains('ot')) {
+  if (lower.contains('operation') ||
+      lower.contains('theatre') ||
+      lower.contains('ot')) {
     return 'assets/images/department/operation-theater.png';
   }
   if (lower.contains('biomedical') || lower.contains('engine')) {
@@ -114,17 +118,35 @@ IconData getDepartmentIcon(String name) {
   if (lower.contains('pharma')) return Icons.medication_outlined;
   if (lower.contains('ward')) return Icons.single_bed_outlined;
   if (lower.contains('icu')) return Icons.medical_services_outlined;
-  if (lower.contains('casuality') || lower.contains('emerg')) return Icons.emergency_outlined;
+  if (lower.contains('casuality') || lower.contains('emerg')) {
+    return Icons.emergency_outlined;
+  }
   if (lower.contains('lab')) return Icons.science_outlined;
   if (lower.contains('finance')) return Icons.monetization_on_outlined;
-  if (lower.contains('human') || lower.contains('resource')) return Icons.people_outline;
-  if (lower.contains('information') || lower.contains('tech') || lower.contains('it')) return Icons.computer_outlined;
-  if (lower.contains('nutrition') || lower.contains('diabet')) return Icons.restaurant_outlined;
-  if (lower.contains('operation') || lower.contains('theatre') || lower.contains('ot')) return Icons.biotech_outlined;
-  if (lower.contains('biomedical') || lower.contains('engine')) return Icons.build_outlined;
+  if (lower.contains('human') || lower.contains('resource')) {
+    return Icons.people_outline;
+  }
+  if (lower.contains('information') ||
+      lower.contains('tech') ||
+      lower.contains('it')) {
+    return Icons.computer_outlined;
+  }
+  if (lower.contains('nutrition') || lower.contains('diabet')) {
+    return Icons.restaurant_outlined;
+  }
+  if (lower.contains('operation') ||
+      lower.contains('theatre') ||
+      lower.contains('ot')) {
+    return Icons.biotech_outlined;
+  }
+  if (lower.contains('biomedical') || lower.contains('engine')) {
+    return Icons.build_outlined;
+  }
   if (lower.contains('cssd')) return Icons.clean_hands_outlined;
   if (lower.contains('customer')) return Icons.support_agent_outlined;
-  if (lower.contains('dyalisis') || lower.contains('dialysis')) return Icons.water_drop_outlined;
+  if (lower.contains('dyalisis') || lower.contains('dialysis')) {
+    return Icons.water_drop_outlined;
+  }
   if (lower.contains('emrd')) return Icons.folder_shared_outlined;
   if (lower.contains('fire')) return Icons.fire_extinguisher_outlined;
   if (lower.contains('store')) return Icons.store_outlined;
@@ -152,10 +174,16 @@ class SectionDetailHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final subtitleColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final subtitleColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
     final iconColor = isDark ? Colors.white : AppColors.primary;
-    final actionBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final actionBorder = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final actionBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final actionBorder = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
 
     return Row(
       children: [
@@ -171,11 +199,7 @@ class SectionDetailHeader extends StatelessWidget {
               color: actionBg,
               border: Border.all(color: actionBorder),
             ),
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              size: 16.r,
-              color: textColor,
-            ),
+            child: Icon(Icons.arrow_back_ios_new, size: 16.r, color: textColor),
           ),
         ),
         SizedBox(width: 12.w),

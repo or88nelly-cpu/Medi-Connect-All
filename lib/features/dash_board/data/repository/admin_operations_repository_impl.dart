@@ -11,7 +11,6 @@ import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_e
 import 'package:medi_connect/features/dash_board/domain/repositories/admin_operations_repository.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 
-
 class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   final AdminOperationsRemoteDataSource _remoteDataSource;
 
@@ -30,7 +29,9 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, PharmacyItemEntity>> addPharmacyItem(Map<String, dynamic> data) async {
+  Future<Either<Failure, PharmacyItemEntity>> addPharmacyItem(
+    Map<String, dynamic> data,
+  ) async {
     try {
       final item = await _remoteDataSource.addPharmacyItem(data);
       return Right(item);
@@ -42,7 +43,10 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updatePharmacyItem(String id, Map<String, dynamic> data) async {
+  Future<Either<Failure, void>> updatePharmacyItem(
+    String id,
+    Map<String, dynamic> data,
+  ) async {
     try {
       await _remoteDataSource.updatePharmacyItem(id, data);
       return const Right(null);
@@ -78,7 +82,9 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, LabTestEntity>> addLabTest(Map<String, dynamic> data) async {
+  Future<Either<Failure, LabTestEntity>> addLabTest(
+    Map<String, dynamic> data,
+  ) async {
     try {
       final test = await _remoteDataSource.addLabTest(data);
       return Right(test);
@@ -90,7 +96,10 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateLabTestStatus(String id, String status) async {
+  Future<Either<Failure, void>> updateLabTestStatus(
+    String id,
+    String status,
+  ) async {
     try {
       await _remoteDataSource.updateLabTestStatus(id, status);
       return const Right(null);
@@ -102,7 +111,9 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, List<AttendanceEntity>>> getStaffAttendance({DateTime? date}) async {
+  Future<Either<Failure, List<AttendanceEntity>>> getStaffAttendance({
+    DateTime? date,
+  }) async {
     try {
       final attendance = await _remoteDataSource.getStaffAttendance(date: date);
       return Right(attendance);
@@ -114,7 +125,10 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateAttendanceStatus(String id, String status) async {
+  Future<Either<Failure, void>> updateAttendanceStatus(
+    String id,
+    String status,
+  ) async {
     try {
       await _remoteDataSource.updateAttendanceStatus(id, status);
       return const Right(null);
@@ -138,7 +152,9 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, EmergencyEntity>> triggerEmergency(Map<String, dynamic> data) async {
+  Future<Either<Failure, EmergencyEntity>> triggerEmergency(
+    Map<String, dynamic> data,
+  ) async {
     try {
       final emergency = await _remoteDataSource.triggerEmergency(data);
       return Right(emergency);
@@ -222,7 +238,10 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateAdminSetting(String key, dynamic value) async {
+  Future<Either<Failure, void>> updateAdminSetting(
+    String key,
+    dynamic value,
+  ) async {
     try {
       await _remoteDataSource.updateAdminSetting(key, value);
       return const Right(null);
@@ -246,7 +265,9 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, AppointmentEntity>> createAppointment(Map<String, dynamic> data) async {
+  Future<Either<Failure, AppointmentEntity>> createAppointment(
+    Map<String, dynamic> data,
+  ) async {
     try {
       final result = await _remoteDataSource.createAppointment(data);
       return Right(result);
@@ -258,7 +279,10 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateAppointmentStatus(String id, String status) async {
+  Future<Either<Failure, void>> updateAppointmentStatus(
+    String id,
+    String status,
+  ) async {
     try {
       await _remoteDataSource.updateAppointmentStatus(id, status);
       return const Right(null);
@@ -270,7 +294,10 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> updateAppointmentVitals(String id, Map<String, dynamic> vitals) async {
+  Future<Either<Failure, void>> updateAppointmentVitals(
+    String id,
+    Map<String, dynamic> vitals,
+  ) async {
     try {
       await _remoteDataSource.updateAppointmentVitals(id, vitals);
       return const Right(null);

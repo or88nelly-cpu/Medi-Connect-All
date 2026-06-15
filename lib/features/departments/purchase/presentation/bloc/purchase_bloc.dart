@@ -20,13 +20,16 @@ abstract class PurchaseState extends Equatable {
 }
 
 class PurchaseInitial extends PurchaseState {}
+
 class PurchaseLoading extends PurchaseState {}
+
 class PurchaseLoaded extends PurchaseState {
   final Map<String, dynamic> stats;
   const PurchaseLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class PurchaseError extends PurchaseState {
   final String message;
   const PurchaseError(this.message);
@@ -42,7 +45,10 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
     on<LoadPurchaseStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadPurchaseStats event, Emitter<PurchaseState> emit) async {
+  Future<void> _onLoadStats(
+    LoadPurchaseStats event,
+    Emitter<PurchaseState> emit,
+  ) async {
     emit(PurchaseLoading());
     final result = await _useCase(const NoParams());
     result.fold(

@@ -5,7 +5,11 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 class SlotsGridSection extends StatefulWidget {
   final List<Map<String, dynamic>> morningSlots;
   final List<Map<String, dynamic>> afternoonSlots;
-  final Function(List<Map<String, dynamic>> morningSlots, List<Map<String, dynamic>> afternoonSlots)? onSlotsChanged;
+  final Function(
+    List<Map<String, dynamic>> morningSlots,
+    List<Map<String, dynamic>> afternoonSlots,
+  )?
+  onSlotsChanged;
 
   const SlotsGridSection({
     super.key,
@@ -41,13 +45,17 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
         newStatus = "Available";
     }
 
-    final morningIdx = widget.morningSlots.indexWhere((item) => item['time'] == slot['time']);
+    final morningIdx = widget.morningSlots.indexWhere(
+      (item) => item['time'] == slot['time'],
+    );
     if (morningIdx != -1) {
       setState(() {
         widget.morningSlots[morningIdx]['status'] = newStatus;
       });
     } else {
-      final afternoonIdx = widget.afternoonSlots.indexWhere((item) => item['time'] == slot['time']);
+      final afternoonIdx = widget.afternoonSlots.indexWhere(
+        (item) => item['time'] == slot['time'],
+      );
       if (afternoonIdx != -1) {
         setState(() {
           widget.afternoonSlots[afternoonIdx]['status'] = newStatus;
@@ -78,10 +86,18 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Column(
       children: [
@@ -91,7 +107,8 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
           timeRange: "(09:00 AM - 01:00 PM)",
           isExpanded: _morningExpanded,
           slots: widget.morningSlots,
-          onToggleExpand: () => setState(() => _morningExpanded = !_morningExpanded),
+          onToggleExpand: () =>
+              setState(() => _morningExpanded = !_morningExpanded),
           textColor: textColor,
           labelColor: labelColor,
           borderColor: borderColor,
@@ -105,7 +122,8 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
           timeRange: "(02:00 PM - 06:00 PM)",
           isExpanded: _afternoonExpanded,
           slots: widget.afternoonSlots,
-          onToggleExpand: () => setState(() => _afternoonExpanded = !_afternoonExpanded),
+          onToggleExpand: () =>
+              setState(() => _afternoonExpanded = !_afternoonExpanded),
           textColor: textColor,
           labelColor: labelColor,
           borderColor: borderColor,
@@ -154,14 +172,13 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
                   SizedBox(width: 6.w),
                   Text(
                     timeRange,
-                    style: TextStyle(
-                      color: labelColor,
-                      fontSize: 10.sp,
-                    ),
+                    style: TextStyle(color: labelColor, fontSize: 10.sp),
                   ),
                   const Spacer(),
                   Icon(
-                    isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                    isExpanded
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
                     color: labelColor,
                     size: 16.sp,
                   ),
@@ -193,9 +210,11 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
                     borderRadius: BorderRadius.circular(6.r),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: statusColor.withOpacity(isDark ? 0.05 : 0.1),
+                        color: statusColor.withValues(
+                          alpha: isDark ? 0.05 : 0.1,
+                        ),
                         border: Border.all(
-                          color: statusColor.withOpacity(0.4),
+                          color: statusColor.withValues(alpha: 0.4),
                           width: 1.r,
                         ),
                         borderRadius: BorderRadius.circular(6.r),

@@ -42,17 +42,17 @@ class AdminAttendanceBloc
   final UpdateAttendanceStatusUseCase _updateStatus;
 
   AdminAttendanceBloc({
-    required GetStaffAttendanceUseCase getAttendance,
-    required UpdateAttendanceStatusUseCase updateStatus,
-  })  : _getAttendance = getAttendance,
-        _updateStatus = updateStatus,
-        super(AdminAttendanceInitial()) {
+    required this._getAttendance,
+    required this._updateStatus,
+  }) : super(AdminAttendanceInitial()) {
     on<LoadStaffAttendance>(_onLoadStaffAttendance);
     on<UpdateAttendanceStatus>(_onUpdateAttendanceStatus);
   }
 
   Future<void> _onLoadStaffAttendance(
-      LoadStaffAttendance event, Emitter<AdminAttendanceState> emit) async {
+    LoadStaffAttendance event,
+    Emitter<AdminAttendanceState> emit,
+  ) async {
     emit(AdminAttendanceLoading());
     final targetDate = event.date ?? DateTime.now();
     final result = await _getAttendance(date: targetDate);
@@ -63,7 +63,9 @@ class AdminAttendanceBloc
   }
 
   Future<void> _onUpdateAttendanceStatus(
-      UpdateAttendanceStatus event, Emitter<AdminAttendanceState> emit) async {
+    UpdateAttendanceStatus event,
+    Emitter<AdminAttendanceState> emit,
+  ) async {
     final result = await _updateStatus(event.id, event.status);
     result.fold(
       (failure) => emit(AdminAttendanceError(failure.message)),

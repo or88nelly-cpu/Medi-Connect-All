@@ -23,7 +23,9 @@ class DoctorConsultsTab extends StatelessWidget {
           return const Center(child: Text("Please login to see consultations"));
         }
         final doctor = authState.user;
-        final docDisplayName = doctor.name ?? "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName =
+            doctor.name ??
+            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, state) {
@@ -37,34 +39,43 @@ class DoctorConsultsTab extends StatelessWidget {
               // Filter for current logged-in doctor
               final doctorApts = appointments.where((a) {
                 final matchId = a.doctorId == doctor.id;
-                final matchName = a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
+                final matchName =
+                    a.doctorName.toLowerCase().replaceAll("dr.", "").trim() ==
                     docDisplayName.toLowerCase().replaceAll("dr.", "").trim();
                 return matchId || matchName;
               }).toList();
 
               // Filter for upcoming Video consultations that are not Cancelled or Completed
               final upcomingVideoApts = doctorApts.where((a) {
-                final isVideo = a.type.toLowerCase().contains("video") || 
-                                a.type.toLowerCase().contains("virtual") ||
-                                a.specialty.toLowerCase().contains("video");
-                final isNotDone = a.status != 'Cancelled' && a.status != 'Completed';
-                
+                final isVideo =
+                    a.type.toLowerCase().contains("video") ||
+                    a.type.toLowerCase().contains("virtual") ||
+                    a.specialty.toLowerCase().contains("video");
+                final isNotDone =
+                    a.status != 'Cancelled' && a.status != 'Completed';
+
                 // Compare dates
                 final today = DateTime.now();
-                final isTodayOrFuture = a.appointmentDate.isAfter(today.subtract(const Duration(days: 1)));
+                final isTodayOrFuture = a.appointmentDate.isAfter(
+                  today.subtract(const Duration(days: 1)),
+                );
 
                 return isVideo && isNotDone && isTodayOrFuture;
               }).toList();
 
               // Sort chronologically (by date, then time if dates are equal)
               upcomingVideoApts.sort((a, b) {
-                final dateCompare = a.appointmentDate.compareTo(b.appointmentDate);
+                final dateCompare = a.appointmentDate.compareTo(
+                  b.appointmentDate,
+                );
                 if (dateCompare != 0) return dateCompare;
                 return a.appointmentTime.compareTo(b.appointmentTime);
               });
 
               final hasUpcoming = upcomingVideoApts.isNotEmpty;
-              final AppointmentEntity? nextApt = hasUpcoming ? upcomingVideoApts.first : null;
+              final AppointmentEntity? nextApt = hasUpcoming
+                  ? upcomingVideoApts.first
+                  : null;
 
               return Padding(
                 padding: EdgeInsets.all(20.r),
@@ -73,7 +84,9 @@ class DoctorConsultsTab extends StatelessWidget {
                   children: [
                     Text(
                       "Video Consultations",
-                      style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+                      style: AppTextStyles.headingMedium.copyWith(
+                        fontSize: 22.sp,
+                      ),
                     ),
                     SizedBox(height: 16.h),
                     Card(
@@ -89,11 +102,15 @@ class DoctorConsultsTab extends StatelessWidget {
                             Icon(
                               Icons.video_camera_front_outlined,
                               size: 60.r,
-                              color: hasUpcoming ? AppColors.secondary : Colors.grey[400],
+                              color: hasUpcoming
+                                  ? AppColors.secondary
+                                  : Colors.grey[400],
                             ),
                             SizedBox(height: 12.h),
                             Text(
-                              hasUpcoming ? "Next Virtual Session" : "No Upcoming Sessions",
+                              hasUpcoming
+                                  ? "Next Virtual Session"
+                                  : "No Upcoming Sessions",
                               style: AppTextStyles.titleMedium.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -102,12 +119,16 @@ class DoctorConsultsTab extends StatelessWidget {
                             if (hasUpcoming && nextApt != null) ...[
                               Text(
                                 "Patient: ${nextApt.patientName}",
-                                style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                                style: AppTextStyles.bodyMedium.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               SizedBox(height: 4.h),
                               Text(
                                 "Time: ${_formatAptDateTime(nextApt.appointmentDate, nextApt.appointmentTime)}",
-                                style: AppTextStyles.bodySmall.copyWith(color: Colors.grey[600]),
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: Colors.grey[600],
+                                ),
                               ),
                               SizedBox(height: 16.h),
                               SizedBox(
@@ -122,14 +143,19 @@ class DoctorConsultsTab extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  icon: const Icon(Icons.video_call, color: Colors.white),
+                                  icon: const Icon(
+                                    Icons.video_call,
+                                    color: Colors.white,
+                                  ),
                                   label: const Text(
                                     "Launch Consult",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.secondary,
-                                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 12.h,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.r),
                                     ),
@@ -140,7 +166,9 @@ class DoctorConsultsTab extends StatelessWidget {
                               Text(
                                 "You have no virtual sessions scheduled for today or upcoming days.",
                                 textAlign: TextAlign.center,
-                                style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
+                                style: AppTextStyles.bodyMedium.copyWith(
+                                  color: Colors.grey,
+                                ),
                               ),
                             ],
                           ],
@@ -164,8 +192,8 @@ class DoctorConsultsTab extends StatelessWidget {
     final dateStr = _isSameDay(date, now)
         ? "Today"
         : _isSameDay(date, now.add(const Duration(days: 1)))
-            ? "Tomorrow"
-            : DateFormat('dd MMM yyyy').format(date);
+        ? "Tomorrow"
+        : DateFormat('dd MMM yyyy').format(date);
     return "$dateStr, $time";
   }
 }

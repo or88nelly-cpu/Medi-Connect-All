@@ -35,14 +35,20 @@ class AdminMasterDataPage extends StatelessWidget {
               side: const BorderSide(color: AppColors.border),
             ),
             child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 8.h,
+              ),
               leading: Container(
                 padding: EdgeInsets.all(8.r),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.08),
+                  color: AppColors.primary.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: const Icon(Icons.dataset_outlined, color: AppColors.primary),
+                child: const Icon(
+                  Icons.dataset_outlined,
+                  color: AppColors.primary,
+                ),
               ),
               title: Text(
                 item['name']!,

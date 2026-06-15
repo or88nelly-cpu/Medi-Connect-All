@@ -39,9 +39,15 @@ class ManageSlotsActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,11 +80,7 @@ class ManageSlotsActions extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        act["icon"] as IconData,
-                        size: 18.sp,
-                        color: color,
-                      ),
+                      Icon(act["icon"] as IconData, size: 18.sp, color: color),
                       SizedBox(height: 6.h),
                       Text(
                         act["label"] as String,

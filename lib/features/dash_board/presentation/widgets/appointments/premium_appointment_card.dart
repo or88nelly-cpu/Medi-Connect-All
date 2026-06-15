@@ -12,7 +12,7 @@ import 'package:medi_connect/core/utils/constants/app_assets.dart';
 import 'package:medi_connect/features/dash_board/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/patient/presentation/bloc/patient_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 
@@ -28,45 +28,61 @@ class PremiumAppointmentCard extends StatelessWidget {
     required this.onComplete,
   });
 
-  Color _getStatusColor(String status) {
-    switch (status) {
-      case 'Confirmed':
-        return AppColors.success;
-      case 'Pending':
-        return AppColors.warning;
-      case 'Completed':
-        return AppColors.infoPurple;
-      case 'Cancelled':
-      default:
-        return AppColors.error;
-    }
-  }
+  // Color _getStatusColor(String status) {
+  //   switch (status) {
+  //     case 'Confirmed':
+  //       return AppColors.success;
+  //     case 'Pending':
+  //       return AppColors.warning;
+  //     case 'Completed':
+  //       return AppColors.infoPurple;
+  //     case 'Cancelled':
+  //     default:
+  //       return AppColors.error;
+  //   }
+  // }
 
   Color _getStatusBgColor(String status, bool isDark) {
     switch (status) {
       case 'Confirmed':
-        return isDark ? AppColors.statusConfirmedBgDark : AppColors.statusConfirmedBgLight;
+        return isDark
+            ? AppColors.statusConfirmedBgDark
+            : AppColors.statusConfirmedBgLight;
       case 'Pending':
-        return isDark ? AppColors.statusPendingBgDark : AppColors.statusPendingBgLight;
+        return isDark
+            ? AppColors.statusPendingBgDark
+            : AppColors.statusPendingBgLight;
       case 'Completed':
-        return isDark ? AppColors.statusCompletedBgDark : AppColors.statusCompletedBgLight;
+        return isDark
+            ? AppColors.statusCompletedBgDark
+            : AppColors.statusCompletedBgLight;
       case 'Cancelled':
       default:
-        return isDark ? AppColors.statusCancelledBgDark : AppColors.statusCancelledBgLight;
+        return isDark
+            ? AppColors.statusCancelledBgDark
+            : AppColors.statusCancelledBgLight;
     }
   }
 
   Color _getStatusTextColor(String status, bool isDark) {
     switch (status) {
       case 'Confirmed':
-        return isDark ? AppColors.statusConfirmedTextDark : AppColors.statusConfirmedTextLight;
+        return isDark
+            ? AppColors.statusConfirmedTextDark
+            : AppColors.statusConfirmedTextLight;
       case 'Pending':
-        return isDark ? AppColors.statusPendingTextDark : AppColors.statusPendingTextLight;
+        return isDark
+            ? AppColors.statusPendingTextDark
+            : AppColors.statusPendingTextLight;
       case 'Completed':
-        return isDark ? AppColors.statusCompletedTextDark : AppColors.statusCompletedTextLight;
+        return isDark
+            ? AppColors.statusCompletedTextDark
+            : AppColors.statusCompletedTextLight;
       case 'Cancelled':
       default:
-        return isDark ? AppColors.statusCancelledTextDark : AppColors.statusCancelledTextLight;
+        return isDark
+            ? AppColors.statusCancelledTextDark
+            : AppColors.statusCancelledTextLight;
     }
   }
 
@@ -85,7 +101,9 @@ class PremiumAppointmentCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final badgeBg = _getStatusBgColor(appointment.status, isDark);
     final badgeText = _getStatusTextColor(appointment.status, isDark);
-    final formattedDate = DateFormat('dd MMM yyyy').format(appointment.appointmentDate);
+    final formattedDate = DateFormat(
+      'dd MMM yyyy',
+    ).format(appointment.appointmentDate);
 
     // Try to retrieve patient info from PatientBloc
     UserModel? patient;
@@ -93,7 +111,9 @@ class PremiumAppointmentCard extends StatelessWidget {
       final patientState = context.watch<PatientBloc>().state;
       if (patientState is PatientLoaded) {
         final matches = patientState.patients.where(
-          (p) => p.id == appointment.patientId || p.patientId == appointment.patientId,
+          (p) =>
+              p.id == appointment.patientId ||
+              p.patientId == appointment.patientId,
         );
         if (matches.isNotEmpty) {
           patient = matches.first;
@@ -129,7 +149,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             ? null
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.02),
+                  color: Colors.black.withValues(alpha: 0.02),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -191,7 +211,9 @@ class PremiumAppointmentCard extends StatelessWidget {
                         appointment.specialty,
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11.sp,
-                          color: isDark ? Colors.white60 : AppColors.textSecondary,
+                          color: isDark
+                              ? Colors.white60
+                              : AppColors.textSecondary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -215,7 +237,9 @@ class PremiumAppointmentCard extends StatelessWidget {
                         _cleanDoctorName(appointment.doctorName),
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11.sp,
-                          color: isDark ? Colors.white60 : AppColors.textSecondary,
+                          color: isDark
+                              ? Colors.white60
+                              : AppColors.textSecondary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -237,7 +261,10 @@ class PremiumAppointmentCard extends StatelessWidget {
                 children: [
                   // Status Badge
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 3.h,
+                    ),
                     decoration: BoxDecoration(
                       color: badgeBg,
                       borderRadius: BorderRadius.circular(6.r),
@@ -267,7 +294,11 @@ class PremiumAppointmentCard extends StatelessWidget {
                       } else if (val == 'cancel') {
                         onCancel();
                       } else if (val == 'details') {
-                        _showAppointmentDetailsDialog(context, patient, formattedDate);
+                        _showAppointmentDetailsDialog(
+                          context,
+                          patient,
+                          formattedDate,
+                        );
                       } else if (val == 'vitals') {
                         _showVitalsEntryDialog(context);
                       }
@@ -277,20 +308,35 @@ class PremiumAppointmentCard extends StatelessWidget {
                         value: 'details',
                         child: Row(
                           children: [
-                            Icon(Icons.info_outline, size: 16.r, color: AppColors.primary),
+                            Icon(
+                              Icons.info_outline,
+                              size: 16.r,
+                              color: AppColors.primary,
+                            ),
                             SizedBox(width: 8.w),
-                            Text("View Details", style: TextStyle(fontSize: 12.sp)),
+                            Text(
+                              "View Details",
+                              style: TextStyle(fontSize: 12.sp),
+                            ),
                           ],
                         ),
                       ),
-                      if (appointment.status == 'Confirmed' || appointment.status == 'Pending') ...[
+                      if (appointment.status == 'Confirmed' ||
+                          appointment.status == 'Pending') ...[
                         PopupMenuItem(
                           value: 'vitals',
                           child: Row(
                             children: [
-                              Icon(Icons.thermostat_outlined, size: 16.r, color: Colors.orange),
+                              Icon(
+                                Icons.thermostat_outlined,
+                                size: 16.r,
+                                color: Colors.orange,
+                              ),
                               SizedBox(width: 8.w),
-                              Text("Record Vitals", style: TextStyle(fontSize: 12.sp)),
+                              Text(
+                                "Record Vitals",
+                                style: TextStyle(fontSize: 12.sp),
+                              ),
                             ],
                           ),
                         ),
@@ -298,9 +344,16 @@ class PremiumAppointmentCard extends StatelessWidget {
                           value: 'complete',
                           child: Row(
                             children: [
-                              Icon(Icons.check_circle_outline, size: 16.r, color: AppColors.success),
+                              Icon(
+                                Icons.check_circle_outline,
+                                size: 16.r,
+                                color: AppColors.success,
+                              ),
                               SizedBox(width: 8.w),
-                              Text("Complete Consult", style: TextStyle(fontSize: 12.sp)),
+                              Text(
+                                "Complete Consult",
+                                style: TextStyle(fontSize: 12.sp),
+                              ),
                             ],
                           ),
                         ),
@@ -308,9 +361,16 @@ class PremiumAppointmentCard extends StatelessWidget {
                           value: 'cancel',
                           child: Row(
                             children: [
-                              Icon(Icons.cancel_outlined, size: 16.r, color: AppColors.error),
+                              Icon(
+                                Icons.cancel_outlined,
+                                size: 16.r,
+                                color: AppColors.error,
+                              ),
                               SizedBox(width: 8.w),
-                              Text("Cancel Booking", style: TextStyle(fontSize: 12.sp)),
+                              Text(
+                                "Cancel Booking",
+                                style: TextStyle(fontSize: 12.sp),
+                              ),
                             ],
                           ),
                         ),
@@ -351,8 +411,8 @@ class PremiumAppointmentCard extends StatelessWidget {
                 child: Text(
                   appointment.token != null && appointment.token!.isNotEmpty
                       ? (appointment.token!.toUpperCase().contains("OPD")
-                          ? appointment.token!
-                          : "OPD - ${appointment.token}")
+                            ? appointment.token!
+                            : "OPD - ${appointment.token}")
                       : "OPD - 1",
                   style: TextStyle(
                     color: isDark ? AppColors.accent : AppColors.primary,
@@ -368,7 +428,11 @@ class PremiumAppointmentCard extends StatelessWidget {
     );
   }
 
-  void _showAppointmentDetailsDialog(BuildContext context, UserModel? patient, String formattedDate) {
+  void _showAppointmentDetailsDialog(
+    BuildContext context,
+    UserModel? patient,
+    String formattedDate,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final genderStr = patient?.gender ?? 'N/A';
 
@@ -382,7 +446,9 @@ class PremiumAppointmentCard extends StatelessWidget {
             SizedBox(width: 8.w),
             Text(
               AppStrings.appointmentDetails,
-              style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),
@@ -391,7 +457,11 @@ class PremiumAppointmentCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildInfoRow(AppStrings.patientNameLabel, appointment.patientName, isDark),
+              _buildInfoRow(
+                AppStrings.patientNameLabel,
+                appointment.patientName,
+                isDark,
+              ),
               _buildInfoRow(
                 AppStrings.patientIdLabel,
                 "PAT-${(appointment.patientId?.length ?? 0) > 8 ? appointment.patientId?.substring(0, 8).toUpperCase() : appointment.patientId?.toUpperCase()}",
@@ -408,9 +478,17 @@ class PremiumAppointmentCard extends StatelessWidget {
                 _cleanDoctorName(appointment.doctorName),
                 isDark,
               ),
-              _buildInfoRow(AppStrings.specialtyLabel, appointment.specialty, isDark),
+              _buildInfoRow(
+                AppStrings.specialtyLabel,
+                appointment.specialty,
+                isDark,
+              ),
               _buildInfoRow(AppStrings.dateLabel, formattedDate, isDark),
-              _buildInfoRow(AppStrings.timeLabel, appointment.appointmentTime, isDark),
+              _buildInfoRow(
+                AppStrings.timeLabel,
+                appointment.appointmentTime,
+                isDark,
+              ),
               if (appointment.token != null && appointment.token!.isNotEmpty)
                 _buildInfoRow(
                   AppStrings.tokenNoLabel,
@@ -428,7 +506,11 @@ class PremiumAppointmentCard extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.h),
-              _buildInfoRow(AppStrings.bloodPressure, appointment.bp ?? "N/A", isDark),
+              _buildInfoRow(
+                AppStrings.bloodPressure,
+                appointment.bp ?? "N/A",
+                isDark,
+              ),
               _buildInfoRow(
                 AppStrings.weightLabel,
                 appointment.weight != null && appointment.weight!.isNotEmpty
@@ -498,14 +580,17 @@ class PremiumAppointmentCard extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary,
+              color: isDark
+                  ? AppColors.terminalDarkLabel
+                  : AppColors.textSecondary,
             ),
           ),
           Text(
             value,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: valueFontWeight ?? FontWeight.w600,
-              color: valueColor ?? (isDark ? Colors.white : AppColors.textPrimary),
+              color:
+                  valueColor ?? (isDark ? Colors.white : AppColors.textPrimary),
             ),
           ),
         ],
@@ -515,16 +600,26 @@ class PremiumAppointmentCard extends StatelessWidget {
 
   void _showVitalsEntryDialog(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final bpController = TextEditingController(text: appointment.bp);
     final weightController = TextEditingController(text: appointment.weight);
     final heightController = TextEditingController(text: appointment.height);
     final feverController = TextEditingController(text: appointment.fever);
-    final headCircumferenceController = TextEditingController(text: appointment.headCircumference);
+    final headCircumferenceController = TextEditingController(
+      text: appointment.headCircumference,
+    );
 
     // Parse custom vitals
     final List<MapEntry<String, String>> customVitalsList = [];
@@ -570,8 +665,14 @@ class PremiumAppointmentCard extends StatelessWidget {
                     labelText: "Blood Pressure (mmHg)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 120/80",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.favorite, color: Colors.red, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -583,8 +684,14 @@ class PremiumAppointmentCard extends StatelessWidget {
                     labelText: "Weight (kg)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 70",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.scale, color: Colors.orange, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.scale,
+                      color: Colors.orange,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -596,21 +703,35 @@ class PremiumAppointmentCard extends StatelessWidget {
                     labelText: "Height (cm)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 175",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.height, color: Colors.blue, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.height,
+                      color: Colors.blue,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
                 TextField(
                   controller: feverController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   style: TextStyle(color: textColor),
                   decoration: InputDecoration(
                     labelText: "Fever / Temp (°F)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 98.6",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.thermostat, color: Colors.teal, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.thermostat,
+                      color: Colors.teal,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -622,8 +743,14 @@ class PremiumAppointmentCard extends StatelessWidget {
                     labelText: "Circumference Head (cm)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 42",
-                    hintStyle: TextStyle(color: labelColor.withOpacity(0.5)),
-                    prefixIcon: Icon(Icons.child_care, color: Colors.purple, size: 18.sp),
+                    hintStyle: TextStyle(
+                      color: labelColor.withValues(alpha: 0.5),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.child_care,
+                      color: Colors.purple,
+                      size: 18.sp,
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.h),
@@ -649,7 +776,10 @@ class PremiumAppointmentCard extends StatelessWidget {
                       icon: const Icon(Icons.add, size: 14),
                       label: Text(
                         "Add More",
-                        style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
@@ -693,7 +823,10 @@ class PremiumAppointmentCard extends StatelessWidget {
                               ),
                             ),
                             onChanged: (val) {
-                              customVitalsList[index] = MapEntry(val.trim(), valCtrl.text.trim());
+                              customVitalsList[index] = MapEntry(
+                                val.trim(),
+                                valCtrl.text.trim(),
+                              );
                             },
                           ),
                         ),
@@ -711,12 +844,19 @@ class PremiumAppointmentCard extends StatelessWidget {
                               ),
                             ),
                             onChanged: (val) {
-                              customVitalsList[index] = MapEntry(nameCtrl.text.trim(), val.trim());
+                              customVitalsList[index] = MapEntry(
+                                nameCtrl.text.trim(),
+                                val.trim(),
+                              );
                             },
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete_outline, color: AppColors.error, size: 18.sp),
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: AppColors.error,
+                            size: 18.sp,
+                          ),
                           onPressed: () {
                             setDialogState(() {
                               customVitalsList.removeAt(index);
@@ -745,31 +885,43 @@ class PremiumAppointmentCard extends StatelessWidget {
                 }
 
                 final vitalsMap = {
-                  'bp': bpController.text.trim().isNotEmpty ? bpController.text.trim() : null,
-                  'weight': weightController.text.trim().isNotEmpty ? weightController.text.trim() : null,
-                  'height': heightController.text.trim().isNotEmpty ? heightController.text.trim() : null,
-                  'fever': feverController.text.trim().isNotEmpty ? feverController.text.trim() : null,
-                  'head_circumference': headCircumferenceController.text.trim().isNotEmpty
+                  'bp': bpController.text.trim().isNotEmpty
+                      ? bpController.text.trim()
+                      : null,
+                  'weight': weightController.text.trim().isNotEmpty
+                      ? weightController.text.trim()
+                      : null,
+                  'height': heightController.text.trim().isNotEmpty
+                      ? heightController.text.trim()
+                      : null,
+                  'fever': feverController.text.trim().isNotEmpty
+                      ? feverController.text.trim()
+                      : null,
+                  'head_circumference':
+                      headCircumferenceController.text.trim().isNotEmpty
                       ? headCircumferenceController.text.trim()
                       : null,
-                  'additional_vitals': customMap.isNotEmpty ? jsonEncode(customMap) : null,
+                  'additional_vitals': customMap.isNotEmpty
+                      ? jsonEncode(customMap)
+                      : null,
                 };
 
                 try {
                   final authState = context.read<AuthBloc>().state;
-                  if (authState is Authenticated && authState.user.role == 'doctor') {
+                  if (authState is Authenticated &&
+                      authState.user.role == 'doctor') {
                     context.read<DoctorAppointmentsBloc>().add(
-                          UpdateDoctorAppointmentVitals(appointment.id, vitalsMap),
-                        );
+                      UpdateDoctorAppointmentVitals(appointment.id, vitalsMap),
+                    );
                   } else {
                     context.read<AdminAppointmentsBloc>().add(
-                          UpdateAppointmentVitals(appointment.id, vitalsMap),
-                        );
+                      UpdateAppointmentVitals(appointment.id, vitalsMap),
+                    );
                   }
                 } catch (_) {
                   context.read<AdminAppointmentsBloc>().add(
-                        UpdateAppointmentVitals(appointment.id, vitalsMap),
-                      );
+                    UpdateAppointmentVitals(appointment.id, vitalsMap),
+                  );
                 }
 
                 Navigator.pop(ctx);

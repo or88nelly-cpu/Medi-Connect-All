@@ -60,7 +60,8 @@ class SlotStep extends StatelessWidget {
     final formattedDate = DateFormat('dd MMM yyyy').format(state.selectedDate);
 
     final slotsByDate =
-        state.selectedDoctor!.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ??
+        state.selectedDoctor!.metadata?['slots_by_date']
+            as Map<dynamic, dynamic>? ??
         {};
     final dateData = slotsByDate[formattedDate] as Map<dynamic, dynamic>? ?? {};
 
@@ -92,10 +93,30 @@ class SlotStep extends StatelessWidget {
       afternoonSlots = _generateDefaultSlots("afternoon", slotDuration);
     }
 
-    final doctorName = state.selectedDoctor!.name ??
-        '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'.trim();
-    final isLikhin = doctorName == "Likhin Nelliyotan" ||
-        (doctorName.contains("Likhin") && doctorName.contains("Nelliyotan"));
+    final doctorName =
+        state.selectedDoctor!.name ??
+        '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
+            .trim();
+    final cleanName = doctorName
+        .replaceAll(RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false), '')
+        .trim();
+    final parts = cleanName
+        .split(RegExp(r'\s+'))
+        .where((s) => s.isNotEmpty)
+        .toList();
+    String initials = 'DR';
+    if (parts.isNotEmpty) {
+      if (parts.length == 1) {
+        initials = parts[0]
+            .substring(0, parts[0].length >= 2 ? 2 : 1)
+            .toUpperCase();
+      } else {
+        initials =
+            '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
+      }
+    }
+    final normalPrefix = '${initials}A';
+    final waitingPrefix = '${initials}W';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,11 +142,15 @@ class SlotStep extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected
                         ? AppColors.primary
-                        : (isDark ? AppColors.terminalDarkBg : Colors.grey[100]),
+                        : (isDark
+                              ? AppColors.terminalDarkBg
+                              : Colors.grey[100]),
                     border: Border.all(
                       color: isSelected
                           ? AppColors.primary
-                          : (isDark ? AppColors.terminalDarkBorder : AppColors.border),
+                          : (isDark
+                                ? AppColors.terminalDarkBorder
+                                : AppColors.border),
                     ),
                     borderRadius: BorderRadius.circular(6.r),
                   ),
@@ -137,7 +162,9 @@ class SlotStep extends StatelessWidget {
                           fontSize: 9.sp,
                           color: isSelected
                               ? Colors.white
-                              : (isDark ? Colors.white70 : AppColors.textSecondary),
+                              : (isDark
+                                    ? Colors.white70
+                                    : AppColors.textSecondary),
                         ),
                       ),
                       SizedBox(height: 2.h),
@@ -159,73 +186,81 @@ class SlotStep extends StatelessWidget {
         ),
         SizedBox(height: 12.h),
 
-        // Queue Token list config for Likhin Nelliyotan
-        if (isLikhin) ...[
-          state.isLoadingCounts
-              ? const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Center(
-                    child: SizedBox(
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  ),
-                )
-              : Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  decoration: BoxDecoration(
-                    color: isDark ? Colors.white12 : Colors.grey[100],
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Queue Type:",
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11.sp,
-                          color: isDark ? Colors.white : AppColors.textPrimary,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          ChoiceChip(
-                            label: Text(
-                              "Normal Slot (LNA: ${state.currentNormalCount})",
-                              style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp),
-                            ),
-                            selected: !state.isWaitingList,
-                            selectedColor: AppColors.primary.withOpacity(0.2),
-                            checkmarkColor: AppColors.primary,
-                            onSelected: (val) {
-                              if (val) cubit.setWaitingList(false);
-                            },
-                          ),
-                          SizedBox(width: 8.w),
-                          ChoiceChip(
-                            label: Text(
-                              "Waiting List (LNW: ${state.currentWaitingCount}/10)",
-                              style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp),
-                            ),
-                            selected: state.isWaitingList,
-                            selectedColor: AppColors.primary.withOpacity(0.2),
-                            checkmarkColor: AppColors.primary,
-                            onSelected: (val) {
-                              if (val) cubit.setWaitingList(true);
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+        // Queue Token list config for selected doctor
+        state.isLoadingCounts
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Center(
+                  child: SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
                   ),
                 ),
-        ],
+              )
+            : Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                margin: EdgeInsets.only(bottom: 12.h),
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.white12 : Colors.grey[100],
+                  borderRadius: BorderRadius.circular(8.r),
+                  border: Border.all(
+                    color: isDark
+                        ? AppColors.terminalDarkBorder
+                        : AppColors.border,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Queue Type:",
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11.sp,
+                        color: isDark ? Colors.white : AppColors.textPrimary,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        ChoiceChip(
+                          label: Text(
+                            "Normal($normalPrefix: ${state.currentNormalCount})",
+                            style: AppTextStyles.bodySmall.copyWith(
+                              fontSize: 8.sp,
+                            ),
+                          ),
+                          selected: !state.isWaitingList,
+                          selectedColor: AppColors.primary.withValues(
+                            alpha: 0.2,
+                          ),
+                          checkmarkColor: AppColors.primary,
+                          onSelected: (val) {
+                            if (val) cubit.setWaitingList(false);
+                          },
+                        ),
+                        SizedBox(width: 3.w),
+                        ChoiceChip(
+                          label: Text(
+                            "Waiting List $waitingPrefix: ${state.currentWaitingCount}",
+                            style: AppTextStyles.bodySmall.copyWith(
+                              fontSize: 8.sp,
+                            ),
+                          ),
+                          selected: state.isWaitingList,
+                          selectedColor: AppColors.primary.withValues(
+                            alpha: 0.2,
+                          ),
+                          checkmarkColor: AppColors.primary,
+                          onSelected: (val) {
+                            if (val) cubit.setWaitingList(true);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
 
         // Slots grid lists
         Expanded(
@@ -252,11 +287,15 @@ class SlotStep extends StatelessWidget {
                       return ChoiceChip(
                         label: Text(
                           slot['time'] as String,
-                          style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp),
+                          style: AppTextStyles.bodySmall.copyWith(
+                            fontSize: 10.sp,
+                          ),
                         ),
                         selected: isSelected,
-                        disabledColor: isDark ? Colors.white12 : Colors.grey[200],
-                        selectedColor: AppColors.primary.withOpacity(0.2),
+                        disabledColor: isDark
+                            ? Colors.white12
+                            : Colors.grey[200],
+                        selectedColor: AppColors.primary.withValues(alpha: 0.2),
                         checkmarkColor: AppColors.primary,
                         onSelected: isAvailable
                             ? (val) {
@@ -266,15 +305,21 @@ class SlotStep extends StatelessWidget {
                         side: BorderSide(
                           color: isSelected
                               ? AppColors.primary
-                              : (isDark ? AppColors.terminalDarkBorder : AppColors.border),
+                              : (isDark
+                                    ? AppColors.terminalDarkBorder
+                                    : AppColors.border),
                         ),
                         labelStyle: AppTextStyles.bodySmall.copyWith(
                           fontSize: 10.sp,
                           color: isSelected
                               ? AppColors.primary
                               : (isAvailable
-                                  ? (isDark ? Colors.white : AppColors.textPrimary)
-                                  : (isDark ? Colors.white24 : Colors.grey[400])),
+                                    ? (isDark
+                                          ? Colors.white
+                                          : AppColors.textPrimary)
+                                    : (isDark
+                                          ? Colors.white24
+                                          : Colors.grey[400])),
                         ),
                       );
                     }).toList(),
@@ -300,11 +345,15 @@ class SlotStep extends StatelessWidget {
                       return ChoiceChip(
                         label: Text(
                           slot['time'] as String,
-                          style: AppTextStyles.bodySmall.copyWith(fontSize: 10.sp),
+                          style: AppTextStyles.bodySmall.copyWith(
+                            fontSize: 10.sp,
+                          ),
                         ),
                         selected: isSelected,
-                        disabledColor: isDark ? Colors.white12 : Colors.grey[200],
-                        selectedColor: AppColors.primary.withOpacity(0.2),
+                        disabledColor: isDark
+                            ? Colors.white12
+                            : Colors.grey[200],
+                        selectedColor: AppColors.primary.withValues(alpha: 0.2),
                         checkmarkColor: AppColors.primary,
                         onSelected: isAvailable
                             ? (val) {
@@ -314,15 +363,21 @@ class SlotStep extends StatelessWidget {
                         side: BorderSide(
                           color: isSelected
                               ? AppColors.primary
-                              : (isDark ? AppColors.terminalDarkBorder : AppColors.border),
+                              : (isDark
+                                    ? AppColors.terminalDarkBorder
+                                    : AppColors.border),
                         ),
                         labelStyle: AppTextStyles.bodySmall.copyWith(
                           fontSize: 10.sp,
                           color: isSelected
                               ? AppColors.primary
                               : (isAvailable
-                                  ? (isDark ? Colors.white : AppColors.textPrimary)
-                                  : (isDark ? Colors.white24 : Colors.grey[400])),
+                                    ? (isDark
+                                          ? Colors.white
+                                          : AppColors.textPrimary)
+                                    : (isDark
+                                          ? Colors.white24
+                                          : Colors.grey[400])),
                         ),
                       );
                     }).toList(),

@@ -50,7 +50,10 @@ class EmrdBloc extends Bloc<EmrdEvent, EmrdState> {
     on<LoadEmrdStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadEmrdStats event, Emitter<EmrdState> emit) async {
+  Future<void> _onLoadStats(
+    LoadEmrdStats event,
+    Emitter<EmrdState> emit,
+  ) async {
     emit(EmrdLoading());
 
     final statsRes = await _getStats(NoParams());

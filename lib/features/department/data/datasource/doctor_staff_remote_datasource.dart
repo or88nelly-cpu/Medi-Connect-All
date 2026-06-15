@@ -1,9 +1,6 @@
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/features/auth/data/models/user_model.dart';
 
-import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/features/auth/data/models/user_model.dart';
-
 abstract class DoctorStaffRemoteDataSource {
   Future<List<UserModel>> getDoctorStaff(String departmentName);
   Future<UserModel> createDoctorStaffMember(UserModel user);
@@ -38,15 +35,23 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
             await _supabase.from('users').insert(payload);
           } catch (_) {}
         }
-        final req = await _supabase.from('users').select().isFilter('deleted_at', null).eq('department', 'Human Resource');
+        final req = await _supabase
+            .from('users')
+            .select()
+            .isFilter('deleted_at', null)
+            .eq('department', 'Human Resource');
         list = (req as List<dynamic>)
             .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
             .toList();
       } else if (departmentName == 'Cardiology' ||
-                 departmentName == 'Neurology' ||
-                 departmentName == 'Pediatrics' ||
-                 departmentName == 'All') {
-        final docQuery = await _supabase.from('users').select().isFilter('deleted_at', null).eq('role', 'doctor');
+          departmentName == 'Neurology' ||
+          departmentName == 'Pediatrics' ||
+          departmentName == 'All') {
+        final docQuery = await _supabase
+            .from('users')
+            .select()
+            .isFilter('deleted_at', null)
+            .eq('role', 'doctor');
         final existingDocs = (docQuery as List<dynamic>)
             .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
             .toList();
@@ -60,9 +65,17 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
               await _supabase.from('users').insert(payload);
             } catch (_) {}
           }
-          final req = await (departmentName.isNotEmpty && departmentName != 'All'
-              ? _supabase.from('users').select().isFilter('deleted_at', null).eq('department', departmentName)
-              : _supabase.from('users').select().isFilter('deleted_at', null));
+          final req =
+              await (departmentName.isNotEmpty && departmentName != 'All'
+                  ? _supabase
+                        .from('users')
+                        .select()
+                        .isFilter('deleted_at', null)
+                        .eq('department', departmentName)
+                  : _supabase
+                        .from('users')
+                        .select()
+                        .isFilter('deleted_at', null));
           list = (req as List<dynamic>)
               .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
               .toList();
@@ -71,7 +84,9 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
     }
 
     if (departmentName.isEmpty || departmentName == 'All') {
-      return list.where((u) => u.role == 'doctor' || u.role == 'staff').toList();
+      return list
+          .where((u) => u.role == 'doctor' || u.role == 'staff')
+          .toList();
     }
     return list;
   }
@@ -88,7 +103,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         .select()
         .single();
 
-    return UserModel.fromJson(response as Map<String, dynamic>);
+    return UserModel.fromJson(response);
   }
 
   @override
@@ -101,7 +116,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         .select()
         .single();
 
-    return UserModel.fromJson(response as Map<String, dynamic>);
+    return UserModel.fromJson(response);
   }
 
   @override
@@ -357,4 +372,3 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
     ];
   }
 }
-

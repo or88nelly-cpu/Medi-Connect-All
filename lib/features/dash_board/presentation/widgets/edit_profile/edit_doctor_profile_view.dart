@@ -63,9 +63,11 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
 
     // Personal details initialization
     _nameController = TextEditingController(text: widget.user.name);
-    _dobController = TextEditingController(text: widget.user.dateOfBirth ?? "20 May 1985");
+    _dobController = TextEditingController(
+      text: widget.user.dateOfBirth ?? "20 May 1985",
+    );
     _emailController = TextEditingController(text: widget.user.email);
-    
+
     // Format phone number to remove +91 if present for UI editing
     String rawPhone = widget.user.phoneNumber ?? "";
     if (rawPhone.startsWith("+91 ")) {
@@ -74,43 +76,64 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
       rawPhone = rawPhone.replaceFirst("+91", "");
     }
     _phoneController = TextEditingController(text: rawPhone);
-    _alternatePhoneController = TextEditingController(text: widget.user.emergencyContact ?? "");
+    _alternatePhoneController = TextEditingController(
+      text: widget.user.emergencyContact ?? "",
+    );
     _gender = widget.user.gender ?? "Male";
     _bloodGroup = widget.user.bloodGroup ?? "A+";
 
     // Professional details initialization
-    _qualificationController = TextEditingController(text: widget.user.qualification ?? "MBBS, MD");
-    _experienceController = TextEditingController(text: widget.user.experience?.toString() ?? "10");
-    _regNumberController = TextEditingController(text: widget.user.medicalRegistrationNumber ?? "REG-12345");
-    _feeController = TextEditingController(text: widget.user.consultationFee?.toString() ?? "500");
+    _qualificationController = TextEditingController(
+      text: widget.user.qualification ?? "MBBS, MD",
+    );
+    _experienceController = TextEditingController(
+      text: widget.user.experience?.toString() ?? "10",
+    );
+    _regNumberController = TextEditingController(
+      text: widget.user.medicalRegistrationNumber ?? "REG-12345",
+    );
+    _feeController = TextEditingController(
+      text: widget.user.consultationFee?.toString() ?? "500",
+    );
     _selectedDept = widget.user.department ?? "Cardiology";
     _selectedSpec = widget.user.specialization ?? "Cardiologist";
 
     // Address details initialization
     final addressParts = widget.user.address?.split(',') ?? [];
     _address1Controller = TextEditingController(
-      text: addressParts.isNotEmpty ? addressParts[0].trim() : "123 Health Street",
+      text: addressParts.isNotEmpty
+          ? addressParts[0].trim()
+          : "123 Health Street",
     );
     _address2Controller = TextEditingController(
-      text: addressParts.length > 1 ? addressParts[1].trim() : "Clinic Building",
+      text: addressParts.length > 1
+          ? addressParts[1].trim()
+          : "Clinic Building",
     );
     _cityController = TextEditingController(
       text: addressParts.length > 2 ? addressParts[2].trim() : "Mumbai",
     );
-    _selectedState = addressParts.length > 3 ? addressParts[3].trim() : "Maharashtra";
+    _selectedState = addressParts.length > 3
+        ? addressParts[3].trim()
+        : "Maharashtra";
     _pincodeController = TextEditingController(
       text: addressParts.length > 4 ? addressParts[4].trim() : "400001",
     );
 
     // Additional info initialization
-    _languages = widget.user.metadata != null && widget.user.metadata!['languages'] != null
+    _languages =
+        widget.user.metadata != null &&
+            widget.user.metadata!['languages'] != null
         ? List<String>.from(widget.user.metadata!['languages'])
         : ["English", "Hindi", "Punjabi"];
-    _selectedConsultationModes = widget.user.metadata != null && widget.user.metadata!['consultation_modes'] != null
+    _selectedConsultationModes =
+        widget.user.metadata != null &&
+            widget.user.metadata!['consultation_modes'] != null
         ? List<String>.from(widget.user.metadata!['consultation_modes'])
         : ["Video", "In-Person"];
     _aboutController = TextEditingController(
-      text: widget.user.metadata != null && widget.user.metadata!['about'] != null
+      text:
+          widget.user.metadata != null && widget.user.metadata!['about'] != null
           ? widget.user.metadata!['about'] as String
           : "Dr. ${widget.user.name ?? ''} is a dedicated medical specialist with over a decade of clinical excellence.",
     );
@@ -138,16 +161,19 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
   void _saveChanges() {
     if (_formKey.currentState!.validate()) {
       // Build address string
-      final fullAddress = "${_address1Controller.text}, ${_address2Controller.text}, ${_cityController.text}, $_selectedState, ${_pincodeController.text}";
+      final fullAddress =
+          "${_address1Controller.text}, ${_address2Controller.text}, ${_cityController.text}, $_selectedState, ${_pincodeController.text}";
 
       // Build metadata
-      final updatedMetadata = Map<String, dynamic>.from(widget.user.metadata ?? {});
+      final updatedMetadata = Map<String, dynamic>.from(
+        widget.user.metadata ?? {},
+      );
       updatedMetadata['languages'] = _languages;
       updatedMetadata['consultation_modes'] = _selectedConsultationModes;
       updatedMetadata['about'] = _aboutController.text;
 
-      final formattedPhone = _phoneController.text.startsWith("+91") 
-          ? _phoneController.text 
+      final formattedPhone = _phoneController.text.startsWith("+91")
+          ? _phoneController.text
           : "+91 ${_phoneController.text}";
 
       final updatedUser = widget.user.copyWithDoctorFields(
@@ -168,9 +194,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
         metadata: updatedMetadata,
       );
 
-      context.read<DoctorStaffBloc>().add(
-        UpdateDoctorStaffMember(updatedUser),
-      );
+      context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
     }
   }
 
@@ -182,13 +206,15 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
         listener: (context, state) {
           if (state is DoctorStaffActionSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Doctor profile updated successfully.")),
+              const SnackBar(
+                content: Text("Doctor profile updated successfully."),
+              ),
             );
             Navigator.pop(context, true);
           } else if (state is DoctorStaffError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: Form(
@@ -362,7 +388,8 @@ extension on UserModel {
       maritalStatus: maritalStatus,
       employeeId: employeeId,
       patientId: patientId,
-      medicalRegistrationNumber: medicalRegistrationNumber ?? this.medicalRegistrationNumber,
+      medicalRegistrationNumber:
+          medicalRegistrationNumber ?? this.medicalRegistrationNumber,
       experience: experience ?? this.experience,
       specialization: specialization ?? this.specialization,
       consultationFee: consultationFee ?? this.consultationFee,

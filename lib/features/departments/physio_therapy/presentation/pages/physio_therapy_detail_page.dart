@@ -12,14 +12,16 @@ class PhysioTherapyDetailPage extends StatefulWidget {
   const PhysioTherapyDetailPage({super.key});
 
   @override
-  State<PhysioTherapyDetailPage> createState() => _PhysioTherapyDetailPageState();
+  State<PhysioTherapyDetailPage> createState() =>
+      _PhysioTherapyDetailPageState();
 }
 
 class _PhysioTherapyDetailPageState extends State<PhysioTherapyDetailPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.I<PhysioTherapyBloc>()..add(LoadPhysioTherapyStats()),
+      create: (context) =>
+          GetIt.I<PhysioTherapyBloc>()..add(LoadPhysioTherapyStats()),
       child: CustomScaffold(
         customAppbar: const CommonAppBar(title: "Physio Therapy Department"),
         body: BlocBuilder<PhysioTherapyBloc, PhysioTherapyState>(
@@ -30,7 +32,9 @@ class _PhysioTherapyDetailPageState extends State<PhysioTherapyDetailPage> {
               return Center(
                 child: Text(
                   state.message,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.error,
+                  ),
                 ),
               );
             } else if (state is PhysioTherapyLoaded) {
@@ -61,11 +65,16 @@ class _PhysioTherapyDetailPageState extends State<PhysioTherapyDetailPage> {
                       itemBuilder: (context, index) {
                         final key = stats.keys.elementAt(index);
                         final val = stats[key];
-                        final displayKey = key.split('_').map((word) {
-                          if (word == 'pct') return '%';
-                          if (word == 'min' || word == 'mins') return 'Mins';
-                          return word[0].toUpperCase() + word.substring(1);
-                        }).join(' ');
+                        final displayKey = key
+                            .split('_')
+                            .map((word) {
+                              if (word == 'pct') return '%';
+                              if (word == 'min' || word == 'mins') {
+                                return 'Mins';
+                              }
+                              return word[0].toUpperCase() + word.substring(1);
+                            })
+                            .join(' ');
 
                         return Card(
                           elevation: 0,

@@ -10,7 +10,8 @@ abstract class ManagementInformationSystemEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadManagementInformationSystemStats extends ManagementInformationSystemEvent {}
+class LoadManagementInformationSystemStats
+    extends ManagementInformationSystemEvent {}
 
 // STATES
 abstract class ManagementInformationSystemState extends Equatable {
@@ -19,15 +20,22 @@ abstract class ManagementInformationSystemState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ManagementInformationSystemInitial extends ManagementInformationSystemState {}
-class ManagementInformationSystemLoading extends ManagementInformationSystemState {}
-class ManagementInformationSystemLoaded extends ManagementInformationSystemState {
+class ManagementInformationSystemInitial
+    extends ManagementInformationSystemState {}
+
+class ManagementInformationSystemLoading
+    extends ManagementInformationSystemState {}
+
+class ManagementInformationSystemLoaded
+    extends ManagementInformationSystemState {
   final Map<String, dynamic> stats;
   const ManagementInformationSystemLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
-class ManagementInformationSystemError extends ManagementInformationSystemState {
+
+class ManagementInformationSystemError
+    extends ManagementInformationSystemState {
   final String message;
   const ManagementInformationSystemError(this.message);
   @override
@@ -35,14 +43,23 @@ class ManagementInformationSystemError extends ManagementInformationSystemState 
 }
 
 // BLOC
-class ManagementInformationSystemBloc extends Bloc<ManagementInformationSystemEvent, ManagementInformationSystemState> {
+class ManagementInformationSystemBloc
+    extends
+        Bloc<
+          ManagementInformationSystemEvent,
+          ManagementInformationSystemState
+        > {
   final GetManagementInformationSystemStatsUseCase _useCase;
 
-  ManagementInformationSystemBloc(this._useCase) : super(ManagementInformationSystemInitial()) {
+  ManagementInformationSystemBloc(this._useCase)
+    : super(ManagementInformationSystemInitial()) {
     on<LoadManagementInformationSystemStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadManagementInformationSystemStats event, Emitter<ManagementInformationSystemState> emit) async {
+  Future<void> _onLoadStats(
+    LoadManagementInformationSystemStats event,
+    Emitter<ManagementInformationSystemState> emit,
+  ) async {
     emit(ManagementInformationSystemLoading());
     final result = await _useCase(const NoParams());
     result.fold(

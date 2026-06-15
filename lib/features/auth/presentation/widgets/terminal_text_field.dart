@@ -48,11 +48,7 @@ class TerminalTextField extends StatelessWidget {
             Row(
               children: [
                 if (prefixIcon != null) ...[
-                  Icon(
-                    prefixIcon,
-                    color: labelColor,
-                    size: 12.r,
-                  ),
+                  Icon(prefixIcon, color: labelColor, size: 12.r),
                   SizedBox(width: 4.w),
                 ],
                 Text(
@@ -64,7 +60,7 @@ class TerminalTextField extends StatelessWidget {
                 ),
               ],
             ),
-            if (rightLabelWidget != null) rightLabelWidget!,
+            ?rightLabelWidget,
           ],
         ),
         SizedBox(height: 8.h),
@@ -84,13 +80,19 @@ class TerminalTextField extends StatelessWidget {
             ),
             filled: true,
             fillColor: bgColor,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 14.h,
+            ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: borderColor, width: 1.0),
               borderRadius: BorderRadius.circular(6.r),
             ),
-            focusedBorder:  OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.terminalAccentCyan, width: 1.2),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.terminalAccentCyan,
+                width: 1.2,
+              ),
               borderRadius: BorderRadius.circular(6.r),
             ),
             errorBorder: OutlineInputBorder(

@@ -5,16 +5,17 @@ import 'package:medi_connect/core/common_widgets/common_app_bar.dart';
 import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin_recent_activity_bloc.dart';
+import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_recent_activity_bloc.dart';
 
-class AdminAuditLogsPage extends StatefulWidget {
-  const AdminAuditLogsPage({super.key});
+class AdminRecentActivityPage extends StatefulWidget {
+  const AdminRecentActivityPage({super.key});
 
   @override
-  State<AdminAuditLogsPage> createState() => _AdminAuditLogsPageState();
+  State<AdminRecentActivityPage> createState() =>
+      _AdminRecentActivityPageState();
 }
 
-class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
+class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
   @override
   void initState() {
     super.initState();
@@ -24,7 +25,7 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "System Audit Logs"),
+      customAppbar: const CommonAppBar(title: "Recent Activity"),
       body: BlocBuilder<AdminRecentActivityBloc, AdminRecentActivityState>(
         builder: (context, state) {
           if (state is AdminRecentActivityLoading) {
@@ -36,10 +37,15 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(state.message, style: const TextStyle(color: AppColors.error)),
+                  Text(
+                    state.message,
+                    style: const TextStyle(color: AppColors.error),
+                  ),
                   SizedBox(height: 12.h),
                   ElevatedButton(
-                    onPressed: () => context.read<AdminRecentActivityBloc>().add(LoadRecentActivity()),
+                    onPressed: () => context
+                        .read<AdminRecentActivityBloc>()
+                        .add(LoadRecentActivity()),
                     child: const Text("Retry"),
                   ),
                 ],
@@ -50,7 +56,7 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
           if (state is AdminRecentActivityLoaded) {
             final logs = state.logs;
             if (logs.isEmpty) {
-              return const Center(child: Text("No audit records found."));
+              return const Center(child: Text("No recent activities."));
             }
 
             return ListView.builder(
@@ -58,7 +64,45 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
               itemCount: logs.length,
               itemBuilder: (context, idx) {
                 final log = logs[idx];
-                final dateStr = "${log.createdAt.day}/${log.createdAt.month}/${log.createdAt.year} ${log.createdAt.hour.toString().padLeft(2, '0')}:${log.createdAt.minute.toString().padLeft(2, '0')}";
+                Color iconColor;
+                IconData icon;
+                switch (log.category) {
+                  case 'Record':
+                    icon = Icons.folder_shared_outlined;
+                    iconColor = AppColors.primary;
+                    break;
+                  case 'Patient':
+                    icon = Icons.person_add_outlined;
+                    iconColor = AppColors.secondary;
+                    break;
+                  case 'Lab':
+                    icon = Icons.science_outlined;
+                    iconColor = AppColors.accent;
+                    break;
+                  case 'Pharmacy':
+                    icon = Icons.medication_outlined;
+                    iconColor = AppColors.error;
+                    break;
+                  case 'Appointment':
+                    icon = Icons.calendar_month_outlined;
+                    iconColor = AppColors.success;
+                    break;
+                  default:
+                    icon = Icons.info_outline;
+                    iconColor = AppColors.textSecondary;
+                }
+
+                // Format time difference
+                final now = DateTime.now();
+                final diff = now.difference(log.createdAt);
+                String timeAgo = "Just now";
+                if (diff.inDays > 0) {
+                  timeAgo = "${diff.inDays}d ago";
+                } else if (diff.inHours > 0) {
+                  timeAgo = "${diff.inHours}h ago";
+                } else if (diff.inMinutes > 0) {
+                  timeAgo = "${diff.inMinutes}m ago";
+                }
 
                 return Card(
                   margin: EdgeInsets.only(bottom: 12.h),
@@ -72,10 +116,10 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
                     leading: Container(
                       padding: EdgeInsets.all(8.r),
                       decoration: BoxDecoration(
-                        color: AppColors.adminPrimary.withOpacity(0.08),
+                        color: iconColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8.r),
                       ),
-                      child: const Icon(Icons.shield_outlined, color: AppColors.adminPrimary),
+                      child: Icon(icon, color: iconColor),
                     ),
                     title: Text(
                       log.message,
@@ -84,13 +128,9 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 4.h),
-                        Text("Category: ${log.category}", style: AppTextStyles.bodySmall),
-                        Text("Timestamp: $dateStr", style: AppTextStyles.bodySmall),
-                      ],
+                    subtitle: Text(
+                      "${log.category} | $timeAgo",
+                      style: AppTextStyles.bodySmall,
                     ),
                   ),
                 );

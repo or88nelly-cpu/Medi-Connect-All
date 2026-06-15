@@ -58,13 +58,21 @@ class BookingWizardState {
   }) {
     return BookingWizardState(
       currentStep: currentStep ?? this.currentStep,
-      selectedPatient: clearSelectedPatient ? null : (selectedPatient ?? this.selectedPatient),
+      selectedPatient: clearSelectedPatient
+          ? null
+          : (selectedPatient ?? this.selectedPatient),
       patientSearchQuery: patientSearchQuery ?? this.patientSearchQuery,
       isCreatingPatient: isCreatingPatient ?? this.isCreatingPatient,
-      selectedSection: clearSelectedSection ? null : (selectedSection ?? this.selectedSection),
-      selectedDoctor: clearSelectedDoctor ? null : (selectedDoctor ?? this.selectedDoctor),
+      selectedSection: clearSelectedSection
+          ? null
+          : (selectedSection ?? this.selectedSection),
+      selectedDoctor: clearSelectedDoctor
+          ? null
+          : (selectedDoctor ?? this.selectedDoctor),
       selectedDate: selectedDate ?? this.selectedDate,
-      selectedSlotTime: clearSelectedSlot ? null : (selectedSlotTime ?? this.selectedSlotTime),
+      selectedSlotTime: clearSelectedSlot
+          ? null
+          : (selectedSlotTime ?? this.selectedSlotTime),
       selectedType: selectedType ?? this.selectedType,
       isWaitingList: isWaitingList ?? this.isWaitingList,
       currentNormalCount: currentNormalCount ?? this.currentNormalCount,
@@ -77,7 +85,8 @@ class BookingWizardState {
 
 class BookingWizardCubit extends Cubit<BookingWizardState> {
   BookingWizardCubit()
-      : super(BookingWizardState(
+    : super(
+        BookingWizardState(
           currentStep: 0,
           patientSearchQuery: '',
           isCreatingPatient: false,
@@ -88,7 +97,8 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
           currentWaitingCount: 0,
           isLoadingCounts: false,
           gender: 'Male',
-        ));
+        ),
+      );
 
   void setGender(String val) {
     emit(state.copyWith(gender: val));
@@ -111,10 +121,7 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
   }
 
   void selectPatient(UserModel? patient) {
-    emit(state.copyWith(
-      selectedPatient: patient,
-      isCreatingPatient: false,
-    ));
+    emit(state.copyWith(selectedPatient: patient, isCreatingPatient: false));
   }
 
   void setPatientSearchQuery(String query) {
@@ -126,28 +133,24 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
   }
 
   void selectSection(DepartmentEntity? section) {
-    emit(state.copyWith(
-      selectedSection: section,
-      clearSelectedDoctor: true,
-      clearSelectedSlot: true,
-    ));
+    emit(
+      state.copyWith(
+        selectedSection: section,
+        clearSelectedDoctor: true,
+        clearSelectedSlot: true,
+      ),
+    );
   }
 
   void selectDoctor(UserModel? doctor) {
-    emit(state.copyWith(
-      selectedDoctor: doctor,
-      clearSelectedSlot: true,
-    ));
+    emit(state.copyWith(selectedDoctor: doctor, clearSelectedSlot: true));
     if (doctor != null) {
       loadAppointmentCounts();
     }
   }
 
   void selectDate(DateTime date) {
-    emit(state.copyWith(
-      selectedDate: date,
-      clearSelectedSlot: true,
-    ));
+    emit(state.copyWith(selectedDate: date, clearSelectedSlot: true));
     loadAppointmentCounts();
   }
 
@@ -168,9 +171,11 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
     emit(state.copyWith(isLoadingCounts: true));
     try {
       final dateStr = state.selectedDate.toIso8601String().split('T').first;
-      final doctorName = state.selectedDoctor!.name ??
-          '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'.trim();
-      
+      final doctorName =
+          state.selectedDoctor!.name ??
+          '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
+              .trim();
+
       final res = await Supabase.instance.client
           .from('appointments')
           .select('token')
@@ -178,23 +183,51 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
           .eq('appointment_date', dateStr);
 
       final list = res as List<dynamic>? ?? [];
+      // Compute the prefix based on doctor initials
+      final cleanName = doctorName
+          .replaceAll(
+            RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false),
+            '',
+          )
+          .trim();
+      final parts = cleanName
+          .split(RegExp(r'\s+'))
+          .where((s) => s.isNotEmpty)
+          .toList();
+      String initials = 'DR';
+      if (parts.isNotEmpty) {
+        if (parts.length == 1) {
+          initials = parts[0]
+              .substring(0, parts[0].length >= 2 ? 2 : 1)
+              .toUpperCase();
+        } else {
+          initials =
+              '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
+        }
+      }
+
+      final normalPrefix = '${initials}A';
+      final waitingPrefix = '${initials}W';
+
       int normal = 0;
       int waiting = 0;
       for (final item in list) {
         final t = item['token'] as String?;
         if (t != null) {
-          if (t.startsWith('LNW')) {
+          if (t.startsWith(waitingPrefix)) {
             waiting++;
-          } else if (t.startsWith('LNA')) {
+          } else if (t.startsWith(normalPrefix)) {
             normal++;
           }
         }
       }
-      emit(state.copyWith(
-        currentNormalCount: normal,
-        currentWaitingCount: waiting,
-        isLoadingCounts: false,
-      ));
+      emit(
+        state.copyWith(
+          currentNormalCount: normal,
+          currentWaitingCount: waiting,
+          isLoadingCounts: false,
+        ),
+      );
     } catch (_) {
       emit(state.copyWith(isLoadingCounts: false));
     }

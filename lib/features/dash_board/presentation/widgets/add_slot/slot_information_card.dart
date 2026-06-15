@@ -4,7 +4,16 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
 class SlotInformationCard extends StatefulWidget {
-  final Function(String date, String session, String start, String end, String duration, String gap, int count)? onConfigChanged;
+  final Function(
+    String date,
+    String session,
+    String start,
+    String end,
+    String duration,
+    String gap,
+    int count,
+  )?
+  onConfigChanged;
 
   const SlotInformationCard({super.key, this.onConfigChanged});
 
@@ -20,10 +29,43 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
   String _slotDuration = "10 Minutes";
   String _gapDuration = "0 Minutes";
 
-  final List<String> _timesMorning = ["09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM"];
-  final List<String> _timesAfternoon = ["02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM"];
-  final List<String> _durations = ["10 Minutes", "15 Minutes", "20 Minutes", "30 Minutes", "45 Minutes", "60 Minutes"];
-  final List<String> _gaps = ["0 Minutes", "5 Minutes", "10 Minutes", "15 Minutes", "20 Minutes"];
+  final List<String> _timesMorning = [
+    "09:00 AM",
+    "09:30 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+    "11:30 AM",
+    "12:00 PM",
+    "12:30 PM",
+    "01:00 PM",
+  ];
+  final List<String> _timesAfternoon = [
+    "02:00 PM",
+    "02:30 PM",
+    "03:00 PM",
+    "03:30 PM",
+    "04:00 PM",
+    "04:30 PM",
+    "05:00 PM",
+    "05:30 PM",
+    "06:00 PM",
+  ];
+  final List<String> _durations = [
+    "10 Minutes",
+    "15 Minutes",
+    "20 Minutes",
+    "30 Minutes",
+    "45 Minutes",
+    "60 Minutes",
+  ];
+  final List<String> _gaps = [
+    "0 Minutes",
+    "5 Minutes",
+    "10 Minutes",
+    "15 Minutes",
+    "20 Minutes",
+  ];
 
   @override
   void initState() {
@@ -88,9 +130,23 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
       lastDate: DateTime(2030, 12, 31),
     );
     if (picked != null) {
-      final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      final months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
       setState(() {
-        _selectedDate = "${picked.day} ${months[picked.month - 1]} ${picked.year}";
+        _selectedDate =
+            "${picked.day} ${months[picked.month - 1]} ${picked.year}";
       });
       _notifyChanges();
     }
@@ -99,13 +155,23 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final totalSlots = _calculateTotalSlots();
-    final activeTimes = _selectedSession == "Morning" ? _timesMorning : _timesAfternoon;
+    final activeTimes = _selectedSession == "Morning"
+        ? _timesMorning
+        : _timesAfternoon;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -134,12 +200,18 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Select Date", style: TextStyle(color: labelColor, fontSize: 10.sp)),
+                    Text(
+                      "Select Date",
+                      style: TextStyle(color: labelColor, fontSize: 10.sp),
+                    ),
                     SizedBox(height: 6.h),
                     GestureDetector(
                       onTap: _selectDate,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 10.h,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(color: borderColor),
                           borderRadius: BorderRadius.circular(6.r),
@@ -147,8 +219,19 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(_selectedDate, style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600)),
-                            Icon(Icons.calendar_month_outlined, size: 14.sp, color: AppColors.primary),
+                            Text(
+                              _selectedDate,
+                              style: TextStyle(
+                                color: textColor,
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Icon(
+                              Icons.calendar_month_outlined,
+                              size: 14.sp,
+                              color: AppColors.primary,
+                            ),
                           ],
                         ),
                       ),
@@ -162,13 +245,26 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Select Session", style: TextStyle(color: labelColor, fontSize: 10.sp)),
+                    Text(
+                      "Select Session",
+                      style: TextStyle(color: labelColor, fontSize: 10.sp),
+                    ),
                     SizedBox(height: 6.h),
                     Row(
                       children: [
-                        _buildSessionButton("Morning", labelColor, borderColor, cardBg),
+                        _buildSessionButton(
+                          "Morning",
+                          labelColor,
+                          borderColor,
+                          cardBg,
+                        ),
                         SizedBox(width: 4.w),
-                        _buildSessionButton("Afternoon", labelColor, borderColor, cardBg),
+                        _buildSessionButton(
+                          "Afternoon",
+                          labelColor,
+                          borderColor,
+                          cardBg,
+                        ),
                       ],
                     ),
                   ],
@@ -269,7 +365,9 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
             decoration: BoxDecoration(
               color: isDark ? const Color(0xFF131130) : const Color(0xFFF3E5F5),
               border: Border.all(
-                color: isDark ? const Color(0xFF3F2D70) : const Color(0xFFE1BEE7),
+                color: isDark
+                    ? const Color(0xFF3F2D70)
+                    : const Color(0xFFE1BEE7),
                 width: 0.5.r,
               ),
               borderRadius: BorderRadius.circular(8.r),
@@ -279,7 +377,9 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
               children: [
                 Icon(
                   Icons.info_outline,
-                  color: isDark ? const Color(0xFFB39DDB) : const Color(0xFF7B1FA2),
+                  color: isDark
+                      ? const Color(0xFFB39DDB)
+                      : const Color(0xFF7B1FA2),
                   size: 16.sp,
                 ),
                 SizedBox(width: 8.w),
@@ -287,7 +387,9 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
                   child: Text(
                     "Slots will be created from $_startTime to $_endTime with $_slotDuration duration.\nTotal Slots: $totalSlots",
                     style: TextStyle(
-                      color: isDark ? const Color(0xFFB39DDB) : const Color(0xFF7B1FA2),
+                      color: isDark
+                          ? const Color(0xFFB39DDB)
+                          : const Color(0xFF7B1FA2),
                       fontSize: 10.sp,
                       height: 1.4,
                       fontWeight: FontWeight.w600,
@@ -302,7 +404,12 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
     );
   }
 
-  Widget _buildSessionButton(String session, Color labelColor, Color borderColor, Color cardBg) {
+  Widget _buildSessionButton(
+    String session,
+    Color labelColor,
+    Color borderColor,
+    Color cardBg,
+  ) {
     final isSelected = _selectedSession == session;
     final activeBg = AppColors.primary;
 
@@ -361,7 +468,10 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(color: labelColor, fontSize: 10.sp)),
+        Text(
+          label,
+          style: TextStyle(color: labelColor, fontSize: 10.sp),
+        ),
         SizedBox(height: 6.h),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -375,7 +485,11 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
               isExpanded: true,
               dropdownColor: cardBg,
               icon: Icon(Icons.arrow_drop_down, color: labelColor, size: 14.sp),
-              style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+              ),
               onChanged: onChanged,
               items: items.map((val) {
                 return DropdownMenuItem<String>(
@@ -384,7 +498,9 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
                     children: [
                       Icon(icon, size: 12.sp, color: labelColor),
                       SizedBox(width: 6.w),
-                      Expanded(child: Text(val, overflow: TextOverflow.ellipsis)),
+                      Expanded(
+                        child: Text(val, overflow: TextOverflow.ellipsis),
+                      ),
                     ],
                   ),
                 );

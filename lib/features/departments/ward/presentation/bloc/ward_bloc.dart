@@ -20,13 +20,16 @@ abstract class WardState extends Equatable {
 }
 
 class WardInitial extends WardState {}
+
 class WardLoading extends WardState {}
+
 class WardLoaded extends WardState {
   final Map<String, dynamic> stats;
   const WardLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class WardError extends WardState {
   final String message;
   const WardError(this.message);
@@ -42,7 +45,10 @@ class WardBloc extends Bloc<WardEvent, WardState> {
     on<LoadWardStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadWardStats event, Emitter<WardState> emit) async {
+  Future<void> _onLoadStats(
+    LoadWardStats event,
+    Emitter<WardState> emit,
+  ) async {
     emit(WardLoading());
     final result = await _useCase(const NoParams());
     result.fold(

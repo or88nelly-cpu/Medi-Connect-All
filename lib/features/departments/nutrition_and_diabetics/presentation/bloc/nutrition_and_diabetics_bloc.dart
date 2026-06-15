@@ -20,13 +20,16 @@ abstract class NutritionAndDiabeticsState extends Equatable {
 }
 
 class NutritionAndDiabeticsInitial extends NutritionAndDiabeticsState {}
+
 class NutritionAndDiabeticsLoading extends NutritionAndDiabeticsState {}
+
 class NutritionAndDiabeticsLoaded extends NutritionAndDiabeticsState {
   final Map<String, dynamic> stats;
   const NutritionAndDiabeticsLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class NutritionAndDiabeticsError extends NutritionAndDiabeticsState {
   final String message;
   const NutritionAndDiabeticsError(this.message);
@@ -35,14 +38,19 @@ class NutritionAndDiabeticsError extends NutritionAndDiabeticsState {
 }
 
 // BLOC
-class NutritionAndDiabeticsBloc extends Bloc<NutritionAndDiabeticsEvent, NutritionAndDiabeticsState> {
+class NutritionAndDiabeticsBloc
+    extends Bloc<NutritionAndDiabeticsEvent, NutritionAndDiabeticsState> {
   final GetNutritionAndDiabeticsStatsUseCase _useCase;
 
-  NutritionAndDiabeticsBloc(this._useCase) : super(NutritionAndDiabeticsInitial()) {
+  NutritionAndDiabeticsBloc(this._useCase)
+    : super(NutritionAndDiabeticsInitial()) {
     on<LoadNutritionAndDiabeticsStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadNutritionAndDiabeticsStats event, Emitter<NutritionAndDiabeticsState> emit) async {
+  Future<void> _onLoadStats(
+    LoadNutritionAndDiabeticsStats event,
+    Emitter<NutritionAndDiabeticsState> emit,
+  ) async {
     emit(NutritionAndDiabeticsLoading());
     final result = await _useCase(const NoParams());
     result.fold(

@@ -39,35 +39,43 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
       "name": "Online",
       "icon": Icons.circle,
       "color": const Color(0xFF0F9F58),
-      "desc": "Available for Appointments"
+      "desc": "Available for Appointments",
     },
     {
       "name": "Busy",
       "icon": Icons.error_outline,
       "color": AppColors.warning,
-      "desc": "In consultations / surgeries"
+      "desc": "In consultations / surgeries",
     },
     {
       "name": "Offline",
       "icon": Icons.remove_circle_outline,
       "color": AppColors.error,
-      "desc": "Not currently active"
+      "desc": "Not currently active",
     },
     {
       "name": "On Leave",
       "icon": Icons.calendar_today_outlined,
       "color": AppColors.primary,
-      "desc": "Out of clinic today"
+      "desc": "Out of clinic today",
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final activeStatusDetail = _statusOptions.firstWhere(
       (s) => s["name"].toString().toLowerCase() == _currentStatus.toLowerCase(),
@@ -99,7 +107,9 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                 decoration: BoxDecoration(
-                  color: (activeStatusDetail["color"] as Color).withOpacity(0.1),
+                  color: (activeStatusDetail["color"] as Color).withValues(
+                    alpha: 0.1,
+                  ),
                   borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(
                     color: activeStatusDetail["color"] as Color,
@@ -120,10 +130,7 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
           SizedBox(height: 4.h),
           Text(
             "Currently ${activeStatusDetail["desc"]}",
-            style: TextStyle(
-              color: labelColor,
-              fontSize: 11.sp,
-            ),
+            style: TextStyle(color: labelColor, fontSize: 11.sp),
           ),
           SizedBox(height: 16.h),
           // Option Buttons Row
@@ -131,7 +138,8 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: _statusOptions.map((opt) {
               final optName = opt["name"] as String;
-              final isSelected = optName.toLowerCase() == _currentStatus.toLowerCase();
+              final isSelected =
+                  optName.toLowerCase() == _currentStatus.toLowerCase();
               final optColor = opt["color"] as Color;
 
               return Expanded(
@@ -150,12 +158,10 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? optColor.withOpacity(0.1)
+                          ? optColor.withValues(alpha: 0.1)
                           : Colors.transparent,
                       border: Border.all(
-                        color: isSelected
-                            ? optColor
-                            : borderColor,
+                        color: isSelected ? optColor : borderColor,
                         width: 1.r,
                       ),
                       borderRadius: BorderRadius.circular(8.r),
@@ -173,7 +179,9 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
                           optName,
                           style: TextStyle(
                             color: isSelected ? optColor : textColor,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                             fontSize: 10.sp,
                           ),
                         ),

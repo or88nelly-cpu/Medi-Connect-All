@@ -20,13 +20,16 @@ abstract class OperationTheatreState extends Equatable {
 }
 
 class OperationTheatreInitial extends OperationTheatreState {}
+
 class OperationTheatreLoading extends OperationTheatreState {}
+
 class OperationTheatreLoaded extends OperationTheatreState {
   final Map<String, dynamic> stats;
   const OperationTheatreLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class OperationTheatreError extends OperationTheatreState {
   final String message;
   const OperationTheatreError(this.message);
@@ -35,14 +38,18 @@ class OperationTheatreError extends OperationTheatreState {
 }
 
 // BLOC
-class OperationTheatreBloc extends Bloc<OperationTheatreEvent, OperationTheatreState> {
+class OperationTheatreBloc
+    extends Bloc<OperationTheatreEvent, OperationTheatreState> {
   final GetOperationTheatreStatsUseCase _useCase;
 
   OperationTheatreBloc(this._useCase) : super(OperationTheatreInitial()) {
     on<LoadOperationTheatreStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadOperationTheatreStats event, Emitter<OperationTheatreState> emit) async {
+  Future<void> _onLoadStats(
+    LoadOperationTheatreStats event,
+    Emitter<OperationTheatreState> emit,
+  ) async {
     emit(OperationTheatreLoading());
     final result = await _useCase(const NoParams());
     result.fold(

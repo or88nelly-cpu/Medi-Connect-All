@@ -50,11 +50,21 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final fieldBg = isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade50;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final fieldBg = isDark
+        ? AppColors.terminalDarkFieldFill
+        : Colors.grey.shade50;
 
     final availableModes = ["Video", "Audio", "In-Person"];
 
@@ -94,10 +104,18 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                   ),
                   child: TextField(
                     controller: _langController,
-                    style: TextStyle(color: textColor, fontSize: 11.sp, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                     decoration: InputDecoration(
                       hintText: "Add a language (e.g. Spanish)",
-                      hintStyle: TextStyle(color: labelColor, fontSize: 11.sp, fontWeight: FontWeight.normal),
+                      hintStyle: TextStyle(
+                        color: labelColor,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.normal,
+                      ),
                       border: InputBorder.none,
                       isDense: true,
                     ),
@@ -139,9 +157,15 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
               return Chip(
                 label: Text(
                   lang,
-                  style: TextStyle(color: textColor, fontSize: 10.5.sp, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 10.5.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                backgroundColor: isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade100,
+                backgroundColor: isDark
+                    ? AppColors.terminalDarkFieldFill
+                    : Colors.grey.shade100,
                 side: BorderSide(color: borderColor),
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -158,7 +182,9 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
           Wrap(
             spacing: 8.w,
             children: availableModes.map((mode) {
-              final isSelected = widget.selectedConsultationModes.contains(mode);
+              final isSelected = widget.selectedConsultationModes.contains(
+                mode,
+              );
               return ChoiceChip(
                 label: Text(
                   mode,
@@ -170,8 +196,12 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                 ),
                 selected: isSelected,
                 selectedColor: AppColors.primary,
-                backgroundColor: isDark ? AppColors.terminalDarkFieldFill : Colors.grey.shade100,
-                side: BorderSide(color: isSelected ? AppColors.primary : borderColor),
+                backgroundColor: isDark
+                    ? AppColors.terminalDarkFieldFill
+                    : Colors.grey.shade100,
+                side: BorderSide(
+                  color: isSelected ? AppColors.primary : borderColor,
+                ),
                 checkmarkColor: Colors.white,
                 onSelected: (_) => widget.onToggleConsultationMode(mode),
               );
@@ -197,7 +227,11 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: 8.h),
-                      child: Icon(Icons.info_outline, size: 14.sp, color: labelColor),
+                      child: Icon(
+                        Icons.info_outline,
+                        size: 14.sp,
+                        color: labelColor,
+                      ),
                     ),
                     SizedBox(width: 8.w),
                     Expanded(
@@ -206,10 +240,19 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                         maxLines: 4,
                         maxLength: 500,
                         style: TextStyle(color: textColor, fontSize: 11.sp),
-                        buildCounter: (context, {required currentLength, required isFocused, maxLength}) => null,
+                        buildCounter:
+                            (
+                              context, {
+                              required currentLength,
+                              required isFocused,
+                              maxLength,
+                            }) => null,
                         decoration: InputDecoration(
                           hintText: "Enter short bio / background...",
-                          hintStyle: TextStyle(color: labelColor, fontSize: 11.sp),
+                          hintStyle: TextStyle(
+                            color: labelColor,
+                            fontSize: 11.sp,
+                          ),
                           border: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 8.h),

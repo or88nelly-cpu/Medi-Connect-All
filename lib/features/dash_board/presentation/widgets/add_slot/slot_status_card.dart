@@ -25,10 +25,18 @@ class _SlotStatusCardState extends State<SlotStatusCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return Container(
       padding: EdgeInsets.all(14.r),
@@ -51,10 +59,7 @@ class _SlotStatusCardState extends State<SlotStatusCard> {
           SizedBox(height: 2.h),
           Text(
             "Select initial status for the slot",
-            style: TextStyle(
-              color: labelColor,
-              fontSize: 10.sp,
-            ),
+            style: TextStyle(color: labelColor, fontSize: 10.sp),
           ),
           SizedBox(height: 14.h),
           // Horizontal status options row
@@ -79,7 +84,9 @@ class _SlotStatusCardState extends State<SlotStatusCard> {
                     margin: EdgeInsets.symmetric(horizontal: 4.w),
                     padding: EdgeInsets.symmetric(vertical: 10.h),
                     decoration: BoxDecoration(
-                      color: isSelected ? color.withOpacity(0.1) : Colors.transparent,
+                      color: isSelected
+                          ? color.withValues(alpha: 0.1)
+                          : Colors.transparent,
                       border: Border.all(
                         color: isSelected ? color : borderColor,
                         width: 1.r,

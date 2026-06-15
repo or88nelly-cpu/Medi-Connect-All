@@ -6,6 +6,8 @@ import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 
 class AdminHeader extends StatelessWidget {
+  const AdminHeader({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(

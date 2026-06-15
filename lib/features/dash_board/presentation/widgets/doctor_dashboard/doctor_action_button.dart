@@ -39,21 +39,18 @@ class DoctorActionButton extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(8.r),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                icon,
-                color: color,
-                size: 20.r,
-              ),
+              child: Icon(icon, color: color, size: 20.r),
             ),
-            SizedBox(height: 8.h),
+            Spacer(),
+
             Text(
               label,
               style: TextStyle(
                 color: isDark ? Colors.white : AppColors.textPrimary,
-                fontSize: 10.sp,
+                fontSize: 9.sp,
                 fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,

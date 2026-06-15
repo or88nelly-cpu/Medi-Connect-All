@@ -1,5 +1,7 @@
 /// Custom reusable feedback dialog widgets.
 /// Implements: SuccessDialog, ErrorDialog, ConfirmationDialog.
+library;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/common_widgets/buttons/buttons.dart';
@@ -45,7 +47,7 @@ class SuccessDialog extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30.r,
-            backgroundColor: AppColors.success.withOpacity(0.1),
+            backgroundColor: AppColors.success.withValues(alpha: 0.1),
             child: Icon(
               Icons.check_circle_outline,
               size: 36.r,
@@ -99,7 +101,7 @@ class ErrorDialog extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30.r,
-            backgroundColor: AppColors.error.withOpacity(0.1),
+            backgroundColor: AppColors.error.withValues(alpha: 0.1),
             child: Icon(
               Icons.error_outline,
               size: 36.r,
@@ -170,7 +172,7 @@ class ConfirmationDialog extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 30.r,
-            backgroundColor: AppColors.warning.withOpacity(0.1),
+            backgroundColor: AppColors.warning.withValues(alpha: 0.1),
             child: Icon(
               Icons.warning_amber_outlined,
               size: 36.r,

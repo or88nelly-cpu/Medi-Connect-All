@@ -27,9 +27,13 @@ class AdminDoctorsPage extends StatefulWidget {
 
 class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
   final ValueNotifier<String> _searchNotifier = ValueNotifier<String>('');
-  final ValueNotifier<String> _selectedSectionNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _selectedSectionNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<String> _sortByNotifier = ValueNotifier<String>('None');
-  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>('All');
+  final ValueNotifier<String> _statusFilterNotifier = ValueNotifier<String>(
+    'All',
+  );
   final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(1);
   final int _itemsPerPage = 5;
 
@@ -53,13 +57,24 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
     final state = context.read<DepartmentBloc>().state;
     List<String> list = [];
     if (state is DepartmentsLoaded) {
-      list.addAll(state.sections.map((e) => e.name).where((name) => name.isNotEmpty));
-      list.addAll(state.departments.map((e) => e.name).where((name) => name.isNotEmpty));
+      list.addAll(
+        state.sections.map((e) => e.name).where((name) => name.isNotEmpty),
+      );
+      list.addAll(
+        state.departments.map((e) => e.name).where((name) => name.isNotEmpty),
+      );
       list = list.toSet().toList();
     }
 
     if (list.isEmpty) {
-      list = ['General Medicine', 'Cardiology', 'Neurology', 'Pediatrics', 'Emergency', 'OPD'];
+      list = [
+        'General Medicine',
+        'Cardiology',
+        'Neurology',
+        'Pediatrics',
+        'Emergency',
+        'OPD',
+      ];
     }
 
     String selectedDept = list.first;
@@ -94,7 +109,9 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                     )
                     .then((value) {
                       if (value == true && context.mounted) {
-                        context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+                        context.read<DoctorStaffBloc>().add(
+                          const LoadDoctorStaff('All'),
+                        );
                       }
                     });
               },
@@ -109,10 +126,13 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     return BlocProvider(
-      create: (context) => GetIt.I<DoctorStaffBloc>()..add(const LoadDoctorStaff('All')),
+      create: (context) =>
+          GetIt.I<DoctorStaffBloc>()..add(const LoadDoctorStaff('All')),
       child: Builder(
         builder: (context) {
           return CustomScaffold(
@@ -132,7 +152,11 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                       builder: (context, state) {
                         final List<String> sections = ['All'];
                         if (state is DepartmentsLoaded) {
-                          sections.addAll(state.sections.map((e) => e.name).where((name) => name.isNotEmpty));
+                          sections.addAll(
+                            state.sections
+                                .map((e) => e.name)
+                                .where((name) => name.isNotEmpty),
+                          );
                         }
                         final uniqueSections = sections.toSet().toList();
 
@@ -161,7 +185,9 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                           BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
                             builder: (context, state) {
                               if (state is DoctorStaffLoading) {
-                                return const Center(child: CircularProgressIndicator());
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
                               } else if (state is DoctorStaffError) {
                                 return Center(
                                   child: Text(
@@ -173,7 +199,9 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
 
                               List<UserModel> doctorsList = [];
                               if (state is DoctorStaffLoaded) {
-                                doctorsList = state.doctors.where((u) => u.role == 'doctor').toList();
+                                doctorsList = state.doctors
+                                    .where((u) => u.role == 'doctor')
+                                    .toList();
                               }
 
                               if (doctorsList.isEmpty) {
@@ -195,27 +223,61 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                         valueListenable: _sortByNotifier,
                                         builder: (context, sortBy, _) {
                                           return ValueListenableBuilder<String>(
-                                            valueListenable: _statusFilterNotifier,
+                                            valueListenable:
+                                                _statusFilterNotifier,
                                             builder: (context, statusFilter, _) {
                                               // 1. Filter
-                                              final filtered = doctorsList.where((doc) {
-                                                final matchesSearch = (doc.name ?? '').toLowerCase().contains(searchQuery.toLowerCase()) ||
-                                                    (doc.specialization ?? '').toLowerCase().contains(searchQuery.toLowerCase());
-                                                final matchesSection = selectedSection == 'All' || doc.department == selectedSection;
-                                                final matchesStatus = statusFilter == 'All' ||
-                                                    doc.status.toLowerCase() == statusFilter.toLowerCase();
-                                                return matchesSearch && matchesSection && matchesStatus;
-                                              }).toList();
+                                              final filtered = doctorsList.where(
+                                                (doc) {
+                                                  final matchesSearch =
+                                                      (doc.name ?? '')
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchQuery
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      (doc.specialization ?? '')
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchQuery
+                                                                .toLowerCase(),
+                                                          );
+                                                  final matchesSection =
+                                                      selectedSection ==
+                                                          'All' ||
+                                                      doc.department ==
+                                                          selectedSection;
+                                                  final matchesStatus =
+                                                      statusFilter == 'All' ||
+                                                      doc.status
+                                                              .toLowerCase() ==
+                                                          statusFilter
+                                                              .toLowerCase();
+                                                  return matchesSearch &&
+                                                      matchesSection &&
+                                                      matchesStatus;
+                                                },
+                                              ).toList();
 
                                               // 2. Sort
                                               if (sortBy == 'Name (A-Z)') {
-                                                filtered.sort((a, b) => (a.name ?? '').compareTo(b.name ?? ''));
-                                              } else if (sortBy == 'Name (Z-A)') {
-                                                filtered.sort((a, b) => (b.name ?? '').compareTo(a.name ?? ''));
-                                              } else if (sortBy == 'Experience (High-Low)') {
+                                                filtered.sort(
+                                                  (a, b) => (a.name ?? '')
+                                                      .compareTo(b.name ?? ''),
+                                                );
+                                              } else if (sortBy ==
+                                                  'Name (Z-A)') {
+                                                filtered.sort(
+                                                  (a, b) => (b.name ?? '')
+                                                      .compareTo(a.name ?? ''),
+                                                );
+                                              } else if (sortBy ==
+                                                  'Experience (High-Low)') {
                                                 filtered.sort((a, b) {
-                                                  final expA = (a.age ?? 35) - 25;
-                                                  final expB = (b.age ?? 35) - 25;
+                                                  final expA =
+                                                      (a.age ?? 35) - 25;
+                                                  final expB =
+                                                      (b.age ?? 35) - 25;
                                                   return expB.compareTo(expA);
                                                 });
                                               }
@@ -224,38 +286,83 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                                 return Center(
                                                   child: Text(
                                                     "No matching doctors found.",
-                                                    style: TextStyle(color: labelColor),
+                                                    style: TextStyle(
+                                                      color: labelColor,
+                                                    ),
                                                   ),
                                                 );
                                               }
 
-                                              return ValueListenableBuilder<int>(
-                                                valueListenable: _currentPageNotifier,
+                                              return ValueListenableBuilder<
+                                                int
+                                              >(
+                                                valueListenable:
+                                                    _currentPageNotifier,
                                                 builder: (context, currentPage, _) {
-                                                  final totalPages = (filtered.length / _itemsPerPage).ceil();
-                                                  final startIndex = (currentPage - 1) * _itemsPerPage;
-                                                  final endIndex = (startIndex + _itemsPerPage).clamp(0, filtered.length);
-                                                  final paginatedList = filtered.sublist(startIndex, endIndex);
+                                                  final totalPages =
+                                                      (filtered.length /
+                                                              _itemsPerPage)
+                                                          .ceil();
+                                                  final startIndex =
+                                                      (currentPage - 1) *
+                                                      _itemsPerPage;
+                                                  final endIndex =
+                                                      (startIndex +
+                                                              _itemsPerPage)
+                                                          .clamp(
+                                                            0,
+                                                            filtered.length,
+                                                          );
+                                                  final paginatedList = filtered
+                                                      .sublist(
+                                                        startIndex,
+                                                        endIndex,
+                                                      );
 
                                                   return Column(
                                                     children: [
                                                       Expanded(
                                                         child: ListView.builder(
-                                                          itemCount: paginatedList.length,
+                                                          itemCount:
+                                                              paginatedList
+                                                                  .length,
                                                           itemBuilder: (context, idx) {
-                                                            final doc = paginatedList[idx];
+                                                            final doc =
+                                                                paginatedList[idx];
                                                             return DoctorCard(
                                                               doc: doc,
                                                               onTap: () {
-                                                                context.push('/admin/doctor-staff/detail', extra: doc);
+                                                                context.push(
+                                                                  '/admin/doctor-staff/detail',
+                                                                  extra: doc,
+                                                                );
                                                               },
                                                               onView: () {
-                                                                context.push('/admin/doctor-staff/detail', extra: doc);
+                                                                context.push(
+                                                                  '/admin/doctor-staff/detail',
+                                                                  extra: doc,
+                                                                );
                                                               },
                                                               onEdit: () async {
-                                                                final res = await context.push('/admin/doctor-staff/edit', extra: doc);
-                                                                if (res == true && context.mounted) {
-                                                                  context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+                                                                final res =
+                                                                    await context.push(
+                                                                      '/admin/doctor-staff/edit',
+                                                                      extra:
+                                                                          doc,
+                                                                    );
+                                                                if (res ==
+                                                                        true &&
+                                                                    context
+                                                                        .mounted) {
+                                                                  context
+                                                                      .read<
+                                                                        DoctorStaffBloc
+                                                                      >()
+                                                                      .add(
+                                                                        const LoadDoctorStaff(
+                                                                          'All',
+                                                                        ),
+                                                                      );
                                                                 }
                                                               },
                                                             );
@@ -263,10 +370,13 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                                         ),
                                                       ),
                                                       DirectoryPagination(
-                                                        currentPage: currentPage,
+                                                        currentPage:
+                                                            currentPage,
                                                         totalPages: totalPages,
                                                         onPageChanged: (page) {
-                                                          _currentPageNotifier.value = page;
+                                                          _currentPageNotifier
+                                                                  .value =
+                                                              page;
                                                         },
                                                       ),
                                                     ],
@@ -292,9 +402,13 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                               children: [
                                 FloatingActionButton(
                                   heroTag: 'add_doctor_fab',
-                                  onPressed: () => _showSelectDepartmentAndCreate(context),
+                                  onPressed: () =>
+                                      _showSelectDepartmentAndCreate(context),
                                   backgroundColor: AppColors.primary,
-                                  child: const Icon(Icons.add, color: Colors.white),
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 SizedBox(height: 4.h),
                                 Text(
@@ -316,7 +430,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
               ),
             ),
           );
-        }
+        },
       ),
     );
   }

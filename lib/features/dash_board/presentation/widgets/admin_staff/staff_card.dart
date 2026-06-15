@@ -25,10 +25,18 @@ class StaffCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final status = stf.status;
 
@@ -79,7 +87,10 @@ class StaffCard extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 2.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.secondary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(4.r),
@@ -98,10 +109,7 @@ class StaffCard extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Text(
                       "Dept: ${stf.department ?? 'None'} | Shift: Rotational",
-                      style: TextStyle(
-                        color: labelColor,
-                        fontSize: 11.sp,
-                      ),
+                      style: TextStyle(color: labelColor, fontSize: 11.sp),
                     ),
                   ],
                 ),
@@ -124,16 +132,25 @@ class StaffCard extends StatelessWidget {
                     itemBuilder: (ctx) => [
                       PopupMenuItem(
                         value: 'view',
-                        child: Text("View Profile", style: TextStyle(color: textColor)),
+                        child: Text(
+                          "View Profile",
+                          style: TextStyle(color: textColor),
+                        ),
                       ),
                       PopupMenuItem(
                         value: 'edit',
-                        child: Text("Edit Staff", style: TextStyle(color: textColor)),
+                        child: Text(
+                          "Edit Staff",
+                          style: TextStyle(color: textColor),
+                        ),
                       ),
                       if (onDelete != null)
                         PopupMenuItem(
                           value: 'delete',
-                          child: Text("Delete", style: TextStyle(color: AppColors.error)),
+                          child: Text(
+                            "Delete",
+                            style: TextStyle(color: AppColors.error),
+                          ),
                         ),
                     ],
                   ),
@@ -174,10 +191,7 @@ class StaffCard extends StatelessWidget {
           Container(
             width: 6.r,
             height: 6.r,
-            decoration: BoxDecoration(
-              color: dotColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
           SizedBox(width: 6.w),
           Text(

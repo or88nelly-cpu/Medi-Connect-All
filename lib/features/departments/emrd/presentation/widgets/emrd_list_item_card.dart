@@ -15,12 +15,7 @@ class EmrdListItemCard extends StatelessWidget {
   });
 
   Color _getAvatarColor(String name) {
-    final colors = [
-      Colors.blue,
-      Colors.green,
-      Colors.purple,
-      Colors.orange,
-    ];
+    final colors = [Colors.blue, Colors.green, Colors.purple, Colors.orange];
     final index = name.hashCode.abs() % colors.length;
     return colors[index];
   }
@@ -43,7 +38,7 @@ class EmrdListItemCard extends StatelessWidget {
     final doctorName = _cleanDoctorName(record['doctor_name']);
     final specialty = record['specialty'] ?? 'General';
     final dateStr = record['recorded_at'] ?? record['created_at'] ?? '';
-    
+
     String formattedDate = 'N/A';
     if (dateStr.isNotEmpty) {
       try {
@@ -53,7 +48,9 @@ class EmrdListItemCard extends StatelessWidget {
     }
 
     final avatarBgColor = _getAvatarColor(patientName);
-    final initials = patientName.isNotEmpty ? patientName[0].toUpperCase() : 'P';
+    final initials = patientName.isNotEmpty
+        ? patientName[0].toUpperCase()
+        : 'P';
 
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
@@ -65,7 +62,7 @@ class EmrdListItemCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -83,7 +80,7 @@ class EmrdListItemCard extends StatelessWidget {
                 // Patient Avatar (Initials with color backgrounds matching mockups)
                 CircleAvatar(
                   radius: 24.r,
-                  backgroundColor: avatarBgColor.withOpacity(0.12),
+                  backgroundColor: avatarBgColor.withValues(alpha: 0.12),
                   child: Text(
                     initials,
                     style: TextStyle(
@@ -110,7 +107,9 @@ class EmrdListItemCard extends StatelessWidget {
                       Text(
                         '$doctorName · $specialty',
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: isDark ? Colors.white54 : AppColors.textSecondary,
+                          color: isDark
+                              ? Colors.white54
+                              : AppColors.textSecondary,
                         ),
                       ),
                       SizedBox(height: 4.h),
@@ -119,14 +118,22 @@ class EmrdListItemCard extends StatelessWidget {
                           Icon(
                             Icons.calendar_today,
                             size: 11.r,
-                            color: isDark ? Colors.white30 : AppColors.textSecondary.withOpacity(0.5),
+                            color: isDark
+                                ? Colors.white30
+                                : AppColors.textSecondary.withValues(
+                                    alpha: 0.5,
+                                  ),
                           ),
                           SizedBox(width: 4.w),
                           Text(
                             formattedDate,
                             style: AppTextStyles.bodySmall.copyWith(
                               fontSize: 10.sp,
-                              color: isDark ? Colors.white30 : AppColors.textSecondary.withOpacity(0.6),
+                              color: isDark
+                                  ? Colors.white30
+                                  : AppColors.textSecondary.withValues(
+                                      alpha: 0.6,
+                                    ),
                             ),
                           ),
                         ],
@@ -136,14 +143,23 @@ class EmrdListItemCard extends StatelessWidget {
                         children: [
                           // Completed badge
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 6.w,
+                              vertical: 2.h,
+                            ),
                             decoration: BoxDecoration(
-                              color: isDark ? const Color(0xFF1E3A20) : const Color(0xFFE8F5E9),
+                              color: isDark
+                                  ? const Color(0xFF1E3A20)
+                                  : const Color(0xFFE8F5E9),
                               borderRadius: BorderRadius.circular(4.r),
                             ),
                             child: Row(
                               children: [
-                                Icon(Icons.check, size: 10.r, color: Colors.green),
+                                Icon(
+                                  Icons.check,
+                                  size: 10.r,
+                                  color: Colors.green,
+                                ),
                                 SizedBox(width: 2.w),
                                 Text(
                                   "Completed",
@@ -159,9 +175,14 @@ class EmrdListItemCard extends StatelessWidget {
                           SizedBox(width: 8.w),
                           // EMR Created badge
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 6.w,
+                              vertical: 2.h,
+                            ),
                             decoration: BoxDecoration(
-                              color: isDark ? const Color(0xFF1E2D3E) : const Color(0xFFE0F2FE),
+                              color: isDark
+                                  ? const Color(0xFF1E2D3E)
+                                  : const Color(0xFFE0F2FE),
                               borderRadius: BorderRadius.circular(4.r),
                             ),
                             child: Text(
@@ -184,7 +205,7 @@ class EmrdListItemCard extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(8.r),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.08),
+                      color: AppColors.primary.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Icon(
@@ -199,7 +220,9 @@ class EmrdListItemCard extends StatelessWidget {
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 12.r,
-                  color: isDark ? Colors.white24 : AppColors.textSecondary.withOpacity(0.4),
+                  color: isDark
+                      ? Colors.white24
+                      : AppColors.textSecondary.withValues(alpha: 0.4),
                 ),
               ],
             ),

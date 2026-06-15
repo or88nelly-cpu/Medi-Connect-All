@@ -1,5 +1,7 @@
 /// Authentication repository interface contract.
 /// Must be implemented in the Data layer.
+library;
+
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/common_models/failures/failure.dart';
 

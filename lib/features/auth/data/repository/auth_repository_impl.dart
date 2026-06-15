@@ -1,5 +1,7 @@
 /// Repository implementation of the AuthRepository contract.
 /// Translates remote exceptions to clean functional Failures.
+library;
+
 import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
@@ -51,7 +53,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String? phoneNumber,
   }) async {
     try {
-      log("user details ${email} ${password} ${name} ${role} ${phoneNumber}");
+      log("user details $email $password $name $role $phoneNumber");
       final userModel = await _remoteDataSource.registerWithEmailAndPassword(
         email: email,
         password: password,

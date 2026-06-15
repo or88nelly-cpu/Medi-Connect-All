@@ -35,30 +35,45 @@ class _LoginFormState extends State<LoginForm> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     // Theme-based colors from AppColors
-    final cardBgColor = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final cardBorderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final textfieldBgColor = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
-    final textfieldBorderColor = isDark ? AppColors.terminalDarkFieldBorder : AppColors.terminalLightFieldBorder;
-    final textfieldHintColor = isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint;
-    final checkboxTextColor = isDark ? AppColors.terminalDarkCheckboxText : AppColors.terminalLightCheckboxText;
-    final footerTextColor = isDark ? AppColors.terminalDarkFooterText : AppColors.terminalLightFooterText;
+    final cardBgColor = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final cardBorderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final textfieldBgColor = isDark
+        ? AppColors.terminalDarkFieldFill
+        : AppColors.terminalLightFieldFill;
+    final textfieldBorderColor = isDark
+        ? AppColors.terminalDarkFieldBorder
+        : AppColors.terminalLightFieldBorder;
+    final textfieldHintColor = isDark
+        ? AppColors.terminalDarkFieldHint
+        : AppColors.terminalLightFieldHint;
+    final checkboxTextColor = isDark
+        ? AppColors.terminalDarkCheckboxText
+        : AppColors.terminalLightCheckboxText;
+    final footerTextColor = isDark
+        ? AppColors.terminalDarkFooterText
+        : AppColors.terminalLightFooterText;
 
     return Container(
       padding: EdgeInsets.all(24.r),
       decoration: BoxDecoration(
         color: cardBgColor,
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(
-          color: cardBorderColor,
-          width: 1.0,
-        ),
+        border: Border.all(color: cardBorderColor, width: 1.0),
         boxShadow: isDark
             ? null
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),
@@ -78,10 +93,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           SizedBox(height: 12.h),
-          Container(
-            height: 1.0,
-            color: cardBorderColor,
-          ),
+          Container(height: 1.0, color: cardBorderColor),
           SizedBox(height: 24.h),
 
           // Terminal ID (Email)
@@ -94,10 +106,8 @@ class _LoginFormState extends State<LoginForm> {
             bgColor: textfieldBgColor,
             borderColor: textfieldBorderColor,
             hintColor: textfieldHintColor,
-            validator: (val) => ValidationUtils.validateRequired(
-              val,
-              AppStrings.requiredField,
-            ),
+            validator: (val) =>
+                ValidationUtils.validateRequired(val, AppStrings.requiredField),
           ),
           SizedBox(height: 16.h),
 
@@ -138,20 +148,17 @@ class _LoginFormState extends State<LoginForm> {
           Row(
             children: [
               Theme(
-                data: ThemeData(
-                  unselectedWidgetColor: textfieldBorderColor,
-                ),
+                data: ThemeData(unselectedWidgetColor: textfieldBorderColor),
                 child: SizedBox(
                   width: 20.r,
                   height: 20.r,
                   child: Checkbox(
                     value: _rememberMe,
                     activeColor: AppColors.terminalAccentCyan,
-                    checkColor: isDark ? AppColors.terminalDarkBg : Colors.white,
-                    side: BorderSide(
-                      color: textfieldBorderColor,
-                      width: 1.5,
-                    ),
+                    checkColor: isDark
+                        ? AppColors.terminalDarkBg
+                        : Colors.white,
+                    side: BorderSide(color: textfieldBorderColor, width: 1.5),
                     onChanged: (val) {
                       setState(() {
                         _rememberMe = val ?? false;
@@ -187,7 +194,9 @@ class _LoginFormState extends State<LoginForm> {
                     borderRadius: BorderRadius.circular(6.r),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.terminalAccentCyan.withOpacity(0.3),
+                        color: AppColors.terminalAccentCyan.withValues(
+                          alpha: 0.3,
+                        ),
                         blurRadius: 10,
                         spreadRadius: 1,
                       ),
@@ -199,7 +208,9 @@ class _LoginFormState extends State<LoginForm> {
                           width: 20.r,
                           height: 20.r,
                           child: CircularProgressIndicator(
-                            color: isDark ? AppColors.terminalDarkBg : Colors.white,
+                            color: isDark
+                                ? AppColors.terminalDarkBg
+                                : Colors.white,
                             strokeWidth: 2.0,
                           ),
                         )
@@ -208,14 +219,18 @@ class _LoginFormState extends State<LoginForm> {
                           children: [
                             Icon(
                               Icons.dns_outlined,
-                              color: isDark ? AppColors.terminalDarkBg : Colors.white,
+                              color: isDark
+                                  ? AppColors.terminalDarkBg
+                                  : Colors.white,
                               size: 20.r,
                             ),
                             SizedBox(width: 10.w),
                             Text(
                               AppStrings.initializeAccess,
                               style: AppTextStyles.labelMedium.copyWith(
-                                color: isDark ? AppColors.terminalDarkBg : Colors.white,
+                                color: isDark
+                                    ? AppColors.terminalDarkBg
+                                    : Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15.sp,
                               ),
@@ -244,10 +259,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 16.h),
 
           // Register Option
-          Container(
-            height: 1.0,
-            color: cardBorderColor,
-          ),
+          Container(height: 1.0, color: cardBorderColor),
           SizedBox(height: 16.h),
           Center(
             child: GestureDetector(

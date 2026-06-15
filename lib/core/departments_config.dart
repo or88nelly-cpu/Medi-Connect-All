@@ -125,154 +125,300 @@ import 'package:medi_connect/features/departments/ward/presentation/bloc/ward_bl
 
 void configureAllDepartmentsDependencies(GetIt sl) {
   // Biomedical Engineering Department
-  sl.registerLazySingleton<BiomedicalEngineeringRemoteDataSource>(() => BiomedicalEngineeringRemoteDataSourceImpl());
-  sl.registerLazySingleton<BiomedicalEngineeringRepository>(() => BiomedicalEngineeringRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetBiomedicalEngineeringStatsUseCase>(() => GetBiomedicalEngineeringStatsUseCase(sl()));
-  sl.registerFactory<BiomedicalEngineeringBloc>(() => BiomedicalEngineeringBloc(sl()));
+  sl.registerLazySingleton<BiomedicalEngineeringRemoteDataSource>(
+    () => BiomedicalEngineeringRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<BiomedicalEngineeringRepository>(
+    () => BiomedicalEngineeringRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetBiomedicalEngineeringStatsUseCase>(
+    () => GetBiomedicalEngineeringStatsUseCase(sl()),
+  );
+  sl.registerFactory<BiomedicalEngineeringBloc>(
+    () => BiomedicalEngineeringBloc(sl()),
+  );
 
   // Casuality Department
-  sl.registerLazySingleton<CasualityRemoteDataSource>(() => CasualityRemoteDataSourceImpl());
-  sl.registerLazySingleton<CasualityRepository>(() => CasualityRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetCasualityStatsUseCase>(() => GetCasualityStatsUseCase(sl()));
+  sl.registerLazySingleton<CasualityRemoteDataSource>(
+    () => CasualityRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<CasualityRepository>(
+    () => CasualityRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetCasualityStatsUseCase>(
+    () => GetCasualityStatsUseCase(sl()),
+  );
   sl.registerFactory<CasualityBloc>(() => CasualityBloc(sl()));
 
   // CSSD Department
-  sl.registerLazySingleton<CssdRemoteDataSource>(() => CssdRemoteDataSourceImpl());
+  sl.registerLazySingleton<CssdRemoteDataSource>(
+    () => CssdRemoteDataSourceImpl(),
+  );
   sl.registerLazySingleton<CssdRepository>(() => CssdRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetCssdStatsUseCase>(() => GetCssdStatsUseCase(sl()));
+  sl.registerLazySingleton<GetCssdStatsUseCase>(
+    () => GetCssdStatsUseCase(sl()),
+  );
   sl.registerFactory<CssdBloc>(() => CssdBloc(sl()));
 
   // Customer Care Department
-  sl.registerLazySingleton<CustomerCareRemoteDataSource>(() => CustomerCareRemoteDataSourceImpl());
-  sl.registerLazySingleton<CustomerCareRepository>(() => CustomerCareRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetCustomerCareStatsUseCase>(() => GetCustomerCareStatsUseCase(sl()));
+  sl.registerLazySingleton<CustomerCareRemoteDataSource>(
+    () => CustomerCareRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<CustomerCareRepository>(
+    () => CustomerCareRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetCustomerCareStatsUseCase>(
+    () => GetCustomerCareStatsUseCase(sl()),
+  );
   sl.registerFactory<CustomerCareBloc>(() => CustomerCareBloc(sl()));
 
   // Dyalisis Department
-  sl.registerLazySingleton<DyalisisRemoteDataSource>(() => DyalisisRemoteDataSourceImpl());
-  sl.registerLazySingleton<DyalisisRepository>(() => DyalisisRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetDyalisisStatsUseCase>(() => GetDyalisisStatsUseCase(sl()));
+  sl.registerLazySingleton<DyalisisRemoteDataSource>(
+    () => DyalisisRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<DyalisisRepository>(
+    () => DyalisisRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetDyalisisStatsUseCase>(
+    () => GetDyalisisStatsUseCase(sl()),
+  );
   sl.registerFactory<DyalisisBloc>(() => DyalisisBloc(sl()));
 
   // EMRD Department
-  sl.registerLazySingleton<EmrdRemoteDataSource>(() => EmrdRemoteDataSourceImpl());
+  sl.registerLazySingleton<EmrdRemoteDataSource>(
+    () => EmrdRemoteDataSourceImpl(),
+  );
   sl.registerLazySingleton<EmrdRepository>(() => EmrdRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetEmrdStatsUseCase>(() => GetEmrdStatsUseCase(sl()));
-  sl.registerLazySingleton<GetEmrRecordsUseCase>(() => GetEmrRecordsUseCase(sl()));
+  sl.registerLazySingleton<GetEmrdStatsUseCase>(
+    () => GetEmrdStatsUseCase(sl()),
+  );
+  sl.registerLazySingleton<GetEmrRecordsUseCase>(
+    () => GetEmrRecordsUseCase(sl()),
+  );
   sl.registerFactory<EmrdBloc>(() => EmrdBloc(sl(), sl()));
 
   // Finance Department
-  sl.registerLazySingleton<FinanceRemoteDataSource>(() => FinanceRemoteDataSourceImpl());
-  sl.registerLazySingleton<FinanceRepository>(() => FinanceRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetFinanceStatsUseCase>(() => GetFinanceStatsUseCase(sl()));
+  sl.registerLazySingleton<FinanceRemoteDataSource>(
+    () => FinanceRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<FinanceRepository>(
+    () => FinanceRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetFinanceStatsUseCase>(
+    () => GetFinanceStatsUseCase(sl()),
+  );
   sl.registerFactory<FinanceBloc>(() => FinanceBloc(sl()));
 
   // Fire Safety Department
-  sl.registerLazySingleton<FireSafetyRemoteDataSource>(() => FireSafetyRemoteDataSourceImpl());
-  sl.registerLazySingleton<FireSafetyRepository>(() => FireSafetyRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetFireSafetyStatsUseCase>(() => GetFireSafetyStatsUseCase(sl()));
+  sl.registerLazySingleton<FireSafetyRemoteDataSource>(
+    () => FireSafetyRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<FireSafetyRepository>(
+    () => FireSafetyRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetFireSafetyStatsUseCase>(
+    () => GetFireSafetyStatsUseCase(sl()),
+  );
   sl.registerFactory<FireSafetyBloc>(() => FireSafetyBloc(sl()));
 
   // General Store Department
-  sl.registerLazySingleton<GeneralStoreRemoteDataSource>(() => GeneralStoreRemoteDataSourceImpl());
-  sl.registerLazySingleton<GeneralStoreRepository>(() => GeneralStoreRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetGeneralStoreStatsUseCase>(() => GetGeneralStoreStatsUseCase(sl()));
+  sl.registerLazySingleton<GeneralStoreRemoteDataSource>(
+    () => GeneralStoreRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<GeneralStoreRepository>(
+    () => GeneralStoreRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetGeneralStoreStatsUseCase>(
+    () => GetGeneralStoreStatsUseCase(sl()),
+  );
   sl.registerFactory<GeneralStoreBloc>(() => GeneralStoreBloc(sl()));
 
   // Human Resource Department
-  sl.registerLazySingleton<HumanResourceRemoteDataSource>(() => HumanResourceRemoteDataSourceImpl());
-  sl.registerLazySingleton<HumanResourceRepository>(() => HumanResourceRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetHumanResourceStatsUseCase>(() => GetHumanResourceStatsUseCase(sl()));
+  sl.registerLazySingleton<HumanResourceRemoteDataSource>(
+    () => HumanResourceRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<HumanResourceRepository>(
+    () => HumanResourceRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetHumanResourceStatsUseCase>(
+    () => GetHumanResourceStatsUseCase(sl()),
+  );
   sl.registerFactory<HumanResourceBloc>(() => HumanResourceBloc(sl()));
 
   // ICU Department
-  sl.registerLazySingleton<IcuRemoteDataSource>(() => IcuRemoteDataSourceImpl());
+  sl.registerLazySingleton<IcuRemoteDataSource>(
+    () => IcuRemoteDataSourceImpl(),
+  );
   sl.registerLazySingleton<IcuRepository>(() => IcuRepositoryImpl(sl()));
   sl.registerLazySingleton<GetIcuStatsUseCase>(() => GetIcuStatsUseCase(sl()));
   sl.registerFactory<IcuBloc>(() => IcuBloc(sl()));
 
   // Information Technology Department
-  sl.registerLazySingleton<InformationTechnologyRemoteDataSource>(() => InformationTechnologyRemoteDataSourceImpl());
-  sl.registerLazySingleton<InformationTechnologyRepository>(() => InformationTechnologyRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetInformationTechnologyStatsUseCase>(() => GetInformationTechnologyStatsUseCase(sl()));
-  sl.registerFactory<InformationTechnologyBloc>(() => InformationTechnologyBloc(sl()));
+  sl.registerLazySingleton<InformationTechnologyRemoteDataSource>(
+    () => InformationTechnologyRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<InformationTechnologyRepository>(
+    () => InformationTechnologyRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetInformationTechnologyStatsUseCase>(
+    () => GetInformationTechnologyStatsUseCase(sl()),
+  );
+  sl.registerFactory<InformationTechnologyBloc>(
+    () => InformationTechnologyBloc(sl()),
+  );
 
   // Laboratory Department
-  sl.registerLazySingleton<LaboratoryRemoteDataSource>(() => LaboratoryRemoteDataSourceImpl());
-  sl.registerLazySingleton<LaboratoryRepository>(() => LaboratoryRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetLaboratoryStatsUseCase>(() => GetLaboratoryStatsUseCase(sl()));
+  sl.registerLazySingleton<LaboratoryRemoteDataSource>(
+    () => LaboratoryRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<LaboratoryRepository>(
+    () => LaboratoryRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetLaboratoryStatsUseCase>(
+    () => GetLaboratoryStatsUseCase(sl()),
+  );
   sl.registerFactory<LaboratoryBloc>(() => LaboratoryBloc(sl()));
 
   // Management Information System Department
-  sl.registerLazySingleton<ManagementInformationSystemRemoteDataSource>(() => ManagementInformationSystemRemoteDataSourceImpl());
-  sl.registerLazySingleton<ManagementInformationSystemRepository>(() => ManagementInformationSystemRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetManagementInformationSystemStatsUseCase>(() => GetManagementInformationSystemStatsUseCase(sl()));
-  sl.registerFactory<ManagementInformationSystemBloc>(() => ManagementInformationSystemBloc(sl()));
+  sl.registerLazySingleton<ManagementInformationSystemRemoteDataSource>(
+    () => ManagementInformationSystemRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<ManagementInformationSystemRepository>(
+    () => ManagementInformationSystemRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetManagementInformationSystemStatsUseCase>(
+    () => GetManagementInformationSystemStatsUseCase(sl()),
+  );
+  sl.registerFactory<ManagementInformationSystemBloc>(
+    () => ManagementInformationSystemBloc(sl()),
+  );
 
   // Marketing Department
-  sl.registerLazySingleton<MarketingRemoteDataSource>(() => MarketingRemoteDataSourceImpl());
-  sl.registerLazySingleton<MarketingRepository>(() => MarketingRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetMarketingStatsUseCase>(() => GetMarketingStatsUseCase(sl()));
+  sl.registerLazySingleton<MarketingRemoteDataSource>(
+    () => MarketingRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<MarketingRepository>(
+    () => MarketingRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetMarketingStatsUseCase>(
+    () => GetMarketingStatsUseCase(sl()),
+  );
   sl.registerFactory<MarketingBloc>(() => MarketingBloc(sl()));
 
   // MEP Engineer Department
-  sl.registerLazySingleton<MepEngineerRemoteDataSource>(() => MepEngineerRemoteDataSourceImpl());
-  sl.registerLazySingleton<MepEngineerRepository>(() => MepEngineerRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetMepEngineerStatsUseCase>(() => GetMepEngineerStatsUseCase(sl()));
+  sl.registerLazySingleton<MepEngineerRemoteDataSource>(
+    () => MepEngineerRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<MepEngineerRepository>(
+    () => MepEngineerRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetMepEngineerStatsUseCase>(
+    () => GetMepEngineerStatsUseCase(sl()),
+  );
   sl.registerFactory<MepEngineerBloc>(() => MepEngineerBloc(sl()));
 
   // Nursing Department
-  sl.registerLazySingleton<NursingRemoteDataSource>(() => NursingRemoteDataSourceImpl());
-  sl.registerLazySingleton<NursingRepository>(() => NursingRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetNursingStatsUseCase>(() => GetNursingStatsUseCase(sl()));
+  sl.registerLazySingleton<NursingRemoteDataSource>(
+    () => NursingRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<NursingRepository>(
+    () => NursingRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetNursingStatsUseCase>(
+    () => GetNursingStatsUseCase(sl()),
+  );
   sl.registerFactory<NursingBloc>(() => NursingBloc(sl()));
 
   // Nutrition and Diabetics Department
-  sl.registerLazySingleton<NutritionAndDiabeticsRemoteDataSource>(() => NutritionAndDiabeticsRemoteDataSourceImpl());
-  sl.registerLazySingleton<NutritionAndDiabeticsRepository>(() => NutritionAndDiabeticsRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetNutritionAndDiabeticsStatsUseCase>(() => GetNutritionAndDiabeticsStatsUseCase(sl()));
-  sl.registerFactory<NutritionAndDiabeticsBloc>(() => NutritionAndDiabeticsBloc(sl()));
+  sl.registerLazySingleton<NutritionAndDiabeticsRemoteDataSource>(
+    () => NutritionAndDiabeticsRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<NutritionAndDiabeticsRepository>(
+    () => NutritionAndDiabeticsRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetNutritionAndDiabeticsStatsUseCase>(
+    () => GetNutritionAndDiabeticsStatsUseCase(sl()),
+  );
+  sl.registerFactory<NutritionAndDiabeticsBloc>(
+    () => NutritionAndDiabeticsBloc(sl()),
+  );
 
   // Operation Theatre Department
-  sl.registerLazySingleton<OperationTheatreRemoteDataSource>(() => OperationTheatreRemoteDataSourceImpl());
-  sl.registerLazySingleton<OperationTheatreRepository>(() => OperationTheatreRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetOperationTheatreStatsUseCase>(() => GetOperationTheatreStatsUseCase(sl()));
+  sl.registerLazySingleton<OperationTheatreRemoteDataSource>(
+    () => OperationTheatreRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<OperationTheatreRepository>(
+    () => OperationTheatreRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetOperationTheatreStatsUseCase>(
+    () => GetOperationTheatreStatsUseCase(sl()),
+  );
   sl.registerFactory<OperationTheatreBloc>(() => OperationTheatreBloc(sl()));
 
   // Pharmacy Department
-  sl.registerLazySingleton<PharmacyRemoteDataSource>(() => PharmacyRemoteDataSourceImpl());
-  sl.registerLazySingleton<PharmacyRepository>(() => PharmacyRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetPharmacyStatsUseCase>(() => GetPharmacyStatsUseCase(sl()));
+  sl.registerLazySingleton<PharmacyRemoteDataSource>(
+    () => PharmacyRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<PharmacyRepository>(
+    () => PharmacyRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetPharmacyStatsUseCase>(
+    () => GetPharmacyStatsUseCase(sl()),
+  );
   sl.registerFactory<PharmacyBloc>(() => PharmacyBloc(sl()));
 
   // Physio Therapy Department
-  sl.registerLazySingleton<PhysioTherapyRemoteDataSource>(() => PhysioTherapyRemoteDataSourceImpl());
-  sl.registerLazySingleton<PhysioTherapyRepository>(() => PhysioTherapyRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetPhysioTherapyStatsUseCase>(() => GetPhysioTherapyStatsUseCase(sl()));
+  sl.registerLazySingleton<PhysioTherapyRemoteDataSource>(
+    () => PhysioTherapyRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<PhysioTherapyRepository>(
+    () => PhysioTherapyRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetPhysioTherapyStatsUseCase>(
+    () => GetPhysioTherapyStatsUseCase(sl()),
+  );
   sl.registerFactory<PhysioTherapyBloc>(() => PhysioTherapyBloc(sl()));
 
   // Purchase Department
-  sl.registerLazySingleton<PurchaseRemoteDataSource>(() => PurchaseRemoteDataSourceImpl());
-  sl.registerLazySingleton<PurchaseRepository>(() => PurchaseRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetPurchaseStatsUseCase>(() => GetPurchaseStatsUseCase(sl()));
+  sl.registerLazySingleton<PurchaseRemoteDataSource>(
+    () => PurchaseRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<PurchaseRepository>(
+    () => PurchaseRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetPurchaseStatsUseCase>(
+    () => GetPurchaseStatsUseCase(sl()),
+  );
   sl.registerFactory<PurchaseBloc>(() => PurchaseBloc(sl()));
 
   // Radiology Department
-  sl.registerLazySingleton<RadiologyRemoteDataSource>(() => RadiologyRemoteDataSourceImpl());
-  sl.registerLazySingleton<RadiologyRepository>(() => RadiologyRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetRadiologyStatsUseCase>(() => GetRadiologyStatsUseCase(sl()));
+  sl.registerLazySingleton<RadiologyRemoteDataSource>(
+    () => RadiologyRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<RadiologyRepository>(
+    () => RadiologyRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<GetRadiologyStatsUseCase>(
+    () => GetRadiologyStatsUseCase(sl()),
+  );
   sl.registerFactory<RadiologyBloc>(() => RadiologyBloc(sl()));
 
   // Ward Department
-  sl.registerLazySingleton<WardRemoteDataSource>(() => WardRemoteDataSourceImpl());
+  sl.registerLazySingleton<WardRemoteDataSource>(
+    () => WardRemoteDataSourceImpl(),
+  );
   sl.registerLazySingleton<WardRepository>(() => WardRepositoryImpl(sl()));
-  sl.registerLazySingleton<GetWardStatsUseCase>(() => GetWardStatsUseCase(sl()));
+  sl.registerLazySingleton<GetWardStatsUseCase>(
+    () => GetWardStatsUseCase(sl()),
+  );
   sl.registerFactory<WardBloc>(() => WardBloc(sl()));
 }
 
 List<BlocProvider> getAllDepartmentsProviders(GetIt sl) {
   return [
-    BlocProvider<BiomedicalEngineeringBloc>(create: (_) => sl<BiomedicalEngineeringBloc>()),
+    BlocProvider<BiomedicalEngineeringBloc>(
+      create: (_) => sl<BiomedicalEngineeringBloc>(),
+    ),
     BlocProvider<CasualityBloc>(create: (_) => sl<CasualityBloc>()),
     BlocProvider<CssdBloc>(create: (_) => sl<CssdBloc>()),
     BlocProvider<CustomerCareBloc>(create: (_) => sl<CustomerCareBloc>()),
@@ -283,14 +429,22 @@ List<BlocProvider> getAllDepartmentsProviders(GetIt sl) {
     BlocProvider<GeneralStoreBloc>(create: (_) => sl<GeneralStoreBloc>()),
     BlocProvider<HumanResourceBloc>(create: (_) => sl<HumanResourceBloc>()),
     BlocProvider<IcuBloc>(create: (_) => sl<IcuBloc>()),
-    BlocProvider<InformationTechnologyBloc>(create: (_) => sl<InformationTechnologyBloc>()),
+    BlocProvider<InformationTechnologyBloc>(
+      create: (_) => sl<InformationTechnologyBloc>(),
+    ),
     BlocProvider<LaboratoryBloc>(create: (_) => sl<LaboratoryBloc>()),
-    BlocProvider<ManagementInformationSystemBloc>(create: (_) => sl<ManagementInformationSystemBloc>()),
+    BlocProvider<ManagementInformationSystemBloc>(
+      create: (_) => sl<ManagementInformationSystemBloc>(),
+    ),
     BlocProvider<MarketingBloc>(create: (_) => sl<MarketingBloc>()),
     BlocProvider<MepEngineerBloc>(create: (_) => sl<MepEngineerBloc>()),
     BlocProvider<NursingBloc>(create: (_) => sl<NursingBloc>()),
-    BlocProvider<NutritionAndDiabeticsBloc>(create: (_) => sl<NutritionAndDiabeticsBloc>()),
-    BlocProvider<OperationTheatreBloc>(create: (_) => sl<OperationTheatreBloc>()),
+    BlocProvider<NutritionAndDiabeticsBloc>(
+      create: (_) => sl<NutritionAndDiabeticsBloc>(),
+    ),
+    BlocProvider<OperationTheatreBloc>(
+      create: (_) => sl<OperationTheatreBloc>(),
+    ),
     BlocProvider<PharmacyBloc>(create: (_) => sl<PharmacyBloc>()),
     BlocProvider<PhysioTherapyBloc>(create: (_) => sl<PhysioTherapyBloc>()),
     BlocProvider<PurchaseBloc>(create: (_) => sl<PurchaseBloc>()),

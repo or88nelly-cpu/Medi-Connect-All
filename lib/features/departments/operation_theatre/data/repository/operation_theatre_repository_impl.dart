@@ -9,7 +9,8 @@ class OperationTheatreRepositoryImpl implements OperationTheatreRepository {
   OperationTheatreRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getOperationTheatreStats() async {
+  Future<Either<Failure, Map<String, dynamic>>>
+  getOperationTheatreStats() async {
     try {
       final res = await _remoteDataSource.getOperationTheatreStats();
       return Right(res);

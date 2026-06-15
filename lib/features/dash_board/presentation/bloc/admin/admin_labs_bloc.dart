@@ -42,20 +42,19 @@ class AdminLabsBloc extends Bloc<AdminLabsEvent, AdminLabsState> {
   final UpdateLabTestStatusUseCase _updateStatus;
 
   AdminLabsBloc({
-    required GetLabTestsUseCase getTests,
-    required AddLabTestUseCase addTest,
-    required UpdateLabTestStatusUseCase updateStatus,
-  })  : _getTests = getTests,
-        _addTest = addTest,
-        _updateStatus = updateStatus,
-        super(AdminLabsInitial()) {
+    required this._getTests,
+    required this._addTest,
+    required this._updateStatus,
+  }) : super(AdminLabsInitial()) {
     on<LoadLabTests>(_onLoadLabTests);
     on<AddLabTest>(_onAddLabTest);
     on<UpdateLabTestStatus>(_onUpdateLabTestStatus);
   }
 
   Future<void> _onLoadLabTests(
-      LoadLabTests event, Emitter<AdminLabsState> emit) async {
+    LoadLabTests event,
+    Emitter<AdminLabsState> emit,
+  ) async {
     emit(AdminLabsLoading());
     final result = await _getTests();
     result.fold(
@@ -65,7 +64,9 @@ class AdminLabsBloc extends Bloc<AdminLabsEvent, AdminLabsState> {
   }
 
   Future<void> _onAddLabTest(
-      AddLabTest event, Emitter<AdminLabsState> emit) async {
+    AddLabTest event,
+    Emitter<AdminLabsState> emit,
+  ) async {
     final result = await _addTest(event.data);
     result.fold(
       (failure) => emit(AdminLabsError(failure.message)),
@@ -74,7 +75,9 @@ class AdminLabsBloc extends Bloc<AdminLabsEvent, AdminLabsState> {
   }
 
   Future<void> _onUpdateLabTestStatus(
-      UpdateLabTestStatus event, Emitter<AdminLabsState> emit) async {
+    UpdateLabTestStatus event,
+    Emitter<AdminLabsState> emit,
+  ) async {
     final result = await _updateStatus(event.id, event.status);
     result.fold(
       (failure) => emit(AdminLabsError(failure.message)),

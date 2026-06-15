@@ -20,13 +20,16 @@ abstract class MepEngineerState extends Equatable {
 }
 
 class MepEngineerInitial extends MepEngineerState {}
+
 class MepEngineerLoading extends MepEngineerState {}
+
 class MepEngineerLoaded extends MepEngineerState {
   final Map<String, dynamic> stats;
   const MepEngineerLoaded(this.stats);
   @override
   List<Object?> get props => [stats];
 }
+
 class MepEngineerError extends MepEngineerState {
   final String message;
   const MepEngineerError(this.message);
@@ -42,7 +45,10 @@ class MepEngineerBloc extends Bloc<MepEngineerEvent, MepEngineerState> {
     on<LoadMepEngineerStats>(_onLoadStats);
   }
 
-  Future<void> _onLoadStats(LoadMepEngineerStats event, Emitter<MepEngineerState> emit) async {
+  Future<void> _onLoadStats(
+    LoadMepEngineerStats event,
+    Emitter<MepEngineerState> emit,
+  ) async {
     emit(MepEngineerLoading());
     final result = await _useCase(const NoParams());
     result.fold(

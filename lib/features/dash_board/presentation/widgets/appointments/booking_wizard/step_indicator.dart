@@ -32,11 +32,11 @@ class StepIndicator extends StatelessWidget {
                   ? AppColors.success
                   : (isDark
                         ? Colors.white30
-                        : AppColors.textSecondary.withOpacity(0.5)));
+                        : AppColors.textSecondary.withValues(alpha: 0.5)));
         final circleBg = isActive
             ? AppColors.primary
             : (isCompleted
-                  ? AppColors.success.withOpacity(0.15)
+                  ? AppColors.success.withValues(alpha: 0.15)
                   : Colors.transparent);
         final borderColor = isActive
             ? AppColors.primary

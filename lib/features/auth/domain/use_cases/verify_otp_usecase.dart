@@ -1,4 +1,6 @@
 /// Executes OTP verification flow in the authentication feature.
+library;
+
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/usecases/usecase.dart';
 

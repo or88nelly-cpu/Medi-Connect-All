@@ -1,5 +1,6 @@
 /// Local data-layer exceptions that will be caught and converted
 /// to Failure objects in the repository implementations.
+library;
 
 class ServerException implements Exception {
   final String message;

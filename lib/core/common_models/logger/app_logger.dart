@@ -1,5 +1,7 @@
 /// Centralized logging utility for the Healthcare Platform.
 /// Handles API, Bloc, Navigation, and Error logging using the `logger` package.
+library;
+
 import 'package:logger/logger.dart';
 
 class AppLogger {

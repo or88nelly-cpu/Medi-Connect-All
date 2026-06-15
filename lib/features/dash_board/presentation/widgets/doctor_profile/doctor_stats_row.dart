@@ -10,11 +10,19 @@ class DoctorStatsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
-    final valueColor = isDark ? AppColors.terminalAccentCyan : AppColors.primary;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
+    final valueColor = isDark
+        ? AppColors.terminalAccentCyan
+        : AppColors.primary;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
 
-    final expString = user.experience != null ? "${user.experience} Years" : "12+ Years";
+    final expString = user.experience != null
+        ? "${user.experience} Years"
+        : "12+ Years";
     final qualString = user.qualification ?? "MBBS, MD (Cardiology)";
     final specString = user.specialization ?? "Cardiology";
     final rating = user.metadata?['rating']?.toString() ?? "4.8";
@@ -35,13 +43,36 @@ class DoctorStatsRow extends StatelessWidget {
           if (isWide) {
             return Row(
               children: [
-                Expanded(child: _buildStatItem(expString, "Experience", valueColor, labelColor)),
+                Expanded(
+                  child: _buildStatItem(
+                    expString,
+                    "Experience",
+                    valueColor,
+                    labelColor,
+                  ),
+                ),
                 _buildDivider(borderColor),
-                Expanded(child: _buildStatItem(qualString, "Qualification", valueColor, labelColor)),
+                Expanded(
+                  child: _buildStatItem(
+                    qualString,
+                    "Qualification",
+                    valueColor,
+                    labelColor,
+                  ),
+                ),
                 _buildDivider(borderColor),
-                Expanded(child: _buildStatItem(specString, "Specialization", valueColor, labelColor)),
+                Expanded(
+                  child: _buildStatItem(
+                    specString,
+                    "Specialization",
+                    valueColor,
+                    labelColor,
+                  ),
+                ),
                 _buildDivider(borderColor),
-                Expanded(child: _buildRatingItem(rating, reviewsCount, labelColor)),
+                Expanded(
+                  child: _buildRatingItem(rating, reviewsCount, labelColor),
+                ),
               ],
             );
           } else {
@@ -52,15 +83,30 @@ class DoctorStatsRow extends StatelessWidget {
               children: [
                 SizedBox(
                   width: (constraints.maxWidth - 20.w) / 2,
-                  child: _buildStatItem(expString, "Experience", valueColor, labelColor),
+                  child: _buildStatItem(
+                    expString,
+                    "Experience",
+                    valueColor,
+                    labelColor,
+                  ),
                 ),
                 SizedBox(
                   width: (constraints.maxWidth - 20.w) / 2,
-                  child: _buildStatItem(qualString, "Qualification", valueColor, labelColor),
+                  child: _buildStatItem(
+                    qualString,
+                    "Qualification",
+                    valueColor,
+                    labelColor,
+                  ),
                 ),
                 SizedBox(
                   width: (constraints.maxWidth - 20.w) / 2,
-                  child: _buildStatItem(specString, "Specialization", valueColor, labelColor),
+                  child: _buildStatItem(
+                    specString,
+                    "Specialization",
+                    valueColor,
+                    labelColor,
+                  ),
                 ),
                 SizedBox(
                   width: (constraints.maxWidth - 20.w) / 2,
@@ -75,14 +121,15 @@ class DoctorStatsRow extends StatelessWidget {
   }
 
   Widget _buildDivider(Color color) {
-    return Container(
-      width: 1.w,
-      height: 32.h,
-      color: color,
-    );
+    return Container(width: 1.w, height: 32.h, color: color);
   }
 
-  Widget _buildStatItem(String value, String label, Color valueColor, Color labelColor) {
+  Widget _buildStatItem(
+    String value,
+    String label,
+    Color valueColor,
+    Color labelColor,
+  ) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,10 +148,7 @@ class DoctorStatsRow extends StatelessWidget {
         SizedBox(height: 4.h),
         Text(
           label,
-          style: TextStyle(
-            color: labelColor,
-            fontSize: 11.sp,
-          ),
+          style: TextStyle(color: labelColor, fontSize: 11.sp),
           textAlign: TextAlign.center,
         ),
       ],
@@ -120,11 +164,7 @@ class DoctorStatsRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.star,
-              color: Colors.amber,
-              size: 16.sp,
-            ),
+            Icon(Icons.star, color: Colors.amber, size: 16.sp),
             SizedBox(width: 4.w),
             Text(
               rating,
@@ -137,20 +177,14 @@ class DoctorStatsRow extends StatelessWidget {
             SizedBox(width: 4.w),
             Text(
               "($reviewCount)",
-              style: TextStyle(
-                color: labelColor,
-                fontSize: 12.sp,
-              ),
+              style: TextStyle(color: labelColor, fontSize: 12.sp),
             ),
           ],
         ),
         SizedBox(height: 4.h),
         Text(
           "Patient Rating",
-          style: TextStyle(
-            color: labelColor,
-            fontSize: 11.sp,
-          ),
+          style: TextStyle(color: labelColor, fontSize: 11.sp),
           textAlign: TextAlign.center,
         ),
       ],

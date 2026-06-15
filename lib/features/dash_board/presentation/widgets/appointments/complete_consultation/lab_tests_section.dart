@@ -9,10 +9,7 @@ import 'consultation_section_header.dart';
 class LabTestsSection extends StatelessWidget {
   final TextEditingController labNotesCtrl;
 
-  const LabTestsSection({
-    super.key,
-    required this.labNotesCtrl,
-  });
+  const LabTestsSection({super.key, required this.labNotesCtrl});
 
   static const List<String> _availableTests = [
     'CBC (Blood Count)',
@@ -66,13 +63,17 @@ class LabTestsSection extends StatelessWidget {
               onSelected: (val) {
                 cubit.toggleLabTest(test);
               },
-              selectedColor: AppColors.secondary.withOpacity(0.15),
+              selectedColor: AppColors.secondary.withValues(alpha: 0.15),
               checkmarkColor: AppColors.secondary,
-              backgroundColor: isDark ? AppColors.terminalDarkBg : Colors.grey[100],
+              backgroundColor: isDark
+                  ? AppColors.terminalDarkBg
+                  : Colors.grey[100],
               side: BorderSide(
                 color: isSelected
                     ? AppColors.secondary
-                    : (isDark ? AppColors.terminalDarkBorder : AppColors.border),
+                    : (isDark
+                          ? AppColors.terminalDarkBorder
+                          : AppColors.border),
               ),
             );
           }).toList(),
@@ -84,18 +85,26 @@ class LabTestsSection extends StatelessWidget {
             showDialog(
               context: context,
               builder: (ctx) => AlertDialog(
-                backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+                backgroundColor: isDark
+                    ? AppColors.terminalDarkCard
+                    : Colors.white,
                 title: Text(
                   'Add Custom Lab Test',
-                  style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
+                  style: TextStyle(
+                    color: isDark ? Colors.white : AppColors.textPrimary,
+                  ),
                 ),
                 content: TextField(
                   controller: textCtrl,
                   autofocus: true,
-                  style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
+                  style: TextStyle(
+                    color: isDark ? Colors.white : AppColors.textPrimary,
+                  ),
                   decoration: InputDecoration(
                     hintText: 'Enter test name (e.g. Urine Culture)',
-                    hintStyle: TextStyle(color: isDark ? Colors.white38 : AppColors.textSecondary),
+                    hintStyle: TextStyle(
+                      color: isDark ? Colors.white38 : AppColors.textSecondary,
+                    ),
                   ),
                 ),
                 actions: [
@@ -126,7 +135,9 @@ class LabTestsSection extends StatelessWidget {
           ),
           style: OutlinedButton.styleFrom(
             side: const BorderSide(color: AppColors.secondary),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
+            ),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
           ),
         ),
@@ -144,7 +155,10 @@ class LabTestsSection extends StatelessWidget {
             ),
             filled: true,
             fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
-            contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 10.h,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
@@ -153,7 +167,10 @@ class LabTestsSection extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+              borderSide: const BorderSide(
+                color: AppColors.primary,
+                width: 1.5,
+              ),
             ),
           ),
         ),
