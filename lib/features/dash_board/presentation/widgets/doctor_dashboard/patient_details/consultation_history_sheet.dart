@@ -33,8 +33,10 @@ class ConsultationHistorySheet extends StatelessWidget {
 
     final sheetBg = isDark ? AppColors.terminalDarkCard : Colors.white;
     final primaryText = isDark ? Colors.white : AppColors.textDarkNavy;
-    final secondaryText = isDark ? Colors.white54 : AppColors.textSecondary;
-    final borderCol = isDark ? AppColors.terminalDarkBorder : AppColors.border;
+    final secondaryText = isDark
+        ? Colors.white54
+        : AppColors.textSecondary(context);
+    final borderCol = AppColors.border(context);
 
     return DraggableScrollableSheet(
       initialChildSize: 0.7,

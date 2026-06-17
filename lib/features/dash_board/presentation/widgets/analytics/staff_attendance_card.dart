@@ -103,9 +103,7 @@ class StaffAttendanceCard extends StatelessWidget {
                             value: total > 0 ? present / total : 0,
                             strokeWidth: 8.r,
 
-                            backgroundColor: isDark
-                                ? AppColors.terminalDarkBorder
-                                : AppColors.border,
+                            backgroundColor: AppColors.border(context),
                             valueColor: const AlwaysStoppedAnimation<Color>(
                               AppColors.primary,
                             ),

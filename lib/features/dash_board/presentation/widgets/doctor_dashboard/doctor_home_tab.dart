@@ -86,7 +86,9 @@ class DoctorHomeTab extends StatelessWidget {
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 16.sp,
-                      color: isDark ? Colors.white : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                   SizedBox(height: 12.h),
@@ -145,7 +147,9 @@ class DoctorHomeTab extends StatelessWidget {
                         style: AppTextStyles.titleMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,
-                          color: isDark ? Colors.white : AppColors.textPrimary,
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.textPrimary(context),
                         ),
                       ),
                       TextButton(
@@ -183,7 +187,9 @@ class DoctorHomeTab extends StatelessWidget {
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 16.sp,
-                      color: isDark ? Colors.white : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                   SizedBox(height: 12.h),

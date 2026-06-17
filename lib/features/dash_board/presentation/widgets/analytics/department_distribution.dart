@@ -17,7 +17,7 @@ class DepartmentDistribution extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +63,7 @@ class DepartmentDistribution extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4.r),
                       child: LinearProgressIndicator(
                         value: progress,
-                        backgroundColor: AppColors.border,
+                        backgroundColor: AppColors.border(context),
                         color: AppColors.primary,
                         minHeight: 6.h,
                       ),

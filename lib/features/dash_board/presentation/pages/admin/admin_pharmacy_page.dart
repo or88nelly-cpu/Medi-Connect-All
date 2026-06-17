@@ -286,23 +286,20 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.isDetail? Stack(
-      children: [
-        contents(),
-        
-      ],
-    ):
-    CustomScaffold(
-      customAppbar: CommonAppBar(
-        title: "Pharmacy Inventory",
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add, color: AppColors.primary),
-            onPressed: _showAddMedicineDialog,
-          ),
-        ],
-      ),
-      body:contents()  );
+    return widget.isDetail
+        ? Stack(children: [contents()])
+        : CustomScaffold(
+            customAppbar: CommonAppBar(
+              title: "Pharmacy Inventory",
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.add, color: AppColors.primary),
+                  onPressed: _showAddMedicineDialog,
+                ),
+              ],
+            ),
+            body: contents(),
+          );
   }
 
   Widget contents() {
@@ -361,7 +358,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
-                  side: const BorderSide(color: AppColors.border),
+                  side:  BorderSide(color: AppColors.border(context)),
                 ),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12.r),
@@ -424,7 +421,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                                 "Buy: ₹${item.buyPrice.toStringAsFixed(2)}  ·  Sell: ₹${item.sellPrice.toStringAsFixed(2)}",
                                 style: TextStyle(
                                   fontSize: 12.sp,
-                                  color: AppColors.textSecondary,
+                                  color: AppColors.textSecondary(context),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

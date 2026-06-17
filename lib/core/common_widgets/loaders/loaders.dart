@@ -132,7 +132,7 @@ class EmptyStateWidget extends StatelessWidget {
             Icon(
               icon,
               size: 72.r,
-              color: AppColors.textSecondary.withValues(alpha: 0.5),
+              color: AppColors.textSecondary(context).withValues(alpha: 0.5),
             ),
             SizedBox(height: 16.h),
             Text(

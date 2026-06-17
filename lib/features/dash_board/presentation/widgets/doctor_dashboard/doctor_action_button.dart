@@ -28,10 +28,7 @@ class DoctorActionButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: isDark ? AppColors.terminalDarkCard : Colors.white,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(
-            color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-            width: 1,
-          ),
+          border: Border.all(color: AppColors.border(context), width: 1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +46,7 @@ class DoctorActionButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isDark ? Colors.white : AppColors.textPrimary,
+                color: isDark ? Colors.white : AppColors.textPrimary(context),
                 fontSize: 9.sp,
                 fontWeight: FontWeight.w600,
               ),

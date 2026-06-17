@@ -57,9 +57,7 @@ class EmrdListItemCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.terminalDarkCard : Colors.white,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-        ),
+        border: Border.all(color: AppColors.border(context)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -100,7 +98,9 @@ class EmrdListItemCard extends StatelessWidget {
                         patientName,
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : AppColors.textPrimary,
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.textPrimary(context),
                         ),
                       ),
                       SizedBox(height: 4.h),
@@ -109,7 +109,7 @@ class EmrdListItemCard extends StatelessWidget {
                         style: AppTextStyles.bodySmall.copyWith(
                           color: isDark
                               ? Colors.white54
-                              : AppColors.textSecondary,
+                              : AppColors.textSecondary(context),
                         ),
                       ),
                       SizedBox(height: 4.h),
@@ -120,9 +120,9 @@ class EmrdListItemCard extends StatelessWidget {
                             size: 11.r,
                             color: isDark
                                 ? Colors.white30
-                                : AppColors.textSecondary.withValues(
-                                    alpha: 0.5,
-                                  ),
+                                : AppColors.textSecondary(
+                                    context,
+                                  ).withValues(alpha: 0.5),
                           ),
                           SizedBox(width: 4.w),
                           Text(
@@ -131,9 +131,9 @@ class EmrdListItemCard extends StatelessWidget {
                               fontSize: 10.sp,
                               color: isDark
                                   ? Colors.white30
-                                  : AppColors.textSecondary.withValues(
-                                      alpha: 0.6,
-                                    ),
+                                  : AppColors.textSecondary(
+                                      context,
+                                    ).withValues(alpha: 0.6),
                             ),
                           ),
                         ],
@@ -222,7 +222,7 @@ class EmrdListItemCard extends StatelessWidget {
                   size: 12.r,
                   color: isDark
                       ? Colors.white24
-                      : AppColors.textSecondary.withValues(alpha: 0.4),
+                      : AppColors.textSecondary(context).withValues(alpha: 0.4),
                 ),
               ],
             ),

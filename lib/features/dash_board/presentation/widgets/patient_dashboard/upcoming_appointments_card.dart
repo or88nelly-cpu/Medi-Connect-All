@@ -57,7 +57,7 @@ class UpcomingAppointmentsCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(14.r),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: AppColors.border(context)),
             boxShadow: [
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: 0.04),
@@ -71,7 +71,8 @@ class UpcomingAppointmentsCard extends StatelessWidget {
               final apt = appointments[idx];
               return Column(
                 children: [
-                  if (idx > 0) Divider(color: AppColors.border, height: 20.h),
+                  if (idx > 0)
+                    Divider(color: AppColors.border(context), height: 20.h),
                   AppointmentRow(
                     doctorName: apt['doctorName']!,
                     specialty: apt['specialty']!,

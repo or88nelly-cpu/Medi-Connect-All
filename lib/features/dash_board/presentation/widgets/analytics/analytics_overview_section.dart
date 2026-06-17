@@ -91,7 +91,7 @@ class AnalyticsOverviewSection extends StatelessWidget {
               label: AppStrings.appointments,
               value: appointments.toString(),
               iconPath: AppAssets.appointments,
-              lineColor: AppColors.textSecondary,
+              lineColor: AppColors.textSecondary(context),
               onTap: onAppointmentsTap,
               painter: _HorizontalLinePainter(
                 isDark

@@ -65,15 +65,9 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
-    final borderColor = isDark
-        ? AppColors.terminalDarkBorder
-        : AppColors.border;
-    final textColor = isDark
-        ? AppColors.terminalDarkText
-        : AppColors.textPrimary;
-    final labelColor = isDark
-        ? AppColors.terminalDarkLabel
-        : AppColors.textSecondary;
+    final borderColor = AppColors.border(context);
+    final textColor =AppColors.textPrimary(context);
+    final labelColor = AppColors.textSecondary(context);
     final fieldFillColor = isDark
         ? AppColors.terminalDarkFieldFill
         : AppColors.terminalLightFieldFill;

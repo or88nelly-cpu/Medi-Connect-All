@@ -51,7 +51,7 @@ class SlotStep extends StatelessWidget {
         child: Text(
           "Please select a doctor first.",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white54 : AppColors.textSecondary,
+            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
           ),
         ),
       );
@@ -148,9 +148,7 @@ class SlotStep extends StatelessWidget {
                     border: Border.all(
                       color: isSelected
                           ? AppColors.primary
-                          : (isDark
-                                ? AppColors.terminalDarkBorder
-                                : AppColors.border),
+                          : (AppColors.border(context)),
                     ),
                     borderRadius: BorderRadius.circular(6.r),
                   ),
@@ -164,7 +162,7 @@ class SlotStep extends StatelessWidget {
                               ? Colors.white
                               : (isDark
                                     ? Colors.white70
-                                    : AppColors.textSecondary),
+                                    : AppColors.textSecondary(context)),
                         ),
                       ),
                       SizedBox(height: 2.h),
@@ -174,7 +172,7 @@ class SlotStep extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: isSelected
                               ? Colors.white
-                              : (isDark ? Colors.white : AppColors.textPrimary),
+                              : (AppColors.textPrimary(context)),
                         ),
                       ),
                     ],
@@ -204,11 +202,7 @@ class SlotStep extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isDark ? Colors.white12 : Colors.grey[100],
                   borderRadius: BorderRadius.circular(8.r),
-                  border: Border.all(
-                    color: isDark
-                        ? AppColors.terminalDarkBorder
-                        : AppColors.border,
-                  ),
+                  border: Border.all(color: AppColors.border(context)),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +212,9 @@ class SlotStep extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 11.sp,
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimary(context),
                       ),
                     ),
                     Row(
@@ -273,7 +269,9 @@ class SlotStep extends StatelessWidget {
                     "Morning Slots",
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                   SizedBox(height: 6.h),
@@ -307,16 +305,14 @@ class SlotStep extends StatelessWidget {
                               ? AppColors.primary
                               : (isDark
                                     ? AppColors.terminalDarkBorder
-                                    : AppColors.border),
+                                    : AppColors.border(context)),
                         ),
                         labelStyle: AppTextStyles.bodySmall.copyWith(
                           fontSize: 10.sp,
                           color: isSelected
                               ? AppColors.primary
                               : (isAvailable
-                                    ? (isDark
-                                          ? Colors.white
-                                          : AppColors.textPrimary)
+                                    ? (AppColors.textPrimary(context))
                                     : (isDark
                                           ? Colors.white24
                                           : Colors.grey[400])),
@@ -331,7 +327,9 @@ class SlotStep extends StatelessWidget {
                     "Afternoon Slots",
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                   SizedBox(height: 6.h),
@@ -365,7 +363,7 @@ class SlotStep extends StatelessWidget {
                               ? AppColors.primary
                               : (isDark
                                     ? AppColors.terminalDarkBorder
-                                    : AppColors.border),
+                                    : AppColors.border(context)),
                         ),
                         labelStyle: AppTextStyles.bodySmall.copyWith(
                           fontSize: 10.sp,
@@ -374,7 +372,7 @@ class SlotStep extends StatelessWidget {
                               : (isAvailable
                                     ? (isDark
                                           ? Colors.white
-                                          : AppColors.textPrimary)
+                                          : AppColors.textPrimary(context))
                                     : (isDark
                                           ? Colors.white24
                                           : Colors.grey[400])),

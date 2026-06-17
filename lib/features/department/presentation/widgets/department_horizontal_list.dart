@@ -150,7 +150,7 @@ class DepartmentHorizontalList extends StatelessWidget {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
               AppStrings.cancel,
-              style: TextStyle(color: AppColors.textSecondary),
+              style: TextStyle(color: AppColors.textSecondary(context)),
             ),
           ),
           TextButton(
@@ -181,17 +181,19 @@ class _EmptyDepartmentsStrip extends StatelessWidget {
     return Container(
       height: 80.h,
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : AppColors.background,
+        color: isDark
+            ? AppColors.terminalDarkCard
+            : AppColors.background(context),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-        ),
+        border: Border.all(color: AppColors.border(context)),
       ),
       alignment: Alignment.center,
       child: Text(
         AppStrings.noDepartments,
         style: AppTextStyles.bodyMedium.copyWith(
-          color: isDark ? AppColors.terminalDarkLabel : AppColors.textSecondary,
+          color: isDark
+              ? AppColors.terminalDarkLabel
+              : AppColors.textSecondary(context),
         ),
       ),
     );

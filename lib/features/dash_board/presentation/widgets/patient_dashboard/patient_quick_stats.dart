@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/patient_dashboard/quick_stat_card.dart';
 

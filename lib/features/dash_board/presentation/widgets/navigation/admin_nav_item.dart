@@ -28,7 +28,7 @@ class AdminNavItem extends StatelessWidget {
 
     final color = isSelected
         ? AppColors.primary
-        : (isDark ? Colors.white54 : AppColors.textSecondary);
+        : (isDark ? Colors.white54 : AppColors.textSecondary(context));
 
     return InkWell(
       onTap: () => onTap(index),

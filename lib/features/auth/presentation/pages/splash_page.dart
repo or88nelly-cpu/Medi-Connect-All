@@ -331,7 +331,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                               AppStrings.splashSubtitle,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 fontFamily: AppFonts.inter,
-                                color: AppColors.textSecondary,
+                                color: AppColors.textSecondary(context),
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                               ),

@@ -38,9 +38,7 @@ class WizardFooterButtons extends StatelessWidget {
               onPressed: () => cubit.previousStep(),
               style: OutlinedButton.styleFrom(
                 side: BorderSide(
-                  color: isDark
-                      ? AppColors.terminalDarkBorder
-                      : AppColors.border,
+                  color: AppColors.border(context),
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),

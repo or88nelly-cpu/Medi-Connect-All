@@ -1879,9 +1879,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                 "Authorized Signature",
                 style: AppTextStyles.bodySmall.copyWith(
                   fontSize: 9.sp,
-                  color: isDark
-                      ? Colors.white30
-                      : AppColors.textSecondary.withValues(alpha: 0.6),
+                  color: AppColors.textSecondary(context).withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -1968,7 +1966,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                 style: AppTextStyles.bodySmall.copyWith(
                                   color: isDark
                                       ? Colors.white54
-                                      : AppColors.textSecondary,
+                                      : AppColors.textSecondary(context),
                                 ),
                               ),
                             ],
@@ -2113,10 +2111,8 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                                     .copyWith(
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: isDark
-                                                          ? Colors.white
-                                                          : AppColors
-                                                                .textPrimary,
+                                                      color: AppColors
+                                                                .textPrimary(context),
                                                     ),
                                               ),
                                               SizedBox(height: 4.h),
@@ -2188,10 +2184,8 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                                 style: AppTextStyles.bodySmall
                                                     .copyWith(
                                                       fontSize: 10.sp,
-                                                      color: isDark
-                                                          ? Colors.white54
-                                                          : AppColors
-                                                                .textSecondary,
+                                                      color:  AppColors
+                                                                .textSecondary(context),
                                                     ),
                                               ),
                                             ],
@@ -2223,7 +2217,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                           style: AppTextStyles.bodySmall
                                               .copyWith(
                                                 fontSize: 10.sp,
-                                                color: AppColors.textSecondary,
+                                                color: AppColors.textSecondary(
+                                                  context,
+                                                ),
                                               ),
                                         ),
                                     ],
@@ -2298,7 +2294,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                   fontStyle: FontStyle.italic,
                                   color: isDark
                                       ? Colors.white38
-                                      : AppColors.textSecondary,
+                                      : AppColors.textSecondary(context),
                                 ),
                               ),
                           ],
@@ -2366,7 +2362,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                                   fontWeight: FontWeight.w600,
                                                   color: isDark
                                                       ? Colors.white
-                                                      : AppColors.textPrimary,
+                                                      : AppColors.textPrimary(
+                                                          context,
+                                                        ),
                                                 ),
                                           ),
                                         ),
@@ -2396,7 +2394,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                           style: AppTextStyles.bodySmall
                                               .copyWith(
                                                 fontSize: 10.sp,
-                                                color: AppColors.textSecondary,
+                                                color: AppColors.textSecondary(
+                                                  context,
+                                                ),
                                               ),
                                         ),
                                     ],
@@ -2470,7 +2470,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                   fontStyle: FontStyle.italic,
                                   color: isDark
                                       ? Colors.white38
-                                      : AppColors.textSecondary,
+                                      : AppColors.textSecondary(context),
                                 ),
                               ),
                           ],
@@ -2495,7 +2495,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                   height: 1.4,
                                   color: isDark
                                       ? Colors.white70
-                                      : AppColors.textPrimary,
+                                      : AppColors.textPrimary(context),
                                 ),
                               )
                             else
@@ -2505,7 +2505,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                   fontStyle: FontStyle.italic,
                                   color: isDark
                                       ? Colors.white38
-                                      : AppColors.textSecondary,
+                                      : AppColors.textSecondary(context),
                                 ),
                               ),
                           ],
@@ -2629,9 +2629,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
       decoration: BoxDecoration(
         color: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-        ),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2644,7 +2642,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                 title,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white70 : AppColors.textPrimary,
+                  color: isDark
+                      ? Colors.white70
+                      : AppColors.textPrimary(context),
                 ),
               ),
             ],
@@ -2671,16 +2671,14 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : AppColors.textSecondary,
+              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
             ),
           ),
           Text(
             value,
             style: AppTextStyles.bodySmall.copyWith(
               fontWeight: valueFontWeight ?? FontWeight.w500,
-              color:
-                  valueColor ??
-                  (isDark ? Colors.white70 : AppColors.textPrimary),
+              color: valueColor ?? (AppColors.textPrimary(context)),
             ),
           ),
         ],
@@ -2754,7 +2752,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r),
-                            side: const BorderSide(color: AppColors.border),
+                            side: BorderSide(color: AppColors.border(context)),
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(12.r),
@@ -2765,7 +2763,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                 Text(
                                   displayKey,
                                   style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.textSecondary,
+                                    color: AppColors.textSecondary(context),
                                     fontWeight: FontWeight.w500,
                                   ),
                                   maxLines: 2,
@@ -2809,7 +2807,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
-                          side: const BorderSide(color: AppColors.border),
+                          side: BorderSide(color: AppColors.border(context)),
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -2823,9 +2821,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                 Icon(
                                   Icons.assignment_outlined,
                                   size: 48.r,
-                                  color: AppColors.textSecondary.withValues(
-                                    alpha: 0.4,
-                                  ),
+                                  color: AppColors.textSecondary(
+                                    context,
+                                  ).withValues(alpha: 0.4),
                                 ),
                                 SizedBox(height: 12.h),
                                 Text(
@@ -2839,7 +2837,7 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                   "Completed consultations will be recorded and listed here.",
                                   textAlign: TextAlign.center,
                                   style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.textSecondary,
+                                    color: AppColors.textSecondary(context),
                                   ),
                                 ),
                               ],

@@ -168,7 +168,7 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
+                    side: BorderSide(color: AppColors.border(context)),
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12.r),

@@ -61,7 +61,7 @@ class AdminNotificationsPage extends StatelessWidget {
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.r),
-              side: const BorderSide(color: AppColors.border),
+              side:  BorderSide(color: AppColors.border(context)),
             ),
             child: Padding(
               padding: EdgeInsets.all(16.r),
@@ -84,7 +84,7 @@ class AdminNotificationsPage extends StatelessWidget {
                           log['subject'],
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
+                            color: AppColors.textPrimary(context),
                           ),
                         ),
                         SizedBox(height: 4.h),

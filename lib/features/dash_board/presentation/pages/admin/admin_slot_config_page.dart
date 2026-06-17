@@ -55,19 +55,19 @@ class AdminSlotConfigPage extends StatelessWidget {
                     title: "Default Slot Duration",
                     value: "15 Minutes",
                   ),
-                  const Divider(color: AppColors.border),
+                  Divider(color: AppColors.border(context)),
                   _buildSettingRow(
                     icon: Icons.hourglass_top_outlined,
                     title: "Buffer Time Between Slots",
                     value: "5 Minutes",
                   ),
-                  const Divider(color: AppColors.border),
+                  Divider(color: AppColors.border(context)),
                   _buildSettingRow(
                     icon: Icons.calendar_month_outlined,
                     title: "Max Booking Window",
                     value: "30 Days",
                   ),
-                  const Divider(color: AppColors.border),
+                  Divider(color: AppColors.border(context)),
                   _buildSettingRow(
                     icon: Icons.cancel_presentation_outlined,
                     title: "Cancellation Threshold",

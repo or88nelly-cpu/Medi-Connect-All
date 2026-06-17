@@ -19,7 +19,7 @@ class FormTab extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.background(context),
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
@@ -44,7 +44,7 @@ class FormTab extends StatelessWidget {
             Text(
               subTitle!,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: AppColors.textSecondary(context),
                 fontSize: 12.sp,
               ),
               textAlign: TextAlign.center,

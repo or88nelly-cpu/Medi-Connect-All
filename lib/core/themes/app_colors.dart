@@ -1,27 +1,24 @@
-/// Standard palette definition for the Healthcare Platform.
-/// All colors utilized across applications must reside here.
 library;
 
 import 'package:flutter/material.dart';
 
 class AppColors {
+  AppColors._();
 
-  static const accent = Color(0xFFFFB547);
+  // =====================================================
+  // BRAND COLORS
+  // =====================================================
 
-
-  // Background colors
-  static const background = Color(0xFFF7FAFC);
-  static const surface = Colors.white;
-
-  // Text colors
-  static const textPrimary = Color(0xFF1A1A1A);
-  static const textSecondary = Color(0xFF6B7280);
+  static const Color primary = Color(0xFF4F2DFF);
+  static const Color primaryLight = Color(0xFF6A4DFF);
+  static const Color primaryDark = Color(0xFF2D1AFF);
   static const textLight = Colors.white;
 
-  // Border & divider colors
-  static const border = Color(0xFFE5E7EB);
-  static const divider = Color(0xFFF3F4F6);
-
+  static const Color secondary = Color(0xFF7B61FF);
+  static const Color accent = Color(0xFFFFB547);
+   static const divider = Color(0xFFF3F4F6);
+static const surface = Colors.white;
+  
   // Admin and branding colors
   static const adminPrimary = Color(0xFF7928CA);
   static const adminSecondary = Color(0xFFFF0080);
@@ -99,17 +96,6 @@ class AppColors {
   static const patientChipTextDark = Color(0xFF38BDF8);
   static const patientChipTextLight = Color(0xFF0369A1);
 
-
-  // =====================================================
-  // BRAND COLORS
-  // =====================================================
-
-  static const Color primary = Color(0xFF4F2DFF);
-  static const Color primaryLight = Color(0xFF6A4DFF);
-  static const Color primaryDark = Color(0xFF2D1AFF);
-
-  static const Color secondary = Color(0xFF7B61FF);
-
   // =====================================================
   // LIGHT THEME
   // =====================================================
@@ -127,10 +113,10 @@ class AppColors {
 
   static const Color lightShadow = Color(0x14000000);
 
+  static const Color lightSidebar = Color(0xFFF0F5FF);
+
   static const Color lightHeaderStart = Color(0xFF2D2CFF);
   static const Color lightHeaderEnd = Color(0xFF742FFF);
-
-  static const Color lightSidebar = Color(0xFFF0F5FF);
 
   // =====================================================
   // DARK THEME
@@ -139,7 +125,7 @@ class AppColors {
   static const Color darkScaffold = Color(0xFF050816);
   static const Color darkBackground = Color(0xFF0A1022);
 
-  static const Color darkCard = Color(0xFF0F172A);
+  static const Color darkCard = Color(0xFF10192C);
   static const Color darkCardSecondary = Color(0xFF131D33);
 
   static const Color darkBorder = Color(0xFF26324D);
@@ -149,10 +135,29 @@ class AppColors {
 
   static const Color darkShadow = Color(0x66000000);
 
+  static const Color darkSidebar = Color(0xFF071122);
+
   static const Color darkHeaderStart = Color(0xFF0D0C5F);
   static const Color darkHeaderEnd = Color(0xFF34178D);
 
-  static const Color darkSidebar = Color(0xFF071122);
+  // =====================================================
+  // SHIMMER
+  // =====================================================
+
+  static const Color lightShimmerBase = Color(0xFFE8EDF5);
+  static const Color lightShimmerHighlight = Color(0xFFF8FAFC);
+
+  static const Color darkShimmerBase = Color(0xFF182338);
+  static const Color darkShimmerHighlight = Color(0xFF24324C);
+
+  // =====================================================
+  // STATUS COLORS
+  // =====================================================
+
+  static const Color success = Color(0xFF22C55E);
+  static const Color warning = Color(0xFFF59E0B);
+  static const Color error = Color(0xFFEF4444);
+  static const Color info = Color(0xFF3B82F6);
 
   // =====================================================
   // DEPARTMENT ICON COLORS
@@ -167,7 +172,7 @@ class AppColors {
   static const Color red = Color(0xFFEF4444);
 
   // =====================================================
-  // DEPARTMENT CARD BG - LIGHT
+  // DEPARTMENT LIGHT BG
   // =====================================================
 
   static const Color lightBlueCard = Color(0xFFF3F8FF);
@@ -179,7 +184,7 @@ class AppColors {
   static const Color lightRedCard = Color(0xFFFFF3F3);
 
   // =====================================================
-  // DEPARTMENT CARD BG - DARK
+  // DEPARTMENT DARK BG
   // =====================================================
 
   static const Color darkBlueCard = Color(0xFF0D1B38);
@@ -191,26 +196,17 @@ class AppColors {
   static const Color darkRedCard = Color(0xFF341515);
 
   // =====================================================
-  // STATUS COLORS
-  // =====================================================
-
-  static const Color success = Color(0xFF22C55E);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color error = Color(0xFFEF4444);
-  static const Color info = Color(0xFF3B82F6);
-
-  // =====================================================
   // GRADIENTS
   // =====================================================
 
   static const List<Color> lightHeaderGradient = [
-    Color(0xFF2D2CFF),
-    Color(0xFF742FFF),
+    lightHeaderStart,
+    lightHeaderEnd,
   ];
 
   static const List<Color> darkHeaderGradient = [
-    Color(0xFF0D0C5F),
-    Color(0xFF34178D),
+    darkHeaderStart,
+    darkHeaderEnd,
   ];
 
   static const List<Color> blueGradient = [
@@ -238,7 +234,47 @@ class AppColors {
     Color(0xFFFF8A26),
   ];
 
+  // =====================================================
+  // THEME HELPERS
+  // =====================================================
 
- 
-  AppColors._();
+  static bool isDark(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark;
+  }
+
+  static Color scaffold(BuildContext context) =>
+      isDark(context) ? darkScaffold : lightScaffold;
+
+  static Color background(BuildContext context) =>
+      isDark(context) ? darkBackground : lightBackground;
+
+  static Color card(BuildContext context) =>
+      isDark(context) ? darkCard : lightCard;
+
+  static Color cardSecondary(BuildContext context) =>
+      isDark(context) ? darkCardSecondary : lightCardSecondary;
+
+  static Color border(BuildContext context) =>
+      isDark(context) ? darkBorder : lightBorder;
+
+  static Color textPrimary(BuildContext context) =>
+      isDark(context) ? darkTextPrimary : lightTextPrimary;
+
+  static Color textSecondary(BuildContext context) =>
+      isDark(context) ? darkTextSecondary : lightTextSecondary;
+
+  static Color shadow(BuildContext context) =>
+      isDark(context) ? darkShadow : lightShadow;
+
+  static Color sidebar(BuildContext context) =>
+      isDark(context) ? darkSidebar : lightSidebar;
+
+  static List<Color> headerGradient(BuildContext context) =>
+      isDark(context) ? darkHeaderGradient : lightHeaderGradient;
+
+  static Color shimmerBase(BuildContext context) =>
+      isDark(context) ? darkShimmerBase : lightShimmerBase;
+
+  static Color shimmerHighlight(BuildContext context) =>
+      isDark(context) ? darkShimmerHighlight : lightShimmerHighlight;
 }

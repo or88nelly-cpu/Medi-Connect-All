@@ -16,17 +16,17 @@ class SignUpFooter extends StatelessWidget {
         SizedBox(height: 10.r),
         Row(
           children: [
-            const Expanded(child: Divider(color: AppColors.border)),
+             Expanded(child: Divider(color: AppColors.border(context))),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
                 AppStrings.orDivider,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.textSecondary(context),
                 ),
               ),
             ),
-            const Expanded(child: Divider(color: AppColors.border)),
+             Expanded(child: Divider(color: AppColors.border(context))),
           ],
         ),
         SizedBox(height: 10.r),
@@ -41,7 +41,7 @@ class SignUpFooter extends StatelessWidget {
           child: RichText(
             text: TextSpan(
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: AppColors.textSecondary(context),
               ),
               children: [
                 const TextSpan(text: AppStrings.alreadyHaveAccount),

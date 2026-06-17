@@ -38,14 +38,14 @@ class AppointmentRow extends StatelessWidget {
               Text(
                 doctorName,
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textPrimary,
+                  color: AppColors.textPrimary(context),
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 specialty,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.textSecondary(context),
                 ),
               ),
             ],

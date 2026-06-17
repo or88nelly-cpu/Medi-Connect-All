@@ -98,7 +98,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           Text(
                             slide['desc']!,
                             style: AppTextStyles.bodyLarge.copyWith(
-                              color: AppColors.textSecondary,
+                              color: AppColors.textSecondary(context),
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -119,7 +119,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       decoration: BoxDecoration(
                         color: _currentIndex == index
                             ? AppColors.primary
-                            : AppColors.border,
+                            : AppColors.border(context),
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                     ),

@@ -118,9 +118,7 @@ class RecentActivityCard extends StatelessWidget {
                           Expanded(
                             child: Container(
                               width: 1.5.w,
-                              color: isDark
-                                  ? AppColors.terminalDarkBorder
-                                  : AppColors.border,
+                              color:  AppColors.border(context),
                             ),
                           ),
                       ],

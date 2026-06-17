@@ -83,9 +83,7 @@ class AppointmentsStatusFilter extends StatelessWidget {
     }
 
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final borderCol = isSelected
-        ? statusColor
-        : (isDark ? AppColors.terminalDarkBorder : AppColors.border);
+    final borderCol = isSelected ? statusColor : (AppColors.border(context));
 
     return GestureDetector(
       onTap: () {
@@ -117,7 +115,7 @@ class AppointmentsStatusFilter extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10.sp,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isDark ? Colors.white : AppColors.textPrimary,
+                color: isDark ? Colors.white : AppColors.textPrimary(context),
               ),
             ),
             SizedBox(width: 8.w),
@@ -136,7 +134,9 @@ class AppointmentsStatusFilter extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: count > 0
                       ? statusColor
-                      : (isDark ? Colors.white38 : AppColors.textSecondary),
+                      : (isDark
+                            ? Colors.white38
+                            : AppColors.textSecondary(context)),
                 ),
               ),
             ),

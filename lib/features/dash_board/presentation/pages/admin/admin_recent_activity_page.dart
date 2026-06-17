@@ -89,7 +89,7 @@ class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
                     break;
                   default:
                     icon = Icons.info_outline;
-                    iconColor = AppColors.textSecondary;
+                    iconColor = AppColors.textSecondary(context);
                 }
 
                 // Format time difference
@@ -109,7 +109,7 @@ class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
+                    side: BorderSide(color: AppColors.border(context)),
                   ),
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16.r),
@@ -125,7 +125,7 @@ class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
                       log.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: AppColors.textPrimary(context),
                       ),
                     ),
                     subtitle: Text(

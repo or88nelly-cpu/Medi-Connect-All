@@ -56,7 +56,7 @@ class LabTestsSection extends StatelessWidget {
                 style: AppTextStyles.bodySmall.copyWith(
                   color: isSelected
                       ? AppColors.secondary
-                      : (isDark ? Colors.white70 : AppColors.textPrimary),
+                      : (AppColors.textPrimary(context)),
                 ),
               ),
               selected: isSelected,
@@ -71,9 +71,7 @@ class LabTestsSection extends StatelessWidget {
               side: BorderSide(
                 color: isSelected
                     ? AppColors.secondary
-                    : (isDark
-                          ? AppColors.terminalDarkBorder
-                          : AppColors.border),
+                    : (AppColors.border(context)),
               ),
             );
           }).toList(),
@@ -91,19 +89,25 @@ class LabTestsSection extends StatelessWidget {
                 title: Text(
                   'Add Custom Lab Test',
                   style: TextStyle(
-                    color: isDark ? Colors.white : AppColors.textPrimary,
+                    color: isDark
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                   ),
                 ),
                 content: TextField(
                   controller: textCtrl,
                   autofocus: true,
                   style: TextStyle(
-                    color: isDark ? Colors.white : AppColors.textPrimary,
+                    color: isDark
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                   ),
                   decoration: InputDecoration(
                     hintText: 'Enter test name (e.g. Urine Culture)',
                     hintStyle: TextStyle(
-                      color: isDark ? Colors.white38 : AppColors.textSecondary,
+                      color: isDark
+                          ? Colors.white38
+                          : AppColors.textSecondary(context),
                     ),
                   ),
                 ),
@@ -146,12 +150,12 @@ class LabTestsSection extends StatelessWidget {
           controller: labNotesCtrl,
           maxLines: 2,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white : AppColors.textPrimary,
+            color: isDark ? Colors.white : AppColors.textPrimary(context),
           ),
           decoration: InputDecoration(
             hintText: 'Special instructions for lab...',
             hintStyle: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : AppColors.textSecondary,
+              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
             ),
             filled: true,
             fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
@@ -161,9 +165,7 @@ class LabTestsSection extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-              ),
+              borderSide: BorderSide(color: AppColors.border(context)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),

@@ -52,18 +52,22 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
                 );
               },
               style: TextStyle(
-                color: isDark ? Colors.white : AppColors.textPrimary,
+                color: isDark ? Colors.white : AppColors.textPrimary(context),
                 fontSize: 12.sp,
               ),
               decoration: InputDecoration(
                 hintText: "Search patient, doctor, or specialty...",
                 hintStyle: TextStyle(
                   fontSize: 12.sp,
-                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                  color: isDark
+                      ? Colors.white54
+                      : AppColors.textSecondary(context),
                 ),
                 prefixIcon: Icon(
                   Icons.search,
-                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                  color: isDark
+                      ? Colors.white54
+                      : AppColors.textSecondary(context),
                 ),
                 filled: true,
                 fillColor: isDark ? AppColors.terminalDarkCard : Colors.white,
@@ -73,11 +77,7 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.r),
-                  borderSide: BorderSide(
-                    color: isDark
-                        ? AppColors.terminalDarkBorder
-                        : AppColors.border,
-                  ),
+                  borderSide: BorderSide(color: AppColors.border(context)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.r),

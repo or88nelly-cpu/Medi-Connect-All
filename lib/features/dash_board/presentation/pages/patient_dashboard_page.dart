@@ -400,7 +400,7 @@ class _UpcomingAppointmentsCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(14.r),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(color: AppColors.border(context)),
             boxShadow: [
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: 0.04),
@@ -416,7 +416,8 @@ class _UpcomingAppointmentsCard extends StatelessWidget {
                 final apt = appointments[idx];
                 return Column(
                   children: [
-                    if (idx > 0) Divider(color: AppColors.border, height: 20.h),
+                    if (idx > 0)
+                      Divider(color: AppColors.border(context), height: 20.h),
                     _AppointmentRow(
                       doctorName: apt['doctorName']!,
                       specialty: apt['specialty']!,
@@ -468,14 +469,14 @@ class _AppointmentRow extends StatelessWidget {
               Text(
                 doctorName,
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textPrimary,
+                  color: AppColors.textPrimary(context),
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 specialty,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: AppColors.textSecondary(context),
                 ),
               ),
             ],
@@ -599,7 +600,7 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
-                        side: const BorderSide(color: AppColors.border),
+                        side: BorderSide(color: AppColors.border(context)),
                       ),
                       child: ListTile(
                         contentPadding: EdgeInsets.all(16.r),
@@ -613,7 +614,7 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
                           apt['doctor']!,
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
+                            color: AppColors.textPrimary(context),
                           ),
                         ),
                         subtitle: Text(
@@ -682,7 +683,7 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
                     ),
                   ],
                 ),
-                const Divider(color: AppColors.border),
+                Divider(color: AppColors.border(context)),
                 SizedBox(height: 12.h),
                 Expanded(
                   child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
@@ -767,7 +768,7 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.r),
-        side: const BorderSide(color: AppColors.border),
+        side: BorderSide(color: AppColors.border(context)),
       ),
       child: ListTile(
         contentPadding: EdgeInsets.all(16.r),
@@ -782,7 +783,7 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
           doc.name ?? 'Dr. Specialist',
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
+            color: AppColors.textPrimary(context),
           ),
         ),
         subtitle: Column(
@@ -962,7 +963,7 @@ class _PatientRecordsTab extends StatelessWidget {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
-                        side: const BorderSide(color: AppColors.border),
+                        side: BorderSide(color: AppColors.border(context)),
                       ),
                       child: ListTile(
                         contentPadding: EdgeInsets.all(16.r),
@@ -987,7 +988,7 @@ class _PatientRecordsTab extends StatelessWidget {
                           rec['title']!,
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
+                            color: AppColors.textPrimary(context),
                           ),
                         ),
                         subtitle: Text(
@@ -1075,7 +1076,7 @@ class _PatientChatTab extends StatelessWidget {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
-                        side: const BorderSide(color: AppColors.border),
+                        side: BorderSide(color: AppColors.border(context)),
                       ),
                       child: ListTile(
                         contentPadding: EdgeInsets.all(16.r),
@@ -1092,7 +1093,7 @@ class _PatientChatTab extends StatelessWidget {
                               ch['doctor']!,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.textPrimary,
+                                color: AppColors.textPrimary(context),
                               ),
                             ),
                             Text(ch['time']!, style: AppTextStyles.bodySmall),
@@ -1190,7 +1191,7 @@ class _PatientProfileTab extends StatelessWidget {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
-                  side: const BorderSide(color: AppColors.border),
+                  side: BorderSide(color: AppColors.border(context)),
                 ),
                 child: Column(
                   children: [
@@ -1198,20 +1199,23 @@ class _PatientProfileTab extends StatelessWidget {
                       Icons.phone_outlined,
                       "Phone",
                       phone ?? "Not Set",
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.bloodtype_outlined,
                       "Blood Group",
                       bloodGroup,
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.warning_amber_rounded,
                       "Allergies",
                       allergies,
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     BlocBuilder<ThemeCubit, ThemeMode>(
                       builder: (context, themeMode) {
                         final isDark = themeMode == ThemeMode.dark;
@@ -1280,18 +1284,20 @@ class _PatientProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String title, String value) {
+  Widget _buildInfoTile(IconData icon, String title, String value,BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: AppColors.primary),
       title: Text(
         title,
-        style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: AppColors.textSecondary(context),
+        ),
       ),
       trailing: Text(
         value,
         style: AppTextStyles.bodyMedium.copyWith(
           fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary,
+          color: AppColors.textPrimary(context),
         ),
       ),
     );

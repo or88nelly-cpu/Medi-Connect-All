@@ -1,106 +1,188 @@
-/// Centralized typography definitions using flutter_screenutil for responsiveness.
-/// Text styling must come from here to maintain visual consistency.
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'app_colors.dart';
 
 class AppTextStyles {
-  /// ScreenUtil-scaled font sizes.
+  AppTextStyles._();
+
+  // =====================================================
+  // FONT SIZES
+  // =====================================================
+
+  static double get s40 => 40.sp;
+  static double get s36 => 36.sp;
   static double get s32 => 32.sp;
+  static double get s28 => 28.sp;
   static double get s24 => 24.sp;
   static double get s20 => 20.sp;
   static double get s18 => 18.sp;
   static double get s16 => 16.sp;
   static double get s14 => 14.sp;
   static double get s12 => 12.sp;
+  static double get s10 => 10.sp;
 
-  /// Large heading style (e.g. Onboarding titles, big highlights).
+  // =====================================================
+  // HEADINGS
+  // =====================================================
+
+  static TextStyle get headingXLarge => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s40,
+    fontWeight: FontWeight.w700,
+  );
+
   static TextStyle get headingLarge => TextStyle(
     fontFamily: 'Inter',
     fontSize: s32,
-    fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w700,
   );
 
-  /// Medium heading style (e.g. Page titles, large sections).
   static TextStyle get headingMedium => TextStyle(
     fontFamily: 'Inter',
     fontSize: s24,
-    fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w700,
   );
 
-  /// Large title style (e.g. Cards title, dialog header).
+  static TextStyle get headingSmall => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s20,
+    fontWeight: FontWeight.w700,
+  );
+
+  // =====================================================
+  // TITLES
+  // =====================================================
+
   static TextStyle get titleLarge => TextStyle(
     fontFamily: 'Inter',
     fontSize: s20,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
   );
 
-  /// Medium title style (e.g. ListItem title, field label).
   static TextStyle get titleMedium => TextStyle(
     fontFamily: 'Inter',
     fontSize: s18,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
   );
 
-  /// Large body text (e.g. standard body copy, input text).
+  static TextStyle get titleSmall => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s16,
+    fontWeight: FontWeight.w600,
+  );
+
+  // =====================================================
+  // BODY
+  // =====================================================
+
   static TextStyle get bodyLarge => TextStyle(
     fontFamily: 'Inter',
     fontSize: s16,
-    fontWeight: FontWeight.normal,
-    color: AppColors.textPrimary,
+    fontWeight: FontWeight.w400,
   );
 
-  /// Medium body text (e.g. secondary page descriptions).
   static TextStyle get bodyMedium => TextStyle(
     fontFamily: 'Inter',
     fontSize: s14,
-    fontWeight: FontWeight.normal,
-    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w400,
   );
 
-  /// Small body text (e.g. metadata, captions).
   static TextStyle get bodySmall => TextStyle(
     fontFamily: 'Inter',
     fontSize: s12,
-    fontWeight: FontWeight.normal,
-    color: AppColors.textSecondary,
+    fontWeight: FontWeight.w400,
   );
 
-  /// Medium label text (e.g. button labels, action text).
+  static TextStyle get bodyXSmall => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s10,
+    fontWeight: FontWeight.w400,
+  );
+
+  // =====================================================
+  // LABELS
+  // =====================================================
+
+  static TextStyle get labelLarge => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s16,
+    fontWeight: FontWeight.w600,
+  );
+
   static TextStyle get labelMedium => TextStyle(
     fontFamily: 'Inter',
     fontSize: s14,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
   );
 
-  // Terminal theme styles
-  static TextStyle get terminalHeadingLarge => TextStyle(
+  static TextStyle get labelSmall => TextStyle(
     fontFamily: 'Inter',
+    fontSize: s12,
+    fontWeight: FontWeight.w600,
+  );
+
+  // =====================================================
+  // BUTTONS
+  // =====================================================
+
+  static TextStyle get buttonLarge => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle get buttonMedium => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s14,
+    fontWeight: FontWeight.w600,
+  );
+
+  // =====================================================
+  // DASHBOARD
+  // =====================================================
+
+  static TextStyle get dashboardTitle => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s24,
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle get dashboardCardTitle => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle get dashboardCardValue => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s28,
+    fontWeight: FontWeight.w700,
+  );
+
+  // =====================================================
+  // TERMINAL
+  // =====================================================
+
+  static TextStyle get terminalHeadingLarge => TextStyle(
+    fontFamily: 'monospace',
     fontSize: s32,
     fontWeight: FontWeight.bold,
   );
 
   static TextStyle get terminalHeadingMedium => TextStyle(
-    fontFamily: 'Inter',
+    fontFamily: 'monospace',
     fontSize: s24,
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle get terminalMonospace =>
-      const TextStyle(fontFamily: 'monospace');
+  static const TextStyle terminalMonospace = TextStyle(fontFamily: 'monospace');
 
   static TextStyle get terminalMonospaceLabel => TextStyle(
     fontFamily: 'monospace',
     fontSize: s12,
     fontWeight: FontWeight.bold,
-    letterSpacing: 0.5,
+    letterSpacing: .5,
   );
 
   static TextStyle get terminalBodyLarge =>
@@ -111,6 +193,4 @@ class AppTextStyles {
 
   static TextStyle get terminalBodySmall =>
       TextStyle(fontFamily: 'monospace', fontSize: s12);
-
-  AppTextStyles._();
 }

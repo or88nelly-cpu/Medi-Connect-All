@@ -18,7 +18,7 @@ class PatientDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       child: Column(
         children: [
           _RoleDrawerHeader(
@@ -67,7 +67,7 @@ class PatientDrawer extends StatelessWidget {
                     context.pop();
                   },
                 ),
-                const Divider(color: AppColors.border),
+                Divider(color: AppColors.border(context)),
                 _DrawerItem(
                   icon: Icons.person_outline,
                   title: 'Profile',
@@ -113,7 +113,7 @@ class DoctorDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       child: Column(
         children: [
           _RoleDrawerHeader(
@@ -163,7 +163,7 @@ class DoctorDrawer extends StatelessWidget {
                     context.push('/departments');
                   },
                 ),
-                const Divider(color: AppColors.border),
+                Divider(color: AppColors.border(context)),
                 _DrawerItem(
                   icon: Icons.person_outline,
                   title: 'Profile',
@@ -209,7 +209,7 @@ class StaffDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background(context),
       child: Column(
         children: [
           _RoleDrawerHeader(
@@ -259,7 +259,7 @@ class StaffDrawer extends StatelessWidget {
                     context.pop();
                   },
                 ),
-                const Divider(color: AppColors.border),
+                Divider(color: AppColors.border(context)),
                 _DrawerItem(
                   icon: Icons.person_outline,
                   title: 'Profile',
@@ -425,13 +425,13 @@ class _DrawerItem extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: iconColor ?? AppColors.textPrimary,
+        color: iconColor ?? AppColors.textPrimary(context),
         size: 22.r,
       ),
       title: Text(
         title,
         style: AppTextStyles.bodyMedium.copyWith(
-          color: textColor ?? AppColors.textPrimary,
+          color: textColor ?? AppColors.textPrimary(context),
           fontWeight: FontWeight.w600,
         ),
       ),

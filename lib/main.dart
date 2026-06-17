@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/app_responsive.dart';
 import 'package:medi_connect/core/themes/app_theme.dart';
 import 'package:medi_connect/core/themes/theme_cubit.dart';
 
@@ -35,7 +36,9 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: AppProviders.getProviders(),
       child: ScreenUtilInit(
-        designSize: const Size(390, 884), // Premium device base reference
+        designSize: AppResponsive.getDesignSize(
+          context,
+        ), // Premium device base reference
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {

@@ -78,7 +78,7 @@ class DoctorConsultationsCard extends StatelessWidget {
                   color: isDark ? AppColors.terminalDarkCard : Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14.r),
-                    side: const BorderSide(color: AppColors.border),
+                    side: BorderSide(color: AppColors.border(context)),
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(24.r),
@@ -110,14 +110,16 @@ class DoctorConsultationsCard extends StatelessWidget {
                 color: isDark ? AppColors.terminalDarkCard : Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14.r),
-                  side: const BorderSide(color: AppColors.border),
+                  side: BorderSide(color: AppColors.border(context)),
                 ),
                 child: ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: todayApts.length,
-                  separatorBuilder: (context, idx) =>
-                      const Divider(color: AppColors.border, height: 1),
+                  separatorBuilder: (context, idx) =>  Divider(
+                    color: AppColors.border(context),
+                    height: 1,
+                  ),
                   itemBuilder: (context, idx) {
                     final apt = todayApts[idx];
 
@@ -224,7 +226,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                         apt.patientName,
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : AppColors.textPrimary,
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.textPrimary(context),
                         ),
                       ),
                       subtitle: Padding(

@@ -23,7 +23,7 @@ class VitalsGridSection extends StatelessWidget {
     final status = recentApt?.status ?? "N/A";
 
     final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
-    final borderCol = isDark ? AppColors.terminalDarkBorder : AppColors.border;
+    final borderCol = AppColors.border(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,8 +151,10 @@ class VitalsGridSection extends StatelessWidget {
     required Color borderCol,
     bool isStatus = false,
   }) {
-    final textCol = isDark ? Colors.white : AppColors.textPrimary;
-    final subTextCol = isDark ? Colors.white38 : AppColors.textSecondary;
+    final textCol =  AppColors.textPrimary(context);
+    final subTextCol = isDark
+        ? Colors.white38
+        : AppColors.textSecondary(context);
     final cardBg = isDark ? const Color(0xFF0F172A) : Colors.white;
 
     final displayVal =

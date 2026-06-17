@@ -26,7 +26,7 @@ class AdminLogoSection extends StatelessWidget {
       width: size ?? 90.r,
       decoration: decorationNeeded
           ? BoxDecoration(
-              color: bgColor ?? AppColors.background,
+              color: bgColor ?? AppColors.background(context),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(

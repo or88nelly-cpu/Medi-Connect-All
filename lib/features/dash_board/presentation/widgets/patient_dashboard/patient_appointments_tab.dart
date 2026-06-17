@@ -78,8 +78,9 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                 children: [
                   Text(
                     AppStrings.appointments,
-                    style:
-                        AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+                    style: AppTextStyles.headingMedium.copyWith(
+                      fontSize: 22.sp,
+                    ),
                   ),
                   ElevatedButton.icon(
                     onPressed: () => _showBookDoctorDialog(context),
@@ -115,21 +116,21 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
-                        side: const BorderSide(color: AppColors.border),
+                        side: BorderSide(color: AppColors.border(context)),
                       ),
                       child: ListTile(
                         contentPadding: EdgeInsets.all(16.r),
                         leading: CircleAvatar(
-                          backgroundColor:
-                              AppColors.primary.withValues(alpha: 0.1),
-                          child:
-                              Icon(Icons.person, color: AppColors.primary),
+                          backgroundColor: AppColors.primary.withValues(
+                            alpha: 0.1,
+                          ),
+                          child: Icon(Icons.person, color: AppColors.primary),
                         ),
                         title: Text(
                           apt['doctor']!,
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
+                            color: AppColors.textPrimary(context),
                           ),
                         ),
                         subtitle: Text(
@@ -188,22 +189,23 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Find & Choose Doctor',
-                        style: AppTextStyles.titleLarge),
+                    Text(
+                      'Find & Choose Doctor',
+                      style: AppTextStyles.titleLarge,
+                    ),
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () => Navigator.pop(ctx),
                     ),
                   ],
                 ),
-                const Divider(color: AppColors.border),
+                Divider(color: AppColors.border(context)),
                 SizedBox(height: 12.h),
                 Expanded(
                   child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
                     builder: (context, state) {
                       if (state is DoctorStaffLoading) {
-                        return const Center(
-                            child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       if (state is DoctorStaffError ||
                           state is! DoctorStaffLoaded) {
@@ -264,8 +266,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
     ];
     return ListView.builder(
       itemCount: fallbackDocs.length,
-      itemBuilder: (_, idx) =>
-          _buildDoctorBookingTile(ctx, fallbackDocs[idx]),
+      itemBuilder: (_, idx) => _buildDoctorBookingTile(ctx, fallbackDocs[idx]),
     );
   }
 
@@ -275,7 +276,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.r),
-        side: const BorderSide(color: AppColors.border),
+        side: BorderSide(color: AppColors.border(context)),
       ),
       child: ListTile(
         contentPadding: EdgeInsets.all(16.r),
@@ -290,7 +291,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
           doc.name ?? 'Dr. Specialist',
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
+            color: AppColors.textPrimary(context),
           ),
         ),
         subtitle: Column(
@@ -338,23 +339,25 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
               final authState = context.read<AuthBloc>().state;
               if (authState is Authenticated) {
                 final user = UserModel.fromEntity(authState.user);
-                final updatedMetadata =
-                    Map<String, dynamic>.from(user.metadata ?? {});
+                final updatedMetadata = Map<String, dynamic>.from(
+                  user.metadata ?? {},
+                );
                 final currentApts = List<dynamic>.from(
-                  updatedMetadata['appointments'] ?? [
-                    {
-                      'doctor': 'Dr. Sarah Johnson',
-                      'specialty': 'Cardiologist',
-                      'time': 'June 12, 10:30 AM',
-                      'type': 'Cardiology Clinic',
-                    },
-                    {
-                      'doctor': 'Dr. Michael Chen',
-                      'specialty': 'Neurologist',
-                      'time': 'June 15, 02:00 PM',
-                      'type': 'Neurology Clinic',
-                    },
-                  ],
+                  updatedMetadata['appointments'] ??
+                      [
+                        {
+                          'doctor': 'Dr. Sarah Johnson',
+                          'specialty': 'Cardiologist',
+                          'time': 'June 12, 10:30 AM',
+                          'type': 'Cardiology Clinic',
+                        },
+                        {
+                          'doctor': 'Dr. Michael Chen',
+                          'specialty': 'Neurologist',
+                          'time': 'June 15, 02:00 PM',
+                          'type': 'Neurology Clinic',
+                        },
+                      ],
                 );
 
                 currentApts.insert(0, {

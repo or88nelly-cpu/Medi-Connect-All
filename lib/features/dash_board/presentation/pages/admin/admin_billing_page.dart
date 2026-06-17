@@ -119,7 +119,9 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
-                          side: const BorderSide(color: AppColors.border),
+                          side:  BorderSide(
+                            color: AppColors.border(context),
+                          ),
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12.r),
@@ -172,7 +174,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                                       style: AppTextStyles.titleMedium.copyWith(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.sp,
-                                        color: AppColors.textPrimary,
+                                        color: AppColors.textPrimary(context),
                                       ),
                                     ),
                                     SizedBox(height: 4.h),
@@ -232,7 +234,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
             Text(
               title,
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textSecondary,
+                color: AppColors.textSecondary(context),
               ),
             ),
             SizedBox(height: 4.h),
@@ -290,7 +292,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.sp,
-                    color: isDark ? Colors.white : AppColors.textPrimary,
+                    color: AppColors.textPrimary(context),
                   ),
                 ),
                 SizedBox(height: 4.h),
@@ -298,11 +300,11 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                   "Invoice Review",
                   style: TextStyle(
                     fontSize: 11.sp,
-                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                    color: AppColors.textSecondary(context),
                   ),
                 ),
                 SizedBox(height: 16.h),
-                const Divider(color: AppColors.border, height: 1),
+                Divider(color: AppColors.border(context), height: 1),
                 SizedBox(height: 16.h),
 
                 _buildReceiptRow("Patient Name", invoice.patientName, isDark),
@@ -337,9 +339,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                     color: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
                     borderRadius: BorderRadius.circular(8.r),
                     border: Border.all(
-                      color: isDark
-                          ? AppColors.terminalDarkBorder
-                          : AppColors.border,
+                      color:  AppColors.border(context),
                     ),
                   ),
                   child: Row(
@@ -350,9 +350,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
-                          color: isDark
-                              ? Colors.white70
-                              : AppColors.textPrimary,
+                          color:AppColors.textPrimary(context),
                         ),
                       ),
                       Text(
@@ -411,7 +409,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
             label,
             style: TextStyle(
               fontSize: 11.sp,
-              color: isDark ? Colors.white54 : AppColors.textSecondary,
+              color: AppColors.textSecondary(context),
             ),
           ),
           Text(
@@ -421,7 +419,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
               fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
               color:
                   valueColor ??
-                  (isDark ? Colors.white70 : AppColors.textPrimary),
+                  AppColors.textPrimary(context),
             ),
           ),
         ],

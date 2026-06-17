@@ -39,9 +39,7 @@ class SuccessStepView extends StatelessWidget {
     ).format(DateTime.now());
 
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final borderColor = isDark
-        ? AppColors.terminalDarkBorder
-        : AppColors.border;
+    final borderColor = AppColors.border(context);
 
     return Column(
       children: [
@@ -111,14 +109,14 @@ class SuccessStepView extends StatelessWidget {
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
-            color: isDark ? Colors.white : AppColors.textPrimary,
+            color: isDark ? Colors.white : AppColors.textPrimary(context),
           ),
         ),
         SizedBox(height: 6.h),
         Text(
           'The consultation has been completed successfully.',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white54 : AppColors.textSecondary,
+            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
           ),
           textAlign: TextAlign.center,
         ),
@@ -139,30 +137,35 @@ class SuccessStepView extends StatelessWidget {
                 'Patient',
                 appointment.patientName,
                 isDark,
+                context
               ),
               _buildSummaryRow(
                 Icons.local_hospital_outlined,
                 'Doctor',
                 '$docName (${appointment.specialty})',
                 isDark,
+                context
               ),
               _buildSummaryRow(
                 Icons.calendar_today_outlined,
                 'Date & Time',
                 formattedDate,
                 isDark,
+                context
               ),
               _buildSummaryRow(
                 Icons.receipt_long_outlined,
                 'Invoice Number',
                 state.invoiceNumber,
                 isDark,
-              ),
+                context
+                ),
               _buildSummaryRow(
                 Icons.payments_outlined,
                 'Amount Paid',
                 '₹${state.totalFee.toStringAsFixed(2)}',
                 isDark,
+                context,
                 isLast: true,
               ),
             ],
@@ -212,7 +215,7 @@ class SuccessStepView extends StatelessWidget {
                       style: AppTextStyles.bodySmall.copyWith(
                         color: isDark
                             ? Colors.white54
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                     ),
                   ],
@@ -280,7 +283,7 @@ class SuccessStepView extends StatelessWidget {
     IconData icon,
     String label,
     String value,
-    bool isDark, {
+    bool isDark,BuildContext context, {
     bool isLast = false,
   }) {
     return Padding(
@@ -290,9 +293,7 @@ class SuccessStepView extends StatelessWidget {
           Icon(
             icon,
             size: 16.r,
-            color: isDark
-                ? Colors.white38
-                : AppColors.textSecondary.withValues(alpha: 0.7),
+            color:  AppColors.textSecondary(context).withValues(alpha: 0.7),
           ),
           SizedBox(width: 10.w),
           SizedBox(
@@ -300,7 +301,9 @@ class SuccessStepView extends StatelessWidget {
             child: Text(
               label,
               style: AppTextStyles.bodySmall.copyWith(
-                color: isDark ? Colors.white54 : AppColors.textSecondary,
+                color: isDark
+                    ? Colors.white54
+                    : AppColors.textSecondary(context),
               ),
             ),
           ),
@@ -309,7 +312,7 @@ class SuccessStepView extends StatelessWidget {
               value,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : AppColors.textPrimary,
+                color: isDark ? Colors.white : AppColors.textPrimary(context),
               ),
               textAlign: TextAlign.end,
             ),

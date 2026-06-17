@@ -23,7 +23,7 @@ class ConfirmStep extends StatelessWidget {
         child: Text(
           "Incomplete wizard configuration",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white54 : AppColors.textSecondary,
+            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
           ),
         ),
       );
@@ -48,7 +48,7 @@ class ConfirmStep extends StatelessWidget {
           "Select Consultation Type",
           style: AppTextStyles.bodySmall.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : AppColors.textPrimary,
+            color: isDark ? Colors.white : AppColors.textPrimary(context),
           ),
         ),
         SizedBox(height: 6.h),
@@ -71,9 +71,7 @@ class ConfirmStep extends StatelessWidget {
                 side: BorderSide(
                   color: state.selectedType == 'Consultation'
                       ? AppColors.primary
-                      : (isDark
-                            ? AppColors.terminalDarkBorder
-                            : AppColors.border),
+                      : (AppColors.border(context)),
                 ),
               ),
             ),
@@ -95,9 +93,7 @@ class ConfirmStep extends StatelessWidget {
                 side: BorderSide(
                   color: state.selectedType == 'Video'
                       ? AppColors.primary
-                      : (isDark
-                            ? AppColors.terminalDarkBorder
-                            : AppColors.border),
+                      : (AppColors.border(context)),
                 ),
               ),
             ),
@@ -108,7 +104,7 @@ class ConfirmStep extends StatelessWidget {
           "Appointment Review Summary",
           style: AppTextStyles.bodySmall.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : AppColors.textPrimary,
+            color: isDark ? Colors.white : AppColors.textPrimary(context),
           ),
         ),
         SizedBox(height: 8.h),
@@ -117,19 +113,17 @@ class ConfirmStep extends StatelessWidget {
           padding: EdgeInsets.all(14.r),
           decoration: BoxDecoration(
             color: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
-            border: Border.all(
-              color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-            ),
+            border: Border.all(color: AppColors.border(context)),
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Column(
             children: [
-              _buildReviewRow("Patient", patientName, isDark),
-              _buildReviewRow("Specialty", state.selectedSection!.name, isDark),
-              _buildReviewRow("Doctor", doctorName, isDark),
-              _buildReviewRow("Date", formattedDate, isDark),
-              _buildReviewRow("Time Slot", state.selectedSlotTime!, isDark),
-              _buildReviewRow("Type", state.selectedType, isDark, isLast: true),
+              _buildReviewRow("Patient", patientName, isDark,context),
+              _buildReviewRow("Specialty", state.selectedSection!.name, isDark,context),
+              _buildReviewRow("Doctor", doctorName, isDark,context),
+              _buildReviewRow("Date", formattedDate, isDark,context),
+              _buildReviewRow("Time Slot", state.selectedSlotTime!, isDark,context),
+              _buildReviewRow("Type", state.selectedType, isDark, isLast: true,context),
             ],
           ),
         ),
@@ -140,7 +134,7 @@ class ConfirmStep extends StatelessWidget {
   Widget _buildReviewRow(
     String label,
     String value,
-    bool isDark, {
+    bool isDark,BuildContext context, {
     bool isLast = false,
   }) {
     return Padding(
@@ -152,7 +146,7 @@ class ConfirmStep extends StatelessWidget {
             label,
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11.sp,
-              color: isDark ? Colors.white54 : AppColors.textSecondary,
+              color: isDark ? Colors.white54 : AppColors.textSecondary(context),
             ),
           ),
           Text(
@@ -160,7 +154,7 @@ class ConfirmStep extends StatelessWidget {
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11.sp,
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : AppColors.textPrimary,
+              color: isDark ? Colors.white : AppColors.textPrimary(context),
             ),
           ),
         ],

@@ -7,7 +7,6 @@ import 'package:medi_connect/features/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/features/auth/presentation/pages/admin_signup_page.dart';
 import 'package:medi_connect/features/auth/presentation/pages/splash_page.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/dashboard_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/patient/patient_dashboard_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/doctor/doctor_dashboard_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/staff/staff_dashboard_page.dart';

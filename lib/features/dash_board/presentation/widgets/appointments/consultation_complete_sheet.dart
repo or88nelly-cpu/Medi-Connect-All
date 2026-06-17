@@ -459,7 +459,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                     style: AppTextStyles.titleLarge.copyWith(
                                       color: isDark
                                           ? Colors.white
-                                          : AppColors.textPrimary,
+                                          : AppColors.textPrimary(context),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -469,7 +469,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: isDark
                                           ? Colors.white54
-                                          : AppColors.textSecondary,
+                                          : AppColors.textSecondary(context),
                                     ),
                                   ),
                                 ],
@@ -480,7 +480,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   Icons.close,
                                   color: isDark
                                       ? Colors.white54
-                                      : AppColors.textSecondary,
+                                      : AppColors.textSecondary(context),
                                 ),
                               ),
                             ],
@@ -551,11 +551,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                         decoration: BoxDecoration(
                           color: sheetBg,
                           border: Border(
-                            top: BorderSide(
-                              color: isDark
-                                  ? AppColors.terminalDarkBorder
-                                  : AppColors.border,
-                            ),
+                            top: BorderSide(color: AppColors.border(context)),
                           ),
                         ),
                         child: Row(
@@ -568,11 +564,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: isDark
                                         ? Colors.white70
-                                        : AppColors.textSecondary,
+                                        : AppColors.textSecondary(context),
                                     side: BorderSide(
-                                      color: isDark
-                                          ? Colors.white24
-                                          : AppColors.border,
+                                      color: AppColors.border(context),
                                     ),
                                     padding: EdgeInsets.symmetric(
                                       vertical: 14.h,
@@ -625,11 +619,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: isDark
                                         ? Colors.white70
-                                        : AppColors.textSecondary,
+                                        : AppColors.textSecondary(context),
                                     side: BorderSide(
-                                      color: isDark
-                                          ? Colors.white24
-                                          : AppColors.border,
+                                      color: AppColors.border(context),
                                     ),
                                     padding: EdgeInsets.symmetric(
                                       vertical: 14.h,
@@ -682,11 +674,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: isDark
                                         ? Colors.white70
-                                        : AppColors.textSecondary,
+                                        : AppColors.textSecondary(context),
                                     side: BorderSide(
-                                      color: isDark
-                                          ? Colors.white24
-                                          : AppColors.border,
+                                      color: AppColors.border(context),
                                     ),
                                     padding: EdgeInsets.symmetric(
                                       vertical: 14.h,

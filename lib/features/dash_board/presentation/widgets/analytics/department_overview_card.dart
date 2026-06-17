@@ -127,9 +127,7 @@ class DepartmentOverviewCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4.r),
                     child: LinearProgressIndicator(
                       value: val,
-                      backgroundColor: isDark
-                          ? AppColors.terminalDarkBorder
-                          : AppColors.border,
+                      backgroundColor: AppColors.border(context),
                       valueColor: AlwaysStoppedAnimation<Color>(color),
                       minHeight: 8.h,
                     ),

@@ -105,20 +105,22 @@ class DoctorStaffDetailPage extends StatelessWidget {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
+                    side: BorderSide(color: AppColors.border(context)),
                   ),
                   child: Column(
                     children: [
                       _buildInfoRow(
                         "Phone",
                         currentUser.phoneNumber ?? "Not Set",
+                        context
                       ),
-                      const Divider(color: AppColors.border, height: 1),
-                      _buildInfoRow("Gender", currentUser.gender ?? "Not Set"),
-                      const Divider(color: AppColors.border, height: 1),
+                      Divider(color: AppColors.border(context), height: 1),
+                      _buildInfoRow("Gender", currentUser.gender ?? "Not Set",context),
+                      Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
                         "Department",
                         currentUser.department ?? "Not Assigned",
+                        context
                       ),
                     ],
                   ),
@@ -129,26 +131,29 @@ class DoctorStaffDetailPage extends StatelessWidget {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
+                    side: BorderSide(color: AppColors.border(context)),
                   ),
                   child: Column(
                     children: [
                       _buildInfoRow(
                         "Staff Role",
                         currentUser.staffRole ?? "Not Set",
+                        context
                       ),
-                      const Divider(color: AppColors.border, height: 1),
+                      Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
                         "Designation",
                         currentUser.designation ?? "Not Set",
+                        context
                       ),
-                      const Divider(color: AppColors.border, height: 1),
+                      Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
                         "Shift",
                         currentUser.availabilityStatus ?? "Day Shift",
+                        context
                       ),
-                      const Divider(color: AppColors.border, height: 1),
-                      _buildInfoRow("Status", currentUser.status),
+                      Divider(color: AppColors.border(context), height: 1),
+                      _buildInfoRow("Status", currentUser.status,context),
                     ],
                   ),
                 ),
@@ -176,17 +181,19 @@ class DoctorStaffDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String title, String value) {
+  Widget _buildInfoRow(String title, String value,BuildContext context) {
     return ListTile(
       title: Text(
         title,
-        style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: AppColors.textSecondary(context),
+        ),
       ),
       trailing: Text(
         value,
         style: AppTextStyles.bodyMedium.copyWith(
           fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary,
+          color: AppColors.textPrimary(context),
         ),
       ),
     );

@@ -57,7 +57,9 @@ class PatientStep extends StatelessWidget {
                   Text(
                     "New Patient Registration",
                     style: AppTextStyles.titleMedium.copyWith(
-                      color: isDark ? Colors.white : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                   TextButton.icon(
@@ -74,7 +76,9 @@ class PatientStep extends StatelessWidget {
                     child: TextFormField(
                       controller: firstNameController,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimary(context),
                       ),
                       decoration: const InputDecoration(
                         labelText: "First Name",
@@ -92,7 +96,9 @@ class PatientStep extends StatelessWidget {
                     child: TextFormField(
                       controller: lastNameController,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimary(context),
                       ),
                       decoration: const InputDecoration(
                         labelText: "Last Name",
@@ -112,7 +118,7 @@ class PatientStep extends StatelessWidget {
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: isDark ? Colors.white : AppColors.textPrimary,
+                  color: isDark ? Colors.white : AppColors.textPrimary(context),
                 ),
                 decoration: const InputDecoration(
                   labelText: "Email ID",
@@ -133,7 +139,9 @@ class PatientStep extends StatelessWidget {
                       controller: phoneController,
                       keyboardType: TextInputType.phone,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimary(context),
                       ),
                       decoration: const InputDecoration(
                         labelText: "Phone Number",
@@ -153,7 +161,9 @@ class PatientStep extends StatelessWidget {
                       controller: ageController,
                       keyboardType: TextInputType.number,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimary(context),
                       ),
                       decoration: const InputDecoration(
                         labelText: "Age",
@@ -176,7 +186,9 @@ class PatientStep extends StatelessWidget {
                   Text(
                     "Gender:  ",
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark ? Colors.white70 : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white70
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                   Row(
@@ -197,7 +209,7 @@ class PatientStep extends StatelessWidget {
                             style: AppTextStyles.bodySmall.copyWith(
                               color: isDark
                                   ? Colors.white70
-                                  : AppColors.textPrimary,
+                                  : AppColors.textPrimary(context),
                             ),
                           ),
                           SizedBox(width: 8.w),
@@ -271,12 +283,14 @@ class PatientStep extends StatelessWidget {
               child: TextField(
                 onChanged: (val) => cubit.setPatientSearchQuery(val),
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: isDark ? Colors.white : AppColors.textPrimary,
+                  color: isDark ? Colors.white : AppColors.textPrimary(context),
                 ),
                 decoration: InputDecoration(
                   hintText: "Search patient name, email, or phone...",
                   hintStyle: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                    color: isDark
+                        ? Colors.white54
+                        : AppColors.textSecondary(context),
                   ),
                   prefixIcon: const Icon(Icons.search),
                   contentPadding: EdgeInsets.symmetric(
@@ -329,7 +343,7 @@ class PatientStep extends StatelessWidget {
                       style: AppTextStyles.bodySmall.copyWith(
                         color: isDark
                             ? Colors.white54
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                     ),
                   );
@@ -354,9 +368,7 @@ class PatientStep extends StatelessWidget {
                           border: Border.all(
                             color: isSelected
                                 ? AppColors.primary
-                                : (isDark
-                                      ? AppColors.terminalDarkBorder
-                                      : AppColors.border),
+                                : (AppColors.border(context)),
                             width: isSelected ? 1.5 : 1,
                           ),
                         ),
@@ -386,7 +398,7 @@ class PatientStep extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: isDark
                                   ? Colors.white
-                                  : AppColors.textPrimary,
+                                  : AppColors.textPrimary(context),
                             ),
                           ),
                           subtitle: Text(
@@ -394,7 +406,7 @@ class PatientStep extends StatelessWidget {
                             style: AppTextStyles.bodySmall.copyWith(
                               color: isDark
                                   ? Colors.white54
-                                  : AppColors.textSecondary,
+                                  : AppColors.textSecondary(context),
                             ),
                           ),
                           trailing: Column(
@@ -407,7 +419,7 @@ class PatientStep extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   color: isDark
                                       ? Colors.white70
-                                      : AppColors.textPrimary,
+                                      : AppColors.textPrimary(context),
                                 ),
                               ),
                               Text(
@@ -415,7 +427,7 @@ class PatientStep extends StatelessWidget {
                                 style: AppTextStyles.bodySmall.copyWith(
                                   color: isDark
                                       ? Colors.white38
-                                      : AppColors.textSecondary,
+                                      : AppColors.textSecondary(context),
                                 ),
                               ),
                             ],

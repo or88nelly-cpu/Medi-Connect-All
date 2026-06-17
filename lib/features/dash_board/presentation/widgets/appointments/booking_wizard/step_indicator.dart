@@ -30,9 +30,7 @@ class StepIndicator extends StatelessWidget {
             ? Colors.white
             : (isCompleted
                   ? AppColors.success
-                  : (isDark
-                        ? Colors.white30
-                        : AppColors.textSecondary.withValues(alpha: 0.5)));
+                  : (AppColors.textSecondary(context).withValues(alpha: 0.5)));
         final circleBg = isActive
             ? AppColors.primary
             : (isCompleted
@@ -40,9 +38,7 @@ class StepIndicator extends StatelessWidget {
                   : Colors.transparent);
         final borderColor = isActive
             ? AppColors.primary
-            : (isCompleted
-                  ? AppColors.success
-                  : (isDark ? AppColors.terminalDarkBorder : AppColors.border));
+            : (isCompleted ? AppColors.success : (AppColors.border(context)));
 
         return Expanded(
           child: Row(
@@ -83,7 +79,9 @@ class StepIndicator extends StatelessWidget {
                           : FontWeight.normal,
                       color: isActive
                           ? AppColors.primary
-                          : (isDark ? Colors.white70 : AppColors.textSecondary),
+                          : (isDark
+                                ? Colors.white70
+                                : AppColors.textSecondary(context)),
                     ),
                   ),
                 ],
@@ -98,9 +96,7 @@ class StepIndicator extends StatelessWidget {
                     ),
                     color: isCompleted
                         ? AppColors.success
-                        : (isDark
-                              ? AppColors.terminalDarkBorder
-                              : AppColors.border),
+                        : (AppColors.border(context)),
                   ),
                 ),
             ],

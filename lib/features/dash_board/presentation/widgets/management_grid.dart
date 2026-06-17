@@ -63,7 +63,7 @@ class _NavCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.r),
-        side: const BorderSide(color: AppColors.border),
+        side: BorderSide(color: AppColors.border(context)),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.r),
@@ -95,7 +95,7 @@ class _NavCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: AppColors.textSecondary(context),
                         fontSize: 12.sp,
                         height: 1,
                       ),
@@ -109,7 +109,7 @@ class _NavCard extends StatelessWidget {
               Icon(
                 Icons.arrow_forward_ios,
                 size: 14.r,
-                color: AppColors.textSecondary,
+                color: AppColors.textSecondary(context),
               ),
             ],
           ),

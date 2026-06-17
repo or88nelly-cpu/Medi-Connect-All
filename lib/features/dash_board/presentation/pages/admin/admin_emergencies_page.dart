@@ -220,7 +220,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
+                    side:  BorderSide(color: AppColors.border(context)),
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12.r),
@@ -249,7 +249,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                                   alert.message,
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.textPrimary,
+                                    color: AppColors.textPrimary(context),
                                   ),
                                 ),
                                 SizedBox(height: 4.h),

@@ -25,7 +25,7 @@ class EmrPrescriptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
-    final borderCol = isDark ? AppColors.terminalDarkBorder : AppColors.border;
+    final borderCol = AppColors.border(context);
     final cardBg = isDark
         ? const Color(0xFF0F172A)
         : const Color(0xFFF7FAFD); // Light blue tint matching mockup
@@ -101,7 +101,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
                             ? Colors.white38
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                     ),
                   ),
@@ -144,6 +144,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                               _buildPrescribedMedicinesList(
                                 emrRecord!['medicines']?.toString() ?? '',
                                 isDark,
+                                context
                               ),
                             ],
                           ),
@@ -220,12 +221,12 @@ class EmrPrescriptionCard extends StatelessWidget {
     );
   }
 
-  Widget _buildPrescribedMedicinesList(String medicinesStr, bool isDark) {
+  Widget _buildPrescribedMedicinesList(String medicinesStr, bool isDark,BuildContext context) {
     if (medicinesStr.isEmpty) {
       return Text(
         "No medicines prescribed.",
         style: TextStyle(
-          color: isDark ? Colors.white30 : AppColors.textSecondary,
+          color: isDark ? Colors.white30 : AppColors.textSecondary(context),
           fontSize: 12.sp,
         ),
       );
@@ -266,7 +267,9 @@ class EmrPrescriptionCard extends StatelessWidget {
                 Text(
                   details,
                   style: TextStyle(
-                    color: isDark ? Colors.white38 : AppColors.textSecondary,
+                    color: isDark
+                        ? Colors.white38
+                        : AppColors.textSecondary(context),
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w500,
                   ),

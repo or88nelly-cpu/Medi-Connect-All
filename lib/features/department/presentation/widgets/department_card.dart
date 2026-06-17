@@ -6,7 +6,6 @@ import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
-import 'package:medi_connect/features/department/presentation/widgets/section_detail/section_detail_header.dart';
 
 /// A single department card shown in the horizontal list.
 /// Shows a [CustomImageView] with the department image (or a gradient icon fallback),
@@ -47,7 +46,7 @@ class DepartmentCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: AppColors.border),
+          border: Border.all(color: AppColors.border(context)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

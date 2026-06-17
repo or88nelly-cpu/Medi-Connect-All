@@ -316,109 +316,111 @@ class _CreateAppointmentWizardBottomSheetState
               maxChildSize: 0.95,
               expand: false,
               builder: (ctx, scrollCtrl) {
-                return SafeArea(child:
-                Container(
-                  decoration: BoxDecoration(
-                    color: sheetBg,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(24.r),
-                    ),
-                    border: Border(
-                      top: BorderSide(
-                        color: isDark
-                            ? AppColors.terminalDarkBorder
-                            : AppColors.border,
-                        width: 1.5,
+                return SafeArea(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: sheetBg,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(24.r),
+                      ),
+                      border: Border(
+                        top: BorderSide(
+                          color: AppColors.border(context),
+                          width: 1.5,
+                        ),
                       ),
                     ),
-                  ),
-                  child: BlocBuilder<BookingWizardCubit, BookingWizardState>(
-                    builder: (context, state) {
-                      return Column(
-                        children: [
-                          // Drag handle
-                          SizedBox(height: 12.h),
-                          Center(
-                            child: Container(
-                              width: 40.w,
-                              height: 4.h,
-                              decoration: BoxDecoration(
-                                color: isDark
-                                    ? Colors.white24
-                                    : Colors.grey[300],
-                                borderRadius: BorderRadius.circular(2),
+                    child: BlocBuilder<BookingWizardCubit, BookingWizardState>(
+                      builder: (context, state) {
+                        return Column(
+                          children: [
+                            // Drag handle
+                            SizedBox(height: 12.h),
+                            Center(
+                              child: Container(
+                                width: 40.w,
+                                height: 4.h,
+                                decoration: BoxDecoration(
+                                  color: isDark
+                                      ? Colors.white24
+                                      : Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 12.h),
+                            SizedBox(height: 12.h),
 
-                          // Header
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Booking Wizard",
-                                  style: AppTextStyles.titleLarge.copyWith(
-                                    color: isDark
-                                        ? Colors.white
-                                        : AppColors.textPrimary,
-                                    fontWeight: FontWeight.bold,
+                            // Header
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Booking Wizard",
+                                    style: AppTextStyles.titleLarge.copyWith(
+                                      color: isDark
+                                          ? Colors.white
+                                          : AppColors.textPrimary(context),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                IconButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  icon: Icon(
-                                    Icons.close,
-                                    color: isDark
-                                        ? Colors.white54
-                                        : AppColors.textSecondary,
+                                  IconButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    icon: Icon(
+                                      Icons.close,
+                                      color: isDark
+                                          ? Colors.white54
+                                          : AppColors.textSecondary(context),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 8.h),
-
-                          // Steps Indicator Strip
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: const StepIndicator(),
-                          ),
-                          SizedBox(height: 12.h),
-                          const Divider(height: 1),
-
-                          // Active Step Content Container
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20.w,
-                                vertical: 12.h,
+                                ],
                               ),
-                              child: _buildActiveStepContent(state.currentStep),
                             ),
-                          ),
+                            SizedBox(height: 8.h),
 
-                          const Divider(height: 1),
+                            // Steps Indicator Strip
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: const StepIndicator(),
+                            ),
+                            SizedBox(height: 12.h),
+                            const Divider(height: 1),
 
-                          // Footer Navigation Buttons
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                              20.w,
-                              12.h,
-                              20.w,
-                              20.h,
+                            // Active Step Content Container
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 12.h,
+                                ),
+                                child: _buildActiveStepContent(
+                                  state.currentStep,
+                                ),
+                              ),
                             ),
-                            child: WizardFooterButtons(
-                              onSubmit: () => _submitAppointment(cubit),
+
+                            const Divider(height: 1),
+
+                            // Footer Navigation Buttons
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                20.w,
+                                12.h,
+                                20.w,
+                                20.h,
+                              ),
+                              child: WizardFooterButtons(
+                                onSubmit: () => _submitAppointment(cubit),
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ));
+                );
               },
             ),
           );

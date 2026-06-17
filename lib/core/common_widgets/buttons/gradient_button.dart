@@ -44,7 +44,7 @@ class GradientButton extends StatelessWidget {
                   end: Alignment.centerRight,
                 )
               : null,
-          color: isButtonEnabled ? null : AppColors.border,
+          color: isButtonEnabled ? null : AppColors.border(context),
           borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
           boxShadow: isButtonEnabled
               ? [
@@ -59,7 +59,7 @@ class GradientButton extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
-            foregroundColor: AppColors.textLight,
+            foregroundColor: AppColors.textPrimary(context),
             shadowColor: Colors.transparent,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
@@ -73,7 +73,7 @@ class GradientButton extends StatelessWidget {
                   height: 24.h,
                   width: 24.w,
                   child: CircularProgressIndicator(
-                    color: AppColors.textLight,
+                    color: AppColors.textPrimary(context),
                     strokeWidth: 2.w,
                   ),
                 )
@@ -82,7 +82,7 @@ class GradientButton extends StatelessWidget {
                   style:
                       textStyle ??
                       AppTextStyles.labelMedium.copyWith(
-                        color: AppColors.textLight,
+                        color: AppColors.textPrimary(context),
                         fontSize: AppTextStyles.s16,
                       ),
                 ),

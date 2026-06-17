@@ -217,9 +217,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                               Text(
                                 "${_greetingMessage()}, Dr. ${adminName.replaceAll("Dr.", "").replaceAll("dr.", "").trim()} 👋",
                                 style: AppTextStyles.bodyMedium.copyWith(
-                                  color: isDark
-                                      ? AppColors.terminalDarkLabel
-                                      : AppColors.textSecondary,
+                                  color: AppColors.textSecondary(context),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -231,9 +229,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                   Text(
                                     AppStrings.appointments,
                                     style: AppTextStyles.headingMedium.copyWith(
-                                      color: isDark
-                                          ? Colors.white
-                                          : AppColors.textPrimary,
+                                      color: AppColors.textPrimary(context),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24.sp,
                                     ),
@@ -241,9 +237,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                   IconButton(
                                     icon: Icon(
                                       Icons.refresh,
-                                      color: isDark
-                                          ? Colors.white70
-                                          : AppColors.textSecondary,
+                                      color: AppColors.textSecondary(context),
                                       size: 24.r,
                                     ),
                                     onPressed: () {
@@ -292,9 +286,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                         ).format(filterState.selectedDate),
                                         style: AppTextStyles.bodyMedium
                                             .copyWith(
-                                              color: isDark
-                                                  ? Colors.white70
-                                                  : AppColors.textPrimary,
+                                              color: AppColors.textPrimary(
+                                                context,
+                                              ),
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
@@ -334,9 +328,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                           12.r,
                                         ),
                                         border: Border.all(
-                                          color: isDark
-                                              ? AppColors.terminalDarkBorder
-                                              : AppColors.border,
+                                          color: AppColors.border(context),
                                         ),
                                       ),
                                       child: TextField(
@@ -346,9 +338,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                             >()
                                             .changeSearchQuery(val),
                                         style: TextStyle(
-                                          color: isDark
-                                              ? Colors.white
-                                              : AppColors.textPrimary,
+                                          color: AppColors.textPrimary(context),
                                           fontSize: 13.sp,
                                         ),
                                         decoration: InputDecoration(
@@ -363,9 +353,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                           ),
                                           prefixIcon: Icon(
                                             Icons.search,
-                                            color: isDark
-                                                ? Colors.white54
-                                                : AppColors.textSecondary,
+                                            color: AppColors.textSecondary(
+                                              context,
+                                            ),
                                             size: 20.r,
                                           ),
                                           border: InputBorder.none,
@@ -385,16 +375,12 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                           : Colors.white,
                                       borderRadius: BorderRadius.circular(12.r),
                                       border: Border.all(
-                                        color: isDark
-                                            ? AppColors.terminalDarkBorder
-                                            : AppColors.border,
+                                        color: AppColors.border(context),
                                       ),
                                     ),
                                     child: Icon(
                                       Icons.filter_list,
-                                      color: isDark
-                                          ? Colors.white70
-                                          : AppColors.textPrimary,
+                                      color: AppColors.textPrimary(context),
                                       size: 20.r,
                                     ),
                                   ),
@@ -482,9 +468,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                       ).format(filterState.selectedDate),
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: isDark
-                                      ? Colors.white
-                                      : AppColors.textPrimary,
+                                  color: AppColors.textPrimary(context),
                                   fontSize: 14.sp,
                                 ),
                               ),
@@ -501,10 +485,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                         children: [
                                           Icon(
                                             Icons.calendar_today_outlined,
-                                            color: isDark
-                                                ? Colors.white30
-                                                : AppColors.textSecondary
-                                                      .withValues(alpha: 0.5),
+                                            color: AppColors.textSecondary(
+                                              context,
+                                            ).withValues(alpha: 0.5),
                                             size: 40.r,
                                           ),
                                           SizedBox(height: 12.h),
@@ -512,9 +495,10 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                             AppStrings.noRecords,
                                             style: AppTextStyles.titleMedium
                                                 .copyWith(
-                                                  color: isDark
-                                                      ? Colors.white54
-                                                      : AppColors.textSecondary,
+                                                  color:
+                                                      AppColors.textSecondary(
+                                                        context,
+                                                      ),
                                                 ),
                                           ),
                                         ],

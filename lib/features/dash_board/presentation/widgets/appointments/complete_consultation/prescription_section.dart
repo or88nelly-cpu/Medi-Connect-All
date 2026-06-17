@@ -51,7 +51,9 @@ class PrescriptionSection extends StatelessWidget {
                     'Medicine Name',
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white70 : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white70
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                 ),
@@ -62,7 +64,9 @@ class PrescriptionSection extends StatelessWidget {
                     'Dosage (e.g. 1-0-1)',
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white70 : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white70
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                 ),
@@ -73,7 +77,9 @@ class PrescriptionSection extends StatelessWidget {
                     'Duration (Days)',
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white70 : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white70
+                          : AppColors.textPrimary(context),
                     ),
                   ),
                 ),
@@ -132,14 +138,14 @@ class PrescriptionSection extends StatelessWidget {
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   color: isDark
                                       ? Colors.white
-                                      : AppColors.textPrimary,
+                                      : AppColors.textPrimary(context),
                                 ),
                                 decoration: InputDecoration(
                                   hintText: 'Search medicine...',
                                   hintStyle: AppTextStyles.bodySmall.copyWith(
                                     color: isDark
                                         ? Colors.white38
-                                        : AppColors.textSecondary,
+                                        : AppColors.textSecondary(context),
                                   ),
                                   filled: true,
                                   fillColor: isDark
@@ -152,9 +158,7 @@ class PrescriptionSection extends StatelessWidget {
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.r),
                                     borderSide: BorderSide(
-                                      color: isDark
-                                          ? AppColors.terminalDarkBorder
-                                          : AppColors.border,
+                                      color: AppColors.border(context),
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
@@ -189,9 +193,7 @@ class PrescriptionSection extends StatelessWidget {
                                     ),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: isDark
-                                            ? AppColors.terminalDarkBorder
-                                            : AppColors.border,
+                                        color: AppColors.border(context),
                                       ),
                                       borderRadius: BorderRadius.circular(8.r),
                                     ),
@@ -218,10 +220,11 @@ class PrescriptionSection extends StatelessWidget {
                                                             .withValues(
                                                               alpha: 0.5,
                                                             )
-                                                      : AppColors.border
-                                                            .withValues(
-                                                              alpha: 0.5,
-                                                            ),
+                                                      : AppColors.border(
+                                                          context,
+                                                        ).withValues(
+                                                          alpha: 0.5,
+                                                        ),
                                                 ),
                                               ),
                                             ),
@@ -244,10 +247,10 @@ class PrescriptionSection extends StatelessWidget {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
-                                                              color: isDark
-                                                                  ? Colors.white
-                                                                  : AppColors
-                                                                        .textPrimary,
+                                                              color:
+                                                                  AppColors.textPrimary(
+                                                                    context,
+                                                                  ),
                                                             ),
                                                       ),
                                                       if (option
@@ -259,11 +262,10 @@ class PrescriptionSection extends StatelessWidget {
                                                           style: AppTextStyles
                                                               .bodySmall
                                                               .copyWith(
-                                                                color: isDark
-                                                                    ? Colors
-                                                                          .white38
-                                                                    : AppColors
-                                                                          .textSecondary,
+                                                                color:
+                                                                    AppColors.textSecondary(
+                                                                      context,
+                                                                    ),
                                                               ),
                                                         ),
                                                       ],
@@ -302,7 +304,7 @@ class PrescriptionSection extends StatelessWidget {
                             style: AppTextStyles.bodySmall.copyWith(
                               color: isDark
                                   ? Colors.white38
-                                  : AppColors.textSecondary,
+                                  : AppColors.textSecondary(context),
                               fontSize: 10.sp,
                             ),
                           ),
@@ -318,14 +320,16 @@ class PrescriptionSection extends StatelessWidget {
                   child: TextField(
                     controller: freqCtrl,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: isDark ? Colors.white : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white
+                          : AppColors.textPrimary(context),
                     ),
                     decoration: InputDecoration(
                       hintText: 'e.g. 1-0-1',
                       hintStyle: AppTextStyles.bodySmall.copyWith(
                         color: isDark
                             ? Colors.white38
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                       filled: true,
                       fillColor: isDark
@@ -338,9 +342,7 @@ class PrescriptionSection extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
                         borderSide: BorderSide(
-                          color: isDark
-                              ? AppColors.terminalDarkBorder
-                              : AppColors.border,
+                          color: AppColors.border(context),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -362,14 +364,16 @@ class PrescriptionSection extends StatelessWidget {
                     controller: daysCtrl,
                     keyboardType: TextInputType.number,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: isDark ? Colors.white : AppColors.textPrimary,
+                      color: isDark
+                          ? Colors.white
+                          : AppColors.textPrimary(context),
                     ),
                     decoration: InputDecoration(
                       hintText: 'Days',
                       hintStyle: AppTextStyles.bodySmall.copyWith(
                         color: isDark
                             ? Colors.white38
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                       filled: true,
                       fillColor: isDark
@@ -382,9 +386,7 @@ class PrescriptionSection extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
                         borderSide: BorderSide(
-                          color: isDark
-                              ? AppColors.terminalDarkBorder
-                              : AppColors.border,
+                          color: AppColors.border(context),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -446,12 +448,12 @@ class PrescriptionSection extends StatelessWidget {
           controller: prescriptionNotesCtrl,
           maxLines: 3,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white : AppColors.textPrimary,
+            color: isDark ? Colors.white : AppColors.textPrimary(context),
           ),
           decoration: InputDecoration(
             hintText: 'Prescription notes / doctor remarks...',
             hintStyle: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : AppColors.textSecondary,
+              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
             ),
             filled: true,
             fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
@@ -461,9 +463,7 @@ class PrescriptionSection extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: BorderSide(
-                color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
-              ),
+              borderSide: BorderSide(color: AppColors.border(context)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),

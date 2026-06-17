@@ -209,7 +209,7 @@ class _SectionListContentState extends State<_SectionListContent> {
             child: Text(
               AppStrings.cancel,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
+                color: AppColors.textSecondary(context),
               ),
             ),
           ),
@@ -245,7 +245,7 @@ class _EmptyState extends StatelessWidget {
           Icon(
             Icons.local_hospital_outlined,
             size: 64.r,
-            color: isDark ? AppColors.terminalDarkBorder : AppColors.border,
+            color: AppColors.border(context),
           ),
           SizedBox(height: 16.h),
           Text(
@@ -253,7 +253,7 @@ class _EmptyState extends StatelessWidget {
             style: AppTextStyles.bodyMedium.copyWith(
               color: isDark
                   ? AppColors.terminalDarkLabel
-                  : AppColors.textSecondary,
+                  : AppColors.textSecondary(context),
             ),
           ),
         ],

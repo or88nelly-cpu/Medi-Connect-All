@@ -168,7 +168,7 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.r),
-        side: const BorderSide(color: AppColors.border),
+        side: BorderSide(color: AppColors.border(context)),
       ),
       child: SwitchListTile(
         activeThumbColor: AppColors.primary,
@@ -184,7 +184,7 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
           title,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+            color: AppColors.textPrimary(context),
           ),
         ),
         subtitle: Text(subtitle, style: AppTextStyles.bodySmall),

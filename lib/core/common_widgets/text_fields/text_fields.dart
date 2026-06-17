@@ -130,7 +130,7 @@ class _PasswordFieldState extends State<PasswordField> {
       prefixIcon: Icon(
         Icons.lock_outline,
         size: 24.r,
-        color: AppColors.textSecondary,
+        color: AppColors.textSecondary(context),
       ),
       suffixIcon: IconButton(
         icon: Icon(
@@ -138,7 +138,7 @@ class _PasswordFieldState extends State<PasswordField> {
               ? Icons.visibility_off_outlined
               : Icons.visibility_outlined,
           size: 24.r,
-          color: AppColors.textSecondary,
+          color: AppColors.textSecondary(context),
         ),
         onPressed: () {
           setState(() {
@@ -172,14 +172,14 @@ class SearchField extends StatelessWidget {
       prefixIcon: Icon(
         Icons.search,
         size: 24.r,
-        color: AppColors.textSecondary,
+        color: AppColors.textSecondary(context),
       ),
       suffixIcon: controller?.text.isNotEmpty == true
           ? IconButton(
               icon: Icon(
                 Icons.clear,
                 size: 24.r,
-                color: AppColors.textSecondary,
+                color: AppColors.textSecondary(context),
               ),
               onPressed: () => controller?.clear(),
             )

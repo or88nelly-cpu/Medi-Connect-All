@@ -66,7 +66,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
               labelColor: AppColors.primary,
               unselectedLabelColor: isDark
                   ? Colors.white70
-                  : AppColors.textSecondary,
+                  : AppColors.textSecondary(context),
               indicatorColor: AppColors.primary,
               tabs: const [
                 Tab(icon: Icon(Icons.analytics_outlined), text: "Insights"),
@@ -104,7 +104,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                               fontSize: 16.sp,
                               color: isDark
                                   ? Colors.white
-                                  : AppColors.textPrimary,
+                                  : AppColors.textPrimary(context),
                             ),
                           ),
                           SizedBox(height: 16.h),
@@ -144,7 +144,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                   side: BorderSide(
                                     color: isDark
                                         ? AppColors.terminalDarkBorder
-                                        : AppColors.border,
+                                        : AppColors.border(context),
                                   ),
                                 ),
                                 child: Padding(
@@ -159,7 +159,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                         style: AppTextStyles.bodySmall.copyWith(
                                           color: isDark
                                               ? Colors.white70
-                                              : AppColors.textSecondary,
+                                              : AppColors.textSecondary(
+                                                  context,
+                                                ),
                                           fontWeight: FontWeight.w500,
                                         ),
                                         maxLines: 2,
@@ -196,20 +198,22 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                     TextField(
                       onChanged: (val) => setState(() => _searchQuery = val),
                       style: TextStyle(
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                        color: isDark
+                            ? Colors.white
+                            : AppColors.textPrimary(context),
                       ),
                       decoration: InputDecoration(
                         hintText: "Search medicine by name or category...",
                         hintStyle: TextStyle(
                           color: isDark
                               ? Colors.white54
-                              : AppColors.textSecondary,
+                              : AppColors.textSecondary(context),
                         ),
                         prefixIcon: Icon(
                           Icons.search,
                           color: isDark
                               ? Colors.white54
-                              : AppColors.textSecondary,
+                              : AppColors.textSecondary(context),
                         ),
                         filled: true,
                         fillColor: isDark
@@ -219,9 +223,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(
-                            color: isDark
-                                ? AppColors.terminalDarkBorder
-                                : AppColors.border,
+                            color: AppColors.border(context),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -280,7 +282,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                   style: TextStyle(
                                     color: isDark
                                         ? Colors.white54
-                                        : AppColors.textSecondary,
+                                        : AppColors.textSecondary(context),
                                   ),
                                 ),
                               );
@@ -311,9 +313,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.r),
                                     side: BorderSide(
-                                      color: isDark
-                                          ? AppColors.terminalDarkBorder
-                                          : AppColors.border,
+                                      color: AppColors.border(context),
                                     ),
                                   ),
                                   child: InkWell(
@@ -383,10 +383,10 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 15.sp,
-                                                        color: isDark
-                                                            ? Colors.white
-                                                            : AppColors
-                                                                  .textPrimary,
+                                                        color:
+                                                            AppColors.textPrimary(
+                                                              context,
+                                                            ),
                                                       ),
                                                 ),
                                                 SizedBox(height: 4.h),
@@ -395,7 +395,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                                   style: TextStyle(
                                                     color: isDark
                                                         ? Colors.white70
-                                                        : AppColors.textPrimary,
+                                                        : AppColors.textPrimary(
+                                                            context,
+                                                          ),
                                                   ),
                                                 ),
                                                 Text(
@@ -404,10 +406,9 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                                     fontWeight: FontWeight.w600,
                                                     color: item.stock == 0
                                                         ? AppColors.error
-                                                        : (isDark
-                                                              ? Colors.white70
-                                                              : AppColors
-                                                                    .textPrimary),
+                                                        : (AppColors.textPrimary(
+                                                            context,
+                                                          )),
                                                   ),
                                                 ),
                                                 SizedBox(height: 2.h),
@@ -415,10 +416,8 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                                   "Price: ₹${item.sellPrice.toStringAsFixed(2)}",
                                                   style: TextStyle(
                                                     fontSize: 12.sp,
-                                                    color: isDark
-                                                        ? Colors.white54
-                                                        : AppColors
-                                                              .textSecondary,
+                                                    color:  AppColors
+                                                              .textSecondary(context),
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
@@ -502,7 +501,7 @@ class _StockEditDialogState extends State<_StockEditDialog> {
       backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
       title: Text(
         "Quick Edit Stock",
-        style: TextStyle(color: isDark ? Colors.white : AppColors.textPrimary),
+        style: TextStyle(color: AppColors.textPrimary(context)),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -512,7 +511,7 @@ class _StockEditDialogState extends State<_StockEditDialog> {
             "Modify stock quantity for ${widget.item.name}.",
             style: TextStyle(
               fontSize: 13.sp,
-              color: isDark ? Colors.white70 : AppColors.textSecondary,
+              color: isDark ? Colors.white70 : AppColors.textSecondary(context),
             ),
           ),
           SizedBox(height: 20.h),
@@ -544,7 +543,9 @@ class _StockEditDialogState extends State<_StockEditDialog> {
                   style: TextStyle(
                     fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white : AppColors.textPrimary,
+                    color: isDark
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                   ),
                   onChanged: (val) {
                     final parsed = int.tryParse(val);
@@ -557,11 +558,7 @@ class _StockEditDialogState extends State<_StockEditDialog> {
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 8.h),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: isDark
-                            ? AppColors.terminalDarkBorder
-                            : AppColors.border,
-                      ),
+                      borderSide: BorderSide(color: AppColors.border(context)),
                     ),
                   ),
                 ),

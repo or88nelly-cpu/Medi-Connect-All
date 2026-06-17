@@ -91,7 +91,7 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
                         fontSize: 13.sp,
                         height: 1.5,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: AppColors.textPrimary(context),
                       ),
                     ),
                   ],
@@ -137,7 +137,7 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
                     //     fontFamily: AppFonts.inter,
                     //     fontSize: 10.sp,
 
-                    //     color: AppColors.textPrimary,
+                    //     color: AppColors.textPrimary(context),
                     //   ),
                     // ),
                     // Text(

@@ -22,7 +22,7 @@ class DoctorStep extends StatelessWidget {
         child: Text(
           "Please select a specialty section first.",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white54 : AppColors.textSecondary,
+            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
           ),
         ),
       );
@@ -37,7 +37,7 @@ class DoctorStep extends StatelessWidget {
             "Select Doctor",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : AppColors.textPrimary,
+              color: isDark ? Colors.white : AppColors.textPrimary(context),
             ),
           ),
         ),
@@ -67,7 +67,7 @@ class DoctorStep extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
                             ? Colors.white54
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                     ),
                   );
@@ -99,7 +99,7 @@ class DoctorStep extends StatelessWidget {
                               ? AppColors.primary
                               : (isDark
                                     ? AppColors.terminalDarkBorder
-                                    : AppColors.border),
+                                    : AppColors.border(context)),
                           width: isSelected ? 1.5 : 1,
                         ),
                       ),
@@ -125,7 +125,7 @@ class DoctorStep extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: isDark
                                 ? Colors.white
-                                : AppColors.textPrimary,
+                                : AppColors.textPrimary(context),
                           ),
                         ),
                         subtitle: Text(
@@ -133,7 +133,7 @@ class DoctorStep extends StatelessWidget {
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isDark
                                 ? Colors.white70
-                                : AppColors.textSecondary,
+                                : AppColors.textSecondary(context),
                           ),
                         ),
                         trailing: isSelected

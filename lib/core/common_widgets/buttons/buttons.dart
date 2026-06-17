@@ -28,7 +28,7 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.textLight,
+          foregroundColor: AppColors.textPrimary(context),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.r),
           ),
@@ -40,14 +40,14 @@ class PrimaryButton extends StatelessWidget {
                 height: 24.h,
                 width: 24.w,
                 child: CircularProgressIndicator(
-                  color: AppColors.textLight,
+                  color: AppColors.textPrimary(context),
                   strokeWidth: 2.w,
                 ),
               )
             : Text(
                 text,
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: AppColors.textLight,
+                  color: AppColors.textPrimary(context),
                   fontSize: 16.sp,
                 ),
               ),
@@ -77,7 +77,7 @@ class SecondaryButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.secondary,
-          foregroundColor: AppColors.textLight,
+          foregroundColor: AppColors.textPrimary(context),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.r),
           ),
@@ -89,14 +89,14 @@ class SecondaryButton extends StatelessWidget {
                 height: 24.h,
                 width: 24.w,
                 child: CircularProgressIndicator(
-                  color: AppColors.textLight,
+                  color: AppColors.textPrimary(context),
                   strokeWidth: 2.w,
                 ),
               )
             : Text(
                 text,
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: AppColors.textLight,
+                  color: AppColors.textPrimary(context),
                   fontSize: 16.sp,
                 ),
               ),

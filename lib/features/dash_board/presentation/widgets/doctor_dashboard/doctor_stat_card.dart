@@ -71,7 +71,7 @@ class DoctorStatCard extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: isDark ? Colors.white70 : AppColors.textSecondary,
+              color: isDark ? Colors.white70 : AppColors.textSecondary(context),
               fontSize: 10.sp,
               fontWeight: FontWeight.w500,
             ),

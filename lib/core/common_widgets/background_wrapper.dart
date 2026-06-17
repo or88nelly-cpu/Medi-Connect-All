@@ -24,7 +24,7 @@ class BackgroundWrapper extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF121212) : AppColors.background,
+        color: AppColors.background(context),
         image: DecorationImage(image: AssetImage(bgImage), fit: BoxFit.cover),
       ),
       child: child,

@@ -81,7 +81,7 @@ class _OperationTheatreDetailPageState
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r),
-                            side: const BorderSide(color: AppColors.border),
+                            side: BorderSide(color: AppColors.border(context)),
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(12.r),
@@ -92,7 +92,7 @@ class _OperationTheatreDetailPageState
                                 Text(
                                   displayKey,
                                   style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.textSecondary,
+                                    color: AppColors.textSecondary(context),
                                     fontWeight: FontWeight.w500,
                                   ),
                                   maxLines: 2,

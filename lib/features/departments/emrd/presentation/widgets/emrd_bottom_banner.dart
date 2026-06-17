@@ -56,7 +56,9 @@ class EmrdBottomBanner extends StatelessWidget {
                   "Keep EMR Organized & Secure",
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white : AppColors.textPrimary,
+                    color: isDark
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                   ),
                 ),
                 SizedBox(height: 2.h),
@@ -64,7 +66,9 @@ class EmrdBottomBanner extends StatelessWidget {
                   "Ensure accurate records and quick retrieval for better patient care.",
                   style: AppTextStyles.bodySmall.copyWith(
                     fontSize: 10.sp,
-                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                    color: isDark
+                        ? Colors.white54
+                        : AppColors.textSecondary(context),
                   ),
                 ),
               ],

@@ -27,7 +27,7 @@ class LineChartPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final paintDotBorder = Paint()
-      ..color = AppColors.textLight
+      ..color = AppColors.lightTextPrimary
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
@@ -88,7 +88,7 @@ class LineChartPainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: days[i],
         style: TextStyle(
-          color: AppColors.textSecondary,
+          color: AppColors.lightTextSecondary,
           fontSize: 10.sp,
           fontWeight: FontWeight.bold,
         ),

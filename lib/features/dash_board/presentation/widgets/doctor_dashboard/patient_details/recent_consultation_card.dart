@@ -20,7 +20,7 @@ class RecentConsultationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
-    final borderCol = isDark ? AppColors.terminalDarkBorder : AppColors.border;
+    final borderCol = AppColors.border(context);
     final cardBg = isDark
         ? const Color(0xFF0F172A)
         : const Color(0xFFFAF9FE); // Lavender hint bg matching mockup
@@ -90,7 +90,7 @@ class RecentConsultationCard extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
                             ? Colors.white38
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                     ),
                   ),

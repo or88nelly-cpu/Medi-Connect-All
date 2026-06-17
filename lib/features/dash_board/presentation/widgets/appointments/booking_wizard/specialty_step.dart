@@ -27,7 +27,7 @@ class SpecialtyStep extends StatelessWidget {
             "Select Clinic Specialty",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : AppColors.textPrimary,
+              color: isDark ? Colors.white : AppColors.textPrimary(context),
             ),
           ),
         ),
@@ -56,7 +56,7 @@ class SpecialtyStep extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
                             ? Colors.white54
-                            : AppColors.textSecondary,
+                            : AppColors.textSecondary(context),
                       ),
                     ),
                   );
@@ -95,7 +95,7 @@ class SpecialtyStep extends StatelessWidget {
                                 ? AppColors.primary
                                 : (isDark
                                       ? AppColors.terminalDarkBorder
-                                      : AppColors.border),
+                                      : AppColors.border(context)),
                             width: isSelected ? 2 : 1,
                           ),
                           boxShadow: isSelected
@@ -155,9 +155,7 @@ class SpecialtyStep extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       color: isSelected
                                           ? AppColors.primary
-                                          : (isDark
-                                                ? Colors.white
-                                                : AppColors.textPrimary),
+                                          : (AppColors.textPrimary(context)),
                                     ),
                                   ),
                                   if (dept.description != null &&
@@ -171,7 +169,7 @@ class SpecialtyStep extends StatelessWidget {
                                         fontSize: 10.sp,
                                         color: isDark
                                             ? Colors.white38
-                                            : AppColors.textSecondary,
+                                            : AppColors.textSecondary(context),
                                       ),
                                     ),
                                   ],

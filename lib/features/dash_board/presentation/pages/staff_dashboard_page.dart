@@ -250,7 +250,7 @@ class _StaffShiftCard extends StatelessWidget {
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.r),
-            side: const BorderSide(color: AppColors.border),
+            side: BorderSide(color: AppColors.border(context)),
           ),
           child: Padding(
             padding: EdgeInsets.all(16.r),
@@ -266,7 +266,7 @@ class _StaffShiftCard extends StatelessWidget {
                       currentShift,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: AppColors.textPrimary(context),
                       ),
                     ),
                   ],
@@ -338,14 +338,14 @@ class _StaffTasksOverviewCard extends StatelessWidget {
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14.r),
-            side: const BorderSide(color: AppColors.border),
+            side: BorderSide(color: AppColors.border(context)),
           ),
           child: ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: tasksToShow.length,
             separatorBuilder: (context, idx) =>
-                const Divider(color: AppColors.border, height: 1),
+                Divider(color: AppColors.border(context), height: 1),
             itemBuilder: (context, idx) {
               final t = tasksToShow[idx];
               final isCompleted = t['status'] == 'Completed';
@@ -357,15 +357,15 @@ class _StaffTasksOverviewCard extends StatelessWidget {
                       : Icons.radio_button_unchecked,
                   color: isCompleted
                       ? AppColors.success
-                      : AppColors.textSecondary,
+                      : AppColors.textSecondary(context),
                 ),
                 title: Text(
                   t['title']!,
                   style: AppTextStyles.bodyMedium.copyWith(
                     decoration: isCompleted ? TextDecoration.lineThrough : null,
                     color: isCompleted
-                        ? AppColors.textSecondary
-                        : AppColors.textPrimary,
+                        ? AppColors.textSecondary(context)
+                        : AppColors.textPrimary(context),
                     fontWeight: isCompleted
                         ? FontWeight.normal
                         : FontWeight.bold,
@@ -461,7 +461,7 @@ class _StaffTasksTab extends StatelessWidget {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
-                        side: const BorderSide(color: AppColors.border),
+                        side: BorderSide(color: AppColors.border(context)),
                       ),
                       child: CheckboxListTile(
                         activeColor: AppColors.primary,
@@ -531,8 +531,8 @@ class _StaffTasksTab extends StatelessWidget {
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
                             color: isCompleted
-                                ? AppColors.textSecondary
-                                : AppColors.textPrimary,
+                                ? AppColors.textSecondary(context)
+                                : AppColors.textPrimary(context),
                             decoration: isCompleted
                                 ? TextDecoration.lineThrough
                                 : null,
@@ -738,9 +738,11 @@ class _StaffRosterTab extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 12.h),
                         padding: EdgeInsets.all(16.r),
                         decoration: BoxDecoration(
-                          color: isOff ? AppColors.divider : AppColors.surface,
+                          color: isOff
+                              ? AppColors.divider
+                              : AppColors.surface,
                           borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: AppColors.border),
+                          border: Border.all(color: AppColors.border(context)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -752,7 +754,7 @@ class _StaffRosterTab extends StatelessWidget {
                                   r['day']!,
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.textPrimary,
+                                    color: AppColors.textPrimary(context),
                                   ),
                                 ),
                                 SizedBox(height: 2.h),
@@ -772,7 +774,7 @@ class _StaffRosterTab extends StatelessWidget {
                                   ? Icons.home_outlined
                                   : Icons.calendar_month_outlined,
                               color: isOff
-                                  ? AppColors.textSecondary
+                                  ? AppColors.textSecondary(context)
                                   : AppColors.accent,
                             ),
                           ],
@@ -844,7 +846,7 @@ class _StaffAlertsTab extends StatelessWidget {
                       alert['message']!,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: AppColors.textPrimary(context),
                       ),
                     ),
                     subtitle: Text("Triggered: ${alert['time']!}"),
@@ -935,7 +937,7 @@ class _StaffProfileTab extends StatelessWidget {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
-                  side: const BorderSide(color: AppColors.border),
+                  side: BorderSide(color: AppColors.border(context)),
                 ),
                 child: Column(
                   children: [
@@ -943,20 +945,23 @@ class _StaffProfileTab extends StatelessWidget {
                       Icons.phone_outlined,
                       "Phone",
                       phone ?? "Not Set",
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.badge_outlined,
                       "Staff ID",
                       "STF-2819",
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.work_history_outlined,
                       "Joining Date",
                       "Feb 20, 2025",
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     BlocBuilder<ThemeCubit, ThemeMode>(
                       builder: (context, themeMode) {
                         final isDark = themeMode == ThemeMode.dark;
@@ -1025,18 +1030,20 @@ class _StaffProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String title, String value) {
+  Widget _buildInfoTile(IconData icon, String title, String value,BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: AppColors.accent),
       title: Text(
         title,
-        style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: AppColors.textSecondary(context),
+        ),
       ),
       trailing: Text(
         value,
         style: AppTextStyles.bodyMedium.copyWith(
           fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary,
+          color: AppColors.textPrimary(context),
         ),
       ),
     );

@@ -92,7 +92,7 @@ class DoctorProfileTab extends StatelessWidget {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
-                  side: const BorderSide(color: AppColors.border),
+                  side: BorderSide(color: AppColors.border(context)),
                 ),
                 child: Column(
                   children: [
@@ -100,20 +100,23 @@ class DoctorProfileTab extends StatelessWidget {
                       Icons.phone_outlined,
                       "Phone",
                       phone ?? "Not Set",
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.badge_outlined,
                       "Registration Number",
                       regNumber,
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.work_outline,
                       "Experience",
                       experience,
+                      context
                     ),
-                    const Divider(color: AppColors.border, height: 1),
+                    Divider(color: AppColors.border(context), height: 1),
                     BlocBuilder<ThemeCubit, ThemeMode>(
                       builder: (context, themeMode) {
                         final isDark = themeMode == ThemeMode.dark;
@@ -212,18 +215,20 @@ class DoctorProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String title, String value) {
+  Widget _buildInfoTile(IconData icon, String title, String value,BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: AppColors.secondary),
       title: Text(
         title,
-        style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+        style: AppTextStyles.bodySmall.copyWith(
+          color: AppColors.textSecondary(context),
+        ),
       ),
       trailing: Text(
         value,
         style: AppTextStyles.bodyMedium.copyWith(
           fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary,
+          color: AppColors.textPrimary(context),
         ),
       ),
     );

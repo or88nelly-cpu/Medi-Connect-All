@@ -46,7 +46,9 @@ class ConsultationSectionHeader extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.titleMedium.copyWith(
-                    color: isDark ? Colors.white : AppColors.textPrimary,
+                    color: isDark
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -55,7 +57,9 @@ class ConsultationSectionHeader extends StatelessWidget {
                 Text(
                   subtitle,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white54 : AppColors.textSecondary,
+                    color: isDark
+                        ? Colors.white54
+                        : AppColors.textSecondary(context),
                   ),
                 ),
               ],

@@ -136,7 +136,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                           ? AppColors.success
                           : status == "In Progress"
                           ? AppColors.warning
-                          : AppColors.textSecondary,
+                          : AppColors.textSecondary(context),
                     ),
                     SizedBox(width: 12.w),
                     Text(status, style: AppTextStyles.bodyLarge),
@@ -170,7 +170,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
           // Filter strip at the top
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            color: AppColors.background,
+            color: AppColors.background(context),
             child: Row(
               children: ["All", "Normal", "High", "Critical"].map((filter) {
                 final isSelected = _selectedPriorityFilter == filter;
@@ -188,7 +188,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                     labelStyle: TextStyle(
                       color: isSelected
                           ? AppColors.primary
-                          : AppColors.textSecondary,
+                          : AppColors.textSecondary(context),
                       fontWeight: isSelected
                           ? FontWeight.bold
                           : FontWeight.normal,
@@ -261,7 +261,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
-                          side: const BorderSide(color: AppColors.border),
+                          side: BorderSide(color: AppColors.border(context)),
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12.r),
@@ -318,7 +318,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                                             ? AppColors.warning.withValues(
                                                 alpha: 0.1,
                                               )
-                                            : AppColors.textSecondary
+                                            : AppColors.textSecondary(context)
                                                   .withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(
                                           6.r,
@@ -331,7 +331,9 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                                               ? AppColors.success
                                               : test.status == 'In Progress'
                                               ? AppColors.warning
-                                              : AppColors.textSecondary,
+                                              : AppColors.textSecondary(
+                                                  context,
+                                                ),
                                           fontSize: 10.sp,
                                           fontWeight: FontWeight.bold,
                                         ),

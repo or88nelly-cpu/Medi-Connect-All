@@ -27,7 +27,7 @@ class PatientHeaderCard extends StatelessWidget {
         ? AppAssets.femaleAvatarPng
         : AppAssets.maleAvatarPng;
 
-    final borderCol = isDark ? AppColors.terminalDarkBorder : AppColors.border;
+    final borderCol = AppColors.border(context);
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -96,7 +96,9 @@ class PatientHeaderCard extends StatelessWidget {
                 Text(
                   "${AppStrings.agePrefix}$ageStr  •  ${AppStrings.genderPrefix}$gender",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white70 : AppColors.textSecondary,
+                    color: isDark
+                        ? Colors.white70
+                        : AppColors.textSecondary(context),
                     fontWeight: FontWeight.w500,
                   ),
                 ),

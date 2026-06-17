@@ -47,7 +47,9 @@ class PaymentSection extends StatelessWidget {
               Text(
                 'Invoice Number',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: isDark ? Colors.white54 : AppColors.textSecondary,
+                  color: isDark
+                      ? Colors.white54
+                      : AppColors.textSecondary(context),
                 ),
               ),
               Text(
@@ -87,7 +89,7 @@ class PaymentSection extends StatelessWidget {
                 controller: feeCtrl,
                 keyboardType: TextInputType.number,
                 style: AppTextStyles.titleMedium.copyWith(
-                  color: isDark ? Colors.white : AppColors.textPrimary,
+                  color: isDark ? Colors.white : AppColors.textPrimary(context),
                   fontWeight: FontWeight.bold,
                 ),
                 decoration: InputDecoration(
@@ -101,22 +103,14 @@ class PaymentSection extends StatelessWidget {
                     vertical: 14.h,
                   ),
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: isDark
-                          ? AppColors.terminalDarkBorder
-                          : AppColors.border,
-                    ),
+                    borderSide: BorderSide(color: AppColors.border(context)),
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(8.r),
                       bottomRight: Radius.circular(8.r),
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: isDark
-                          ? AppColors.terminalDarkBorder
-                          : AppColors.border,
-                    ),
+                    borderSide: BorderSide(color: AppColors.border(context)),
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(8.r),
                       bottomRight: Radius.circular(8.r),
@@ -133,7 +127,7 @@ class PaymentSection extends StatelessWidget {
           'Payment Method',
           style: AppTextStyles.bodySmall.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white70 : AppColors.textPrimary,
+            color: isDark ? Colors.white70 : AppColors.textPrimary(context),
           ),
         ),
         SizedBox(height: 8.h),
@@ -157,9 +151,7 @@ class PaymentSection extends StatelessWidget {
                     border: Border.all(
                       color: state.paymentMethod == 'Cash'
                           ? AppColors.accent
-                          : (isDark
-                                ? AppColors.terminalDarkBorder
-                                : AppColors.border),
+                          : AppColors.border(context),
                       width: state.paymentMethod == 'Cash' ? 2 : 1,
                     ),
                   ),
@@ -171,7 +163,7 @@ class PaymentSection extends StatelessWidget {
                             ? AppColors.accent
                             : (isDark
                                   ? Colors.white54
-                                  : AppColors.textSecondary),
+                                  : AppColors.textSecondary(context)),
                         size: 28.r,
                       ),
                       SizedBox(height: 4.h),
@@ -183,7 +175,7 @@ class PaymentSection extends StatelessWidget {
                               ? AppColors.accent
                               : (isDark
                                     ? Colors.white54
-                                    : AppColors.textSecondary),
+                                    : AppColors.textSecondary(context)),
                         ),
                       ),
                     ],
@@ -208,9 +200,7 @@ class PaymentSection extends StatelessWidget {
                     border: Border.all(
                       color: state.paymentMethod == 'Online'
                           ? AppColors.primary
-                          : (isDark
-                                ? AppColors.terminalDarkBorder
-                                : AppColors.border),
+                          : (AppColors.border(context)),
                       width: state.paymentMethod == 'Online' ? 2 : 1,
                     ),
                   ),
@@ -222,7 +212,7 @@ class PaymentSection extends StatelessWidget {
                             ? AppColors.primary
                             : (isDark
                                   ? Colors.white54
-                                  : AppColors.textSecondary),
+                                  : AppColors.textSecondary(context)),
                         size: 28.r,
                       ),
                       SizedBox(height: 4.h),
@@ -234,7 +224,7 @@ class PaymentSection extends StatelessWidget {
                               ? AppColors.primary
                               : (isDark
                                     ? Colors.white54
-                                    : AppColors.textSecondary),
+                                    : AppColors.textSecondary(context)),
                         ),
                       ),
                     ],

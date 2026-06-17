@@ -219,7 +219,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   color: isDark
                                       ? AppColors.terminalDarkLabel
-                                      : AppColors.textSecondary,
+                                      : AppColors.textSecondary(context),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -233,7 +233,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                     style: AppTextStyles.headingMedium.copyWith(
                                       color: isDark
                                           ? Colors.white
-                                          : AppColors.textPrimary,
+                                          : AppColors.textPrimary(context),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24.sp,
                                     ),
@@ -243,7 +243,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                       Icons.refresh,
                                       color: isDark
                                           ? Colors.white70
-                                          : AppColors.textSecondary,
+                                          : AppColors.textSecondary(context),
                                       size: 24.r,
                                     ),
                                     onPressed: () {
@@ -294,7 +294,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                             .copyWith(
                                               color: isDark
                                                   ? Colors.white70
-                                                  : AppColors.textPrimary,
+                                                  : AppColors.textPrimary(
+                                                      context,
+                                                    ),
                                               fontWeight: FontWeight.bold,
                                             ),
                                       ),
@@ -334,9 +336,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                           12.r,
                                         ),
                                         border: Border.all(
-                                          color: isDark
-                                              ? AppColors.terminalDarkBorder
-                                              : AppColors.border,
+                                          color: AppColors.border(context),
                                         ),
                                       ),
                                       child: TextField(
@@ -348,7 +348,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                         style: TextStyle(
                                           color: isDark
                                               ? Colors.white
-                                              : AppColors.textPrimary,
+                                              : AppColors.textPrimary(context),
                                           fontSize: 13.sp,
                                         ),
                                         decoration: InputDecoration(
@@ -365,7 +365,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                             Icons.search,
                                             color: isDark
                                                 ? Colors.white54
-                                                : AppColors.textSecondary,
+                                                : AppColors.textSecondary(
+                                                    context,
+                                                  ),
                                             size: 20.r,
                                           ),
                                           border: InputBorder.none,
@@ -385,16 +387,14 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                           : Colors.white,
                                       borderRadius: BorderRadius.circular(12.r),
                                       border: Border.all(
-                                        color: isDark
-                                            ? AppColors.terminalDarkBorder
-                                            : AppColors.border,
+                                        color: AppColors.border(context),
                                       ),
                                     ),
                                     child: Icon(
                                       Icons.filter_list,
                                       color: isDark
                                           ? Colors.white70
-                                          : AppColors.textPrimary,
+                                          : AppColors.textPrimary(context),
                                       size: 20.r,
                                     ),
                                   ),
@@ -484,7 +484,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                   fontWeight: FontWeight.bold,
                                   color: isDark
                                       ? Colors.white
-                                      : AppColors.textPrimary,
+                                      : AppColors.textPrimary(context),
                                   fontSize: 14.sp,
                                 ),
                               ),
@@ -503,7 +503,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                             Icons.calendar_today_outlined,
                                             color: isDark
                                                 ? Colors.white30
-                                                : AppColors.textSecondary
+                                                : AppColors.textSecondary(context)
                                                       .withValues(alpha: 0.5),
                                             size: 40.r,
                                           ),
@@ -514,7 +514,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                                 .copyWith(
                                                   color: isDark
                                                       ? Colors.white54
-                                                      : AppColors.textSecondary,
+                                                      : AppColors.textSecondary(
+                                                          context,
+                                                        ),
                                                 ),
                                           ),
                                         ],

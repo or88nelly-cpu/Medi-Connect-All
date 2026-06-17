@@ -71,7 +71,7 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
+                    side: BorderSide(color: AppColors.border(context)),
                   ),
                   child: ListTile(
                     contentPadding: EdgeInsets.all(16.r),
@@ -90,7 +90,7 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
                       log.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.textPrimary,
+                        color: AppColors.textPrimary(context),
                       ),
                     ),
                     subtitle: Column(

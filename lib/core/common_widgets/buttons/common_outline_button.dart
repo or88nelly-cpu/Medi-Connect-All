@@ -40,14 +40,14 @@ class CommonOutlineButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           side: BorderSide(
-            color: isButtonEnabled ? effectiveBorderColor : AppColors.border,
+            color: isButtonEnabled ? effectiveBorderColor : AppColors.border((context)),
             width: 1.5.w,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
           ),
           foregroundColor: effectiveTextColor,
-          disabledForegroundColor: AppColors.textSecondary,
+          disabledForegroundColor: AppColors.textSecondary(context),
           padding: EdgeInsets.symmetric(horizontal: 16.w),
         ),
         onPressed: isButtonEnabled ? onPressed : null,
@@ -68,7 +68,7 @@ class CommonOutlineButton extends StatelessWidget {
                       fontSize: AppTextStyles.s16,
                       color: isButtonEnabled
                           ? effectiveTextColor
-                          : AppColors.textSecondary,
+                          : AppColors.textSecondary(context),
                     ),
               ),
       ),

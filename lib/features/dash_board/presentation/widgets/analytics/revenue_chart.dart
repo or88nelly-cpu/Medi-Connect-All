@@ -17,7 +17,7 @@ class RevenueChart extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.border(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

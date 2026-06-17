@@ -32,7 +32,7 @@ class AdminMasterDataPage extends StatelessWidget {
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.r),
-              side: const BorderSide(color: AppColors.border),
+              side: BorderSide(color: AppColors.border(context)),
             ),
             child: ListTile(
               contentPadding: EdgeInsets.symmetric(
@@ -54,7 +54,7 @@ class AdminMasterDataPage extends StatelessWidget {
                 item['name']!,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                  color: AppColors.textPrimary(context),
                 ),
               ),
               subtitle: Text("Department Area: ${item['dept']!}"),
@@ -64,7 +64,7 @@ class AdminMasterDataPage extends StatelessWidget {
                   fontFamily: 'monospace',
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textSecondary,
+                  color: AppColors.textSecondary(context),
                 ),
               ),
             ),
