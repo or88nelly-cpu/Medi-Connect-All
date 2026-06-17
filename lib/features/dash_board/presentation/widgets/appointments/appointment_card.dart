@@ -533,37 +533,39 @@ class AppointmentCard extends StatelessWidget {
               AppStrings.patientNameLabel,
               appointment.patientName,
               isDark,
-              context
+              context,
             ),
             _buildInfoRow(
               AppStrings.patientIdLabel,
               "PAT-${(appointment.patientId?.length ?? 0) > 8 ? appointment.patientId?.substring(0, 8).toUpperCase() : appointment.patientId?.toUpperCase()}",
-              isDark,context
+              isDark,
+              context,
             ),
-            _buildInfoRow(AppStrings.gender, genderStr, isDark,context),
+            _buildInfoRow(AppStrings.gender, genderStr, isDark, context),
             _buildInfoRow(
               AppStrings.ageLabel,
               patient?.age != null ? "${patient!.age} years" : "N/A",
-              isDark,context
-              
+              isDark,
+              context,
             ),
             _buildInfoRow(
               AppStrings.doctorNameLabel,
               _cleanDoctorName(appointment.doctorName),
-              isDark,context
+              isDark,
+              context,
             ),
             _buildInfoRow(
               AppStrings.specialtyLabel,
               appointment.specialty,
               isDark,
-              context
+              context,
             ),
-            _buildInfoRow(AppStrings.dateLabel, formattedDate, isDark,context),
+            _buildInfoRow(AppStrings.dateLabel, formattedDate, isDark, context),
             _buildInfoRow(
               AppStrings.timeLabel,
               appointment.appointmentTime,
               isDark,
-              context
+              context,
             ),
             if (appointment.token != null && appointment.token!.isNotEmpty)
               _buildInfoRow(
@@ -587,7 +589,7 @@ class AppointmentCard extends StatelessWidget {
               AppStrings.bloodPressure,
               appointment.bp ?? "N/A",
               isDark,
-              context
+              context,
             ),
             _buildInfoRow(
               AppStrings.weightLabel,
@@ -595,7 +597,7 @@ class AppointmentCard extends StatelessWidget {
                   ? "${appointment.weight} kg"
                   : "N/A",
               isDark,
-              context
+              context,
             ),
             _buildInfoRow(
               AppStrings.heightLabel,
@@ -603,7 +605,7 @@ class AppointmentCard extends StatelessWidget {
                   ? "${appointment.height} cm"
                   : "N/A",
               isDark,
-              context
+              context,
             ),
             _buildInfoRow(
               AppStrings.temperature,
@@ -611,13 +613,13 @@ class AppointmentCard extends StatelessWidget {
                   ? "${appointment.fever} °F"
                   : "N/A",
               isDark,
-              context
+              context,
             ),
             _buildInfoRow(
               AppStrings.headCircumference,
               appointment.headCircumference ?? "N/A",
               isDark,
-              context
+              context,
             ),
             if (appointment.additionalVitals != null &&
                 appointment.additionalVitals!.isNotEmpty) ...[
@@ -822,29 +824,28 @@ class AppointmentCard extends StatelessWidget {
                           isDark: isDark,
                           children: [
                             _buildInfoRow(
-                              
                               AppStrings.patientNameLabel,
                               record['patient_name'] ?? 'N/A',
                               isDark,
-                              context
+                              context,
                             ),
                             _buildInfoRow(
                               AppStrings.doctorNameLabel,
                               'Dr. ${record['doctor_name'] ?? "N/A"}',
                               isDark,
-                              context
+                              context,
                             ),
                             _buildInfoRow(
                               AppStrings.specialtyLabel,
                               record['specialty'] ?? 'N/A',
                               isDark,
-                              context
+                              context,
                             ),
                             _buildInfoRow(
                               AppStrings.invoiceNumber,
                               record['invoice_number'] ?? 'N/A',
                               isDark,
-                              context
+                              context,
                             ),
                           ],
                         ),
@@ -875,15 +876,14 @@ class AppointmentCard extends StatelessWidget {
                               AppStrings.medicineTotal,
                               "₹${medAmount.toStringAsFixed(2)}",
                               isDark,
-                              context
-                              
+                              context,
                             ),
                             if (medInvoice.isNotEmpty)
                               _buildInfoRow(
                                 AppStrings.medInvoiceNo,
                                 medInvoice,
                                 isDark,
-                                context
+                                context,
                               ),
                           ],
                         ),
@@ -914,14 +914,14 @@ class AppointmentCard extends StatelessWidget {
                               AppStrings.labTestsTotal,
                               "₹${labAmount.toStringAsFixed(2)}",
                               isDark,
-                              context
+                              context,
                             ),
                             if (labInvoice.isNotEmpty)
                               _buildInfoRow(
                                 AppStrings.labInvoiceNo,
                                 labInvoice,
                                 isDark,
-                                context
+                                context,
                               ),
                           ],
                         ),
@@ -1007,7 +1007,8 @@ class AppointmentCard extends StatelessWidget {
   Widget _buildInfoRow(
     String label,
     String value,
-    bool isDark,BuildContext context, {
+    bool isDark,
+    BuildContext context, {
     Color? valueColor,
     FontWeight? valueFontWeight,
   }) {

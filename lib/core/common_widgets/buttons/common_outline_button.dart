@@ -40,7 +40,9 @@ class CommonOutlineButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           side: BorderSide(
-            color: isButtonEnabled ? effectiveBorderColor : AppColors.border((context)),
+            color: isButtonEnabled
+                ? effectiveBorderColor
+                : AppColors.border((context)),
             width: 1.5.w,
           ),
           shape: RoundedRectangleBorder(

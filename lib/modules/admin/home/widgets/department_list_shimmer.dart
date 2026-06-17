@@ -9,7 +9,7 @@ class DepartmentCardShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-       baseColor: AppColors.shimmerBase(context),
+      baseColor: AppColors.shimmerBase(context),
       highlightColor: AppColors.shimmerHighlight(context),
       child: Container(
         decoration: BoxDecoration(

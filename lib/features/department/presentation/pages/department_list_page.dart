@@ -211,7 +211,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
               AppStrings.cancel,
-              style:  TextStyle(color: AppColors.textSecondary(context)),
+              style: TextStyle(color: AppColors.textSecondary(context)),
             ),
           ),
           TextButton(

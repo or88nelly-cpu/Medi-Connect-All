@@ -261,9 +261,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
-                          side:  BorderSide(
-                            color: AppColors.border(context),
-                          ),
+                          side: BorderSide(color: AppColors.border(context)),
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12.r),
@@ -322,8 +320,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                                               )
                                             : AppColors.textSecondary(
                                                 context,
-                                              )
-                                                  .withValues(alpha: 0.1),
+                                              ).withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(
                                           6.r,
                                         ),

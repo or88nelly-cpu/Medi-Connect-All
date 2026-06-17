@@ -100,21 +100,21 @@ class DoctorProfileTab extends StatelessWidget {
                       Icons.phone_outlined,
                       "Phone",
                       phone ?? "Not Set",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.badge_outlined,
                       "Registration Number",
                       regNumber,
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.work_outline,
                       "Experience",
                       experience,
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     BlocBuilder<ThemeCubit, ThemeMode>(
@@ -215,7 +215,12 @@ class DoctorProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String title, String value,BuildContext context) {
+  Widget _buildInfoTile(
+    IconData icon,
+    String title,
+    String value,
+    BuildContext context,
+  ) {
     return ListTile(
       leading: Icon(icon, color: AppColors.secondary),
       title: Text(

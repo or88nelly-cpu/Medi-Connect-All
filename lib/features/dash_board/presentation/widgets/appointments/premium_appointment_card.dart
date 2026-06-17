@@ -467,41 +467,44 @@ class PremiumAppointmentCard extends StatelessWidget {
                 AppStrings.patientNameLabel,
                 appointment.patientName,
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(
                 AppStrings.patientIdLabel,
                 "PAT-${(appointment.patientId?.length ?? 0) > 8 ? appointment.patientId?.substring(0, 8).toUpperCase() : appointment.patientId?.toUpperCase()}",
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(AppStrings.gender, genderStr, isDark, context),
               _buildInfoRow(
                 AppStrings.ageLabel,
                 patient?.age != null ? "${patient!.age} years" : "N/A",
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(
                 AppStrings.doctorNameLabel,
                 _cleanDoctorName(appointment.doctorName),
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(
                 AppStrings.specialtyLabel,
                 appointment.specialty,
                 isDark,
-                context
+                context,
               ),
-              _buildInfoRow(AppStrings.dateLabel, formattedDate, isDark,
+              _buildInfoRow(
+                AppStrings.dateLabel,
+                formattedDate,
+                isDark,
                 context,
               ),
               _buildInfoRow(
                 AppStrings.timeLabel,
                 appointment.appointmentTime,
                 isDark,
-                context
+                context,
               ),
               if (appointment.token != null && appointment.token!.isNotEmpty)
                 _buildInfoRow(
@@ -525,7 +528,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                 AppStrings.bloodPressure,
                 appointment.bp ?? "N/A",
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(
                 AppStrings.weightLabel,
@@ -533,7 +536,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ? "${appointment.weight} kg"
                     : "N/A",
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(
                 AppStrings.heightLabel,
@@ -541,7 +544,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ? "${appointment.height} cm"
                     : "N/A",
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(
                 AppStrings.temperature,
@@ -549,13 +552,13 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ? "${appointment.fever} °F"
                     : "N/A",
                 isDark,
-                context
+                context,
               ),
               _buildInfoRow(
                 AppStrings.headCircumference,
                 appointment.headCircumference ?? "N/A",
                 isDark,
-                context
+                context,
               ),
               if (appointment.additionalVitals != null &&
                   appointment.additionalVitals!.isNotEmpty) ...[
@@ -594,7 +597,6 @@ class PremiumAppointmentCard extends StatelessWidget {
     BuildContext context, {
     Color? valueColor,
     FontWeight? valueFontWeight,
-    
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
@@ -613,8 +615,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             value,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: valueFontWeight ?? FontWeight.w600,
-              color:
-                  valueColor ??  AppColors.textPrimary(context),
+              color: valueColor ?? AppColors.textPrimary(context),
             ),
           ),
         ],

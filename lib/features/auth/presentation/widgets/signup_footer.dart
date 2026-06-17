@@ -16,7 +16,7 @@ class SignUpFooter extends StatelessWidget {
         SizedBox(height: 10.r),
         Row(
           children: [
-             Expanded(child: Divider(color: AppColors.border(context))),
+            Expanded(child: Divider(color: AppColors.border(context))),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Text(
@@ -26,7 +26,7 @@ class SignUpFooter extends StatelessWidget {
                 ),
               ),
             ),
-             Expanded(child: Divider(color: AppColors.border(context))),
+            Expanded(child: Divider(color: AppColors.border(context))),
           ],
         ),
         SizedBox(height: 10.r),

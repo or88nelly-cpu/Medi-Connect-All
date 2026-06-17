@@ -943,21 +943,21 @@ class _StaffProfileTab extends StatelessWidget {
                       Icons.phone_outlined,
                       "Phone",
                       phone ?? "Not Set",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.badge_outlined,
                       "Staff ID",
                       "STF-2819",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.work_history_outlined,
                       "Joining Date",
                       "Feb 20, 2025",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     BlocBuilder<ThemeCubit, ThemeMode>(
@@ -1028,7 +1028,12 @@ class _StaffProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String title, String value,BuildContext context) {
+  Widget _buildInfoTile(
+    IconData icon,
+    String title,
+    String value,
+    BuildContext context,
+  ) {
     return ListTile(
       leading: Icon(icon, color: AppColors.accent),
       title: Text(

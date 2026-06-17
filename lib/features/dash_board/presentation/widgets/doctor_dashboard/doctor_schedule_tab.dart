@@ -270,7 +270,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                   : Colors.white,
                               borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
-                                color:  AppColors.border(context),
+                                color: AppColors.border(context),
                               ),
                             ),
                             child: TextField(
@@ -317,7 +317,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(12.r),
                             border: Border.all(
-                              color:AppColors.border(context),
+                              color: AppColors.border(context),
                             ),
                           ),
                           child: Icon(
@@ -413,9 +413,9 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                               children: [
                                 Icon(
                                   Icons.calendar_today_outlined,
-                                  color:  AppColors.textSecondary(context).withValues(
-                                          alpha: 0.5,
-                                        ),
+                                  color: AppColors.textSecondary(
+                                    context,
+                                  ).withValues(alpha: 0.5),
                                   size: 40.r,
                                 ),
                                 SizedBox(height: 12.h),

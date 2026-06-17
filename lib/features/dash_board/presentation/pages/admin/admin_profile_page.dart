@@ -108,21 +108,21 @@ class AdminProfilePage extends StatelessWidget {
                       Icons.phone_outlined,
                       "Phone",
                       phone ?? "Not Set",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.badge_outlined,
                       "Employee ID",
                       "EMP-ADMIN-01",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.calendar_month_outlined,
                       "Joining Date",
                       "Jan 15, 2025",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     BlocBuilder<ThemeCubit, ThemeMode>(
@@ -193,7 +193,12 @@ class AdminProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String title, String value,BuildContext context) {
+  Widget _buildInfoTile(
+    IconData icon,
+    String title,
+    String value,
+    BuildContext context,
+  ) {
     return ListTile(
       leading: Icon(icon, color: AppColors.primary),
       title: Text(

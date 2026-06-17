@@ -57,17 +57,28 @@ class SubmitEmrSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildEMRRow('Patient', appointment.patientName, isDark,context),
-              _buildEMRRow('Doctor', 'Dr. ${appointment.doctorName}', isDark,context),
-              _buildEMRRow('Specialty', appointment.specialty, isDark,context),
-              _buildEMRRow('Invoice', state.invoiceNumber, isDark,context),
+              _buildEMRRow('Patient', appointment.patientName, isDark, context),
+              _buildEMRRow(
+                'Doctor',
+                'Dr. ${appointment.doctorName}',
+                isDark,
+                context,
+              ),
+              _buildEMRRow('Specialty', appointment.specialty, isDark, context),
+              _buildEMRRow('Invoice', state.invoiceNumber, isDark, context),
               if (medicineNames.isNotEmpty)
-                _buildEMRRow('Medicines', medicineNames.join(', '), isDark,context),
+                _buildEMRRow(
+                  'Medicines',
+                  medicineNames.join(', '),
+                  isDark,
+                  context,
+                ),
               if (state.selectedTests.isNotEmpty)
                 _buildEMRRow(
                   'Lab Tests',
                   state.selectedTests.join(', '),
-                  isDark,context
+                  isDark,
+                  context,
                 ),
               if (prescriptionNotesCtrl.text.trim().isNotEmpty)
                 _buildEMRRow(
@@ -119,7 +130,9 @@ class SubmitEmrSection extends StatelessWidget {
               child: Text(
                 'Complete payment first to enable EMR submission',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color:  AppColors.textSecondary(context).withValues(alpha: 0.6),
+                  color: AppColors.textSecondary(
+                    context,
+                  ).withValues(alpha: 0.6),
                 ),
               ),
             ),
@@ -131,9 +144,9 @@ class SubmitEmrSection extends StatelessWidget {
   Widget _buildEMRRow(
     String label,
     String value,
-    bool isDark, BuildContext context, {
+    bool isDark,
+    BuildContext context, {
     bool isLast = false,
-   
   }) {
     return Padding(
       padding: EdgeInsets.only(bottom: isLast ? 0 : 8.h),

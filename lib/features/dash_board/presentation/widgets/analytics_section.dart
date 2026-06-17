@@ -119,9 +119,12 @@ class AnalyticsSection extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.r),
-              LabSummaryCard(lab: lab,onViewAll: ()=>context.push("admin/lab"),),
+              LabSummaryCard(
+                lab: lab,
+                onViewAll: () => context.push("admin/lab"),
+              ),
               SizedBox(height: 8.r),
-              DepartmentOverviewCard(deptStats: deptStats,),
+              DepartmentOverviewCard(deptStats: deptStats),
               SizedBox(height: 8.r),
               StaffAttendanceCard(
                 attendance: attendance,

@@ -118,12 +118,28 @@ class ConfirmStep extends StatelessWidget {
           ),
           child: Column(
             children: [
-              _buildReviewRow("Patient", patientName, isDark,context),
-              _buildReviewRow("Specialty", state.selectedSection!.name, isDark,context),
-              _buildReviewRow("Doctor", doctorName, isDark,context),
-              _buildReviewRow("Date", formattedDate, isDark,context),
-              _buildReviewRow("Time Slot", state.selectedSlotTime!, isDark,context),
-              _buildReviewRow("Type", state.selectedType, isDark, isLast: true,context),
+              _buildReviewRow("Patient", patientName, isDark, context),
+              _buildReviewRow(
+                "Specialty",
+                state.selectedSection!.name,
+                isDark,
+                context,
+              ),
+              _buildReviewRow("Doctor", doctorName, isDark, context),
+              _buildReviewRow("Date", formattedDate, isDark, context),
+              _buildReviewRow(
+                "Time Slot",
+                state.selectedSlotTime!,
+                isDark,
+                context,
+              ),
+              _buildReviewRow(
+                "Type",
+                state.selectedType,
+                isDark,
+                isLast: true,
+                context,
+              ),
             ],
           ),
         ),
@@ -134,7 +150,8 @@ class ConfirmStep extends StatelessWidget {
   Widget _buildReviewRow(
     String label,
     String value,
-    bool isDark,BuildContext context, {
+    bool isDark,
+    BuildContext context, {
     bool isLast = false,
   }) {
     return Padding(

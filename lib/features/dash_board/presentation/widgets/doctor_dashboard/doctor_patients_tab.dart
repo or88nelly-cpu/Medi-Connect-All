@@ -170,7 +170,7 @@ class DoctorPatientsTab extends StatelessWidget {
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.r),
-                                  side:  BorderSide(
+                                  side: BorderSide(
                                     color: AppColors.border(context),
                                   ),
                                 ),

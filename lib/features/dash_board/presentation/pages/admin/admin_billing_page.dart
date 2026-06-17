@@ -119,9 +119,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
-                          side:  BorderSide(
-                            color: AppColors.border(context),
-                          ),
+                          side: BorderSide(color: AppColors.border(context)),
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12.r),
@@ -338,9 +336,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.terminalDarkBg : Colors.grey[50],
                     borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color:  AppColors.border(context),
-                    ),
+                    border: Border.all(color: AppColors.border(context)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,7 +346,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
-                          color:AppColors.textPrimary(context),
+                          color: AppColors.textPrimary(context),
                         ),
                       ),
                       Text(
@@ -417,9 +413,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
             style: TextStyle(
               fontSize: 11.sp,
               fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
-              color:
-                  valueColor ??
-                  AppColors.textPrimary(context),
+              color: valueColor ?? AppColors.textPrimary(context),
             ),
           ),
         ],

@@ -144,7 +144,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                               _buildPrescribedMedicinesList(
                                 emrRecord!['medicines']?.toString() ?? '',
                                 isDark,
-                                context
+                                context,
                               ),
                             ],
                           ),
@@ -221,7 +221,11 @@ class EmrPrescriptionCard extends StatelessWidget {
     );
   }
 
-  Widget _buildPrescribedMedicinesList(String medicinesStr, bool isDark,BuildContext context) {
+  Widget _buildPrescribedMedicinesList(
+    String medicinesStr,
+    bool isDark,
+    BuildContext context,
+  ) {
     if (medicinesStr.isEmpty) {
       return Text(
         "No medicines prescribed.",

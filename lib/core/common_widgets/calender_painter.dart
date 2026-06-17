@@ -27,7 +27,10 @@ class CalendarPainter extends CustomPainter {
     canvas.drawRRect(bodyRect, bodyPaint);
 
     // Glass Overlay
-    canvas.drawRRect(bodyRect, Paint()..color = Colors.white.withValues(alpha: .08));
+    canvas.drawRRect(
+      bodyRect,
+      Paint()..color = Colors.white.withValues(alpha: .08),
+    );
 
     // Border
     canvas.drawRRect(

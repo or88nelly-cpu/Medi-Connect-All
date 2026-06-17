@@ -317,7 +317,9 @@ class ReviewStepView extends StatelessWidget {
                       'DM ${appointment.specialty}, 12+ Years Exp.',
                       style: AppTextStyles.bodySmall.copyWith(
                         fontSize: 10.sp,
-                        color:AppColors.textSecondary(context).withValues(alpha: 0.6),
+                        color: AppColors.textSecondary(
+                          context,
+                        ).withValues(alpha: 0.6),
                       ),
                     ),
                   ],
@@ -735,30 +737,35 @@ class ReviewStepView extends StatelessWidget {
                 'Consultation Fee',
                 '₹${consultFee.toStringAsFixed(2)}',
                 isDark,
-                context
+                context,
               ),
               if (medicineCost > 0)
                 _buildBillRow(
                   'Medicine Total',
                   '₹${medicineCost.toStringAsFixed(2)}',
                   isDark,
-                  context
+                  context,
                 ),
               if (labCost > 0)
                 _buildBillRow(
                   'Lab Test Total',
                   '₹${labCost.toStringAsFixed(2)}',
                   isDark,
-                  context
+                  context,
                 ),
-              _buildBillRow('Payment Method', state.paymentMethod, isDark,context),
+              _buildBillRow(
+                'Payment Method',
+                state.paymentMethod,
+                isDark,
+                context,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Payment Status',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color:AppColors.textSecondary(context),
+                      color: AppColors.textSecondary(context),
                     ),
                   ),
                   Container(
@@ -852,7 +859,12 @@ class ReviewStepView extends StatelessWidget {
     );
   }
 
-  Widget _buildBillRow(String label, String value, bool isDark,BuildContext context) {
+  Widget _buildBillRow(
+    String label,
+    String value,
+    bool isDark,
+    BuildContext context,
+  ) {
     return Padding(
       padding: EdgeInsets.only(bottom: 8.h),
       child: Row(

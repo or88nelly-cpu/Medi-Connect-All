@@ -16,9 +16,9 @@ class AppColors {
 
   static const Color secondary = Color(0xFF7B61FF);
   static const Color accent = Color(0xFFFFB547);
-   static const divider = Color(0xFFF3F4F6);
-static const surface = Colors.white;
-  
+  static const divider = Color(0xFFF3F4F6);
+  static const surface = Colors.white;
+
   // Admin and branding colors
   static const adminPrimary = Color(0xFF7928CA);
   static const adminSecondary = Color(0xFFFF0080);

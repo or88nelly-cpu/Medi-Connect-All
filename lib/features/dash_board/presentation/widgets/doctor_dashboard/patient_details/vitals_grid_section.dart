@@ -151,7 +151,7 @@ class VitalsGridSection extends StatelessWidget {
     required Color borderCol,
     bool isStatus = false,
   }) {
-    final textCol =  AppColors.textPrimary(context);
+    final textCol = AppColors.textPrimary(context);
     final subTextCol = isDark
         ? Colors.white38
         : AppColors.textSecondary(context);

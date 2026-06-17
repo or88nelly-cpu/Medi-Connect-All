@@ -318,8 +318,9 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                                             ? AppColors.warning.withValues(
                                                 alpha: 0.1,
                                               )
-                                            : AppColors.textSecondary(context)
-                                                  .withValues(alpha: 0.1),
+                                            : AppColors.textSecondary(
+                                                context,
+                                              ).withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(
                                           6.r,
                                         ),

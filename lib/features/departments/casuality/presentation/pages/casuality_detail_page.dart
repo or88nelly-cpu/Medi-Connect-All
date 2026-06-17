@@ -78,9 +78,7 @@ class _CasualityDetailPageState extends State<CasualityDetailPage> {
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r),
-                            side:  BorderSide(
-                              color: AppColors.border(context),
-                            ),
+                            side: BorderSide(color: AppColors.border(context)),
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(12.r),

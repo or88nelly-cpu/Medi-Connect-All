@@ -116,10 +116,8 @@ class DoctorConsultationsCard extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: todayApts.length,
-                  separatorBuilder: (context, idx) =>  Divider(
-                    color: AppColors.border(context),
-                    height: 1,
-                  ),
+                  separatorBuilder: (context, idx) =>
+                      Divider(color: AppColors.border(context), height: 1),
                   itemBuilder: (context, idx) {
                     final apt = todayApts[idx];
 

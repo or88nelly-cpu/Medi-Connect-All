@@ -122,8 +122,8 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
             .trim();
 
     final sheetBg = isDark ? AppColors.terminalDarkBg : Colors.white;
-    final secondaryText =AppColors.textSecondary(context);
-    final primaryText =  AppColors.textPrimary(context);
+    final secondaryText = AppColors.textSecondary(context);
+    final primaryText = AppColors.textPrimary(context);
 
     return DraggableScrollableSheet(
       initialChildSize: 0.85,

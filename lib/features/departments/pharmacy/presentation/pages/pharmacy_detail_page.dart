@@ -416,8 +416,10 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                                   "Price: ₹${item.sellPrice.toStringAsFixed(2)}",
                                                   style: TextStyle(
                                                     fontSize: 12.sp,
-                                                    color:  AppColors
-                                                              .textSecondary(context),
+                                                    color:
+                                                        AppColors.textSecondary(
+                                                          context,
+                                                        ),
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),

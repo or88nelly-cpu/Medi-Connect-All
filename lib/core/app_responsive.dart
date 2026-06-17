@@ -35,6 +35,7 @@ class AppResponsive {
     if (isTablet(context)) return 20;
     return 16;
   }
+
   static Size getDesignSize(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 

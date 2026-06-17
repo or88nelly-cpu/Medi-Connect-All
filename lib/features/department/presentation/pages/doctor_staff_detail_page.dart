@@ -112,15 +112,19 @@ class DoctorStaffDetailPage extends StatelessWidget {
                       _buildInfoRow(
                         "Phone",
                         currentUser.phoneNumber ?? "Not Set",
-                        context
+                        context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow("Gender", currentUser.gender ?? "Not Set",context),
+                      _buildInfoRow(
+                        "Gender",
+                        currentUser.gender ?? "Not Set",
+                        context,
+                      ),
                       Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
                         "Department",
                         currentUser.department ?? "Not Assigned",
-                        context
+                        context,
                       ),
                     ],
                   ),
@@ -138,22 +142,22 @@ class DoctorStaffDetailPage extends StatelessWidget {
                       _buildInfoRow(
                         "Staff Role",
                         currentUser.staffRole ?? "Not Set",
-                        context
+                        context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
                         "Designation",
                         currentUser.designation ?? "Not Set",
-                        context
+                        context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
                         "Shift",
                         currentUser.availabilityStatus ?? "Day Shift",
-                        context
+                        context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow("Status", currentUser.status,context),
+                      _buildInfoRow("Status", currentUser.status, context),
                     ],
                   ),
                 ),
@@ -181,7 +185,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String title, String value,BuildContext context) {
+  Widget _buildInfoRow(String title, String value, BuildContext context) {
     return ListTile(
       title: Text(
         title,

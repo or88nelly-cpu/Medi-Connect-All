@@ -137,29 +137,29 @@ class SuccessStepView extends StatelessWidget {
                 'Patient',
                 appointment.patientName,
                 isDark,
-                context
+                context,
               ),
               _buildSummaryRow(
                 Icons.local_hospital_outlined,
                 'Doctor',
                 '$docName (${appointment.specialty})',
                 isDark,
-                context
+                context,
               ),
               _buildSummaryRow(
                 Icons.calendar_today_outlined,
                 'Date & Time',
                 formattedDate,
                 isDark,
-                context
+                context,
               ),
               _buildSummaryRow(
                 Icons.receipt_long_outlined,
                 'Invoice Number',
                 state.invoiceNumber,
                 isDark,
-                context
-                ),
+                context,
+              ),
               _buildSummaryRow(
                 Icons.payments_outlined,
                 'Amount Paid',
@@ -283,7 +283,8 @@ class SuccessStepView extends StatelessWidget {
     IconData icon,
     String label,
     String value,
-    bool isDark,BuildContext context, {
+    bool isDark,
+    BuildContext context, {
     bool isLast = false,
   }) {
     return Padding(
@@ -293,7 +294,7 @@ class SuccessStepView extends StatelessWidget {
           Icon(
             icon,
             size: 16.r,
-            color:  AppColors.textSecondary(context).withValues(alpha: 0.7),
+            color: AppColors.textSecondary(context).withValues(alpha: 0.7),
           ),
           SizedBox(width: 10.w),
           SizedBox(

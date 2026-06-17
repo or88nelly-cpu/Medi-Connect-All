@@ -1879,7 +1879,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                 "Authorized Signature",
                 style: AppTextStyles.bodySmall.copyWith(
                   fontSize: 9.sp,
-                  color: AppColors.textSecondary(context).withValues(alpha: 0.6),
+                  color: AppColors.textSecondary(
+                    context,
+                  ).withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -2111,8 +2113,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                                     .copyWith(
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: AppColors
-                                                                .textPrimary(context),
+                                                      color:
+                                                          AppColors.textPrimary(
+                                                            context,
+                                                          ),
                                                     ),
                                               ),
                                               SizedBox(height: 4.h),
@@ -2184,8 +2188,10 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
                                                 style: AppTextStyles.bodySmall
                                                     .copyWith(
                                                       fontSize: 10.sp,
-                                                      color:  AppColors
-                                                                .textSecondary(context),
+                                                      color:
+                                                          AppColors.textSecondary(
+                                                            context,
+                                                          ),
                                                     ),
                                               ),
                                             ],

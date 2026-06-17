@@ -220,7 +220,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.r),
-                    side:  BorderSide(color: AppColors.border(context)),
+                    side: BorderSide(color: AppColors.border(context)),
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(12.r),

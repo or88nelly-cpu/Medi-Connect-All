@@ -503,8 +503,9 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                             Icons.calendar_today_outlined,
                                             color: isDark
                                                 ? Colors.white30
-                                                : AppColors.textSecondary(context)
-                                                      .withValues(alpha: 0.5),
+                                                : AppColors.textSecondary(
+                                                    context,
+                                                  ).withValues(alpha: 0.5),
                                             size: 40.r,
                                           ),
                                           SizedBox(height: 12.h),

@@ -1199,21 +1199,21 @@ class _PatientProfileTab extends StatelessWidget {
                       Icons.phone_outlined,
                       "Phone",
                       phone ?? "Not Set",
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.bloodtype_outlined,
                       "Blood Group",
                       bloodGroup,
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     _buildInfoTile(
                       Icons.warning_amber_rounded,
                       "Allergies",
                       allergies,
-                      context
+                      context,
                     ),
                     Divider(color: AppColors.border(context), height: 1),
                     BlocBuilder<ThemeCubit, ThemeMode>(
@@ -1284,7 +1284,12 @@ class _PatientProfileTab extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(IconData icon, String title, String value,BuildContext context) {
+  Widget _buildInfoTile(
+    IconData icon,
+    String title,
+    String value,
+    BuildContext context,
+  ) {
     return ListTile(
       leading: Icon(icon, color: AppColors.primary),
       title: Text(
