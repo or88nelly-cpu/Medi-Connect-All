@@ -104,7 +104,10 @@ class AnalyticsSection extends StatelessWidget {
                   // ),
                   Expanded(
                     flex: 1,
-                    child: PharmacySummaryCard(pharmacy: pharmacy),
+                    child: PharmacySummaryCard(
+                      pharmacy: pharmacy,
+                      onViewAll: () => context.push('/admin/pharmacy'),
+                    ),
                   ),
 
                   // Expanded(
@@ -116,9 +119,9 @@ class AnalyticsSection extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 8.r),
-              LabSummaryCard(lab: lab),
+              LabSummaryCard(lab: lab,onViewAll: ()=>context.push("admin/lab"),),
               SizedBox(height: 8.r),
-              DepartmentOverviewCard(deptStats: deptStats),
+              DepartmentOverviewCard(deptStats: deptStats,),
               SizedBox(height: 8.r),
               StaffAttendanceCard(
                 attendance: attendance,

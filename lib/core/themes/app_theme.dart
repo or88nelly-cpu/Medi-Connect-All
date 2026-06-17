@@ -1,5 +1,3 @@
-/// Application theme definitions combining colors and text styles.
-/// Configures light and dark themes for the platform.
 library;
 
 import 'package:flutter/material.dart';
@@ -7,75 +5,165 @@ import 'app_colors.dart';
 import 'app_text_styles.dart';
 
 class AppTheme {
-  /// Defines Light Theme Data.
+  AppTheme._();
+
+  // =========================================================
+  // LIGHT THEME
+  // =========================================================
+
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+
       primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: AppColors.background,
+
+      scaffoldBackgroundColor: AppColors.lightScaffold,
+
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
-        surface: AppColors.surface,
+        surface: AppColors.lightCard,
         error: AppColors.error,
       ),
-      dividerColor: AppColors.divider,
-      textTheme: TextTheme(
-        headlineLarge: AppTextStyles.headingLarge,
-        headlineMedium: AppTextStyles.headingMedium,
-        titleLarge: AppTextStyles.titleLarge,
-        titleMedium: AppTextStyles.titleMedium,
-        bodyLarge: AppTextStyles.bodyLarge,
-        bodyMedium: AppTextStyles.bodyMedium,
-        bodySmall: AppTextStyles.bodySmall,
-        labelMedium: AppTextStyles.labelMedium,
-      ),
+
+      cardColor: AppColors.lightCard,
+
+      dividerColor: AppColors.lightBorder,
+
+      shadowColor: AppColors.lightShadow,
+
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.surface,
         elevation: 0,
-        iconTheme: IconThemeData(color: AppColors.textPrimary),
+        centerTitle: false,
+        backgroundColor: AppColors.lightCard,
+        foregroundColor: AppColors.lightTextPrimary,
+        iconTheme: IconThemeData(color: AppColors.lightTextPrimary),
+      ),
+
+      iconTheme: const IconThemeData(color: AppColors.lightTextPrimary),
+
+      textTheme: TextTheme(
+        headlineLarge: AppTextStyles.headingLarge.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
+
+        headlineMedium: AppTextStyles.headingMedium.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
+
+        titleLarge: AppTextStyles.titleLarge.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
+
+        titleMedium: AppTextStyles.titleMedium.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
+
+        bodyLarge: AppTextStyles.bodyLarge.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
+
+        bodyMedium: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.lightTextSecondary,
+        ),
+
+        bodySmall: AppTextStyles.bodySmall.copyWith(
+          color: AppColors.lightTextSecondary,
+        ),
+
+        labelMedium: AppTextStyles.labelMedium.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
+      ),
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
       ),
     );
   }
 
-  /// Defines Dark Theme Data.
+  // =========================================================
+  // DARK THEME
+  // =========================================================
+
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+
       primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: const Color(0xFF121212),
+
+      scaffoldBackgroundColor: AppColors.darkScaffold,
+
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
-        surface: Color(0xFF1E1E1E),
+        surface: AppColors.darkCard,
         error: AppColors.error,
       ),
-      dividerColor: const Color(0xFF2C2C2C),
-      textTheme: TextTheme(
-        headlineLarge: AppTextStyles.headingLarge.copyWith(color: Colors.white),
-        headlineMedium: AppTextStyles.headingMedium.copyWith(
-          color: Colors.white,
-        ),
-        titleLarge: AppTextStyles.titleLarge.copyWith(color: Colors.white),
-        titleMedium: AppTextStyles.titleMedium.copyWith(color: Colors.white),
-        bodyLarge: AppTextStyles.bodyLarge.copyWith(color: Colors.white),
-        bodyMedium: AppTextStyles.bodyMedium.copyWith(
-          color: const Color(0xFFB3B3B3),
-        ),
-        bodySmall: AppTextStyles.bodySmall.copyWith(
-          color: const Color(0xFF8C8C8C),
-        ),
-        labelMedium: AppTextStyles.labelMedium.copyWith(color: Colors.white),
-      ),
+
+      cardColor: AppColors.darkCard,
+
+      dividerColor: AppColors.darkBorder,
+
+      shadowColor: AppColors.darkShadow,
+
       appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF1E1E1E),
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: false,
+        backgroundColor: AppColors.darkCard,
+        foregroundColor: AppColors.darkTextPrimary,
+        iconTheme: IconThemeData(color: AppColors.darkTextPrimary),
+      ),
+
+      iconTheme: const IconThemeData(color: AppColors.darkTextPrimary),
+
+      textTheme: TextTheme(
+        headlineLarge: AppTextStyles.headingLarge.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
+
+        headlineMedium: AppTextStyles.headingMedium.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
+
+        titleLarge: AppTextStyles.titleLarge.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
+
+        titleMedium: AppTextStyles.titleMedium.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
+
+        bodyLarge: AppTextStyles.bodyLarge.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
+
+        bodyMedium: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
+
+        bodySmall: AppTextStyles.bodySmall.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
+
+        labelMedium: AppTextStyles.labelMedium.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
+      ),
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
       ),
     );
   }
-
-  AppTheme._();
 }

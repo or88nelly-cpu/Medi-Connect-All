@@ -316,7 +316,8 @@ class _CreateAppointmentWizardBottomSheetState
               maxChildSize: 0.95,
               expand: false,
               builder: (ctx, scrollCtrl) {
-                return Container(
+                return SafeArea(child:
+                Container(
                   decoration: BoxDecoration(
                     color: sheetBg,
                     borderRadius: BorderRadius.vertical(
@@ -417,7 +418,7 @@ class _CreateAppointmentWizardBottomSheetState
                       );
                     },
                   ),
-                );
+                ));
               },
             ),
           );

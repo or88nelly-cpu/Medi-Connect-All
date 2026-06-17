@@ -125,7 +125,7 @@ class AnalyticsOverviewSection extends StatelessWidget {
             ),
             _StatCard(
               label: AppStrings.totalRevenue,
-              value: "₹ $revenue",
+              value: "₹ ${revenue.toStringAsFixed(2)}",
               iconPath: AppAssets.revenue,
               lineColor: AppColors.infoIndigo,
               onTap: onRevenueTap,

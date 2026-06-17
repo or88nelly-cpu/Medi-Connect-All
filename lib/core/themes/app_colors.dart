@@ -5,15 +5,9 @@ library;
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Brand colors
-  static const primary = Color(0xFF0F6FFF);
-  static const secondary = Color(0xFF00C2A8);
+
   static const accent = Color(0xFFFFB547);
 
-  // Status colors
-  static const success = Color(0xFF34C759);
-  static const warning = Color(0xFFFF9500);
-  static const error = Color(0xFFFF3B30);
 
   // Background colors
   static const background = Color(0xFFF7FAFC);
@@ -105,6 +99,146 @@ class AppColors {
   static const patientChipTextDark = Color(0xFF38BDF8);
   static const patientChipTextLight = Color(0xFF0369A1);
 
-  // Private constructor to prevent instantiation.
+
+  // =====================================================
+  // BRAND COLORS
+  // =====================================================
+
+  static const Color primary = Color(0xFF4F2DFF);
+  static const Color primaryLight = Color(0xFF6A4DFF);
+  static const Color primaryDark = Color(0xFF2D1AFF);
+
+  static const Color secondary = Color(0xFF7B61FF);
+
+  // =====================================================
+  // LIGHT THEME
+  // =====================================================
+
+  static const Color lightScaffold = Color(0xFFF5F7FC);
+  static const Color lightBackground = Color(0xFFFFFFFF);
+
+  static const Color lightCard = Color(0xFFFFFFFF);
+  static const Color lightCardSecondary = Color(0xFFF8FAFD);
+
+  static const Color lightBorder = Color(0xFFE3E8F3);
+
+  static const Color lightTextPrimary = Color(0xFF111827);
+  static const Color lightTextSecondary = Color(0xFF6B7280);
+
+  static const Color lightShadow = Color(0x14000000);
+
+  static const Color lightHeaderStart = Color(0xFF2D2CFF);
+  static const Color lightHeaderEnd = Color(0xFF742FFF);
+
+  static const Color lightSidebar = Color(0xFFF0F5FF);
+
+  // =====================================================
+  // DARK THEME
+  // =====================================================
+
+  static const Color darkScaffold = Color(0xFF050816);
+  static const Color darkBackground = Color(0xFF0A1022);
+
+  static const Color darkCard = Color(0xFF0F172A);
+  static const Color darkCardSecondary = Color(0xFF131D33);
+
+  static const Color darkBorder = Color(0xFF26324D);
+
+  static const Color darkTextPrimary = Color(0xFFFFFFFF);
+  static const Color darkTextSecondary = Color(0xFF94A3B8);
+
+  static const Color darkShadow = Color(0x66000000);
+
+  static const Color darkHeaderStart = Color(0xFF0D0C5F);
+  static const Color darkHeaderEnd = Color(0xFF34178D);
+
+  static const Color darkSidebar = Color(0xFF071122);
+
+  // =====================================================
+  // DEPARTMENT ICON COLORS
+  // =====================================================
+
+  static const Color blue = Color(0xFF2F80FF);
+  static const Color green = Color(0xFF22C55E);
+  static const Color purple = Color(0xFF8B5CF6);
+  static const Color pink = Color(0xFFEC4899);
+  static const Color orange = Color(0xFFFF8A26);
+  static const Color teal = Color(0xFF14B8A6);
+  static const Color red = Color(0xFFEF4444);
+
+  // =====================================================
+  // DEPARTMENT CARD BG - LIGHT
+  // =====================================================
+
+  static const Color lightBlueCard = Color(0xFFF3F8FF);
+  static const Color lightGreenCard = Color(0xFFF2FFF7);
+  static const Color lightPurpleCard = Color(0xFFF8F4FF);
+  static const Color lightPinkCard = Color(0xFFFFF2F8);
+  static const Color lightOrangeCard = Color(0xFFFFF7F0);
+  static const Color lightTealCard = Color(0xFFF0FFFD);
+  static const Color lightRedCard = Color(0xFFFFF3F3);
+
+  // =====================================================
+  // DEPARTMENT CARD BG - DARK
+  // =====================================================
+
+  static const Color darkBlueCard = Color(0xFF0D1B38);
+  static const Color darkGreenCard = Color(0xFF0D261A);
+  static const Color darkPurpleCard = Color(0xFF21133F);
+  static const Color darkPinkCard = Color(0xFF34132A);
+  static const Color darkOrangeCard = Color(0xFF38200F);
+  static const Color darkTealCard = Color(0xFF0B2A28);
+  static const Color darkRedCard = Color(0xFF341515);
+
+  // =====================================================
+  // STATUS COLORS
+  // =====================================================
+
+  static const Color success = Color(0xFF22C55E);
+  static const Color warning = Color(0xFFF59E0B);
+  static const Color error = Color(0xFFEF4444);
+  static const Color info = Color(0xFF3B82F6);
+
+  // =====================================================
+  // GRADIENTS
+  // =====================================================
+
+  static const List<Color> lightHeaderGradient = [
+    Color(0xFF2D2CFF),
+    Color(0xFF742FFF),
+  ];
+
+  static const List<Color> darkHeaderGradient = [
+    Color(0xFF0D0C5F),
+    Color(0xFF34178D),
+  ];
+
+  static const List<Color> blueGradient = [
+    Color(0xFF4DA3FF),
+    Color(0xFF0066FF),
+  ];
+
+  static const List<Color> greenGradient = [
+    Color(0xFF4ADE80),
+    Color(0xFF16A34A),
+  ];
+
+  static const List<Color> purpleGradient = [
+    Color(0xFFA78BFA),
+    Color(0xFF7C3AED),
+  ];
+
+  static const List<Color> pinkGradient = [
+    Color(0xFFFF66C4),
+    Color(0xFFEC4899),
+  ];
+
+  static const List<Color> orangeGradient = [
+    Color(0xFFFFB366),
+    Color(0xFFFF8A26),
+  ];
+
+
+ 
   AppColors._();
 }

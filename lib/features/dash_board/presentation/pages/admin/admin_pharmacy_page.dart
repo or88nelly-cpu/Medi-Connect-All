@@ -9,7 +9,8 @@ import 'package:medi_connect/features/dash_board/domain/entities/pharmacy_item_e
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_pharmacy_bloc.dart';
 
 class AdminPharmacyPage extends StatefulWidget {
-  const AdminPharmacyPage({super.key});
+  final bool isDetail;
+  const AdminPharmacyPage({super.key, this.isDetail = false});
 
   @override
   State<AdminPharmacyPage> createState() => _AdminPharmacyPageState();
@@ -285,7 +286,13 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
+    return widget.isDetail? Stack(
+      children: [
+        contents(),
+        
+      ],
+    ):
+    CustomScaffold(
       customAppbar: CommonAppBar(
         title: "Pharmacy Inventory",
         actions: [
@@ -295,179 +302,181 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
           ),
         ],
       ),
-      body: BlocBuilder<AdminPharmacyBloc, AdminPharmacyState>(
-        builder: (context, state) {
-          if (state is AdminPharmacyLoading) {
-            return const Center(child: CircularProgressIndicator());
+      body:contents()  );
+  }
+
+  Widget contents() {
+    return BlocBuilder<AdminPharmacyBloc, AdminPharmacyState>(
+      builder: (context, state) {
+        if (state is AdminPharmacyLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state is AdminPharmacyError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  state.message,
+                  style: const TextStyle(color: AppColors.error),
+                ),
+                SizedBox(height: 12.h),
+                ElevatedButton(
+                  onPressed: () => context.read<AdminPharmacyBloc>().add(
+                    LoadPharmacyItems(),
+                  ),
+                  child: const Text("Retry"),
+                ),
+              ],
+            ),
+          );
+        }
+
+        if (state is AdminPharmacyLoaded) {
+          final items = state.items;
+          if (items.isEmpty) {
+            return const Center(child: Text("No items found."));
           }
 
-          if (state is AdminPharmacyError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    state.message,
-                    style: const TextStyle(color: AppColors.error),
-                  ),
-                  SizedBox(height: 12.h),
-                  ElevatedButton(
-                    onPressed: () => context.read<AdminPharmacyBloc>().add(
-                      LoadPharmacyItems(),
-                    ),
-                    child: const Text("Retry"),
-                  ),
-                ],
-              ),
-            );
-          }
+          return ListView.builder(
+            padding: EdgeInsets.all(20.r),
+            itemCount: items.length,
+            itemBuilder: (context, idx) {
+              final item = items[idx];
+              Color badgeColor;
+              switch (item.status) {
+                case 'In Stock':
+                  badgeColor = AppColors.success;
+                  break;
+                case 'Low Stock':
+                  badgeColor = AppColors.warning;
+                  break;
+                default:
+                  badgeColor = AppColors.error;
+              }
 
-          if (state is AdminPharmacyLoaded) {
-            final items = state.items;
-            if (items.isEmpty) {
-              return const Center(child: Text("No items found."));
-            }
-
-            return ListView.builder(
-              padding: EdgeInsets.all(20.r),
-              itemCount: items.length,
-              itemBuilder: (context, idx) {
-                final item = items[idx];
-                Color badgeColor;
-                switch (item.status) {
-                  case 'In Stock':
-                    badgeColor = AppColors.success;
-                    break;
-                  case 'Low Stock':
-                    badgeColor = AppColors.warning;
-                    break;
-                  default:
-                    badgeColor = AppColors.error;
-                }
-
-                return Card(
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    side: const BorderSide(color: AppColors.border),
-                  ),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12.r),
-                    onTap: () => _showEditMedicineDialog(item),
-                    child: Padding(
-                      padding: EdgeInsets.all(16.r),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.r),
-                            child: item.imageUrl.isNotEmpty
-                                ? Image.network(
-                                    item.imageUrl,
-                                    width: 48.w,
-                                    height: 48.w,
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            Container(
-                                              width: 48.w,
-                                              height: 48.w,
-                                              color: badgeColor.withValues(
-                                                alpha: 0.1,
-                                              ),
-                                              child: Icon(
-                                                Icons.medication_outlined,
-                                                color: badgeColor,
-                                              ),
-                                            ),
-                                  )
-                                : Container(
-                                    width: 48.w,
-                                    height: 48.w,
-                                    color: badgeColor.withValues(alpha: 0.1),
-                                    child: Icon(
-                                      Icons.medication_outlined,
-                                      color: badgeColor,
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(width: 16.w),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item.name +
-                                      (item.dosage.isNotEmpty
-                                          ? " (${item.dosage})"
-                                          : ""),
-                                  style: AppTextStyles.titleMedium.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.sp,
-                                  ),
-                                ),
-                                SizedBox(height: 4.h),
-                                Text("Category: ${item.category}"),
-                                Text("Current Stock: ${item.stock} units"),
-                                SizedBox(height: 2.h),
-                                Text(
-                                  "Buy: ₹${item.buyPrice.toStringAsFixed(2)}  ·  Sell: ₹${item.sellPrice.toStringAsFixed(2)}",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: AppColors.textSecondary,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w,
-                                  vertical: 4.h,
-                                ),
-                                decoration: BoxDecoration(
+              return Card(
+                margin: EdgeInsets.only(bottom: 12.h),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                  side: const BorderSide(color: AppColors.border),
+                ),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12.r),
+                  onTap: () => _showEditMedicineDialog(item),
+                  child: Padding(
+                    padding: EdgeInsets.all(16.r),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.r),
+                          child: item.imageUrl.isNotEmpty
+                              ? Image.network(
+                                  item.imageUrl,
+                                  width: 48.w,
+                                  height: 48.w,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                        width: 48.w,
+                                        height: 48.w,
+                                        color: badgeColor.withValues(
+                                          alpha: 0.1,
+                                        ),
+                                        child: Icon(
+                                          Icons.medication_outlined,
+                                          color: badgeColor,
+                                        ),
+                                      ),
+                                )
+                              : Container(
+                                  width: 48.w,
+                                  height: 48.w,
                                   color: badgeColor.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(6.r),
-                                ),
-                                child: Text(
-                                  item.status,
-                                  style: TextStyle(
+                                  child: Icon(
+                                    Icons.medication_outlined,
                                     color: badgeColor,
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.bold,
                                   ),
+                                ),
+                        ),
+                        SizedBox(width: 16.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.name +
+                                    (item.dosage.isNotEmpty
+                                        ? " (${item.dosage})"
+                                        : ""),
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp,
                                 ),
                               ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.delete_outline,
-                                  color: AppColors.error,
-                                  size: 18,
+                              SizedBox(height: 4.h),
+                              Text("Category: ${item.category}"),
+                              Text("Current Stock: ${item.stock} units"),
+                              SizedBox(height: 2.h),
+                              Text(
+                                "Buy: ₹${item.buyPrice.toStringAsFixed(2)}  ·  Sell: ₹${item.sellPrice.toStringAsFixed(2)}",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: AppColors.textSecondary,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                                onPressed: () {
-                                  context.read<AdminPharmacyBloc>().add(
-                                    DeletePharmacyItem(item.id),
-                                  );
-                                },
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8.w,
+                                vertical: 4.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: badgeColor.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(6.r),
+                              ),
+                              child: Text(
+                                item.status,
+                                style: TextStyle(
+                                  color: badgeColor,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: AppColors.error,
+                                size: 18,
+                              ),
+                              onPressed: () {
+                                context.read<AdminPharmacyBloc>().add(
+                                  DeletePharmacyItem(item.id),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                );
-              },
-            );
-          }
+                ),
+              );
+            },
+          );
+        }
 
-          return const SizedBox.shrink();
-        },
-      ),
+        return const SizedBox.shrink();
+      },
     );
   }
 }

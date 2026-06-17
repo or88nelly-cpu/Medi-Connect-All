@@ -33,6 +33,7 @@ import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_
 import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_audit_logs_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_notifications_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_master_data_page.dart';
+import 'package:medi_connect/modules/admin/home/admin_home_page.dart';
 
 class AppRouterConfig {
   static GoRouter buildRouter() {
@@ -69,7 +70,7 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: '/admin/dashboard',
-          builder: (context, state) => const DashboardPage(),
+          builder: (context, state) => const AdminHomePage(),
         ),
         GoRoute(
           path: '/patient/dashboard',
