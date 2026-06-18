@@ -40,7 +40,7 @@ class AppResponsive {
     final width = MediaQuery.of(context).size.width;
 
     if (width >= 1200) {
-      return const Size(1440, 1024);
+      return const Size(1536, 1024);
     }
 
     if (width >= 600) {

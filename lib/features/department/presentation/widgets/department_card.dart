@@ -53,14 +53,14 @@ class DepartmentCard extends StatelessWidget {
           children: [
             CustomImageView(
               imagePath: department.imageUrl ?? '',
-              width: 64.r,
-              height: 64.r,
+              width: 62.r,
+              height: 62.r,
             ),
-            SizedBox(height: 16),
+            Spacer(),
             Text(
               department.name,
               textAlign: TextAlign.center,
-              style: AppTextStyles.bodyMedium,
+              style: AppTextStyles.bodyMedium.copyWith(fontSize: 13.sp),
             ),
           ],
         ),

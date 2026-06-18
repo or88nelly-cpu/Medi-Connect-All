@@ -8,6 +8,7 @@ import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/admin_drawer.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/modules/admin/home/widgets/dashboard_header.dart';
+import 'package:medi_connect/modules/admin/home/widgets/extra_card.dart';
 
 import 'widgets/department_list_home.dart' show DepartmentListHome;
 
@@ -39,17 +40,22 @@ class _AdminHomePageState extends State<AdminHomePage> {
         final user = state is Authenticated ? state.user : null;
         return CustomScaffold(
           drawer: AdminDrawer(),
+          appBarNeeded: false,
           body: SingleChildScrollView(
             padding: EdgeInsets.symmetric(
-              horizontal: 50.r,
-              vertical: 20.r,
-            ).copyWith(top: 10.r),
+              horizontal: 66.w,
+              vertical: 30.h,
+            ).copyWith(left: 66.w - 58.r),
 
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+
               children: [
                 DashboardHeader(user: user),
-                SizedBox(height: 20.r),
+                SizedBox(height: 12.r),
                 DepartmentListHome(),
+                SizedBox(height: 12.r),
+                ExtraCard(),
               ],
             ),
           ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/themes/app_colors.dart';
+import 'package:medi_connect/core/themes/app_strings.dart';
+import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/department/presentation/widgets/department_card.dart';
@@ -24,30 +27,62 @@ class DepartmentListHome extends StatelessWidget {
             : [];
         return LayoutBuilder(
           builder: (context, constraints) {
-            final crossAxisCount = _getCrossAxisCount(constraints.maxWidth);
+            final (crossAxisCount, itemGap) = _getCrossAxisCount(1364.w);
 
-            return GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: isLoading ? 18 : departments.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 16.r,
-                mainAxisSpacing: 16.r,
-                childAspectRatio: 1.15,
+            return Container(
+              width: 1408.w,
+              margin: EdgeInsets.only(left: 58.r),
+              decoration: BoxDecoration(
+                color: AppColors.card(context),
+                borderRadius: BorderRadius.circular(28.r),
               ),
-              itemBuilder: (_, index) {
-                if (isLoading) {
-                  return const DepartmentCardShimmer();
-                }
+              padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 24.h),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.grid_view_outlined,
+                        size: 24.r,
+                        color: AppColors.primary,
+                      ),
+                      SizedBox(width: 12.w),
+                      Text(
+                        AppStrings.departments,
+                        style: AppTextStyles.bodyLarge.copyWith(
+                          fontSize: 18.sp,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12.r),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: isLoading ? 18 : departments.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 16.h,
+                      mainAxisSpacing: 16.w,
+                      childAspectRatio: 1.9,
+                    ),
+                    itemBuilder: (_, index) {
+                      if (isLoading) {
+                        return const DepartmentCardShimmer();
+                      }
 
-                return DepartmentCard(
-                  department: departments[index],
-                  isSection: false,
-                  isAdmin: false,
-                  isHorizontal: false,
-                );
-              },
+                      return DepartmentCard(
+                        department: departments[index],
+                        isSection: false,
+                        isAdmin: false,
+                        isHorizontal: false,
+                      );
+                    },
+                  ),
+                ],
+              ),
             );
           },
         );
@@ -55,11 +90,11 @@ class DepartmentListHome extends StatelessWidget {
     );
   }
 
-  int _getCrossAxisCount(double width) {
-    if (width >= 1400) return 8;
-    if (width >= 1100) return 6;
-    if (width >= 800) return 4;
-
-    return 3;
+  (int crossAxisCount, double itemGap) _getCrossAxisCount(double width) {
+    double itemWidth = 212;
+    int crossAxisCount = (width ~/ itemWidth);
+    double itemGap =
+        ((width - (crossAxisCount * itemWidth)) / (crossAxisCount - 1));
+    return (crossAxisCount, itemGap);
   }
 }
