@@ -25,8 +25,12 @@ class InsuranceInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
-    final labelColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
+    final labelColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
     final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
 
     return Container(
@@ -41,11 +45,7 @@ class InsuranceInfoSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.shield_outlined,
-                color: AppColors.primary,
-                size: 22.r,
-              ),
+              Icon(Icons.shield_outlined, color: AppColors.primary, size: 22.r),
               SizedBox(width: 10.w),
               Text(
                 "Insurance Information",
@@ -76,7 +76,7 @@ class InsuranceInfoSection extends StatelessWidget {
                         'HDFC Ergo',
                         'Max Life Insurance',
                         'Other',
-                        'None'
+                        'None',
                       ],
                       onChanged: (val) {
                         if (val != null) {
@@ -172,15 +172,15 @@ class InsuranceInfoSection extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
-          icon: Icon(Icons.arrow_drop_down, color: inputTextColor.withValues(alpha: 0.6)),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: inputTextColor.withValues(alpha: 0.6),
+          ),
           dropdownColor: fillBg,
           isExpanded: true,
           style: AppTextStyles.bodyLarge.copyWith(color: inputTextColor),
           items: items.map((item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
+            return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),
           onChanged: onChanged,
         ),

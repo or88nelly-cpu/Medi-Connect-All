@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/router/route_names.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
@@ -1784,7 +1786,9 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
 
                       if (mounted) {
                         emrdBloc.add(LoadEmrdStats());
-                        Navigator.pop(dialogCtx);
+                        if (dialogCtx.mounted) {
+                          Navigator.pop(dialogCtx);
+                        }
                         navigator.pop();
 
                         messenger.showSnackBar(
@@ -1895,6 +1899,11 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
     BuildContext context,
     Map<String, dynamic> record,
   ) {
+    final isCustomerCare = record['specialty'] == 'Customer Care';
+    if (isCustomerCare) {
+      context.push(RouteNames.patientRegistrationRecordDetail, extra: record);
+      return;
+    }
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final dateStr = record['recorded_at'] ?? record['created_at'] ?? '';
     String formattedDate = 'N/A';
@@ -2694,8 +2703,6 @@ class _EmrdDetailPageState extends State<EmrdDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return BlocProvider(
       create: (context) => GetIt.I<EmrdBloc>()..add(LoadEmrdStats()),
       child: CustomScaffold(

@@ -17,8 +17,12 @@ class IdCardActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
-    final buttonTextColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
+    final buttonTextColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -44,7 +48,7 @@ class IdCardActions extends StatelessWidget {
             ],
           ),
           SizedBox(height: 20.h),
-          
+
           Row(
             children: [
               // Download Button
@@ -63,7 +67,11 @@ class IdCardActions extends StatelessWidget {
                         "ID Card for $patientName ($uhid) downloaded successfully as PDF.",
                       );
                     },
-                    icon: Icon(Icons.download_rounded, color: AppColors.primary, size: 18.r),
+                    icon: Icon(
+                      Icons.download_rounded,
+                      color: AppColors.primary,
+                      size: 18.r,
+                    ),
                     label: Text(
                       "Download ID Card",
                       style: AppTextStyles.buttonMedium.copyWith(
@@ -98,7 +106,11 @@ class IdCardActions extends StatelessWidget {
                         "Sending ID Card for $patientName ($uhid) to clinical printer...",
                       );
                     },
-                    icon: Icon(Icons.print_rounded, color: AppColors.primary, size: 18.r),
+                    icon: Icon(
+                      Icons.print_rounded,
+                      color: AppColors.primary,
+                      size: 18.r,
+                    ),
                     label: Text(
                       "Print ID Card",
                       style: AppTextStyles.buttonMedium.copyWith(

@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -43,13 +45,18 @@ class IdCardPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
 
-    final String displayName = (firstName.trim().isEmpty && lastName.trim().isEmpty)
+    final String displayName =
+        (firstName.trim().isEmpty && lastName.trim().isEmpty)
         ? "Ramesh Kumar"
         : "${firstName.trim()} ${lastName.trim()}";
-    
-    final String displayPhone = phone.trim().isEmpty ? "98765 43210" : phone.trim();
+
+    final String displayPhone = phone.trim().isEmpty
+        ? "98765 43210"
+        : phone.trim();
     final String displayDob = dob.trim().isEmpty ? "15/06/1990" : dob.trim();
     final String displaySex = sex;
     final String displayBlood = bloodGroup;
@@ -85,9 +92,19 @@ class IdCardPreview extends StatelessWidget {
           // Tabs
           Row(
             children: [
-              _buildTabButton("Front Side", selectedTab == 'front', () => onTabChanged('front'), isDark),
+              _buildTabButton(
+                "Front Side",
+                selectedTab == 'front',
+                () => onTabChanged('front'),
+                isDark,
+              ),
               SizedBox(width: 8.w),
-              _buildTabButton("Back Side", selectedTab == 'back', () => onTabChanged('back'), isDark),
+              _buildTabButton(
+                "Back Side",
+                selectedTab == 'back',
+                () => onTabChanged('back'),
+                isDark,
+              ),
             ],
           ),
           SizedBox(height: 20.h),
@@ -96,7 +113,15 @@ class IdCardPreview extends StatelessWidget {
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: selectedTab == 'front'
-                ? _buildFrontSide(context, displayName, displayDob, displaySex, displayBlood, displayPhone, isDark)
+                ? _buildFrontSide(
+                    context,
+                    displayName,
+                    displayDob,
+                    displaySex,
+                    displayBlood,
+                    displayPhone,
+                    isDark,
+                  )
                 : _buildBackSide(context, displayBlood, displayAddress, isDark),
           ),
         ],
@@ -104,18 +129,25 @@ class IdCardPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildTabButton(String text, bool isActive, VoidCallback onTap, bool isDark) {
+  Widget _buildTabButton(
+    String text,
+    bool isActive,
+    VoidCallback onTap,
+    bool isDark,
+  ) {
     final bgActive = AppColors.primary;
-    final bgInactive = isDark ? const Color(0xFF0D182A) : const Color(0xFFEDF2F7);
+    final bgInactive = isDark
+        ? const Color(0xFF0D182A)
+        : const Color(0xFFEDF2F7);
     final textActive = Colors.white;
-    final textInactive = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final textInactive = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
 
     return Expanded(
       child: Container(
         height: 38.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.r),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.r)),
         child: Material(
           color: isActive ? bgActive : bgInactive,
           borderRadius: BorderRadius.circular(8.r),
@@ -216,7 +248,9 @@ class IdCardPreview extends StatelessWidget {
                             Text(
                               "City Care",
                               style: AppTextStyles.titleMedium.copyWith(
-                                color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                                color: isDark
+                                    ? Colors.white
+                                    : const Color(0xFF0F2C59),
                                 fontWeight: FontWeight.bold,
                                 height: 1.1,
                               ),
@@ -224,7 +258,9 @@ class IdCardPreview extends StatelessWidget {
                             Text(
                               "Multi Speciality Hospital",
                               style: AppTextStyles.bodyXSmall.copyWith(
-                                color: isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94),
+                                color: isDark
+                                    ? const Color(0xFF5E98C7)
+                                    : const Color(0xFF3F6D94),
                                 fontSize: 8.sp,
                               ),
                             ),
@@ -238,7 +274,9 @@ class IdCardPreview extends StatelessWidget {
                         Text(
                           "UHID",
                           style: AppTextStyles.bodyXSmall.copyWith(
-                            color: isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94),
+                            color: isDark
+                                ? const Color(0xFF5E98C7)
+                                : const Color(0xFF3F6D94),
                             fontSize: 7.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -246,7 +284,9 @@ class IdCardPreview extends StatelessWidget {
                         Text(
                           uhid.isNotEmpty ? uhid : "CCH25-0001147",
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                            color: isDark
+                                ? Colors.white
+                                : const Color(0xFF0F2C59),
                             fontWeight: FontWeight.bold,
                             fontSize: 10.sp,
                           ),
@@ -267,18 +307,35 @@ class IdCardPreview extends StatelessWidget {
                       backgroundColor: isDark ? Colors.white12 : Colors.black12,
                       child: ClipOval(
                         child: photoPath.isNotEmpty
-                            ? Image.network(
-                                photoPath,
-                                width: 72.r,
-                                height: 72.r,
-                                fit: BoxFit.cover,
-                                errorBuilder: (ctx, err, stack) => Image.network(
-                                  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150",
-                                  width: 72.r,
-                                  height: 72.r,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
+                            ? (kIsWeb ||
+                                      photoPath.startsWith('http') ||
+                                      photoPath.startsWith('blob:')
+                                  ? Image.network(
+                                      photoPath,
+                                      width: 72.r,
+                                      height: 72.r,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (ctx, err, stack) =>
+                                          Image.network(
+                                            "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150",
+                                            width: 72.r,
+                                            height: 72.r,
+                                            fit: BoxFit.cover,
+                                          ),
+                                    )
+                                  : Image.file(
+                                      File(photoPath),
+                                      width: 72.r,
+                                      height: 72.r,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (ctx, err, stack) =>
+                                          Image.network(
+                                            "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150",
+                                            width: 72.r,
+                                            height: 72.r,
+                                            fit: BoxFit.cover,
+                                          ),
+                                    ))
                             : Image.network(
                                 "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150",
                                 width: 72.r,
@@ -297,7 +354,9 @@ class IdCardPreview extends StatelessWidget {
                           Text(
                             name,
                             style: AppTextStyles.titleMedium.copyWith(
-                              color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xFF0F2C59),
                               fontWeight: FontWeight.bold,
                               fontSize: 15.sp,
                             ),
@@ -306,7 +365,9 @@ class IdCardPreview extends StatelessWidget {
                           Text(
                             "$dobVal  |  $sexVal  |  $bloodVal",
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: isDark ? const Color(0xFF8FA2B6) : const Color(0xFF4A5568),
+                              color: isDark
+                                  ? const Color(0xFF8FA2B6)
+                                  : const Color(0xFF4A5568),
                               fontSize: 10.sp,
                             ),
                           ),
@@ -322,7 +383,9 @@ class IdCardPreview extends StatelessWidget {
                               Text(
                                 phoneVal,
                                 style: AppTextStyles.bodySmall.copyWith(
-                                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                                  color: isDark
+                                      ? Colors.white
+                                      : const Color(0xFF0F2C59),
                                   fontWeight: FontWeight.w600,
                                   fontSize: 10.sp,
                                 ),
@@ -355,7 +418,9 @@ class IdCardPreview extends StatelessWidget {
                   child: Text(
                     "Your Health, Our Priority",
                     style: AppTextStyles.bodyXSmall.copyWith(
-                      color: isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94),
+                      color: isDark
+                          ? const Color(0xFF5E98C7)
+                          : const Color(0xFF3F6D94),
                       fontSize: 8.sp,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 0.5,
@@ -370,17 +435,24 @@ class IdCardPreview extends StatelessWidget {
     );
   }
 
-  Widget _buildBackSide(BuildContext context, String bloodVal, String addressVal, bool isDark) {
+  Widget _buildBackSide(
+    BuildContext context,
+    String bloodVal,
+    String addressVal,
+    bool isDark,
+  ) {
     final displayEmergency = (emergencyName.trim().isEmpty)
         ? "Sita Kumar"
         : emergencyName.trim();
-    
+
     final displayRelation = emergencyRelationship;
     final displayEmergencyPhone = emergencyPhone.trim().isEmpty
         ? "+91 91234 56789"
         : emergencyPhone.trim();
 
-    final cardTextTitleColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final cardTextTitleColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
     final cardTextValueColor = isDark ? Colors.white : const Color(0xFF0C192E);
 
     return Container(
@@ -456,7 +528,7 @@ class IdCardPreview extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10.h),
-                        
+
                         Text(
                           "Address",
                           style: AppTextStyles.bodyXSmall.copyWith(
@@ -498,7 +570,11 @@ class IdCardPreview extends StatelessWidget {
                         SizedBox(height: 2.h),
                         Row(
                           children: [
-                            Icon(Icons.bloodtype, color: AppColors.error, size: 12.r),
+                            Icon(
+                              Icons.bloodtype,
+                              color: AppColors.error,
+                              size: 12.r,
+                            ),
                             SizedBox(width: 4.w),
                             Text(
                               bloodVal,
@@ -511,7 +587,7 @@ class IdCardPreview extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 12.h),
-                        
+
                         Text(
                           "Issued On",
                           style: AppTextStyles.bodyXSmall.copyWith(
@@ -549,7 +625,9 @@ class IdCardPreview extends StatelessWidget {
                 child: Text(
                   "In case of emergency, please contact your nearest hospital.",
                   style: AppTextStyles.bodyXSmall.copyWith(
-                    color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF4A5568),
+                    color: isDark
+                        ? const Color(0xFF94A3B8)
+                        : const Color(0xFF4A5568),
                     fontSize: 8.sp,
                     fontStyle: FontStyle.italic,
                   ),
@@ -596,13 +674,23 @@ class QrCodePainter extends CustomPainter {
       // Inner background
       final margin1 = w / 7;
       canvas.drawRect(
-        Rect.fromLTWH(x + margin1, y + margin1, w - 2 * margin1, w - 2 * margin1),
+        Rect.fromLTWH(
+          x + margin1,
+          y + margin1,
+          w - 2 * margin1,
+          w - 2 * margin1,
+        ),
         innerBg,
       );
       // Inner square
       final margin2 = w * 2 / 7;
       canvas.drawRect(
-        Rect.fromLTWH(x + margin2, y + margin2, w - 2 * margin2, w - 2 * margin2),
+        Rect.fromLTWH(
+          x + margin2,
+          y + margin2,
+          w - 2 * margin2,
+          w - 2 * margin2,
+        ),
         innerSquare,
       );
     }
@@ -630,7 +718,7 @@ class QrCodePainter extends CustomPainter {
         final inTopLeft = r < 6 && c < 6;
         final inTopRight = r < 6 && c >= gridCount - 6;
         final inBottomLeft = r >= gridCount - 6 && c < 6;
-        
+
         if (inTopLeft || inTopRight || inBottomLeft) continue;
 
         if (rand.nextBool()) {

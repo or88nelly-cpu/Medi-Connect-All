@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -231,6 +233,9 @@ class AdminDepartmentCard extends StatelessWidget {
     final borderCol = isDark
         ? Colors.white.withValues(alpha: 0.03)
         : Colors.black.withValues(alpha: 0.02);
+    if (department.name.toLowerCase().contains("cas")) {
+      log("url ${department.imageUrl} ${department.name}");
+    }
 
     return InkWell(
       onTap: () {

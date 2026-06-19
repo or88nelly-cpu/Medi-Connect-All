@@ -11,7 +11,7 @@ class PatientRegistrationBloc
   final PatientRepository _patientRepository;
 
   PatientRegistrationBloc(this._patientRepository)
-      : super(const PatientRegistrationState()) {
+    : super(const PatientRegistrationState()) {
     on<GenerateUHIDEvent>(_onGenerateUHID);
     on<FetchAddressEvent>(_onFetchAddress);
     on<ToggleTabEvent>(_onToggleTab);
@@ -31,6 +31,7 @@ class PatientRegistrationBloc
         (_) => random.nextInt(16).toRadixString(16),
       ).join();
     }
+
     return '${hex(8)}-${hex(4)}-4${hex(3)}-${(random.nextInt(4) + 8).toRadixString(16)}${hex(3)}-${hex(12)}';
   }
 
@@ -49,10 +50,12 @@ class PatientRegistrationBloc
   ) async {
     final pin = event.pincode.trim();
     if (pin.length != 6) {
-      emit(state.copyWith(
-        pincodeFetchedAddress: 'Invalid pincode format (6 digits required)',
-        isFetchingAddress: false,
-      ));
+      emit(
+        state.copyWith(
+          pincodeFetchedAddress: 'Invalid pincode format (6 digits required)',
+          isFetchingAddress: false,
+        ),
+      );
       return;
     }
 
@@ -87,11 +90,13 @@ class PatientRegistrationBloc
         break;
     }
 
-    emit(state.copyWith(
-      pincodeFetchedAddress: address,
-      place: place,
-      isFetchingAddress: false,
-    ));
+    emit(
+      state.copyWith(
+        pincodeFetchedAddress: address,
+        place: place,
+        isFetchingAddress: false,
+      ),
+    );
   }
 
   void _onToggleTab(
@@ -112,30 +117,32 @@ class PatientRegistrationBloc
     UpdateFormFieldsEvent event,
     Emitter<PatientRegistrationState> emit,
   ) {
-    emit(state.copyWith(
-      firstName: event.firstName,
-      lastName: event.lastName,
-      email: event.email,
-      phone: event.phone,
-      dob: event.dob,
-      sex: event.sex,
-      genderIdentity: event.genderIdentity,
-      bloodGroup: event.bloodGroup,
-      place: event.place,
-      wardNum: event.wardNum,
-      insuranceProvider: event.insuranceProvider,
-      insurancePolicyId: event.insurancePolicyId,
-      insuranceValidTill: event.insuranceValidTill,
-      smoking: event.smoking,
-      alcohol: event.alcohol,
-      dietType: event.dietType,
-      exercise: event.exercise,
-      allergies: event.allergies,
-      otherDetails: event.otherDetails,
-      emergencyName: event.emergencyName,
-      emergencyRelationship: event.emergencyRelationship,
-      emergencyPhone: event.emergencyPhone,
-    ));
+    emit(
+      state.copyWith(
+        firstName: event.firstName,
+        lastName: event.lastName,
+        email: event.email,
+        phone: event.phone,
+        dob: event.dob,
+        sex: event.sex,
+        genderIdentity: event.genderIdentity,
+        bloodGroup: event.bloodGroup,
+        place: event.place,
+        wardNum: event.wardNum,
+        insuranceProvider: event.insuranceProvider,
+        insurancePolicyId: event.insurancePolicyId,
+        insuranceValidTill: event.insuranceValidTill,
+        smoking: event.smoking,
+        alcohol: event.alcohol,
+        dietType: event.dietType,
+        exercise: event.exercise,
+        allergies: event.allergies,
+        otherDetails: event.otherDetails,
+        emergencyName: event.emergencyName,
+        emergencyRelationship: event.emergencyRelationship,
+        emergencyPhone: event.emergencyPhone,
+      ),
+    );
   }
 
   Future<void> _onSubmitForm(
@@ -144,59 +151,75 @@ class PatientRegistrationBloc
   ) async {
     // 1. Validations
     if (state.firstName.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'First name is required',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'First name is required',
+        ),
+      );
       return;
     }
     if (state.lastName.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'Last name is required',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Last name is required',
+        ),
+      );
       return;
     }
     if (state.phone.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'Phone number is required',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Phone number is required',
+        ),
+      );
       return;
     }
     if (state.dob.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'Date of birth is required',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Date of birth is required',
+        ),
+      );
       return;
     }
     if (state.pincodeFetchedAddress.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'Please enter and fetch address from Pincode',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Please enter and fetch address from Pincode',
+        ),
+      );
       return;
     }
     if (state.place.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'Place/Area is required',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Place/Area is required',
+        ),
+      );
       return;
     }
     if (state.emergencyName.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'Emergency contact name is required',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Emergency contact name is required',
+        ),
+      );
       return;
     }
     if (state.emergencyPhone.trim().isEmpty) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: 'Emergency contact phone is required',
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Emergency contact phone is required',
+        ),
+      );
       return;
     }
 
@@ -204,7 +227,7 @@ class PatientRegistrationBloc
 
     final patientUuid = _generateUUID();
     final patientName = '${state.firstName.trim()} ${state.lastName.trim()}';
-    
+
     // Fallback email if optional is left empty
     final patientEmail = state.email.trim().isNotEmpty
         ? state.email.trim()
@@ -254,7 +277,11 @@ class PatientRegistrationBloc
       'patient_name': patientName,
       'specialty': 'Customer Care',
       'doctor_name': 'Customer Care Department',
-      'prescription_notes': 'Initial patient registration from Customer Care. '
+      'invoice_number': 'REG-${state.generatedUHID.split('-').last}',
+      'registration_fee': 200.00,
+      'registration_payment_status': 'Pending',
+      'prescription_notes':
+          'Initial patient registration from Customer Care. '
           'UHID: ${state.generatedUHID}. '
           'Emergency Contact: ${state.emergencyName} (${state.emergencyRelationship}) - ${state.emergencyPhone}. '
           'Lifestyle: Smoking (${state.smoking}), Alcohol (${state.alcohol}), Diet (${state.dietType}), Exercise (${state.exercise}). '
@@ -269,10 +296,12 @@ class PatientRegistrationBloc
     );
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: failure.message,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: failure.message,
+        ),
+      ),
       (_) => emit(state.copyWith(status: PatientRegistrationStatus.success)),
     );
   }

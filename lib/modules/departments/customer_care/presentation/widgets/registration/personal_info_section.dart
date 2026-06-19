@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -43,8 +45,12 @@ class PersonalInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
-    final labelColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
+    final labelColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
     final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
 
     return Container(
@@ -75,7 +81,7 @@ class PersonalInfoSection extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          
+
           // Form Grid/Row
           LayoutBuilder(
             builder: (context, constraints) {
@@ -123,7 +129,12 @@ class PersonalInfoSection extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildLabel("Photo (Optional)", labelColor),
-                              _buildPhotoUploadButton(context, isDark, borderColor, labelColor),
+                              _buildPhotoUploadButton(
+                                context,
+                                isDark,
+                                borderColor,
+                                labelColor,
+                              ),
                             ],
                           ),
                         ),
@@ -136,7 +147,12 @@ class PersonalInfoSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _buildLabel("Photo (Optional)", labelColor),
-                        _buildPhotoUploadButton(context, isDark, borderColor, labelColor),
+                        _buildPhotoUploadButton(
+                          context,
+                          isDark,
+                          borderColor,
+                          labelColor,
+                        ),
                       ],
                     ),
                   ],
@@ -165,7 +181,12 @@ class PersonalInfoSection extends StatelessWidget {
                         child: Column(
                           children: [
                             _buildLabel("Phone Number *", labelColor),
-                            _buildPhoneField(context, isDark, borderColor, inputTextColor),
+                            _buildPhoneField(
+                              context,
+                              isDark,
+                              borderColor,
+                              inputTextColor,
+                            ),
                           ],
                         ),
                       ),
@@ -223,7 +244,10 @@ class PersonalInfoSection extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _buildLabel("Gender Identity (Including Trans)", labelColor),
+                            _buildLabel(
+                              "Gender Identity (Including Trans)",
+                              labelColor,
+                            ),
                             _buildDropdown(
                               value: selectedGenderIdentity,
                               items: [
@@ -232,7 +256,7 @@ class PersonalInfoSection extends StatelessWidget {
                                 'Transgender Male',
                                 'Transgender Female',
                                 'Non-Binary',
-                                'Other'
+                                'Other',
                               ],
                               onChanged: (val) {
                                 if (val != null) {
@@ -255,7 +279,16 @@ class PersonalInfoSection extends StatelessWidget {
                             _buildLabel("Blood Group *", labelColor),
                             _buildDropdown(
                               value: selectedBloodGroup,
-                              items: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'],
+                              items: [
+                                'A+',
+                                'A-',
+                                'B+',
+                                'B-',
+                                'O+',
+                                'O-',
+                                'AB+',
+                                'AB-',
+                              ],
                               onChanged: (val) {
                                 if (val != null) {
                                   onBloodGroupChanged(val);
@@ -296,7 +329,12 @@ class PersonalInfoSection extends StatelessWidget {
     );
   }
 
-  Widget _buildPhotoUploadButton(BuildContext context, bool isDark, Color borderColor, Color labelColor) {
+  Widget _buildPhotoUploadButton(
+    BuildContext context,
+    bool isDark,
+    Color borderColor,
+    Color labelColor,
+  ) {
     final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
     return InkWell(
       onTap: onPhotoPick,
@@ -312,11 +350,43 @@ class PersonalInfoSection extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              photoPath.isNotEmpty ? Icons.check_circle_outline : Icons.cloud_upload_outlined,
-              color: photoPath.isNotEmpty ? AppColors.success : AppColors.primary,
-              size: 20.r,
-            ),
+            if (photoPath.isNotEmpty) ...[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4.r),
+                child:
+                    kIsWeb ||
+                        photoPath.startsWith('http') ||
+                        photoPath.startsWith('blob:')
+                    ? Image.network(
+                        photoPath,
+                        width: 24.r,
+                        height: 24.r,
+                        fit: BoxFit.cover,
+                        errorBuilder: (ctx, err, stack) => Icon(
+                          Icons.check_circle_outline,
+                          color: AppColors.success,
+                          size: 20.r,
+                        ),
+                      )
+                    : Image.file(
+                        File(photoPath),
+                        width: 24.r,
+                        height: 24.r,
+                        fit: BoxFit.cover,
+                        errorBuilder: (ctx, err, stack) => Icon(
+                          Icons.check_circle_outline,
+                          color: AppColors.success,
+                          size: 20.r,
+                        ),
+                      ),
+              ),
+            ] else ...[
+              Icon(
+                Icons.cloud_upload_outlined,
+                color: AppColors.primary,
+                size: 20.r,
+              ),
+            ],
             SizedBox(width: 8.w),
             Flexible(
               child: Text(
@@ -334,7 +404,12 @@ class PersonalInfoSection extends StatelessWidget {
     );
   }
 
-  Widget _buildPhoneField(BuildContext context, bool isDark, Color borderColor, Color inputTextColor) {
+  Widget _buildPhoneField(
+    BuildContext context,
+    bool isDark,
+    Color borderColor,
+    Color inputTextColor,
+  ) {
     final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
     return Row(
       children: [
@@ -352,10 +427,7 @@ class PersonalInfoSection extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Text(
-                "🇮🇳",
-                style: TextStyle(fontSize: 16.sp),
-              ),
+              Text("🇮🇳", style: TextStyle(fontSize: 16.sp)),
               SizedBox(width: 4.w),
               Text(
                 "+91",
@@ -382,11 +454,16 @@ class PersonalInfoSection extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "98765 43210",
               hintStyle: AppTextStyles.bodyMedium.copyWith(
-                color: isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint,
+                color: isDark
+                    ? AppColors.terminalDarkFieldHint
+                    : AppColors.terminalLightFieldHint,
               ),
               filled: true,
               fillColor: fillBg,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 16.h,
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: borderColor, width: 1.w),
                 borderRadius: BorderRadius.only(
@@ -428,15 +505,15 @@ class PersonalInfoSection extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
-          icon: Icon(Icons.arrow_drop_down, color: inputTextColor.withValues(alpha: 0.6)),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: inputTextColor.withValues(alpha: 0.6),
+          ),
           dropdownColor: fillBg,
           isExpanded: true,
           style: AppTextStyles.bodyLarge.copyWith(color: inputTextColor),
           items: items.map((item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
+            return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),
           onChanged: onChanged,
         ),

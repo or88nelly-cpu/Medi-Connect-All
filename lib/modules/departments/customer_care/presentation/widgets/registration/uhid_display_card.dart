@@ -13,9 +13,7 @@ class UhidDisplayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final cardBg = isDark
-        ? const Color(0xFF09121F)
-        : Colors.white;
+    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
     final borderColor = isDark
         ? const Color(0xFF16253B)
         : const Color(0xFFD3E0EE);
@@ -79,11 +77,7 @@ class UhidDisplayCard extends StatelessWidget {
           ),
           SizedBox(width: 16.w),
           IconButton(
-            icon: Icon(
-              Icons.copy_rounded,
-              color: labelColor,
-              size: 18.r,
-            ),
+            icon: Icon(Icons.copy_rounded, color: labelColor, size: 18.r),
             onPressed: () {
               if (uhid.isNotEmpty) {
                 Clipboard.setData(ClipboardData(text: uhid));

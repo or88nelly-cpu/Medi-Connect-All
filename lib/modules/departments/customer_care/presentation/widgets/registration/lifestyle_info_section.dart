@@ -36,8 +36,12 @@ class LifestyleInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
-    final labelColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
+    final labelColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
     final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
 
     return Container(
@@ -123,7 +127,12 @@ class LifestyleInfoSection extends StatelessWidget {
                     _buildLabel("Diet Type", labelColor),
                     _buildDropdown(
                       value: selectedDietType,
-                      items: ['Non Vegetarian', 'Vegetarian', 'Vegan', 'Eggetarian'],
+                      items: [
+                        'Non Vegetarian',
+                        'Vegetarian',
+                        'Vegan',
+                        'Eggetarian',
+                      ],
                       onChanged: (val) {
                         if (val != null) {
                           onDietTypeChanged(val);
@@ -169,7 +178,10 @@ class LifestyleInfoSection extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    _buildLabel("Allergies / Medical Conditions (Optional)", labelColor),
+                    _buildLabel(
+                      "Allergies / Medical Conditions (Optional)",
+                      labelColor,
+                    ),
                     AppTextField(
                       controller: allergiesCtrl,
                       labelText: "Enter allergies",
@@ -236,15 +248,15 @@ class LifestyleInfoSection extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
-          icon: Icon(Icons.arrow_drop_down, color: inputTextColor.withValues(alpha: 0.6)),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: inputTextColor.withValues(alpha: 0.6),
+          ),
           dropdownColor: fillBg,
           isExpanded: true,
           style: AppTextStyles.bodyLarge.copyWith(color: inputTextColor),
           items: items.map((item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
+            return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),
           onChanged: onChanged,
         ),

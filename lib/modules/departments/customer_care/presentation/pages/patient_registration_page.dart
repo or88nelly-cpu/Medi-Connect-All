@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
@@ -27,7 +28,8 @@ class PatientRegistrationPage extends StatefulWidget {
   const PatientRegistrationPage({super.key});
 
   @override
-  State<PatientRegistrationPage> createState() => _PatientRegistrationPageState();
+  State<PatientRegistrationPage> createState() =>
+      _PatientRegistrationPageState();
 }
 
 class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
@@ -92,37 +94,41 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
   }
 
   void _onFieldsChanged() {
-    _bloc.add(UpdateFormFieldsEvent(
-      firstName: _firstNameCtrl.text,
-      lastName: _lastNameCtrl.text,
-      email: _emailCtrl.text,
-      phone: _phoneCtrl.text,
-      dob: _dobCtrl.text,
-      sex: _bloc.state.sex,
-      genderIdentity: _bloc.state.genderIdentity,
-      bloodGroup: _bloc.state.bloodGroup,
-      place: _placeCtrl.text,
-      wardNum: _wardCtrl.text,
-      insuranceProvider: _bloc.state.insuranceProvider,
-      insurancePolicyId: _policyIdCtrl.text,
-      insuranceValidTill: _validTillCtrl.text,
-      smoking: _bloc.state.smoking,
-      alcohol: _bloc.state.alcohol,
-      dietType: _bloc.state.dietType,
-      exercise: _bloc.state.exercise,
-      allergies: _allergiesCtrl.text,
-      otherDetails: _otherDetailsCtrl.text,
-      emergencyName: _emergencyNameCtrl.text,
-      emergencyRelationship: _bloc.state.emergencyRelationship,
-      emergencyPhone: _emergencyPhoneCtrl.text,
-    ));
+    _bloc.add(
+      UpdateFormFieldsEvent(
+        firstName: _firstNameCtrl.text,
+        lastName: _lastNameCtrl.text,
+        email: _emailCtrl.text,
+        phone: _phoneCtrl.text,
+        dob: _dobCtrl.text,
+        sex: _bloc.state.sex,
+        genderIdentity: _bloc.state.genderIdentity,
+        bloodGroup: _bloc.state.bloodGroup,
+        place: _placeCtrl.text,
+        wardNum: _wardCtrl.text,
+        insuranceProvider: _bloc.state.insuranceProvider,
+        insurancePolicyId: _policyIdCtrl.text,
+        insuranceValidTill: _validTillCtrl.text,
+        smoking: _bloc.state.smoking,
+        alcohol: _bloc.state.alcohol,
+        dietType: _bloc.state.dietType,
+        exercise: _bloc.state.exercise,
+        allergies: _allergiesCtrl.text,
+        otherDetails: _otherDetailsCtrl.text,
+        emergencyName: _emergencyNameCtrl.text,
+        emergencyRelationship: _bloc.state.emergencyRelationship,
+        emergencyPhone: _emergencyPhoneCtrl.text,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryTextColor = isDark ? Colors.white : const Color(0xFF0F2C59);
-    final secondaryTextColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final secondaryTextColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
 
     return BlocProvider.value(
       value: _bloc,
@@ -131,7 +137,9 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
         body: BlocListener<PatientRegistrationBloc, PatientRegistrationState>(
           listener: (context, state) {
             // If address is fetched from pincode, fill the place controller
-            if (state.place != _placeCtrl.text && state.place.isNotEmpty && _placeCtrl.text.isEmpty) {
+            if (state.place != _placeCtrl.text &&
+                state.place.isNotEmpty &&
+                _placeCtrl.text.isEmpty) {
               _placeCtrl.text = state.place;
             }
 
@@ -157,7 +165,12 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Top header row
-                    _buildHeader(context, state, primaryTextColor, secondaryTextColor),
+                    _buildHeader(
+                      context,
+                      state,
+                      primaryTextColor,
+                      secondaryTextColor,
+                    ),
                     SizedBox(height: 24.h),
 
                     // Main Layout
@@ -177,82 +190,107 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                                       phoneCtrl: _phoneCtrl,
                                       dobCtrl: _dobCtrl,
                                       selectedSex: state.sex,
-                                      selectedGenderIdentity: state.genderIdentity,
+                                      selectedGenderIdentity:
+                                          state.genderIdentity,
                                       selectedBloodGroup: state.bloodGroup,
                                       photoPath: state.photoPath,
-                                      onSexChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: val,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: state.alcohol,
-                                        dietType: state.dietType,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
-                                      onGenderIdentityChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: val,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: state.alcohol,
-                                        dietType: state.dietType,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
-                                      onBloodGroupChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: val,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: state.alcohol,
-                                        dietType: state.dietType,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
-                                      onPhotoPick: _simulatePhotoUpload,
+                                      onSexChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: val,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: state.bloodGroup,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider:
+                                              state.insuranceProvider,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: state.smoking,
+                                          alcohol: state.alcohol,
+                                          dietType: state.dietType,
+                                          exercise: state.exercise,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship:
+                                              state.emergencyRelationship,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
+                                      onGenderIdentityChanged: (val) =>
+                                          _bloc.add(
+                                            UpdateFormFieldsEvent(
+                                              firstName: _firstNameCtrl.text,
+                                              lastName: _lastNameCtrl.text,
+                                              email: _emailCtrl.text,
+                                              phone: _phoneCtrl.text,
+                                              dob: _dobCtrl.text,
+                                              sex: state.sex,
+                                              genderIdentity: val,
+                                              bloodGroup: state.bloodGroup,
+                                              place: _placeCtrl.text,
+                                              wardNum: _wardCtrl.text,
+                                              insuranceProvider:
+                                                  state.insuranceProvider,
+                                              insurancePolicyId:
+                                                  _policyIdCtrl.text,
+                                              insuranceValidTill:
+                                                  _validTillCtrl.text,
+                                              smoking: state.smoking,
+                                              alcohol: state.alcohol,
+                                              dietType: state.dietType,
+                                              exercise: state.exercise,
+                                              allergies: _allergiesCtrl.text,
+                                              otherDetails:
+                                                  _otherDetailsCtrl.text,
+                                              emergencyName:
+                                                  _emergencyNameCtrl.text,
+                                              emergencyRelationship:
+                                                  state.emergencyRelationship,
+                                              emergencyPhone:
+                                                  _emergencyPhoneCtrl.text,
+                                            ),
+                                          ),
+                                      onBloodGroupChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: state.sex,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: val,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider:
+                                              state.insuranceProvider,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: state.smoking,
+                                          alcohol: state.alcohol,
+                                          dietType: state.dietType,
+                                          exercise: state.exercise,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship:
+                                              state.emergencyRelationship,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
+                                      onPhotoPick: _pickPhoto,
                                       onFieldsChanged: _onFieldsChanged,
                                     ),
                                     SizedBox(height: 20.h),
@@ -260,9 +298,12 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                                       pincodeCtrl: _pincodeCtrl,
                                       placeCtrl: _placeCtrl,
                                       wardCtrl: _wardCtrl,
-                                      fetchedAddress: state.pincodeFetchedAddress,
-                                      isFetchingAddress: state.isFetchingAddress,
-                                      onFetchAddress: (pin) => _bloc.add(FetchAddressEvent(pin)),
+                                      fetchedAddress:
+                                          state.pincodeFetchedAddress,
+                                      isFetchingAddress:
+                                          state.isFetchingAddress,
+                                      onFetchAddress: (pin) =>
+                                          _bloc.add(FetchAddressEvent(pin)),
                                       onFieldsChanged: _onFieldsChanged,
                                     ),
                                     SizedBox(height: 20.h),
@@ -270,30 +311,36 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                                       policyIdCtrl: _policyIdCtrl,
                                       validTillCtrl: _validTillCtrl,
                                       selectedProvider: state.insuranceProvider,
-                                      onProviderChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: val,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: state.alcohol,
-                                        dietType: state.dietType,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
+                                      onProviderChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: state.sex,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: state.bloodGroup,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider: val,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: state.smoking,
+                                          alcohol: state.alcohol,
+                                          dietType: state.dietType,
+                                          exercise: state.exercise,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship:
+                                              state.emergencyRelationship,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
                                       onFieldsChanged: _onFieldsChanged,
                                     ),
                                     SizedBox(height: 20.h),
@@ -304,133 +351,168 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                                       selectedAlcohol: state.alcohol,
                                       selectedDietType: state.dietType,
                                       selectedExercise: state.exercise,
-                                      onSmokingChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: val,
-                                        alcohol: state.alcohol,
-                                        dietType: state.dietType,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
-                                      onAlcoholChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: val,
-                                        dietType: state.dietType,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
-                                      onDietTypeChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: state.alcohol,
-                                        dietType: val,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
-                                      onExerciseChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: state.alcohol,
-                                        dietType: state.dietType,
-                                        exercise: val,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
+                                      onSmokingChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: state.sex,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: state.bloodGroup,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider:
+                                              state.insuranceProvider,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: val,
+                                          alcohol: state.alcohol,
+                                          dietType: state.dietType,
+                                          exercise: state.exercise,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship:
+                                              state.emergencyRelationship,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
+                                      onAlcoholChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: state.sex,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: state.bloodGroup,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider:
+                                              state.insuranceProvider,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: state.smoking,
+                                          alcohol: val,
+                                          dietType: state.dietType,
+                                          exercise: state.exercise,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship:
+                                              state.emergencyRelationship,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
+                                      onDietTypeChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: state.sex,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: state.bloodGroup,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider:
+                                              state.insuranceProvider,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: state.smoking,
+                                          alcohol: state.alcohol,
+                                          dietType: val,
+                                          exercise: state.exercise,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship:
+                                              state.emergencyRelationship,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
+                                      onExerciseChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: state.sex,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: state.bloodGroup,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider:
+                                              state.insuranceProvider,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: state.smoking,
+                                          alcohol: state.alcohol,
+                                          dietType: state.dietType,
+                                          exercise: val,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship:
+                                              state.emergencyRelationship,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
                                       onFieldsChanged: _onFieldsChanged,
                                     ),
                                     SizedBox(height: 20.h),
                                     EmergencyContactSection(
                                       nameCtrl: _emergencyNameCtrl,
                                       phoneCtrl: _emergencyPhoneCtrl,
-                                      selectedRelationship: state.emergencyRelationship,
-                                      onRelationshipChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                        firstName: _firstNameCtrl.text,
-                                        lastName: _lastNameCtrl.text,
-                                        email: _emailCtrl.text,
-                                        phone: _phoneCtrl.text,
-                                        dob: _dobCtrl.text,
-                                        sex: state.sex,
-                                        genderIdentity: state.genderIdentity,
-                                        bloodGroup: state.bloodGroup,
-                                        place: _placeCtrl.text,
-                                        wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
-                                        insurancePolicyId: _policyIdCtrl.text,
-                                        insuranceValidTill: _validTillCtrl.text,
-                                        smoking: state.smoking,
-                                        alcohol: state.alcohol,
-                                        dietType: state.dietType,
-                                        exercise: state.exercise,
-                                        allergies: _allergiesCtrl.text,
-                                        otherDetails: _otherDetailsCtrl.text,
-                                        emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: val,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
-                                      )),
+                                      selectedRelationship:
+                                          state.emergencyRelationship,
+                                      onRelationshipChanged: (val) => _bloc.add(
+                                        UpdateFormFieldsEvent(
+                                          firstName: _firstNameCtrl.text,
+                                          lastName: _lastNameCtrl.text,
+                                          email: _emailCtrl.text,
+                                          phone: _phoneCtrl.text,
+                                          dob: _dobCtrl.text,
+                                          sex: state.sex,
+                                          genderIdentity: state.genderIdentity,
+                                          bloodGroup: state.bloodGroup,
+                                          place: _placeCtrl.text,
+                                          wardNum: _wardCtrl.text,
+                                          insuranceProvider:
+                                              state.insuranceProvider,
+                                          insurancePolicyId: _policyIdCtrl.text,
+                                          insuranceValidTill:
+                                              _validTillCtrl.text,
+                                          smoking: state.smoking,
+                                          alcohol: state.alcohol,
+                                          dietType: state.dietType,
+                                          exercise: state.exercise,
+                                          allergies: _allergiesCtrl.text,
+                                          otherDetails: _otherDetailsCtrl.text,
+                                          emergencyName:
+                                              _emergencyNameCtrl.text,
+                                          emergencyRelationship: val,
+                                          emergencyPhone:
+                                              _emergencyPhoneCtrl.text,
+                                        ),
+                                      ),
                                       onFieldsChanged: _onFieldsChanged,
                                     ),
                                   ],
@@ -458,79 +540,88 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                                 selectedGenderIdentity: state.genderIdentity,
                                 selectedBloodGroup: state.bloodGroup,
                                 photoPath: state.photoPath,
-                                onSexChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                  firstName: _firstNameCtrl.text,
-                                  lastName: _lastNameCtrl.text,
-                                  email: _emailCtrl.text,
-                                  phone: _phoneCtrl.text,
-                                  dob: _dobCtrl.text,
-                                  sex: val,
-                                  genderIdentity: state.genderIdentity,
-                                  bloodGroup: state.bloodGroup,
-                                  place: _placeCtrl.text,
-                                  wardNum: _wardCtrl.text,
-                                  insuranceProvider: state.insuranceProvider,
-                                  insurancePolicyId: _policyIdCtrl.text,
-                                  insuranceValidTill: _validTillCtrl.text,
-                                  smoking: state.smoking,
-                                  alcohol: state.alcohol,
-                                  dietType: state.dietType,
-                                  exercise: state.exercise,
-                                  allergies: _allergiesCtrl.text,
-                                  otherDetails: _otherDetailsCtrl.text,
-                                  emergencyName: _emergencyNameCtrl.text,
-                                  emergencyRelationship: state.emergencyRelationship,
-                                  emergencyPhone: _emergencyPhoneCtrl.text,
-                                )),
-                                onGenderIdentityChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                  firstName: _firstNameCtrl.text,
-                                  lastName: _lastNameCtrl.text,
-                                  email: _emailCtrl.text,
-                                  phone: _phoneCtrl.text,
-                                  dob: _dobCtrl.text,
-                                  sex: state.sex,
-                                  genderIdentity: val,
-                                  bloodGroup: state.bloodGroup,
-                                  place: _placeCtrl.text,
-                                  wardNum: _wardCtrl.text,
-                                  insuranceProvider: state.insuranceProvider,
-                                  insurancePolicyId: _policyIdCtrl.text,
-                                  insuranceValidTill: _validTillCtrl.text,
-                                  smoking: state.smoking,
-                                  alcohol: state.alcohol,
-                                  dietType: state.dietType,
-                                  exercise: state.exercise,
-                                  allergies: _allergiesCtrl.text,
-                                  otherDetails: _otherDetailsCtrl.text,
-                                  emergencyName: _emergencyNameCtrl.text,
-                                  emergencyRelationship: state.emergencyRelationship,
-                                  emergencyPhone: _emergencyPhoneCtrl.text,
-                                )),
-                                onBloodGroupChanged: (val) => _bloc.add(UpdateFormFieldsEvent(
-                                  firstName: _firstNameCtrl.text,
-                                  lastName: _lastNameCtrl.text,
-                                  email: _emailCtrl.text,
-                                  phone: _phoneCtrl.text,
-                                  dob: _dobCtrl.text,
-                                  sex: state.sex,
-                                  genderIdentity: state.genderIdentity,
-                                  bloodGroup: val,
-                                  place: _placeCtrl.text,
-                                  wardNum: _wardCtrl.text,
-                                  insuranceProvider: state.insuranceProvider,
-                                  insurancePolicyId: _policyIdCtrl.text,
-                                  insuranceValidTill: _validTillCtrl.text,
-                                  smoking: state.smoking,
-                                  alcohol: state.alcohol,
-                                  dietType: state.dietType,
-                                  exercise: state.exercise,
-                                  allergies: _allergiesCtrl.text,
-                                  otherDetails: _otherDetailsCtrl.text,
-                                  emergencyName: _emergencyNameCtrl.text,
-                                  emergencyRelationship: state.emergencyRelationship,
-                                  emergencyPhone: _emergencyPhoneCtrl.text,
-                                )),
-                                onPhotoPick: _simulatePhotoUpload,
+                                onSexChanged: (val) => _bloc.add(
+                                  UpdateFormFieldsEvent(
+                                    firstName: _firstNameCtrl.text,
+                                    lastName: _lastNameCtrl.text,
+                                    email: _emailCtrl.text,
+                                    phone: _phoneCtrl.text,
+                                    dob: _dobCtrl.text,
+                                    sex: val,
+                                    genderIdentity: state.genderIdentity,
+                                    bloodGroup: state.bloodGroup,
+                                    place: _placeCtrl.text,
+                                    wardNum: _wardCtrl.text,
+                                    insuranceProvider: state.insuranceProvider,
+                                    insurancePolicyId: _policyIdCtrl.text,
+                                    insuranceValidTill: _validTillCtrl.text,
+                                    smoking: state.smoking,
+                                    alcohol: state.alcohol,
+                                    dietType: state.dietType,
+                                    exercise: state.exercise,
+                                    allergies: _allergiesCtrl.text,
+                                    otherDetails: _otherDetailsCtrl.text,
+                                    emergencyName: _emergencyNameCtrl.text,
+                                    emergencyRelationship:
+                                        state.emergencyRelationship,
+                                    emergencyPhone: _emergencyPhoneCtrl.text,
+                                  ),
+                                ),
+                                onGenderIdentityChanged: (val) => _bloc.add(
+                                  UpdateFormFieldsEvent(
+                                    firstName: _firstNameCtrl.text,
+                                    lastName: _lastNameCtrl.text,
+                                    email: _emailCtrl.text,
+                                    phone: _phoneCtrl.text,
+                                    dob: _dobCtrl.text,
+                                    sex: state.sex,
+                                    genderIdentity: val,
+                                    bloodGroup: state.bloodGroup,
+                                    place: _placeCtrl.text,
+                                    wardNum: _wardCtrl.text,
+                                    insuranceProvider: state.insuranceProvider,
+                                    insurancePolicyId: _policyIdCtrl.text,
+                                    insuranceValidTill: _validTillCtrl.text,
+                                    smoking: state.smoking,
+                                    alcohol: state.alcohol,
+                                    dietType: state.dietType,
+                                    exercise: state.exercise,
+                                    allergies: _allergiesCtrl.text,
+                                    otherDetails: _otherDetailsCtrl.text,
+                                    emergencyName: _emergencyNameCtrl.text,
+                                    emergencyRelationship:
+                                        state.emergencyRelationship,
+                                    emergencyPhone: _emergencyPhoneCtrl.text,
+                                  ),
+                                ),
+                                onBloodGroupChanged: (val) => _bloc.add(
+                                  UpdateFormFieldsEvent(
+                                    firstName: _firstNameCtrl.text,
+                                    lastName: _lastNameCtrl.text,
+                                    email: _emailCtrl.text,
+                                    phone: _phoneCtrl.text,
+                                    dob: _dobCtrl.text,
+                                    sex: state.sex,
+                                    genderIdentity: state.genderIdentity,
+                                    bloodGroup: val,
+                                    place: _placeCtrl.text,
+                                    wardNum: _wardCtrl.text,
+                                    insuranceProvider: state.insuranceProvider,
+                                    insurancePolicyId: _policyIdCtrl.text,
+                                    insuranceValidTill: _validTillCtrl.text,
+                                    smoking: state.smoking,
+                                    alcohol: state.alcohol,
+                                    dietType: state.dietType,
+                                    exercise: state.exercise,
+                                    allergies: _allergiesCtrl.text,
+                                    otherDetails: _otherDetailsCtrl.text,
+                                    emergencyName: _emergencyNameCtrl.text,
+                                    emergencyRelationship:
+                                        state.emergencyRelationship,
+                                    emergencyPhone: _emergencyPhoneCtrl.text,
+                                  ),
+                                ),
+                                onPhotoPick: _pickPhoto,
                                 onFieldsChanged: _onFieldsChanged,
                               ),
                               SizedBox(height: 20.h),
@@ -540,7 +631,8 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                                 wardCtrl: _wardCtrl,
                                 fetchedAddress: state.pincodeFetchedAddress,
                                 isFetchingAddress: state.isFetchingAddress,
-                                onFetchAddress: (pin) => _bloc.add(FetchAddressEvent(pin)),
+                                onFetchAddress: (pin) =>
+                                    _bloc.add(FetchAddressEvent(pin)),
                                 onFieldsChanged: _onFieldsChanged,
                               ),
                               SizedBox(height: 20.h),
@@ -570,7 +662,11 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
           children: [
             // Back button matching theme
             IconButton(
-              icon: Icon(Icons.arrow_back_ios_new_rounded, color: primaryColor, size: 20.r),
+              icon: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: primaryColor,
+                size: 20.r,
+              ),
               onPressed: () => context.pop(),
             ),
             SizedBox(width: 8.w),
@@ -587,13 +683,15 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                 SizedBox(height: 2.h),
                 Text(
                   "Register a new patient and generate unique UHID",
-                  style: AppTextStyles.bodySmall.copyWith(color: secondaryColor),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: secondaryColor,
+                  ),
                 ),
               ],
             ),
           ],
         ),
-        
+
         Row(
           children: [
             // Top UHID card
@@ -638,7 +736,10 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
     );
   }
 
-  Widget _buildIdCardColumn(BuildContext context, PatientRegistrationState state) {
+  Widget _buildIdCardColumn(
+    BuildContext context,
+    PatientRegistrationState state,
+  ) {
     return Column(
       children: [
         IdCardPreview(
@@ -672,15 +773,23 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
   Widget _buildBackPreviewDirectCard(PatientRegistrationState state) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
-    
-    final displayEmergency = state.emergencyName.trim().isEmpty ? "Sita Kumar" : state.emergencyName.trim();
-    final displayEmergencyPhone = state.emergencyPhone.trim().isEmpty ? "+91 91234 56789" : state.emergencyPhone.trim();
-    final displayAddress = state.pincodeFetchedAddress.trim().isEmpty 
-        ? "#45, MG Road, Bengaluru, Karnataka - 560001" 
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
+
+    final displayEmergency = state.emergencyName.trim().isEmpty
+        ? "Sita Kumar"
+        : state.emergencyName.trim();
+    final displayEmergencyPhone = state.emergencyPhone.trim().isEmpty
+        ? "+91 91234 56789"
+        : state.emergencyPhone.trim();
+    final displayAddress = state.pincodeFetchedAddress.trim().isEmpty
+        ? "#45, MG Road, Bengaluru, Karnataka - 560001"
         : state.pincodeFetchedAddress.trim();
 
-    final textTitleColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final textTitleColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
     final textValueColor = isDark ? Colors.white : const Color(0xFF0C192E);
 
     return Container(
@@ -743,29 +852,48 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                           children: [
                             Text(
                               "Emergency Contact",
-                              style: AppTextStyles.bodyXSmall.copyWith(color: textTitleColor, fontSize: 8.sp, fontWeight: FontWeight.bold),
+                              style: AppTextStyles.bodyXSmall.copyWith(
+                                color: textTitleColor,
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(height: 2.h),
                             Text(
                               "$displayEmergency (${state.emergencyRelationship})",
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.bodySmall.copyWith(color: textValueColor, fontWeight: FontWeight.bold, fontSize: 10.sp),
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: textValueColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10.sp,
+                              ),
                             ),
                             Text(
                               displayEmergencyPhone,
-                              style: AppTextStyles.bodyXSmall.copyWith(color: textValueColor, fontSize: 9.sp),
+                              style: AppTextStyles.bodyXSmall.copyWith(
+                                color: textValueColor,
+                                fontSize: 9.sp,
+                              ),
                             ),
                             SizedBox(height: 10.h),
                             Text(
                               "Address",
-                              style: AppTextStyles.bodyXSmall.copyWith(color: textTitleColor, fontSize: 8.sp, fontWeight: FontWeight.bold),
+                              style: AppTextStyles.bodyXSmall.copyWith(
+                                color: textTitleColor,
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(height: 2.h),
                             Text(
                               displayAddress,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.bodyXSmall.copyWith(color: textValueColor, fontSize: 9.sp, height: 1.2),
+                              style: AppTextStyles.bodyXSmall.copyWith(
+                                color: textValueColor,
+                                fontSize: 9.sp,
+                                height: 1.2,
+                              ),
                             ),
                           ],
                         ),
@@ -778,28 +906,48 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                           children: [
                             Text(
                               "Blood Group",
-                              style: AppTextStyles.bodyXSmall.copyWith(color: textTitleColor, fontSize: 8.sp, fontWeight: FontWeight.bold),
+                              style: AppTextStyles.bodyXSmall.copyWith(
+                                color: textTitleColor,
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(height: 2.h),
                             Row(
                               children: [
-                                Icon(Icons.bloodtype, color: AppColors.error, size: 12.r),
+                                Icon(
+                                  Icons.bloodtype,
+                                  color: AppColors.error,
+                                  size: 12.r,
+                                ),
                                 SizedBox(width: 4.w),
                                 Text(
                                   state.bloodGroup,
-                                  style: AppTextStyles.bodySmall.copyWith(color: textValueColor, fontWeight: FontWeight.bold, fontSize: 10.sp),
+                                  style: AppTextStyles.bodySmall.copyWith(
+                                    color: textValueColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.sp,
+                                  ),
                                 ),
                               ],
                             ),
                             SizedBox(height: 12.h),
                             Text(
                               "Issued On",
-                              style: AppTextStyles.bodyXSmall.copyWith(color: textTitleColor, fontSize: 8.sp, fontWeight: FontWeight.bold),
+                              style: AppTextStyles.bodyXSmall.copyWith(
+                                color: textTitleColor,
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(height: 2.h),
                             Text(
                               DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                              style: AppTextStyles.bodySmall.copyWith(color: textValueColor, fontWeight: FontWeight.bold, fontSize: 10.sp),
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: textValueColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10.sp,
+                              ),
                             ),
                           ],
                         ),
@@ -819,7 +967,9 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                     child: Text(
                       "In case of emergency, please contact your nearest hospital.",
                       style: AppTextStyles.bodyXSmall.copyWith(
-                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF4A5568),
+                        color: isDark
+                            ? const Color(0xFF94A3B8)
+                            : const Color(0xFF4A5568),
                         fontSize: 8.sp,
                         fontStyle: FontStyle.italic,
                       ),
@@ -834,17 +984,85 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
     );
   }
 
-  void _simulatePhotoUpload() {
-    // Simulate setting a high-quality avatar photo
-    _bloc.add(const SelectPhotoEvent(
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150"
-    ));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Mock photo scanned / uploaded successfully."),
-        backgroundColor: AppColors.success,
+  Future<void> _pickPhoto() async {
+    final ImagePicker picker = ImagePicker();
+
+    final source = await showDialog<ImageSource>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF09121F)
+            : Colors.white,
+        title: Text(
+          "Upload / Scan Photo",
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          "Select photo source to upload or scan patient photograph.",
+          style: AppTextStyles.bodyMedium,
+        ),
+        actionsPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        actions: [
+          TextButton.icon(
+            onPressed: () => Navigator.pop(ctx, ImageSource.camera),
+            icon: const Icon(
+              Icons.camera_alt_outlined,
+              color: AppColors.primary,
+            ),
+            label: Text(
+              "Use Camera",
+              style: TextStyle(color: AppColors.primary),
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: () => Navigator.pop(ctx, ImageSource.gallery),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+            icon: const Icon(Icons.photo_library_outlined, color: Colors.white),
+            label: const Text(
+              "Open Gallery",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
+
+    if (source == null) return;
+
+    try {
+      final XFile? image = await picker.pickImage(
+        source: source,
+        maxWidth: 500,
+        maxHeight: 500,
+        imageQuality: 85,
+      );
+
+      if (!mounted) return;
+
+      if (image != null) {
+        _bloc.add(SelectPhotoEvent(image.path));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              source == ImageSource.camera
+                  ? "Photo scanned successfully."
+                  : "Photo uploaded successfully.",
+            ),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to pick photo: ${e.toString()}"),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
   }
 
   void _showSuccessDialog(BuildContext context, String uhid) {
@@ -870,7 +1088,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(ctx); // pop dialog
-              context.pop();      // pop registration page back to Customer Care
+              context.pop(); // pop registration page back to Customer Care
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             child: const Text("OK", style: TextStyle(color: Colors.white)),
@@ -882,10 +1100,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
 
   void _showErrorSnackBar(BuildContext context, String error) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(error),
-        backgroundColor: AppColors.error,
-      ),
+      SnackBar(content: Text(error), backgroundColor: AppColors.error),
     );
   }
 }

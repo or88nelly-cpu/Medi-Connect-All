@@ -119,7 +119,7 @@ class CustomerCareChartsSection extends StatelessWidget {
       );
     } else {
       // Desktop layout: Row of 4 cards side-by-side
-      return Container(
+      return SizedBox(
         width: 1408.w,
         height: 300.h,
         child: Row(

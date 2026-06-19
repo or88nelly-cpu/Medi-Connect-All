@@ -140,12 +140,9 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
       event.patient,
       event.mrdRecord,
     );
-    result.fold(
-      (failure) => emit(PatientError(failure.message)),
-      (_) {
-        emit(PatientActionSuccess());
-        add(LoadPatients());
-      },
-    );
+    result.fold((failure) => emit(PatientError(failure.message)), (_) {
+      emit(PatientActionSuccess());
+      add(LoadPatients());
+    });
   }
 }

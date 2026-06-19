@@ -80,14 +80,17 @@ class DepartmentListHome extends StatelessWidget {
 
             if (simplifiedName == 'physiotherapy' &&
                 (simplifiedKey == 'physiotherapy' ||
-                    simplifiedKey == 'physiotherapy'))
+                    simplifiedKey == 'physiotherapy')) {
               return true;
-            if (simplifiedName == 'dialysis' && simplifiedKey == 'dyalisis')
+            }
+            if (simplifiedName == 'dialysis' && simplifiedKey == 'dyalisis') {
               return true;
+            }
             if (simplifiedName == 'nutritionanddietetics' &&
                 (simplifiedKey == 'nutritionanddiabetics' ||
-                    simplifiedKey == 'nutritionanddietetics'))
+                    simplifiedKey == 'nutritionanddietetics')) {
               return true;
+            }
 
             return simplifiedKey == simplifiedName ||
                 simplifiedKey.contains(simplifiedName) ||
@@ -121,15 +124,15 @@ class DepartmentListHome extends StatelessWidget {
                 borderRadius: BorderRadius.circular(28.r),
                 border: Border.all(
                   color: isDark
-                      ? Colors.white.withOpacity(0.04)
-                      : Colors.black.withOpacity(0.03),
+                      ? Colors.white.withValues(alpha: 0.04)
+                      : Colors.black.withValues(alpha: 0.03),
                   width: 1.2,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: isDark
-                        ? Colors.black.withOpacity(0.2)
-                        : Colors.black.withOpacity(0.02),
+                        ? Colors.black.withValues(alpha: 0.2)
+                        : Colors.black.withValues(alpha: 0.02),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
@@ -167,8 +170,8 @@ class DepartmentListHome extends StatelessWidget {
                       Icon(
                         Icons.add_rounded,
                         size: 24.r,
-                        color: AppColors.primary.withOpacity(
-                          isDark ? 0.3 : 0.15,
+                        color: AppColors.primary.withValues(
+                          alpha: isDark ? 0.3 : 0.15,
                         ),
                       ),
                     ],

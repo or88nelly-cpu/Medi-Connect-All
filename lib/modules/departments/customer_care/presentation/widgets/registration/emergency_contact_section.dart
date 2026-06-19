@@ -24,8 +24,12 @@ class EmergencyContactSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
-    final labelColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
+    final labelColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
     final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
 
     return Container(
@@ -85,7 +89,15 @@ class EmergencyContactSection extends StatelessWidget {
                     _buildLabel("Relationship *", labelColor),
                     _buildDropdown(
                       value: selectedRelationship,
-                      items: ['Wife', 'Husband', 'Parent', 'Child', 'Sibling', 'Friend', 'Other'],
+                      items: [
+                        'Wife',
+                        'Husband',
+                        'Parent',
+                        'Child',
+                        'Sibling',
+                        'Friend',
+                        'Other',
+                      ],
                       onChanged: (val) {
                         if (val != null) {
                           onRelationshipChanged(val);
@@ -106,7 +118,12 @@ class EmergencyContactSection extends StatelessWidget {
                 child: Column(
                   children: [
                     _buildLabel("Phone Number *", labelColor),
-                    _buildPhoneField(context, isDark, borderColor, inputTextColor),
+                    _buildPhoneField(
+                      context,
+                      isDark,
+                      borderColor,
+                      inputTextColor,
+                    ),
                   ],
                 ),
               ),
@@ -153,15 +170,15 @@ class EmergencyContactSection extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
-          icon: Icon(Icons.arrow_drop_down, color: inputTextColor.withValues(alpha: 0.6)),
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: inputTextColor.withValues(alpha: 0.6),
+          ),
           dropdownColor: fillBg,
           isExpanded: true,
           style: AppTextStyles.bodyLarge.copyWith(color: inputTextColor),
           items: items.map((item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
+            return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),
           onChanged: onChanged,
         ),
@@ -169,7 +186,12 @@ class EmergencyContactSection extends StatelessWidget {
     );
   }
 
-  Widget _buildPhoneField(BuildContext context, bool isDark, Color borderColor, Color inputTextColor) {
+  Widget _buildPhoneField(
+    BuildContext context,
+    bool isDark,
+    Color borderColor,
+    Color inputTextColor,
+  ) {
     final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
     return Row(
       children: [
@@ -187,10 +209,7 @@ class EmergencyContactSection extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Text(
-                "🇮🇳",
-                style: TextStyle(fontSize: 16.sp),
-              ),
+              Text("🇮🇳", style: TextStyle(fontSize: 16.sp)),
               SizedBox(width: 4.w),
               Text(
                 "+91",
@@ -217,11 +236,16 @@ class EmergencyContactSection extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "91234 56789",
               hintStyle: AppTextStyles.bodyMedium.copyWith(
-                color: isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint,
+                color: isDark
+                    ? AppColors.terminalDarkFieldHint
+                    : AppColors.terminalLightFieldHint,
               ),
               filled: true,
               fillColor: fillBg,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 16.h,
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: borderColor, width: 1.w),
                 borderRadius: BorderRadius.only(

@@ -38,6 +38,7 @@ class EmrdListItemCard extends StatelessWidget {
     final doctorName = _cleanDoctorName(record['doctor_name']);
     final specialty = record['specialty'] ?? 'General';
     final dateStr = record['recorded_at'] ?? record['created_at'] ?? '';
+    final isCustomerCare = specialty == 'Customer Care';
 
     String formattedDate = 'N/A';
     if (dateStr.isNotEmpty) {
@@ -47,7 +48,9 @@ class EmrdListItemCard extends StatelessWidget {
       } catch (_) {}
     }
 
-    final avatarBgColor = _getAvatarColor(patientName);
+    final avatarBgColor = isCustomerCare
+        ? Colors.blue
+        : _getAvatarColor(patientName);
     final initials = patientName.isNotEmpty
         ? patientName[0].toUpperCase()
         : 'P';
@@ -75,18 +78,23 @@ class EmrdListItemCard extends StatelessWidget {
             padding: EdgeInsets.all(16.r),
             child: Row(
               children: [
-                // Patient Avatar (Initials with color backgrounds matching mockups)
                 CircleAvatar(
                   radius: 24.r,
                   backgroundColor: avatarBgColor.withValues(alpha: 0.12),
-                  child: Text(
-                    initials,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
-                      color: avatarBgColor,
-                    ),
-                  ),
+                  child: isCustomerCare
+                      ? Icon(
+                          Icons.assignment_ind_outlined,
+                          color: Colors.blue,
+                          size: 22.r,
+                        )
+                      : Text(
+                          initials,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
+                            color: avatarBgColor,
+                          ),
+                        ),
                 ),
                 SizedBox(width: 14.w),
                 // Text details
@@ -105,7 +113,9 @@ class EmrdListItemCard extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        '$doctorName · $specialty',
+                        isCustomerCare
+                            ? 'Patient Registration · Customer Care'
+                            : '$doctorName · $specialty',
                         style: AppTextStyles.bodySmall.copyWith(
                           color: isDark
                               ? Colors.white54

@@ -34,6 +34,8 @@ import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_
 import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_master_data_page.dart';
 import 'package:medi_connect/modules/admin/home/admin_home_page.dart';
 import 'package:medi_connect/modules/departments/customer_care/presentation/pages/patient_registration_page.dart';
+import 'package:medi_connect/modules/departments/emrd/presentation/pages/patient_registration_record_detail_page.dart';
+import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_settings_page.dart';
 
 class AppRouterConfig {
   static GoRouter buildRouter() {
@@ -172,6 +174,17 @@ class AppRouterConfig {
         GoRoute(
           path: RouteNames.patientRegistration,
           builder: (context, state) => const PatientRegistrationPage(),
+        ),
+        GoRoute(
+          path: RouteNames.patientRegistrationRecordDetail,
+          builder: (context, state) => PatientRegistrationRecordDetailPage(
+            record: state.extra as Map<String, dynamic>,
+          ),
+        ),
+        GoRoute(
+          path: RouteNames.adminSettings,
+          builder: (context, state) =>
+              const AdminSettingsPage(isStandalone: true),
         ),
       ],
     );

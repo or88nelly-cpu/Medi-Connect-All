@@ -28,17 +28,21 @@ class AddressInfoSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
-    final labelColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+    final borderColor = isDark
+        ? const Color(0xFF16253B)
+        : const Color(0xFFD3E0EE);
+    final labelColor = isDark
+        ? const Color(0xFF5E98C7)
+        : const Color(0xFF3F6D94);
 
-    final addressCardBg = isDark 
-        ? AppColors.primary.withValues(alpha: 0.08) 
+    final addressCardBg = isDark
+        ? AppColors.primary.withValues(alpha: 0.08)
         : AppColors.primary.withValues(alpha: 0.04);
-    final addressBorderColor = isDark 
-        ? AppColors.primary.withValues(alpha: 0.3) 
+    final addressBorderColor = isDark
+        ? AppColors.primary.withValues(alpha: 0.3)
         : AppColors.primary.withValues(alpha: 0.15);
-    final addressTextColor = isDark 
-        ? const Color(0xFF90B9FF) 
+    final addressTextColor = isDark
+        ? const Color(0xFF90B9FF)
         : const Color(0xFF0D54B7);
 
     return Container(
@@ -91,14 +95,14 @@ class AddressInfoSection extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 12.w),
-              
+
               // Fetch Button
               Container(
                 height: 52.h,
                 margin: EdgeInsets.only(bottom: 0.h),
                 child: ElevatedButton(
-                  onPressed: isFetchingAddress 
-                      ? null 
+                  onPressed: isFetchingAddress
+                      ? null
                       : () {
                           if (pincodeCtrl.text.isNotEmpty) {
                             onFetchAddress(pincodeCtrl.text);
@@ -117,7 +121,9 @@ class AddressInfoSection extends StatelessWidget {
                           height: 20.r,
                           child: const CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
                           ),
                         )
                       : Text(
@@ -166,7 +172,7 @@ class AddressInfoSection extends StatelessWidget {
               ),
             ],
           ),
-          
+
           // Auto fetched address display block
           if (fetchedAddress.isNotEmpty) ...[
             SizedBox(height: 20.h),
