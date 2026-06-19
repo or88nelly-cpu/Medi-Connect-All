@@ -31,8 +31,16 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
       create: (context) =>
           GetIt.I<CustomerCareBloc>()..add(LoadCustomerCareStats()),
       child: CustomScaffold(
-        appBarNeeded: false,
-        //  customAppbar: const CommonAppBar(title: "Customer Care Department"),
+        appBarNeeded: true,
+        customAppbar: PreferredSize(
+          preferredSize: Size(double.infinity, 120.h),
+          
+          child: CustomerCareHeader(
+            onReset: () {
+              context.read<CustomerCareBloc>().add(LoadCustomerCareStats());
+            },
+          ),
+        ),
         body: BlocBuilder<CustomerCareBloc, CustomerCareState>(
           builder: (context, state) {
             if (state is CustomerCareLoading) {
@@ -59,13 +67,6 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomerCareHeader(
-                      onReset: () {
-                        context.read<CustomerCareBloc>().add(
-                          LoadCustomerCareStats(),
-                        );
-                      },
-                    ),
                     SizedBox(height: 20.h),
                     CustomerCareStatsGrid(stats: stats),
                     SizedBox(height: 20.h),

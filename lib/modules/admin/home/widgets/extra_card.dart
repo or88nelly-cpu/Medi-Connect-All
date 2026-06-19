@@ -25,16 +25,17 @@ class ExtraCard extends StatelessWidget {
     ];
 
     if (isDesktop) {
-      return Padding(
+      return Container(
         padding: margin,
+        height: 225.h,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(flex: 1, child: children[0]),
+            Expanded(flex: 2, child: children[0]),
             SizedBox(width: 24.w),
-            Expanded(flex: 1, child: children[1]),
+            Expanded(flex: 2, child: children[1]),
             SizedBox(width: 24.w),
-            Expanded(flex: 2, child: children[2]),
+            Expanded(flex: 5, child: children[2]),
           ],
         ),
       );
@@ -111,85 +112,102 @@ class ExtraCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Text(
-            title,
-            style: AppTextStyles.bodyLarge.copyWith(
-              fontSize: 16.sp,
-              color: isDark ? Colors.white : AppColors.textDarkNavy,
-              fontWeight: FontWeight.bold,
+          Positioned(
+            right: -35.w,
+            top: -15.h,
+            child: ShaderMask(
+              shaderCallback: (bounds) => LinearGradient(
+                colors: [
+                  Colors.white.withValues(alpha: 0.12),
+                  Colors.white.withValues(alpha: 0.02),
+                ],
+              ).createShader(bounds),
+              child: Icon(icon, size: 180.r, color: gradient.last),
             ),
           ),
-          SizedBox(height: 20.h),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 60.r,
-                height: 60.r,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  gradient: LinearGradient(
-                    colors: gradient,
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: gradient.last.withValues(alpha: 0.25),
-                      blurRadius: 6,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(icon, color: Colors.white, size: 28.r),
+              Text(
+                title,
+                style: AppTextStyles.bodyLarge.copyWith(
+                  fontSize: 16.sp,
+                  color: isDark ? Colors.white : AppColors.textDarkNavy,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 14.w),
-              Expanded(
-                child: Text(
-                  subTitle,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    fontSize: 13.sp,
-                    color: isDark
-                        ? Colors.white70
-                        : AppColors.textDarkNavy.withValues(alpha: 0.8),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: onTap,
-                borderRadius: BorderRadius.circular(100.r),
-                child: Container(
-                  padding: EdgeInsets.all(10.r),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.05)
-                        : AppColors.primary.withValues(alpha: 0.06),
-                    border: Border.all(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.1)
-                          : AppColors.primary.withValues(alpha: 0.15),
-                      width: 1,
+              SizedBox(height: 20.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 60.r,
+                    height: 60.r,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      gradient: LinearGradient(
+                        colors: gradient,
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: gradient.last.withValues(alpha: 0.25),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
-                    shape: BoxShape.circle,
+                    child: Center(
+                      child: Icon(icon, color: Colors.white, size: 44.r),
+                    ),
                   ),
-                  child: Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: isDark ? Colors.white : AppColors.primary,
-                    size: 14.r,
+                  SizedBox(width: 14.w),
+                  Expanded(
+                    child: Text(
+                      subTitle,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        fontSize: 13.sp,
+                        color: isDark
+                            ? Colors.white70
+                            : AppColors.textDarkNavy.withValues(alpha: 0.8),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: onTap,
+                    borderRadius: BorderRadius.circular(100.r),
+                    child: Container(
+                      padding: EdgeInsets.all(10.r),
+                      decoration: BoxDecoration(
+                        color: isDark
+                            ? Colors.white.withValues(alpha: 0.05)
+                            : AppColors.primary.withValues(alpha: 0.06),
+                        border: Border.all(
+                          color: isDark
+                              ? Colors.white.withValues(alpha: 0.1)
+                              : AppColors.primary.withValues(alpha: 0.15),
+                          width: 1,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: isDark ? Colors.white : AppColors.primary,
+                        size: 14.r,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

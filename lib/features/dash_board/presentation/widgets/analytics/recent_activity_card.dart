@@ -99,8 +99,8 @@ class RecentActivityCard extends StatelessWidget {
             {'message': AppStrings.doctorAddedSuccessfully, 'time': ''},
             {'message': AppStrings.departmentUpdatedActivity, 'time': ''},
             {'message': AppStrings.userRoleChanged, 'time': '10:30 AM'},
-            {'message': AppStrings.billingConfigUpdated, 'time': '08:15 AM'},
-            {'message': AppStrings.systemBackupCompleted, 'time': '07:30 AM'},
+            // {'message': AppStrings.billingConfigUpdated, 'time': '08:15 AM'},
+            // {'message': AppStrings.systemBackupCompleted, 'time': '07:30 AM'},
           ];
 
     final parsedList = rawActivities.map((act) => _parseActivity(act)).toList();
@@ -169,26 +169,26 @@ class RecentActivityCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
-          if (isDesktop && parsedList.length >= 6) ...[
+          if (isDesktop && parsedList.length >= 4) ...[
             Column(
               children: [
                 _buildCenterTimelineRow(
                   parsedList[0],
-                  parsedList[3],
+                  parsedList[1],
                   true,
                   false,
                   context,
                 ),
-                _buildCenterTimelineRow(
-                  parsedList[1],
-                  parsedList[4],
-                  false,
-                  false,
-                  context,
-                ),
+                // _buildCenterTimelineRow(
+                //   parsedList[1],
+                //   parsedList[4],
+                //   false,
+                //   false,
+                //   context,
+                // ),
                 _buildCenterTimelineRow(
                   parsedList[2],
-                  parsedList[5],
+                  parsedList[3],
                   false,
                   true,
                   context,

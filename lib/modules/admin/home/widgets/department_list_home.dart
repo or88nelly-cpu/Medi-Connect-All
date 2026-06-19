@@ -5,7 +5,6 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
-import 'package:medi_connect/features/department/data/models/department_model.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
 import 'admin_department_card.dart';
 import 'department_list_shimmer.dart';
@@ -13,32 +12,6 @@ import 'department_list_shimmer.dart';
 class DepartmentListHome extends StatelessWidget {
   const DepartmentListHome({super.key});
 
-  static const List<String> orderedDepartmentNames = [
-    'Customer Care',
-    'Finance',
-    'Nursing',
-    'Pharmacy',
-    'Radiology',
-    'Laboratory',
-    'Physiotherapy',
-    'Purchase',
-    'General Store',
-    'Human Resource',
-    'Marketing',
-    'Casualty',
-    'Operation Theatre',
-    'Nutrition & Dietetics',
-    'EMRD',
-    'Biomedical Engineering',
-    'MEP Engineer',
-    'Fire Safety',
-    'Information Technology',
-    'Management Information System',
-    'Dialysis',
-    'ICU',
-    'Ward',
-    'CSSD',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,58 +33,9 @@ class DepartmentListHome extends StatelessWidget {
             : [];
 
         // Build the exactly 24 ordered list with Supabase bindings & Fallbacks
-        final Map<String, DepartmentEntity> dbMap = {};
-        for (var dept in loadedList) {
-          dbMap[dept.name.toLowerCase().trim()] = dept;
-        }
+      
 
-        final List<DepartmentEntity> orderedList = [];
-        for (var name in orderedDepartmentNames) {
-          var matchedKey = dbMap.keys.firstWhere((key) {
-            final simplifiedKey = key
-                .replaceAll('&', 'and')
-                .replaceAll(' ', '')
-                .replaceAll('therapist', 'therapy');
-            final simplifiedName = name
-                .toLowerCase()
-                .replaceAll('&', 'and')
-                .replaceAll(' ', '')
-                .replaceAll('therapist', 'therapy');
-
-            if (simplifiedName == 'physiotherapy' &&
-                (simplifiedKey == 'physiotherapy' ||
-                    simplifiedKey == 'physiotherapy')) {
-              return true;
-            }
-            if (simplifiedName == 'dialysis' && simplifiedKey == 'dyalisis') {
-              return true;
-            }
-            if (simplifiedName == 'nutritionanddietetics' &&
-                (simplifiedKey == 'nutritionanddiabetics' ||
-                    simplifiedKey == 'nutritionanddietetics')) {
-              return true;
-            }
-
-            return simplifiedKey == simplifiedName ||
-                simplifiedKey.contains(simplifiedName) ||
-                simplifiedName.contains(simplifiedKey);
-          }, orElse: () => '');
-
-          if (matchedKey.isNotEmpty) {
-            orderedList.add(dbMap[matchedKey]!);
-          } else {
-            // Seeding mock fallback so the grid remains complete
-            orderedList.add(
-              DepartmentModel(
-                id: 'fallback-${name.toLowerCase().replaceAll(' ', '-')}',
-                name: name,
-                createdAt: DateTime.now(),
-                consultation: false,
-              ),
-            );
-          }
-        }
-
+     
         return LayoutBuilder(
           builder: (context, constraints) {
             final double width = constraints.maxWidth;
@@ -180,7 +104,7 @@ class DepartmentListHome extends StatelessWidget {
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: isLoading ? 24 : orderedList.length,
+                    itemCount: isLoading ? 24 : loadedList.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
                       crossAxisSpacing: 16.w,
@@ -194,7 +118,7 @@ class DepartmentListHome extends StatelessWidget {
                       }
 
                       return AdminDepartmentCard(
-                        department: orderedList[index],
+                        department: loadedList[index],
                       );
                     },
                   ),

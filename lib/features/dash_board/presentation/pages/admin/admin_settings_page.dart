@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/common_widgets/common_app_bar.dart';
 import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
+import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/themes/theme_cubit.dart';
+import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_settings_bloc.dart';
 
 class AdminSettingsPage extends StatefulWidget {
@@ -141,6 +144,9 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
                       },
                       icon: Icons.email_outlined,
                     ),
+                    SizedBox(height: 24.h),
+                    _buildCategoryHeader("Account"),
+                    _buildLogoutTile(context),
                   ],
                 ),
               );
@@ -210,4 +216,113 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
       ),
     );
   }
+
+  Widget _buildLogoutTile(BuildContext context) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is Unauthenticated) {
+          context.go(RouteNames.login);
+        }
+      },
+      child: Card(
+        margin: EdgeInsets.only(bottom: 12.h),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          side: BorderSide(
+            color: AppColors.error.withValues(alpha: 0.3),
+          ),
+        ),
+        child: ListTile(
+          leading: Container(
+            padding: EdgeInsets.all(8.r),
+            decoration: BoxDecoration(
+              color: AppColors.error.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: Icon(
+              Icons.logout_rounded,
+              color: AppColors.error,
+              size: 20.r,
+            ),
+          ),
+          title: Text(
+            "Log Out",
+            style: AppTextStyles.bodyMedium.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.error,
+            ),
+          ),
+          subtitle: Text(
+            "Sign out of your account",
+            style: AppTextStyles.bodySmall,
+          ),
+          trailing: Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.error.withValues(alpha: 0.6),
+          ),
+          onTap: () => _showLogoutConfirmation(context),
+        ),
+      ),
+    );
+  }
+
+  void _showLogoutConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.logout_rounded, color: AppColors.error, size: 24.r),
+            SizedBox(width: 10.w),
+            Text(
+              "Log Out",
+              style: AppTextStyles.headingMedium.copyWith(fontSize: 18.sp),
+            ),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to log out? You will need to sign in again to access your account.",
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary(context),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(
+              "Cancel",
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary(context),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.error,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              context.read<AuthBloc>().add(LogoutRequested());
+            },
+            child: Text(
+              "Log Out",
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
+

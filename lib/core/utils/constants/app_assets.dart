@@ -60,5 +60,7 @@ class AppAssets {
   // EMR Details
   static const String emrd = "assets/images/department/emrd.png";
 
+  static const String ladyImagePng = "assets/images/lady_image.png";
+
   AppAssets._();
 }

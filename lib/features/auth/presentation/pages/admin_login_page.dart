@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/app_responsive.dart';
+import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
+import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+import 'package:medi_connect/core/utils/constants/app_assets.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/features/auth/presentation/widgets/background_accent_painter.dart';
 import 'package:medi_connect/features/auth/presentation/widgets/login_form.dart';
 
 class AdminLoginPage extends StatefulWidget {
@@ -43,251 +45,126 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   }
 
   Widget _contents() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    bool isDesktop = AppResponsive.isDesktop(context);
+    return CustomScaffold(
+      appBarNeeded: false,
+      body: SingleChildScrollView(
+        child: isDesktop ? _buildDesktopLayout() : _buildMobileLayout(),
+      ),
+    );
+  }
 
-    // Theme-based colors from AppColors
-    final bgColor1 = isDark
-        ? AppColors.terminalDarkBgGrad1
-        : AppColors.terminalLightBgGrad1;
-    final bgColor2 = isDark
-        ? AppColors.terminalDarkBgGrad2
-        : AppColors.terminalLightBgGrad2;
-    final textColor = isDark
-        ? AppColors.terminalDarkText
-        : AppColors.terminalLightText;
-    final footerTextColor = isDark
-        ? AppColors.terminalDarkFooterText
-        : AppColors.terminalLightFooterText;
-    final ornamentColor = isDark
-        ? Colors.white.withValues(alpha: 0.1)
-        : Colors.black.withValues(alpha: 0.04);
-    final crossColor = isDark
-        ? Colors.white.withValues(alpha: 0.05)
-        : Colors.black.withValues(alpha: 0.02);
-
-    return Scaffold(
-      backgroundColor: isDark
-          ? AppColors.terminalDarkBg
-          : AppColors.terminalLightBg,
-      body: Stack(
+  Widget _buildDesktopLayout() {
+    return Container(
+      height: MediaQuery.sizeOf(context).height,
+      padding: EdgeInsets.symmetric(
+        vertical: 100.r,
+        horizontal: 80.r,
+      ).copyWith(bottom: 0.r),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // 1. Background Gradient Ornaments
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  center: Alignment.center,
-                  radius: 1.5,
-                  colors: [bgColor1, bgColor2],
-                ),
-              ),
-            ),
+          _header(),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [Spacer(), personIcon(400.w)],
           ),
+          _formData(),
+        ],
+      ),
+    );
+  }
 
-          // Top Left Dot Grid
-          Positioned(
-            top: 40.h,
-            left: 24.w,
-            child: Opacity(
-              opacity: 1.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  6,
-                  (r) => Padding(
-                    padding: EdgeInsets.only(bottom: 6.h),
-                    child: Row(
-                      children: List.generate(
-                        6,
-                        (c) => Padding(
-                          padding: EdgeInsets.only(right: 6.w),
-                          child: Container(
-                            width: 3.r,
-                            height: 3.r,
-                            decoration: BoxDecoration(
-                              color: ornamentColor,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+  Widget personIcon(double width) {
+    return CustomImageView(imagePath: AppAssets.ladyImagePng, width: width);
+  }
+
+  Widget _buildMobileLayout() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 60.r, vertical: 50.r),
+      child: Column(
+        children: [
+          _header(),
+          SizedBox(height: 20.h),
+
+          Stack(
+            children: [
+              personIcon(200.w),
+              Container(
+                margin: EdgeInsets.only(top: 250.h),
+                child: _formData(),
               ),
-            ),
-          ),
-
-          // Top Right Accent Arc & Dot
-          Positioned.fill(
-            child: CustomPaint(
-              painter: BackgroundAccentPainter(
-                lineColor: isDark
-                    ? Colors.white.withValues(alpha: 0.03)
-                    : Colors.black.withValues(alpha: 0.02),
-                dotColor: AppColors.terminalAccentCyan,
-              ),
-            ),
-          ),
-
-          // Bottom Right Cross Grid
-          Positioned(
-            bottom: 120.h,
-            right: 24.w,
-            child: Opacity(
-              opacity: 1.0,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: 40.r,
-                    height: 12.r,
-                    decoration: BoxDecoration(
-                      color: crossColor,
-                      borderRadius: BorderRadius.circular(2.r),
-                    ),
-                  ),
-                  Container(
-                    width: 12.r,
-                    height: 40.r,
-                    decoration: BoxDecoration(
-                      color: crossColor,
-                      borderRadius: BorderRadius.circular(2.r),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // 2. Main Login Form & Header
-          Center(
-            child: SingleChildScrollView(
-              child: Container(
-                width: double.infinity,
-                constraints: BoxConstraints(maxWidth: 420.w),
-                padding: EdgeInsets.symmetric(horizontal: 24.r, vertical: 24.r),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Header Logo & Titles
-                      _buildHeader(textColor),
-                      SizedBox(height: 24.h),
-
-                      // Card Containment (LoginForm is now separated)
-                      LoginForm(
-                        email: _usernameController,
-                        password: _passwordController,
-                        onLoginPressed: _onLoginPressed,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // 3. System Page Status Footer
-          Positioned(
-            bottom: 20.h,
-            left: 24.w,
-            right: 24.w,
-            child: Row(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 8.r,
-                      height: 8.r,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF22C55E),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      AppStrings.opsStable,
-                      style: AppTextStyles.terminalBodySmall.copyWith(
-                        color: const Color(0xFF22C55E),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Icon(Icons.language, color: footerTextColor, size: 18.r),
-                SizedBox(width: 16.w),
-                Icon(Icons.help_outline, color: footerTextColor, size: 18.r),
-              ],
-            ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildHeader(Color textColor) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+  Widget _formData() {
+    return SizedBox(
+      width:
+          (AppResponsive.isDesktop(context)
+                  ? MediaQuery.sizeOf(context).width * 0.3
+                  : (MediaQuery.sizeOf(context).width * 0.7))
+              .clamp(0, 360.w),
+      child: LoginForm(
+        onLoginPressed: () {},
+        email: _usernameController,
+        password: _passwordController,
+      ),
+    );
+  }
+
+  Widget _header() {
+    return Column(
       children: [
-        Icon(
-          Icons.assignment_ind_outlined,
-          color: AppColors.terminalAccentCyan,
-          size: 32.r,
-        ),
-        SizedBox(width: 12.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            Row(
+            Container(
+              padding: EdgeInsets.all(10.r),
+
+              decoration: BoxDecoration(
+                color: AppColors.background(context),
+                borderRadius: BorderRadius.circular(12.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.03),
+                    blurRadius: 12,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: CustomImageView(
+                imagePath: AppAssets.logoIconPng,
+                width: 100.r,
+                height: 100.r,
+              ),
+            ),
+            SizedBox(width: 10.w),
+            Column(
               children: [
                 Text(
-                  "Clinical",
-                  style: AppTextStyles.terminalHeadingMedium.copyWith(
-                    color: textColor,
-                    fontSize: 24.sp,
+                  'MediConnect',
+                  style: AppTextStyles.bodyLarge.copyWith(
+                    fontSize: 30.sp,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.adminPrimary,
                   ),
                 ),
                 Text(
-                  " Operations",
-                  style: AppTextStyles.terminalHeadingMedium.copyWith(
-                    color: AppColors.terminalAccentCyan,
-                    fontSize: 24.sp,
+                  'Multi speciality hospital',
+                  style: AppTextStyles.bodyLarge.copyWith(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
               ],
-            ),
-            Text(
-              "SECURE PERSONNEL TERMINAL",
-              style: AppTextStyles.terminalMonospaceLabel.copyWith(
-                color: AppColors.terminalDarkFooterText,
-                fontSize: 9.sp,
-                letterSpacing: 2.0,
-              ),
             ),
           ],
         ),
       ],
     );
-  }
-
-  void _onLoginPressed() {
-    if (_formKey.currentState?.validate() ?? false) {
-      context.read<AuthBloc>().add(
-        LoginRequested(
-          email: _usernameController.text.trim(),
-          password: _passwordController.text,
-        ),
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 }
