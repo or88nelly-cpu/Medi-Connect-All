@@ -148,6 +148,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
   );
 
+  static TextStyle get dashboardSubtitle => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s14,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle get dashboardCardTitle => TextStyle(
     fontFamily: 'Inter',
     fontSize: s16,
@@ -158,6 +164,42 @@ class AppTextStyles {
     fontFamily: 'Inter',
     fontSize: s28,
     fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle get dashboardStatValueSmall => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s20,
+    fontWeight: FontWeight.w800,
+  );
+
+  static TextStyle get dashboardActionTitle => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s16,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle get dashboardActionDesc => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s12,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle get dashboardCardHeader => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s14,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle get dashboardChartLabel => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s10,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle get dashboardLegendText => TextStyle(
+    fontFamily: 'Inter',
+    fontSize: s12,
+    fontWeight: FontWeight.w500,
   );
 
   // =====================================================

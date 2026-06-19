@@ -234,9 +234,51 @@ class AppColors {
     Color(0xFFFF8A26),
   ];
 
+  static const List<Color> redGradient = [Color(0xFFFF5B5B), Color(0xFFEF4444)];
+
   // =====================================================
   // THEME HELPERS
   // =====================================================
+
+  static const List<Color> registrationGradient = [
+    Color(0xFF0F6FFF),
+    Color(0xFF0056C6),
+  ];
+  static const List<Color> qrRegistrationGradient = [
+    Color(0xFF00C2A8),
+    Color(0xFF009688),
+  ];
+  static const List<Color> appointmentGradient = [
+    Color(0xFF7B61FF),
+    Color(0xFF4F2DFF),
+  ];
+  static const List<Color> patientSearchGradient = [
+    Color(0xFF0F6FFF),
+    Color(0xFF4F2DFF),
+  ];
+  static const List<Color> admissionGradient = [
+    Color(0xFFFF8A26),
+    Color(0xFFFFB547),
+  ];
+  static const List<Color> feedbackGradient = [
+    Color(0xFFEC4899),
+    Color(0xFFFF0080),
+  ];
+
+  static Color dashboardCardBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF09121F) : Colors.white;
+
+  static Color dashboardCardBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
+
+  static Color dashboardTextPrimary(BuildContext context) =>
+      isDark(context) ? Colors.white : const Color(0xFF0F2C59);
+
+  static Color dashboardTextSecondary(BuildContext context) =>
+      isDark(context) ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+
+  static Color dashboardHighlight(BuildContext context) =>
+      isDark(context) ? const Color(0xFF0A1E3F) : const Color(0xFFE2EAF4);
 
   static bool isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;

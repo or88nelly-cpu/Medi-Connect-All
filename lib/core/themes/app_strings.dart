@@ -443,5 +443,62 @@ class AppStrings {
   static const shareRx = "Share Rx";
   static const consultationHistory = "Consultation History";
 
+  // Admin Dashboard Redesign Strings
+  static const specialityManagement = "Speciality Management";
+  static const specialityManagementDesc =
+      "Manage all hospital specialties in one place";
+  static const settings = "Settings";
+  static const settingsDesc = "Configure system settings and preferences";
+  static const welcomeHms = "Welcome back to Hospital Management System";
+
+  static const newPatientRegistered = "New patient registered";
+  static const doctorAddedSuccessfully = "Doctor added successfully";
+  static const departmentUpdatedActivity = "Department updated";
+  static const userRoleChanged = "User role changed";
+  static const billingConfigUpdated = "Billing configuration updated";
+  static const systemBackupCompleted = "System backup completed";
+
+  // Customer Care Redesign
+  static const customerCare = "Customer Care";
+  static const smartCareSubtitle = "Smart care begins with every interaction";
+  static const dateRange = "Date Range";
+  static const speciality = "Speciality";
+  static const allSpecialities = "All Specialities";
+  static const reset = "Reset";
+  static const totalRegistrations = "Total Registrations";
+  static const totalAppointments = "Total Appointments";
+  static const totalAdmissions = "Total Admissions";
+  static const feedbackScore = "Feedback Score";
+  static const walkInPatients = "Walk-in Patients";
+  static const followUpVisits = "Follow-up Visits";
+  static const avgWaitingTime = "Avg. Waiting Time";
+  static const enquiriesHandled = "Enquiries Handled";
+  static const registrationDesc = "Register new patient manually";
+  static const qrRegistration = "QR Registration";
+  static const qrRegistrationDesc = "Scan QR code to register new patient";
+  static const appointmentDesc = "Book, reschedule or manage appointments";
+  static const patientSearch = "Patient Search";
+  static const patientSearchDesc = "Search by UHID, phone or name & book visit";
+  static const admission = "Admission";
+  static const admissionDesc = "New admission & manage stays";
+  static const feedback = "Feedback";
+  static const feedbackDesc = "View patient feedbacks and ratings";
+  static const registrationsTrendDaily = "Registrations Trend (Daily)";
+  static const appointmentsTrendDaily = "Appointments Trend (Daily)";
+  static const feedbackDistribution = "Feedback Distribution";
+  static const visitsBySpeciality = "Visits by Speciality";
+  static const lineChart = "Line Chart";
+  static const barChart = "Bar Chart";
+  static const sort = "Sort";
+  static const excellent = "Excellent";
+  static const average = "Average";
+  static const poor = "Poor";
+  static const totalFeedbacks = "Total Feedbacks";
+  static const averageRating = "Average Rating";
+  static const vsLastPeriod = "vs last period";
+  static const thisPeriod = "This Period";
+  static const vsLast17Days = "vs last 17 days";
+  static const minsSuffix = "mins";
+
   AppStrings._();
 }

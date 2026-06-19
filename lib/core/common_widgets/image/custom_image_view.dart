@@ -35,7 +35,7 @@ class CustomImageView extends StatelessWidget {
         imagePath.startsWith('https://')) {
       if (imagePath.endsWith('.svg')) {
         imageWidget = SvgPicture.network(
-          imagePath,
+          imagePath.trim(),
           width: width,
           height: height,
           fit: fit,
@@ -45,7 +45,7 @@ class CustomImageView extends StatelessWidget {
         );
       } else {
         imageWidget = CachedNetworkImage(
-          imageUrl: imagePath,
+          imageUrl: imagePath.trim(),
           width: width,
           height: height,
           fit: fit,
@@ -65,7 +65,7 @@ class CustomImageView extends StatelessWidget {
       }
     } else if (imagePath.endsWith('.svg')) {
       imageWidget = SvgPicture.asset(
-        imagePath,
+        imagePath.trim(),
         width: width,
         height: height,
         fit: fit,
@@ -75,7 +75,7 @@ class CustomImageView extends StatelessWidget {
       );
     } else if (imagePath.contains('assets/')) {
       imageWidget = Image.asset(
-        imagePath,
+        imagePath.trim(),
         width: width,
         height: height,
         fit: fit,
@@ -83,7 +83,7 @@ class CustomImageView extends StatelessWidget {
       );
     } else {
       imageWidget = Image.file(
-        File(imagePath),
+        File(imagePath.trim()),
         width: width,
         height: height,
         fit: fit,

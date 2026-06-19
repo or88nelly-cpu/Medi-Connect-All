@@ -5,79 +5,193 @@ import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
+import 'package:medi_connect/features/department/data/models/department_model.dart';
 import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/features/department/presentation/widgets/department_card.dart';
-import 'package:medi_connect/modules/admin/home/widgets/department_list_shimmer.dart';
+import 'admin_department_card.dart';
+import 'department_list_shimmer.dart';
 
-/// A horizontal scrollable list of department cards displayed on any dashboard.
-/// Accepts an optional [isAdmin] flag to show admin controls.
 class DepartmentListHome extends StatelessWidget {
   const DepartmentListHome({super.key});
 
+  static const List<String> orderedDepartmentNames = [
+    'Customer Care',
+    'Finance',
+    'Nursing',
+    'Pharmacy',
+    'Radiology',
+    'Laboratory',
+    'Physiotherapy',
+    'Purchase',
+    'General Store',
+    'Human Resource',
+    'Marketing',
+    'Casualty',
+    'Operation Theatre',
+    'Nutrition & Dietetics',
+    'EMRD',
+    'Biomedical Engineering',
+    'MEP Engineer',
+    'Fire Safety',
+    'Information Technology',
+    'Management Information System',
+    'Dialysis',
+    'ICU',
+    'Ward',
+    'CSSD',
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDesktop = MediaQuery.of(context).size.width > 950;
+
+    final margin = isDesktop
+        ? EdgeInsets.only(left: 58.r)
+        : EdgeInsets.symmetric(horizontal: 16.r);
+
     return BlocBuilder<DepartmentBloc, DepartmentState>(
       builder: (context, state) {
-        bool isLoading = state is DepartmentLoading;
+        final bool isLoading = state is DepartmentLoading;
 
-        final List<DepartmentEntity> departments = state is DepartmentsLoaded
+        final List<DepartmentEntity> loadedList = state is DepartmentsLoaded
             ? state.departments
             : state is DepartmentActionSuccess
             ? (state.updatedDepartments)
             : [];
+
+        // Build the exactly 24 ordered list with Supabase bindings & Fallbacks
+        final Map<String, DepartmentEntity> dbMap = {};
+        for (var dept in loadedList) {
+          dbMap[dept.name.toLowerCase().trim()] = dept;
+        }
+
+        final List<DepartmentEntity> orderedList = [];
+        for (var name in orderedDepartmentNames) {
+          var matchedKey = dbMap.keys.firstWhere((key) {
+            final simplifiedKey = key
+                .replaceAll('&', 'and')
+                .replaceAll(' ', '')
+                .replaceAll('therapist', 'therapy');
+            final simplifiedName = name
+                .toLowerCase()
+                .replaceAll('&', 'and')
+                .replaceAll(' ', '')
+                .replaceAll('therapist', 'therapy');
+
+            if (simplifiedName == 'physiotherapy' &&
+                (simplifiedKey == 'physiotherapy' ||
+                    simplifiedKey == 'physiotherapy'))
+              return true;
+            if (simplifiedName == 'dialysis' && simplifiedKey == 'dyalisis')
+              return true;
+            if (simplifiedName == 'nutritionanddietetics' &&
+                (simplifiedKey == 'nutritionanddiabetics' ||
+                    simplifiedKey == 'nutritionanddietetics'))
+              return true;
+
+            return simplifiedKey == simplifiedName ||
+                simplifiedKey.contains(simplifiedName) ||
+                simplifiedName.contains(simplifiedKey);
+          }, orElse: () => '');
+
+          if (matchedKey.isNotEmpty) {
+            orderedList.add(dbMap[matchedKey]!);
+          } else {
+            // Seeding mock fallback so the grid remains complete
+            orderedList.add(
+              DepartmentModel(
+                id: 'fallback-${name.toLowerCase().replaceAll(' ', '-')}',
+                name: name,
+                createdAt: DateTime.now(),
+                consultation: false,
+              ),
+            );
+          }
+        }
+
         return LayoutBuilder(
           builder: (context, constraints) {
-            final (crossAxisCount, itemGap) = _getCrossAxisCount(1364.w);
+            final double width = constraints.maxWidth;
+            final int crossAxisCount = _getResponsiveCrossAxisCount(width);
 
             return Container(
-              width: 1408.w,
-              margin: EdgeInsets.only(left: 58.r),
+              margin: margin,
               decoration: BoxDecoration(
-                color: AppColors.card(context),
+                color: isDark ? AppColors.darkCard : Colors.white,
                 borderRadius: BorderRadius.circular(28.r),
+                border: Border.all(
+                  color: isDark
+                      ? Colors.white.withOpacity(0.04)
+                      : Colors.black.withOpacity(0.03),
+                  width: 1.2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: isDark
+                        ? Colors.black.withOpacity(0.2)
+                        : Colors.black.withOpacity(0.02),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
               ),
               padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 24.h),
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(
-                        Icons.grid_view_outlined,
-                        size: 24.r,
-                        color: AppColors.primary,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.grid_view_outlined,
+                            size: 24.r,
+                            color: isDark
+                                ? Colors.white
+                                : const Color(0xFF0F2C59),
+                          ),
+                          SizedBox(width: 12.w),
+                          Text(
+                            AppStrings.departments,
+                            style: AppTextStyles.bodyLarge.copyWith(
+                              fontSize: 18.sp,
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xFF0F2C59),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 12.w),
-                      Text(
-                        AppStrings.departments,
-                        style: AppTextStyles.bodyLarge.copyWith(
-                          fontSize: 18.sp,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
+                      // Decorative plus sign as seen in mockup
+                      Icon(
+                        Icons.add_rounded,
+                        size: 24.r,
+                        color: AppColors.primary.withOpacity(
+                          isDark ? 0.3 : 0.15,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 12.r),
+                  SizedBox(height: 20.r),
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: isLoading ? 18 : departments.length,
+                    itemCount: isLoading ? 24 : orderedList.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: 16.h,
-                      mainAxisSpacing: 16.w,
-                      childAspectRatio: 1.9,
+                      crossAxisSpacing: 16.w,
+                      mainAxisSpacing: 16.h,
+                      childAspectRatio:
+                          1.9, // Squared aspect ratio matches mockup
                     ),
                     itemBuilder: (_, index) {
                       if (isLoading) {
                         return const DepartmentCardShimmer();
                       }
 
-                      return DepartmentCard(
-                        department: departments[index],
-                        isSection: false,
-                        isAdmin: false,
-                        isHorizontal: false,
+                      return AdminDepartmentCard(
+                        department: orderedList[index],
                       );
                     },
                   ),
@@ -90,11 +204,17 @@ class DepartmentListHome extends StatelessWidget {
     );
   }
 
-  (int crossAxisCount, double itemGap) _getCrossAxisCount(double width) {
-    double itemWidth = 212;
-    int crossAxisCount = (width ~/ itemWidth);
-    double itemGap =
-        ((width - (crossAxisCount * itemWidth)) / (crossAxisCount - 1));
-    return (crossAxisCount, itemGap);
+  int _getResponsiveCrossAxisCount(double width) {
+    if (width > 1200) {
+      return 6;
+    } else if (width > 900) {
+      return 5;
+    } else if (width > 700) {
+      return 4;
+    } else if (width > 500) {
+      return 3;
+    } else {
+      return 2;
+    }
   }
 }
