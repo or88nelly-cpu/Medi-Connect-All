@@ -6,6 +6,7 @@ abstract class PatientRemoteDataSource {
   Future<UserModel> createPatient(UserModel patient);
   Future<UserModel> updatePatient(UserModel patient);
   Future<void> deletePatient(String patientId);
+  Future<void> sendToMRD(Map<String, dynamic> record);
 }
 
 class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
@@ -54,5 +55,10 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
         .from('users')
         .update({'deleted_at': DateTime.now().toIso8601String()})
         .eq('id', patientId);
+  }
+
+  @override
+  Future<void> sendToMRD(Map<String, dynamic> record) async {
+    await _supabase.from('emr_records').insert(record);
   }
 }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/themes/app_strings.dart';
+import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/app_responsive.dart';
-import 'package:medi_connect/core/common_widgets/common_app_bar.dart';
 import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
@@ -67,7 +69,13 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                     SizedBox(height: 20.h),
                     CustomerCareStatsGrid(stats: stats),
                     SizedBox(height: 20.h),
-                    const CustomerCareActionsGrid(),
+                    CustomerCareActionsGrid(
+                      onActionClick: (title) {
+                        if (title == AppStrings.register) {
+                          context.push(RouteNames.patientRegistration);
+                        }
+                      },
+                    ),
                     SizedBox(height: 20.h),
                     CustomerCareChartsSection(stats: stats),
                     SizedBox(height: 20.h),

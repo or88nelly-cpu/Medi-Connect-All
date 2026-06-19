@@ -14,6 +14,7 @@ class RouteNames {
   static const doctorDashboard = '/doctor/dashboard';
   static const staffDashboard = '/staff/dashboard';
   static const adminDashboard = '/admin/dashboard';
+  static const patientRegistration = '/customer-care/patient-registration';
 
   // Inner feature screens
   static const appointments = 'appointments';

@@ -33,6 +33,17 @@ class DeletePatient extends PatientEvent {
   List<Object?> get props => [patientId];
 }
 
+class RegisterPatientAndSendToMRD extends PatientEvent {
+  final UserModel patient;
+  final Map<String, dynamic> mrdRecord;
+  const RegisterPatientAndSendToMRD({
+    required this.patient,
+    required this.mrdRecord,
+  });
+  @override
+  List<Object?> get props => [patient, mrdRecord];
+}
+
 // STATES
 abstract class PatientState extends Equatable {
   const PatientState();
@@ -69,6 +80,7 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
     on<CreatePatient>(_onCreatePatient);
     on<UpdatePatient>(_onUpdatePatient);
     on<DeletePatient>(_onDeletePatient);
+    on<RegisterPatientAndSendToMRD>(_onRegisterPatientAndSendToMRD);
   }
 
   Future<void> _onLoadPatients(
@@ -117,5 +129,23 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
       emit(PatientActionSuccess());
       add(LoadPatients());
     });
+  }
+
+  Future<void> _onRegisterPatientAndSendToMRD(
+    RegisterPatientAndSendToMRD event,
+    Emitter<PatientState> emit,
+  ) async {
+    emit(PatientLoading());
+    final result = await _repository.registerPatientAndSendToMRD(
+      event.patient,
+      event.mrdRecord,
+    );
+    result.fold(
+      (failure) => emit(PatientError(failure.message)),
+      (_) {
+        emit(PatientActionSuccess());
+        add(LoadPatients());
+      },
+    );
   }
 }

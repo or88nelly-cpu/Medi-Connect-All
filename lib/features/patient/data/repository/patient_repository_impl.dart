@@ -56,4 +56,20 @@ class PatientRepositoryImpl implements PatientRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> registerPatientAndSendToMRD(
+    UserModel patient,
+    Map<String, dynamic> mrdRecord,
+  ) async {
+    try {
+      await _remoteDataSource.createPatient(patient);
+      await _remoteDataSource.sendToMRD(mrdRecord);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, code: e.code));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -7,4 +7,8 @@ abstract class PatientRepository {
   Future<Either<Failure, UserModel>> createPatient(UserModel patient);
   Future<Either<Failure, UserModel>> updatePatient(UserModel patient);
   Future<Either<Failure, void>> deletePatient(String patientId);
+  Future<Either<Failure, void>> registerPatientAndSendToMRD(
+    UserModel patient,
+    Map<String, dynamic> mrdRecord,
+  );
 }
