@@ -786,7 +786,7 @@ class _SettingsDashCard extends StatelessWidget {
     final isDark = AppColors.isDark(context);
 
     return GestureDetector(
-      onTap: () => context.go(RouteNames.staffSettings),
+      onTap: () => context.push(RouteNames.staffSettings),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
         decoration: BoxDecoration(
