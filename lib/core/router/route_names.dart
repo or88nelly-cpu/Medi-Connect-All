@@ -18,6 +18,7 @@ class RouteNames {
   static const patientRegistrationRecordDetail =
       '/emrd/patient-registration-detail';
   static const adminSettings = '/admin/settings';
+  static const staffSettings = '/staff/settings';
 
   // Inner feature screens
   static const appointments = 'appointments';

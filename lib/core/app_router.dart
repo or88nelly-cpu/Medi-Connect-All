@@ -36,6 +36,7 @@ import 'package:medi_connect/modules/admin/home/admin_home_page.dart';
 import 'package:medi_connect/modules/departments/customer_care/presentation/pages/patient_registration_page.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/patient_registration_record_detail_page.dart';
 import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_settings_page.dart';
+import 'package:medi_connect/modules/staff/patient/pages/staff_patient_registration.dart';
 
 class AppRouterConfig {
   static GoRouter buildRouter() {
@@ -97,6 +98,10 @@ class AppRouterConfig {
         GoRoute(
           path: '/admin/pharmacy',
           builder: (context, state) => const AdminPharmacyPage(),
+        ),
+         GoRoute(
+          path: '/staff/patientRegistration',
+          builder: (context, state) => const StaffPatientRegistration(),
         ),
         GoRoute(
           path: '/admin/labs',
@@ -183,6 +188,11 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: RouteNames.adminSettings,
+          builder: (context, state) =>
+              const AdminSettingsPage(isStandalone: true),
+        ),
+        GoRoute(
+          path: RouteNames.staffSettings,
           builder: (context, state) =>
               const AdminSettingsPage(isStandalone: true),
         ),
