@@ -4,11 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/utils/validation_utils.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/features/auth/presentation/widgets/terminal_text_field.dart';
 
 class LoginForm extends StatefulWidget {
   final TextEditingController? email;
@@ -28,265 +26,336 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool _isPasswordObscured = true;
-  bool _rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // ── Title ──
+        Text(
+          'Login to your account',
+          style: AppTextStyles.headingSmall.copyWith(
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary(context),
+          ),
+        ),
+        SizedBox(height: 24.h),
 
-    // Theme-based colors from AppColors
-    final cardBgColor = isDark
-        ? AppColors.terminalDarkCard
-        : AppColors.terminalLightCard;
-    final cardBorderColor = isDark
-        ? AppColors.terminalDarkBorder
-        : AppColors.terminalLightBorder;
-    final textColor = isDark
-        ? AppColors.terminalDarkText
-        : AppColors.terminalLightText;
-    final labelColor = isDark
-        ? AppColors.terminalDarkLabel
-        : AppColors.terminalLightLabel;
-    final textfieldBgColor = isDark
-        ? AppColors.terminalDarkFieldFill
-        : AppColors.terminalLightFieldFill;
-    final textfieldBorderColor = isDark
-        ? AppColors.terminalDarkFieldBorder
-        : AppColors.terminalLightFieldBorder;
-    final textfieldHintColor = isDark
-        ? AppColors.terminalDarkFieldHint
-        : AppColors.terminalLightFieldHint;
-    final checkboxTextColor = isDark
-        ? AppColors.terminalDarkCheckboxText
-        : AppColors.terminalLightCheckboxText;
-    final footerTextColor = isDark
-        ? AppColors.terminalDarkFooterText
-        : AppColors.terminalLightFooterText;
+        // ── Email / Mobile Field ──
+        _buildTextField(
+          controller: widget.email,
+          hint: 'Email or Mobile Number',
+          prefixIcon: Icons.mail_outline_rounded,
+          validator: (val) =>
+              ValidationUtils.validateRequired(val, 'This field is required'),
+        ),
+        SizedBox(height: 14.h),
 
-    return Container(
-      padding: EdgeInsets.all(24.r),
-      decoration: BoxDecoration(
-        color: cardBgColor,
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: cardBorderColor, width: 1.0),
-        boxShadow: isDark
-            ? null
-            : [
+        // ── Password Field ──
+        _buildTextField(
+          controller: widget.password,
+          hint: 'Password',
+          prefixIcon: Icons.lock_outline_rounded,
+          isPassword: true,
+          validator: ValidationUtils.validatePassword,
+        ),
+        SizedBox(height: 8.h),
+
+        // ── Forgot Password ──
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () => context.push(RouteNames.forgotPassword),
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Text(
+              'Forgot Password?',
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.primary,
+                fontWeight: FontWeight.w600,
+                fontSize: 12.sp,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 20.h),
+
+        // ── Login Button ──
+        _buildLoginButton(),
+        SizedBox(height: 20.h),
+
+        // ── Divider "or" ──
+        _buildOrDivider(),
+        SizedBox(height: 20.h),
+
+        // ── Social Buttons ──
+        _buildSocialButtons(),
+        SizedBox(height: 24.h),
+
+        // ── Sign Up Link ──
+        _buildSignUpLink(),
+      ],
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // TEXT FIELD
+  // ──────────────────────────────────────────
+  Widget _buildTextField({
+    required TextEditingController? controller,
+    required String hint,
+    required IconData prefixIcon,
+    bool isPassword = false,
+    FormFieldValidator<String>? validator,
+  }) {
+    final borderColor = AppColors.border(context);
+
+    return TextFormField(
+      controller: controller,
+      obscureText: isPassword && _isPasswordObscured,
+      validator: validator,
+      style: AppTextStyles.bodyMedium.copyWith(
+        color: AppColors.textPrimary(context),
+        fontSize: 14.sp,
+      ),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary(context).withValues(alpha: 0.6),
+          fontSize: 14.sp,
+        ),
+        prefixIcon: Padding(
+          padding: EdgeInsets.only(left: 14.w, right: 10.w),
+          child: Icon(
+            prefixIcon,
+            color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+            size: 20.r,
+          ),
+        ),
+        prefixIconConstraints: BoxConstraints(minWidth: 44.w),
+        suffixIcon: isPassword
+            ? GestureDetector(
+                onTap: () =>
+                    setState(() => _isPasswordObscured = !_isPasswordObscured),
+                child: Padding(
+                  padding: EdgeInsets.only(right: 12.w),
+                  child: Icon(
+                    _isPasswordObscured
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color:
+                        AppColors.textSecondary(context).withValues(alpha: 0.5),
+                    size: 20.r,
+                  ),
+                ),
+              )
+            : null,
+        suffixIconConstraints:
+            isPassword ? BoxConstraints(minWidth: 44.w) : null,
+        filled: true,
+        fillColor: AppColors.background(context),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.h,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: borderColor, width: 1),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.error, width: 1),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.error, width: 1.5),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+      ),
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // LOGIN BUTTON
+  // ──────────────────────────────────────────
+  Widget _buildLoginButton() {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final isLoading = state is AuthLoading;
+        return GestureDetector(
+          onTap: isLoading ? null : widget.onLoginPressed,
+          child: Container(
+            width: double.infinity,
+            height: 52.h,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF4F6EFF),
+                  Color(0xFF3B5BFD),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(14.r),
+              boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
                 ),
               ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            AppStrings.authRequired,
-            style: AppTextStyles.terminalBodyLarge.copyWith(
-              color: textColor,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
             ),
-          ),
-          SizedBox(height: 12.h),
-          Container(height: 1.0, color: cardBorderColor),
-          SizedBox(height: 24.h),
-
-          // Terminal ID (Email)
-          TerminalTextField(
-            labelText: AppStrings.terminalIdLabel,
-            controller: widget.email,
-            hintText: AppStrings.terminalIdHint,
-            labelColor: labelColor,
-            textColor: textColor,
-            bgColor: textfieldBgColor,
-            borderColor: textfieldBorderColor,
-            hintColor: textfieldHintColor,
-            validator: (val) =>
-                ValidationUtils.validateRequired(val, AppStrings.requiredField),
-          ),
-          SizedBox(height: 16.h),
-
-          // Access Key (Password)
-          TerminalTextField(
-            labelText: AppStrings.accessKeyLabel,
-            prefixIcon: Icons.lock_outline,
-            controller: widget.password,
-            hintText: AppStrings.passwordHintDots,
-            isPassword: true,
-            isPasswordObscured: _isPasswordObscured,
-            labelColor: labelColor,
-            textColor: textColor,
-            bgColor: textfieldBgColor,
-            borderColor: textfieldBorderColor,
-            hintColor: textfieldHintColor,
-            onToggleVisibility: () {
-              setState(() {
-                _isPasswordObscured = !_isPasswordObscured;
-              });
-            },
-            rightLabelWidget: GestureDetector(
-              onTap: () => context.push(RouteNames.forgotPassword),
-              child: Text(
-                AppStrings.forgotLabel,
-                style: AppTextStyles.terminalMonospaceLabel.copyWith(
-                  color: labelColor,
-                  fontSize: 11.sp,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-            validator: ValidationUtils.validatePassword,
-          ),
-          SizedBox(height: 20.h),
-
-          // Checkbox
-          Row(
-            children: [
-              Theme(
-                data: ThemeData(unselectedWidgetColor: textfieldBorderColor),
-                child: SizedBox(
-                  width: 20.r,
-                  height: 20.r,
-                  child: Checkbox(
-                    value: _rememberMe,
-                    activeColor: AppColors.terminalAccentCyan,
-                    checkColor: isDark
-                        ? AppColors.terminalDarkBg
-                        : Colors.white,
-                    side: BorderSide(color: textfieldBorderColor, width: 1.5),
-                    onChanged: (val) {
-                      setState(() {
-                        _rememberMe = val ?? false;
-                      });
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(width: 8.w),
-              Text(
-                AppStrings.persistentSession,
-                style: AppTextStyles.terminalBodyMedium.copyWith(
-                  color: checkboxTextColor,
-                  fontSize: 13.sp,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 24.h),
-
-          // Button
-          BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              final isLoading = state is AuthLoading;
-              return InkWell(
-                onTap: isLoading ? null : widget.onLoginPressed,
-                borderRadius: BorderRadius.circular(6.r),
-                child: Container(
-                  width: double.infinity,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.terminalAccentCyan,
-                    borderRadius: BorderRadius.circular(6.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.terminalAccentCyan.withValues(
-                          alpha: 0.3,
-                        ),
-                        blurRadius: 10,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                  alignment: Alignment.center,
-                  child: isLoading
-                      ? SizedBox(
-                          width: 20.r,
-                          height: 20.r,
-                          child: CircularProgressIndicator(
-                            color: isDark
-                                ? AppColors.terminalDarkBg
-                                : Colors.white,
-                            strokeWidth: 2.0,
-                          ),
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.dns_outlined,
-                              color: isDark
-                                  ? AppColors.terminalDarkBg
-                                  : Colors.white,
-                              size: 20.r,
-                            ),
-                            SizedBox(width: 10.w),
-                            Text(
-                              AppStrings.initializeAccess,
-                              style: AppTextStyles.labelMedium.copyWith(
-                                color: isDark
-                                    ? AppColors.terminalDarkBg
-                                    : Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 24.h),
-
-          // Card Footer details
-          Center(
-            child: Text(
-              AppStrings.terminalLocationNode,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.terminalBodySmall.copyWith(
-                color: footerTextColor,
-                fontSize: 11.sp,
-                height: 1.5,
-                letterSpacing: 0.5,
-              ),
-            ),
-          ),
-          SizedBox(height: 16.h),
-
-          // Register Option
-          Container(height: 1.0, color: cardBorderColor),
-          SizedBox(height: 16.h),
-          Center(
-            child: GestureDetector(
-              onTap: () => context.push(RouteNames.register),
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: AppTextStyles.terminalBodySmall.copyWith(
-                    color: footerTextColor,
-                    fontSize: 12.sp,
-                  ),
-                  children: const [
-                    TextSpan(text: AppStrings.unregistered),
-                    TextSpan(
-                      text: AppStrings.requestAccessSignUp,
-                      style: TextStyle(
-                        color: AppColors.terminalAccentCyan,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
+            alignment: Alignment.center,
+            child: isLoading
+                ? SizedBox(
+                    width: 22.r,
+                    height: 22.r,
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2.5,
                     ),
-                  ],
-                ),
+                  )
+                : Text(
+                    'Login',
+                    style: AppTextStyles.buttonLarge.copyWith(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+          ),
+        );
+      },
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // "or" DIVIDER
+  // ──────────────────────────────────────────
+  Widget _buildOrDivider() {
+    return Row(
+      children: [
+        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Text(
+            'or',
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary(context),
+              fontSize: 13.sp,
+            ),
+          ),
+        ),
+        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
+      ],
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // SOCIAL BUTTONS
+  // ──────────────────────────────────────────
+  Widget _buildSocialButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildSocialButton(
+            label: 'Continue with Google',
+            textLabel: 'G',
+            textColor: const Color(0xFFEA4335),
+          ),
+        ),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: _buildSocialButton(
+            label: 'Continue with Apple',
+            icon: Icons.apple_rounded,
+            iconColor: AppColors.textPrimary(context),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialButton({
+    required String label,
+    String? textLabel,
+    Color? textColor,
+    IconData? icon,
+    Color? iconColor,
+  }) {
+    return OutlinedButton(
+      onPressed: () {},
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
+        side: BorderSide(color: AppColors.border(context)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (textLabel != null)
+            Text(
+              textLabel,
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+                color: textColor,
+              ),
+            )
+          else if (icon != null)
+            Icon(icon, size: 20.r, color: iconColor),
+          SizedBox(width: 8.w),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.textPrimary(context),
+                fontWeight: FontWeight.w600,
+                fontSize: 12.sp,
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // SIGN UP LINK
+  // ──────────────────────────────────────────
+  Widget _buildSignUpLink() {
+    return Center(
+      child: GestureDetector(
+        onTap: () => context.push(RouteNames.register),
+        child: RichText(
+          text: TextSpan(
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary(context),
+              fontSize: 13.sp,
+            ),
+            children: [
+              const TextSpan(text: "Don't have an account?  "),
+              TextSpan(
+                text: 'Sign Up',
+                style: TextStyle(
+                  color: AppColors.textPrimary(context),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

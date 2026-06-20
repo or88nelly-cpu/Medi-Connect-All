@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/core/utils/validation_utils.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/features/auth/presentation/widgets/terminal_text_field.dart';
 
 class SignUpForm extends StatefulWidget {
   final TextEditingController nameController;
@@ -41,407 +41,418 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final _isPasswordObscured = ValueNotifier<bool>(true);
-
-  @override
-  void dispose() {
-    _isPasswordObscured.dispose();
-    super.dispose();
-  }
+  bool _isPasswordObscured = true;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    // Theme-based colors from AppColors
-    final textColor = isDark
-        ? AppColors.terminalDarkText
-        : AppColors.terminalLightText;
-    final labelColor = isDark
-        ? AppColors.terminalDarkLabel
-        : AppColors.terminalLightLabel;
-    final textfieldBgColor = isDark
-        ? AppColors.terminalDarkFieldFill
-        : AppColors.terminalLightFieldFill;
-    final textfieldBorderColor = isDark
-        ? AppColors.terminalDarkFieldBorder
-        : AppColors.terminalLightFieldBorder;
-    final textfieldHintColor = isDark
-        ? AppColors.terminalDarkFieldHint
-        : AppColors.terminalLightFieldHint;
-    final checkboxTextColor = isDark
-        ? AppColors.terminalDarkCheckboxText
-        : AppColors.terminalLightCheckboxText;
-    final footerTextColor = isDark
-        ? AppColors.terminalDarkFooterText
-        : AppColors.terminalLightFooterText;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // SELECT YOUR ROLE Label
+        // ── Role selection title ──
         Text(
-          AppStrings.selectYourRole,
-          style: AppTextStyles.terminalMonospaceLabel.copyWith(
-            color: labelColor,
-            fontSize: 11.sp,
+          'Choose your user type',
+          style: AppTextStyles.labelMedium.copyWith(
+            color: AppColors.textPrimary(context),
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
           ),
         ),
         SizedBox(height: 12.h),
 
-        // 2x2 Grid of Roles
-        _buildRoleGrid(widget.selectedRole, labelColor),
+        // ── Role cards row ──
+        _buildRoleSelector(),
         SizedBox(height: 24.h),
 
-        // Input fields
-        TerminalTextField(
-          labelText: AppStrings.legalNameLabel,
-          controller: widget.nameController,
-          hintText: AppStrings.legalNameHint,
-          labelColor: labelColor,
-          textColor: textColor,
-          bgColor: textfieldBgColor,
-          borderColor: textfieldBorderColor,
-          hintColor: textfieldHintColor,
-          prefixIcon: Icons.person_outline,
-          validator: (val) =>
-              ValidationUtils.validateRequired(val, AppStrings.requiredField),
-        ),
-        SizedBox(height: 16.h),
-
-        TerminalTextField(
-          labelText: AppStrings.clinicalEmailLabel,
+        // ── Email field ──
+        _buildTextField(
           controller: widget.emailController,
-          hintText: AppStrings.clinicalEmailHint,
-          labelColor: labelColor,
-          textColor: textColor,
-          bgColor: textfieldBgColor,
-          borderColor: textfieldBorderColor,
-          hintColor: textfieldHintColor,
-          prefixIcon: Icons.email_outlined,
+          label: 'Email Address',
+          hint: 'Enter your email address',
+          prefixIcon: Icons.mail_outline_rounded,
           validator: ValidationUtils.validateEmail,
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 14.h),
 
-        ValueListenableBuilder<bool>(
-          valueListenable: _isPasswordObscured,
-          builder: (context, passwordObscured, _) {
-            return TerminalTextField(
-              labelText: AppStrings.securityPasswordLabel,
-              controller: widget.passwordController,
-              hintText: AppStrings.passwordHintDots,
-              isPassword: true,
-              isPasswordObscured: passwordObscured,
-              labelColor: labelColor,
-              textColor: textColor,
-              bgColor: textfieldBgColor,
-              borderColor: textfieldBorderColor,
-              hintColor: textfieldHintColor,
-              prefixIcon: Icons.lock_outline,
-              onToggleVisibility: () {
-                _isPasswordObscured.value = !_isPasswordObscured.value;
-              },
-              validator: ValidationUtils.validatePassword,
-            );
-          },
+        // ── Phone Number field ──
+        if (widget.phoneController != null) ...[
+          _buildTextField(
+            controller: widget.phoneController,
+            label: 'Phone Number',
+            hint: 'Enter your phone number',
+            prefixIcon: Icons.phone_outlined,
+            keyboardType: TextInputType.phone,
+            validator: ValidationUtils.validatePhone,
+          ),
+          SizedBox(height: 14.h),
+        ],
+
+        // ── Password field ──
+        _buildTextField(
+          controller: widget.passwordController,
+          label: 'Password',
+          hint: 'Create a password',
+          prefixIcon: Icons.lock_outline_rounded,
+          isPassword: true,
+          validator: ValidationUtils.validatePassword,
         ),
+        SizedBox(height: 22.h),
+
+        // ── Create Account Button ──
+        _buildCreateAccountButton(),
         SizedBox(height: 20.h),
 
-        // Agreement checkbox
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Theme(
-              data: ThemeData(unselectedWidgetColor: textfieldBorderColor),
-              child: SizedBox(
-                width: 20.r,
-                height: 20.r,
-                child: Checkbox(
-                  value: widget.isAgreed,
-                  activeColor: AppColors.terminalAccentCyan,
-                  checkColor: isDark ? AppColors.terminalDarkBg : Colors.white,
-                  side: BorderSide(color: textfieldBorderColor, width: 1.5),
-                  onChanged: (val) {
-                    widget.onAgreedChanged(val ?? false);
-                  },
-                ),
-              ),
-            ),
-            SizedBox(width: 10.w),
-            Expanded(
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: checkboxTextColor,
-                    fontSize: 12.sp,
-                    height: 1.4,
-                  ),
-                  children: const [
-                    TextSpan(text: AppStrings.hipaaAcknowledgePrefix),
-                    TextSpan(
-                      text: AppStrings.hipaaComplianceTerms,
-                      style: TextStyle(
-                        color: AppColors.terminalAccentCyan,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextSpan(text: AppStrings.andGeneral),
-                    TextSpan(
-                      text: AppStrings.privacyProtocol,
-                      style: TextStyle(
-                        color: AppColors.terminalAccentCyan,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextSpan(text: AppStrings.forMedicalDataHandling),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+        // ── Divider "or" ──
+        _buildOrDivider(),
+        SizedBox(height: 20.h),
+
+        // ── Google signup button ──
+        _buildGoogleButton(),
         SizedBox(height: 24.h),
 
-        // Finalize Registration Button
-        BlocBuilder<AuthBloc, AuthState>(
-          builder: (context, state) {
-            final isLoading = state is AuthLoading;
-            return InkWell(
-              onTap: isLoading ? null : widget.onRegisterPressed,
-              borderRadius: BorderRadius.circular(6.r),
-              child: Container(
-                width: double.infinity,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: AppColors.terminalAccentCyan,
-                  borderRadius: BorderRadius.circular(6.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.terminalAccentCyan.withValues(
-                        alpha: 0.3,
-                      ),
-                      blurRadius: 10,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-                alignment: Alignment.center,
-                child: isLoading
-                    ? SizedBox(
-                        width: 20.r,
-                        height: 20.r,
-                        child: CircularProgressIndicator(
-                          color: isDark
-                              ? AppColors.terminalDarkBg
-                              : Colors.white,
-                          strokeWidth: 2.0,
-                        ),
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppStrings.finalizeRegistration,
-                            style: AppTextStyles.labelMedium.copyWith(
-                              color: isDark
-                                  ? AppColors.terminalDarkBg
-                                  : Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.sp,
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: isDark
-                                ? AppColors.terminalDarkBg
-                                : Colors.white,
-                            size: 18.r,
-                          ),
-                        ],
-                      ),
-              ),
-            );
-          },
-        ),
-        SizedBox(height: 32.h),
-
-        // Footer System Warning details
-        Center(
-          child: Column(
-            children: [
-              Text(
-                AppStrings.clinicalOpsVersion,
-                style: AppTextStyles.terminalBodySmall.copyWith(
-                  color: footerTextColor,
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                AppStrings.secureEncryptedEnv,
-                style: AppTextStyles.terminalMonospaceLabel.copyWith(
-                  color: footerTextColor,
-                  fontSize: 9.sp,
-                  letterSpacing: 0.8,
-                ),
-              ),
-            ],
-          ),
-        ),
+        // ── Login link ──
+        _buildLoginLink(),
       ],
     );
   }
 
-  Widget _buildRoleGrid(String selectedRole, Color labelColor) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            _buildRoleCard(
-              label: "Staff",
-              subtext: "Operational Access",
-              icon: Icons.badge_outlined,
-              isSelected: selectedRole == 'staff',
-              labelColor: labelColor,
-              onTap: () => widget.onRoleChanged('staff'),
+  // ──────────────────────────────────────────
+  // ROLE SELECTOR
+  // ──────────────────────────────────────────
+  Widget _buildRoleSelector() {
+    final roles = [
+      _RoleData('patient', 'Patient', 'For individuals', Icons.person_outline_rounded),
+      _RoleData('doctor', 'Doctor', 'For healthcare\nprofessionals', Icons.medical_services_outlined),
+      _RoleData('staff', 'Staff', 'For hospital\nstaff members', Icons.badge_outlined),
+    ];
+
+    return Row(
+      children: roles
+          .map(
+            (role) => Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: role == roles.last ? 0 : 10.w,
+                ),
+                child: _buildRoleCard(role),
+              ),
             ),
-            SizedBox(width: 12.w),
-            _buildRoleCard(
-              label: "Patient",
-              subtext: "Health Records",
-              icon: Icons.person_search_outlined,
-              isSelected: selectedRole == 'patient',
-              labelColor: labelColor,
-              onTap: () => widget.onRoleChanged('patient'),
-            ),
-          ],
-        ),
-        SizedBox(height: 12.h),
-        Row(
-          children: [
-            _buildRoleCard(
-              label: "Doctor",
-              subtext: "Clinical Tools",
-              icon: Icons.medical_services_outlined,
-              isSelected: selectedRole == 'doctor',
-              labelColor: labelColor,
-              onTap: () => widget.onRoleChanged('doctor'),
-            ),
-            SizedBox(width: 12.w),
-            _buildRoleCard(
-              label: "Admin",
-              subtext: "System Control",
-              icon: Icons.security_outlined,
-              isSelected: selectedRole == 'admin',
-              labelColor: labelColor,
-              onTap: () => widget.onRoleChanged('admin'),
-            ),
-          ],
-        ),
-      ],
+          )
+          .toList(),
     );
   }
 
-  Widget _buildRoleCard({
-    required String label,
-    required String subtext,
-    required IconData icon,
-    required bool isSelected,
-    required Color labelColor,
-    required VoidCallback onTap,
-  }) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBgColor = isDark
-        ? AppColors.terminalDarkCard
-        : AppColors.terminalLightCard;
-    final cardBorderColor = isDark
-        ? AppColors.terminalDarkBorder
-        : AppColors.terminalLightBorder;
-    final cardTextColor = isDark
-        ? AppColors.terminalDarkText
-        : AppColors.terminalLightText;
+  Widget _buildRoleCard(_RoleData role) {
+    final isSelected = widget.selectedRole == role.key;
 
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          height: 130.r,
-          decoration: BoxDecoration(
-            color: cardBgColor,
-            borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(
-              color: isSelected
-                  ? AppColors.terminalAccentCyan
-                  : cardBorderColor,
-              width: isSelected ? 1.5 : 1.0,
-            ),
-            boxShadow: isDark
-                ? null
-                : [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.03),
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
+    return GestureDetector(
+      onTap: () => widget.onRoleChanged(role.key),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary.withValues(alpha: 0.06)
+              : AppColors.background(context),
+          borderRadius: BorderRadius.circular(14.r),
+          border: Border.all(
+            color: isSelected
+                ? AppColors.primary
+                : AppColors.border(context),
+            width: isSelected ? 1.5 : 1,
           ),
-          child: Stack(
-            children: [
-              if (isSelected)
-                Positioned(
-                  left: 0,
-                  top: 20.h,
-                  bottom: 20.h,
-                  child: Container(
-                    width: 4.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.terminalAccentCyan,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(2.r),
-                        bottomRight: Radius.circular(2.r),
-                      ),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  role.icon,
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.textSecondary(context),
+                  size: 22.r,
+                ),
+                // Radio indicator
+                Container(
+                  width: 18.r,
+                  height: 18.r,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.border(context),
+                      width: isSelected ? 5 : 1.5,
                     ),
+                    color: isSelected
+                        ? Colors.white
+                        : Colors.transparent,
                   ),
                 ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      icon,
-                      color: isSelected
-                          ? AppColors.terminalAccentCyan
-                          : labelColor,
-                      size: 20.r,
+              ],
+            ),
+            SizedBox(height: 10.h),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    role.label,
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: AppColors.textPrimary(context),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13.sp,
                     ),
-                    SizedBox(height: 6.h),
-                    Text(
-                      label,
-                      style: TextStyle(
-                        color: cardTextColor,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    role.subtitle,
+                    style: AppTextStyles.bodyXSmall.copyWith(
+                      color: AppColors.textSecondary(context),
+                      fontSize: 10.sp,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // TEXT FIELD
+  // ──────────────────────────────────────────
+  Widget _buildTextField({
+    required TextEditingController? controller,
+    required String label,
+    required String hint,
+    required IconData prefixIcon,
+    bool isPassword = false,
+    TextInputType? keyboardType,
+    FormFieldValidator<String>? validator,
+  }) {
+    final borderColor = AppColors.border(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          controller: controller,
+          obscureText: isPassword && _isPasswordObscured,
+          keyboardType: keyboardType,
+          validator: validator,
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textPrimary(context),
+            fontSize: 14.sp,
+          ),
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary(context),
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+            ),
+            hintText: hint,
+            hintStyle: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+              fontSize: 13.sp,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(left: 14.w, right: 10.w),
+              child: Icon(
+                prefixIcon,
+                color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+                size: 20.r,
+              ),
+            ),
+            prefixIconConstraints: BoxConstraints(minWidth: 44.w),
+            suffixIcon: isPassword
+                ? GestureDetector(
+                    onTap: () => setState(
+                        () => _isPasswordObscured = !_isPasswordObscured),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 12.w),
+                      child: Icon(
+                        _isPasswordObscured
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: AppColors.textSecondary(context)
+                            .withValues(alpha: 0.5),
+                        size: 20.r,
                       ),
                     ),
-                    SizedBox(height: 2.h),
-                    Text(
-                      subtext,
-                      style: TextStyle(
-                        color: AppColors.terminalDarkFooterText,
-                        fontSize: 10.sp,
-                        fontFamily: 'monospace',
-                      ),
+                  )
+                : null,
+            suffixIconConstraints:
+                isPassword ? BoxConstraints(minWidth: 44.w) : null,
+            filled: true,
+            fillColor: AppColors.background(context),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 16.h,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: borderColor, width: 1),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.error, width: 1),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.error, width: 1.5),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // CREATE ACCOUNT BUTTON
+  // ──────────────────────────────────────────
+  Widget _buildCreateAccountButton() {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final isLoading = state is AuthLoading;
+        return GestureDetector(
+          onTap: isLoading ? null : widget.onRegisterPressed,
+          child: Container(
+            width: double.infinity,
+            height: 52.h,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF4F6EFF),
+                  Color(0xFF7B61FF),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(14.r),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: isLoading
+                ? SizedBox(
+                    width: 22.r,
+                    height: 22.r,
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2.5,
                     ),
-                  ],
+                  )
+                : Text(
+                    'Create Account',
+                    style: AppTextStyles.buttonLarge.copyWith(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+          ),
+        );
+      },
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // "or" DIVIDER
+  // ──────────────────────────────────────────
+  Widget _buildOrDivider() {
+    return Row(
+      children: [
+        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Text(
+            'or',
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary(context),
+              fontSize: 13.sp,
+            ),
+          ),
+        ),
+        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
+      ],
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // GOOGLE BUTTON
+  // ──────────────────────────────────────────
+  Widget _buildGoogleButton() {
+    return OutlinedButton(
+      onPressed: () {},
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 14.h),
+        side: BorderSide(color: AppColors.border(context)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'G',
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xFFEA4335),
+            ),
+          ),
+          SizedBox(width: 10.w),
+          Text(
+            'Sign up with Google',
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textPrimary(context),
+              fontWeight: FontWeight.w600,
+              fontSize: 14.sp,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ──────────────────────────────────────────
+  // LOGIN LINK
+  // ──────────────────────────────────────────
+  Widget _buildLoginLink() {
+    return Center(
+      child: GestureDetector(
+        onTap: () => context.go(RouteNames.login),
+        child: RichText(
+          text: TextSpan(
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary(context),
+              fontSize: 13.sp,
+            ),
+            children: [
+              const TextSpan(text: 'Already have an account?  '),
+              TextSpan(
+                text: 'Login',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
@@ -450,4 +461,12 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
+}
+
+class _RoleData {
+  final String key;
+  final String label;
+  final String subtitle;
+  final IconData icon;
+  const _RoleData(this.key, this.label, this.subtitle, this.icon);
 }
