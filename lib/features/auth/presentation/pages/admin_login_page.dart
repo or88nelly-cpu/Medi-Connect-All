@@ -308,7 +308,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
       children: badges
           .map(
             (b) => Padding(
-              padding: EdgeInsets.only(right: 12.w),
+              padding: EdgeInsets.only(
+                right: AppResponsive.isDesktop(context) ? 12.w : 10.w,
+              ),
               child: _buildBadge(b),
             ),
           )
@@ -317,28 +319,35 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   }
 
   Widget _buildBadge(_BadgeData data) {
+    bool isDesktop = AppResponsive.isDesktop(context);
     return Column(
       children: [
         Container(
-          width: 52.r,
-          height: 52.r,
+          width: isDesktop ? 52.r : 40.r,
+          height: isDesktop ? 52.r : 40.r,
           decoration: BoxDecoration(
             color: data.color.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(14.r),
+            borderRadius: BorderRadius.circular(isDesktop ? 14.r : 8.r),
             border: Border.all(
               color: data.color.withValues(alpha: 0.15),
               width: 1,
             ),
           ),
-          child: Icon(data.icon, color: data.color, size: 24.r),
+          child: Icon(
+            data.icon,
+            color: data.color,
+            size: isDesktop ? 24.r : 18.r,
+          ),
         ),
         SizedBox(height: 6.h),
-        Text(
-          data.label,
-          style: AppTextStyles.bodyXSmall.copyWith(
-            fontWeight: FontWeight.w600,
-            color: AppColors.textSecondary(context),
-            fontSize: 10.sp,
+        SizedBox(
+          child: Text(
+            data.label,
+            style: AppTextStyles.bodyXSmall.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textSecondary(context),
+              fontSize: AppResponsive.isDesktop(context) ? 10.sp : 8.sp,
+            ),
           ),
         ),
       ],

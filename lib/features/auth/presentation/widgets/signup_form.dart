@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/app_responsive.dart';
 import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
@@ -100,14 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
         // ── Create Account Button ──
         _buildCreateAccountButton(),
-        SizedBox(height: 20.h),
 
-        // ── Divider "or" ──
-        _buildOrDivider(),
-        SizedBox(height: 20.h),
-
-        // ── Google signup button ──
-        _buildGoogleButton(),
         SizedBox(height: 24.h),
 
         // ── Login link ──
@@ -121,9 +115,24 @@ class _SignUpFormState extends State<SignUpForm> {
   // ──────────────────────────────────────────
   Widget _buildRoleSelector() {
     final roles = [
-      _RoleData('patient', 'Patient', 'For individuals', Icons.person_outline_rounded),
-      _RoleData('doctor', 'Doctor', 'For healthcare\nprofessionals', Icons.medical_services_outlined),
-      _RoleData('staff', 'Staff', 'For hospital\nstaff members', Icons.badge_outlined),
+      _RoleData(
+        'patient',
+        'Patient',
+        'For individuals',
+        Icons.person_outline_rounded,
+      ),
+      _RoleData(
+        'doctor',
+        'Doctor',
+        'For healthcare\nprofessionals',
+        Icons.medical_services_outlined,
+      ),
+      _RoleData(
+        'staff',
+        'Staff',
+        'For hospital\nstaff members',
+        Icons.badge_outlined,
+      ),
     ];
 
     return Row(
@@ -131,9 +140,7 @@ class _SignUpFormState extends State<SignUpForm> {
           .map(
             (role) => Expanded(
               child: Padding(
-                padding: EdgeInsets.only(
-                  right: role == roles.last ? 0 : 10.w,
-                ),
+                padding: EdgeInsets.only(right: role == roles.last ? 0 : 10.w),
                 child: _buildRoleCard(role),
               ),
             ),
@@ -144,21 +151,23 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Widget _buildRoleCard(_RoleData role) {
     final isSelected = widget.selectedRole == role.key;
+    bool isDesktop = AppResponsive.isDesktop(context);
 
     return GestureDetector(
       onTap: () => widget.onRoleChanged(role.key),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: isDesktop ? 10.w : 6.w,
+          vertical: isDesktop ? 12.h : 6.h,
+        ),
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withValues(alpha: 0.06)
               : AppColors.background(context),
           borderRadius: BorderRadius.circular(14.r),
           border: Border.all(
-            color: isSelected
-                ? AppColors.primary
-                : AppColors.border(context),
+            color: isSelected ? AppColors.primary : AppColors.border(context),
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -172,12 +181,12 @@ class _SignUpFormState extends State<SignUpForm> {
                   color: isSelected
                       ? AppColors.primary
                       : AppColors.textSecondary(context),
-                  size: 22.r,
+                  size: isDesktop ? 22.r : 16.r,
                 ),
                 // Radio indicator
                 Container(
-                  width: 18.r,
-                  height: 18.r,
+                  width: isDesktop ? 18.r : 14.r,
+                  height: isDesktop ? 18.r : 14.r,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
@@ -186,9 +195,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           : AppColors.border(context),
                       width: isSelected ? 5 : 1.5,
                     ),
-                    color: isSelected
-                        ? Colors.white
-                        : Colors.transparent,
+                    color: isSelected ? Colors.white : Colors.transparent,
                   ),
                 ),
               ],
@@ -204,7 +211,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.textPrimary(context),
                       fontWeight: FontWeight.w700,
-                      fontSize: 13.sp,
+                      fontSize: isDesktop ? 13.sp : 11.sp,
                     ),
                   ),
                   SizedBox(height: 2.h),
@@ -212,7 +219,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     role.subtitle,
                     style: AppTextStyles.bodyXSmall.copyWith(
                       color: AppColors.textSecondary(context),
-                      fontSize: 10.sp,
+                      fontSize: isDesktop ? 10.sp : 8.sp,
                       height: 1.3,
                     ),
                   ),
@@ -238,7 +245,7 @@ class _SignUpFormState extends State<SignUpForm> {
     FormFieldValidator<String>? validator,
   }) {
     final borderColor = AppColors.border(context);
-
+    bool isDesktop = AppResponsive.isDesktop(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -255,43 +262,49 @@ class _SignUpFormState extends State<SignUpForm> {
             labelText: label,
             labelStyle: AppTextStyles.bodySmall.copyWith(
               color: AppColors.textSecondary(context),
-              fontSize: 12.sp,
+              fontSize: isDesktop ? 12.sp : 10.sp,
               fontWeight: FontWeight.w600,
             ),
             hintText: hint,
             hintStyle: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textSecondary(context).withValues(alpha: 0.5),
-              fontSize: 13.sp,
+              fontSize: isDesktop ? 13.sp : 11.5.sp,
             ),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             prefixIcon: Padding(
-              padding: EdgeInsets.only(left: 14.w, right: 10.w),
+              padding: EdgeInsets.only(
+                left: isDesktop ? 14.w : 10.w,
+                right: isDesktop ? 10.w : 6.w,
+              ),
               child: Icon(
                 prefixIcon,
                 color: AppColors.textSecondary(context).withValues(alpha: 0.5),
-                size: 20.r,
+                size: isDesktop ? 20.r : 18.r,
               ),
             ),
             prefixIconConstraints: BoxConstraints(minWidth: 44.w),
             suffixIcon: isPassword
                 ? GestureDetector(
                     onTap: () => setState(
-                        () => _isPasswordObscured = !_isPasswordObscured),
+                      () => _isPasswordObscured = !_isPasswordObscured,
+                    ),
                     child: Padding(
                       padding: EdgeInsets.only(right: 12.w),
                       child: Icon(
                         _isPasswordObscured
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
-                        color: AppColors.textSecondary(context)
-                            .withValues(alpha: 0.5),
+                        color: AppColors.textSecondary(
+                          context,
+                        ).withValues(alpha: 0.5),
                         size: 20.r,
                       ),
                     ),
                   )
                 : null,
-            suffixIconConstraints:
-                isPassword ? BoxConstraints(minWidth: 44.w) : null,
+            suffixIconConstraints: isPassword
+                ? BoxConstraints(minWidth: 44.w)
+                : null,
             filled: true,
             fillColor: AppColors.background(context),
             contentPadding: EdgeInsets.symmetric(
@@ -334,10 +347,7 @@ class _SignUpFormState extends State<SignUpForm> {
             height: 52.h,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [
-                  Color(0xFF4F6EFF),
-                  Color(0xFF7B61FF),
-                ],
+                colors: [Color(0xFF4F6EFF), Color(0xFF7B61FF)],
               ),
               borderRadius: BorderRadius.circular(14.r),
               boxShadow: [
@@ -370,66 +380,6 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
         );
       },
-    );
-  }
-
-  // ──────────────────────────────────────────
-  // "or" DIVIDER
-  // ──────────────────────────────────────────
-  Widget _buildOrDivider() {
-    return Row(
-      children: [
-        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Text(
-            'or',
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary(context),
-              fontSize: 13.sp,
-            ),
-          ),
-        ),
-        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
-      ],
-    );
-  }
-
-  // ──────────────────────────────────────────
-  // GOOGLE BUTTON
-  // ──────────────────────────────────────────
-  Widget _buildGoogleButton() {
-    return OutlinedButton(
-      onPressed: () {},
-      style: OutlinedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 14.h),
-        side: BorderSide(color: AppColors.border(context)),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'G',
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFFEA4335),
-            ),
-          ),
-          SizedBox(width: 10.w),
-          Text(
-            'Sign up with Google',
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textPrimary(context),
-              fontWeight: FontWeight.w600,
-              fontSize: 14.sp,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

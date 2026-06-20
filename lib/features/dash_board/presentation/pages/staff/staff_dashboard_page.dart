@@ -2,22 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/router/route_names.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/features/auth/data/models/user_model.dart';
-import 'package:get_it/get_it.dart';
-import 'package:medi_connect/features/department/data/datasource/doctor_staff_remote_datasource.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/common/dashboard_tab_cubit.dart';
-import 'package:medi_connect/features/dash_board/presentation/widgets/navigation/staff_bottom_nav_bar.dart';
 import 'package:medi_connect/features/dash_board/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/utils/profile_image_helper.dart';
-import 'package:medi_connect/core/common_widgets/dialogs/dialogs.dart';
-import 'package:medi_connect/core/themes/theme_cubit.dart';
+import 'package:medi_connect/modules/staff/operations/staff_operations_page.dart';
 
 class StaffDashboardPage extends StatefulWidget {
   const StaffDashboardPage({super.key});
@@ -35,262 +27,152 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DashboardTabCubit(),
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state is Unauthenticated) context.go(RouteNames.login);
-        },
-        child: BlocBuilder<DashboardTabCubit, int>(
-          builder: (context, currentIndex) {
-            return CustomScaffold(
-              appBarNeeded: currentIndex == 0,
-              customAppbar: currentIndex == 0
-                  ? AppBar(
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      title: Text(
-                        AppStrings.staffDashboardTitle,
-                        style: AppTextStyles.titleLarge.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  : null,
-              drawer: const StaffDrawer(),
-              body: IndexedStack(
-                index: currentIndex,
-                children: [
-                  const _StaffHomeTab(),
-                  const _StaffTasksTab(),
-                  const _StaffRosterTab(),
-                  const _StaffAlertsTab(),
-                  const _StaffProfileTab(),
-                ],
-              ),
-              bottomNavigationBar: StaffBottomNavBar(
-                currentIndex: currentIndex,
-                onTap: (i) => context.read<DashboardTabCubit>().setTab(i),
-              ),
-            );
-          },
-        ),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is Unauthenticated) context.go(RouteNames.login);
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.scaffold(context),
+        drawer: const StaffDrawer(),
+        body: const _StaffDashboardBody(),
       ),
     );
   }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Staff Home Tab
+// Dashboard Body
 // ─────────────────────────────────────────────────────────────────────────────
-class _StaffHomeTab extends StatelessWidget {
-  const _StaffHomeTab();
+class _StaffDashboardBody extends StatelessWidget {
+  const _StaffDashboardBody();
 
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _StaffWelcomeBanner(),
-          SizedBox(height: 20.h),
-          Text(
-            "Shift Information",
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 12.h),
-          _StaffShiftCard(),
-          SizedBox(height: 20.h),
-          Text(
-            "My Tasks Overview",
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 12.h),
-          _StaffTasksOverviewCard(),
-        ],
-      ),
-    );
-  }
-}
-
-class _StaffWelcomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         String name = 'Staff Member';
         String? profileImage;
-        String? roleLabel = 'Medical Support';
+        String roleLabel = 'Medical Support';
+        final String greeting = _getGreeting();
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.name ??
+          name = user.name ??
               "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          if (name.isEmpty) name = 'Staff Member';
           profileImage = user.profileImage;
-          roleLabel = user.staffRole ?? 'Administrative Staff';
+          roleLabel = user.staffRole ?? user.department ?? 'Medical Support';
         }
 
-        return Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(20.r),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: AppColors.staffGradient,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(16.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.accent.withValues(alpha: 0.25),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.welcomeUser,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.white70,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      name,
-                      style: AppTextStyles.headingMedium.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      roleLabel,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 16.w),
-              Container(
-                width: 64.r,
-                height: 64.r,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white30, width: 2),
-                ),
-                child: CustomImageView(
-                  imagePath: ProfileImageHelper.resolveImagePath(
-                    profileImage,
-                    'staff',
-                    state is Authenticated ? state.user.gender : null,
-                  ),
-                  borderRadius: 32.r,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _StaffShiftCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        String currentShift = "Day Shift (08:00 AM - 04:00 PM)";
-        String statusLabel = "Active";
-
-        if (state is Authenticated) {
-          final user = UserModel.fromEntity(state.user);
-          final roster = user.metadata?['roster'] as List<dynamic>?;
-          if (roster != null && roster.isNotEmpty) {
-            final days = [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday",
-            ];
-            final currentDayName = days[DateTime.now().weekday - 1];
-            final shiftItem = roster.firstWhere(
-              (item) => item is Map && item['day'] == currentDayName,
-              orElse: () => null,
-            );
-            if (shiftItem != null && shiftItem is Map) {
-              currentShift = (shiftItem['shift'] ?? '').toString();
-              if (currentShift.toLowerCase().contains("off")) {
-                statusLabel = "Off";
-              }
-            }
-          }
-        }
-
-        return Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            side: BorderSide(color: AppColors.border(context)),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(16.r),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Current Shift", style: AppTextStyles.bodySmall),
-                    SizedBox(height: 4.h),
-                    Text(
-                      currentShift,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary(context),
-                      ),
-                    ),
-                  ],
+                _TopBar(
+                  name: name,
+                  profileImage: profileImage,
+                  roleLabel: roleLabel,
+                  greeting: greeting,
+                  state: state,
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: statusLabel == "Off"
-                        ? AppColors.error.withValues(alpha: 0.1)
-                        : AppColors.accent.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(6.r),
-                  ),
-                  child: Text(
-                    statusLabel,
-                    style: TextStyle(
-                      color: statusLabel == "Off"
-                          ? AppColors.error
-                          : AppColors.accent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10.sp,
-                    ),
+                SizedBox(height: 20.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // 2x2 grid for 4 main cards
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _DashCard(
+                              icon: Icons.assignment_outlined,
+                              title: 'Operations',
+                              subtitle:
+                                  'Access all department\noperations and activities',
+                              gradientColors: const [
+                                Color(0xFF3B5BFF),
+                                Color(0xFF6A7FFF),
+                              ],
+                              bgColorLight: const Color(0xFFF0F3FF),
+                              bgColorDark: const Color(0xFF0D1A38),
+                              accentColor: const Color(0xFF4F2DFF),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => BlocProvider.value(
+                                      value: context.read<AuthBloc>(),
+                                      child: const StaffOperationsPage(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: _DashCard(
+                              icon: Icons.task_alt_rounded,
+                              title: 'Tasks',
+                              subtitle:
+                                  'View and manage your\nassigned tasks',
+                              gradientColors: const [
+                                Color(0xFFFF7043),
+                                Color(0xFFFFB74D),
+                              ],
+                              bgColorLight: const Color(0xFFFFF4EE),
+                              bgColorDark: const Color(0xFF2E1208),
+                              accentColor: const Color(0xFFFF7043),
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12.h),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _DashCard(
+                              icon: Icons.event_available_outlined,
+                              title: 'Leave Management',
+                              subtitle:
+                                  'Apply for leave and\ncheck leave status',
+                              gradientColors: const [
+                                Color(0xFF00C07A),
+                                Color(0xFF00E096),
+                              ],
+                              bgColorLight: const Color(0xFFEFFFF8),
+                              bgColorDark: const Color(0xFF062616),
+                              accentColor: const Color(0xFF00C07A),
+                              onTap: () {},
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Expanded(
+                            child: _DashCard(
+                              icon: Icons.notifications_outlined,
+                              title: 'Notifications',
+                              subtitle:
+                                  'View announcements\nand important alerts',
+                              gradientColors: const [
+                                Color(0xFF9B59B6),
+                                Color(0xFFBB8FDB),
+                              ],
+                              bgColorLight: const Color(0xFFF9F0FF),
+                              bgColorDark: const Color(0xFF1C0A2E),
+                              accentColor: const Color(0xFF9B59B6),
+                              notificationCount: 3,
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12.h),
+                      // Full-width settings card
+                      const _SettingsDashCard(),
+                      SizedBox(height: 24.h),
+                    ],
                   ),
                 ),
               ],
@@ -300,557 +182,386 @@ class _StaffShiftCard extends StatelessWidget {
       },
     );
   }
-}
 
-class _StaffTasksOverviewCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        final List<Map<String, dynamic>> tasks = [];
-        if (state is Authenticated) {
-          final user = state.user;
-          final metadataTasks = user.metadata?['tasks'] as List<dynamic>?;
-          if (metadataTasks != null) {
-            for (var item in metadataTasks) {
-              if (item is Map) {
-                tasks.add({
-                  'title': (item['title'] ?? '').toString(),
-                  'status': (item['status'] ?? '').toString(),
-                });
-              }
-            }
-          }
-        }
-
-        if (tasks.isEmpty) {
-          tasks.addAll([
-            {'title': 'Sanitize consultation room 3', 'status': 'Pending'},
-            {'title': 'Verify outpatient logs', 'status': 'Completed'},
-            {'title': 'Update stock checklist in Block A', 'status': 'Pending'},
-          ]);
-        }
-
-        // Only show up to 3 tasks in the home overview card
-        final tasksToShow = tasks.length > 3 ? tasks.sublist(0, 3) : tasks;
-
-        return Card(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.r),
-            side: BorderSide(color: AppColors.border(context)),
-          ),
-          child: ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: tasksToShow.length,
-            separatorBuilder: (context, idx) =>
-                Divider(color: AppColors.border(context), height: 1),
-            itemBuilder: (context, idx) {
-              final t = tasksToShow[idx];
-              final isCompleted = t['status'] == 'Completed';
-              return ListTile(
-                contentPadding: EdgeInsets.all(16.r),
-                leading: Icon(
-                  isCompleted
-                      ? Icons.check_circle
-                      : Icons.radio_button_unchecked,
-                  color: isCompleted
-                      ? AppColors.success
-                      : AppColors.textSecondary(context),
-                ),
-                title: Text(
-                  t['title']!,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    decoration: isCompleted ? TextDecoration.lineThrough : null,
-                    color: isCompleted
-                        ? AppColors.textSecondary(context)
-                        : AppColors.textPrimary(context),
-                    fontWeight: isCompleted
-                        ? FontWeight.normal
-                        : FontWeight.bold,
-                  ),
-                ),
-                trailing: Text(
-                  t['status']!,
-                  style: TextStyle(
-                    color: isCompleted ? AppColors.success : AppColors.accent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10.sp,
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning,';
+    if (hour < 17) return 'Good Afternoon,';
+    return 'Good Evening,';
   }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Staff Tasks Tab
+// Top Banner (Header)
 // ─────────────────────────────────────────────────────────────────────────────
-class _StaffTasksTab extends StatelessWidget {
-  const _StaffTasksTab();
+class _TopBar extends StatelessWidget {
+  final String name;
+  final String? profileImage;
+  final String roleLabel;
+  final String greeting;
+  final AuthState state;
+
+  const _TopBar({
+    required this.name,
+    required this.profileImage,
+    required this.roleLabel,
+    required this.greeting,
+    required this.state,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        if (state is! Authenticated) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        final user = UserModel.fromEntity(state.user);
-        final metadataTasks = user.metadata?['tasks'] as List<dynamic>?;
-        final List<Map<String, dynamic>> tasks = [];
-        if (metadataTasks != null) {
-          for (var item in metadataTasks) {
-            if (item is Map) {
-              tasks.add({
-                'id': (item['id'] ?? '').toString(),
-                'title': (item['title'] ?? '').toString(),
-                'status': (item['status'] ?? '').toString(),
-              });
-            }
-          }
-        } else {
-          tasks.addAll([
-            {
-              'id': 'T-1',
-              'title': 'Sanitize consultation room 3',
-              'status': 'Pending',
-            },
-            {
-              'id': 'T-2',
-              'title': 'Verify outpatient logs',
-              'status': 'Completed',
-            },
-            {
-              'id': 'T-3',
-              'title': 'Update stock checklist in Block A',
-              'status': 'Pending',
-            },
-            {
-              'id': 'T-4',
-              'title': 'Confirm receipt of lab reagents',
-              'status': 'Pending',
-            },
-          ]);
-        }
-
-        return Padding(
-          padding: EdgeInsets.all(20.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "My Tasks",
-                style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
-              ),
-              SizedBox(height: 16.h),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: tasks.length,
-                  itemBuilder: (context, idx) {
-                    final t = tasks[idx];
-                    final isCompleted = t['status'] == 'Completed';
-
-                    return Card(
-                      margin: EdgeInsets.only(bottom: 12.h),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        side: BorderSide(color: AppColors.border(context)),
-                      ),
-                      child: CheckboxListTile(
-                        activeColor: AppColors.primary,
-                        value: isCompleted,
-                        onChanged: (val) async {
-                          final updatedMetadata = Map<String, dynamic>.from(
-                            user.metadata ?? {},
-                          );
-                          final updatedTasks = List<dynamic>.from(
-                            updatedMetadata['tasks'] ??
-                                [
-                                  {
-                                    'id': 'T-1',
-                                    'title': 'Sanitize consultation room 3',
-                                    'status': 'Pending',
-                                  },
-                                  {
-                                    'id': 'T-2',
-                                    'title': 'Verify outpatient logs',
-                                    'status': 'Completed',
-                                  },
-                                  {
-                                    'id': 'T-3',
-                                    'title':
-                                        'Update stock checklist in Block A',
-                                    'status': 'Pending',
-                                  },
-                                  {
-                                    'id': 'T-4',
-                                    'title': 'Confirm receipt of lab reagents',
-                                    'status': 'Pending',
-                                  },
-                                ],
-                          );
-
-                          final taskIdx = updatedTasks.indexWhere(
-                            (item) => item['id'] == t['id'],
-                          );
-                          if (taskIdx != -1) {
-                            final updatedTask = Map<String, dynamic>.from(
-                              updatedTasks[taskIdx],
-                            );
-                            updatedTask['status'] = val!
-                                ? 'Completed'
-                                : 'Pending';
-                            updatedTasks[taskIdx] = updatedTask;
-                          }
-
-                          updatedMetadata['tasks'] = updatedTasks;
-                          final updatedUser = user.copyWith(
-                            metadata: updatedMetadata,
-                          );
-
-                          // Save to DB
-                          await GetIt.instance<DoctorStaffRemoteDataSource>()
-                              .updateDoctorStaffMember(updatedUser);
-
-                          // Update Auth state
-                          if (context.mounted) {
-                            context.read<AuthBloc>().add(
-                              UserUpdated(updatedUser),
-                            );
-                          }
-                        },
-                        title: Text(
-                          t['title']!,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: isCompleted
-                                ? AppColors.textSecondary(context)
-                                : AppColors.textPrimary(context),
-                            decoration: isCompleted
-                                ? TextDecoration.lineThrough
-                                : null,
-                          ),
-                        ),
-                        subtitle: Text("Task ID: ${t['id']!}"),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Staff Roster Tab
-// ─────────────────────────────────────────────────────────────────────────────
-class _StaffRosterTab extends StatelessWidget {
-  const _StaffRosterTab();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        if (state is! Authenticated) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        final user = UserModel.fromEntity(state.user);
-        final metadataRoster = user.metadata?['roster'] as List<dynamic>?;
-        final List<Map<String, String>> roster = [];
-
-        if (metadataRoster != null) {
-          for (var item in metadataRoster) {
-            if (item is Map) {
-              roster.add({
-                'day': (item['day'] ?? '').toString(),
-                'shift': (item['shift'] ?? '').toString(),
-                'dept': (item['dept'] ?? '').toString(),
-              });
-            }
-          }
-        }
-
-        if (roster.isEmpty) {
-          roster.addAll([
-            {
-              'day': 'Monday',
-              'shift': 'Day Shift (08:00 AM - 04:00 PM)',
-              'dept': 'OPD Support',
-            },
-            {
-              'day': 'Tuesday',
-              'shift': 'Day Shift (08:00 AM - 04:00 PM)',
-              'dept': 'OPD Support',
-            },
-            {'day': 'Wednesday', 'shift': 'Off Day', 'dept': '-'},
-            {
-              'day': 'Thursday',
-              'shift': 'Night Shift (08:00 PM - 04:00 AM)',
-              'dept': 'Emergency Wards',
-            },
-            {
-              'day': 'Friday',
-              'shift': 'Night Shift (08:00 PM - 04:00 AM)',
-              'dept': 'Emergency Wards',
-            },
-          ]);
-        }
-
-        return Padding(
-          padding: EdgeInsets.all(20.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Shift Roster",
-                style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
-              ),
-              SizedBox(height: 16.h),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: roster.length,
-                  itemBuilder: (context, idx) {
-                    final r = roster[idx];
-                    final isOff = r['shift'] == 'Off Day';
-
-                    return InkWell(
-                      onTap: () {
-                        // Interactive Shift Change dialog
-                        showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            final shiftCtrl = TextEditingController(
-                              text: r['shift'],
-                            );
-                            final deptCtrl = TextEditingController(
-                              text: r['dept'],
-                            );
-
-                            return AlertDialog(
-                              title: Text("Edit Shift for ${r['day']}"),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextField(
-                                    controller: shiftCtrl,
-                                    decoration: const InputDecoration(
-                                      labelText: "Shift Timing",
-                                    ),
-                                  ),
-                                  TextField(
-                                    controller: deptCtrl,
-                                    decoration: const InputDecoration(
-                                      labelText: "Department",
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(ctx),
-                                  child: const Text("Cancel"),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    Navigator.pop(ctx);
-                                    final updatedMetadata =
-                                        Map<String, dynamic>.from(
-                                          user.metadata ?? {},
-                                        );
-                                    final updatedRoster = List<dynamic>.from(
-                                      updatedMetadata['roster'] ??
-                                          [
-                                            {
-                                              'day': 'Monday',
-                                              'shift':
-                                                  'Day Shift (08:00 AM - 04:00 PM)',
-                                              'dept': 'OPD Support',
-                                            },
-                                            {
-                                              'day': 'Tuesday',
-                                              'shift':
-                                                  'Day Shift (08:00 AM - 04:00 PM)',
-                                              'dept': 'OPD Support',
-                                            },
-                                            {
-                                              'day': 'Wednesday',
-                                              'shift': 'Off Day',
-                                              'dept': '-',
-                                            },
-                                            {
-                                              'day': 'Thursday',
-                                              'shift':
-                                                  'Night Shift (08:00 PM - 04:00 AM)',
-                                              'dept': 'Emergency Wards',
-                                            },
-                                            {
-                                              'day': 'Friday',
-                                              'shift':
-                                                  'Night Shift (08:00 PM - 04:00 AM)',
-                                              'dept': 'Emergency Wards',
-                                            },
-                                          ],
-                                    );
-
-                                    updatedRoster[idx] = {
-                                      'day': r['day']!,
-                                      'shift': shiftCtrl.text,
-                                      'dept': deptCtrl.text,
-                                    };
-
-                                    updatedMetadata['roster'] = updatedRoster;
-                                    final updatedUser = user.copyWith(
-                                      metadata: updatedMetadata,
-                                    );
-
-                                    // Save changes
-                                    await GetIt.instance<
-                                          DoctorStaffRemoteDataSource
-                                        >()
-                                        .updateDoctorStaffMember(updatedUser);
-
-                                    // Trigger session state updates
-                                    if (context.mounted) {
-                                      context.read<AuthBloc>().add(
-                                        UserUpdated(updatedUser),
-                                      );
-                                    }
-                                  },
-                                  child: const Text("Save"),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 12.h),
-                        padding: EdgeInsets.all(16.r),
-                        decoration: BoxDecoration(
-                          color: isOff ? AppColors.divider : AppColors.surface,
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: AppColors.border(context)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  r['day']!,
-                                  style: AppTextStyles.bodyMedium.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textPrimary(context),
-                                  ),
-                                ),
-                                SizedBox(height: 2.h),
-                                Text(
-                                  r['shift']!,
-                                  style: AppTextStyles.bodySmall,
-                                ),
-                                if (!isOff)
-                                  Text(
-                                    "Dept: ${r['dept']!}",
-                                    style: AppTextStyles.bodySmall,
-                                  ),
-                              ],
-                            ),
-                            Icon(
-                              isOff
-                                  ? Icons.home_outlined
-                                  : Icons.calendar_month_outlined,
-                              color: isOff
-                                  ? AppColors.textSecondary(context)
-                                  : AppColors.accent,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Staff Alerts Tab
-// ─────────────────────────────────────────────────────────────────────────────
-class _StaffAlertsTab extends StatelessWidget {
-  const _StaffAlertsTab();
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Map<String, String>> alerts = [
-      {
-        'message': 'Code Blue in Emergency Ward - Room 108',
-        'time': '2m ago',
-        'level': 'Critical',
-      },
-      {
-        'message': 'Intense Patient Influx in ICU - Staff assistance requested',
-        'time': '15m ago',
-        'level': 'High',
-      },
+    final isDark = AppColors.isDark(context);
+    final now = DateTime.now();
+    final months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
     ];
+    final days = [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+      'Friday', 'Saturday', 'Sunday',
+    ];
+    final monthName = months[now.month - 1];
+    final dayName = days[now.weekday - 1];
 
-    return Padding(
-      padding: EdgeInsets.all(20.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF060D1F), const Color(0xFF0D1E45)]
+              : [const Color(0xFFEAEEFF), const Color(0xFFF5F7FF)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Stack(
         children: [
-          Text(
-            "Emergency Messages",
-            style: AppTextStyles.headingMedium.copyWith(fontSize: 22.sp),
+          // Decorative plus icons
+          Positioned(
+            top: 20.h,
+            right: 120.w,
+            child: Icon(
+              Icons.add,
+              color: isDark
+                  ? Colors.blueAccent.withValues(alpha: 0.2)
+                  : Colors.blue.withValues(alpha: 0.15),
+              size: 18.r,
+            ),
           ),
-          SizedBox(height: 16.h),
-          Expanded(
-            child: ListView.builder(
-              itemCount: alerts.length,
-              itemBuilder: (context, idx) {
-                final alert = alerts[idx];
-                Color levelColor = alert['level'] == 'Critical'
-                    ? AppColors.error
-                    : AppColors.warning;
-
-                return Card(
-                  margin: EdgeInsets.only(bottom: 12.h),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    side: BorderSide(color: levelColor.withValues(alpha: 0.4)),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16.r),
-                    leading: Icon(Icons.warning, color: levelColor),
-                    title: Text(
-                      alert['message']!,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary(context),
+          Positioned(
+            top: 60.h,
+            right: 80.w,
+            child: Icon(
+              Icons.add,
+              color: isDark
+                  ? Colors.purpleAccent.withValues(alpha: 0.15)
+                  : Colors.purple.withValues(alpha: 0.1),
+              size: 12.r,
+            ),
+          ),
+          Column(
+            children: [
+              // AppBar row
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                child: Row(
+                  children: [
+                    Builder(
+                      builder: (ctx) => GestureDetector(
+                        onTap: () => Scaffold.of(ctx).openDrawer(),
+                        child: Icon(
+                          Icons.menu_rounded,
+                          color: AppColors.textPrimary(context),
+                          size: 26.r,
+                        ),
                       ),
                     ),
-                    subtitle: Text("Triggered: ${alert['time']!}"),
-                  ),
-                );
-              },
+                    SizedBox(width: 12.w),
+                    // Logo & branding
+                    Row(
+                      children: [
+                        Container(
+                          width: 32.r,
+                          height: 32.r,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Icon(
+                            Icons.local_hospital_rounded,
+                            color: Colors.white,
+                            size: 18.r,
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Medi',
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary(context),
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Connect',
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    // Notification bell with badge
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Icon(
+                          Icons.notifications_none_rounded,
+                          color: AppColors.textPrimary(context),
+                          size: 26.r,
+                        ),
+                        Positioned(
+                          top: -4,
+                          right: -4,
+                          child: Container(
+                            width: 16.r,
+                            height: 16.r,
+                            decoration: const BoxDecoration(
+                              color: AppColors.error,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                '3',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 9.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 12.w),
+                    // Avatar
+                    Container(
+                      width: 36.r,
+                      height: 36.r,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColors.success, width: 2),
+                      ),
+                      child: ClipOval(
+                        child: CustomImageView(
+                          imagePath: ProfileImageHelper.resolveImagePath(
+                            profileImage,
+                            'staff',
+                            state is Authenticated ? (state as Authenticated).user.gender : null,
+                          ),
+                          borderRadius: 18.r,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Welcome content + date card
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // Left: greeting content
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            greeting,
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              color: AppColors.textSecondary(context),
+                            ),
+                          ),
+                          SizedBox(height: 4.h),
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  name,
+                                  style: AppTextStyles.headingMedium.copyWith(
+                                    color: AppColors.textPrimary(context),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24.sp,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(width: 6.w),
+                              Text('👋', style: TextStyle(fontSize: 22.sp)),
+                            ],
+                          ),
+                          SizedBox(height: 8.h),
+                          // Role badge
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 5.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: isDark
+                                  ? Colors.white.withValues(alpha: 0.1)
+                                  : AppColors.primary.withValues(alpha: 0.08),
+                              borderRadius: BorderRadius.circular(20.r),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.person_outline_rounded,
+                                  size: 14.r,
+                                  color: isDark
+                                      ? Colors.white70
+                                      : AppColors.primary,
+                                ),
+                                SizedBox(width: 4.w),
+                                Text(
+                                  roleLabel,
+                                  style: TextStyle(
+                                    color: isDark
+                                        ? Colors.white70
+                                        : AppColors.primary,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'Welcome back! Have a\nproductive day ahead.',
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: AppColors.textSecondary(context),
+                              height: 1.5,
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                        ],
+                      ),
+                    ),
+
+                    // Right: Date card
+                    _DateCard(
+                      day: now.day,
+                      monthName: monthName,
+                      year: now.year,
+                      dayName: dayName,
+                      isDark: isDark,
+                    ),
+                  ],
+                ),
+              ),
+
+              // Heartbeat line decoration
+              _HeartbeatLine(isDark: isDark),
+              SizedBox(height: 8.h),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Date Card
+// ─────────────────────────────────────────────────────────────────────────────
+class _DateCard extends StatelessWidget {
+  final int day;
+  final String monthName;
+  final int year;
+  final String dayName;
+  final bool isDark;
+
+  const _DateCard({
+    required this.day,
+    required this.monthName,
+    required this.year,
+    required this.dayName,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100.w,
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+      margin: EdgeInsets.only(bottom: 16.h),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF0F1E3A) : Colors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: isDark
+              ? const Color(0xFF1A3160)
+              : const Color(0xFFDDE5F8),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.4)
+                : Colors.blue.withValues(alpha: 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.calendar_month_rounded,
+            color: AppColors.primary,
+            size: 20.r,
+          ),
+          SizedBox(height: 6.h),
+          Text(
+            '$day',
+            style: TextStyle(
+              fontSize: 34.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary(context),
+              height: 1,
+            ),
+          ),
+          SizedBox(height: 2.h),
+          Text(
+            '$monthName $year',
+            style: TextStyle(
+              fontSize: 11.sp,
+              color: AppColors.textSecondary(context),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 2.h),
+          Text(
+            dayName,
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: AppColors.primary,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
@@ -860,193 +571,301 @@ class _StaffAlertsTab extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Staff Profile Tab
+// Heartbeat Decoration Line
 // ─────────────────────────────────────────────────────────────────────────────
-class _StaffProfileTab extends StatelessWidget {
-  const _StaffProfileTab();
+class _HeartbeatLine extends StatelessWidget {
+  final bool isDark;
+  const _HeartbeatLine({required this.isDark});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        String name = "Staff Member";
-        String email = "staff@mediconnect.com";
-        String? phone = "+91 98765 43210";
-        String? roleLabel = "Clinic Operations";
-        String? profileImage;
-
-        if (state is Authenticated) {
-          final user = state.user;
-          name =
-              user.name ??
-              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
-          email = user.email;
-          phone = user.phoneNumber;
-          roleLabel = user.staffRole;
-          profileImage = user.profileImage;
-        }
-
-        return SingleChildScrollView(
-          padding: EdgeInsets.all(20.r),
-          child: Column(
-            children: [
-              Container(
-                width: 100.r,
-                height: 100.r,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.accent, width: 3),
-                ),
-                child: CustomImageView(
-                  imagePath: ProfileImageHelper.resolveImagePath(
-                    profileImage,
-                    'staff',
-                    state is Authenticated ? state.user.gender : null,
-                  ),
-                  borderRadius: 50.r,
-                ),
-              ),
-              SizedBox(height: 12.h),
-              Text(
-                name,
-                style: AppTextStyles.titleLarge.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(email, style: AppTextStyles.bodyMedium),
-              SizedBox(height: 8.h),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: AppColors.accent.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Text(
-                  roleLabel ?? 'Administrative Staff',
-                  style: TextStyle(
-                    color: AppColors.accent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
-                  ),
-                ),
-              ),
-              SizedBox(height: 24.h),
-              Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  side: BorderSide(color: AppColors.border(context)),
-                ),
-                child: Column(
-                  children: [
-                    _buildInfoTile(
-                      Icons.phone_outlined,
-                      "Phone",
-                      phone ?? "Not Set",
-                      context,
-                    ),
-                    Divider(color: AppColors.border(context), height: 1),
-                    _buildInfoTile(
-                      Icons.badge_outlined,
-                      "Staff ID",
-                      "STF-2819",
-                      context,
-                    ),
-                    Divider(color: AppColors.border(context), height: 1),
-                    _buildInfoTile(
-                      Icons.work_history_outlined,
-                      "Joining Date",
-                      "Feb 20, 2025",
-                      context,
-                    ),
-                    Divider(color: AppColors.border(context), height: 1),
-                    BlocBuilder<ThemeCubit, ThemeMode>(
-                      builder: (context, themeMode) {
-                        final isDark = themeMode == ThemeMode.dark;
-                        return SwitchListTile(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                          ),
-                          title: Text(
-                            "Dark Mode",
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          value: isDark,
-                          onChanged: (val) {
-                            context.read<ThemeCubit>().setThemeMode(
-                              val ? ThemeMode.dark : ThemeMode.light,
-                            );
-                          },
-                          secondary: const Icon(
-                            Icons.dark_mode_outlined,
-                            color: AppColors.accent,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 24.h),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () => _showLogoutDialog(context),
-                  icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text(
-                    "Sign Out",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.error,
-                    padding: EdgeInsets.all(16.r),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => ConfirmationDialog(
-        title: AppStrings.logout,
-        message: AppStrings.confirmSignOut,
-        onConfirm: () {
-          context.read<AuthBloc>().add(LogoutRequested());
-        },
-      ),
-    );
-  }
-
-  Widget _buildInfoTile(
-    IconData icon,
-    String title,
-    String value,
-    BuildContext context,
-  ) {
-    return ListTile(
-      leading: Icon(icon, color: AppColors.accent),
-      title: Text(
-        title,
-        style: AppTextStyles.bodySmall.copyWith(
-          color: AppColors.textSecondary(context),
+    return SizedBox(
+      height: 32.h,
+      width: double.infinity,
+      child: CustomPaint(
+        painter: _HeartbeatPainter(
+          color: isDark
+              ? AppColors.primary.withValues(alpha: 0.5)
+              : AppColors.primary.withValues(alpha: 0.3),
         ),
       ),
-      trailing: Text(
-        value,
-        style: AppTextStyles.bodyMedium.copyWith(
-          fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary(context),
+    );
+  }
+}
+
+class _HeartbeatPainter extends CustomPainter {
+  final Color color;
+  _HeartbeatPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1.5
+      ..style = PaintingStyle.stroke;
+
+    final path = Path();
+    final w = size.width;
+    final h = size.height;
+    final mid = h / 2;
+
+    path.moveTo(0, mid);
+    path.lineTo(w * 0.15, mid);
+    path.lineTo(w * 0.2, mid - h * 0.3);
+    path.lineTo(w * 0.25, mid + h * 0.4);
+    path.lineTo(w * 0.3, mid - h * 0.5);
+    path.lineTo(w * 0.35, mid + h * 0.3);
+    path.lineTo(w * 0.4, mid);
+    path.lineTo(w * 0.55, mid);
+    path.lineTo(w * 0.6, mid - h * 0.2);
+    path.lineTo(w * 0.65, mid + h * 0.25);
+    path.lineTo(w * 0.68, mid - h * 0.3);
+    path.lineTo(w * 0.72, mid);
+    path.lineTo(w, mid);
+
+    canvas.drawPath(path, paint);
+
+    // Dot at center
+    canvas.drawCircle(Offset(w * 0.45, mid), 3, Paint()..color = color);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Dashboard Card (for 2x2 grid)
+// ─────────────────────────────────────────────────────────────────────────────
+class _DashCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final List<Color> gradientColors;
+  final Color bgColorLight;
+  final Color bgColorDark;
+  final Color accentColor;
+  final int notificationCount;
+  final VoidCallback onTap;
+
+  const _DashCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.gradientColors,
+    required this.bgColorLight,
+    required this.bgColorDark,
+    required this.accentColor,
+    required this.onTap,
+    this.notificationCount = 0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = AppColors.isDark(context);
+    final bg = isDark ? bgColorDark : bgColorLight;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(16.r),
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: BorderRadius.circular(18.r),
+          border: Border.all(
+            color: isDark
+                ? accentColor.withValues(alpha: 0.15)
+                : accentColor.withValues(alpha: 0.12),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: accentColor.withValues(alpha: isDark ? 0.12 : 0.08),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Icon with optional badge
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: 52.r,
+                  height: 52.r,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: gradientColors,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(14.r),
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 26.r),
+                ),
+                if (notificationCount > 0)
+                  Positioned(
+                    top: -6,
+                    right: -6,
+                    child: Container(
+                      padding: EdgeInsets.all(4.r),
+                      decoration: const BoxDecoration(
+                        color: AppColors.error,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '$notificationCount',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 9.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            SizedBox(height: 12.h),
+            // Title
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : accentColor,
+              ),
+            ),
+            SizedBox(height: 4.h),
+            // Subtitle
+            Text(
+              subtitle,
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.textSecondary(context),
+                height: 1.4,
+                fontSize: 11.sp,
+              ),
+            ),
+            SizedBox(height: 10.h),
+            // Arrow button
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                width: 28.r,
+                height: 28.r,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: accentColor.withValues(alpha: 0.4),
+                    width: 1.5,
+                  ),
+                  color: accentColor.withValues(alpha: 0.08),
+                ),
+                child: Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 14.r,
+                  color: accentColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Settings Full-Width Card
+// ─────────────────────────────────────────────────────────────────────────────
+class _SettingsDashCard extends StatelessWidget {
+  const _SettingsDashCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = AppColors.isDark(context);
+
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF0D1A38) : const Color(0xFFF0F3FF),
+          borderRadius: BorderRadius.circular(18.r),
+          border: Border.all(
+            color: isDark
+                ? AppColors.primary.withValues(alpha: 0.15)
+                : AppColors.primary.withValues(alpha: 0.12),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: isDark ? 0.1 : 0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 52.r,
+              height: 52.r,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF4F2DFF), Color(0xFF7B61FF)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(14.r),
+              ),
+              child: Icon(
+                Icons.settings_outlined,
+                color: Colors.white,
+                size: 26.r,
+              ),
+            ),
+            SizedBox(width: 16.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Settings',
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : AppColors.primary,
+                    ),
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    'Manage your profile and application preferences',
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textSecondary(context),
+                      fontSize: 11.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 28.r,
+              height: 28.r,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.4),
+                  width: 1.5,
+                ),
+                color: AppColors.primary.withValues(alpha: 0.08),
+              ),
+              child: Icon(
+                Icons.arrow_forward_rounded,
+                size: 14.r,
+                color: AppColors.primary,
+              ),
+            ),
+          ],
         ),
       ),
     );

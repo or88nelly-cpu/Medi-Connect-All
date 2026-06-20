@@ -88,14 +88,7 @@ class _LoginFormState extends State<LoginForm> {
 
         // ── Login Button ──
         _buildLoginButton(),
-        SizedBox(height: 20.h),
 
-        // ── Divider "or" ──
-        _buildOrDivider(),
-        SizedBox(height: 20.h),
-
-        // ── Social Buttons ──
-        _buildSocialButtons(),
         SizedBox(height: 24.h),
 
         // ── Sign Up Link ──
@@ -122,13 +115,13 @@ class _LoginFormState extends State<LoginForm> {
       validator: validator,
       style: AppTextStyles.bodyMedium.copyWith(
         color: AppColors.textPrimary(context),
-        fontSize: 14.sp,
+        fontSize: 12.sp,
       ),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: AppTextStyles.bodyMedium.copyWith(
           color: AppColors.textSecondary(context).withValues(alpha: 0.6),
-          fontSize: 14.sp,
+          fontSize: 12.sp,
         ),
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 14.w, right: 10.w),
@@ -149,21 +142,20 @@ class _LoginFormState extends State<LoginForm> {
                     _isPasswordObscured
                         ? Icons.visibility_outlined
                         : Icons.visibility_off_outlined,
-                    color:
-                        AppColors.textSecondary(context).withValues(alpha: 0.5),
+                    color: AppColors.textSecondary(
+                      context,
+                    ).withValues(alpha: 0.5),
                     size: 20.r,
                   ),
                 ),
               )
             : null,
-        suffixIconConstraints:
-            isPassword ? BoxConstraints(minWidth: 44.w) : null,
+        suffixIconConstraints: isPassword
+            ? BoxConstraints(minWidth: 44.w)
+            : null,
         filled: true,
         fillColor: AppColors.background(context),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 16.h,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: borderColor, width: 1),
           borderRadius: BorderRadius.circular(12.r),
@@ -198,10 +190,7 @@ class _LoginFormState extends State<LoginForm> {
             height: 52.h,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [
-                  Color(0xFF4F6EFF),
-                  Color(0xFF3B5BFD),
-                ],
+                colors: [Color(0xFF4F6EFF), Color(0xFF3B5BFD)],
               ),
               borderRadius: BorderRadius.circular(14.r),
               boxShadow: [
@@ -236,102 +225,6 @@ class _LoginFormState extends State<LoginForm> {
       },
     );
   }
-
-  // ──────────────────────────────────────────
-  // "or" DIVIDER
-  // ──────────────────────────────────────────
-  Widget _buildOrDivider() {
-    return Row(
-      children: [
-        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Text(
-            'or',
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary(context),
-              fontSize: 13.sp,
-            ),
-          ),
-        ),
-        Expanded(child: Divider(color: AppColors.border(context), height: 1)),
-      ],
-    );
-  }
-
-  // ──────────────────────────────────────────
-  // SOCIAL BUTTONS
-  // ──────────────────────────────────────────
-  Widget _buildSocialButtons() {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildSocialButton(
-            label: 'Continue with Google',
-            textLabel: 'G',
-            textColor: const Color(0xFFEA4335),
-          ),
-        ),
-        SizedBox(width: 12.w),
-        Expanded(
-          child: _buildSocialButton(
-            label: 'Continue with Apple',
-            icon: Icons.apple_rounded,
-            iconColor: AppColors.textPrimary(context),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialButton({
-    required String label,
-    String? textLabel,
-    Color? textColor,
-    IconData? icon,
-    Color? iconColor,
-  }) {
-    return OutlinedButton(
-      onPressed: () {},
-      style: OutlinedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
-        side: BorderSide(color: AppColors.border(context)),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (textLabel != null)
-            Text(
-              textLabel,
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w700,
-                color: textColor,
-              ),
-            )
-          else if (icon != null)
-            Icon(icon, size: 20.r, color: iconColor),
-          SizedBox(width: 8.w),
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textPrimary(context),
-                fontWeight: FontWeight.w600,
-                fontSize: 12.sp,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ──────────────────────────────────────────
   // SIGN UP LINK
   // ──────────────────────────────────────────
   Widget _buildSignUpLink() {

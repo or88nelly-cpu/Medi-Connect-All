@@ -175,7 +175,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                         ),
                       ),
                     ),
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 6.h),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -212,9 +212,9 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
           ),
         ),
 
-        SizedBox(height: 16.h),
+        SizedBox(height: 2.h),
         _buildSecurityFooter(),
-        SizedBox(height: 24.h),
+        SizedBox(height: 12.h),
       ],
     );
   }
@@ -225,6 +225,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
 
   /// Logo + "MediConnect" branding
   Widget _buildBranding() {
+    bool isDesktop = AppResponsive.isDesktop(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -243,8 +244,8 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
           ),
           child: CustomImageView(
             imagePath: AppAssets.logoIconPng,
-            width: 42.r,
-            height: 42.r,
+            width: isDesktop ? 42.r : 34.r,
+            height: isDesktop ? 42.r : 34.r,
           ),
         ),
         SizedBox(width: 12.w),
@@ -257,14 +258,14 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                   TextSpan(
                     text: 'Medi',
                     style: AppTextStyles.headingMedium.copyWith(
-                      fontSize: 22.sp,
+                      fontSize: isDesktop ? 22.sp : 16.sp,
                       color: AppColors.primary,
                     ),
                   ),
                   TextSpan(
                     text: 'Connect',
                     style: AppTextStyles.headingMedium.copyWith(
-                      fontSize: 22.sp,
+                      fontSize: isDesktop ? 22.sp : 16.sp,
                       fontWeight: FontWeight.w800,
                       color: AppColors.textDarkNavy,
                     ),
@@ -276,7 +277,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
               'Multi Speciality Hospital',
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondary(context),
-                fontSize: 11.sp,
+                fontSize: isDesktop ? 11.sp : 9.sp,
                 letterSpacing: 0.3,
               ),
             ),
@@ -288,13 +289,14 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
 
   /// "Create Your Account" + subtitle
   Widget _buildWelcomeText() {
+    bool isDesktop = AppResponsive.isDesktop(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Create Your Account',
           style: AppTextStyles.headingLarge.copyWith(
-            fontSize: AppResponsive.isDesktop(context) ? 32.sp : 26.sp,
+            fontSize: isDesktop ? 32.sp : 18.sp,
             fontWeight: FontWeight.w800,
             color: AppColors.textPrimary(context),
           ),
@@ -305,7 +307,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondary(context),
             height: 1.4,
-            fontSize: AppResponsive.isDesktop(context) ? 14.sp : 13.sp,
+            fontSize: isDesktop ? 14.sp : 11.sp,
           ),
         ),
       ],

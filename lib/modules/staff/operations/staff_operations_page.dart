@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
 import 'package:medi_connect/core/themes/app_colors.dart';
 import 'package:medi_connect/core/themes/app_text_styles.dart';
+import 'package:medi_connect/core/utils/department_utils.dart';
 import 'package:medi_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/modules/staff/department/pages/customer_care.dart';
 
 class StaffOperationsPage extends StatelessWidget {
   const StaffOperationsPage({super.key});
@@ -22,12 +25,9 @@ class StaffOperationsPage extends StatelessWidget {
           }
         }
 
-        return Scaffold(
-          backgroundColor: AppColors.scaffold(context),
-          appBar: AppBar(
-            backgroundColor: isDark
-                ? AppColors.darkBackground
-                : AppColors.lightBackground,
+        return CustomScaffold(
+          customAppbar: AppBar(
+            backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
               icon: Icon(
@@ -60,35 +60,28 @@ class StaffOperationsPage extends StatelessWidget {
             ),
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(1.h),
-              child: Divider(
-                height: 1,
-                color: AppColors.border(context),
-              ),
+              child: Divider(height: 1, color: AppColors.border(context)),
             ),
           ),
-          body: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _SectionHeader(title: 'Quick Actions'),
-                SizedBox(height: 12.h),
-                _OperationsQuickActionsGrid(isDark: isDark),
-                SizedBox(height: 24.h),
-                _SectionHeader(title: 'Department Overview'),
-                SizedBox(height: 12.h),
-                _DepartmentOverviewCard(isDark: isDark),
-                SizedBox(height: 24.h),
-                _SectionHeader(title: 'Recent Activities'),
-                SizedBox(height: 12.h),
-                _RecentActivitiesList(isDark: isDark),
-                SizedBox(height: 32.h),
-              ],
-            ),
-          ),
+          body: getWidgetForDepartment(departmentTitle),
         );
       },
     );
+  }
+}
+
+Widget getWidgetForDepartment(String value) {
+  final department = getDepartment(value);
+  switch (department) {
+    case Department.customerCare:
+      return CustomerCare();
+    case Department.marketing:
+    case Department.finance:
+    case Department.purchase:
+    case Department.pharmacy:
+    case Department.hr:
+    default:
+      return Container();
   }
 }
 
@@ -164,7 +157,8 @@ class _OperationsQuickActionsGrid extends StatelessWidget {
         childAspectRatio: 1,
       ),
       itemCount: actions.length,
-      itemBuilder: (context, i) => _QuickActionCard(data: actions[i], isDark: isDark),
+      itemBuilder: (context, i) =>
+          _QuickActionCard(data: actions[i], isDark: isDark),
     );
   }
 }
@@ -218,11 +212,7 @@ class _QuickActionCard extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(12.r),
               ),
-              child: Icon(
-                data.icon,
-                color: Colors.white,
-                size: 22.r,
-              ),
+              child: Icon(data.icon, color: Colors.white, size: 22.r),
             ),
             SizedBox(height: 8.h),
             Text(
@@ -314,11 +304,7 @@ class _DepartmentOverviewCard extends StatelessWidget {
           SizedBox(height: 16.h),
           Row(
             children: stats
-                .map(
-                  (s) => Expanded(
-                    child: _StatBox(item: s),
-                  ),
-                )
+                .map((s) => Expanded(child: _StatBox(item: s)))
                 .toList(),
           ),
         ],
@@ -331,7 +317,11 @@ class _StatItem {
   final String label;
   final String value;
   final Color color;
-  const _StatItem({required this.label, required this.value, required this.color});
+  const _StatItem({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
 }
 
 class _StatBox extends StatelessWidget {
@@ -423,7 +413,7 @@ class _RecentActivitiesList extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: activities.length,
-        separatorBuilder: (_, __) =>
+        separatorBuilder: (context, index) =>
             Divider(height: 1, color: AppColors.border(context)),
         itemBuilder: (context, i) => _ActivityTile(item: activities[i]),
       ),
