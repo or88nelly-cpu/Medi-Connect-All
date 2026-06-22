@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/router/route_names.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/dash_board/presentation/widgets/analytics/recent_activity_card.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/analytics/recent_activity_card.dart';
 
 class ExtraCard extends StatelessWidget {
   const ExtraCard({super.key});

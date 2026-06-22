@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
-import 'package:medi_connect/features/department/presentation/bloc/department_bloc.dart';
-import 'admin_department_card.dart';
-import 'department_list_shimmer.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/modules/management/staff_management/domain/entities/department_entity.dart';
+import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/modules/admin/home/widgets/admin_department_card.dart';
+import 'package:medi_connect/modules/admin/home/widgets/department_list_shimmer.dart';
 
 class DepartmentListHome extends StatelessWidget {
   const DepartmentListHome({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +32,7 @@ class DepartmentListHome extends StatelessWidget {
             : [];
 
         // Build the exactly 24 ordered list with Supabase bindings & Fallbacks
-      
 
-     
         return LayoutBuilder(
           builder: (context, constraints) {
             final double width = constraints.maxWidth;
@@ -117,9 +114,7 @@ class DepartmentListHome extends StatelessWidget {
                         return const DepartmentCardShimmer();
                       }
 
-                      return AdminDepartmentCard(
-                        department: loadedList[index],
-                      );
+                      return AdminDepartmentCard(department: loadedList[index]);
                     },
                   ),
                 ],

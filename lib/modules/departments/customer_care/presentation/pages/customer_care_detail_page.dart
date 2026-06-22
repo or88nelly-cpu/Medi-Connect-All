@@ -3,19 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
-import 'package:medi_connect/core/router/route_names.dart';
-import 'package:medi_connect/core/app_responsive.dart';
-import 'package:medi_connect/core/common_widgets/custom_scaffold.dart';
-import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/bloc/customer_care_bloc.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/widgets/customer_care_header.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/widgets/customer_care_stats_grid.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/widgets/customer_care_actions_grid.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/widgets/customer_care_charts_section.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/widgets/customer_care_recent_activity.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/widgets/customer_care_footer.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/core/functions/app_responsive.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_header.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/bloc/customer_care_bloc.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_actions_grid.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_charts_section.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_footer.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_recent_activity.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_stats_grid.dart';
 
 class CustomerCareDetailPage extends StatefulWidget {
   const CustomerCareDetailPage({super.key});
@@ -34,7 +34,7 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
         appBarNeeded: true,
         customAppbar: PreferredSize(
           preferredSize: Size(double.infinity, 120.h),
-          
+
           child: CustomerCareHeader(
             onReset: () {
               context.read<CustomerCareBloc>().add(LoadCustomerCareStats());

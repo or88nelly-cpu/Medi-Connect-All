@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:medi_connect/core/common_models/failures/failure.dart';
-import 'package:medi_connect/features/auth/data/models/user_model.dart';
-import 'package:medi_connect/features/patient/domain/repositories/patient_repository.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/bloc/patient_registration_bloc.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/bloc/patient_registration_event.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/bloc/patient_registration_state.dart';
+import 'package:medi_connect/core/models/failure.dart';
+import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/modules/management/patient_management/domain/repositories/patient_repository.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/bloc/patient_registration_bloc.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/bloc/patient_registration_event.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/bloc/patient_registration_state.dart';
 
 class FakePatientRepository implements PatientRepository {
   bool registerCalled = false;

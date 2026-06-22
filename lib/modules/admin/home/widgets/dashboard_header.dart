@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/core/themes/app_strings.dart';
-import 'package:medi_connect/core/utils/constants/app_assets.dart';
-import 'package:medi_connect/core/utils/profile_image_helper.dart';
-import 'package:medi_connect/features/auth/domain/entities/user_entity.dart';
+import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/constants/app_assets.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
+import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 
 class DashboardHeader extends StatelessWidget {
   final UserEntity? user;

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medi_connect/core/storage/secure_storage_service.dart';
-import 'package:medi_connect/modules/departments/emrd/presentation/bloc/emrd_bloc.dart';
-import 'package:medi_connect/modules/departments/emrd/presentation/pages/patient_registration_record_detail_page.dart';
-import 'package:medi_connect/modules/departments/customer_care/presentation/widgets/registration/id_card_preview.dart';
+import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
+import 'package:medi_connect/modules/management/consultation_management/presentation/pages/patient_registration_record_detail_page.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
 
 class FakeSecureStorageService extends SecureStorageService {
   final Map<String, String> _data = {};

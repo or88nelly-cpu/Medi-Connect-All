@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/common_widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/router/route_names.dart';
-import 'package:medi_connect/core/themes/app_colors.dart';
-import 'package:medi_connect/core/themes/app_text_styles.dart';
-import 'package:medi_connect/features/department/domain/entities/department_entity.dart';
-import 'package:medi_connect/features/department/data/models/department_model.dart';
+import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/modules/management/staff_management/domain/entities/department_entity.dart';
+import 'package:medi_connect/modules/management/staff_management/data/models/department_model.dart';
 
 class AdminDepartmentStyle {
   final IconData icon;

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medi_connect/core/storage/secure_storage_service.dart';
-import 'package:medi_connect/core/themes/theme_cubit.dart';
-import 'package:medi_connect/features/dash_board/presentation/bloc/admin/admin_settings_bloc.dart';
-import 'package:medi_connect/features/dash_board/presentation/pages/admin/admin_settings_page.dart';
+import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/core/theme/theme_cubit.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_settings_bloc.dart';
+import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_settings_page.dart';
 
 class FakeSecureStorageService extends SecureStorageService {
   final Map<String, String> _data = {};
