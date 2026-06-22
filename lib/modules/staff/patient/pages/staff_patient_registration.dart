@@ -51,6 +51,9 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
   final _emergencyPhoneCtrl = TextEditingController();
   final _alternatePhoneCtrl = TextEditingController();
 
+  final _step1FormKey = GlobalKey<FormState>();
+  final _step2FormKey = GlobalKey<FormState>();
+
   final ValueNotifier<int> _currentStep = ValueNotifier<int>(1);
   final int totalSteps = 3;
 
@@ -321,7 +324,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                       : IconButton(
                           icon: Icon(
                             Icons.arrow_back_ios_new_rounded,
-                            color: isDark ? Colors.white : Colors.black,
+                            color: AppColors.textPrimary(context),
                             size: 18.r,
                           ),
                           onPressed: () {
@@ -334,8 +337,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                         ),
                   title: Text(
                     _isPatientMode ? "Complete Your Profile" : "Patient Registration",
-                    style: TextStyle(
-                      color: isDark ? Colors.white : Colors.black,
+                    style: AppTextStyles.titleSmall.copyWith(
+                      color: AppColors.textPrimary(context),
                       fontWeight: FontWeight.bold,
                       fontSize: 14.sp,
                     ),
@@ -357,6 +360,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                     currentStep: currentStep,
                                     totalSteps: totalSteps,
                                     stepTitle: stepTitles[currentStep - 1],
+                                    isPatientMode: _isPatientMode,
                                   ),
                                   SizedBox(height: 20.h),
                                 ],
@@ -364,6 +368,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                 // Wizard step screens
                                 if (currentStep == 1)
                                   BasicInfoStep(
+                                    formKey: _step1FormKey,
                                     firstNameCtrl: _firstNameCtrl,
                                     lastNameCtrl: _lastNameCtrl,
                                     emailCtrl: _emailCtrl,
@@ -405,6 +410,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                   )
                                 else if (currentStep == 2)
                                   AdditionalInfoStep(
+                                    formKey: _step2FormKey,
                                     policyIdCtrl: _policyIdCtrl,
                                     validTillCtrl: _validTillCtrl,
                                     selectedProvider: state.insuranceProvider,
@@ -694,18 +700,12 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                           ? null
                                           : () {
                                               if (currentStep < totalSteps) {
-                                                // Basic validations on step transitions
                                                 if (currentStep == 1) {
-                                                  if (_firstNameCtrl.text.trim().isEmpty ||
-                                                      _lastNameCtrl.text.trim().isEmpty ||
-                                                      _phoneCtrl.text.trim().isEmpty ||
-                                                      _dobCtrl.text.trim().isEmpty ||
-                                                      _placeCtrl.text.trim().isEmpty) {
-                                                    ScaffoldMessenger.of(context).showSnackBar(
-                                                      const SnackBar(
-                                                        content: Text("Please fill all required fields marked with *"),
-                                                      ),
-                                                    );
+                                                  if (!_step1FormKey.currentState!.validate()) {
+                                                    return;
+                                                  }
+                                                } else if (currentStep == 2) {
+                                                  if (!_step2FormKey.currentState!.validate()) {
                                                     return;
                                                   }
                                                 }

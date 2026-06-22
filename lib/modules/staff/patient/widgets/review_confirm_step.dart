@@ -205,10 +205,10 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
                   Container(
                     padding: EdgeInsets.all(10.r),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF5E3BFF).withValues(alpha: 0.1),
+                      color: AppColors.primary.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.receipt_long_outlined, color: const Color(0xFF5E3BFF), size: 20.r),
+                    child: Icon(Icons.receipt_long_outlined, color: AppColors.primary, size: 20.r),
                   ),
                   SizedBox(width: 12.w),
                   Column(
@@ -256,7 +256,7 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF5E3BFF)
+              ? AppColors.primary
               : isDark
                   ? const Color(0xFF1E293B)
                   : const Color(0xFFF1F5F9),

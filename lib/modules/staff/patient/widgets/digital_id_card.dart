@@ -1,10 +1,10 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/modules/management/customer_care/presentation/widgets/registration/id_card_preview.dart' show QrCodePainter;
+import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/registration/id_card_preview.dart'
+    show QrCodePainter;
 
 class DigitalIdCard extends StatelessWidget {
   final String firstName;
@@ -41,12 +41,15 @@ class DigitalIdCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final String displayName = (firstName.trim().isEmpty && lastName.trim().isEmpty)
+
+    final String displayName =
+        (firstName.trim().isEmpty && lastName.trim().isEmpty)
         ? "Priya Sharma"
         : "${firstName.trim()} ${lastName.trim()}";
 
-    final String displayPhone = phone.trim().isEmpty ? "+91 98765 43210" : phone.trim();
+    final String displayPhone = phone.trim().isEmpty
+        ? "+91 98765 43210"
+        : phone.trim();
     final String displayDob = dob.trim().isEmpty ? "15 May 1998" : dob.trim();
     final String displaySex = sex;
     final String displayBlood = bloodGroup.trim().isEmpty ? "B+" : bloodGroup;
@@ -57,7 +60,16 @@ class DigitalIdCard extends StatelessWidget {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       child: isFront
-          ? _buildFrontSide(context, displayName, displayDob, displaySex, displayBlood, displayPhone, displayAddress, isDark)
+          ? _buildFrontSide(
+              context,
+              displayName,
+              displayDob,
+              displaySex,
+              displayBlood,
+              displayPhone,
+              displayAddress,
+              isDark,
+            )
           : _buildBackSide(context, isDark),
     );
   }
@@ -73,7 +85,9 @@ class DigitalIdCard extends StatelessWidget {
     bool isDark,
   ) {
     final cardBg = isDark ? const Color(0xFF131B2A) : Colors.white;
-    final textThemeColor = isDark ? Colors.white : const Color(0xFF0F2C59);
+    final textThemeColor = isDark
+        ? Colors.white
+        : AppColors.textPrimary(context);
 
     return Container(
       key: const ValueKey('digital_card_front'),
@@ -89,7 +103,7 @@ class DigitalIdCard extends StatelessWidget {
           ),
         ],
         border: Border.all(
-          color: isDark ? const Color(0xFF1E2D4A) : const Color(0xFFE2EAF8),
+          color: isDark ? const Color(0xFF1E2D4A) : AppColors.border(context),
           width: 1.5.w,
         ),
       ),
@@ -109,7 +123,7 @@ class DigitalIdCard extends StatelessWidget {
                       width: 28.r,
                       height: 28.r,
                       decoration: const BoxDecoration(
-                        color: Color(0xFF5E3BFF),
+                        color: AppColors.primary,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -134,7 +148,9 @@ class DigitalIdCard extends StatelessWidget {
                         Text(
                           "HOSPITAL",
                           style: TextStyle(
-                            color: isDark ? const Color(0xFF8FA2B6) : const Color(0xFF718096),
+                            color: isDark
+                                ? const Color(0xFF8FA2B6)
+                                : AppColors.textSecondary(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 7.sp,
                             letterSpacing: 1.0,
@@ -150,17 +166,19 @@ class DigitalIdCard extends StatelessWidget {
                     Text(
                       "UHID",
                       style: TextStyle(
-                        color: const Color(0xFF5E3BFF),
+                        color: AppColors.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 8.sp,
+
                       ),
                     ),
                     Text(
                       uhid.isNotEmpty ? uhid : "MC-2024-000123",
                       style: TextStyle(
-                        color: isDark ? Colors.white70 : Colors.black,
+                        color: isDark ? Colors.white70 : Colors.black87,
                         fontWeight: FontWeight.bold,
                         fontSize: 9.sp,
+                        
                       ),
                     ),
                   ],
@@ -175,33 +193,29 @@ class DigitalIdCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Avatar
-                CircleAvatar(
-                  radius: 34.r,
-                  backgroundColor: isDark ? Colors.white10 : const Color(0xFFF3F4F6),
-                  child: ClipOval(
-                    child: photoPath.isNotEmpty
-                        ? (kIsWeb || photoPath.startsWith('http') || photoPath.startsWith('blob:')
-                            ? Image.network(
-                                photoPath,
-                                width: 68.r,
-                                height: 68.r,
-                                fit: BoxFit.cover,
-                                errorBuilder: (ctx, err, stack) => Icon(Icons.person, size: 34.r, color: Colors.grey),
-                              )
-                            : Image.file(
-                                File(photoPath),
-                                width: 68.r,
-                                height: 68.r,
-                                fit: BoxFit.cover,
-                                errorBuilder: (ctx, err, stack) => Icon(Icons.person, size: 34.r, color: Colors.grey),
-                              ))
-                        : Image.network(
-                            "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150",
-                            width: 68.r,
-                            height: 68.r,
-                            fit: BoxFit.cover,
-                          ),
+                // Avatar via CustomImageView
+                Container(
+                  width: 68.r,
+                  height: 68.r,
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? Colors.white10
+                        : AppColors.lightCardSecondary,
+                    shape: BoxShape.circle,
+                  ),
+                  child: CustomImageView(
+                    imagePath: photoPath.isNotEmpty
+                        ? photoPath
+                        : "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150",
+                    width: 68.r,
+                    height: 68.r,
+                    borderRadius: 34.r,
+                    fit: BoxFit.cover,
+                    errorWidget: Icon(
+                      Icons.person,
+                      size: 34.r,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -221,15 +235,18 @@ class DigitalIdCard extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 4.h,
+                        ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF5E3BFF).withValues(alpha: 0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           uhid.isNotEmpty ? uhid : "MC-2024-000123",
                           style: TextStyle(
-                            color: const Color(0xFF5E3BFF),
+                            color: AppColors.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 9.sp,
                           ),
@@ -247,7 +264,10 @@ class DigitalIdCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(color: Colors.grey.shade200, width: 1.w),
+                    border: Border.all(
+                      color: AppColors.border(context),
+                      width: 1.w,
+                    ),
                   ),
                   child: CustomPaint(
                     painter: QrCodePainter(color: Colors.black),
@@ -265,10 +285,23 @@ class DigitalIdCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: _buildInfoItem(Icons.calendar_today_outlined, "Date of Birth", dobVal, isDark),
+                      child: _buildInfoItem(
+                        Icons.calendar_today_outlined,
+                        "Date of Birth",
+                        dobVal,
+                        isDark,
+                         context: context
+                      ),
                     ),
                     Expanded(
-                      child: _buildInfoItem(Icons.bloodtype_outlined, "Blood Group", bloodVal, isDark, iconColor: Colors.red),
+                      child: _buildInfoItem(
+                        Icons.bloodtype_outlined,
+                        "Blood Group",
+                        bloodVal,
+                        isDark,
+                        iconColor: AppColors.error,
+                         context: context
+                      ),
                     ),
                   ],
                 ),
@@ -276,10 +309,23 @@ class DigitalIdCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: _buildInfoItem(Icons.phone_outlined, "Mobile Number", phoneVal, isDark),
+                      child: _buildInfoItem(
+                        Icons.phone_outlined,
+                        "Mobile Number",
+                        phoneVal,
+                        isDark,
+                         context: context
+                      ),
                     ),
                     Expanded(
-                      child: _buildInfoItem(Icons.location_on_outlined, "Place", placeVal, isDark),
+                      child: _buildInfoItem(
+                        Icons.location_on_outlined,
+                        "Place",
+                       
+                        placeVal,
+                        isDark,
+                         context: context
+                      ),
                     ),
                   ],
                 ),
@@ -293,7 +339,7 @@ class DigitalIdCard extends StatelessWidget {
             margin: EdgeInsets.only(top: 8.h),
             padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
             decoration: BoxDecoration(
-              color: const Color(0xFF5E3BFF),
+              color: AppColors.primary,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(18.r),
                 bottomRight: Radius.circular(18.r),
@@ -301,7 +347,11 @@ class DigitalIdCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.phone_in_talk_rounded, color: Colors.white, size: 14.r),
+                Icon(
+                  Icons.phone_in_talk_rounded,
+                  color: Colors.white,
+                  size: 14.r,
+                ),
                 SizedBox(width: 8.w),
                 Expanded(
                   child: Text(
@@ -325,10 +375,8 @@ class DigitalIdCard extends StatelessWidget {
   }
 
   Widget _buildBackSide(BuildContext context, bool isDark) {
-    final cardBg = isDark ? const Color(0xFF0F1E36) : const Color(0xFF4F2DFF);
-    final boxBg = isDark ? const Color(0xFF070F1C) : Colors.white;
-    final titleColor = isDark ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
-    final valueColor = isDark ? Colors.white : const Color(0xFF0C192E);
+    final cardBg = isDark ? const Color(0xFF0F1E36) : AppColors.primary;
+    final valueColor = isDark ? Colors.white : AppColors.textPrimary(context);
 
     return Container(
       key: const ValueKey('digital_card_back'),
@@ -345,7 +393,7 @@ class DigitalIdCard extends StatelessWidget {
           ),
         ],
         border: Border.all(
-          color: isDark ? const Color(0xFF1E2D4A) : const Color(0xFF5E3BFF),
+          color: isDark ? const Color(0xFF1E2D4A) : AppColors.primary,
           width: 1.5.w,
         ),
       ),
@@ -358,12 +406,12 @@ class DigitalIdCard extends StatelessWidget {
                 width: 24.r,
                 height: 24.r,
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF5E3BFF) : Colors.white,
+                  color: isDark ? AppColors.primary : Colors.white,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.add_box_rounded,
-                  color: isDark ? Colors.white : const Color(0xFF4F2DFF),
+                  color: isDark ? Colors.white : AppColors.primary,
                   size: 14.r,
                 ),
               ),
@@ -392,16 +440,22 @@ class DigitalIdCard extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           _buildInstructionRow("1. This card is non-transferable."),
-          _buildInstructionRow("2. Please carry this card during every hospital visit."),
-          _buildInstructionRow("3. Show this card at the reception for faster service."),
-          _buildInstructionRow("4. In case of loss, please inform the hospital immediately."),
+          _buildInstructionRow(
+            "2. Please carry this card during every hospital visit.",
+          ),
+          _buildInstructionRow(
+            "3. Show this card at the reception for faster service.",
+          ),
+          _buildInstructionRow(
+            "4. In case of loss, please inform the hospital immediately.",
+          ),
           SizedBox(height: 12.h),
 
           // Emergency contact card
           Container(
             padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF1A263B) : const Color(0xFFFFF2F2),
+              color: isDark ? const Color(0xFF1A263B) : AppColors.lightRedCard,
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: Row(
@@ -409,7 +463,7 @@ class DigitalIdCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(6.r),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF2D1AFF) : const Color(0xFFFFEAEA),
+                    color: isDark ? AppColors.primary : const Color(0xFFFFEAEA),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -426,7 +480,9 @@ class DigitalIdCard extends StatelessWidget {
                       Text(
                         "EMERGENCY CONTACT",
                         style: TextStyle(
-                          color: isDark ? const Color(0xFF5E98C7) : Colors.red.shade800,
+                          color: isDark
+                              ? const Color(0xFF5E98C7)
+                              : Colors.red.shade800,
                           fontWeight: FontWeight.bold,
                           fontSize: 7.sp,
                         ),
@@ -443,7 +499,9 @@ class DigitalIdCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        emergencyPhone.isNotEmpty ? emergencyPhone : "+91 98765 43211",
+                        emergencyPhone.isNotEmpty
+                            ? emergencyPhone
+                            : "+91 98765 43211",
                         style: TextStyle(
                           color: isDark ? Colors.white70 : Colors.black54,
                           fontSize: 8.sp,
@@ -479,22 +537,27 @@ class DigitalIdCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 2.h),
       child: Text(
         text,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 8.5.sp,
-          height: 1.2,
-        ),
+        style: TextStyle(color: Colors.white, fontSize: 8.5.sp, height: 1.2),
       ),
     );
   }
 
-  Widget _buildInfoItem(IconData icon, String label, String value, bool isDark, {Color? iconColor}) {
+  Widget _buildInfoItem(
+    IconData icon,
+    String label,
+    String value,
+    bool isDark, {
+    Color? iconColor,
+    required BuildContext context,
+  }) {
     final titleStyle = TextStyle(
-      color: isDark ? const Color(0xFF8FA2B6) : const Color(0xFF718096),
+      color: isDark
+          ? const Color(0xFF8FA2B6)
+          : AppColors.textSecondary(context),
       fontSize: 8.sp,
     );
     final valueStyle = TextStyle(
-      color: isDark ? Colors.white : const Color(0xFF0F2C59),
+      color: isDark ? Colors.white : AppColors.textPrimary(context),
       fontWeight: FontWeight.bold,
       fontSize: 9.sp,
     );
@@ -502,7 +565,7 @@ class DigitalIdCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(icon, color: iconColor ?? const Color(0xFF5E3BFF), size: 12.r),
+        Icon(icon, color: iconColor ?? AppColors.primary, size: 12.r),
         SizedBox(width: 6.w),
         Expanded(
           child: Column(

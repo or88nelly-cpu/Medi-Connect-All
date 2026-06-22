@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 
 class RegistrationProgressHeader extends StatelessWidget {
   final int currentStep;
   final int totalSteps;
   final String stepTitle;
+  final bool isPatientMode;
 
   const RegistrationProgressHeader({
     super.key,
     required this.currentStep,
     required this.totalSteps,
     required this.stepTitle,
+    this.isPatientMode = false,
   });
 
   @override
@@ -40,7 +43,7 @@ class RegistrationProgressHeader extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Complete Your Profile",
+                  isPatientMode ? "Complete Your Profile" : "Patient Registration",
                   style: AppTextStyles.headingMedium.copyWith(
                     color: AppColors.textPrimary(context),
                     fontWeight: FontWeight.bold,
@@ -97,7 +100,7 @@ class RegistrationProgressHeader extends StatelessWidget {
         color: isCompleted
             ? AppColors.primary
             : isActive
-                ? const Color(0xFF5E3BFF)
+                ? AppColors.primary
                 : const Color(0xFFE2E8F0),
         shape: BoxShape.circle,
         border: Border.all(
@@ -141,15 +144,13 @@ class RegistrationProgressHeader extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16.r),
-          child: Image.asset(
-            "assets/images/lady_image.png",
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) {
-              return _buildFallbackIconIllustration(Icons.person_outline, const Color(0xFFE0E7FF), const Color(0xFF4F46E5));
-            },
-          ),
+        child: CustomImageView(
+          imagePath: "assets/images/lady_image.png",
+          width: size,
+          height: size,
+          fit: BoxFit.contain,
+          borderRadius: 16.r,
+          errorWidget: _buildFallbackIconIllustration(Icons.person_outline, const Color(0xFFE0E7FF), AppColors.primary),
         ),
       );
     } else if (step == 2) {
@@ -157,14 +158,14 @@ class RegistrationProgressHeader extends StatelessWidget {
       return _buildFallbackIconIllustration(
         Icons.assignment_outlined,
         isDark ? const Color(0xFF1E293B) : const Color(0xFFECFDF5),
-        const Color(0xFF10B981),
+        AppColors.success,
       );
     } else {
       // Step 3: Review / ID Card
       return _buildFallbackIconIllustration(
         Icons.badge_outlined,
         isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF),
-        const Color(0xFF3B82F6),
+        AppColors.info,
       );
     }
   }

@@ -55,7 +55,7 @@ class SuccessStep extends StatelessWidget {
             width: 60.r,
             height: 60.r,
             decoration: const BoxDecoration(
-              color: Color(0xFF22C55E),
+              color: AppColors.success,
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -78,7 +78,7 @@ class SuccessStep extends StatelessWidget {
           Text(
             "Successfully!",
             style: AppTextStyles.headingMedium.copyWith(
-              color: const Color(0xFF22C55E),
+              color: AppColors.success,
               fontWeight: FontWeight.w900,
               fontSize: 20.sp,
             ),
@@ -123,7 +123,7 @@ class SuccessStep extends StatelessWidget {
                   context,
                   isDark,
                   icon: Icons.receipt_long_outlined,
-                  iconColor: const Color(0xFF5E3BFF),
+                  iconColor: AppColors.primary,
                   title: "Registration Fee",
                   value: "₹50",
                   subValue: "Paid",
@@ -135,7 +135,7 @@ class SuccessStep extends StatelessWidget {
                   context,
                   isDark,
                   icon: Icons.check_circle_outline_rounded,
-                  iconColor: const Color(0xFF22C55E),
+                  iconColor: AppColors.success,
                   title: "Payment Status",
                   value: "Success",
                   subValue: "Completed",
@@ -296,7 +296,7 @@ class SuccessStep extends StatelessWidget {
                 Text(
                   subValue,
                   style: TextStyle(
-                    color: const Color(0xFF22C55E),
+                    color: AppColors.success,
                     fontWeight: FontWeight.bold,
                     fontSize: 8.sp,
                   ),
