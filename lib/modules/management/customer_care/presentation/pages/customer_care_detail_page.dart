@@ -74,6 +74,8 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                       onActionClick: (title) {
                         if (title == AppStrings.register) {
                           context.push(RouteNames.patientRegistration);
+                        } else if (title == AppStrings.patientSearch) {
+                          context.push(RouteNames.patientSearch);
                         }
                       },
                     ),

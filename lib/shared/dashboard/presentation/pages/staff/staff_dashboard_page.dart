@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:get_it/get_it.dart';
+import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -10,6 +13,7 @@ import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/modules/staff/operations/staff_operations_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/role_drawers.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/staff/attendance_proximity_dialog.dart';
 
 class StaffDashboardPage extends StatefulWidget {
   const StaffDashboardPage({super.key});
@@ -19,17 +23,57 @@ class StaffDashboardPage extends StatefulWidget {
 }
 
 class _StaffDashboardPageState extends State<StaffDashboardPage> {
+  bool _checkedAttendanceToday = false;
+
   @override
   void initState() {
     super.initState();
     context.read<AuthBloc>().add(AuthCheckRequested());
   }
 
+  void _checkAndPromptAttendance(BuildContext context, dynamic userEntity) async {
+    if (_checkedAttendanceToday) return;
+    _checkedAttendanceToday = true;
+
+    final user = UserModel.fromEntity(userEntity);
+    final supabase = GetIt.I<SupabaseService>();
+    final todayStr = DateTime.now().toIso8601String().split('T').first;
+
+    try {
+      final response = await supabase
+          .from('staff_attendance')
+          .select()
+          .eq('staff_id', user.id)
+          .eq('date', todayStr);
+
+      if ((response as List).isEmpty) {
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (ctx) => AttendanceProximityDialog(
+              user: user,
+              onAttendanceMarked: () {
+                // Refresh operations or dashboard if needed
+              },
+            ),
+          );
+        }
+      }
+    } catch (_) {
+      // Silently handle offline/network issues
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is Unauthenticated) context.go(RouteNames.login);
+        if (state is Unauthenticated) {
+          context.go(RouteNames.login);
+        } else if (state is Authenticated) {
+          _checkAndPromptAttendance(context, state.user);
+        }
       },
       child: Scaffold(
         backgroundColor: AppColors.scaffold(context),

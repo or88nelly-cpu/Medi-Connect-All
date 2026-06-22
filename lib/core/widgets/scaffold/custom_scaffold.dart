@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medi_connect/core/widgets/scaffold/background_wrapper.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/core/widgets/ads/google_ad_banner.dart';
 
 class CustomScaffold extends StatelessWidget {
   final PreferredSizeWidget? customAppbar;
@@ -25,15 +28,28 @@ class CustomScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackgroundWrapper(
       child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: appBarNeeded == false
-              ? null
-              : customAppbar ?? const CommonAppBar(),
-          drawer: drawer,
-          body: body,
-          bottomNavigationBar: bottomNavigationBar,
-          floatingActionButton: floatingActionButton,
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, authState) {
+            final showAd = authState is Authenticated && authState.user.role != 'admin';
+
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: appBarNeeded == false
+                  ? null
+                  : customAppbar ?? const CommonAppBar(),
+              drawer: drawer,
+              body: showAd
+                  ? Column(
+                      children: [
+                        Expanded(child: body ?? const SizedBox.shrink()),
+                        const GoogleAdBanner(),
+                      ],
+                    )
+                  : body,
+              bottomNavigationBar: bottomNavigationBar,
+              floatingActionButton: floatingActionButton,
+            );
+          },
         ),
       ),
     );

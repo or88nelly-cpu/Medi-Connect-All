@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/modules/staff/department/widgets/common_card.dart';
@@ -60,6 +62,14 @@ class _CustomerCareState extends State<CustomerCare> {
     ),
   ];
 
+  void _handleCardTap(BuildContext context, int index) {
+    if (index == 0) {
+      context.push("/staff/patientRegistration");
+    } else if (index == 3) {
+      context.push(RouteNames.patientSearch);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = AppColors.isDark(context);
@@ -89,10 +99,7 @@ class _CustomerCareState extends State<CustomerCare> {
                             subTitle: _cards[i].subTitle,
                             icon: _cards[i].icon,
                             color: _cards[i].color,
-                            onTap: () => {
-                              if (i == 0)
-                                {context.push("/staff/patientRegistration")},
-                            },
+                            onTap: () => _handleCardTap(context, i),
                           ),
                         ),
                         SizedBox(width: 12.w),
@@ -103,6 +110,7 @@ class _CustomerCareState extends State<CustomerCare> {
                               subTitle: _cards[i + 1].subTitle,
                               icon: _cards[i + 1].icon,
                               color: _cards[i + 1].color,
+                              onTap: () => _handleCardTap(context, i + 1),
                             ),
                           )
                         else
