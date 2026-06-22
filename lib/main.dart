@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/constants/app_router.dart';
-import 'package:medi_connect/core/routes/app_router.dart';
 import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/theme/app_theme.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';

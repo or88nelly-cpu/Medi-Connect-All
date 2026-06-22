@@ -13,6 +13,9 @@ class FakePatientRepository implements PatientRepository {
   Map<String, dynamic>? sentMrdRecord;
   Either<Failure, void> registerResult = const Right(null);
 
+  bool updateCalled = false;
+  UserModel? updatedPatient;
+
   @override
   Future<Either<Failure, List<UserModel>>> getPatients() async =>
       const Right([]);
@@ -22,8 +25,11 @@ class FakePatientRepository implements PatientRepository {
       Right(patient);
 
   @override
-  Future<Either<Failure, UserModel>> updatePatient(UserModel patient) async =>
-      Right(patient);
+  Future<Either<Failure, UserModel>> updatePatient(UserModel patient) async {
+    updateCalled = true;
+    updatedPatient = patient;
+    return Right(patient);
+  }
 
   @override
   Future<Either<Failure, void>> deletePatient(String patientId) async =>
@@ -189,6 +195,66 @@ void main() {
         bloc.state.generatedUHID,
       );
       expect(fakeRepository.sentMrdRecord?['patient_name'], 'John Doe');
+    },
+  );
+
+  test(
+    'SubmitProfileUpdateEvent should validate required fields and fail if invalid',
+    () async {
+      bloc.add(const SubmitProfileUpdateEvent('test-user-id'));
+
+      await Future.delayed(const Duration(milliseconds: 100));
+      expect(bloc.state.status, PatientRegistrationStatus.failure);
+      expect(bloc.state.errorMessage, 'First name is required');
+    },
+  );
+
+  test(
+    'SubmitProfileUpdateEvent should update patient profile when all fields are valid',
+    () async {
+      // 1. Fill fields
+      bloc.add(
+        const UpdateFormFieldsEvent(
+          firstName: 'Sarah',
+          lastName: 'Smith',
+          email: 'sarah.smith@test.com',
+          phone: '9876543212',
+          dob: '12/12/1995',
+          sex: 'Female',
+          genderIdentity: 'Cisgender Female',
+          bloodGroup: 'AB+',
+          place: 'Indiranagar',
+          wardNum: '12',
+          insuranceProvider: 'Star Health',
+          insurancePolicyId: 'POL999',
+          insuranceValidTill: '31/12/2027',
+          smoking: 'No',
+          alcohol: 'No',
+          dietType: 'Veg',
+          exercise: 'Moderate',
+          allergies: 'None',
+          otherDetails: 'None',
+          emergencyName: 'John Smith',
+          emergencyRelationship: 'Spouse',
+          emergencyPhone: '9876543213',
+        ),
+      );
+
+      // 2. Fetch Address to populate address info
+      bloc.add(const FetchAddressEvent('560001'));
+      await Future.delayed(const Duration(milliseconds: 700));
+
+      // 3. Submit Update
+      bloc.add(const SubmitProfileUpdateEvent('test-user-id'));
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      expect(bloc.state.status, PatientRegistrationStatus.success);
+      expect(fakeRepository.updateCalled, true);
+      expect(fakeRepository.updatedPatient?.id, 'test-user-id');
+      expect(fakeRepository.updatedPatient?.firstName, 'Sarah');
+      expect(fakeRepository.updatedPatient?.lastName, 'Smith');
+      expect(fakeRepository.updatedPatient?.name, 'Sarah Smith');
+      expect(fakeRepository.updatedPatient?.phoneNumber, '9876543212');
     },
   );
 }

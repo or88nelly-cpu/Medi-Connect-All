@@ -112,3 +112,12 @@ class UpdateFormFieldsEvent extends PatientRegistrationEvent {
 class SubmitFormEvent extends PatientRegistrationEvent {
   const SubmitFormEvent();
 }
+
+class SubmitProfileUpdateEvent extends PatientRegistrationEvent {
+  final String userId;
+  const SubmitProfileUpdateEvent(this.userId);
+
+  @override
+  List<Object?> get props => [userId];
+}
+

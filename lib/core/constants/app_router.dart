@@ -102,7 +102,11 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: '/staff/patientRegistration',
-          builder: (context, state) => const StaffPatientRegistration(),
+          builder: (context, state) =>  const StaffPatientRegistration(),
+        ),
+        GoRoute(
+          path: RouteNames.profileCompletion,
+          builder: (context, state) =>  const StaffPatientRegistration(),
         ),
         GoRoute(
           path: '/admin/labs',

@@ -18,6 +18,7 @@ class PatientRegistrationBloc
     on<SelectPhotoEvent>(_onSelectPhoto);
     on<UpdateFormFieldsEvent>(_onUpdateFormFields);
     on<SubmitFormEvent>(_onSubmitForm);
+    on<SubmitProfileUpdateEvent>(_onSubmitProfileUpdate);
 
     // Auto-generate UHID on start
     add(GenerateUHIDEvent());
@@ -294,6 +295,142 @@ class PatientRegistrationBloc
       patientModel,
       mrdRecord,
     );
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: failure.message,
+        ),
+      ),
+      (_) => emit(state.copyWith(status: PatientRegistrationStatus.success)),
+    );
+  }
+
+  Future<void> _onSubmitProfileUpdate(
+    SubmitProfileUpdateEvent event,
+    Emitter<PatientRegistrationState> emit,
+  ) async {
+    // 1. Validations
+    if (state.firstName.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'First name is required',
+        ),
+      );
+      return;
+    }
+    if (state.lastName.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Last name is required',
+        ),
+      );
+      return;
+    }
+    if (state.phone.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Phone number is required',
+        ),
+      );
+      return;
+    }
+    if (state.dob.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Date of birth is required',
+        ),
+      );
+      return;
+    }
+    if (state.pincodeFetchedAddress.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Please enter and fetch address from Pincode',
+        ),
+      );
+      return;
+    }
+    if (state.place.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Place/Area is required',
+        ),
+      );
+      return;
+    }
+    if (state.emergencyName.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Emergency contact name is required',
+        ),
+      );
+      return;
+    }
+    if (state.emergencyPhone.trim().isEmpty) {
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: 'Emergency contact phone is required',
+        ),
+      );
+      return;
+    }
+
+    emit(state.copyWith(status: PatientRegistrationStatus.loading));
+
+    final patientModel = UserModel(
+      id: event.userId,
+      email: state.email.trim().isNotEmpty
+          ? state.email.trim()
+          : '${state.firstName.toLowerCase()}.${state.lastName.toLowerCase()}_temp@mediconnect.com',
+      name: '${state.firstName.trim()} ${state.lastName.trim()}',
+      firstName: state.firstName.trim(),
+      lastName: state.lastName.trim(),
+      phoneNumber: state.phone.trim(),
+      dateOfBirth: state.dob.trim(),
+      gender: state.sex,
+      bloodGroup: state.bloodGroup,
+      role: 'patient',
+      profileCompletionStatus: true,
+      status: 'Active',
+      profileImage: state.photoPath.isNotEmpty ? state.photoPath : null,
+      address: state.pincodeFetchedAddress,
+      emergencyContact: jsonEncode({
+        'name': state.emergencyName.trim(),
+        'relationship': state.emergencyRelationship,
+        'phone': state.emergencyPhone.trim(),
+      }),
+      insuranceProvider: state.insuranceProvider,
+      insuranceNumber: state.insurancePolicyId.trim().isNotEmpty
+          ? state.insurancePolicyId.trim()
+          : null,
+      metadata: {
+        'gender_identity': state.genderIdentity,
+        'place': state.place.trim(),
+        'ward_num': state.wardNum.trim(),
+        'insurance_valid_till': state.insuranceValidTill,
+        'smoking': state.smoking,
+        'alcohol': state.alcohol,
+        'diet_type': state.dietType,
+        'exercise': state.exercise,
+        'allergies': state.allergies.trim(),
+        'other_details': state.otherDetails.trim(),
+      },
+      patientId: state.generatedUHID.isNotEmpty
+          ? state.generatedUHID
+          : 'CCH25-${(Random().nextInt(9000000) + 1000000)}',
+    );
+
+    final result = await _patientRepository.updatePatient(patientModel);
 
     result.fold(
       (failure) => emit(
