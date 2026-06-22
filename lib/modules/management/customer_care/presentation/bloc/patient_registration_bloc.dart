@@ -279,7 +279,7 @@ class PatientRegistrationBloc
       'specialty': 'Customer Care',
       'doctor_name': 'Customer Care Department',
       'invoice_number': 'REG-${state.generatedUHID.split('-').last}',
-      'registration_fee': 200.00,
+      'registration_fee': 200,
       'registration_payment_status': 'Pending',
       'prescription_notes':
           'Initial patient registration from Customer Care. '
