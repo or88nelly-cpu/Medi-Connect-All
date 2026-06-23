@@ -125,25 +125,25 @@ void showEmrdRecordDetailsSheet(
                         isDark: isDark,
                         children: [
                           _buildInfoRow(
-                            context: context,
+                            context,
                             label: "Patient Name",
                             value: record['patient_name'] ?? 'N/A',
                             isDark: isDark,
                           ),
                           _buildInfoRow(
-                            context: context,
+                            context,
                             label: "Doctor Name",
                             value: 'Dr. ${record['doctor_name'] ?? "N/A"}',
                             isDark: isDark,
                           ),
                           _buildInfoRow(
-                            context: context,
+                            context,
                             label: "Specialty",
                             value: record['specialty'] ?? 'N/A',
                             isDark: isDark,
                           ),
                           _buildInfoRow(
-                            context: context,
+                            context,
                             label: "Invoice Number",
                             value: record['invoice_number'] ?? 'N/A',
                             isDark: isDark,
@@ -624,7 +624,7 @@ void showEmrdRecordDetailsSheet(
                         isDark: isDark,
                         children: [
                           _buildInfoRow(
-                            context: context,
+                            context,
                             label: "Consultation Fee",
                             value: "₹${(record['amount'] ?? 0.0).toStringAsFixed(2)}",
                             isDark: isDark,
@@ -632,13 +632,13 @@ void showEmrdRecordDetailsSheet(
                             valueFontWeight: FontWeight.bold,
                           ),
                           _buildInfoRow(
-                            context: context,
+                            context,
                             label: "Payment Method",
                             value: record['payment_method'] ?? 'Cash',
                             isDark: isDark,
                           ),
                           _buildInfoRow(
-                            context: context,
+                            context,
                             label: "Payment Status",
                             value: "PAID",
                             isDark: isDark,
@@ -717,6 +717,7 @@ void showEmrdRecordDetailsSheet(
                       SizedBox(height: 24.h),
                     ],
                   ),
+                )
                 ],
               ),
             );
@@ -725,7 +726,6 @@ void showEmrdRecordDetailsSheet(
       },
     );
   }
-}
 
 Widget _buildDetailCard({
   required BuildContext context,
