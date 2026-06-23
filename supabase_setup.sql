@@ -2,6 +2,46 @@
 -- Supabase Schema Setup & Activity Logging Automation Script
 -- ============================================================================
 
+-- 0. Users Profile
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email TEXT,
+    name TEXT,
+    phone TEXT,
+    role TEXT NOT NULL DEFAULT 'patient',
+    profile_completion_status BOOLEAN DEFAULT false,
+    status TEXT DEFAULT 'Pending Registration',
+    department TEXT,
+    qualification TEXT,
+    metadata JSONB,
+    first_name TEXT,
+    last_name TEXT,
+    date_of_birth TEXT,
+    age INTEGER,
+    gender TEXT,
+    profile_image TEXT,
+    address TEXT,
+    emergency_contact TEXT,
+    blood_group TEXT,
+    marital_status TEXT,
+    employee_id TEXT,
+    patient_id TEXT,
+    medical_registration_number TEXT,
+    experience INTEGER,
+    specialization TEXT,
+    consultation_fee NUMERIC(10, 2),
+    availability_status TEXT DEFAULT 'Available',
+    staff_role TEXT,
+    joining_date TEXT,
+    allergies TEXT,
+    chronic_diseases TEXT,
+    insurance_provider TEXT,
+    insurance_number TEXT,
+    designation TEXT,
+    access_level TEXT,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
 -- 1. Pharmacy Inventory
 CREATE TABLE IF NOT EXISTS pharmacy_inventory (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -262,6 +302,7 @@ ALTER TABLE invoices DISABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_settings DISABLE ROW LEVEL SECURITY;
 ALTER TABLE appointments DISABLE ROW LEVEL SECURITY;
 ALTER TABLE emr_records DISABLE ROW LEVEL SECURITY;
+ALTER TABLE users DISABLE ROW LEVEL SECURITY;
 
 -- Add Vitals columns to Appointments table
 ALTER TABLE appointments ADD COLUMN IF NOT EXISTS bp TEXT;

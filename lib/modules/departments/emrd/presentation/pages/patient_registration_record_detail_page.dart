@@ -36,12 +36,14 @@ class _PatientRegistrationRecordDetailPageState
   late String _payMethod;
   bool _isPaying = false;
   String _idCardTab = 'Front';
+  late Future<Map<String, dynamic>?> _patientDetailsFuture;
 
   @override
   void initState() {
     super.initState();
     _paymentStatus = widget.record['registration_payment_status'] ?? 'Pending';
     _payMethod = widget.record['payment_method'] ?? 'Cash';
+    _patientDetailsFuture = _fetchPatientDetails(widget.record['patient_id']);
   }
 
   Future<Map<String, dynamic>?> _fetchPatientDetails(String patientUuid) async {
@@ -306,7 +308,7 @@ class _PatientRegistrationRecordDetailPageState
     return CustomScaffold(
       customAppbar: const CommonAppBar(title: "Registration Details"),
       body: FutureBuilder<Map<String, dynamic>?>(
-        future: _fetchPatientDetails(widget.record['patient_id']),
+        future: _patientDetailsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

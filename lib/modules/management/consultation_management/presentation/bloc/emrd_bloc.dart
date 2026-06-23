@@ -4,6 +4,12 @@ import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/modules/management/consultation_management/domain/usecases/get_emrd_stats_usecase.dart';
 import 'package:medi_connect/modules/management/consultation_management/domain/usecases/get_emr_records_usecase.dart';
 
+enum EmrdView {
+  dashboard,
+  medicalRecordManagement,
+  patientRegistry,
+}
+
 abstract class EmrdEvent extends Equatable {
   const EmrdEvent();
 
@@ -12,6 +18,14 @@ abstract class EmrdEvent extends Equatable {
 }
 
 class LoadEmrdStats extends EmrdEvent {}
+
+class SwitchEmrdView extends EmrdEvent {
+  final EmrdView view;
+  const SwitchEmrdView(this.view);
+
+  @override
+  List<Object?> get props => [view];
+}
 
 abstract class EmrdState extends Equatable {
   const EmrdState();
@@ -27,11 +41,28 @@ class EmrdLoading extends EmrdState {}
 class EmrdLoaded extends EmrdState {
   final Map<String, dynamic> stats;
   final List<Map<String, dynamic>> emrRecords;
+  final EmrdView currentView;
 
-  const EmrdLoaded(this.stats, {this.emrRecords = const []});
+  const EmrdLoaded(
+    this.stats, {
+    this.emrRecords = const [],
+    this.currentView = EmrdView.dashboard,
+  });
 
   @override
-  List<Object?> get props => [stats, emrRecords];
+  List<Object?> get props => [stats, emrRecords, currentView];
+
+  EmrdLoaded copyWith({
+    Map<String, dynamic>? stats,
+    List<Map<String, dynamic>>? emrRecords,
+    EmrdView? currentView,
+  }) {
+    return EmrdLoaded(
+      stats ?? this.stats,
+      emrRecords: emrRecords ?? this.emrRecords,
+      currentView: currentView ?? this.currentView,
+    );
+  }
 }
 
 class EmrdError extends EmrdState {
@@ -48,6 +79,7 @@ class EmrdBloc extends Bloc<EmrdEvent, EmrdState> {
 
   EmrdBloc(this._getStats, this._getRecords) : super(EmrdInitial()) {
     on<LoadEmrdStats>(_onLoadStats);
+    on<SwitchEmrdView>(_onSwitchView);
   }
 
   Future<void> _onLoadStats(
@@ -65,6 +97,15 @@ class EmrdBloc extends Bloc<EmrdEvent, EmrdState> {
     statsRes.fold((_) {}, (val) => stats = val);
     recordsRes.fold((_) {}, (val) => records = val);
 
-    emit(EmrdLoaded(stats, emrRecords: records));
+    emit(EmrdLoaded(stats, emrRecords: records, currentView: EmrdView.dashboard));
+  }
+
+  void _onSwitchView(
+    SwitchEmrdView event,
+    Emitter<EmrdState> emit,
+  ) {
+    if (state is EmrdLoaded) {
+      emit((state as EmrdLoaded).copyWith(currentView: event.view));
+    }
   }
 }

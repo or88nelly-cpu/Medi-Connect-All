@@ -7,6 +7,7 @@ import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/pages/patient_registration_record_detail_page.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 
 class FakeSecureStorageService extends SecureStorageService {
   final Map<String, String> _data = {};
@@ -30,10 +31,15 @@ class FakeEmrdBloc extends Bloc<EmrdEvent, EmrdState> implements EmrdBloc {
   }
 }
 
+class FakeAuthBloc extends Bloc<AuthEvent, AuthState> implements AuthBloc {
+  FakeAuthBloc() : super(Unauthenticated());
+}
+
 void main() {
   setUpAll(() {
     GetIt.I.registerSingleton<SecureStorageService>(FakeSecureStorageService());
     GetIt.I.registerSingleton<EmrdBloc>(FakeEmrdBloc());
+    GetIt.I.registerSingleton<AuthBloc>(FakeAuthBloc());
   });
 
   tearDownAll(() async {
@@ -46,8 +52,11 @@ void main() {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, _) => MaterialApp(
-        home: BlocProvider<EmrdBloc>(
-          create: (_) => GetIt.I<EmrdBloc>(),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<EmrdBloc>(create: (_) => GetIt.I<EmrdBloc>()),
+            BlocProvider<AuthBloc>(create: (_) => GetIt.I<AuthBloc>()),
+          ],
           child: child,
         ),
       ),

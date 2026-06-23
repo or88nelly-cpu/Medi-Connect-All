@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_settings_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_settings_page.dart';
 
@@ -55,12 +56,16 @@ class FakeAdminSettingsBloc extends Bloc<AdminSettingsEvent, AdminSettingsState>
   }
 }
 
+class FakeAuthBloc extends Bloc<AuthEvent, AuthState> implements AuthBloc {
+  FakeAuthBloc() : super(Unauthenticated());
+}
+
 void main() {
   late FakeSecureStorageService fakeSecureStorage;
   late ThemeCubit themeCubit;
   late FakeAdminSettingsBloc fakeAdminSettingsBloc;
 
-  setUpAll(() {
+  setUp(() {
     fakeSecureStorage = FakeSecureStorageService();
     themeCubit = ThemeCubit(fakeSecureStorage);
     fakeAdminSettingsBloc = FakeAdminSettingsBloc();
@@ -68,9 +73,10 @@ void main() {
     GetIt.I.registerSingleton<SecureStorageService>(fakeSecureStorage);
     GetIt.I.registerSingleton<ThemeCubit>(themeCubit);
     GetIt.I.registerSingleton<AdminSettingsBloc>(fakeAdminSettingsBloc);
+    GetIt.I.registerSingleton<AuthBloc>(FakeAuthBloc());
   });
 
-  tearDownAll(() async {
+  tearDown(() async {
     await GetIt.I.reset();
   });
 
@@ -79,12 +85,15 @@ void main() {
       designSize: const Size(1200, 1000),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, _) => MultiBlocProvider(
-        providers: [
-          BlocProvider<ThemeCubit>.value(value: themeCubit),
-          BlocProvider<AdminSettingsBloc>.value(value: fakeAdminSettingsBloc),
-        ],
-        child: MaterialApp(home: child),
+      builder: (context, _) => MaterialApp(
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeCubit>(create: (_) => GetIt.I<ThemeCubit>()),
+            BlocProvider<AdminSettingsBloc>(create: (_) => GetIt.I<AdminSettingsBloc>()),
+            BlocProvider<AuthBloc>(create: (_) => GetIt.I<AuthBloc>()),
+          ],
+          child: child,
+        ),
       ),
     );
   }
