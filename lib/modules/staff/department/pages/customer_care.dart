@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/medical_record_management_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/widgets/admit_patient_dialog.dart';
 
 class CustomerCare extends StatefulWidget {
   const CustomerCare({super.key});
@@ -75,6 +76,8 @@ class _CustomerCareState extends State<CustomerCare> {
   void _handleCardTap(BuildContext context, int index) {
     if (index == 0) {
       context.push("/staff/patientRegistration");
+    } else if (index == 1) {
+      context.push(RouteNames.qrRegistration);
     } else if (index == 2) {
       showModalBottomSheet(
         context: context,
@@ -84,6 +87,11 @@ class _CustomerCareState extends State<CustomerCare> {
       );
     } else if (index == 3) {
       context.push(RouteNames.patientSearch);
+    } else if (index == 4) {
+      showDialog(
+        context: context,
+        builder: (_) => const AdmitPatientDialog(),
+      );
     } else if (index == 6) {
       final emrdBloc = context.read<EmrdBloc>();
       emrdBloc.add(LoadEmrdStats());

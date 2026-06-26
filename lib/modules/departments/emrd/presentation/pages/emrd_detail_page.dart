@@ -16,6 +16,7 @@ import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_
 import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_admin_analytics_section.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/patient_registry_page.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/medical_record_management_page.dart';
+import 'package:medi_connect/modules/departments/emrd/presentation/pages/emrd_consultations_page.dart';
 
 class EmrdDetailPage extends StatelessWidget {
   const EmrdDetailPage({super.key});
@@ -136,6 +137,51 @@ class EmrdDetailPage extends StatelessWidget {
                                             value: emrdBloc,
                                             child: const MedicalRecordManagementPage(),
                                           ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  EmrdOperationCard(
+                                    title: "Active Consultations",
+                                    value: NumberFormat('#,###').format(stats['active_consultations'] ?? 42),
+                                    subtitle: "Pending / Today",
+                                    icon: Icons.pending_actions_outlined,
+                                    accentColor: const Color(0xFF6366F1),
+                                    isDark: isDark,
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => const EmrdConsultationsPage(initialTab: 0),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  EmrdOperationCard(
+                                    title: "Complete Consultation",
+                                    value: NumberFormat('#,###').format(stats['completed_consultations_today'] ?? 18),
+                                    subtitle: "Completed Today",
+                                    icon: Icons.check_circle_outline,
+                                    accentColor: const Color(0xFF10B981),
+                                    isDark: isDark,
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => const EmrdConsultationsPage(initialTab: 1),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  EmrdOperationCard(
+                                    title: "Record Patient Vitals",
+                                    value: NumberFormat('#,###').format(stats['patients_awaiting_vitals'] ?? 7),
+                                    subtitle: "Awaiting Vitals",
+                                    icon: Icons.monitor_heart_outlined,
+                                    accentColor: const Color(0xFFEF4444),
+                                    isDark: isDark,
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => const EmrdConsultationsPage(initialTab: 0),
                                         ),
                                       );
                                     },

@@ -16,6 +16,7 @@ class RouteNames {
   static const adminDashboard = '/admin/dashboard';
   static const patientRegistration = '/customer-care/patient-registration';
   static const patientSearch = '/customer-care/patient-search';
+  static const qrRegistration = '/customer-care/qr-registration';
   static const patientRegistrationRecordDetail =
       '/emrd/patient-registration-detail';
   static const adminSettings = '/admin/settings';

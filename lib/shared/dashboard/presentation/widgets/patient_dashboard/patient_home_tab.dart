@@ -10,6 +10,8 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashb
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_quick_stats.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/upcoming_appointments_card.dart';
 
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_book_consultation_card.dart';
+
 class PatientHomeTab extends StatelessWidget {
   const PatientHomeTab({super.key});
 
@@ -33,6 +35,10 @@ class PatientHomeTab extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           const PatientQuickStats(),
+          SizedBox(height: 24.h),
+
+          // ── Book Consultation Card ──────────────────────
+          const PatientBookConsultationCard(),
           SizedBox(height: 24.h),
 
           // ── Upcoming Appointments ───────────────────────

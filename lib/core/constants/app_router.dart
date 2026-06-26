@@ -13,6 +13,7 @@ import 'package:medi_connect/modules/admin/home/admin_home_page.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/pages/patient_registration_record_detail_page.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/pages/patient_registration_page.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/pages/patient_search_page.dart';
+import 'package:medi_connect/modules/management/customer_care/presentation/pages/qr_registration_page.dart';
 import 'package:medi_connect/modules/management/staff_management/data/models/department_model.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/pages/department_detail.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/pages/department_list_page.dart';
@@ -189,6 +190,10 @@ class AppRouterConfig {
         GoRoute(
           path: RouteNames.patientSearch,
           builder: (context, state) => const PatientSearchPage(),
+        ),
+        GoRoute(
+          path: RouteNames.qrRegistration,
+          builder: (context, state) => const QrRegistrationPage(),
         ),
         GoRoute(
           path: RouteNames.patientRegistrationRecordDetail,
