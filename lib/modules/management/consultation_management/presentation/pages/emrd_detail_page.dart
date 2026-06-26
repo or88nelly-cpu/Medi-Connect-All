@@ -45,6 +45,7 @@ class EmrdDetailPage extends StatelessWidget {
               final stats = state.stats;
               final double screenWidth = MediaQuery.of(context).size.width;
               final int crossAxisCount = screenWidth > 600 ? 4 : 2;
+              final double childAspectRatio = screenWidth > 600 ? 0.96 : 0.92;
 
               return BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, authState) {
@@ -97,9 +98,9 @@ class EmrdDetailPage extends StatelessWidget {
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 crossAxisCount: crossAxisCount,
-                                mainAxisSpacing: 12.h,
-                                crossAxisSpacing: 12.w,
-                                childAspectRatio: 1.1,
+                                mainAxisSpacing: 14.h,
+                                crossAxisSpacing: 14.w,
+                                childAspectRatio: childAspectRatio,
                                 children: [
                                   EmrdOperationCard(
                                     title: "Patient Registry & Identification",

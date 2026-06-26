@@ -61,6 +61,12 @@ class CustomerCareActionsGrid extends StatelessWidget {
         icon: Icons.rate_review_rounded,
         gradient: AppColors.feedbackGradient,
       ),
+      _ActionItem(
+        title: "Consultation",
+        description: "View completed consultations (EMR)",
+        icon: Icons.assignment_rounded,
+        gradient: AppColors.greenGradient,
+      ),
     ];
 
     return GridView.builder(

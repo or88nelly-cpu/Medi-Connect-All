@@ -12,6 +12,8 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
+import 'package:medi_connect/modules/management/consultation_management/presentation/widgets/emrd_list_item_card.dart';
+import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_record_details_sheet.dart';
 
 class PatientRegistrationRecordDetailPage extends StatefulWidget {
   final Map<String, dynamic> record;
@@ -415,6 +417,16 @@ class _PatientRegistrationRecordDetailPageState
               'None';
           final otherDetails = meta['other_details'] ?? 'None';
 
+          final emrdState = context.read<EmrdBloc>().state;
+          List<Map<String, dynamic>> allRecords = [];
+          if (emrdState is EmrdLoaded) {
+            allRecords = emrdState.emrRecords;
+          }
+          final patientId = widget.record['patient_id'];
+          final patientConsultations = allRecords
+              .where((r) => r['patient_id'] == patientId && r['specialty'] != 'Customer Care')
+              .toList();
+
           // Visual Cards list
           final detailCards = [
             _buildDetailCard(
@@ -496,6 +508,83 @@ class _PatientRegistrationRecordDetailPageState
                 _buildInfoRow("Contact Name", emergencyName, isDark),
                 _buildInfoRow("Relationship", emergencyRelationship, isDark),
                 _buildInfoRow("Phone Number", emergencyPhone, isDark),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            _buildDetailCard(
+              title: "Recent Consultations",
+              icon: Icons.history_edu_outlined,
+              iconColor: Colors.orange,
+              isDark: isDark,
+              children: [
+                if (patientConsultations.isEmpty)
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h),
+                    child: Text(
+                      "No clinical consultations recorded.",
+                      style: AppTextStyles.bodySmall.copyWith(
+                        fontStyle: FontStyle.italic,
+                        color: isDark ? Colors.white30 : AppColors.textSecondary(context),
+                      ),
+                    ),
+                  )
+                else ...[
+                  ...patientConsultations.take(5).map((consultation) {
+                    final doc = consultation['doctor_name'] ?? 'Unknown Doctor';
+                    final dept = consultation['specialty'] ?? 'General';
+                    final dateStr = consultation['recorded_at'] ?? '';
+                    String formattedDate = 'N/A';
+                    if (dateStr.isNotEmpty) {
+                      try {
+                        formattedDate = DateFormat('dd MMM yyyy').format(DateTime.parse(dateStr));
+                      } catch (_) {}
+                    }
+                    return Card(
+                      elevation: 0,
+                      margin: EdgeInsets.only(bottom: 8.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                        side: BorderSide(color: AppColors.border(context)),
+                      ),
+                      color: isDark ? Colors.white.withValues(alpha: 0.02) : Colors.black.withValues(alpha: 0.01),
+                      child: ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                        title: Text(
+                          doc,
+                          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          "$dept · $formattedDate",
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+                          ),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 12.r),
+                        onTap: () => showEmrdRecordDetailsSheet(context, consultation),
+                      ),
+                    );
+                  }),
+                  if (patientConsultations.length > 5) ...[
+                    SizedBox(height: 8.h),
+                    Center(
+                      child: TextButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => AllConsultationsPage(
+                                patientName: patientName,
+                                consultations: patientConsultations,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.view_list),
+                        label: const Text("View All Consultations"),
+                      ),
+                    ),
+                  ],
+                ],
               ],
             ),
           ];
@@ -851,6 +940,35 @@ class _PatientRegistrationRecordDetailPageState
                 ],
               ],
             ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class AllConsultationsPage extends StatelessWidget {
+  final String patientName;
+  final List<Map<String, dynamic>> consultations;
+
+  const AllConsultationsPage({
+    super.key,
+    required this.patientName,
+    required this.consultations,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScaffold(
+      customAppbar: CommonAppBar(title: "All Consultations - $patientName"),
+      body: ListView.builder(
+        padding: EdgeInsets.all(16.r),
+        itemCount: consultations.length,
+        itemBuilder: (context, index) {
+          final record = consultations[index];
+          return EmrdListItemCard(
+            record: record,
+            onTap: () => showEmrdRecordDetailsSheet(context, record),
           );
         },
       ),

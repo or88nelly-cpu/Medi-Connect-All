@@ -16,6 +16,9 @@ import 'package:medi_connect/modules/management/customer_care/presentation/widge
 import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_charts_section.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_recent_activity.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/widgets/customer_care_footer.dart';
+import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
+import 'package:medi_connect/modules/departments/emrd/presentation/pages/medical_record_management_page.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
 
 class CustomerCareDetailPage extends StatefulWidget {
   const CustomerCareDetailPage({super.key});
@@ -76,6 +79,25 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                           context.push(RouteNames.patientRegistration);
                         } else if (title == AppStrings.patientSearch) {
                           context.push(RouteNames.patientSearch);
+                        } else if (title == AppStrings.appointment) {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (ctx) =>
+                                const CreateAppointmentWizardBottomSheet(),
+                          );
+                        } else if (title == "Consultation") {
+                          final emrdBloc = context.read<EmrdBloc>();
+                          emrdBloc.add(LoadEmrdStats());
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider.value(
+                                value: emrdBloc,
+                                child: const MedicalRecordManagementPage(),
+                              ),
+                            ),
+                          );
                         }
                       },
                     ),

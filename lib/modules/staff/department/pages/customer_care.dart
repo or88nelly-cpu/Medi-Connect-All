@@ -6,6 +6,10 @@ import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/modules/staff/department/widgets/common_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
+import 'package:medi_connect/modules/departments/emrd/presentation/pages/medical_record_management_page.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
 
 class CustomerCare extends StatefulWidget {
   const CustomerCare({super.key});
@@ -60,13 +64,37 @@ class _CustomerCareState extends State<CustomerCare> {
       icon: Icons.star_rounded,
       color: Color(0xFFFF4D8D),
     ),
+    _CardData(
+      title: 'Consultation',
+      subTitle: 'View completed\nconsultations (EMR)',
+      icon: Icons.assignment_rounded,
+      color: Color(0xFF10B981),
+    ),
   ];
 
   void _handleCardTap(BuildContext context, int index) {
     if (index == 0) {
       context.push("/staff/patientRegistration");
+    } else if (index == 2) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (ctx) => const CreateAppointmentWizardBottomSheet(),
+      );
     } else if (index == 3) {
       context.push(RouteNames.patientSearch);
+    } else if (index == 6) {
+      final emrdBloc = context.read<EmrdBloc>();
+      emrdBloc.add(LoadEmrdStats());
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+            value: emrdBloc,
+            child: const MedicalRecordManagementPage(),
+          ),
+        ),
+      );
     }
   }
 

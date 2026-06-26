@@ -35,6 +35,8 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
   final TextEditingController _prescriptionNotesCtrl = TextEditingController();
   final TextEditingController _labNotesCtrl = TextEditingController();
   final TextEditingController _feeCtrl = TextEditingController(text: '500.00');
+  double _initialFee = 500.0;
+  bool _isLoadingFee = true;
 
   @override
   void initState() {
@@ -47,6 +49,42 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     }
     context.read<AdminPharmacyBloc>().add(LoadPharmacyItems());
     context.read<PatientBloc>().add(LoadPatients());
+    _initFee();
+  }
+
+  Future<void> _initFee() async {
+    if (widget.appointment.type == 'Follow-up') {
+      setState(() {
+        _initialFee = 0.0;
+        _feeCtrl.text = '0.00';
+        _isLoadingFee = false;
+      });
+      return;
+    }
+
+    try {
+      if (widget.appointment.doctorId != null) {
+        final supabase = GetIt.I<SupabaseService>().client;
+        final res = await supabase
+            .from('users')
+            .select('consultation_fee')
+            .eq('id', widget.appointment.doctorId!)
+            .single();
+        final feeNum = res['consultation_fee'] as num?;
+        if (feeNum != null) {
+          setState(() {
+            _initialFee = feeNum.toDouble();
+            _feeCtrl.text = _initialFee.toStringAsFixed(2);
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint("Failed to fetch doctor fee: $e");
+    } finally {
+      setState(() {
+        _isLoadingFee = false;
+      });
+    }
   }
 
   @override
@@ -400,8 +438,19 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     final sheetBg = isDark ? AppColors.terminalDarkCard : Colors.white;
     final cleanDocName = _cleanDoctorName(apt.doctorName);
 
+    if (_isLoadingFee) {
+      return Container(
+        height: 300.h,
+        decoration: BoxDecoration(
+          color: sheetBg,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return BlocProvider(
-      create: (context) => CompleteConsultationCubit(),
+      create: (context) => CompleteConsultationCubit(initialConsultationFee: _initialFee),
       child: BlocConsumer<CompleteConsultationCubit, CompleteConsultationState>(
         listener: (context, state) {
           final feeStr = state.totalFee.toStringAsFixed(2);

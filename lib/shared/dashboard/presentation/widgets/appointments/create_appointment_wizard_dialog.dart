@@ -153,7 +153,7 @@ class _CreateAppointmentWizardBottomSheetState
         'appointment_date': dateStr,
         'appointment_time': state.selectedSlotTime!,
         'status': 'Confirmed',
-        'type': state.selectedType,
+        'type': state.isFollowUp ? 'Follow-up' : state.selectedType,
         'token': token,
       }),
     );

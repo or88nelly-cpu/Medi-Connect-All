@@ -256,8 +256,20 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
 
   Widget _buildTitleSection(Color textColor, Color labelColor) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final canPop = Navigator.of(context).canPop();
     return Row(
       children: [
+        if (canPop) ...[
+          IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: textColor,
+              size: 20.r,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          SizedBox(width: 8.w),
+        ],
         Container(
           width: 54.r,
           height: 54.r,

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
-// --- OPERATIONS MODULE CARD ---
 class EmrdOperationCard extends StatelessWidget {
   final String title;
   final String value;
@@ -28,106 +27,167 @@ class EmrdOperationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final Color borderCol = isDark ? Colors.white10 : accentColor.withOpacity(0.12);
+    final Color titleColor = isDark ? Colors.white : AppColors.textPrimary(context);
+    final Color subColor = isDark ? Colors.white54 : AppColors.textSecondary(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(
-          color: isDark ? Colors.white10 : AppColors.border(context),
-        ),
+        color: cardBg,
+        borderRadius: BorderRadius.circular(18.r),
+        border: Border.all(color: borderCol, width: 1.2),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.015),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
+          if (!isDark)
+            BoxShadow(
+              color: accentColor.withOpacity(0.06),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          if (isDark)
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
         ],
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(16.r),
-          child: Padding(
-            padding: EdgeInsets.all(12.r),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8.r),
-                          decoration: BoxDecoration(
-                            color: accentColor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          child: Icon(
-                            icon,
-                            color: accentColor,
-                            size: 20.r,
-                          ),
-                        ),
-                        if (badgeCount != null && badgeCount! > 0)
-                          Positioned(
-                            top: -4.h,
-                            right: -4.w,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFFDC2626),
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18.r),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            splashColor: accentColor.withOpacity(0.05),
+            hoverColor: accentColor.withOpacity(0.02),
+            child: Padding(
+              padding: EdgeInsets.all(14.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Top Row: Icon Container
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(10.r),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  accentColor.withOpacity(0.2),
+                                  accentColor.withOpacity(0.05),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                              child: Text(
-                                "$badgeCount",
-                                style: TextStyle(
-                                  fontSize: 8.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: Icon(
+                              icon,
+                              color: accentColor,
+                              size: 22.r,
+                            ),
+                          ),
+                          if (badgeCount != null && badgeCount! > 0)
+                            Positioned(
+                              top: -4.h,
+                              right: -4.w,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 6.w,
+                                  vertical: 2.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFEF4444),
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFFEF4444).withOpacity(0.3),
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  "$badgeCount",
+                                  style: TextStyle(
+                                    fontSize: 8.sp,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(4.r),
-                      decoration: BoxDecoration(
-                        color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100],
-                        shape: BoxShape.circle,
+                        ],
                       ),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        size: 14.r,
-                        color: accentColor,
-                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  // Title of the card
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 11.5.sp,
+                      fontWeight: FontWeight.bold,
+                      height: 1.25,
+                      color: titleColor,
                     ),
-                  ],
-                ),
-                const Spacer(),
-                Text(
-                  value,
-                  style: AppTextStyles.headingSmall.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                    color: isDark ? Colors.white : AppColors.textPrimary(context),
                   ),
-                ),
-                SizedBox(height: 2.h),
-                Text(
-                  title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 10.sp,
-                    color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+                  SizedBox(height: 10.h),
+                  // Bottom Section: Value, Subtitle and Action Button
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              value,
+                              style: TextStyle(
+                                fontSize: 17.sp,
+                                fontWeight: FontWeight.w900,
+                                color: titleColor,
+                                height: 1.1,
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              subtitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 9.5.sp,
+                                fontWeight: FontWeight.w500,
+                                color: subColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(5.r),
+                        decoration: BoxDecoration(
+                          color: accentColor.withOpacity(0.12),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.arrow_forward_rounded,
+                          size: 13.r,
+                          color: accentColor,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

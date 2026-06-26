@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_drawer.
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/modules/admin/home/widgets/dashboard_header.dart';
 import 'package:medi_connect/modules/admin/home/widgets/extra_card.dart';
+import 'package:medi_connect/modules/admin/home/widgets/admin_home_mobile.dart';
 
 import 'package:medi_connect/modules/admin/home/widgets/department_list_home.dart'
     show DepartmentListHome;
@@ -39,6 +41,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
       },
       builder: (context, state) {
         final user = state is Authenticated ? state.user : null;
+        if (AppResponsive.isMobile(context)) {
+          return AdminHomeMobile(user: user);
+        }
         return CustomScaffold(
           drawer: AdminDrawer(),
           appBarNeeded: false,

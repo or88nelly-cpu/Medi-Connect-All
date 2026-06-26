@@ -107,7 +107,7 @@ class DepartmentListHome extends StatelessWidget {
                       crossAxisSpacing: 16.w,
                       mainAxisSpacing: 16.h,
                       childAspectRatio:
-                          1.9, // Squared aspect ratio matches mockup
+                          MediaQuery.of(context).size.width < 600 ? 1.3 : 1.9, // Responsive aspect ratio to prevent mobile overflow
                     ),
                     itemBuilder: (_, index) {
                       if (isLoading) {
