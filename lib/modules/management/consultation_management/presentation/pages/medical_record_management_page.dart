@@ -24,11 +24,15 @@ class MedicalRecordManagementPage extends StatelessWidget {
           );
         } else if (state is EmrdError) {
           return CustomScaffold(
-            customAppbar: const CommonAppBar(title: "Medical Record Management"),
+            customAppbar: const CommonAppBar(
+              title: "Medical Record Management",
+            ),
             body: Center(
               child: Text(
                 state.message,
-                style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.error,
+                ),
               ),
             ),
           );
@@ -38,7 +42,9 @@ class MedicalRecordManagementPage extends StatelessWidget {
               .toList();
 
           return CustomScaffold(
-            customAppbar: const CommonAppBar(title: "Medical Record Management"),
+            customAppbar: const CommonAppBar(
+              title: "Medical Record Management",
+            ),
             body: SingleChildScrollView(
               padding: EdgeInsets.all(20.r),
               child: Column(
@@ -61,7 +67,10 @@ class MedicalRecordManagementPage extends StatelessWidget {
                       ),
                       const Spacer(),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 4.h,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12.r),
@@ -129,7 +138,8 @@ class MedicalRecordManagementPage extends StatelessWidget {
                         final record = filteredRecords[index];
                         return EmrdListItemCard(
                           record: record,
-                          onTap: () => showEmrdRecordDetailsSheet(context, record),
+                          onTap: () =>
+                              showEmrdRecordDetailsSheet(context, record),
                         );
                       },
                     ),

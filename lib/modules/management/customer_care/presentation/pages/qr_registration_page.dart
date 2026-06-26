@@ -75,7 +75,10 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: isMobile ? 16.w : 40.w, vertical: 20.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: isMobile ? 16.w : 40.w,
+          vertical: 20.h,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -149,7 +152,9 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
               decoration: BoxDecoration(
-                color: isDark ? Colors.white.withValues(alpha: 0.02) : const Color(0xFFEFF6FF),
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.02)
+                    : const Color(0xFFEFF6FF),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
                   color: isDark ? Colors.white10 : const Color(0xFFDBEAFE),
@@ -167,7 +172,9 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
                     child: Text(
                       "By scanning this QR code, patients will be redirected to the official app store. Your data is safe with us.",
                       style: AppTextStyles.bodyXSmall.copyWith(
-                        color: isDark ? Colors.white54 : const Color(0xFF1E3A8A),
+                        color: isDark
+                            ? Colors.white54
+                            : const Color(0xFF1E3A8A),
                         fontSize: 10.sp,
                         height: 1.3,
                       ),

@@ -168,7 +168,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
                 ),
               );
             });
-          }()
+          }(),
         ] else
           Text(
             "No medicines prescribed.",

@@ -19,7 +19,12 @@ class CompleteConsultationSheet extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      padding: EdgeInsets.fromLTRB(20.r, 20.r, 20.r, MediaQuery.of(context).viewInsets.bottom + 20.r),
+      padding: EdgeInsets.fromLTRB(
+        20.r,
+        20.r,
+        20.r,
+        MediaQuery.of(context).viewInsets.bottom + 20.r,
+      ),
       decoration: BoxDecoration(
         color: isDark ? AppColors.terminalDarkCard : Colors.white,
         borderRadius: BorderRadius.only(
@@ -48,7 +53,7 @@ class CompleteConsultationSheet extends StatelessWidget {
           ),
           const Divider(),
           SizedBox(height: 12.h),
-          
+
           Text(
             "Are you sure you want to mark this consultation as completed?",
             style: AppTextStyles.bodyMedium.copyWith(
@@ -62,19 +67,33 @@ class CompleteConsultationSheet extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16.r),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.black.withValues(alpha: 0.02),
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.03)
+                  : Colors.black.withValues(alpha: 0.02),
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: AppColors.border(context)),
             ),
             child: Column(
               children: [
-                _buildDetailRow("Patient Name", appointment.patientName, isDark),
+                _buildDetailRow(
+                  "Patient Name",
+                  appointment.patientName,
+                  isDark,
+                ),
                 SizedBox(height: 8.h),
                 _buildDetailRow("Doctor Name", appointment.doctorName, isDark),
                 SizedBox(height: 8.h),
-                _buildDetailRow("Specialization", appointment.specialty, isDark),
+                _buildDetailRow(
+                  "Specialization",
+                  appointment.specialty,
+                  isDark,
+                ),
                 SizedBox(height: 8.h),
-                _buildDetailRow("Slot Time", appointment.appointmentTime, isDark),
+                _buildDetailRow(
+                  "Slot Time",
+                  appointment.appointmentTime,
+                  isDark,
+                ),
               ],
             ),
           ),

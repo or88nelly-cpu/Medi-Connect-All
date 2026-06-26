@@ -96,7 +96,10 @@ class PatientBookConsultationCard extends StatelessWidget {
                   backgroundColor: Colors.white,
                   foregroundColor: const Color(0xFF3B5BFF),
                   elevation: 0,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),
@@ -111,10 +114,7 @@ class PatientBookConsultationCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 4.w),
-                    Icon(
-                      Icons.arrow_forward_rounded,
-                      size: 14.r,
-                    ),
+                    Icon(Icons.arrow_forward_rounded, size: 14.r),
                   ],
                 ),
               ),

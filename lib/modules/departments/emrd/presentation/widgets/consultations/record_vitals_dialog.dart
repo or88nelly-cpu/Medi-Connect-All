@@ -34,8 +34,12 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
     _weightController = TextEditingController(text: widget.appointment.weight);
     _heightController = TextEditingController(text: widget.appointment.height);
     _feverController = TextEditingController(text: widget.appointment.fever);
-    _headCircController = TextEditingController(text: widget.appointment.headCircumference);
-    _notesController = TextEditingController(text: widget.appointment.additionalVitals);
+    _headCircController = TextEditingController(
+      text: widget.appointment.headCircumference,
+    );
+    _notesController = TextEditingController(
+      text: widget.appointment.additionalVitals,
+    );
   }
 
   @override
@@ -55,9 +59,7 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
 
     return Dialog(
       backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,
         constraints: BoxConstraints(
@@ -212,11 +214,17 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 10.h,
+                      ),
                     ),
                     child: const Text(
                       "Save Vitals",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -238,7 +246,9 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
     int maxLines = 1,
   }) {
     final borderColor = isDark ? Colors.white24 : Colors.black12;
-    final fillCol = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
+    final fillCol = isDark
+        ? AppColors.terminalDarkFieldFill
+        : AppColors.terminalLightFieldFill;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,11 +268,21 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
           style: TextStyle(color: isDark ? Colors.white : Colors.black87),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38, fontSize: 13.sp),
-            prefixIcon: Icon(icon, size: 20.r, color: isDark ? Colors.white60 : Colors.black54),
+            hintStyle: TextStyle(
+              color: isDark ? Colors.white38 : Colors.black38,
+              fontSize: 13.sp,
+            ),
+            prefixIcon: Icon(
+              icon,
+              size: 20.r,
+              color: isDark ? Colors.white60 : Colors.black54,
+            ),
             filled: true,
             fillColor: fillCol,
-            contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 14.w,
+              vertical: 12.h,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide(color: borderColor),

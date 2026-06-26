@@ -188,10 +188,7 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
     final patient = state.selectedPatient;
     final doctor = state.selectedDoctor;
     if (patient == null || doctor == null) {
-      emit(state.copyWith(
-        isFollowUp: false,
-        consultationFee: 0.0,
-      ));
+      emit(state.copyWith(isFollowUp: false, consultationFee: 0.0));
       return;
     }
 
@@ -223,18 +220,22 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
       final double baseFee = doctor.consultationFee ?? 500.0;
       final double finalFee = followUp ? 0.0 : baseFee;
 
-      emit(state.copyWith(
-        isFollowUp: followUp,
-        consultationFee: finalFee,
-        isLoadingFeeCheck: false,
-      ));
+      emit(
+        state.copyWith(
+          isFollowUp: followUp,
+          consultationFee: finalFee,
+          isLoadingFeeCheck: false,
+        ),
+      );
     } catch (e) {
       final double baseFee = doctor.consultationFee ?? 500.0;
-      emit(state.copyWith(
-        isFollowUp: false,
-        consultationFee: baseFee,
-        isLoadingFeeCheck: false,
-      ));
+      emit(
+        state.copyWith(
+          isFollowUp: false,
+          consultationFee: baseFee,
+          isLoadingFeeCheck: false,
+        ),
+      );
     }
   }
 

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -88,10 +87,7 @@ class _CustomerCareState extends State<CustomerCare> {
     } else if (index == 3) {
       context.push(RouteNames.patientSearch);
     } else if (index == 4) {
-      showDialog(
-        context: context,
-        builder: (_) => const AdmitPatientDialog(),
-      );
+      showDialog(context: context, builder: (_) => const AdmitPatientDialog());
     } else if (index == 6) {
       final emrdBloc = context.read<EmrdBloc>();
       emrdBloc.add(LoadEmrdStats());

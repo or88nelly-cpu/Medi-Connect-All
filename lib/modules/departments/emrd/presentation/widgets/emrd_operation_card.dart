@@ -28,9 +28,15 @@ class EmrdOperationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final Color borderCol = isDark ? Colors.white10 : accentColor.withOpacity(0.12);
-    final Color titleColor = isDark ? Colors.white : AppColors.textPrimary(context);
-    final Color subColor = isDark ? Colors.white54 : AppColors.textSecondary(context);
+    final Color borderCol = isDark
+        ? Colors.white10
+        : accentColor.withOpacity(0.12);
+    final Color titleColor = isDark
+        ? Colors.white
+        : AppColors.textPrimary(context);
+    final Color subColor = isDark
+        ? Colors.white54
+        : AppColors.textSecondary(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -86,11 +92,7 @@ class EmrdOperationCard extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(12.r),
                             ),
-                            child: Icon(
-                              icon,
-                              color: accentColor,
-                              size: 22.r,
-                            ),
+                            child: Icon(icon, color: accentColor, size: 22.r),
                           ),
                           if (badgeCount != null && badgeCount! > 0)
                             Positioned(
@@ -106,7 +108,9 @@ class EmrdOperationCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(0xFFEF4444).withOpacity(0.3),
+                                      color: const Color(
+                                        0xFFEF4444,
+                                      ).withOpacity(0.3),
                                       blurRadius: 4,
                                       offset: const Offset(0, 2),
                                     ),

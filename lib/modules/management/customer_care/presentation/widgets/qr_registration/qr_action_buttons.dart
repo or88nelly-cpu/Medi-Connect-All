@@ -79,7 +79,16 @@ class QrActionButtons extends StatelessWidget {
       );
     } else {
       return Row(
-        children: items.map((w) => Expanded(child: Padding(padding: EdgeInsets.symmetric(horizontal: 6.w), child: w))).toList(),
+        children: items
+            .map(
+              (w) => Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                  child: w,
+                ),
+              ),
+            )
+            .toList(),
       );
     }
   }
@@ -94,7 +103,9 @@ class QrActionButtons extends StatelessWidget {
     required bool isDark,
   }) {
     final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final borderCol = isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05);
+    final borderCol = isDark
+        ? Colors.white10
+        : Colors.black.withValues(alpha: 0.05);
 
     return InkWell(
       onTap: onTap,
@@ -121,11 +132,7 @@ class QrActionButtons extends StatelessWidget {
                 color: color.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                icon,
-                color: color,
-                size: 18.r,
-              ),
+              child: Icon(icon, color: color, size: 18.r),
             ),
             SizedBox(width: 10.w),
             Expanded(

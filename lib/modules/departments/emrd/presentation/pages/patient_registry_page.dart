@@ -56,35 +56,48 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
           builder: (context, emrdState) {
             if (patientState is PatientLoading || emrdState is EmrdLoading) {
               return const CustomScaffold(
-                customAppbar: CommonAppBar(title: "Patient Registry & Identification"),
+                customAppbar: CommonAppBar(
+                  title: "Patient Registry & Identification",
+                ),
                 body: Center(child: CircularProgressIndicator()),
               );
             } else if (patientState is PatientError) {
               return CustomScaffold(
-                customAppbar: const CommonAppBar(title: "Patient Registry & Identification"),
+                customAppbar: const CommonAppBar(
+                  title: "Patient Registry & Identification",
+                ),
                 body: Center(
                   child: Text(
                     patientState.message,
-                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.error,
+                    ),
                   ),
                 ),
               );
             } else if (emrdState is EmrdError) {
               return CustomScaffold(
-                customAppbar: const CommonAppBar(title: "Patient Registry & Identification"),
+                customAppbar: const CommonAppBar(
+                  title: "Patient Registry & Identification",
+                ),
                 body: Center(
                   child: Text(
                     emrdState.message,
-                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.error,
+                    ),
                   ),
                 ),
               );
-            } else if (patientState is PatientLoaded && emrdState is EmrdLoaded) {
+            } else if (patientState is PatientLoaded &&
+                emrdState is EmrdLoaded) {
               final patientsList = patientState.patients;
               final emrRecords = emrdState.emrRecords;
 
               return CustomScaffold(
-                customAppbar: const CommonAppBar(title: "Patient Registry & Identification"),
+                customAppbar: const CommonAppBar(
+                  title: "Patient Registry & Identification",
+                ),
                 body: SingleChildScrollView(
                   padding: EdgeInsets.all(20.r),
                   child: Column(
@@ -116,8 +129,10 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   final count = patientsList.where((p) {
                                     if (queryLower.isEmpty) return true;
                                     final name = (p.name ?? '').toLowerCase();
-                                    final uhid = (p.patientId ?? '').toLowerCase();
-                                    final phone = (p.phoneNumber ?? '').toLowerCase();
+                                    final uhid = (p.patientId ?? '')
+                                        .toLowerCase();
+                                    final phone = (p.phoneNumber ?? '')
+                                        .toLowerCase();
 
                                     if (filter == 'UHID') {
                                       return uhid.contains(queryLower);
@@ -129,9 +144,14 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   }).length;
 
                                   return Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w,
+                                      vertical: 4.h,
+                                    ),
                                     decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(alpha: 0.1),
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.1,
+                                      ),
                                       borderRadius: BorderRadius.circular(12.r),
                                     ),
                                     child: Text(
@@ -161,25 +181,35 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: fieldFillColor,
-                                    hintText: "Search patient by ${filter.toLowerCase()}...",
+                                    hintText:
+                                        "Search patient by ${filter.toLowerCase()}...",
                                     hintStyle: TextStyle(
                                       color: isDark
                                           ? AppColors.terminalDarkFieldHint
                                           : AppColors.terminalLightFieldHint,
                                     ),
-                                    prefixIcon: Icon(Icons.search, color: AppColors.textSecondary(context)),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: AppColors.textSecondary(context),
+                                    ),
                                     contentPadding: EdgeInsets.all(12.r),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.r),
-                                      borderSide: BorderSide(color: borderColor),
+                                      borderSide: BorderSide(
+                                        color: borderColor,
+                                      ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.r),
-                                      borderSide: BorderSide(color: borderColor),
+                                      borderSide: BorderSide(
+                                        color: borderColor,
+                                      ),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.r),
-                                      borderSide: const BorderSide(color: AppColors.primary),
+                                      borderSide: const BorderSide(
+                                        color: AppColors.primary,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -192,10 +222,17 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                             builder: (context, filter, _) {
                               return DropdownButton<String>(
                                 value: filter,
-                                dropdownColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-                                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+                                dropdownColor: isDark
+                                    ? AppColors.terminalDarkCard
+                                    : Colors.white,
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 underline: const SizedBox(),
-                                items: ['Name', 'UHID', 'Phone'].map((String val) {
+                                items: ['Name', 'UHID', 'Phone'].map((
+                                  String val,
+                                ) {
                                   return DropdownMenuItem<String>(
                                     value: val,
                                     child: Text(val),
@@ -223,7 +260,8 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                 if (queryLower.isEmpty) return true;
                                 final name = (p.name ?? '').toLowerCase();
                                 final uhid = (p.patientId ?? '').toLowerCase();
-                                final phone = (p.phoneNumber ?? '').toLowerCase();
+                                final phone = (p.phoneNumber ?? '')
+                                    .toLowerCase();
 
                                 if (filter == 'UHID') {
                                   return uhid.contains(queryLower);
@@ -239,7 +277,9 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.r),
-                                    side: BorderSide(color: AppColors.border(context)),
+                                    side: BorderSide(
+                                      color: AppColors.border(context),
+                                    ),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
@@ -248,7 +288,8 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                     ),
                                     child: Center(
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             Icons.badge_outlined,
@@ -260,17 +301,22 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                           SizedBox(height: 12.h),
                                           Text(
                                             "No Patients Found",
-                                            style: AppTextStyles.bodyMedium.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                            style: AppTextStyles.bodyMedium
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                           SizedBox(height: 4.h),
                                           Text(
                                             "Registered patients will be recorded and listed here.",
                                             textAlign: TextAlign.center,
-                                            style: AppTextStyles.bodySmall.copyWith(
-                                              color: AppColors.textSecondary(context),
-                                            ),
+                                            style: AppTextStyles.bodySmall
+                                                .copyWith(
+                                                  color:
+                                                      AppColors.textSecondary(
+                                                        context,
+                                                      ),
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -285,20 +331,30 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                 itemCount: filteredPatients.length,
                                 itemBuilder: (context, index) {
                                   final patient = filteredPatients[index];
-                                  
+
                                   // Locate the customer care registration EMR record, or construct a dynamic fallback
                                   final patientRecord = emrRecords.firstWhere(
-                                    (r) => r['patient_id'] == patient.id && r['specialty'] == 'Customer Care',
+                                    (r) =>
+                                        r['patient_id'] == patient.id &&
+                                        r['specialty'] == 'Customer Care',
                                     orElse: () => {
                                       'patient_id': patient.id,
-                                      'patient_name': patient.name ?? 'Unnamed Patient',
+                                      'patient_name':
+                                          patient.name ?? 'Unnamed Patient',
                                       'specialty': 'Customer Care',
                                       'doctor_name': 'Customer Care Department',
-                                      'invoice_number': 'REG-${patient.patientId?.split('-').last ?? ""}',
+                                      'invoice_number':
+                                          'REG-${patient.patientId?.split('-').last ?? ""}',
                                       'registration_fee': 200,
-                                      'registration_payment_status': patient.status == 'Active' ? 'Paid' : 'Pending',
-                                      'prescription_notes': 'Initial patient registration from Customer Care. UHID: ${patient.patientId ?? ""}.',
-                                      'recorded_at': patient.joiningDate ?? DateTime.now().toIso8601String(),
+                                      'registration_payment_status':
+                                          patient.status == 'Active'
+                                          ? 'Paid'
+                                          : 'Pending',
+                                      'prescription_notes':
+                                          'Initial patient registration from Customer Care. UHID: ${patient.patientId ?? ""}.',
+                                      'recorded_at':
+                                          patient.joiningDate ??
+                                          DateTime.now().toIso8601String(),
                                     },
                                   );
 
@@ -307,9 +363,10 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                     onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => PatientRegistrationRecordDetailPage(
-                                            record: patientRecord,
-                                          ),
+                                          builder: (context) =>
+                                              PatientRegistrationRecordDetailPage(
+                                                record: patientRecord,
+                                              ),
                                         ),
                                       );
                                     },
@@ -326,7 +383,9 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
               );
             }
             return const CustomScaffold(
-              customAppbar: CommonAppBar(title: "Patient Registry & Identification"),
+              customAppbar: CommonAppBar(
+                title: "Patient Registry & Identification",
+              ),
               body: SizedBox.shrink(),
             );
           },

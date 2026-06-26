@@ -14,10 +14,7 @@ import 'package:medi_connect/modules/departments/emrd/presentation/widgets/consu
 class EmrdConsultationsPage extends StatefulWidget {
   final int initialTab;
 
-  const EmrdConsultationsPage({
-    super.key,
-    this.initialTab = 0,
-  });
+  const EmrdConsultationsPage({super.key, this.initialTab = 0});
 
   @override
   State<EmrdConsultationsPage> createState() => _EmrdConsultationsPageState();
@@ -74,7 +71,9 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                 // Search Bar
                 TextField(
                   controller: _searchController,
-                  style: TextStyle(color: isDark ? Colors.white : Colors.black87),
+                  style: TextStyle(
+                    color: isDark ? Colors.white : Colors.black87,
+                  ),
                   decoration: InputDecoration(
                     hintText: "Search by Patient or Doctor...",
                     hintStyle: TextStyle(
@@ -100,7 +99,9 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                 TabBar(
                   controller: _tabController,
                   labelColor: AppColors.primary,
-                  unselectedLabelColor: isDark ? Colors.white60 : Colors.black54,
+                  unselectedLabelColor: isDark
+                      ? Colors.white60
+                      : Colors.black54,
                   indicatorColor: AppColors.primary,
                   indicatorSize: TabBarIndicatorSize.tab,
                   labelStyle: AppTextStyles.bodyMedium.copyWith(
@@ -135,8 +136,16 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                   return TabBarView(
                     controller: _tabController,
                     children: [
-                      _buildAppointmentsList(state.appointments, 'scheduled', isDark),
-                      _buildAppointmentsList(state.appointments, 'completed', isDark),
+                      _buildAppointmentsList(
+                        state.appointments,
+                        'scheduled',
+                        isDark,
+                      ),
+                      _buildAppointmentsList(
+                        state.appointments,
+                        'completed',
+                        isDark,
+                      ),
                       _buildAppointmentsList(state.appointments, 'all', isDark),
                     ],
                   );
@@ -158,9 +167,13 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
     // Filter by status
     var filtered = list;
     if (filterStatus == 'scheduled') {
-      filtered = list.where((a) => a.status.toLowerCase() == 'scheduled').toList();
+      filtered = list
+          .where((a) => a.status.toLowerCase() == 'scheduled')
+          .toList();
     } else if (filterStatus == 'completed') {
-      filtered = list.where((a) => a.status.toLowerCase() == 'completed').toList();
+      filtered = list
+          .where((a) => a.status.toLowerCase() == 'completed')
+          .toList();
     }
 
     // Filter by search query
@@ -217,8 +230,8 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
         appointment: appointment,
         onSave: (vitals) {
           context.read<AdminAppointmentsBloc>().add(
-                UpdateAppointmentVitals(appointment.id, vitals),
-              );
+            UpdateAppointmentVitals(appointment.id, vitals),
+          );
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Patient vitals saved successfully."),
@@ -239,8 +252,8 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
         appointment: appointment,
         onComplete: () {
           context.read<AdminAppointmentsBloc>().add(
-                CompleteAppointment(appointment.id),
-              );
+            CompleteAppointment(appointment.id),
+          );
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Consultation completed successfully."),
@@ -257,7 +270,9 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
         title: Text("Consultation Details", style: AppTextStyles.titleLarge),
         content: SingleChildScrollView(
           child: Column(
@@ -268,7 +283,11 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
               _buildDetailItem("Doctor Name", appointment.doctorName, isDark),
               _buildDetailItem("Specialty", appointment.specialty, isDark),
               _buildDetailItem("Status", appointment.status, isDark),
-              _buildDetailItem("Slot Time", appointment.appointmentTime, isDark),
+              _buildDetailItem(
+                "Slot Time",
+                appointment.appointmentTime,
+                isDark,
+              ),
               _buildDetailItem("Type", appointment.type, isDark),
               const Divider(),
               Text(
@@ -280,10 +299,26 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                 ),
               ),
               SizedBox(height: 8.h),
-              _buildDetailItem("Blood Pressure", appointment.bp ?? "Not recorded", isDark),
-              _buildDetailItem("Weight", appointment.weight ?? "Not recorded", isDark),
-              _buildDetailItem("Height", appointment.height ?? "Not recorded", isDark),
-              _buildDetailItem("Temperature", appointment.fever ?? "Not recorded", isDark),
+              _buildDetailItem(
+                "Blood Pressure",
+                appointment.bp ?? "Not recorded",
+                isDark,
+              ),
+              _buildDetailItem(
+                "Weight",
+                appointment.weight ?? "Not recorded",
+                isDark,
+              ),
+              _buildDetailItem(
+                "Height",
+                appointment.height ?? "Not recorded",
+                isDark,
+              ),
+              _buildDetailItem(
+                "Temperature",
+                appointment.fever ?? "Not recorded",
+                isDark,
+              ),
               _buildDetailItem(
                 "Head Circumference",
                 appointment.headCircumference ?? "Not recorded",

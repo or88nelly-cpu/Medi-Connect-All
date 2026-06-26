@@ -51,7 +51,9 @@ class ConsultationListItem extends StatelessWidget {
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 15.sp,
-                    color: isDark ? Colors.white : AppColors.textPrimary(context),
+                    color: isDark
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                   ),
                 ),
               ),
@@ -77,7 +79,11 @@ class ConsultationListItem extends StatelessWidget {
           // Row 2: Doctor info
           Row(
             children: [
-              Icon(Icons.person_outline_rounded, size: 16.r, color: isDark ? Colors.white60 : Colors.black54),
+              Icon(
+                Icons.person_outline_rounded,
+                size: 16.r,
+                color: isDark ? Colors.white60 : Colors.black54,
+              ),
               SizedBox(width: 6.w),
               Text(
                 appointment.doctorName,
@@ -99,7 +105,11 @@ class ConsultationListItem extends StatelessWidget {
           // Row 3: Slot Time
           Row(
             children: [
-              Icon(Icons.access_time_rounded, size: 16.r, color: isDark ? Colors.white60 : Colors.black54),
+              Icon(
+                Icons.access_time_rounded,
+                size: 16.r,
+                color: isDark ? Colors.white60 : Colors.black54,
+              ),
               SizedBox(width: 6.w),
               Text(
                 appointment.appointmentTime,
@@ -109,7 +119,11 @@ class ConsultationListItem extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 14.w),
-              Icon(Icons.calendar_today_outlined, size: 14.r, color: isDark ? Colors.white38 : Colors.black45),
+              Icon(
+                Icons.calendar_today_outlined,
+                size: 14.r,
+                color: isDark ? Colors.white38 : Colors.black45,
+              ),
               SizedBox(width: 4.w),
               Text(
                 "${appointment.appointmentDate.day}/${appointment.appointmentDate.month}/${appointment.appointmentDate.year}",
@@ -156,21 +170,34 @@ class ConsultationListItem extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 8.h,
+                    ),
                   ),
                 ),
                 SizedBox(width: 8.w),
                 ElevatedButton.icon(
                   onPressed: onComplete,
-                  icon: Icon(Icons.check_circle_outline, size: 16.r, color: Colors.white),
-                  label: const Text("Complete", style: TextStyle(color: Colors.white)),
+                  icon: Icon(
+                    Icons.check_circle_outline,
+                    size: 16.r,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    "Complete",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF10B981), // success green
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 8.h,
+                    ),
                   ),
                 ),
               ],
@@ -182,7 +209,8 @@ class ConsultationListItem extends StatelessWidget {
   }
 
   Widget _buildVitalsSummary(BuildContext context, bool isDark) {
-    final hasVitals = appointment.bp != null ||
+    final hasVitals =
+        appointment.bp != null ||
         appointment.weight != null ||
         appointment.height != null ||
         appointment.fever != null;
@@ -193,12 +221,18 @@ class ConsultationListItem extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.04),
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.black.withValues(alpha: 0.04),
               borderRadius: BorderRadius.circular(6.r),
             ),
             child: Row(
               children: [
-                Icon(Icons.monitor_heart_outlined, size: 14.r, color: isDark ? Colors.white38 : Colors.black45),
+                Icon(
+                  Icons.monitor_heart_outlined,
+                  size: 14.r,
+                  color: isDark ? Colors.white38 : Colors.black45,
+                ),
                 SizedBox(width: 4.w),
                 Text(
                   "No Vitals Recorded",
@@ -216,10 +250,14 @@ class ConsultationListItem extends StatelessWidget {
     }
 
     final List<String> parts = [];
-    if (appointment.bp != null && appointment.bp!.isNotEmpty) parts.add("BP: ${appointment.bp}");
-    if (appointment.weight != null && appointment.weight!.isNotEmpty) parts.add("Wt: ${appointment.weight}");
-    if (appointment.height != null && appointment.height!.isNotEmpty) parts.add("Ht: ${appointment.height}");
-    if (appointment.fever != null && appointment.fever!.isNotEmpty) parts.add("Temp: ${appointment.fever}");
+    if (appointment.bp != null && appointment.bp!.isNotEmpty)
+      parts.add("BP: ${appointment.bp}");
+    if (appointment.weight != null && appointment.weight!.isNotEmpty)
+      parts.add("Wt: ${appointment.weight}");
+    if (appointment.height != null && appointment.height!.isNotEmpty)
+      parts.add("Ht: ${appointment.height}");
+    if (appointment.fever != null && appointment.fever!.isNotEmpty)
+      parts.add("Temp: ${appointment.fever}");
 
     return Container(
       width: double.infinity,

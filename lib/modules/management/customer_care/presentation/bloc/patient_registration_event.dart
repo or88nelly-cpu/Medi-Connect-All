@@ -120,4 +120,3 @@ class SubmitProfileUpdateEvent extends PatientRegistrationEvent {
   @override
   List<Object?> get props => [userId];
 }
-

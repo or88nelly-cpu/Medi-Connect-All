@@ -253,7 +253,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                 final updatedUser = UserModel(
                   id: user.id,
                   email: user.email,
-                  name: '${_firstNameCtrl.text.trim()} ${_lastNameCtrl.text.trim()}',
+                  name:
+                      '${_firstNameCtrl.text.trim()} ${_lastNameCtrl.text.trim()}',
                   firstName: _firstNameCtrl.text.trim(),
                   lastName: _lastNameCtrl.text.trim(),
                   phoneNumber: _phoneCtrl.text.trim(),
@@ -263,10 +264,14 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                   role: 'patient',
                   profileCompletionStatus: true,
                   status: 'Active',
-                  profileImage: state.photoPath.isNotEmpty ? state.photoPath : user.profileImage,
+                  profileImage: state.photoPath.isNotEmpty
+                      ? state.photoPath
+                      : user.profileImage,
                   address: state.pincodeFetchedAddress,
                   insuranceProvider: state.insuranceProvider,
-                  insuranceNumber: _policyIdCtrl.text.trim().isNotEmpty ? _policyIdCtrl.text.trim() : null,
+                  insuranceNumber: _policyIdCtrl.text.trim().isNotEmpty
+                      ? _policyIdCtrl.text.trim()
+                      : null,
                   emergencyContact: jsonEncode({
                     'name': _emergencyNameCtrl.text.trim(),
                     'relationship': state.emergencyRelationship,
@@ -287,7 +292,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                   patientId: state.generatedUHID,
                 );
                 context.read<AuthBloc>().add(UserUpdated(updatedUser));
-                
+
                 // Show success screen first before redirecting
                 _currentStep.value = 4;
               }
@@ -336,7 +341,9 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                           },
                         ),
                   title: Text(
-                    _isPatientMode ? "Complete Your Profile" : "Patient Registration",
+                    _isPatientMode
+                        ? "Complete Your Profile"
+                        : "Patient Registration",
                     style: AppTextStyles.titleSmall.copyWith(
                       color: AppColors.textPrimary(context),
                       fontWeight: FontWeight.bold,
@@ -352,7 +359,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                         children: [
                           Expanded(
                             child: ListView(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 12.h,
+                              ),
                               children: [
                                 // Stepper progress header (not shown on success step 4)
                                 if (currentStep < 4) ...[
@@ -387,7 +397,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         bloodGroup: state.bloodGroup,
                                         place: _placeCtrl.text,
                                         wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
+                                        insuranceProvider:
+                                            state.insuranceProvider,
                                         insurancePolicyId: _policyIdCtrl.text,
                                         insuranceValidTill: _validTillCtrl.text,
                                         smoking: state.smoking,
@@ -397,8 +408,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         allergies: _allergiesCtrl.text,
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyRelationship:
+                                            state.emergencyRelationship,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     pincodeCtrl: _pincodeCtrl,
@@ -406,7 +419,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                     wardCtrl: _wardCtrl,
                                     fetchedAddress: state.pincodeFetchedAddress,
                                     isFetchingAddress: state.isFetchingAddress,
-                                    onFetchAddress: (pin) => _bloc.add(FetchAddressEvent(pin)),
+                                    onFetchAddress: (pin) =>
+                                        _bloc.add(FetchAddressEvent(pin)),
                                   )
                                 else if (currentStep == 2)
                                   AdditionalInfoStep(
@@ -436,8 +450,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         allergies: _allergiesCtrl.text,
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyRelationship:
+                                            state.emergencyRelationship,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     bloodGroup: state.bloodGroup,
@@ -453,7 +469,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         bloodGroup: val,
                                         place: _placeCtrl.text,
                                         wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
+                                        insuranceProvider:
+                                            state.insuranceProvider,
                                         insurancePolicyId: _policyIdCtrl.text,
                                         insuranceValidTill: _validTillCtrl.text,
                                         smoking: state.smoking,
@@ -463,8 +480,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         allergies: _allergiesCtrl.text,
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyRelationship:
+                                            state.emergencyRelationship,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     smoking: state.smoking,
@@ -480,7 +499,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         bloodGroup: state.bloodGroup,
                                         place: _placeCtrl.text,
                                         wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
+                                        insuranceProvider:
+                                            state.insuranceProvider,
                                         insurancePolicyId: _policyIdCtrl.text,
                                         insuranceValidTill: _validTillCtrl.text,
                                         smoking: val,
@@ -490,8 +510,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         allergies: _allergiesCtrl.text,
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyRelationship:
+                                            state.emergencyRelationship,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     alcohol: state.alcohol,
@@ -507,7 +529,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         bloodGroup: state.bloodGroup,
                                         place: _placeCtrl.text,
                                         wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
+                                        insuranceProvider:
+                                            state.insuranceProvider,
                                         insurancePolicyId: _policyIdCtrl.text,
                                         insuranceValidTill: _validTillCtrl.text,
                                         smoking: state.smoking,
@@ -517,8 +540,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         allergies: _allergiesCtrl.text,
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyRelationship:
+                                            state.emergencyRelationship,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     dietType: state.dietType,
@@ -534,7 +559,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         bloodGroup: state.bloodGroup,
                                         place: _placeCtrl.text,
                                         wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
+                                        insuranceProvider:
+                                            state.insuranceProvider,
                                         insurancePolicyId: _policyIdCtrl.text,
                                         insuranceValidTill: _validTillCtrl.text,
                                         smoking: state.smoking,
@@ -544,8 +570,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         allergies: _allergiesCtrl.text,
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyRelationship:
+                                            state.emergencyRelationship,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     exercise: state.exercise,
@@ -561,7 +589,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         bloodGroup: state.bloodGroup,
                                         place: _placeCtrl.text,
                                         wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
+                                        insuranceProvider:
+                                            state.insuranceProvider,
                                         insurancePolicyId: _policyIdCtrl.text,
                                         insuranceValidTill: _validTillCtrl.text,
                                         smoking: state.smoking,
@@ -571,15 +600,18 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         allergies: _allergiesCtrl.text,
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
-                                        emergencyRelationship: state.emergencyRelationship,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyRelationship:
+                                            state.emergencyRelationship,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     allergiesCtrl: _allergiesCtrl,
                                     otherDetailsCtrl: _otherDetailsCtrl,
                                     emergencyNameCtrl: _emergencyNameCtrl,
                                     emergencyPhoneCtrl: _emergencyPhoneCtrl,
-                                    emergencyRelationship: state.emergencyRelationship,
+                                    emergencyRelationship:
+                                        state.emergencyRelationship,
                                     onRelationshipChanged: (val) => _bloc.add(
                                       UpdateFormFieldsEvent(
                                         firstName: _firstNameCtrl.text,
@@ -592,7 +624,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         bloodGroup: state.bloodGroup,
                                         place: _placeCtrl.text,
                                         wardNum: _wardCtrl.text,
-                                        insuranceProvider: state.insuranceProvider,
+                                        insuranceProvider:
+                                            state.insuranceProvider,
                                         insurancePolicyId: _policyIdCtrl.text,
                                         insuranceValidTill: _validTillCtrl.text,
                                         smoking: state.smoking,
@@ -603,7 +636,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                         otherDetails: _otherDetailsCtrl.text,
                                         emergencyName: _emergencyNameCtrl.text,
                                         emergencyRelationship: val,
-                                        emergencyPhone: _emergencyPhoneCtrl.text,
+                                        emergencyPhone:
+                                            _emergencyPhoneCtrl.text,
                                       ),
                                     ),
                                     alternatePhoneCtrl: _alternatePhoneCtrl,
@@ -620,7 +654,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                     photoPath: state.photoPath,
                                     address: state.pincodeFetchedAddress,
                                     emergencyName: state.emergencyName,
-                                    emergencyRelationship: state.emergencyRelationship,
+                                    emergencyRelationship:
+                                        state.emergencyRelationship,
                                     emergencyPhone: state.emergencyPhone,
                                     onEditPressed: () => _currentStep.value = 1,
                                   )
@@ -636,7 +671,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                     photoPath: state.photoPath,
                                     address: state.pincodeFetchedAddress,
                                     emergencyName: state.emergencyName,
-                                    emergencyRelationship: state.emergencyRelationship,
+                                    emergencyRelationship:
+                                        state.emergencyRelationship,
                                     emergencyPhone: state.emergencyPhone,
                                     onHomePressed: () {
                                       if (_isPatientMode) {
@@ -646,9 +682,13 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                       }
                                     },
                                     onSharePressed: () {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
                                         const SnackBar(
-                                          content: Text("ID Card download started..."),
+                                          content: Text(
+                                            "ID Card download started...",
+                                          ),
                                         ),
                                       );
                                     },
@@ -660,11 +700,17 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                           // Bottom buttons (not shown on success step 4)
                           if (currentStep < 4)
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 16.h,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppColors.card(context),
                                 border: Border(
-                                  top: BorderSide(color: AppColors.border(context), width: 1.w),
+                                  top: BorderSide(
+                                    color: AppColors.border(context),
+                                    width: 1.w,
+                                  ),
                                 ),
                               ),
                               child: Row(
@@ -676,10 +722,17 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                           _currentStep.value--;
                                         },
                                         style: OutlinedButton.styleFrom(
-                                          side: const BorderSide(color: AppColors.primary, width: 1.5),
-                                          padding: EdgeInsets.symmetric(vertical: 14.h),
+                                          side: const BorderSide(
+                                            color: AppColors.primary,
+                                            width: 1.5,
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 14.h,
+                                          ),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(12.r),
+                                            borderRadius: BorderRadius.circular(
+                                              12.r,
+                                            ),
                                           ),
                                         ),
                                         child: Text(
@@ -696,16 +749,22 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                   ],
                                   Expanded(
                                     child: ElevatedButton(
-                                      onPressed: state.status == PatientRegistrationStatus.loading
+                                      onPressed:
+                                          state.status ==
+                                              PatientRegistrationStatus.loading
                                           ? null
                                           : () {
                                               if (currentStep < totalSteps) {
                                                 if (currentStep == 1) {
-                                                  if (!_step1FormKey.currentState!.validate()) {
+                                                  if (!_step1FormKey
+                                                      .currentState!
+                                                      .validate()) {
                                                     return;
                                                   }
                                                 } else if (currentStep == 2) {
-                                                  if (!_step2FormKey.currentState!.validate()) {
+                                                  if (!_step2FormKey
+                                                      .currentState!
+                                                      .validate()) {
                                                     return;
                                                   }
                                                 }
@@ -716,19 +775,29 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                                             },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: AppColors.primary,
-                                        padding: EdgeInsets.symmetric(vertical: 14.h),
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 14.h,
+                                        ),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12.r),
+                                          borderRadius: BorderRadius.circular(
+                                            12.r,
+                                          ),
                                         ),
                                       ),
-                                      child: state.status == PatientRegistrationStatus.loading
+                                      child:
+                                          state.status ==
+                                              PatientRegistrationStatus.loading
                                           ? SizedBox(
                                               width: 18.r,
                                               height: 18.r,
-                                              child: const CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                                              ),
+                                              child:
+                                                  const CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                          Color
+                                                        >(Colors.white),
+                                                  ),
                                             )
                                           : Text(
                                               currentStep == totalSteps

@@ -74,7 +74,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20.h),
-          isMobile 
+          isMobile
               ? Column(
                   children: List.generate(_steps.length, (idx) {
                     return _buildVerticalStep(context, idx, isDark);
@@ -103,7 +103,12 @@ class RegistrationStepsTimeline extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(child: Container(height: 1, color: idx == 0 ? Colors.transparent : connectorColor)),
+            Expanded(
+              child: Container(
+                height: 1,
+                color: idx == 0 ? Colors.transparent : connectorColor,
+              ),
+            ),
             Stack(
               alignment: Alignment.center,
               children: [
@@ -111,10 +116,14 @@ class RegistrationStepsTimeline extends StatelessWidget {
                   width: 50.r,
                   height: 50.r,
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEEF2F6),
+                    color: isDark
+                        ? const Color(0xFF1E293B)
+                        : const Color(0xFFEEF2F6),
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05),
+                      color: isDark
+                          ? Colors.white10
+                          : Colors.black.withValues(alpha: 0.05),
                     ),
                   ),
                   child: Icon(
@@ -144,7 +153,12 @@ class RegistrationStepsTimeline extends StatelessWidget {
                 ),
               ],
             ),
-            Expanded(child: Container(height: 1, color: isLast ? Colors.transparent : connectorColor)),
+            Expanded(
+              child: Container(
+                height: 1,
+                color: isLast ? Colors.transparent : connectorColor,
+              ),
+            ),
           ],
         ),
         SizedBox(height: 12.h),
@@ -195,7 +209,9 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     width: 44.r,
                     height: 44.r,
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEEF2F6),
+                      color: isDark
+                          ? const Color(0xFF1E293B)
+                          : const Color(0xFFEEF2F6),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -227,10 +243,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
               ),
               if (!isLast)
                 Expanded(
-                  child: Container(
-                    width: 2.w,
-                    color: connectorColor,
-                  ),
+                  child: Container(width: 2.w, color: connectorColor),
                 ),
             ],
           ),

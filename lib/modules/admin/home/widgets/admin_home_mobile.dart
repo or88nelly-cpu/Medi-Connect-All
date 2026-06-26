@@ -18,9 +18,7 @@ class AdminHomeMobile extends StatelessWidget {
       drawer: const AdminDrawer(),
       appBarNeeded: false,
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          vertical: 20.h,
-        ),
+        padding: EdgeInsets.symmetric(vertical: 20.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

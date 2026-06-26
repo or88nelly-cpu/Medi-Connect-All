@@ -104,7 +104,10 @@ void showEmrdRecordDetailsSheet(
                     children: [
                       EmrdGeneralInfoCard(record: record, isDark: isDark),
                       SizedBox(height: 16.h),
-                      EmrdPrescribedMedicinesCard(record: record, isDark: isDark),
+                      EmrdPrescribedMedicinesCard(
+                        record: record,
+                        isDark: isDark,
+                      ),
                       SizedBox(height: 16.h),
                       EmrdInvestigationsCard(record: record, isDark: isDark),
                       SizedBox(height: 16.h),
@@ -176,7 +179,7 @@ void showEmrdRecordDetailsSheet(
                       SizedBox(height: 24.h),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           );

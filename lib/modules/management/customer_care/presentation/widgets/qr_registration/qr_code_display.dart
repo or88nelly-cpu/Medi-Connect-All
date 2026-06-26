@@ -85,7 +85,9 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final timerColor = _secondsRemaining > 60 ? const Color(0xFF4F46E5) : Colors.red;
+    final timerColor = _secondsRemaining > 60
+        ? const Color(0xFF4F46E5)
+        : Colors.red;
 
     return Center(
       child: Container(
@@ -109,10 +111,14 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
             Container(
               padding: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+                color: isDark
+                    ? const Color(0xFF0F172A)
+                    : const Color(0xFFF8FAFC),
                 borderRadius: BorderRadius.circular(20.r),
                 border: Border.all(
-                  color: isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05),
+                  color: isDark
+                      ? Colors.white10
+                      : Colors.black.withValues(alpha: 0.05),
                 ),
               ),
               child: Stack(
@@ -120,29 +126,51 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
                 children: [
                   // Corner brackets
                   Positioned(
-                    top: 0, left: 0,
-                    child: _buildCorner(top: true, left: true, color: AppColors.primary),
+                    top: 0,
+                    left: 0,
+                    child: _buildCorner(
+                      top: true,
+                      left: true,
+                      color: AppColors.primary,
+                    ),
                   ),
                   Positioned(
-                    top: 0, right: 0,
-                    child: _buildCorner(top: true, left: false, color: AppColors.primary),
+                    top: 0,
+                    right: 0,
+                    child: _buildCorner(
+                      top: true,
+                      left: false,
+                      color: AppColors.primary,
+                    ),
                   ),
                   Positioned(
-                    bottom: 0, left: 0,
-                    child: _buildCorner(top: false, left: true, color: AppColors.primary),
+                    bottom: 0,
+                    left: 0,
+                    child: _buildCorner(
+                      top: false,
+                      left: true,
+                      color: AppColors.primary,
+                    ),
                   ),
                   Positioned(
-                    bottom: 0, right: 0,
-                    child: _buildCorner(top: false, left: false, color: AppColors.primary),
+                    bottom: 0,
+                    right: 0,
+                    child: _buildCorner(
+                      top: false,
+                      left: false,
+                      color: AppColors.primary,
+                    ),
                   ),
-                  
+
                   // QR Custom Paint
                   Container(
                     width: 200.r,
                     height: 200.r,
                     margin: EdgeInsets.all(8.r),
                     child: CustomPaint(
-                      painter: QrCodePainter(color: isDark ? Colors.white : Colors.black),
+                      painter: QrCodePainter(
+                        color: isDark ? Colors.white : Colors.black,
+                      ),
                     ),
                   ),
                 ],
@@ -154,7 +182,9 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F5F9),
+                color: isDark
+                    ? const Color(0xFF0F172A)
+                    : const Color(0xFFF1F5F9),
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Column(
@@ -173,7 +203,9 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
                       Text(
                         widget.registrationId,
                         style: AppTextStyles.titleMedium.copyWith(
-                          color: isDark ? Colors.white : const Color(0xFF1E293B),
+                          color: isDark
+                              ? Colors.white
+                              : const Color(0xFF1E293B),
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,
                           letterSpacing: 0.5,
@@ -203,14 +235,10 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.access_time_rounded,
-                  size: 16.r,
-                  color: timerColor,
-                ),
+                Icon(Icons.access_time_rounded, size: 16.r, color: timerColor),
                 SizedBox(width: 6.w),
                 Text(
-                  _secondsRemaining > 0 
+                  _secondsRemaining > 0
                       ? "Valid for ${_formatTime(_secondsRemaining)} minutes"
                       : "QR Expired",
                   style: AppTextStyles.bodySmall.copyWith(
@@ -226,7 +254,11 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
     );
   }
 
-  Widget _buildCorner({required bool top, required bool left, required Color color}) {
+  Widget _buildCorner({
+    required bool top,
+    required bool left,
+    required Color color,
+  }) {
     final double borderW = 3.w;
     final double size = 16.r;
     return Container(
@@ -235,9 +267,15 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
       decoration: BoxDecoration(
         border: Border(
           top: top ? BorderSide(color: color, width: borderW) : BorderSide.none,
-          bottom: !top ? BorderSide(color: color, width: borderW) : BorderSide.none,
-          left: left ? BorderSide(color: color, width: borderW) : BorderSide.none,
-          right: !left ? BorderSide(color: color, width: borderW) : BorderSide.none,
+          bottom: !top
+              ? BorderSide(color: color, width: borderW)
+              : BorderSide.none,
+          left: left
+              ? BorderSide(color: color, width: borderW)
+              : BorderSide.none,
+          right: !left
+              ? BorderSide(color: color, width: borderW)
+              : BorderSide.none,
         ),
       ),
     );
@@ -263,29 +301,38 @@ class QrCodePainter extends CustomPainter {
       final outer = Paint()
         ..color = color
         ..style = PaintingStyle.fill;
-      final innerBg = Paint()
-        ..color = Colors.transparent;
+      final innerBg = Paint()..color = Colors.transparent;
       final innerSquare = Paint()
         ..color = color
         ..style = PaintingStyle.fill;
 
       // Outer block
       canvas.drawRect(Rect.fromLTWH(x, y, w, w), outer);
-      
+
       // Draw transparent inner area by using BlendMode.clear or white depending on canvas
       final margin1 = w / 7;
       final clearPaint = Paint()
         ..blendMode = BlendMode.clear
         ..color = Colors.transparent;
       canvas.drawRect(
-        Rect.fromLTWH(x + margin1, y + margin1, w - 2 * margin1, w - 2 * margin1),
+        Rect.fromLTWH(
+          x + margin1,
+          y + margin1,
+          w - 2 * margin1,
+          w - 2 * margin1,
+        ),
         clearPaint,
       );
 
       // Restore blend mode to source and draw inner square
       final margin2 = w * 2 / 7;
       canvas.drawRect(
-        Rect.fromLTWH(x + margin2, y + margin2, w - 2 * margin2, w - 2 * margin2),
+        Rect.fromLTWH(
+          x + margin2,
+          y + margin2,
+          w - 2 * margin2,
+          w - 2 * margin2,
+        ),
         innerSquare,
       );
     }

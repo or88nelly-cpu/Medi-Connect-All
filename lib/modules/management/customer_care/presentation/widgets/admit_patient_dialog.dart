@@ -24,14 +24,15 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
   final TextEditingController _roomController = TextEditingController();
   final TextEditingController _bedController = TextEditingController();
   final TextEditingController _notesController = TextEditingController();
-  final TextEditingController _patientSearchController = TextEditingController();
+  final TextEditingController _patientSearchController =
+      TextEditingController();
 
   final List<String> _wards = [
     'General Ward',
     'Semi-Private Room',
     'Private Suite',
     'Intensive Care Unit (ICU)',
-    'Emergency Observation'
+    'Emergency Observation',
   ];
 
   @override
@@ -57,9 +58,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
 
     return Dialog(
       backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
         constraints: BoxConstraints(
@@ -122,7 +121,9 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                       BlocBuilder<PatientBloc, PatientState>(
                         builder: (context, state) {
                           if (state is PatientLoading) {
-                            return const Center(child: LinearProgressIndicator());
+                            return const Center(
+                              child: LinearProgressIndicator(),
+                            );
                           } else if (state is PatientLoaded) {
                             final patients = state.patients
                                 .where((p) => p.role == 'patient')
@@ -131,50 +132,70 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                             return Autocomplete<UserModel>(
                               displayStringForOption: (UserModel p) =>
                                   "${p.name ?? 'Unnamed'} (${p.email})",
-                              optionsBuilder: (TextEditingValue textEditingValue) {
-                                if (textEditingValue.text.isEmpty) {
-                                  return patients;
-                                }
-                                return patients.where((UserModel p) {
-                                  final name = (p.name ?? '').toLowerCase();
-                                  final email = p.email.toLowerCase();
-                                  final search = textEditingValue.text.toLowerCase();
-                                  return name.contains(search) || email.contains(search);
-                                });
-                              },
-                              fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
-                                return TextFormField(
-                                  controller: controller,
-                                  focusNode: focusNode,
-                                  style: TextStyle(
-                                    color: isDark ? Colors.white : Colors.black87,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: "Type patient name or email...",
-                                    hintStyle: TextStyle(
-                                      color: isDark ? Colors.white38 : Colors.black38,
-                                      fontSize: 13.sp,
-                                    ),
-                                    prefixIcon: const Icon(Icons.person_search),
-                                    filled: true,
-                                    fillColor: isDark
-                                        ? AppColors.terminalDarkFieldFill
-                                        : AppColors.terminalLightFieldFill,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      borderSide: BorderSide(
-                                        color: isDark ? Colors.white24 : Colors.black12,
-                                      ),
-                                    ),
-                                  ),
-                                  validator: (val) {
-                                    if (_selectedPatient == null) {
-                                      return "Please select a registered patient";
+                              optionsBuilder:
+                                  (TextEditingValue textEditingValue) {
+                                    if (textEditingValue.text.isEmpty) {
+                                      return patients;
                                     }
-                                    return null;
+                                    return patients.where((UserModel p) {
+                                      final name = (p.name ?? '').toLowerCase();
+                                      final email = p.email.toLowerCase();
+                                      final search = textEditingValue.text
+                                          .toLowerCase();
+                                      return name.contains(search) ||
+                                          email.contains(search);
+                                    });
                                   },
-                                );
-                              },
+                              fieldViewBuilder:
+                                  (
+                                    context,
+                                    controller,
+                                    focusNode,
+                                    onFieldSubmitted,
+                                  ) {
+                                    return TextFormField(
+                                      controller: controller,
+                                      focusNode: focusNode,
+                                      style: TextStyle(
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.black87,
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText:
+                                            "Type patient name or email...",
+                                        hintStyle: TextStyle(
+                                          color: isDark
+                                              ? Colors.white38
+                                              : Colors.black38,
+                                          fontSize: 13.sp,
+                                        ),
+                                        prefixIcon: const Icon(
+                                          Icons.person_search,
+                                        ),
+                                        filled: true,
+                                        fillColor: isDark
+                                            ? AppColors.terminalDarkFieldFill
+                                            : AppColors.terminalLightFieldFill,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            10.r,
+                                          ),
+                                          borderSide: BorderSide(
+                                            color: isDark
+                                                ? Colors.white24
+                                                : Colors.black12,
+                                          ),
+                                        ),
+                                      ),
+                                      validator: (val) {
+                                        if (_selectedPatient == null) {
+                                          return "Please select a registered patient";
+                                        }
+                                        return null;
+                                      },
+                                    );
+                                  },
                               onSelected: (UserModel selection) {
                                 setState(() {
                                   _selectedPatient = selection;
@@ -191,14 +212,21 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                       if (_selectedPatient != null) ...[
                         SizedBox(height: 8.h),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12.w,
+                            vertical: 8.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.05),
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Row(
                             children: [
-                              Icon(Icons.check_circle, color: AppColors.primary, size: 16.r),
+                              Icon(
+                                Icons.check_circle,
+                                color: AppColors.primary,
+                                size: 16.r,
+                              ),
                               SizedBox(width: 6.w),
                               Expanded(
                                 child: Text(
@@ -227,15 +255,21 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                   "Ward Type",
                                   style: AppTextStyles.bodySmall.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: isDark ? Colors.white70 : Colors.black87,
+                                    color: isDark
+                                        ? Colors.white70
+                                        : Colors.black87,
                                   ),
                                 ),
                                 SizedBox(height: 6.h),
                                 DropdownButtonFormField<String>(
                                   value: _selectedWard,
-                                  dropdownColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+                                  dropdownColor: isDark
+                                      ? AppColors.terminalDarkCard
+                                      : Colors.white,
                                   style: TextStyle(
-                                    color: isDark ? Colors.white : Colors.black87,
+                                    color: isDark
+                                        ? Colors.white
+                                        : Colors.black87,
                                   ),
                                   decoration: InputDecoration(
                                     filled: true,
@@ -245,15 +279,22 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.r),
                                       borderSide: BorderSide(
-                                        color: isDark ? Colors.white24 : Colors.black12,
+                                        color: isDark
+                                            ? Colors.white24
+                                            : Colors.black12,
                                       ),
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 12.w,
+                                    ),
                                   ),
                                   items: _wards.map((w) {
                                     return DropdownMenuItem(
                                       value: w,
-                                      child: Text(w, style: TextStyle(fontSize: 13.sp)),
+                                      child: Text(
+                                        w,
+                                        style: TextStyle(fontSize: 13.sp),
+                                      ),
                                     );
                                   }).toList(),
                                   onChanged: (val) {
@@ -321,15 +362,35 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                         builder: (context, state) {
                           List<UserModel> doctors = [];
                           if (state is DoctorStaffLoaded) {
-                            doctors = state.doctors.where((u) => u.role == 'doctor').toList();
+                            doctors = state.doctors
+                                .where((u) => u.role == 'doctor')
+                                .toList();
                           }
 
                           if (doctors.isEmpty) {
                             // Fallback mock doctors
                             doctors = const [
-                              UserModel(id: 'doc-1', email: 'sarah.j@mediconnect.com', name: 'Dr. Sarah Johnson', role: 'doctor', specialization: 'Cardiologist'),
-                              UserModel(id: 'doc-2', email: 'michael.c@mediconnect.com', name: 'Dr. Michael Chen', role: 'doctor', specialization: 'Neurologist'),
-                              UserModel(id: 'doc-3', email: 'james.w@mediconnect.com', name: 'Dr. James Wilson', role: 'doctor', specialization: 'Pediatrician'),
+                              UserModel(
+                                id: 'doc-1',
+                                email: 'sarah.j@mediconnect.com',
+                                name: 'Dr. Sarah Johnson',
+                                role: 'doctor',
+                                specialization: 'Cardiologist',
+                              ),
+                              UserModel(
+                                id: 'doc-2',
+                                email: 'michael.c@mediconnect.com',
+                                name: 'Dr. Michael Chen',
+                                role: 'doctor',
+                                specialization: 'Neurologist',
+                              ),
+                              UserModel(
+                                id: 'doc-3',
+                                email: 'james.w@mediconnect.com',
+                                name: 'Dr. James Wilson',
+                                role: 'doctor',
+                                specialization: 'Pediatrician',
+                              ),
                             ];
                           }
 
@@ -342,7 +403,9 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                 fontSize: 13.sp,
                               ),
                             ),
-                            dropdownColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+                            dropdownColor: isDark
+                                ? AppColors.terminalDarkCard
+                                : Colors.white,
                             style: TextStyle(
                               color: isDark ? Colors.white : Colors.black87,
                             ),
@@ -354,10 +417,14 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.r),
                                 borderSide: BorderSide(
-                                  color: isDark ? Colors.white24 : Colors.black12,
+                                  color: isDark
+                                      ? Colors.white24
+                                      : Colors.black12,
                                 ),
                               ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                              ),
                             ),
                             items: doctors.map((d) {
                               return DropdownMenuItem(
@@ -388,7 +455,8 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                       _buildTextField(
                         controller: _notesController,
                         label: "Admission Reason & Notes",
-                        hint: "Enter clinical indication, symptoms, or emergency remarks...",
+                        hint:
+                            "Enter clinical indication, symptoms, or emergency remarks...",
                         icon: Icons.notes,
                         isDark: isDark,
                         maxLines: 3,
@@ -415,7 +483,10 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 12.h,
+                      ),
                     ),
                     child: const Text(
                       "Admit Patient",
@@ -435,9 +506,15 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
   }
 
   void _admitPatient() {
-    if (_formKey.currentState!.validate() && _selectedPatient != null && _selectedDoctor != null) {
-      final currentMetadata = Map<String, dynamic>.from(_selectedPatient!.metadata ?? {});
-      final admissions = List<dynamic>.from(currentMetadata['admissions'] ?? []);
+    if (_formKey.currentState!.validate() &&
+        _selectedPatient != null &&
+        _selectedDoctor != null) {
+      final currentMetadata = Map<String, dynamic>.from(
+        _selectedPatient!.metadata ?? {},
+      );
+      final admissions = List<dynamic>.from(
+        currentMetadata['admissions'] ?? [],
+      );
 
       final admissionRecord = {
         'ward': _selectedWard,
@@ -462,10 +539,12 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
       context.read<PatientBloc>().add(UpdatePatient(updatedPatient));
 
       Navigator.pop(context); // Close dialog
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("${_selectedPatient!.name ?? 'Patient'} admitted successfully to $_selectedWard."),
+          content: Text(
+            "${_selectedPatient!.name ?? 'Patient'} admitted successfully to $_selectedWard.",
+          ),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -482,7 +561,9 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
     int maxLines = 1,
   }) {
     final borderColor = isDark ? Colors.white24 : Colors.black12;
-    final fillCol = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
+    final fillCol = isDark
+        ? AppColors.terminalDarkFieldFill
+        : AppColors.terminalLightFieldFill;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -503,13 +584,22 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
-              color: isDark ? AppColors.terminalDarkFooterText.withValues(alpha: 0.5) : Colors.black38,
+              color: isDark
+                  ? AppColors.terminalDarkFooterText.withValues(alpha: 0.5)
+                  : Colors.black38,
               fontSize: 13.sp,
             ),
-            prefixIcon: Icon(icon, size: 20.r, color: isDark ? Colors.white60 : Colors.black54),
+            prefixIcon: Icon(
+              icon,
+              size: 20.r,
+              color: isDark ? Colors.white60 : Colors.black54,
+            ),
             filled: true,
             fillColor: fillCol,
-            contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 14.w,
+              vertical: 12.h,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide(color: borderColor),

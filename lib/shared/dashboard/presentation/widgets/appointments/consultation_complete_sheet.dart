@@ -450,7 +450,8 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     }
 
     return BlocProvider(
-      create: (context) => CompleteConsultationCubit(initialConsultationFee: _initialFee),
+      create: (context) =>
+          CompleteConsultationCubit(initialConsultationFee: _initialFee),
       child: BlocConsumer<CompleteConsultationCubit, CompleteConsultationState>(
         listener: (context, state) {
           final feeStr = state.totalFee.toStringAsFixed(2);

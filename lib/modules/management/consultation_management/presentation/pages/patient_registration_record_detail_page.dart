@@ -424,7 +424,11 @@ class _PatientRegistrationRecordDetailPageState
           }
           final patientId = widget.record['patient_id'];
           final patientConsultations = allRecords
-              .where((r) => r['patient_id'] == patientId && r['specialty'] != 'Customer Care')
+              .where(
+                (r) =>
+                    r['patient_id'] == patientId &&
+                    r['specialty'] != 'Customer Care',
+              )
               .toList();
 
           // Visual Cards list
@@ -524,7 +528,9 @@ class _PatientRegistrationRecordDetailPageState
                       "No clinical consultations recorded.",
                       style: AppTextStyles.bodySmall.copyWith(
                         fontStyle: FontStyle.italic,
-                        color: isDark ? Colors.white30 : AppColors.textSecondary(context),
+                        color: isDark
+                            ? Colors.white30
+                            : AppColors.textSecondary(context),
                       ),
                     ),
                   )
@@ -536,7 +542,9 @@ class _PatientRegistrationRecordDetailPageState
                     String formattedDate = 'N/A';
                     if (dateStr.isNotEmpty) {
                       try {
-                        formattedDate = DateFormat('dd MMM yyyy').format(DateTime.parse(dateStr));
+                        formattedDate = DateFormat(
+                          'dd MMM yyyy',
+                        ).format(DateTime.parse(dateStr));
                       } catch (_) {}
                     }
                     return Card(
@@ -546,22 +554,32 @@ class _PatientRegistrationRecordDetailPageState
                         borderRadius: BorderRadius.circular(8.r),
                         side: BorderSide(color: AppColors.border(context)),
                       ),
-                      color: isDark ? Colors.white.withValues(alpha: 0.02) : Colors.black.withValues(alpha: 0.01),
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.02)
+                          : Colors.black.withValues(alpha: 0.01),
                       child: ListTile(
                         dense: true,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 4.h,
+                        ),
                         title: Text(
                           doc,
-                          style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         subtitle: Text(
                           "$dept · $formattedDate",
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+                            color: isDark
+                                ? Colors.white54
+                                : AppColors.textSecondary(context),
                           ),
                         ),
                         trailing: Icon(Icons.arrow_forward_ios, size: 12.r),
-                        onTap: () => showEmrdRecordDetailsSheet(context, consultation),
+                        onTap: () =>
+                            showEmrdRecordDetailsSheet(context, consultation),
                       ),
                     );
                   }),

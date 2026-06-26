@@ -15,7 +15,8 @@ class PatientBookingBottomSheet extends StatefulWidget {
   const PatientBookingBottomSheet({super.key});
 
   @override
-  State<PatientBookingBottomSheet> createState() => _PatientBookingBottomSheetState();
+  State<PatientBookingBottomSheet> createState() =>
+      _PatientBookingBottomSheetState();
 }
 
 class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
@@ -46,22 +47,25 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
               final authState = context.read<AuthBloc>().state;
               if (authState is Authenticated) {
                 final user = UserModel.fromEntity(authState.user);
-                final updatedMetadata = Map<String, dynamic>.from(user.metadata ?? {});
+                final updatedMetadata = Map<String, dynamic>.from(
+                  user.metadata ?? {},
+                );
                 final currentApts = List<dynamic>.from(
-                  updatedMetadata['appointments'] ?? [
-                    {
-                      'doctor': 'Dr. Sarah Johnson',
-                      'specialty': 'Cardiologist',
-                      'time': 'June 12, 10:30 AM',
-                      'type': 'Cardiology Clinic',
-                    },
-                    {
-                      'doctor': 'Dr. Michael Chen',
-                      'specialty': 'Neurologist',
-                      'time': 'June 15, 02:00 PM',
-                      'type': 'Neurology Clinic',
-                    },
-                  ],
+                  updatedMetadata['appointments'] ??
+                      [
+                        {
+                          'doctor': 'Dr. Sarah Johnson',
+                          'specialty': 'Cardiologist',
+                          'time': 'June 12, 10:30 AM',
+                          'type': 'Cardiology Clinic',
+                        },
+                        {
+                          'doctor': 'Dr. Michael Chen',
+                          'specialty': 'Neurologist',
+                          'time': 'June 15, 02:00 PM',
+                          'type': 'Neurology Clinic',
+                        },
+                      ],
                 );
 
                 final newApt = {
@@ -87,11 +91,13 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
               }
               if (ctx.mounted) Navigator.pop(ctx); // Close dialog
               if (context.mounted) Navigator.pop(context); // Close bottom sheet
-              
+
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text("Appointment booked with ${doc.name} successfully."),
+                    content: Text(
+                      "Appointment booked with ${doc.name} successfully.",
+                    ),
                     behavior: SnackBarBehavior.floating,
                   ),
                 );
@@ -147,11 +153,14 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
               builder: (context, state) {
                 if (state is DoctorStaffLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is DoctorStaffError || state is! DoctorStaffLoaded) {
+                } else if (state is DoctorStaffError ||
+                    state is! DoctorStaffLoaded) {
                   return _buildFallbackDoctorsList(context);
                 }
 
-                final doctors = state.doctors.where((u) => u.role == 'doctor').toList();
+                final doctors = state.doctors
+                    .where((u) => u.role == 'doctor')
+                    .toList();
                 if (doctors.isEmpty) {
                   return _buildFallbackDoctorsList(context);
                 }
@@ -272,7 +281,10 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
               borderRadius: BorderRadius.circular(8.r),
             ),
           ),
-          child: const Text("Book", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          child: const Text(
+            "Book",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );

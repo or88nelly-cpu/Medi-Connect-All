@@ -31,7 +31,10 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
     context.read<AuthBloc>().add(AuthCheckRequested());
   }
 
-  void _checkAndPromptAttendance(BuildContext context, dynamic userEntity) async {
+  void _checkAndPromptAttendance(
+    BuildContext context,
+    dynamic userEntity,
+  ) async {
     if (_checkedAttendanceToday) return;
     _checkedAttendanceToday = true;
 
