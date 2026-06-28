@@ -10,9 +10,20 @@ class AppStrings {
   static const cancel = "Cancel";
   static const confirm = "Confirm";
   static const next = "Next";
+  static const back = "Back";
+  static const skip = "Skip for Now";
   static const getStarted = "Get Started";
   static const retry = "Retry";
   static const logout = "Logout";
+
+  // Onboarding / Profile Completion
+  static const completeYourProfile = "Complete Your Profile";
+  static const patientRegistrationTitle = "Patient Registration";
+  static const stepOf = "Step"; // used as "Step 1 of 3"
+  static const basicInformation = "Basic Information";
+  static const additionalInformation = "Additional Information";
+  static const reviewAndConfirm = "Review & Confirm";
+  static const idCardDownloadStarted = "ID Card download started...";
 
   // Navigation / Features
   static const appointment = "Appointment";

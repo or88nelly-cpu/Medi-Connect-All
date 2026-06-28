@@ -7,6 +7,7 @@ class UserEntity extends Equatable {
   final String? phoneNumber;
   final String role; // patient, doctor, staff, admin
   final bool profileCompletionStatus;
+  final int onboardingStep;
   final String status;
   final String? department;
   final String? qualification;
@@ -48,6 +49,7 @@ class UserEntity extends Equatable {
     this.phoneNumber,
     required this.role,
     this.profileCompletionStatus = false,
+    this.onboardingStep = 1,
     this.status = 'Pending Registration',
     this.department,
     this.qualification,
@@ -87,6 +89,7 @@ class UserEntity extends Equatable {
     phoneNumber,
     role,
     profileCompletionStatus,
+    onboardingStep,
     status,
     department,
     qualification,

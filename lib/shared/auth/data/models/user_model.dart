@@ -1,7 +1,3 @@
-/// Data model for User extending UserEntity.
-/// Handles JSON deserialization and serialization for network payloads.
-library;
-
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -12,6 +8,7 @@ class UserModel extends UserEntity {
     super.phoneNumber,
     required super.role,
     super.profileCompletionStatus,
+    super.onboardingStep,
     super.status,
     super.department,
     super.qualification,
@@ -59,7 +56,8 @@ class UserModel extends UserEntity {
       phoneNumber: json['phone'] as String? ?? json['phone_number'] as String?,
       role: parsedRole,
       profileCompletionStatus:
-          json['profile_completion_status'] as bool? ?? false,
+          json['profile_completion_status'] as bool? ?? json['profile_completed'] as bool? ?? false,
+      onboardingStep: json['onboarding_step'] as int? ?? 1,
       status: json['status'] as String? ?? 'Pending Registration',
       department: json['department'] as String?,
       qualification: json['qualification'] as String?,
@@ -69,7 +67,7 @@ class UserModel extends UserEntity {
       dateOfBirth: json['date_of_birth'] as String?,
       age: json['age'] as int?,
       gender: json['gender'] as String?,
-      profileImage: json['profile_image'] as String?,
+      profileImage: json['profile_image'] as String? ?? json['profile_photo'] as String?,
       address: json['address'] as String?,
       emergencyContact: json['emergency_contact'] as String?,
       bloodGroup: json['blood_group'] as String?,
@@ -101,6 +99,7 @@ class UserModel extends UserEntity {
       'name': name,
       'role': role,
       'profile_completion_status': profileCompletionStatus,
+      'onboarding_step': onboardingStep,
       'status': status,
       'department': department,
       'qualification': qualification,
@@ -142,6 +141,7 @@ class UserModel extends UserEntity {
       phoneNumber: entity.phoneNumber,
       role: entity.role,
       profileCompletionStatus: entity.profileCompletionStatus,
+      onboardingStep: entity.onboardingStep,
       status: entity.status,
       department: entity.department,
       qualification: entity.qualification,
@@ -181,6 +181,7 @@ class UserModel extends UserEntity {
     String? phoneNumber,
     String? role,
     bool? profileCompletionStatus,
+    int? onboardingStep,
     String? status,
     String? department,
     String? qualification,
@@ -219,6 +220,7 @@ class UserModel extends UserEntity {
       role: role ?? this.role,
       profileCompletionStatus:
           profileCompletionStatus ?? this.profileCompletionStatus,
+      onboardingStep: onboardingStep ?? this.onboardingStep,
       status: status ?? this.status,
       department: department ?? this.department,
       qualification: qualification ?? this.qualification,

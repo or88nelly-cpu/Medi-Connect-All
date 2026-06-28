@@ -14,35 +14,83 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
   @override
   Future<List<UserModel>> getDoctorStaff(String departmentName) async {
-    final query = _supabase.from('users').select().isFilter('deleted_at', null);
+    final query = _supabase.from('users').select('*, doctors(*), employees(*)').isFilter('deleted_at', null);
     final response = await (departmentName.isNotEmpty && departmentName != 'All'
         ? query.eq('department', departmentName)
         : query);
 
-    var list = (response as List<dynamic>)
-        .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
-        .toList();
+    var list = (response as List<dynamic>).map((json) {
+      final map = Map<String, dynamic>.from(json as Map);
+      
+      final docJson = map.remove('doctors');
+      if (docJson is List && docJson.isNotEmpty) {
+        map.addAll(docJson.first as Map<String, dynamic>);
+      } else if (docJson is Map<String, dynamic>) {
+        map.addAll(docJson);
+      }
+      
+      final empJson = map.remove('employees');
+      if (empJson is List && empJson.isNotEmpty) {
+        map.addAll(empJson.first as Map<String, dynamic>);
+      } else if (empJson is Map<String, dynamic>) {
+        map.addAll(empJson);
+      }
+
+      // Map DB snake_case fields back to CamelCase keys for UserModel compatibility
+      if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
+      if (map.containsKey('profile_image')) map['profileImage'] = map['profile_image'];
+      if (map.containsKey('profile_photo')) map['profileImage'] = map['profile_photo'];
+      if (map.containsKey('profile_completion_status')) {
+        map['profileCompletionStatus'] = map['profile_completion_status'];
+      }
+      if (map.containsKey('profile_completed')) {
+        map['profileCompletionStatus'] = map['profile_completed'];
+      }
+      if (map.containsKey('onboarding_step')) {
+        map['onboardingStep'] = map['onboarding_step'];
+      }
+      if (map.containsKey('medical_registration_number')) {
+        map['medicalRegistrationNumber'] = map['medical_registration_number'];
+      }
+      if (map.containsKey('employee_id')) {
+        map['employeeId'] = map['employee_id'];
+      }
+      if (map.containsKey('joining_date')) {
+        map['joiningDate'] = map['joining_date'];
+      }
+      if (map.containsKey('staff_role')) {
+        map['staffRole'] = map['staff_role'];
+      }
+
+      return UserModel.fromJson(map);
+    }).toList();
 
     // Seeding logic for a robust enterprise-ready app
     if (list.isEmpty) {
       if (departmentName == 'Human Resource') {
         final hrStaff = _getHRSeedData();
         for (final u in hrStaff) {
-          final payload = u.toJson();
-          payload['profile_completion_status'] = true;
-          payload['status'] = 'Active';
           try {
-            await _supabase.from('users').insert(payload);
+            await createDoctorStaffMember(u);
           } catch (_) {}
         }
         final req = await _supabase
             .from('users')
-            .select()
+            .select('*, doctors(*), employees(*)')
             .isFilter('deleted_at', null)
             .eq('department', 'Human Resource');
-        list = (req as List<dynamic>)
-            .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
-            .toList();
+        list = (req as List<dynamic>).map((json) {
+          final map = Map<String, dynamic>.from(json as Map);
+          final docJson = map.remove('doctors');
+          if (docJson is List && docJson.isNotEmpty) map.addAll(docJson.first as Map<String, dynamic>);
+          final empJson = map.remove('employees');
+          if (empJson is List && empJson.isNotEmpty) map.addAll(empJson.first as Map<String, dynamic>);
+          
+          if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
+          if (map.containsKey('profile_image')) map['profileImage'] = map['profile_image'];
+          if (map.containsKey('profile_completion_status')) map['profileCompletionStatus'] = map['profile_completion_status'];
+          return UserModel.fromJson(map);
+        }).toList();
       } else if (departmentName == 'Cardiology' ||
           departmentName == 'Neurology' ||
           departmentName == 'Pediatrics' ||
@@ -58,27 +106,32 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         if (existingDocs.isEmpty) {
           final seedDocs = _getDoctorSeedData();
           for (final doc in seedDocs) {
-            final payload = doc.toJson();
-            payload['profile_completion_status'] = true;
-            payload['status'] = 'Available';
             try {
-              await _supabase.from('users').insert(payload);
+              await createDoctorStaffMember(doc);
             } catch (_) {}
           }
-          final req =
-              await (departmentName.isNotEmpty && departmentName != 'All'
-                  ? _supabase
-                        .from('users')
-                        .select()
-                        .isFilter('deleted_at', null)
-                        .eq('department', departmentName)
-                  : _supabase
-                        .from('users')
-                        .select()
-                        .isFilter('deleted_at', null));
-          list = (req as List<dynamic>)
-              .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
-              .toList();
+          final req = await (departmentName.isNotEmpty && departmentName != 'All'
+              ? _supabase
+                    .from('users')
+                    .select('*, doctors(*), employees(*)')
+                    .isFilter('deleted_at', null)
+                    .eq('department', departmentName)
+              : _supabase
+                    .from('users')
+                    .select('*, doctors(*), employees(*)')
+                    .isFilter('deleted_at', null));
+          list = (req as List<dynamic>).map((json) {
+            final map = Map<String, dynamic>.from(json as Map);
+            final docJson = map.remove('doctors');
+            if (docJson is List && docJson.isNotEmpty) map.addAll(docJson.first as Map<String, dynamic>);
+            final empJson = map.remove('employees');
+            if (empJson is List && empJson.isNotEmpty) map.addAll(empJson.first as Map<String, dynamic>);
+            
+            if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
+            if (map.containsKey('profile_image')) map['profileImage'] = map['profile_image'];
+            if (map.containsKey('profile_completion_status')) map['profileCompletionStatus'] = map['profile_completion_status'];
+            return UserModel.fromJson(map);
+          }).toList();
         }
       }
     }
@@ -93,30 +146,83 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
   @override
   Future<UserModel> createDoctorStaffMember(UserModel user) async {
-    final payload = user.toJson();
-    payload['profile_completion_status'] = true;
-    payload['status'] = 'Available';
+    final userPayload = {
+      'id': user.id,
+      'email': user.email,
+      'name': user.name,
+      'phone': user.phoneNumber,
+      'role': user.role,
+      'profile_completed': true,
+      'status': 'Available',
+      'department': user.department,
+    };
+    await _supabase.from('users').upsert(userPayload);
 
-    final response = await _supabase
-        .from('users')
-        .insert(payload)
-        .select()
-        .single();
+    if (user.role == 'doctor') {
+      final docPayload = {
+        'id': user.id,
+        'medical_registration_number': user.medicalRegistrationNumber ?? 'REG-${user.id.hashCode.abs()}',
+        'experience': user.experience,
+        'specialization': user.specialization ?? user.staffRole,
+        'consultation_fee': user.consultationFee ?? 1000.0,
+        'availability_status': 'Available',
+      };
+      await _supabase.from('doctors').upsert(docPayload);
+    } else {
+      final empPayload = {
+        'id': user.id,
+        'employee_id': user.employeeId ?? 'EMP-${user.id.hashCode.abs()}',
+        'joining_date': user.joiningDate ?? DateTime.now().toIso8601String().split('T').first,
+        'department': user.department ?? 'Staff Department',
+        'designation': user.designation ?? user.staffRole,
+        'qualification': user.qualification ?? 'B.Sc',
+        'staff_role': user.staffRole,
+      };
+      await _supabase.from('employees').upsert(empPayload);
+    }
 
-    return UserModel.fromJson(response);
+    return user;
   }
 
   @override
   Future<UserModel> updateDoctorStaffMember(UserModel user) async {
-    final payload = user.toJson();
-    final response = await _supabase
-        .from('users')
-        .update(payload)
-        .eq('id', user.id)
-        .select()
-        .single();
+    final userPayload = {
+      'id': user.id,
+      'email': user.email,
+      'name': user.name,
+      'phone': user.phoneNumber,
+      'role': user.role,
+      'status': user.status,
+      'department': user.department,
+      'profile_completed': user.profileCompletionStatus,
+      'onboarding_step': user.onboardingStep,
+    };
+    await _supabase.from('users').update(userPayload).eq('id', user.id);
 
-    return UserModel.fromJson(response);
+    if (user.role == 'doctor') {
+      final docPayload = {
+        'id': user.id,
+        'medical_registration_number': user.medicalRegistrationNumber,
+        'experience': user.experience,
+        'specialization': user.specialization,
+        'consultation_fee': user.consultationFee,
+        'availability_status': user.status ?? 'Available',
+      };
+      await _supabase.from('doctors').upsert(docPayload);
+    } else {
+      final empPayload = {
+        'id': user.id,
+        'employee_id': user.employeeId,
+        'joining_date': user.joiningDate,
+        'department': user.department,
+        'designation': user.designation,
+        'qualification': user.qualification,
+        'staff_role': user.staffRole,
+      };
+      await _supabase.from('employees').upsert(empPayload);
+    }
+
+    return user;
   }
 
   @override

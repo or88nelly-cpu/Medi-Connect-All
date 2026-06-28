@@ -3,6 +3,7 @@
 library;
 
 import 'dart:developer';
+import 'dart:math' hide log;
 
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
@@ -56,14 +57,37 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // Fetch profile from users table using Auth User ID
       final List<dynamic> dbProfiles = await _supabaseService.client
           .from('users')
-          .select()
+          .select('*, patients(*), doctors(*), employees(*)')
           .eq('id', response.user!.id);
 
+      Map<String, dynamic> dbProfile;
       if (dbProfiles.isEmpty) {
-        throw const AuthException("User profile not found in database.");
+        log("User profile not found in database. Auto-creating profile row.");
+        final user = response.user!;
+        final insertResponse = await _supabaseService.client.from('users').insert({
+          'id': user.id,
+          'email': user.email ?? email,
+          'phone': user.phone ?? user.userMetadata?['phone'] as String?,
+          'role': user.userMetadata?['role'] as String? ?? 'patient',
+          'name': user.userMetadata?['name'] as String? ?? user.email?.split('@').first ?? 'User',
+          'profile_completion_status': false,
+          'status': 'Registered',
+        }).select();
+
+        if (insertResponse.isEmpty) {
+          throw const ServerException("Failed to auto-create user profile.");
+        }
+        dbProfile = insertResponse.first as Map<String, dynamic>;
+      } else {
+        dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
       }
 
-      final dbProfile = dbProfiles.first as Map<String, dynamic>;
+      // Ensure role profile exists in role specific table
+      await _createRoleProfile(
+        id: response.user!.id,
+        role: dbProfile['role'] as String? ?? 'patient',
+      );
+
       final mergedJson = {...response.user!.toJson(), ...dbProfile};
 
       return UserModel.fromJson(mergedJson);
@@ -149,6 +173,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         finalProfile = insertResponse.first;
       }
 
+      // Ensure role profile exists in role specific table
+      await _createRoleProfile(id: authUserId, role: role);
+
       final mergedJson = {...authUser.toJson(), ...finalProfile};
 
       return UserModel.fromJson(mergedJson);
@@ -179,13 +206,35 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // Fetch profile from users table
       final List<dynamic> dbProfiles = await _supabaseService.client
           .from('users')
-          .select()
+          .select('*, patients(*), doctors(*), employees(*)')
           .eq('id', response.user!.id);
 
       Map<String, dynamic> dbProfile = {};
-      if (dbProfiles.isNotEmpty) {
-        dbProfile = dbProfiles.first as Map<String, dynamic>;
+      if (dbProfiles.isEmpty) {
+        log("User profile not found in database during OTP. Auto-creating.");
+        final user = response.user!;
+        final insertResponse = await _supabaseService.client.from('users').insert({
+          'id': user.id,
+          'email': user.email ?? email,
+          'phone': user.phone ?? user.userMetadata?['phone'] as String?,
+          'role': user.userMetadata?['role'] as String? ?? 'patient',
+          'name': user.userMetadata?['name'] as String? ?? user.email?.split('@').first ?? 'User',
+          'profile_completion_status': false,
+          'status': 'Registered',
+        }).select();
+
+        if (insertResponse.isNotEmpty) {
+          dbProfile = insertResponse.first as Map<String, dynamic>;
+        }
+      } else {
+        dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
       }
+
+      // Ensure role profile exists in role specific table
+      await _createRoleProfile(
+        id: response.user!.id,
+        role: dbProfile['role'] as String? ?? 'patient',
+      );
 
       final mergedJson = {...response.user!.toJson(), ...dbProfile};
 
@@ -241,19 +290,143 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // Fetch profile from users table
       final List<dynamic> dbProfiles = await _supabaseService.client
           .from('users')
-          .select()
+          .select('*, patients(*), doctors(*), employees(*)')
           .eq('id', user.id);
 
+      Map<String, dynamic> dbProfile;
       if (dbProfiles.isEmpty) {
-        return null;
+        log("User profile not found in database during getCurrentUser. Auto-creating.");
+        final insertResponse = await _supabaseService.client.from('users').insert({
+          'id': user.id,
+          'email': user.email ?? '',
+          'phone': user.phone ?? user.userMetadata?['phone'] as String?,
+          'role': user.userMetadata?['role'] as String? ?? 'patient',
+          'name': user.userMetadata?['name'] as String? ?? user.email?.split('@').first ?? 'User',
+          'profile_completion_status': false,
+          'status': 'Registered',
+        }).select();
+
+        if (insertResponse.isEmpty) {
+          return null;
+        }
+        dbProfile = insertResponse.first as Map<String, dynamic>;
+      } else {
+        dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
       }
 
-      final dbProfile = dbProfiles.first as Map<String, dynamic>;
+      // Ensure role profile exists in role specific table
+      await _createRoleProfile(
+        id: user.id,
+        role: dbProfile['role'] as String? ?? 'patient',
+      );
+
       final mergedJson = {...user.toJson(), ...dbProfile};
 
       return UserModel.fromJson(mergedJson);
     } catch (e) {
       throw ServerException(e.toString());
     }
+  }
+
+  Future<void> _createRoleProfile({
+    required String id,
+    required String role,
+  }) async {
+    try {
+      if (role == 'patient') {
+        final randomNum = (Random().nextInt(9000000) + 1000000).toString();
+        await _supabaseService.client.from('patients').insert({
+          'id': id,
+          'patient_id': 'CCH25-$randomNum',
+        });
+      } else if (role == 'doctor') {
+        final randomNum = (Random().nextInt(9000) + 1000).toString();
+        await _supabaseService.client.from('doctors').insert({
+          'id': id,
+          'medical_registration_number': 'REG-$randomNum',
+        });
+      } else if (role == 'staff') {
+        final randomNum = (Random().nextInt(9000) + 1000).toString();
+        await _supabaseService.client.from('employees').insert({
+          'id': id,
+          'employee_id': 'EMP-$randomNum',
+        });
+      } else if (role == 'admin') {
+        await _supabaseService.client.from('admins').insert({
+          'id': id,
+          'access_level': 'Super Admin',
+        });
+      }
+    } catch (e) {
+      log("Role profile insert skipped or already exists: $e");
+    }
+  }
+
+  Map<String, dynamic> _mergeProfileDetails(Map<String, dynamic> rawProfile) {
+    final map = Map<String, dynamic>.from(rawProfile);
+    
+    // Merge patient specific profile if present
+    final patientJson = map.remove('patients');
+    if (patientJson is List && patientJson.isNotEmpty) {
+      map.addAll(patientJson.first as Map<String, dynamic>);
+    } else if (patientJson is Map<String, dynamic>) {
+      map.addAll(patientJson);
+    }
+    
+    // Merge doctor specific profile if present
+    final doctorJson = map.remove('doctors');
+    if (doctorJson is List && doctorJson.isNotEmpty) {
+      map.addAll(doctorJson.first as Map<String, dynamic>);
+    } else if (doctorJson is Map<String, dynamic>) {
+      map.addAll(doctorJson);
+    }
+
+    // Merge employee specific profile if present
+    final employeeJson = map.remove('employees');
+    if (employeeJson is List && employeeJson.isNotEmpty) {
+      map.addAll(employeeJson.first as Map<String, dynamic>);
+    } else if (employeeJson is Map<String, dynamic>) {
+      map.addAll(employeeJson);
+    }
+
+    // Map DB snake_case fields back to CamelCase keys for UserModel compatibility
+    if (map.containsKey('patient_id')) {
+      map['patientId'] = map['patient_id'];
+    }
+    if (map.containsKey('phone')) {
+      map['phoneNumber'] = map['phone'];
+    }
+    if (map.containsKey('profile_image')) {
+      map['profileImage'] = map['profile_image'];
+    }
+    if (map.containsKey('profile_completion_status')) {
+      map['profileCompletionStatus'] = map['profile_completion_status'];
+    }
+    if (map.containsKey('date_of_birth')) {
+      map['dateOfBirth'] = map['date_of_birth'];
+    }
+    if (map.containsKey('insurance_number')) {
+      map['insuranceNumber'] = map['insurance_number'];
+    }
+    if (map.containsKey('medical_registration_number')) {
+      map['medicalRegistrationNumber'] = map['medical_registration_number'];
+    }
+    if (map.containsKey('employee_id')) {
+      map['employeeId'] = map['employee_id'];
+    }
+    if (map.containsKey('joining_date')) {
+      map['joiningDate'] = map['joining_date'];
+    }
+    if (map.containsKey('staff_role')) {
+      map['staffRole'] = map['staff_role'];
+    }
+    if (map.containsKey('profile_completed')) {
+      map['profileCompletionStatus'] = map['profile_completed'];
+    }
+    if (map.containsKey('onboarding_step')) {
+      map['onboardingStep'] = map['onboarding_step'];
+    }
+
+    return map;
   }
 }
