@@ -5,6 +5,7 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
@@ -20,7 +21,8 @@ class AppTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final bool obscureText;
-
+  final BoxConstraints? suffixIconConstraints;
+final BoxConstraints? prefixIconConstraints;
   const AppTextField({
     super.key,
     this.controller,
@@ -33,11 +35,15 @@ class AppTextField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.obscureText = false,
+    this.suffixIconConstraints,
+    this.prefixIconConstraints,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final borderColor = AppColors.border(context);
+    bool isDesktop = AppResponsive.isDesktop(context);
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -49,6 +55,7 @@ class AppTextField extends StatelessWidget {
         color: isDark
             ? AppColors.terminalDarkText
             : AppColors.terminalLightText,
+        fontSize: isDesktop ? 14.sp : 12.sp,
       ),
       decoration: InputDecoration(
         labelText: labelText,
@@ -64,19 +71,20 @@ class AppTextField extends StatelessWidget {
           color: isDark
               ? AppColors.terminalDarkLabel
               : AppColors.terminalLightLabel,
+          fontSize: isDesktop ? 12.sp : 10.sp,
+          fontWeight: FontWeight.w600,
         ),
+
         hintStyle: AppTextStyles.bodyMedium.copyWith(
           color: isDark
               ? AppColors.terminalDarkFieldHint
               : AppColors.terminalLightFieldHint,
+          fontSize: isDesktop ? 14.sp : 12.sp,
         ),
+        suffixIconConstraints: suffixIconConstraints,
+        prefixIconConstraints: prefixIconConstraints,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: isDark
-                ? AppColors.terminalDarkFieldBorder
-                : AppColors.terminalLightFieldBorder,
-            width: 1.w,
-          ),
+          borderSide: BorderSide(color: borderColor, width: 1.w),
           borderRadius: BorderRadius.circular(8.r),
         ),
         focusedBorder: OutlineInputBorder(

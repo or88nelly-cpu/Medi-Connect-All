@@ -5,6 +5,7 @@ library;
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/services/app_logger.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
@@ -43,35 +44,20 @@ class RouteGuards {
 
     // User is authenticated.
     // Fetch profile completion status and role from secure storage
-    final completionStatusStr = await _secureStorageService.read(
-      'profile_completion_status',
-    );
+    
     final cachedRole = await _secureStorageService.read('user_role');
 
-    final isProfileComplete = completionStatusStr == 'true';
+    
     final userRole =
         cachedRole ??
         _supabaseService.currentUser?.userMetadata?['role'] as String? ??
-        'patient';
+        UserRole.patient.value;
 
     // If profile is incomplete, redirect to profile completion flow
-    if (!isProfileComplete) {
-      if (currentPath != RouteNames.profileCompletion) {
-        AppLogger.navigation(
-          "Profile incomplete. Redirecting from $currentPath to Profile Onboarding.",
-        );
-        return RouteNames.profileCompletion;
-      }
-      return null;
-    }
+    
 
     // If profile is complete but user is trying to access auth route or profile completion, redirect to dashboard
-    if (isAuthRoute || currentPath == RouteNames.profileCompletion) {
-      AppLogger.navigation(
-        "Authenticated user on auth/completion route. Redirecting to dashboard.",
-      );
-      return _getDashboardRouteForRole(userRole);
-    }
+  
 
     // Check role boundaries
     if (currentPath.startsWith('/patient') && userRole != 'patient') {
@@ -104,7 +90,7 @@ class RouteGuards {
   }
 
   String _getDashboardRouteForRole(String role) {
-    switch (role) {
+    switch (role.toLowerCase().trim()) {
       case 'doctor':
         return RouteNames.doctorDashboard;
       case 'staff':

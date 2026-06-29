@@ -10,7 +10,6 @@ import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/common/dashboard_tab_cubit.dart';
 
 class AdminDrawer extends StatelessWidget {
   const AdminDrawer({super.key});
@@ -39,7 +38,7 @@ class AdminDrawer extends StatelessWidget {
                   icon: Icons.dashboard_outlined,
                   title: "Dashboard Home",
                   onTap: () {
-                    context.read<DashboardTabCubit>().setTab(0);
+                    
                     context.pop();
                   },
                 ),
@@ -162,7 +161,7 @@ class AdminDrawer extends StatelessWidget {
                   icon: Icons.person_outline,
                   title: "Edit Profile",
                   onTap: () {
-                    context.read<DashboardTabCubit>().setTab(4);
+                    
                     context.pop();
                   },
                 ),
@@ -256,7 +255,7 @@ class AdminDrawer extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.edit_outlined, color: iconColor),
                     onPressed: () {
-                      context.read<DashboardTabCubit>().setTab(4);
+                      
                       context.pop();
                     },
                   ),

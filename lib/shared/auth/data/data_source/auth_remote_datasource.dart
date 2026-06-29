@@ -5,6 +5,8 @@ library;
 import 'dart:developer';
 import 'dart:math' hide log;
 
+import 'package:medi_connect/core/constants/app_enum.dart';
+import 'package:medi_connect/core/constants/app_table_names.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
@@ -20,7 +22,7 @@ abstract class AuthRemoteDataSource {
     required String email,
     required String password,
     required String name,
-    required String role,
+    required UserRole role,
     String? phoneNumber,
   });
 
@@ -50,47 +52,45 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email: email,
         password: password,
       );
-      if (response.user == null) {
+
+      final authUser = response.user;
+
+      if (authUser == null) {
         throw const AuthException("User is empty after sign in.");
       }
 
-      // Fetch profile from users table using Auth User ID
-      final List<dynamic> dbProfiles = await _supabaseService.client
+      // Fetch user profile from users table
+      final userData = await _supabaseService.client
           .from('users')
-          .select('*, patients(*), doctors(*), employees(*)')
-          .eq('id', response.user!.id);
+          .select()
+          .eq('auth_user_id', authUser.id)
+          .maybeSingle();
 
-      Map<String, dynamic> dbProfile;
-      if (dbProfiles.isEmpty) {
-        log("User profile not found in database. Auto-creating profile row.");
-        final user = response.user!;
-        final insertResponse = await _supabaseService.client.from('users').insert({
-          'id': user.id,
-          'email': user.email ?? email,
-          'phone': user.phone ?? user.userMetadata?['phone'] as String?,
-          'role': user.userMetadata?['role'] as String? ?? 'patient',
-          'name': user.userMetadata?['name'] as String? ?? user.email?.split('@').first ?? 'User',
-          'profile_completion_status': false,
-          'status': 'Registered',
-        }).select();
+      Map<String, dynamic> profile;
 
-        if (insertResponse.isEmpty) {
-          throw const ServerException("Failed to auto-create user profile.");
-        }
-        dbProfile = insertResponse.first;
+      if (userData == null) {
+        // Auto create profile
+        final names = authUser.userMetadata?['name']?.split(" ") ?? [];
+        final firstName = names.isEmpty ? email.split('@').first : names.first;
+        final lastName = names.length < 2 ? '' : names.skip(1).join(" ");
+        profile = (await _supabaseService.client
+            .from(AppTableNames.users)
+            .insert({
+              'id': authUser.id,
+              'email': authUser.email ?? email,
+              'phone': authUser.phone,
+              'role': authUser.userMetadata?['role'] ?? UserRole.patient.value,
+              'first_name': firstName,
+              'last_name': lastName,
+              'status': 'Registered',
+            })
+            .select()
+            .single());
       } else {
-        dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
+        profile = userData;
       }
 
-      // Ensure role profile exists in role specific table
-      await _createRoleProfile(
-        id: response.user!.id,
-        role: dbProfile['role'] as String? ?? 'patient',
-      );
-
-      final mergedJson = {...response.user!.toJson(), ...dbProfile};
-
-      return UserModel.fromJson(mergedJson);
+      return UserModel.fromJson({...authUser.toJson(), ...profile});
     } on supabase.AuthException catch (e) {
       throw supabase.AuthException(e.message, code: e.statusCode);
     } catch (e) {
@@ -103,15 +103,23 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
     required String name,
-    required String role,
+    required UserRole role,
     String? phoneNumber,
   }) async {
     try {
       log("register attempt $email $name $role $phoneNumber");
+      final names = name.split(" ");
+      final firstName = names.first;
+      final lastName = names.skip(1).join(" ");
       final response = await _supabaseService.auth.signUp(
         email: email,
         password: password,
-        data: {'name': name, 'role': role, 'phone': phoneNumber},
+        data: {
+          'first_name': firstName,
+          'last_name': lastName,
+          'role': role.value,
+          'phone': phoneNumber,
+        },
       );
       if (response.user == null) {
         throw const AuthException("User is empty after sign up.");
@@ -142,7 +150,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         // Link the Auth User ID with the existing profile. Keep existing fields, update ID and status
         final existingEmail = existingRecord['email'] as String? ?? email;
         final updateResponse = await _supabaseService.client
-            .from('users')
+            .from(AppTableNames.users)
             .update({'id': authUserId, 'status': 'Registered'})
             .eq('email', existingEmail)
             .select();
@@ -157,12 +165,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         log("No existing profile. Creating a minimal profile record.");
         // Create a minimal profile record with false completion status
         final insertResponse =
-            await _supabaseService.client.from('users').insert({
+            await _supabaseService.client.from(AppTableNames.users).insert({
               'id': authUserId,
               'email': email,
               'phone': phoneNumber,
               'role': role,
-              'name': name,
+              'first_name': firstName,
+              'last_name': lastName,
               'profile_completion_status': false,
               'status': 'Registered',
             }).select();
@@ -174,7 +183,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
 
       // Ensure role profile exists in role specific table
-      await _createRoleProfile(id: authUserId, role: role);
+      await _createRoleProfile(id: authUserId, role: role.value);
 
       final mergedJson = {...authUser.toJson(), ...finalProfile};
 
@@ -213,21 +222,27 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (dbProfiles.isEmpty) {
         log("User profile not found in database during OTP. Auto-creating.");
         final user = response.user!;
-        final insertResponse = await _supabaseService.client.from('users').insert({
-          'id': user.id,
-          'email': user.email ?? email,
-          'phone': user.phone ?? user.userMetadata?['phone'] as String?,
-          'role': user.userMetadata?['role'] as String? ?? 'patient',
-          'name': user.userMetadata?['name'] as String? ?? user.email?.split('@').first ?? 'User',
-          'profile_completion_status': false,
-          'status': 'Registered',
-        }).select();
+        final insertResponse =
+            await _supabaseService.client.from('users').insert({
+              'id': user.id,
+              'email': user.email ?? email,
+              'phone': user.phone ?? user.userMetadata?['phone'] as String?,
+              'role': user.userMetadata?['role'] as String? ?? 'patient',
+              'name':
+                  user.userMetadata?['name'] as String? ??
+                  user.email?.split('@').first ??
+                  'User',
+              'profile_completion_status': false,
+              'status': 'Registered',
+            }).select();
 
         if (insertResponse.isNotEmpty) {
           dbProfile = insertResponse.first;
         }
       } else {
-        dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
+        dbProfile = _mergeProfileDetails(
+          dbProfiles.first as Map<String, dynamic>,
+        );
       }
 
       // Ensure role profile exists in role specific table
@@ -288,30 +303,43 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (user == null) return null;
 
       // Fetch profile from users table
-      final List<dynamic> dbProfiles = await _supabaseService.client
-          .from('users')
-          .select('*, patients(*), doctors(*), employees(*)')
-          .eq('id', user.id);
+      final List<dynamic> dbProfiles = await _supabaseService.client.from(
+        AppTableNames.users,
+      );
 
       Map<String, dynamic> dbProfile;
       if (dbProfiles.isEmpty) {
-        log("User profile not found in database during getCurrentUser. Auto-creating.");
-        final insertResponse = await _supabaseService.client.from('users').insert({
-          'id': user.id,
-          'email': user.email ?? '',
-          'phone': user.phone ?? user.userMetadata?['phone'] as String?,
-          'role': user.userMetadata?['role'] as String? ?? 'patient',
-          'name': user.userMetadata?['name'] as String? ?? user.email?.split('@').first ?? 'User',
-          'profile_completion_status': false,
-          'status': 'Registered',
-        }).select();
+        log(
+          "User profile not found in database during getCurrentUser. Auto-creating.",
+        );
+        final insertResponse =
+            await _supabaseService.client.from('users').insert({
+              'id': user.id,
+              'email': user.email ?? '',
+              'phone': user.phone ?? user.userMetadata?['phone'] as String?,
+              'role':
+                  user.userMetadata?['role'] as String? ??
+                  UserRole.patient.value,
+              'first_name':
+                  user.userMetadata?['first_name'] as String? ??
+                  user.email?.split('@').first ??
+                  'User',
+              'last_name':
+                  user.userMetadata?['last_name'] as String? ??
+                  user.email?.split('@').first ??
+                  'User',
+              'profile_completion_status': false,
+              'status': 'Registered',
+            }).select();
 
         if (insertResponse.isEmpty) {
           return null;
         }
         dbProfile = insertResponse.first;
       } else {
-        dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
+        dbProfile = _mergeProfileDetails(
+          dbProfiles.first as Map<String, dynamic>,
+        );
       }
 
       // Ensure role profile exists in role specific table
@@ -364,7 +392,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   Map<String, dynamic> _mergeProfileDetails(Map<String, dynamic> rawProfile) {
     final map = Map<String, dynamic>.from(rawProfile);
-    
+
     // Merge patient specific profile if present
     final patientJson = map.remove('patients');
     if (patientJson is List && patientJson.isNotEmpty) {
@@ -372,7 +400,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } else if (patientJson is Map<String, dynamic>) {
       map.addAll(patientJson);
     }
-    
+
     // Merge doctor specific profile if present
     final doctorJson = map.remove('doctors');
     if (doctorJson is List && doctorJson.isNotEmpty) {

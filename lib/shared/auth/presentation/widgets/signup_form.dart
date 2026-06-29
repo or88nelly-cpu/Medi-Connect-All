@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/functions/validators.dart';
+import 'package:medi_connect/core/widgets/textfields/text_fields.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -19,8 +21,8 @@ class SignUpForm extends StatefulWidget {
   final bool isAgreed;
   final ValueChanged<bool> onAgreedChanged;
   final VoidCallback onRegisterPressed;
-  final String selectedRole;
-  final ValueChanged<String> onRoleChanged;
+  final UserRole selectedRole;
+  
 
   const SignUpForm({
     super.key,
@@ -34,7 +36,7 @@ class SignUpForm extends StatefulWidget {
     required this.onAgreedChanged,
     required this.onRegisterPressed,
     required this.selectedRole,
-    required this.onRoleChanged,
+   
   });
 
   @override
@@ -51,18 +53,7 @@ class _SignUpFormState extends State<SignUpForm> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // ── Role selection title ──
-        Text(
-          'Choose your user type',
-          style: AppTextStyles.labelMedium.copyWith(
-            color: AppColors.textPrimary(context),
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        SizedBox(height: 12.h),
-
-        // ── Role cards row ──
-        _buildRoleSelector(),
+       
         SizedBox(height: 24.h),
 
         // ── Email field ──
@@ -113,126 +104,7 @@ class _SignUpFormState extends State<SignUpForm> {
   // ──────────────────────────────────────────
   // ROLE SELECTOR
   // ──────────────────────────────────────────
-  Widget _buildRoleSelector() {
-    final roles = [
-      _RoleData(
-        'patient',
-        'Patient',
-        'For individuals',
-        Icons.person_outline_rounded,
-      ),
-      _RoleData(
-        'doctor',
-        'Doctor',
-        'For healthcare\nprofessionals',
-        Icons.medical_services_outlined,
-      ),
-      _RoleData(
-        'staff',
-        'Staff',
-        'For hospital\nstaff members',
-        Icons.badge_outlined,
-      ),
-    ];
 
-    return Row(
-      children: roles
-          .map(
-            (role) => Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(right: role == roles.last ? 0 : 10.w),
-                child: _buildRoleCard(role),
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Widget _buildRoleCard(_RoleData role) {
-    final isSelected = widget.selectedRole == role.key;
-    bool isDesktop = AppResponsive.isDesktop(context);
-
-    return GestureDetector(
-      onTap: () => widget.onRoleChanged(role.key),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(
-          horizontal: isDesktop ? 10.w : 6.w,
-          vertical: isDesktop ? 12.h : 6.h,
-        ),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primary.withValues(alpha: 0.06)
-              : AppColors.background(context),
-          borderRadius: BorderRadius.circular(14.r),
-          border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.border(context),
-            width: isSelected ? 1.5 : 1,
-          ),
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  role.icon,
-                  color: isSelected
-                      ? AppColors.primary
-                      : AppColors.textSecondary(context),
-                  size: isDesktop ? 22.r : 16.r,
-                ),
-                // Radio indicator
-                Container(
-                  width: isDesktop ? 18.r : 14.r,
-                  height: isDesktop ? 18.r : 14.r,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: isSelected
-                          ? AppColors.primary
-                          : AppColors.border(context),
-                      width: isSelected ? 5 : 1.5,
-                    ),
-                    color: isSelected ? Colors.white : Colors.transparent,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    role.label,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.textPrimary(context),
-                      fontWeight: FontWeight.w700,
-                      fontSize: isDesktop ? 13.sp : 11.sp,
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  Text(
-                    role.subtitle,
-                    style: AppTextStyles.bodyXSmall.copyWith(
-                      color: AppColors.textSecondary(context),
-                      fontSize: isDesktop ? 10.sp : 8.sp,
-                      height: 1.3,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // ──────────────────────────────────────────
   // TEXT FIELD
   // ──────────────────────────────────────────
   Widget _buildTextField({
@@ -249,6 +121,49 @@ class _SignUpFormState extends State<SignUpForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        AppTextField(
+          labelText: label,
+          controller: controller,
+          obscureText: isPassword && _isPasswordObscured,
+          keyboardType: keyboardType??TextInputType.text,
+          validator: validator,
+           suffixIcon: isPassword
+                ? GestureDetector(
+                    onTap: () => setState(
+                      () => _isPasswordObscured = !_isPasswordObscured,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 12.w),
+                      child: Icon(
+                        _isPasswordObscured
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: AppColors.textSecondary(
+                          context,
+                        ).withValues(alpha: 0.5),
+                        size: 20.r,
+                      ),
+                    ),
+                  )
+                : null,
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(
+                left: isDesktop ? 14.w : 10.w,
+                right: isDesktop ? 10.w : 6.w,
+              ),
+              child: Icon(
+                prefixIcon,
+                color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+                size: isDesktop ? 20.r : 18.r,
+              ),
+            ),
+            prefixIconConstraints: BoxConstraints(minWidth: 44.w),
+            suffixIconConstraints: isPassword
+                ? BoxConstraints(minWidth: 44.w)
+                : null,
+          
+            
+        ),
         TextFormField(
           controller: controller,
           obscureText: isPassword && _isPasswordObscured,

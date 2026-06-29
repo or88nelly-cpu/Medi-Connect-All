@@ -53,7 +53,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
     required String name,
-    required String role,
+    required UserRole role,
     String? phoneNumber,
   }) async {
     try {

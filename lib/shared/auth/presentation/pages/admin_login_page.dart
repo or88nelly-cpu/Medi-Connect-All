@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -32,7 +33,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is Authenticated) {
-          final role = state.user.role;
+          final role = state.user.role.value.toLowerCase();
           context.go('/$role/dashboard');
         } else if (state is AuthError) {
           showDialog(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
@@ -31,7 +32,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
   final _passwordController = TextEditingController();
 
   final _isAgreedNotifier = ValueNotifier<bool>(false);
-  final _selectedRoleNotifier = ValueNotifier<String>('patient');
+  UserRole _selectedUserRole = UserRole.patient;
 
   @override
   Widget build(BuildContext context) {
@@ -337,10 +338,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
       ),
       child: Form(
         key: _formKey,
-        child: ValueListenableBuilder<String>(
-          valueListenable: _selectedRoleNotifier,
-          builder: (context, selectedRole, _) {
-            return ValueListenableBuilder<bool>(
+        child:  ValueListenableBuilder<bool>(
               valueListenable: _isAgreedNotifier,
               builder: (context, isAgreed, _) {
                 return SignUpForm(
@@ -348,16 +346,14 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                   emailController: _emailController,
                   phoneController: _phoneController,
                   passwordController: _passwordController,
-                  selectedRole: selectedRole,
+                  selectedRole: _selectedUserRole,
                   isAgreed: isAgreed,
-                  onRoleChanged: (role) => _selectedRoleNotifier.value = role,
+                 //
                   onAgreedChanged: (agreed) => _isAgreedNotifier.value = agreed,
                   onRegisterPressed: _onRegisterPressed,
                 );
               },
-            );
-          },
-        ),
+            )
       ),
     );
   }
@@ -407,7 +403,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text,
           name: _nameController.text.trim(),
-          role: _selectedRoleNotifier.value,
+          role: _selectedUserRole,
           phoneNumber: _phoneController.text.trim().isEmpty
               ? null
               : _phoneController.text.trim(),
@@ -423,7 +419,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
     _phoneController.dispose();
     _passwordController.dispose();
     _isAgreedNotifier.dispose();
-    _selectedRoleNotifier.dispose();
+   
     super.dispose();
   }
 }
