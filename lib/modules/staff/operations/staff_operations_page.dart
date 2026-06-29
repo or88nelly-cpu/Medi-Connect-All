@@ -17,11 +17,11 @@ class StaffOperationsPage extends StatelessWidget {
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        String departmentTitle = 'Staff';
+        String departmentTitle = 'Customer Care';
         if (state is Authenticated) {
-          final dept = state.user.department;
-          if (dept != null && dept.isNotEmpty) {
-            departmentTitle = dept;
+          final role = state.user.role.name;
+          if (role.toLowerCase().contains('staff') || role.toLowerCase().contains('doctor')) {
+            departmentTitle = 'Customer Care';
           }
         }
 

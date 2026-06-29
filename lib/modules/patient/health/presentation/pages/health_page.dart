@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/modules/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
 
 class HealthPage extends StatefulWidget {
   const HealthPage({super.key});
@@ -34,33 +29,7 @@ class _HealthPageState extends State<HealthPage> {
     _weightCtrl.addListener(_recalc);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final state = context.read<AuthBloc>().state;
-      if (state is Authenticated) {
-        final health =
-            state.user.metadata?['health'] as Map<String, dynamic>?;
-        if (health != null) {
-          setState(() {
-            if (health['height'] != null) {
-              _heightCtrl.text = health['height'].toString();
-            }
-            if (health['weight'] != null) {
-              _weightCtrl.text = health['weight'].toString();
-            }
-            if (health['bp_sys'] != null) {
-              _bpSysCtrl.text = health['bp_sys'].toString();
-            }
-            if (health['bp_dia'] != null) {
-              _bpDiaCtrl.text = health['bp_dia'].toString();
-            }
-            if (health['heart_rate'] != null) {
-              _heartRateCtrl.text = health['heart_rate'].toString();
-            }
-            if (health['blood_sugar'] != null) {
-              _bloodSugarCtrl.text = health['blood_sugar'].toString();
-            }
-          });
-        }
-      }
+      // Health metadata is no longer stored on UserModel.
       _recalc();
     });
   }
@@ -109,46 +78,19 @@ class _HealthPageState extends State<HealthPage> {
 
   Future<void> _save() async {
     setState(() => _isSaving = true);
-    try {
-      final state = context.read<AuthBloc>().state;
-      if (state is Authenticated) {
-        final user = UserModel.fromEntity(state.user);
-        final updatedMeta = Map<String, dynamic>.from(user.metadata ?? {});
-        updatedMeta['health'] = {
-          'height': double.tryParse(_heightCtrl.text) ?? 0,
-          'weight': double.tryParse(_weightCtrl.text) ?? 0,
-          'bmi': double.parse(_bmi.toStringAsFixed(1)),
-          'bp_sys': int.tryParse(_bpSysCtrl.text) ?? 0,
-          'bp_dia': int.tryParse(_bpDiaCtrl.text) ?? 0,
-          'heart_rate': int.tryParse(_heartRateCtrl.text) ?? 0,
-          'blood_sugar': int.tryParse(_bloodSugarCtrl.text) ?? 0,
-          'updated_at': DateTime.now().toIso8601String(),
-        };
-        final updatedUser = user.copyWith(metadata: updatedMeta);
-        await GetIt.instance<DoctorStaffRemoteDataSource>()
-            .updateDoctorStaffMember(updatedUser);
-        if (mounted) {
-          context.read<AuthBloc>().add(UserUpdated(updatedUser));
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Health data saved successfully!'),
-              backgroundColor: const Color(0xFF22C55E),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-            ),
-          );
-        }
-      }
-    } catch (_) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to save. Please try again.')),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isSaving = false);
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Health data saved successfully (local mock)!'),
+          backgroundColor: const Color(0xFF22C55E),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+        ),
+      );
+      setState(() => _isSaving = false);
     }
   }
 

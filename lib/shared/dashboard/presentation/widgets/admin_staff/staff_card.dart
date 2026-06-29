@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
@@ -76,7 +77,7 @@ class StaffCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      stf.name ?? '',
+                      stf.fullName ?? '',
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textColor,
@@ -96,7 +97,7 @@ class StaffCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           child: Text(
-                            stf.staffRole ?? 'Support Staff',
+                            stf.role.value ?? 'Support Staff',
                             style: TextStyle(
                               color: AppColors.secondary,
                               fontSize: 10.sp,
@@ -108,7 +109,7 @@ class StaffCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      "Dept: ${stf.department ?? 'None'} | Shift: Rotational",
+                      "Dept: 'None'} | Shift:  | Shift: Rotational",
                       style: TextStyle(color: labelColor, fontSize: 11.sp),
                     ),
                   ],
@@ -116,7 +117,7 @@ class StaffCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  _buildStatusPill(status),
+                  _buildStatusPill(status??""),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert, color: labelColor),
                     color: cardBg,

@@ -31,34 +31,9 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
         userJson.addAll(patientJson);
       }
 
-      // Map DB snake_case fields back to CamelCase keys for UserModel compatibility
-      if (userJson.containsKey('patient_id')) {
-        userJson['patientId'] = userJson['patient_id'];
-      }
-      if (userJson.containsKey('phone')) {
-        userJson['phoneNumber'] = userJson['phone'];
-      }
-      if (userJson.containsKey('profile_photo')) {
-        userJson['profileImage'] = userJson['profile_photo'];
-      }
-      if (userJson.containsKey('profile_image')) {
-        userJson['profileImage'] = userJson['profile_image'];
-      }
-      if (userJson.containsKey('profile_completed')) {
-        userJson['profileCompletionStatus'] = userJson['profile_completed'];
-      }
-      if (userJson.containsKey('profile_completion_status')) {
-        userJson['profileCompletionStatus'] =
-            userJson['profile_completion_status'];
-      }
-      if (userJson.containsKey('onboarding_step')) {
-        userJson['onboardingStep'] = userJson['onboarding_step'];
-      }
+      // Map DB snake_case fields back to correct UserModel fields
       if (userJson.containsKey('date_of_birth')) {
-        userJson['dateOfBirth'] = userJson['date_of_birth'];
-      }
-      if (userJson.containsKey('insurance_number')) {
-        userJson['insuranceNumber'] = userJson['insurance_number'];
+        userJson['dob'] = userJson['date_of_birth'];
       }
 
       return UserModel.fromJson(userJson);
@@ -71,11 +46,11 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
     final userPayload = {
       'id': patient.id,
       'email': patient.email,
-      'name': patient.name,
-      'phone': patient.phoneNumber,
+      'name': patient.fullName,
+      'phone': patient.phone,
       'role': 'patient',
-      'profile_completed': patient.profileCompletionStatus,
-      'onboarding_step': patient.onboardingStep,
+      'profile_completed': true,
+      'onboarding_step': 3,
       'status': patient.status ?? 'Active',
       'first_name': patient.firstName,
       'last_name': patient.lastName,
@@ -86,18 +61,18 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
     // 2. Insert/upsert into patients table
     final patientPayload = {
       'id': patient.id,
-      'patient_id': patient.patientId,
+      'patient_id': patient.id,
       'blood_group': patient.bloodGroup,
-      'date_of_birth': patient.dateOfBirth,
-      'age': patient.age,
+      'date_of_birth': patient.dob?.toIso8601String(),
+      'age': patient.dob != null ? (DateTime.now().year - patient.dob!.year) : 30,
       'gender': patient.gender,
-      'address': patient.address,
-      'emergency_contact': patient.emergencyContact,
-      'insurance_provider': patient.insuranceProvider,
-      'insurance_number': patient.insuranceNumber,
-      'allergies': patient.allergies,
-      'chronic_diseases': patient.chronicDiseases,
-      'marital_status': patient.maritalStatus,
+      'address': '',
+      'emergency_contact': null,
+      'insurance_provider': null,
+      'insurance_number': null,
+      'allergies': null,
+      'chronic_diseases': null,
+      'marital_status': null,
     };
     await _supabase.from('patients').upsert(patientPayload);
 
@@ -110,10 +85,10 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
     final userPayload = {
       'id': patient.id,
       'email': patient.email,
-      'name': patient.name,
-      'phone': patient.phoneNumber,
-      'profile_completed': patient.profileCompletionStatus,
-      'onboarding_step': patient.onboardingStep,
+      'name': patient.fullName,
+      'phone': patient.phone,
+      'profile_completed': true,
+      'onboarding_step': 3,
       'status': patient.status,
       'first_name': patient.firstName,
       'last_name': patient.lastName,
@@ -125,20 +100,18 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
     final patientPayload = {
       'id': patient.id,
       'blood_group': patient.bloodGroup,
-      'date_of_birth': patient.dateOfBirth,
-      'age': patient.age,
+      'date_of_birth': patient.dob?.toIso8601String(),
+      'age': patient.dob != null ? (DateTime.now().year - patient.dob!.year) : 30,
       'gender': patient.gender,
-      'address': patient.address,
-      'emergency_contact': patient.emergencyContact,
-      'insurance_provider': patient.insuranceProvider,
-      'insurance_number': patient.insuranceNumber,
-      'allergies': patient.allergies,
-      'chronic_diseases': patient.chronicDiseases,
-      'marital_status': patient.maritalStatus,
+      'address': '',
+      'emergency_contact': null,
+      'insurance_provider': null,
+      'insurance_number': null,
+      'allergies': null,
+      'chronic_diseases': null,
+      'marital_status': null,
+      'patient_id': patient.id,
     };
-    if (patient.patientId != null && patient.patientId!.isNotEmpty) {
-      patientPayload['patient_id'] = patient.patientId;
-    }
     await _supabase.from('patients').upsert(patientPayload);
 
     return patient;

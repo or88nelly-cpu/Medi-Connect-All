@@ -88,13 +88,6 @@ class PrescriptionsPage extends StatelessWidget {
   ];
 
   List<Map<String, dynamic>> _resolveConsultations(AuthState state) {
-    if (state is Authenticated) {
-      final raw =
-          state.user.metadata?['consultations'] as List<dynamic>?;
-      if (raw != null && raw.isNotEmpty) {
-        return raw.map((e) => Map<String, dynamic>.from(e as Map)).toList();
-      }
-    }
     return _mockConsultations;
   }
 

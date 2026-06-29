@@ -71,7 +71,7 @@ class EmrdDetailPage extends StatelessWidget {
                         EmrdDashboardHeader(
                           name: userName,
                           role: userRole,
-                          profileImage: profileImage,
+                          profilePhoto: profileImage,
                           gender: gender,
                           stats: stats,
                           isDark: isDark,

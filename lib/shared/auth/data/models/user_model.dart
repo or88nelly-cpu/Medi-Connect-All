@@ -113,6 +113,7 @@ class UserModel extends UserEntity {
       role: role ?? this.role,
     );
   }
+
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
       id: entity.id,

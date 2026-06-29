@@ -11,6 +11,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 class WelcomeBanner extends StatelessWidget {
   const WelcomeBanner({super.key});
@@ -108,12 +109,11 @@ class WelcomeBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.name ?? ("${user.firstName} ${user.lastName ?? ''}".trim());
+          name = user.fullName;
           profileImage = user.profilePhoto;
-          accessLevel =
-              user.accessLevel ??
-              (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
+          accessLevel = user.role == UserRole.admin
+              ? "Super Admin"
+              : user.role.name.toUpperCase();
           gender = user.gender;
         }
 
@@ -202,7 +202,7 @@ class WelcomeBanner extends StatelessWidget {
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(
                         profileImage,
-                        state is Authenticated ? state.user.role : 'admin',
+                        state is Authenticated ? state.user.role.name : 'admin',
                         state is Authenticated ? state.user.gender : null,
                       ),
                       borderRadius: 32.r,

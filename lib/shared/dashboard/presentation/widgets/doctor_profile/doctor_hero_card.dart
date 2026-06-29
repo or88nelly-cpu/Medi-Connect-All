@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -28,7 +29,7 @@ class DoctorHeroCard extends StatelessWidget {
 
     final imgPath = ProfileImageHelper.resolveImagePath(
       user.profilePhoto,
-      user.role,
+      user.role.value,
       user.gender,
     );
 
@@ -98,7 +99,7 @@ class DoctorHeroCard extends StatelessWidget {
                           ),
                           SizedBox(width: 4.w),
                           Text(
-                            user.status,
+                            user.status??"",
                             style: TextStyle(
                               color: const Color(0xFF0F9F58),
                               fontSize: 9.sp,
@@ -122,9 +123,8 @@ class DoctorHeroCard extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            user.name ??
-                                "${user.firstName ?? ''} ${user.lastName ?? ''}"
-                                    .trim(),
+                            user.fullName  
+                                ,
                             style: AppTextStyles.titleMedium.copyWith(
                               color: textColor,
                               fontWeight: FontWeight.bold,
@@ -143,7 +143,7 @@ class DoctorHeroCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      user.specialization ?? "Consultant Cardiologist",
+                      "Consultant Cardiologist",
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.w600,
@@ -160,14 +160,14 @@ class DoctorHeroCard extends StatelessWidget {
                         ),
                         SizedBox(width: 4.w),
                         Text(
-                          user.department ?? "Cardiology Department",
+                           "Cardiology Department",
                           style: TextStyle(color: labelColor, fontSize: 11.sp),
                         ),
                       ],
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      "EMP ID: ${user.employeeId ?? 'DOC1001'}  •  Reg. No: ${user.medicalRegistrationNumber ?? 'CARD/2012/2456'}",
+                      "EMP ID: DOC1001  •  Reg. No: CARD/2012/2456",
                       style: TextStyle(
                         color: labelColor.withValues(alpha: 0.8),
                         fontSize: 10.sp,
@@ -188,7 +188,7 @@ class DoctorHeroCard extends StatelessWidget {
                 _buildInfoTile(
                   context,
                   icon: Icons.email_outlined,
-                  title: user.email,
+                  title: user.email ?? "",
                   isDark: isDark,
                   labelColor: labelColor,
                   textColor: textColor,
@@ -196,7 +196,7 @@ class DoctorHeroCard extends StatelessWidget {
                 _buildInfoTile(
                   context,
                   icon: Icons.phone_outlined,
-                  title: user.phoneNumber ?? "+91 98765 43210",
+                  title: user.phone ?? "+91 98765 43210",
                   isDark: isDark,
                   labelColor: labelColor,
                   textColor: textColor,
@@ -204,7 +204,7 @@ class DoctorHeroCard extends StatelessWidget {
                 _buildInfoTile(
                   context,
                   icon: Icons.calendar_today_outlined,
-                  title: "Joined on ${user.joiningDate ?? '15 Jan 2018'}",
+                  title: "Joined on 15 Jan 2018",
                   isDark: isDark,
                   labelColor: labelColor,
                   textColor: textColor,
@@ -212,7 +212,7 @@ class DoctorHeroCard extends StatelessWidget {
                 _buildInfoTile(
                   context,
                   icon: Icons.location_on_outlined,
-                  title: user.address ?? "New Delhi, India",
+                  title: "New Delhi, India",
                   isDark: isDark,
                   labelColor: labelColor,
                   textColor: textColor,

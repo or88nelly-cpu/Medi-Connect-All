@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_profile/apply_leave_bottom_sheet.dart';
 
 class QuickActionsRow extends StatelessWidget {
@@ -117,41 +113,9 @@ class QuickActionsRow extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           builder: (ctx) => ApplyLeaveBottomSheet(
                             onLeaveApplied: (leave) {
-                              final updatedMetadata = Map<String, dynamic>.from(
-                                user.metadata ?? {},
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Mock leave applied for ${leave['type']}")),
                               );
-                              final currentLeaves = List<dynamic>.from(
-                                updatedMetadata['leaves'] ??
-                                    [
-                                      {
-                                        "type": "Annual Leave",
-                                        "range": "20 May 2025 - 25 May 2025",
-                                        "status": "Approved",
-                                      },
-                                      {
-                                        "type": "Casual Leave",
-                                        "range": "05 Jun 2025",
-                                        "status": "Pending",
-                                      },
-                                    ],
-                              );
-                              currentLeaves.add(leave);
-                              updatedMetadata['leaves'] = currentLeaves;
-                              final updatedUser = user.copyWith(
-                                metadata: updatedMetadata,
-                              );
-
-                              context.read<DoctorStaffBloc>().add(
-                                UpdateDoctorStaffMember(updatedUser),
-                              );
-
-                              final authState = context.read<AuthBloc>().state;
-                              if (authState is Authenticated &&
-                                  authState.user.id == user.id) {
-                                context.read<AuthBloc>().add(
-                                  UserUpdated(updatedUser),
-                                );
-                              }
                             },
                           ),
                         );

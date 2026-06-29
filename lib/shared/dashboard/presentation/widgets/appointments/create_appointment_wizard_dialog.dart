@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
 
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/booking_wizard/booking_wizard_cubit.dart';
@@ -95,11 +92,11 @@ class _CreateAppointmentWizardBottomSheetState
 
     final dateStr = state.selectedDate.toIso8601String().split('T').first;
     final patientName =
-        state.selectedPatient!.name ??
+        state.selectedPatient!.fullName ??
         '${state.selectedPatient!.firstName} ${state.selectedPatient!.lastName}'
             .trim();
     final doctorName =
-        state.selectedDoctor!.name ??
+        state.selectedDoctor!.fullName ??
         '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
             .trim();
 
@@ -158,87 +155,6 @@ class _CreateAppointmentWizardBottomSheetState
       }),
     );
 
-    // 2. Dynamically update doctor's slots configuration metadata
-    final formattedDate = DateFormat('dd MMM yyyy').format(state.selectedDate);
-    final updatedMetadata = Map<String, dynamic>.from(
-      state.selectedDoctor!.metadata ?? {},
-    );
-    final slotsByDate = Map<String, dynamic>.from(
-      updatedMetadata['slots_by_date'] ?? {},
-    );
-    final dateData = Map<String, dynamic>.from(
-      slotsByDate[formattedDate] ?? {},
-    );
-
-    String slotDuration = "10 Minutes";
-    if (dateData.isNotEmpty) {
-      slotDuration = dateData.keys.first.toString();
-    }
-
-    final durationData = Map<String, dynamic>.from(
-      dateData[slotDuration] ?? {},
-    );
-
-    final morningList = durationData['morning'] as List<dynamic>?;
-    final afternoonList = durationData['afternoon'] as List<dynamic>?;
-
-    List<Map<String, dynamic>> morningSlots = [];
-    List<Map<String, dynamic>> afternoonSlots = [];
-
-    if (morningList != null) {
-      morningSlots = morningList
-          .map((e) => Map<String, dynamic>.from(e))
-          .toList();
-    } else {
-      morningSlots = _generateDefaultSlots("morning", slotDuration);
-    }
-
-    if (afternoonList != null) {
-      afternoonSlots = afternoonList
-          .map((e) => Map<String, dynamic>.from(e))
-          .toList();
-    } else {
-      afternoonSlots = _generateDefaultSlots("afternoon", slotDuration);
-    }
-
-    // Set slot status to 'Booked'
-    bool found = false;
-    for (var s in morningSlots) {
-      if (s['time'] == state.selectedSlotTime) {
-        s['status'] = 'Booked';
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      for (var s in afternoonSlots) {
-        if (s['time'] == state.selectedSlotTime) {
-          s['status'] = 'Booked';
-          break;
-        }
-      }
-    }
-
-    durationData['morning'] = morningSlots;
-    durationData['afternoon'] = afternoonSlots;
-    dateData[slotDuration] = durationData;
-    slotsByDate[formattedDate] = dateData;
-    updatedMetadata['slots_by_date'] = slotsByDate;
-
-    final updatedDoctor = state.selectedDoctor!.copyWith(
-      metadata: updatedMetadata,
-    );
-    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedDoctor));
-
-    // 3. Show confirmation snackbar and pop wizard
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          "Appointment successfully booked for $patientName on $formattedDate at ${state.selectedSlotTime}",
-        ),
-        backgroundColor: AppColors.success,
-      ),
-    );
     Navigator.pop(context);
   }
 
@@ -290,7 +206,7 @@ class _CreateAppointmentWizardBottomSheetState
                   _emailController.text.isNotEmpty) {
                 final registered = patientState.patients.where(
                   (p) =>
-                      p.email.toLowerCase() ==
+                      p.email?.toLowerCase() ==
                       _emailController.text.trim().toLowerCase(),
                 );
                 if (registered.isNotEmpty) {

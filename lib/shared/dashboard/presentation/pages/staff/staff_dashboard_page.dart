@@ -118,7 +118,7 @@ class _StaffDashboardBody extends StatelessWidget {
               children: [
                 _TopBar(
                   name: name,
-                  profileImage: profileImage,
+                  profilePhoto: profileImage,
                   roleLabel: roleLabel,
                   greeting: greeting,
                   state: state,
@@ -242,7 +242,7 @@ class _StaffDashboardBody extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 class _TopBar extends StatelessWidget {
   final String name;
-  final String? profileImage;
+  final String? profilePhoto;
   final String roleLabel;
   final String greeting;
   final AuthState state;
@@ -426,7 +426,7 @@ class _TopBar extends StatelessWidget {
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
-                            profileImage,
+                            profilePhoto,
                             'staff',
                             state is Authenticated
                                 ? (state as Authenticated).user.gender

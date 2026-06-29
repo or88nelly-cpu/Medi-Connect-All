@@ -9,40 +9,18 @@ class UpcomingAppointmentsCard extends StatelessWidget {
   const UpcomingAppointmentsCard({super.key});
 
   List<Map<String, String>> _resolveAppointments(AuthState state) {
-    final List<Map<String, String>> appointments = [];
-
-    if (state is Authenticated) {
-      final metadataApts =
-          state.user.metadata?['appointments'] as List<dynamic>?;
-      if (metadataApts != null) {
-        for (var item in metadataApts) {
-          if (item is Map) {
-            appointments.add({
-              'doctorName': (item['doctor'] ?? '').toString(),
-              'specialty': (item['specialty'] ?? '').toString(),
-              'time': (item['time'] ?? '').toString(),
-            });
-          }
-        }
-      }
-    }
-
-    if (appointments.isEmpty) {
-      appointments.addAll([
-        {
-          'doctorName': 'Dr. Sarah Johnson',
-          'specialty': 'Cardiologist',
-          'time': 'Today, 10:30 AM',
-        },
-        {
-          'doctorName': 'Dr. Michael Chen',
-          'specialty': 'Neurologist',
-          'time': 'Tomorrow, 2:00 PM',
-        },
-      ]);
-    }
-
-    return appointments;
+    return [
+      {
+        'doctorName': 'Dr. Sarah Johnson',
+        'specialty': 'Cardiologist',
+        'time': 'Today, 10:30 AM',
+      },
+      {
+        'doctorName': 'Dr. Michael Chen',
+        'specialty': 'Neurologist',
+        'time': 'Tomorrow, 2:00 PM',
+      },
+    ];
   }
 
   @override

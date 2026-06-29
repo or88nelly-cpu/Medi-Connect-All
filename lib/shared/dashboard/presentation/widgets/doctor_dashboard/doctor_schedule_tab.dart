@@ -104,8 +104,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
         }
         final doctor = authState.user;
         final docDisplayName =
-            doctor.name ??
-            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+            doctor.fullName;
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, aptState) {

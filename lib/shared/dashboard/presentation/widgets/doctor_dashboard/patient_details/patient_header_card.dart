@@ -4,6 +4,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 
 class PatientHeaderCard extends StatelessWidget {
@@ -15,13 +16,11 @@ class PatientHeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final displayName =
-        patient.name ??
-        "${patient.firstName ?? ''} ${patient.lastName ?? ''}".trim();
+    final displayName = patient.fullName;
     final gender = patient.gender ?? "Not Specified";
-    final ageStr = patient.age != null ? "${patient.age} years" : "N/A";
+    final ageStr = AppDateUtils.calculateAge(patient.dob) ?? "N/A";
     final bloodGroup = patient.bloodGroup ?? "N/A";
-    final allergies = patient.allergies ?? "None reported";
+    final allergies = "None reported";
 
     final defaultAvatar = gender.toLowerCase() == 'female'
         ? AppAssets.femaleAvatarPng

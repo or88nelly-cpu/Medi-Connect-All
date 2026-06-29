@@ -8,7 +8,7 @@ import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 class EmrdDashboardHeader extends StatelessWidget {
   final String name;
   final String role;
-  final String? profileImage;
+  final String? profilePhoto;
   final String? gender;
   final Map<String, dynamic> stats;
   final bool isDark;
@@ -219,7 +219,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                           ),
                           child: CustomImageView(
                             imagePath: ProfileImageHelper.resolveImagePath(
-                              profileImage,
+                              profilePhoto,
                               role,
                               gender,
                             ),

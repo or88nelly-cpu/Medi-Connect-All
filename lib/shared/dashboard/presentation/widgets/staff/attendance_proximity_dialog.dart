@@ -66,14 +66,12 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
       final timeStr = DateFormat('hh:mm a').format(now);
       final dateStr = now.toIso8601String().split('T').first;
 
-      final staffName =
-          widget.user.name ??
-          "${widget.user.firstName ?? ''} ${widget.user.lastName ?? ''}".trim();
+      final staffName = widget.user.fullName;
 
       await supabase.from('staff_attendance').insert({
         'staff_id': widget.user.id,
         'staff_name': staffName.isNotEmpty ? staffName : 'Staff Member',
-        'role': widget.user.staffRole ?? widget.user.department ?? 'Staff',
+        'role': widget.user.role.name,
         'status': 'Present',
         'check_in_time': timeStr,
         'date': dateStr,

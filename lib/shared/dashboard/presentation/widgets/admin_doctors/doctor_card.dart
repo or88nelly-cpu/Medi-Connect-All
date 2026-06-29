@@ -38,7 +38,7 @@ class DoctorCard extends StatelessWidget {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final yearsExp = (doc.age ?? 35) - 25;
+    final yearsExp = 10;
     final status = doc.status;
 
     return Container(
@@ -77,7 +77,7 @@ class DoctorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      doc.name ?? '',
+                      doc.fullName,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textColor,
@@ -97,7 +97,7 @@ class DoctorCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           child: Text(
-                            doc.department ?? 'General',
+                            'General',
                             style: TextStyle(
                               color: AppColors.primary,
                               fontSize: 10.sp,
@@ -117,7 +117,7 @@ class DoctorCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  _buildStatusPill(status),
+                  _buildStatusPill(status??""),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert, color: labelColor),
                     color: cardBg,

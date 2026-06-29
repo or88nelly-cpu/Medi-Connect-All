@@ -91,7 +91,7 @@ class _SectionDetailState extends State<SectionDetail>
       builder: (ctx) => ConfirmationDialog(
         title: "Delete Profile",
         message:
-            "Are you sure you want to delete ${user.name ?? 'this user'}? This action cannot be undone.",
+            "Are you sure you want to delete ${user.fullName}? This action cannot be undone.",
         onConfirm: () {
           context.read<DoctorStaffBloc>().add(
             DeleteDoctorStaffMember(
@@ -241,7 +241,7 @@ class _SectionDetailState extends State<SectionDetail>
                                             u,
                                           ) {
                                             final matchesSearch =
-                                                (u.name ?? '')
+                                                u.fullName
                                                     .toLowerCase()
                                                     .contains(
                                                       searchQuery.toLowerCase(),
@@ -251,17 +251,17 @@ class _SectionDetailState extends State<SectionDetail>
                                                     .contains(
                                                       searchQuery.toLowerCase(),
                                                     ) ||
-                                                (u.phoneNumber ?? '').contains(
+                                                (u.phone ?? '').contains(
                                                   searchQuery,
                                                 ) ||
-                                                (u.staffRole ?? '')
+                                                u.role.name
                                                     .toLowerCase()
                                                     .contains(
                                                       searchQuery.toLowerCase(),
                                                     );
                                             final matchesStatus =
                                                 statusFilter == 'All' ||
-                                                u.status.toLowerCase() ==
+                                                (u.status ?? 'Active').toLowerCase() ==
                                                     statusFilter.toLowerCase();
                                             return matchesSearch &&
                                                 matchesStatus;
@@ -270,21 +270,14 @@ class _SectionDetailState extends State<SectionDetail>
                                           // Sort
                                           if (sortBy == 'Name (A-Z)') {
                                             filtered.sort(
-                                              (a, b) => (a.name ?? '')
-                                                  .compareTo(b.name ?? ''),
+                                              (a, b) => a.fullName
+                                                  .compareTo(b.fullName),
                                             );
                                           } else if (sortBy == 'Name (Z-A)') {
                                             filtered.sort(
-                                              (a, b) => (b.name ?? '')
-                                                  .compareTo(a.name ?? ''),
+                                              (a, b) => b.fullName
+                                                  .compareTo(a.fullName),
                                             );
-                                          } else if (sortBy ==
-                                              'Experience (High-Low)') {
-                                            filtered.sort((a, b) {
-                                              final expA = (a.age ?? 35) - 25;
-                                              final expB = (b.age ?? 35) - 25;
-                                              return expB.compareTo(expA);
-                                            });
                                           }
 
                                           // Subtitle Row: Count & Add Button
@@ -635,16 +628,16 @@ class _SectionDetailState extends State<SectionDetail>
 
                       if (state is DoctorStaffLoaded) {
                         activeDocs = state.doctors
-                            .where((d) => d.status.toLowerCase() == 'active')
+                            .where((d) => (d.status ?? 'Active').toLowerCase() == 'active')
                             .length;
                         activeStf = state.staff
-                            .where((s) => s.status.toLowerCase() == 'active')
+                            .where((s) => (s.status ?? 'Active').toLowerCase() == 'active')
                             .length;
                         docsLeave = state.doctors
-                            .where((d) => d.status.toLowerCase() == 'away')
+                            .where((d) => (d.status ?? 'Active').toLowerCase() == 'away')
                             .length;
                         stfLeave = state.staff
-                            .where((s) => s.status.toLowerCase() == 'away')
+                            .where((s) => (s.status ?? 'Active').toLowerCase() == 'away')
                             .length;
                       }
 

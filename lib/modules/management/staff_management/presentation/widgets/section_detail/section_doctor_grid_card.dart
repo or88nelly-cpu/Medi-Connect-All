@@ -37,8 +37,8 @@ class SectionDoctorGridCard extends StatelessWidget {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final yearsExp = (doc.age ?? 35) - 25;
-    final status = doc.status;
+    final yearsExp = 5;
+    final status = doc.status ?? 'Active';
 
     return Container(
       decoration: BoxDecoration(
@@ -108,7 +108,7 @@ class SectionDoctorGridCard extends StatelessWidget {
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    doc.name ?? '',
+                    doc.fullName,
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textColor,
@@ -129,7 +129,7 @@ class SectionDoctorGridCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
-                      doc.department ?? AppStrings.general,
+                      AppStrings.general,
                       style: TextStyle(
                         color: AppColors.primary,
                         fontSize: 9.sp,

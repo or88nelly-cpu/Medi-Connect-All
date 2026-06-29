@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/modules/management/patient_management/domain/repositories/patient_repository.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/bloc/patient_registration_event.dart';
@@ -445,48 +445,22 @@ class PatientRegistrationBloc
     bool profileCompleted = true,
     int onboardingStep = 3,
   }) {
-    final uhid = state.generatedUHID.isNotEmpty
-        ? state.generatedUHID
-        : 'CCH25-${(Random().nextInt(9000000) + 1000000)}';
+    final nameParts = name.trim().split(' ');
+    final firstName = nameParts.isNotEmpty ? nameParts.first : state.firstName.trim();
+    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : state.lastName.trim();
 
     return UserModel(
       id: id,
       email: email,
-      name: name,
-      firstName: state.firstName.trim(),
-      lastName: state.lastName.trim(),
-      phoneNumber: state.phone.trim(),
-      dateOfBirth: state.dob.trim(),
+      firstName: firstName.isNotEmpty ? firstName : 'Patient',
+      lastName: lastName.isNotEmpty ? lastName : 'User',
+      phone: state.phone.trim(),
+      dob: DateTime.tryParse(state.dob.trim()),
       gender: state.sex,
       bloodGroup: state.bloodGroup,
-      role: 'patient',
-      profileCompletionStatus: profileCompleted,
-      onboardingStep: onboardingStep,
+      role: UserRole.patient,
       status: 'Active',
-      profileImage: state.photoPath.isNotEmpty ? state.photoPath : null,
-      address: state.pincodeFetchedAddress,
-      emergencyContact: jsonEncode({
-        'name': state.emergencyName.trim(),
-        'relationship': state.emergencyRelationship,
-        'phone': state.emergencyPhone.trim(),
-      }),
-      insuranceProvider: state.insuranceProvider,
-      insuranceNumber: state.insurancePolicyId.trim().isNotEmpty
-          ? state.insurancePolicyId.trim()
-          : null,
-      metadata: {
-        'gender_identity': state.genderIdentity,
-        'place': state.place.trim(),
-        'ward_num': state.wardNum.trim(),
-        'insurance_valid_till': state.insuranceValidTill,
-        'smoking': state.smoking,
-        'alcohol': state.alcohol,
-        'diet_type': state.dietType,
-        'exercise': state.exercise,
-        'allergies': state.allergies.trim(),
-        'other_details': state.otherDetails.trim(),
-      },
-      patientId: uhid,
+      profilePhoto: state.photoPath.isNotEmpty ? state.photoPath : null,
     );
   }
 

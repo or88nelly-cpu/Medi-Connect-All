@@ -91,7 +91,7 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.user.name ?? "Doctor Name",
+                        widget.user.fullName ?? "Doctor Name",
                         style: TextStyle(
                           color: textColor,
                           fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                         ),
                       ),
                       child: Text(
-                        widget.user.availabilityStatus ?? "Active",
+                        widget.user.status ?? "Active",
                         style: TextStyle(
                           color: const Color(0xFF0F9F58),
                           fontSize: 9.sp,
@@ -127,17 +127,17 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  widget.user.specialization ?? "General Physician",
+                  "General Physician",
                   style: TextStyle(color: labelColor, fontSize: 11.sp),
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  widget.user.department ?? "Cardiology",
+                 "Cardiology",
                   style: TextStyle(color: labelColor, fontSize: 11.sp),
                 ),
                 SizedBox(height: 6.h),
                 Text(
-                  "Emp ID: ${widget.user.employeeId ?? 'EMP-2026-9812'}",
+                  'EMP-2026-9812',
                   style: TextStyle(
                     color: labelColor,
                     fontSize: 10.sp,

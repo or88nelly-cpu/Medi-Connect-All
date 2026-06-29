@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:get_it/get_it.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -131,7 +132,7 @@ class AppointmentCard extends StatelessWidget {
         final matches = patientState.patients.where(
           (p) =>
               p.id == appointment.patientId ||
-              p.patientId == appointment.patientId,
+              p.id == appointment.patientId,
         );
         if (matches.isNotEmpty) {
           patient = matches.first;
@@ -544,7 +545,7 @@ class AppointmentCard extends StatelessWidget {
             _buildInfoRow(AppStrings.gender, genderStr, isDark, context),
             _buildInfoRow(
               AppStrings.ageLabel,
-              patient?.age != null ? "${patient!.age} years" : "N/A",
+              patient?.dob != null ? "${AppDateUtils.calculateAge(patient!.dob!)}" : "N/A",
               isDark,
               context,
             ),

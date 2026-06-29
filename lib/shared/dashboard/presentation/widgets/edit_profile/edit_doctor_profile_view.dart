@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
 
 import 'package:medi_connect/shared/dashboard/presentation/widgets/edit_profile/edit_additional_info.dart';
@@ -62,44 +62,24 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
     super.initState();
 
     // Personal details initialization
-    _nameController = TextEditingController(text: widget.user.name);
+    _nameController = TextEditingController(text: widget.user.fullName);
     _dobController = TextEditingController(
-      text: widget.user.dateOfBirth ?? "20 May 1985",
+      text: AppDateUtils.formatDate(widget.user.dob??DateTime.now()),
     );
     _emailController = TextEditingController(text: widget.user.email);
 
     // Format phone number to remove +91 if present for UI editing
-    String rawPhone = widget.user.phoneNumber ?? "";
+    String rawPhone = widget.user.phone ?? "";
     if (rawPhone.startsWith("+91 ")) {
       rawPhone = rawPhone.replaceFirst("+91 ", "");
     } else if (rawPhone.startsWith("+91")) {
       rawPhone = rawPhone.replaceFirst("+91", "");
     }
     _phoneController = TextEditingController(text: rawPhone);
-    _alternatePhoneController = TextEditingController(
-      text: widget.user.emergencyContact ?? "",
-    );
-    _gender = widget.user.gender ?? "Male";
-    _bloodGroup = widget.user.bloodGroup ?? "A+";
-
-    // Professional details initialization
-    _qualificationController = TextEditingController(
-      text: widget.user.qualification ?? "MBBS, MD",
-    );
-    _experienceController = TextEditingController(
-      text: widget.user.experience?.toString() ?? "10",
-    );
-    _regNumberController = TextEditingController(
-      text: widget.user.medicalRegistrationNumber ?? "REG-12345",
-    );
-    _feeController = TextEditingController(
-      text: widget.user.consultationFee?.toString() ?? "500",
-    );
-    _selectedDept = widget.user.department ?? "Cardiology";
-    _selectedSpec = widget.user.specialization ?? "Cardiologist";
+    
 
     // Address details initialization
-    final addressParts = widget.user.address?.split(',') ?? [];
+    final addressParts =  [];
     _address1Controller = TextEditingController(
       text: addressParts.isNotEmpty
           ? addressParts[0].trim()
@@ -121,21 +101,13 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
     );
 
     // Additional info initialization
-    _languages =
-        widget.user.metadata != null &&
-            widget.user.metadata!['languages'] != null
-        ? List<String>.from(widget.user.metadata!['languages'])
-        : ["English", "Hindi", "Punjabi"];
+    _languages =["English", "Hindi", "Punjabi"];
     _selectedConsultationModes =
-        widget.user.metadata != null &&
-            widget.user.metadata!['consultation_modes'] != null
-        ? List<String>.from(widget.user.metadata!['consultation_modes'])
-        : ["Video", "In-Person"];
+       
+        ["Video", "In-Person"];
     _aboutController = TextEditingController(
       text:
-          widget.user.metadata != null && widget.user.metadata!['about'] != null
-          ? widget.user.metadata!['about'] as String
-          : "Dr. ${widget.user.name ?? ''} is a dedicated medical specialist with over a decade of clinical excellence.",
+          "Dr. ${widget.user.fullName ?? ''} is a dedicated medical specialist with over a decade of clinical excellence.",
     );
   }
 
@@ -166,7 +138,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
 
       // Build metadata
       final updatedMetadata = Map<String, dynamic>.from(
-        widget.user.metadata ?? {},
+        {},
       );
       updatedMetadata['languages'] = _languages;
       updatedMetadata['consultation_modes'] = _selectedConsultationModes;
@@ -176,25 +148,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
           ? _phoneController.text
           : "+91 ${_phoneController.text}";
 
-      final updatedUser = widget.user.copyWithDoctorFields(
-        name: _nameController.text,
-        phoneNumber: formattedPhone,
-        gender: _gender,
-        email: _emailController.text,
-        dateOfBirth: _dobController.text,
-        bloodGroup: _bloodGroup,
-        emergencyContact: _alternatePhoneController.text,
-        department: _selectedDept,
-        specialization: _selectedSpec,
-        qualification: _qualificationController.text,
-        experience: int.tryParse(_experienceController.text),
-        medicalRegistrationNumber: _regNumberController.text,
-        consultationFee: double.tryParse(_feeController.text),
-        address: fullAddress,
-        metadata: updatedMetadata,
-      );
-
-      context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+     
     }
   }
 
@@ -347,61 +301,3 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
   }
 }
 
-extension on UserModel {
-  UserModel copyWithDoctorFields({
-    String? name,
-    String? phoneNumber,
-    String? gender,
-    String? email,
-    String? dateOfBirth,
-    String? bloodGroup,
-    String? emergencyContact,
-    String? department,
-    String? specialization,
-    String? qualification,
-    int? experience,
-    String? medicalRegistrationNumber,
-    double? consultationFee,
-    String? address,
-    Map<String, dynamic>? metadata,
-  }) {
-    return UserModel(
-      id: id,
-      email: email ?? this.email,
-      name: name ?? this.name,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      role: role,
-      profileCompletionStatus: profileCompletionStatus,
-      status: status,
-      department: department ?? this.department,
-      qualification: qualification ?? this.qualification,
-      metadata: metadata ?? this.metadata,
-      firstName: firstName,
-      lastName: lastName,
-      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
-      age: age,
-      gender: gender ?? this.gender,
-      profileImage: profileImage,
-      address: address ?? this.address,
-      emergencyContact: emergencyContact ?? this.emergencyContact,
-      bloodGroup: bloodGroup ?? this.bloodGroup,
-      maritalStatus: maritalStatus,
-      employeeId: employeeId,
-      patientId: patientId,
-      medicalRegistrationNumber:
-          medicalRegistrationNumber ?? this.medicalRegistrationNumber,
-      experience: experience ?? this.experience,
-      specialization: specialization ?? this.specialization,
-      consultationFee: consultationFee ?? this.consultationFee,
-      availabilityStatus: availabilityStatus,
-      staffRole: staffRole,
-      joiningDate: joiningDate,
-      allergies: allergies,
-      chronicDiseases: chronicDiseases,
-      insuranceProvider: insuranceProvider,
-      insuranceNumber: insuranceNumber,
-      designation: designation,
-      accessLevel: accessLevel,
-    );
-  }
-}

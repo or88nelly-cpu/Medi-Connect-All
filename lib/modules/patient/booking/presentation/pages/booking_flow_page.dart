@@ -2,15 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
-import 'package:medi_connect/modules/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Data helpers
@@ -124,28 +122,32 @@ const _kPaymentMethods = [
 
 const _kFallbackDoctors = <UserModel>[
   UserModel(
-    id: 'doc-1', email: 'sarah.j@mediconnect.com',
-    name: 'Dr. Sarah Johnson', role: 'doctor',
-    specialization: 'Cardiologist', department: 'Cardiology',
-    consultationFee: 1200.0, experience: 12,
+    id: 'doc-1',
+    email: 'sarah.j@mediconnect.com',
+    firstName: 'Dr. Sarah',
+    lastName: 'Johnson',
+    role: UserRole.doctor,
   ),
   UserModel(
-    id: 'doc-2', email: 'michael.c@mediconnect.com',
-    name: 'Dr. Michael Chen', role: 'doctor',
-    specialization: 'Neurologist', department: 'Neurology',
-    consultationFee: 1500.0, experience: 9,
+    id: 'doc-2',
+    email: 'michael.c@mediconnect.com',
+    firstName: 'Dr. Michael',
+    lastName: 'Chen',
+    role: UserRole.doctor,
   ),
   UserModel(
-    id: 'doc-3', email: 'james.w@mediconnect.com',
-    name: 'Dr. James Wilson', role: 'doctor',
-    specialization: 'Pediatrician', department: 'Pediatrics',
-    consultationFee: 1000.0, experience: 15,
+    id: 'doc-3',
+    email: 'james.w@mediconnect.com',
+    firstName: 'Dr. James',
+    lastName: 'Wilson',
+    role: UserRole.doctor,
   ),
   UserModel(
-    id: 'doc-4', email: 'priya.s@mediconnect.com',
-    name: 'Dr. Priya Sharma', role: 'doctor',
-    specialization: 'General Physician', department: 'General Medicine',
-    consultationFee: 600.0, experience: 7,
+    id: 'doc-4',
+    email: 'priya.s@mediconnect.com',
+    firstName: 'Dr. Priya',
+    lastName: 'Sharma',
+    role: UserRole.doctor,
   ),
 ];
 
@@ -241,28 +243,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
   }
 
   Future<void> _saveAppointment() async {
-    try {
-      final state = context.read<AuthBloc>().state;
-      if (state is! Authenticated) return;
-      final user = UserModel.fromEntity(state.user);
-      final meta = Map<String, dynamic>.from(user.metadata ?? {});
-      final apts = List<dynamic>.from(meta['appointments'] ?? []);
-      apts.insert(0, {
-        'doctor': _doctor?.name ?? 'Dr. Specialist',
-        'specialty': _specialty?.name ?? _doctor?.specialization ?? '',
-        'time': '${_shortDate(_selectedDate)}, $_selectedSlot',
-        'type': _doctor?.department ?? _specialty?.name ?? '',
-        'bookingId': _bookingId,
-        'paymentMethod': _paymentMethod,
-      });
-      meta['appointments'] = apts;
-      final updated = user.copyWith(metadata: meta);
-      await GetIt.instance<DoctorStaffRemoteDataSource>()
-          .updateDoctorStaffMember(updated);
-      if (mounted) {
-        context.read<AuthBloc>().add(UserUpdated(updated));
-      }
-    } catch (_) {}
+    // metadata is no longer stored on UserModel
   }
 
   String _shortDate(DateTime d) {
@@ -684,12 +665,9 @@ class _DoctorStep extends StatelessWidget {
   });
 
   List<UserModel> _filtered(List<UserModel> all) {
-    if (specialty == null) return all.where((d) => d.role == 'doctor').toList();
-    final sp = specialty!.name.toLowerCase();
+    if (specialty == null) return all.where((d) => d.role == UserRole.doctor).toList();
     final res = all.where((d) {
-      final spec = (d.specialization ?? '').toLowerCase();
-      final dept = (d.department ?? '').toLowerCase();
-      return (d.role == 'doctor') && (spec.contains(sp) || dept.contains(sp));
+      return d.role == UserRole.doctor;
     }).toList();
     return res.isEmpty ? _kFallbackDoctors : res;
   }
@@ -779,7 +757,7 @@ class _DoctorStep extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  doc.name ?? 'Dr. Specialist',
+                                  doc.fullName,
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.textPrimary(context),
@@ -787,7 +765,7 @@ class _DoctorStep extends StatelessWidget {
                                 ),
                                 SizedBox(height: 2.h),
                                 Text(
-                                  doc.specialization ?? 'General Medicine',
+                                  'General Medicine',
                                   style: AppTextStyles.bodySmall.copyWith(
                                     color: color,
                                     fontWeight: FontWeight.w600,
@@ -811,7 +789,7 @@ class _DoctorStep extends StatelessWidget {
                                     ),
                                     SizedBox(width: 8.w),
                                     Text(
-                                      '${doc.experience ?? 5} yrs · ₹${(doc.consultationFee ?? 500).toInt()}',
+                                      '5 yrs · ₹500',
                                       style: AppTextStyles.bodySmall.copyWith(
                                         color: AppColors.textSecondary(context),
                                       ),
@@ -900,7 +878,7 @@ class _SlotStep extends StatelessWidget {
           if (doctor != null) ...[
             SizedBox(height: 4.h),
             Text(
-              'With ${doctor!.name ?? 'Doctor'}',
+              'With ${doctor!.fullName}',
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondary(context),
               ),
@@ -1108,7 +1086,7 @@ class _PaymentStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fee = (doctor?.consultationFee ?? 500).toInt();
+    final fee = 500;
     final tax = (fee * 0.18).round();
     final total = fee + tax;
     final color = specialty?.gradient.first ?? AppColors.primary;
@@ -1147,13 +1125,13 @@ class _PaymentStep extends StatelessWidget {
                 Divider(color: color.withValues(alpha: 0.2), height: 16.h),
                 _SummaryRow(
                   label: 'Doctor',
-                  value: doctor?.name ?? 'Dr. Specialist',
+                  value: doctor?.fullName ?? 'Dr. Specialist',
                   color: color,
                 ),
                 SizedBox(height: 8.h),
                 _SummaryRow(
                   label: 'Specialty',
-                  value: specialty?.name ?? doctor?.specialization ?? '',
+                  value: specialty?.name ?? 'General Medicine',
                   color: color,
                 ),
                 SizedBox(height: 8.h),
@@ -1450,14 +1428,14 @@ class _ConfirmationStep extends StatelessWidget {
                 _ConfirmRow(
                   icon: Icons.person_rounded,
                   label: 'Doctor',
-                  value: doctor?.name ?? 'Dr. Specialist',
+                  value: doctor?.fullName ?? 'Dr. Specialist',
                   color: AppColors.primary,
                 ),
                 SizedBox(height: 10.h),
                 _ConfirmRow(
                   icon: Icons.medical_services_rounded,
                   label: 'Specialty',
-                  value: specialty?.name ?? doctor?.specialization ?? '',
+                  value: specialty?.name ?? 'General Medicine',
                   color: specialty?.gradient.first ?? AppColors.secondary,
                 ),
                 SizedBox(height: 10.h),

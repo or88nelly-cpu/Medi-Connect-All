@@ -18,14 +18,13 @@ class PatientQuickStats extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          final apts = user.metadata?['appointments'] as List<dynamic>?;
+          final apts = null;
           if (apts != null) aptCount = apts.length;
 
-          final recs = user.metadata?['records'] as List<dynamic>?;
+          final recs = null;
           if (recs != null) recCount = recs.length;
 
-          final prescriptions =
-              user.metadata?['prescriptions'] as List<dynamic>?;
+          final prescriptions =null;
           if (prescriptions != null) presCount = prescriptions.length;
         }
 

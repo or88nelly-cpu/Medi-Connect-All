@@ -60,8 +60,7 @@ class SlotStep extends StatelessWidget {
     final formattedDate = DateFormat('dd MMM yyyy').format(state.selectedDate);
 
     final slotsByDate =
-        state.selectedDoctor!.metadata?['slots_by_date']
-            as Map<dynamic, dynamic>? ??
+        
         {};
     final dateData = slotsByDate[formattedDate] as Map<dynamic, dynamic>? ?? {};
 
@@ -94,7 +93,7 @@ class SlotStep extends StatelessWidget {
     }
 
     final doctorName =
-        state.selectedDoctor!.name ??
+        state.selectedDoctor!.fullName ??
         '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
             .trim();
     final cleanName = doctorName

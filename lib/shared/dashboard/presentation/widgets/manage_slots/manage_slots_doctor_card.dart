@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -28,7 +29,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
 
     final imgPath = ProfileImageHelper.resolveImagePath(
       user.profilePhoto,
-      user.role,
+      user.role.value,
       user.gender,
     );
 
@@ -84,9 +85,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        user.name ??
-                            "${user.firstName ?? ''} ${user.lastName ?? ''}"
-                                .trim(),
+                        user.fullName,
                         style: AppTextStyles.titleMedium.copyWith(
                           color: textColor,
                           fontWeight: FontWeight.bold,
@@ -101,7 +100,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  user.specialization ?? "Consultant Cardiologist",
+                 "Consultant Cardiologist",
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -118,12 +117,12 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                     ),
                     SizedBox(width: 4.w),
                     Text(
-                      user.department ?? "Cardiology Department",
+                       "Cardiology Department",
                       style: TextStyle(color: labelColor, fontSize: 10.sp),
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      "EMP ID: ${user.employeeId ?? 'DOC1001'}",
+                     'DOC1001',
                       style: TextStyle(color: labelColor, fontSize: 10.sp),
                     ),
                   ],

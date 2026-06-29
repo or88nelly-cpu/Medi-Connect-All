@@ -72,7 +72,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
       builder: (ctx) => ConfirmationDialog(
         title: "Delete Profile",
         message:
-            "Are you sure you want to delete ${user.name ?? 'this user'}? This action cannot be undone.",
+            "Are you sure you want to delete ${user.fullName ?? 'this user'}? This action cannot be undone.",
         onConfirm: () {
           context.read<DoctorStaffBloc>().add(
             DeleteDoctorStaffMember(
@@ -521,16 +521,16 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                   builder: (context, sortBy, _) {
                     // Filter staff
                     final filtered = sourceList.where((u) {
-                      final nameMatch = (u.name ?? '').toLowerCase().contains(
+                      final nameMatch = (u.fullName ?? '').toLowerCase().contains(
                         searchQuery.toLowerCase(),
                       );
-                      final roleMatch = (u.staffRole ?? '')
+                      final roleMatch = u.role.name
                           .toLowerCase()
                           .contains(searchQuery.toLowerCase());
-                      final emailMatch = u.email.toLowerCase().contains(
+                      final emailMatch = u.email?.toLowerCase().contains(
                         searchQuery.toLowerCase(),
-                      );
-                      final phoneMatch = (u.phoneNumber ?? '').contains(
+                      )??false;
+                      final phoneMatch = (u.phone ?? '').contains(
                         searchQuery,
                       );
 
@@ -538,18 +538,18 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                           nameMatch || roleMatch || emailMatch || phoneMatch;
                       final matchesStatus =
                           statusFilter == 'All' ||
-                          u.status.toLowerCase() == statusFilter.toLowerCase();
+                          (u.status ?? 'Active').toLowerCase() == statusFilter.toLowerCase();
                       return matchesSearch && matchesStatus;
                     }).toList();
 
                     // Sort staff
                     if (sortBy == 'Name (A-Z)') {
                       filtered.sort(
-                        (a, b) => (a.name ?? '').compareTo(b.name ?? ''),
+                        (a, b) => a.fullName.compareTo(b.fullName),
                       );
                     } else if (sortBy == 'Name (Z-A)') {
                       filtered.sort(
-                        (a, b) => (b.name ?? '').compareTo(a.name ?? ''),
+                        (a, b) => b.fullName.compareTo(a.fullName),
                       );
                     }
 
@@ -808,7 +808,7 @@ class _StaffListCard extends StatelessWidget {
                   textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(
-                      staff.name ?? '',
+                      staff.fullName,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14.sp,
@@ -817,7 +817,7 @@ class _StaffListCard extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      staff.staffRole ?? '',
+                      staff.role.name,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 11.sp,
@@ -830,14 +830,14 @@ class _StaffListCard extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  "${staff.metadata?['sub_department'] ?? staff.department ?? 'Staff'} • ${staff.email}",
+                  staff.email ?? '',
                   style: TextStyle(fontSize: 12.sp, color: labelColor),
                 ),
               ],
             ),
           ),
           SizedBox(width: 8.w),
-          _StatusPill(status: staff.status),
+          _StatusPill(status: staff.status ?? 'Active'),
           SizedBox(width: 4.w),
           PopupMenuButton<String>(
             icon: Icon(Icons.more_vert, color: labelColor, size: 20.r),
@@ -946,7 +946,7 @@ class _StaffGridCard extends StatelessWidget {
                 ),
                 SizedBox(height: 8.h),
                 Text(
-                  staff.name ?? '',
+                  staff.fullName,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 13.sp,
@@ -957,7 +957,7 @@ class _StaffGridCard extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  staff.staffRole ?? '',
+                  staff.role.name,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 10.sp,
@@ -968,13 +968,13 @@ class _StaffGridCard extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  staff.email,
+                  staff.email ?? '',
                   style: TextStyle(fontSize: 9.sp, color: labelColor),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 8.h),
-                _StatusPill(status: staff.status),
+                _StatusPill(status: staff.status ?? 'Active'),
               ],
             ),
           ),

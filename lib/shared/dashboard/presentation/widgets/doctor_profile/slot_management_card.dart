@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 
 class SlotManagementCard extends StatefulWidget {
   final UserModel user;
@@ -79,29 +75,8 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
   }
 
   void _loadSlots() {
-    final slotsByDate =
-        widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
-    final dateData = slotsByDate[_selectedDate] as Map<dynamic, dynamic>? ?? {};
-    final durationData =
-        dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
-
-    final morningList = durationData['morning'] as List<dynamic>?;
-    if (morningList != null) {
-      _morningSlots = morningList
-          .map((e) => Map<String, dynamic>.from(e))
-          .toList();
-    } else {
-      _morningSlots = _generateDefaultSlots("morning", _slotDuration);
-    }
-
-    final afternoonList = durationData['afternoon'] as List<dynamic>?;
-    if (afternoonList != null) {
-      _afternoonSlots = afternoonList
-          .map((e) => Map<String, dynamic>.from(e))
-          .toList();
-    } else {
-      _afternoonSlots = _generateDefaultSlots("afternoon", _slotDuration);
-    }
+    _morningSlots = _generateDefaultSlots("morning", _slotDuration);
+    _afternoonSlots = _generateDefaultSlots("afternoon", _slotDuration);
   }
 
   void _toggleSlotStatus(Map<String, dynamic> slot) {
@@ -123,50 +98,25 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
         newStatus = "Available";
     }
 
-    final morningIdx = _morningSlots.indexWhere(
-      (item) => item['time'] == slot['time'],
-    );
-    if (morningIdx != -1) {
-      _morningSlots[morningIdx]['status'] = newStatus;
-    } else {
-      final afternoonIdx = _afternoonSlots.indexWhere(
+    setState(() {
+      final morningIdx = _morningSlots.indexWhere(
         (item) => item['time'] == slot['time'],
       );
-      if (afternoonIdx != -1) {
-        _afternoonSlots[afternoonIdx]['status'] = newStatus;
+      if (morningIdx != -1) {
+        _morningSlots[morningIdx]['status'] = newStatus;
+      } else {
+        final afternoonIdx = _afternoonSlots.indexWhere(
+          (item) => item['time'] == slot['time'],
+        );
+        if (afternoonIdx != -1) {
+          _afternoonSlots[afternoonIdx]['status'] = newStatus;
+        }
       }
-    }
+    });
 
-    final updatedMetadata = Map<String, dynamic>.from(
-      widget.user.metadata ?? {},
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Mock slot ${slot['time']} status changed to $newStatus")),
     );
-    final slotsByDate = Map<String, dynamic>.from(
-      updatedMetadata['slots_by_date'] ?? {},
-    );
-    final dateData = Map<String, dynamic>.from(
-      slotsByDate[_selectedDate] ?? {},
-    );
-    final durationData = Map<String, dynamic>.from(
-      dateData[_slotDuration] ?? {},
-    );
-
-    durationData['morning'] = _morningSlots;
-    durationData['afternoon'] = _afternoonSlots;
-    dateData[_slotDuration] = durationData;
-    slotsByDate[_selectedDate] = dateData;
-    updatedMetadata['slots_by_date'] = slotsByDate;
-
-    updatedMetadata['slots_morning'] = _morningSlots;
-    updatedMetadata['slots_afternoon'] = _afternoonSlots;
-
-    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-
-    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-
-    final authState = context.read<AuthBloc>().state;
-    if (authState is Authenticated && authState.user.id == widget.user.id) {
-      context.read<AuthBloc>().add(UserUpdated(updatedUser));
-    }
   }
 
   Color _getStatusColor(String status) {

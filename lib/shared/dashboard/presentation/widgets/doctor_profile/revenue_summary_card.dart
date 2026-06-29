@@ -32,10 +32,9 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final double fee = widget.user.consultationFee ?? 800.0;
+    final double fee = 800.0;
 
-    final metadataConsultations =
-        widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations = null;
     final List<Map<String, dynamic>> consultations = [];
     if (metadataConsultations != null) {
       for (var item in metadataConsultations) {

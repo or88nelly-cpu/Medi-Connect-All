@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
@@ -74,7 +75,7 @@ class PatientCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      patient.name ?? 'Unnamed Patient',
+                      patient.fullName   ?? 'Unnamed Patient',
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textColor,
@@ -94,7 +95,7 @@ class PatientCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           child: Text(
-                            patient.patientId ?? 'PAT-N/A',
+                            patient.id ?? 'PAT-N/A',
                             style: TextStyle(
                               color: AppColors.primary,
                               fontSize: 10.sp,
@@ -106,7 +107,7 @@ class PatientCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      "Age: ${patient.age ?? 'N/A'} | Blood: ${patient.bloodGroup ?? 'N/A'} | Phone: ${patient.phone ?? 'N/A'}",
+                      "Age: ${AppDateUtils.calculateAge(patient.dob)} | Blood: ${patient.bloodGroup ?? 'N/A'} | Phone: ${patient.phone ?? 'N/A'}",
                       style: TextStyle(color: labelColor, fontSize: 11.sp),
                     ),
                   ],
@@ -114,7 +115,7 @@ class PatientCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  _buildStatusPill(status),
+                  _buildStatusPill(status??""),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert, color: labelColor),
                     color: cardBg,

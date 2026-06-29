@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -36,26 +37,16 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.user.name);
-    _phoneController = TextEditingController(text: widget.user.phoneNumber);
-    _qualificationsController = TextEditingController(
-      text: widget.user.qualification,
-    );
-    _specializationController = TextEditingController(
-      text: widget.user.specialization,
-    );
-    _feeController = TextEditingController(
-      text: widget.user.consultationFee?.toString() ?? '',
-    );
-    _expController = TextEditingController(
-      text: widget.user.experience?.toString() ?? '',
-    );
-    _staffRoleController = TextEditingController(text: widget.user.staffRole);
-    _designationController = TextEditingController(
-      text: widget.user.designation,
-    );
+    _nameController = TextEditingController(text: widget.user.fullName);
+    _phoneController = TextEditingController(text: widget.user.phone);
+    _qualificationsController = TextEditingController(text: '');
+    _specializationController = TextEditingController(text: '');
+    _feeController = TextEditingController(text: '');
+    _expController = TextEditingController(text: '');
+    _staffRoleController = TextEditingController(text: '');
+    _designationController = TextEditingController(text: '');
 
-    _availabilityStatus = widget.user.availabilityStatus ?? 'Available';
+    _availabilityStatus = 'Available';
     _gender = widget.user.gender ?? 'Male';
   }
 
@@ -74,15 +65,15 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.user.role == 'doctor') {
+    if (widget.user.role == UserRole.doctor) {
       return EditDoctorProfileView(user: widget.user);
     }
 
-    final isDoctor = widget.user.role == 'doctor';
+    final isDoctor = widget.user.role == UserRole.doctor;
 
     return CustomScaffold(
       customAppbar: CommonAppBar(
-        title: "Edit ${widget.user.role.toUpperCase()}",
+        title: "Edit ${widget.user.role.value.toUpperCase()}",
       ),
       body: BlocListener<DoctorStaffBloc, DoctorStaffState>(
         listener: (context, state) {
@@ -90,7 +81,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  "${widget.user.role.toUpperCase()} updated successfully.",
+                  "${widget.user.role.value.toUpperCase()} updated successfully.",
                 ),
               ),
             );
@@ -110,8 +101,8 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: "Full Name"),
                 validator: (val) => val == null || val.isEmpty
-                    ? AppStrings.requiredField
-                    : null,
+                     ? AppStrings.requiredField
+                     : null,
               ),
               SizedBox(height: 12.h),
               TextFormField(
@@ -207,30 +198,16 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
+                    final nameParts = _nameController.text.trim().split(' ');
+                    final firstName = nameParts.isNotEmpty ? nameParts.first : '';
+                    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
+
                     final updatedUser = UserModel.fromEntity(widget.user)
                         .copyWith(
-                          name: _nameController.text,
-                          phoneNumber: _phoneController.text,
+                          firstName: firstName,
+                          lastName: lastName,
+                          phone: _phoneController.text,
                           gender: _gender,
-                          availabilityStatus: _availabilityStatus,
-                          specialization: isDoctor
-                              ? _specializationController.text
-                              : null,
-                          qualification: isDoctor
-                              ? _qualificationsController.text
-                              : null,
-                          consultationFee: isDoctor
-                              ? double.tryParse(_feeController.text)
-                              : null,
-                          experience: isDoctor
-                              ? int.tryParse(_expController.text)
-                              : null,
-                          staffRole: !isDoctor
-                              ? _staffRoleController.text
-                              : null,
-                          designation: !isDoctor
-                              ? _designationController.text
-                              : null,
                         );
                     context.read<DoctorStaffBloc>().add(
                       UpdateDoctorStaffMember(updatedUser),
@@ -262,50 +239,27 @@ extension on UserModel {
     String? name,
     String? phoneNumber,
     String? gender,
-    String? availabilityStatus,
-    String? specialization,
-    String? qualification,
-    double? consultationFee,
-    int? experience,
-    String? staffRole,
-    String? designation,
   }) {
+    final nameParts = (name ?? fullName).trim().split(' ');
+    final firstName = nameParts.isNotEmpty ? nameParts.first : '';
+    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : 'Staff';
     return UserModel(
       id: id,
-      email: email,
-      name: name ?? this.name,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      role: role,
-      profileCompletionStatus: profileCompletionStatus,
-      status: status,
-      department: department,
-      qualification: qualification ?? this.qualification,
-      metadata: metadata,
+      authUserId: authUserId,
       firstName: firstName,
       lastName: lastName,
-      dateOfBirth: dateOfBirth,
-      age: age,
+      email: email,
+      phone: phoneNumber ?? phone,
       gender: gender ?? this.gender,
-      profileImage: profileImage,
-      address: address,
-      emergencyContact: emergencyContact,
+      dob: dob,
       bloodGroup: bloodGroup,
-      maritalStatus: maritalStatus,
-      employeeId: employeeId,
-      patientId: patientId,
-      medicalRegistrationNumber: medicalRegistrationNumber,
-      experience: experience ?? this.experience,
-      specialization: specialization ?? this.specialization,
-      consultationFee: consultationFee ?? this.consultationFee,
-      availabilityStatus: availabilityStatus ?? this.availabilityStatus,
-      staffRole: staffRole ?? this.staffRole,
-      joiningDate: joiningDate,
-      allergies: allergies,
-      chronicDiseases: chronicDiseases,
-      insuranceProvider: insuranceProvider,
-      insuranceNumber: insuranceNumber,
-      designation: designation ?? this.designation,
-      accessLevel: accessLevel,
+      profilePhoto: profilePhoto,
+      status: status,
+      lastLoginAt: lastLoginAt,
+      activeAt: activeAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      role: role,
     );
   }
 }

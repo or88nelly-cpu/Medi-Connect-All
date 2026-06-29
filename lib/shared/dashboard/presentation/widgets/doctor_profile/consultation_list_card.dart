@@ -4,9 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'dart:convert';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
@@ -91,7 +88,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
 
   List<Map<String, dynamic>> get _consultations {
     final metadataConsultations =
-        widget.user.metadata?['consultations'] as List<dynamic>?;
+        null;
     if (metadataConsultations != null) {
       return metadataConsultations.map((item) {
         final map = item as Map<dynamic, dynamic>;
@@ -140,87 +137,14 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
     Map<String, dynamic> consultation,
     String newStatus,
   ) {
-    final isReal = consultation['isReal'] == true;
-    if (isReal) {
-      final appointmentId = consultation['id'].toString();
-      context.read<AdminAppointmentsBloc>().add(
-        CancelAppointment(appointmentId),
-      );
-      if (newStatus == 'Completed') {
-        context.read<AdminAppointmentsBloc>().add(
-          CompleteAppointment(appointmentId),
-        );
-      }
-      return;
-    }
-
-    final updatedMetadata = Map<String, dynamic>.from(
-      widget.user.metadata ?? {},
-    );
-    final currentConsultations = List<dynamic>.from(
-      updatedMetadata['consultations'] ?? _defaultConsultations,
-    );
-
-    final idx = currentConsultations.indexWhere(
-      (item) =>
-          item['time'] == consultation['time'] &&
-          item['name'] == consultation['name'],
-    );
-
-    if (idx != -1) {
-      final item = Map<String, dynamic>.from(currentConsultations[idx]);
-      item['status'] = newStatus;
-      currentConsultations[idx] = item;
-
-      updatedMetadata['consultations'] = currentConsultations;
-      final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-
-      context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-
-      final authState = context.read<AuthBloc>().state;
-      if (authState is Authenticated && authState.user.id == widget.user.id) {
-        context.read<AuthBloc>().add(UserUpdated(updatedUser));
-      }
-    }
+    
   }
 
   void _updateConsultationVitals(
     Map<String, dynamic> consultation,
     Map<String, dynamic> vitals,
   ) {
-    final updatedMetadata = Map<String, dynamic>.from(
-      widget.user.metadata ?? {},
-    );
-    final currentConsultations = List<dynamic>.from(
-      updatedMetadata['consultations'] ?? _defaultConsultations,
-    );
-
-    final idx = currentConsultations.indexWhere(
-      (item) =>
-          item['time'] == consultation['time'] &&
-          item['name'] == consultation['name'],
-    );
-
-    if (idx != -1) {
-      final item = Map<String, dynamic>.from(currentConsultations[idx]);
-      item['bp'] = vitals['bp'];
-      item['weight'] = vitals['weight'];
-      item['height'] = vitals['height'];
-      item['fever'] = vitals['fever'];
-      item['head_circumference'] = vitals['head_circumference'];
-      item['additional_vitals'] = vitals['additional_vitals'];
-      currentConsultations[idx] = item;
-
-      updatedMetadata['consultations'] = currentConsultations;
-      final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-
-      context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-
-      final authState = context.read<AuthBloc>().state;
-      if (authState is Authenticated && authState.user.id == widget.user.id) {
-        context.read<AuthBloc>().add(UserUpdated(updatedUser));
-      }
-    }
+   
   }
 
   void _showConsultationOptions(

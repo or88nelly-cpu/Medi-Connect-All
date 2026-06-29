@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/dialogs/dialogs.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -208,12 +209,11 @@ class AdminDrawer extends StatelessWidget {
         if (state is Authenticated) {
           final user = state.user;
           name =
-              user.name ?? ("${user.firstName} ${user.lastName ?? ''}".trim());
-          email = user.email;
+              user.fullName ?? ("${user.firstName} ${user.lastName ?? ''}".trim());
+          email = user.email??"";
           profileImage = user.profilePhoto;
           accessLevel =
-              user.accessLevel ??
-              (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
+              user.role.value;
         }
 
         return Container(
@@ -246,7 +246,7 @@ class AdminDrawer extends StatelessWidget {
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(
                         profileImage,
-                        state is Authenticated ? state.user.role : 'admin',
+                        state is Authenticated ? state.user.role.value : 'admin',
                         state is Authenticated ? state.user.gender : null,
                       ),
                       borderRadius: 30.r,

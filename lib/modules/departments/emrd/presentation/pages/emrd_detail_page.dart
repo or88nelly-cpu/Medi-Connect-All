@@ -15,7 +15,7 @@ import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_
 import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_operation_card.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_ai_assistant_panel.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_admin_analytics_section.dart';
-import 'package:medi_connect/modules/departments/emrd/presentation/pages/patient_registry_page.dart';
+import 'package:medi_connect/modules/management/consultation_management/presentation/pages/patient_registry_page.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/medical_record_management_page.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/emrd_consultations_page.dart';
 
@@ -72,7 +72,7 @@ class EmrdDetailPage extends StatelessWidget {
                         EmrdDashboardHeader(
                           name: userName,
                           role: userRole,
-                          profileImage: profileImage,
+                          profilePhoto: profileImage,
                           gender: gender,
                           stats: stats,
                           isDark: isDark,

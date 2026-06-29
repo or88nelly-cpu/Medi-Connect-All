@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -192,33 +193,18 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
+                    final nameParts = _nameController.text.trim().split(' ');
+                    final firstName = nameParts.isNotEmpty ? nameParts.first : '';
+                    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : 'Staff';
                     final newUser = UserModel(
                       id: _generateUUID(),
                       email: _emailController.text,
-                      name: _nameController.text,
-                      phoneNumber: _phoneController.text,
-                      role: widget.role,
-                      profileCompletionStatus: true,
+                      firstName: firstName,
+                      lastName: lastName,
+                      phone: _phoneController.text,
+                      role: UserRoleExtension.fromString(widget.role),
                       status: 'Available',
-                      department: widget.departmentName,
-                      qualification: isDoctor
-                          ? _qualificationsController.text
-                          : null,
                       gender: _gender,
-                      experience: isDoctor
-                          ? int.tryParse(_expController.text)
-                          : null,
-                      specialization: isDoctor
-                          ? _specializationController.text
-                          : null,
-                      consultationFee: isDoctor
-                          ? double.tryParse(_feeController.text)
-                          : null,
-                      staffRole: !isDoctor ? _staffRoleController.text : null,
-                      designation: !isDoctor
-                          ? _designationController.text
-                          : null,
-                      availabilityStatus: 'Available',
                     );
                     context.read<DoctorStaffBloc>().add(
                       CreateDoctorStaffMember(newUser),

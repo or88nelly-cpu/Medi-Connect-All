@@ -12,6 +12,7 @@ import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_patients/patient_card.dart';
 import 'package:medi_connect/modules/management/customer_care/presentation/widgets/qr_scanner_overlay.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 
@@ -48,8 +49,8 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
       builder: (ctx) => QrScannerOverlay(
         demoPatients: patients,
         onQrScanned: (patient) {
-          _searchController.text = patient.patientId ?? '';
-          _queryNotifier.value = patient.patientId ?? '';
+          _searchController.text = patient.id;
+          _queryNotifier.value = patient.id;
         },
       ),
     );
@@ -129,7 +130,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            patient.name ?? 'Unnamed Patient',
+                            patient.fullName,
                             style: AppTextStyles.titleLarge.copyWith(
                               color: textColor,
                               fontWeight: FontWeight.bold,
@@ -151,7 +152,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                   borderRadius: BorderRadius.circular(4.r),
                                 ),
                                 child: Text(
-                                  patient.patientId ?? 'PAT-N/A',
+                                  patient.id,
                                   style: TextStyle(
                                     color: AppColors.primary,
                                     fontSize: 11.sp,
@@ -160,7 +161,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                 ),
                               ),
                               SizedBox(width: 8.w),
-                              _buildStatusPill(patient.status),
+                              _buildStatusPill(patient.status ?? 'Active'),
                             ],
                           ),
                         ],
@@ -194,7 +195,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                     children: [
                       _buildDetailRow(
                         "Age",
-                        "${patient.age ?? 'N/A'} years",
+                        "${AppDateUtils.calculateAge(patient.dob) ?? 'N/A'} years",
                         labelColor,
                         textColor,
                       ),
@@ -215,14 +216,14 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                       Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Phone",
-                        patient.phoneNumber ?? 'N/A',
+                        patient.phone ?? 'N/A',
                         labelColor,
                         textColor,
                       ),
                       Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Email",
-                        patient.email,
+                        patient.email ?? '',
                         labelColor,
                         textColor,
                       ),
@@ -738,13 +739,13 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                       valueListenable: _queryNotifier,
                       builder: (context, query, _) {
                         final filtered = patientsList.where((p) {
-                          final nameMatch = (p.name ?? '')
+                          final nameMatch = p.fullName
                               .toLowerCase()
                               .contains(query.toLowerCase());
-                          final phoneMatch = (p.phoneNumber ?? '').contains(
+                          final phoneMatch = (p.phone ?? '').contains(
                             query,
                           );
-                          final uhidMatch = (p.patientId ?? '')
+                          final uhidMatch = (p.id)
                               .toLowerCase()
                               .contains(query.toLowerCase());
                           return nameMatch || phoneMatch || uhidMatch;

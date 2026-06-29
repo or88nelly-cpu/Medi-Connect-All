@@ -22,8 +22,7 @@ class PatientWelcomeBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.name ?? ('${user.firstName} ${user.lastName ?? ''}'.trim());
+          name = user.fullName;
           profileImage = user.profilePhoto;
           gender = user.gender;
         }

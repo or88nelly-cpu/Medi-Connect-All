@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
@@ -131,15 +132,15 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
 
                             return Autocomplete<UserModel>(
                               displayStringForOption: (UserModel p) =>
-                                  "${p.name ?? 'Unnamed'} (${p.email})",
+                                  "${p.fullName} (${p.email})",
                               optionsBuilder:
                                   (TextEditingValue textEditingValue) {
                                     if (textEditingValue.text.isEmpty) {
                                       return patients;
                                     }
                                     return patients.where((UserModel p) {
-                                      final name = (p.name ?? '').toLowerCase();
-                                      final email = p.email.toLowerCase();
+                                      final name = p.fullName.toLowerCase();
+                                      final email = (p.email ?? '').toLowerCase();
                                       final search = textEditingValue.text
                                           .toLowerCase();
                                       return name.contains(search) ||
@@ -230,7 +231,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                               SizedBox(width: 6.w),
                               Expanded(
                                 child: Text(
-                                  "Selected: ${_selectedPatient!.name ?? 'Patient'} | Blood: ${_selectedPatient!.bloodGroup ?? 'O+'}",
+                                  "Selected: ${_selectedPatient!.fullName} | Blood: ${_selectedPatient!.bloodGroup ?? 'O+'}",
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -368,28 +369,27 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                           }
 
                           if (doctors.isEmpty) {
-                            // Fallback mock doctors
                             doctors = const [
                               UserModel(
                                 id: 'doc-1',
                                 email: 'sarah.j@mediconnect.com',
-                                name: 'Dr. Sarah Johnson',
-                                role: 'doctor',
-                                specialization: 'Cardiologist',
+                                firstName: 'Dr. Sarah',
+                                lastName: 'Johnson',
+                                role: UserRole.doctor,
                               ),
                               UserModel(
                                 id: 'doc-2',
                                 email: 'michael.c@mediconnect.com',
-                                name: 'Dr. Michael Chen',
-                                role: 'doctor',
-                                specialization: 'Neurologist',
+                                firstName: 'Dr. Michael',
+                                lastName: 'Chen',
+                                role: UserRole.doctor,
                               ),
                               UserModel(
                                 id: 'doc-3',
                                 email: 'james.w@mediconnect.com',
-                                name: 'Dr. James Wilson',
-                                role: 'doctor',
-                                specialization: 'Pediatrician',
+                                firstName: 'Dr. James',
+                                lastName: 'Wilson',
+                                role: UserRole.doctor,
                               ),
                             ];
                           }
@@ -430,7 +430,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                               return DropdownMenuItem(
                                 value: d,
                                 child: Text(
-                                  "${d.name} (${d.specialization ?? 'General Medicine'})",
+                                  "${d.fullName} (General Medicine)",
                                   style: TextStyle(fontSize: 13.sp),
                                 ),
                               );
@@ -509,31 +509,9 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
     if (_formKey.currentState!.validate() &&
         _selectedPatient != null &&
         _selectedDoctor != null) {
-      final currentMetadata = Map<String, dynamic>.from(
-        _selectedPatient!.metadata ?? {},
-      );
-      final admissions = List<dynamic>.from(
-        currentMetadata['admissions'] ?? [],
-      );
-
-      final admissionRecord = {
-        'ward': _selectedWard,
-        'room': _roomController.text.trim(),
-        'bed': _bedController.text.trim(),
-        'doctor': _selectedDoctor!.name,
-        'doctorId': _selectedDoctor!.id,
-        'admittedAt': DateTime.now().toIso8601String(),
-        'notes': _notesController.text.trim(),
-        'status': 'Active',
-      };
-
-      admissions.insert(0, admissionRecord);
-      currentMetadata['admissions'] = admissions;
-
-      // Update patient status to 'Admitted' and save updated metadata
+      // Update patient status to 'Admitted'
       final updatedPatient = _selectedPatient!.copyWith(
         status: 'Admitted',
-        metadata: currentMetadata,
       );
 
       context.read<PatientBloc>().add(UpdatePatient(updatedPatient));
@@ -543,7 +521,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "${_selectedPatient!.name ?? 'Patient'} admitted successfully to $_selectedWard.",
+            "${_selectedPatient!.fullName} admitted successfully to $_selectedWard.",
           ),
           behavior: SnackBarBehavior.floating,
         ),

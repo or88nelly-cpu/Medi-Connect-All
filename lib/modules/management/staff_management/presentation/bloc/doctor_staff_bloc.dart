@@ -34,7 +34,7 @@ class DoctorStaffBloc extends Bloc<DoctorStaffEvent, DoctorStaffState> {
     final result = await _repository.createDoctorStaffMember(event.user);
     result.fold((failure) => emit(DoctorStaffError(failure.message)), (user) {
       emit(DoctorStaffActionSuccess());
-      add(LoadDoctorStaff(event.user.department ?? ''));
+      add(const LoadDoctorStaff('All'));
     });
   }
 
@@ -46,7 +46,7 @@ class DoctorStaffBloc extends Bloc<DoctorStaffEvent, DoctorStaffState> {
     final result = await _repository.updateDoctorStaffMember(event.user);
     result.fold((failure) => emit(DoctorStaffError(failure.message)), (user) {
       emit(DoctorStaffActionSuccess());
-      add(LoadDoctorStaff(event.user.department ?? ''));
+      add(const LoadDoctorStaff('All'));
     });
   }
 

@@ -217,7 +217,7 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
         }
       }
 
-      final double baseFee = doctor.consultationFee ?? 500.0;
+      final double baseFee =  500.0;
       final double finalFee = followUp ? 0.0 : baseFee;
 
       emit(
@@ -228,7 +228,7 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
         ),
       );
     } catch (e) {
-      final double baseFee = doctor.consultationFee ?? 500.0;
+      final double baseFee = 500.0;
       emit(
         state.copyWith(
           isFollowUp: false,
@@ -245,7 +245,7 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
     try {
       final dateStr = state.selectedDate.toIso8601String().split('T').first;
       final doctorName =
-          state.selectedDoctor!.name ??
+          state.selectedDoctor!.fullName ??
           '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
               .trim();
 

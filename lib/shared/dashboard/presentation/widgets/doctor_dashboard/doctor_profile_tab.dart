@@ -30,16 +30,15 @@ class DoctorProfileTab extends StatelessWidget {
         if (state is Authenticated) {
           final user = state.user;
           name =
-              user.name ??
+              user.fullName ??
               "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
-          email = user.email;
-          phone = user.phoneNumber;
-          specialty = user.specialization;
+          email = user.email??"";
+          phone = user.phone;
+          specialty = "";
           profileImage = user.profilePhoto;
-          regNumber = user.medicalRegistrationNumber ?? "REG-DOC-2819";
-          experience = user.experience != null
-              ? "${user.experience} Years"
-              : "8 Years";
+          regNumber = "REG-DOC-2819";
+          experience = 
+              "8 Years";
         }
 
         return SingleChildScrollView(

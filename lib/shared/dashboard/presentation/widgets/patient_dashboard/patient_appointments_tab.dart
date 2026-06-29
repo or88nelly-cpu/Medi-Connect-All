@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
@@ -21,21 +20,9 @@ class PatientAppointmentsTab extends StatefulWidget {
 
 class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
   List<Map<String, String>> _resolveAppointments(UserModel user) {
-    final metadataApts = user.metadata?['appointments'] as List<dynamic>?;
+   
     final List<Map<String, String>> appointments = [];
 
-    if (metadataApts != null) {
-      for (var item in metadataApts) {
-        if (item is Map) {
-          appointments.add({
-            'doctor': (item['doctor'] ?? '').toString(),
-            'specialty': (item['specialty'] ?? '').toString(),
-            'time': (item['time'] ?? '').toString(),
-            'type': (item['type'] ?? '').toString(),
-          });
-        }
-      }
-    }
 
     if (appointments.isEmpty) {
       appointments.addAll([
@@ -236,32 +223,26 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
       const UserModel(
         id: 'doc-1',
         email: 'sarah.j@mediconnect.com',
-        name: 'Dr. Sarah Johnson',
-        role: 'doctor',
-        specialization: 'Cardiologist',
-        department: 'Cardiology',
-        consultationFee: 1200.0,
-        experience: 12,
+        firstName: 'Dr. Sarah',
+        lastName: 'Johnson',
+        role: UserRole.doctor,
+        
       ),
       const UserModel(
         id: 'doc-2',
         email: 'michael.c@mediconnect.com',
-        name: 'Dr. Michael Chen',
-        role: 'doctor',
-        specialization: 'Neurologist',
-        department: 'Neurology',
-        consultationFee: 1500.0,
-        experience: 9,
+        firstName: 'Dr. Michael',
+        lastName: 'Chen',
+        role: UserRole.doctor,
+        
       ),
       const UserModel(
         id: 'doc-3',
         email: 'james.w@mediconnect.com',
-        name: 'Dr. James Wilson',
-        role: 'doctor',
-        specialization: 'Pediatrician',
-        department: 'Pediatrics',
-        consultationFee: 1000.0,
-        experience: 15,
+        firstName: 'Dr. James',
+        lastName: 'Wilson',
+        role: UserRole.doctor,
+        
       ),
     ];
     return ListView.builder(
@@ -288,7 +269,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
           ),
         ),
         title: Text(
-          doc.name ?? 'Dr. Specialist',
+          doc.fullName,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary(context),
@@ -299,15 +280,15 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
           children: [
             SizedBox(height: 2.h),
             Text(
-              "${doc.specialization ?? 'General Medicine'} | Exp: ${doc.experience ?? 5} Yrs",
+              "${'General Medicine'} | Exp: ${5} Yrs",
             ),
-            Text("Fee: ₹ ${doc.consultationFee ?? 500}"),
+            Text("Fee: ₹ 500"),
           ],
         ),
         trailing: ElevatedButton(
           onPressed: () {
             Navigator.pop(ctx);
-            _confirmBooking(doc);
+           
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.secondary,
@@ -321,77 +302,4 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
     );
   }
 
-  void _confirmBooking(UserModel doc) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Confirm Appointment', style: AppTextStyles.titleLarge),
-        content: Text(
-          "Do you want to book an appointment with ${doc.name}?\nConsultation Fee: ₹ ${doc.consultationFee ?? 500}",
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final authState = context.read<AuthBloc>().state;
-              if (authState is Authenticated) {
-                final user = UserModel.fromEntity(authState.user);
-                final updatedMetadata = Map<String, dynamic>.from(
-                  user.metadata ?? {},
-                );
-                final currentApts = List<dynamic>.from(
-                  updatedMetadata['appointments'] ??
-                      [
-                        {
-                          'doctor': 'Dr. Sarah Johnson',
-                          'specialty': 'Cardiologist',
-                          'time': 'June 12, 10:30 AM',
-                          'type': 'Cardiology Clinic',
-                        },
-                        {
-                          'doctor': 'Dr. Michael Chen',
-                          'specialty': 'Neurologist',
-                          'time': 'June 15, 02:00 PM',
-                          'type': 'Neurology Clinic',
-                        },
-                      ],
-                );
-
-                currentApts.insert(0, {
-                  'doctor': doc.name ?? 'Dr. Specialist',
-                  'specialty': doc.specialization ?? 'General Medicine',
-                  'time': 'June 18, 09:30 AM',
-                  'type': doc.department ?? 'General Clinic',
-                });
-
-                updatedMetadata['appointments'] = currentApts;
-                final updatedUser = user.copyWith(metadata: updatedMetadata);
-
-                await GetIt.instance<DoctorStaffRemoteDataSource>()
-                    .updateDoctorStaffMember(updatedUser);
-
-                if (context.mounted) {
-                  context.read<AuthBloc>().add(UserUpdated(updatedUser));
-                }
-              }
-              Navigator.pop(ctx);
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      "Appointment booked with ${doc.name} successfully.",
-                    ),
-                  ),
-                );
-              }
-            },
-            child: const Text('Confirm'),
-          ),
-        ],
-      ),
-    );
-  }
-}
+ }

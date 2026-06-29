@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
@@ -26,7 +27,7 @@ class ReviewStepView extends StatelessWidget {
       try {
         return state.patients.firstWhere(
           (p) =>
-              p.patientId == appointment.patientId ||
+              p.id == appointment.patientId ||
               p.id == appointment.patientId,
         );
       } catch (_) {
@@ -73,11 +74,11 @@ class ReviewStepView extends StatelessWidget {
 
     // Resolve Patient Details
     final patient = _findPatient(context);
-    final patientName = patient?.name ?? appointment.patientName;
-    final patientId = patient?.patientId ?? 'PAT-20260061';
-    final age = patient?.age ?? '34';
+    final patientName = patient?.fullName ?? appointment.patientName;
+    final patientId = patient?.id ?? 'PAT-20260061';
+    final age = AppDateUtils.calculateAge(patient?.dob);
     final gender = patient?.gender ?? 'Female';
-    final phone = patient?.phoneNumber ?? '+91 98765 43210';
+    final phone = patient?.phone ?? '+91 98765 43210';
     final bloodGroup = patient?.bloodGroup ?? 'O+';
     final patientImg = ProfileImageHelper.resolveImagePath(
       patient?.profilePhoto,

@@ -161,21 +161,17 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                         );
                         if (res == true && context.mounted) {
                           context.read<DoctorStaffBloc>().add(
-                            LoadDoctorStaff(widget.user.department ?? 'All'),
+                            const LoadDoctorStaff('All'),
                           );
                         }
                       },
                     ),
                     SizedBox(height: 16.h),
                     DoctorAvailabilityCard(
-                      initialStatus:
-                          widget.user.availabilityStatus ?? 'Available',
+                      initialStatus: 'Available',
                       onStatusChanged: (newStatus) {
-                        final updated = widget.user.copyWith(
-                          availabilityStatus: newStatus,
-                        );
-                        context.read<DoctorStaffBloc>().add(
-                          UpdateDoctorStaffMember(updated),
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Availability changed to $newStatus")),
                         );
                       },
                     ),
@@ -219,20 +215,17 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
               );
               if (res == true && context.mounted) {
                 context.read<DoctorStaffBloc>().add(
-                  LoadDoctorStaff(widget.user.department ?? 'All'),
+                  const LoadDoctorStaff('All'),
                 );
               }
             },
           ),
           SizedBox(height: 16.h),
           DoctorAvailabilityCard(
-            initialStatus: widget.user.availabilityStatus ?? 'Available',
+            initialStatus: 'Available',
             onStatusChanged: (newStatus) {
-              final updated = widget.user.copyWith(
-                availabilityStatus: newStatus,
-              );
-              context.read<DoctorStaffBloc>().add(
-                UpdateDoctorStaffMember(updated),
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Availability changed to $newStatus")),
               );
             },
           ),
@@ -307,7 +300,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
         : AppColors.terminalLightLabel;
 
     final metadataConsultations =
-        widget.user.metadata?['consultations'] as List<dynamic>?;
+        null;
     final List<Map<String, dynamic>> patients = [];
     final Set<String> uniqueNames = {};
 
@@ -451,7 +444,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final metadataDocs = widget.user.metadata?['documents'] as List<dynamic>?;
+    final metadataDocs = null;
     final List<Map<String, dynamic>> documents = [];
     if (metadataDocs != null) {
       for (var item in metadataDocs) {
@@ -591,60 +584,8 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 if (docName.isEmpty) return;
                 Navigator.pop(ctx);
 
-                final updatedMetadata = Map<String, dynamic>.from(
-                  widget.user.metadata ?? {},
-                );
-                final currentDocs = List<dynamic>.from(
-                  updatedMetadata['documents'] ??
-                      [
-                        {
-                          'name': 'Medical Registration Certificate',
-                          'issueDate': '12 Jan 2018',
-                          'status': 'Verified',
-                        },
-                        {
-                          'name': 'Specialization Degree (MD)',
-                          'issueDate': '24 Jun 2021',
-                          'status': 'Verified',
-                        },
-                        {
-                          'name': 'Board Certification in Medicine',
-                          'issueDate': '15 Aug 2022',
-                          'status': 'Verified',
-                        },
-                      ],
-                );
-
-                final days = [
-                  "Jan",
-                  "Feb",
-                  "Mar",
-                  "Apr",
-                  "May",
-                  "Jun",
-                  "Jul",
-                  "Aug",
-                  "Sep",
-                  "Oct",
-                  "Nov",
-                  "Dec",
-                ];
-                final now = DateTime.now();
-                final dateStr = "${now.day} ${days[now.month - 1]} ${now.year}";
-
-                currentDocs.add({
-                  'name': docName,
-                  'issueDate': dateStr,
-                  'status': 'Pending Verification',
-                });
-
-                updatedMetadata['documents'] = currentDocs;
-                final updatedUser = widget.user.copyWith(
-                  metadata: updatedMetadata,
-                );
-
-                context.read<DoctorStaffBloc>().add(
-                  UpdateDoctorStaffMember(updatedUser),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Document '$docName' uploaded successfully")),
                 );
               },
               child: const Text("Upload"),

@@ -317,9 +317,8 @@ class _RoleDrawerHeader extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.name ?? ('${user.firstName} ${user.lastName ?? ''}'.trim());
-          email = user.email;
+          name = user.fullName;
+          email = user.email ?? '';
           profileImage = user.profilePhoto;
         }
 
@@ -351,7 +350,7 @@ class _RoleDrawerHeader extends StatelessWidget {
                 child: CustomImageView(
                   imagePath: ProfileImageHelper.resolveImagePath(
                     profileImage,
-                    state is Authenticated ? state.user.role : 'patient',
+                    state is Authenticated ? state.user.role.name : 'patient',
                     state is Authenticated ? state.user.gender : null,
                   ),
                   borderRadius: 30.r,

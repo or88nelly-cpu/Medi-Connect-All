@@ -128,7 +128,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    doc.name ?? 'Dr. Specialist',
+                                    doc.fullName,
                                     style: AppTextStyles.titleLarge.copyWith(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -136,7 +136,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                   ),
                                   SizedBox(height: 3.h),
                                   Text(
-                                    doc.specialization ?? 'General Medicine',
+                                    'General Medicine',
                                     style: AppTextStyles.bodyMedium.copyWith(
                                       color: Colors.white70,
                                     ),
@@ -192,7 +192,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                       border: Border.all(color: AppColors.border(context)),
                     ),
                     child: Text(
-                      '${doc.name ?? 'The doctor'} is an experienced ${doc.specialization ?? 'specialist'} with ${doc.experience ?? 5}+ years of practice. Specializing in diagnosing and treating a wide range of conditions with a patient-centered approach, combining evidence-based medicine with compassionate care.',
+                      '${doc.fullName} is an experienced specialist with 5+ years of practice. Specializing in diagnosing and treating a wide range of conditions with a patient-centered approach, combining evidence-based medicine with compassionate care.',
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textPrimary(context),
                         height: 1.6,
@@ -285,7 +285,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                               child: BookingFlowPage(
                                 preselectedDoctor: doc,
                                 preselectedSpecialty:
-                                    doc.specialization ?? doc.department ?? '',
+                                    'General Medicine',
                               ),
                             ),
                           ),
@@ -338,7 +338,7 @@ class _StatsRow extends StatelessWidget {
     return Row(
       children: [
         _StatChip(
-          value: '${doctor.experience ?? 5}+',
+          value: '5+',
           label: 'Years Exp',
           icon: Icons.work_outline_rounded,
           color: gradient.first,
@@ -352,7 +352,7 @@ class _StatsRow extends StatelessWidget {
         ),
         SizedBox(width: 10.w),
         _StatChip(
-          value: '₹${(doctor.consultationFee ?? 500).toInt()}',
+          value: '₹500',
           label: 'Fee',
           icon: Icons.currency_rupee_rounded,
           color: const Color(0xFF22C55E),

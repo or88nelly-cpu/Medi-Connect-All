@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 
 import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_profile/apply_leave_bottom_sheet.dart';
 
@@ -20,66 +19,18 @@ class DoctorLeaveCard extends StatefulWidget {
 
 class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
   void _approveLeave(Map<String, String> targetLeave) {
-    final updatedMetadata = Map<String, dynamic>.from(
-      widget.user.metadata ?? {},
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Mock leave approved for ${targetLeave['type']}")),
     );
-    final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? []);
-
-    final updatedLeaves = currentLeaves.map((l) {
-      final map = Map<String, dynamic>.from(l as Map);
-      if (map['type'] == targetLeave['type'] &&
-          map['range'] == targetLeave['range']) {
-        map['status'] = 'Approved';
-      }
-      return map;
-    }).toList();
-
-    updatedMetadata['leaves'] = updatedLeaves;
-    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-
-    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-
-    final authState = context.read<AuthBloc>().state;
-    if (authState is Authenticated && authState.user.id == widget.user.id) {
-      context.read<AuthBloc>().add(UserUpdated(updatedUser));
-    }
   }
 
   void _rejectLeave(Map<String, String> targetLeave) {
-    final updatedMetadata = Map<String, dynamic>.from(
-      widget.user.metadata ?? {},
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Mock leave rejected for ${targetLeave['type']}")),
     );
-    final currentLeaves = List<dynamic>.from(updatedMetadata['leaves'] ?? []);
-
-    final updatedLeaves = currentLeaves.where((l) {
-      final map = l as Map;
-      return !(map['type'] == targetLeave['type'] &&
-          map['range'] == targetLeave['range']);
-    }).toList();
-
-    updatedMetadata['leaves'] = updatedLeaves;
-    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-
-    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
-
-    final authState = context.read<AuthBloc>().state;
-    if (authState is Authenticated && authState.user.id == widget.user.id) {
-      context.read<AuthBloc>().add(UserUpdated(updatedUser));
-    }
   }
 
   List<Map<String, String>> get _leaves {
-    final metadataLeaves = widget.user.metadata?['leaves'] as List<dynamic>?;
-    if (metadataLeaves != null) {
-      return metadataLeaves.map((l) {
-        final map = l as Map<dynamic, dynamic>;
-        return {
-          "type": (map["type"] ?? "").toString(),
-          "range": (map["range"] ?? "").toString(),
-          "status": (map["status"] ?? "").toString(),
-        };
-      }).toList();
-    }
     return [
       {
         "type": "Annual Leave",
@@ -97,37 +48,9 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
       backgroundColor: Colors.transparent,
       builder: (ctx) => ApplyLeaveBottomSheet(
         onLeaveApplied: (leave) {
-          final updatedMetadata = Map<String, dynamic>.from(
-            widget.user.metadata ?? {},
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Mock leave applied for ${leave['type']}")),
           );
-          final currentLeaves = List<dynamic>.from(
-            updatedMetadata['leaves'] ??
-                [
-                  {
-                    "type": "Annual Leave",
-                    "range": "20 May 2025 - 25 May 2025",
-                    "status": "Approved",
-                  },
-                  {
-                    "type": "Casual Leave",
-                    "range": "05 Jun 2025",
-                    "status": "Pending",
-                  },
-                ],
-          );
-          currentLeaves.add(leave);
-          updatedMetadata['leaves'] = currentLeaves;
-          final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
-
-          context.read<DoctorStaffBloc>().add(
-            UpdateDoctorStaffMember(updatedUser),
-          );
-
-          final authState = context.read<AuthBloc>().state;
-          if (authState is Authenticated &&
-              authState.user.id == widget.user.id) {
-            context.read<AuthBloc>().add(UserUpdated(updatedUser));
-          }
         },
       ),
     );
@@ -199,7 +122,7 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
 
             final authState = context.watch<AuthBloc>().state;
             final isAdmin =
-                authState is Authenticated && authState.user.role == 'admin';
+                authState is Authenticated && authState.user.role == UserRole.admin;
 
             return Container(
               margin: EdgeInsets.only(bottom: 12.h),

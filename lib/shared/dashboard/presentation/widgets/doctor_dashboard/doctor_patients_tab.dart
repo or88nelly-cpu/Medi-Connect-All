@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
@@ -21,7 +22,7 @@ class DoctorPatientsTab extends StatelessWidget {
         }
         final doctor = authState.user;
         final docDisplayName =
-            doctor.name ??
+            doctor.fullName ??
             "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
@@ -75,10 +76,9 @@ class DoctorPatientsTab extends StatelessWidget {
                   final myPatients = allPatients.where((p) {
                     final matchId =
                         patientIds.contains(p.id) ||
-                        (p.patientId != null &&
-                            patientIds.contains(p.patientId));
+                        (patientIds.contains(p.id));
                     final displayName =
-                        (p.name ??
+                        (p.fullName ??
                                 "${p.firstName ?? ''} ${p.lastName ?? ''}"
                                     .trim())
                             .toLowerCase();
@@ -143,13 +143,11 @@ class DoctorPatientsTab extends StatelessWidget {
                             itemBuilder: (context, idx) {
                               final p = myPatients[idx];
                               final displayName =
-                                  p.name ??
+                                  p.fullName ??
                                   "${p.firstName ?? ''} ${p.lastName ?? ''}"
                                       .trim();
                               final gender = p.gender ?? "Not Specified";
-                              final age = p.age != null
-                                  ? "${p.age} years"
-                                  : "N/A";
+                              final age = AppDateUtils.calculateAge(p.dob) ?? "N/A";
 
                               // Find appointment specialty/reason or fallback to chronic diseases
                               final AppointmentEntity? matchingApt = doctorApts
@@ -161,8 +159,7 @@ class DoctorPatientsTab extends StatelessWidget {
                                     orElse: () => null,
                                   );
                               final issue =
-                                  p.chronicDiseases ??
-                                  matchingApt?.specialty ??
+                                 
                                   "General Consultation";
 
                               return Card(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 
 class DoctorInfoCard extends StatelessWidget {
@@ -27,12 +28,13 @@ class DoctorInfoCard extends StatelessWidget {
         : AppColors.terminalLightLabel;
 
     // Derived values
-    final dob = user.dateOfBirth ?? "12 Apr 1985";
-    final ageStr = user.age != null ? " (${user.age} Y)" : " (39 Y)";
+    final dob = user.dob != null ? AppDateUtils.formatDate(user.dob!) : "12 Apr 1985";
+    final ageStrVal = AppDateUtils.calculateAge(user.dob);
+    final ageStr = ageStrVal != null ? " ($ageStrVal)" : " (39 Y)";
     final gender = user.gender ?? "Male";
     final bloodGroup = user.bloodGroup ?? "O+";
-    final phone = user.phoneNumber ?? "+91 98765 43210";
-    final address = user.address ?? "New Delhi, India";
+    final phone = user.phone ?? "+91 98765 43210";
+    final address = "New Delhi, India";
 
     return Container(
       padding: EdgeInsets.all(16.r),
@@ -125,7 +127,7 @@ class DoctorInfoCard extends StatelessWidget {
             context,
             Icons.email_outlined,
             "Email",
-            user.email,
+            user.email ?? "",
             labelColor,
             textColor,
           ),

@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/routes/route_names.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_hero_banner.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_services_grid.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_promo_footer.dart';
@@ -29,87 +22,87 @@ class PatientHomeTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Warning banner for incomplete profile ────────
-          BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              if (state is Authenticated) {
-                final user = UserModel.fromEntity(state.user);
-                if (!user.profileCompletionStatus) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 16.h),
-                    padding: EdgeInsets.all(16.r),
-                    decoration: BoxDecoration(
-                      color: AppColors.error.withValues(alpha: 0.08),
-                      borderRadius: BorderRadius.circular(16.r),
-                      border: Border.all(
-                        color: AppColors.error.withValues(alpha: 0.2),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.warning_amber_rounded,
-                          color: AppColors.error,
-                          size: 24.r,
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Profile Incomplete",
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.error,
-                                ),
-                              ),
-                              SizedBox(height: 2.h),
-                              Text(
-                                "Please complete your remaining steps to generate your UHID.",
-                                style: AppTextStyles.bodySmall.copyWith(
-                                  color: Colors.grey.shade700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        ElevatedButton(
-                          onPressed: () {
-                            context.push(
-                              RouteNames.patientRegistration,
-                              extra: {
-                                'isPatientMode': true,
-                                'user': user,
-                              },
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.error,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 8.h,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                          ),
-                          child: Text(
-                            "Complete Now",
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              }
-              return const SizedBox.shrink();
-            },
-          ),
+          // BlocBuilder<AuthBloc, AuthState>(
+          //   builder: (context, state) {
+          //     if (state is Authenticated) {
+          //       final user = UserModel.fromEntity(state.user);
+          //       if (!user.profileCompletionStatus) {
+          //         return Container(
+          //           margin: EdgeInsets.only(bottom: 16.h),
+          //           padding: EdgeInsets.all(16.r),
+          //           decoration: BoxDecoration(
+          //             color: AppColors.error.withValues(alpha: 0.08),
+          //             borderRadius: BorderRadius.circular(16.r),
+          //             border: Border.all(
+          //               color: AppColors.error.withValues(alpha: 0.2),
+          //             ),
+          //           ),
+          //           child: Row(
+          //             children: [
+          //               Icon(
+          //                 Icons.warning_amber_rounded,
+          //                 color: AppColors.error,
+          //                 size: 24.r,
+          //               ),
+          //               SizedBox(width: 12.w),
+          //               Expanded(
+          //                 child: Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Text(
+          //                       "Profile Incomplete",
+          //                       style: AppTextStyles.bodyMedium.copyWith(
+          //                         fontWeight: FontWeight.bold,
+          //                         color: AppColors.error,
+          //                       ),
+          //                     ),
+          //                     SizedBox(height: 2.h),
+          //                     Text(
+          //                       "Please complete your remaining steps to generate your UHID.",
+          //                       style: AppTextStyles.bodySmall.copyWith(
+          //                         color: Colors.grey.shade700,
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ),
+          //               SizedBox(width: 8.w),
+          //               ElevatedButton(
+          //                 onPressed: () {
+          //                   context.push(
+          //                     RouteNames.patientRegistration,
+          //                     extra: {
+          //                       'isPatientMode': true,
+          //                       'user': user,
+          //                     },
+          //                   );
+          //                 },
+          //                 style: ElevatedButton.styleFrom(
+          //                   backgroundColor: AppColors.error,
+          //                   padding: EdgeInsets.symmetric(
+          //                     horizontal: 12.w,
+          //                     vertical: 8.h,
+          //                   ),
+          //                   shape: RoundedRectangleBorder(
+          //                     borderRadius: BorderRadius.circular(8.r),
+          //                   ),
+          //                 ),
+          //                 child: Text(
+          //                   "Complete Now",
+          //                   style: AppTextStyles.bodySmall.copyWith(
+          //                     color: Colors.white,
+          //                     fontWeight: FontWeight.bold,
+          //                   ),
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         );
+          //       }
+          //     }
+          //     return const SizedBox.shrink();
+          //   },
+          // ),
 
           // ── Hero banner ─────────────────────────────────
           const PatientHeroBanner(),

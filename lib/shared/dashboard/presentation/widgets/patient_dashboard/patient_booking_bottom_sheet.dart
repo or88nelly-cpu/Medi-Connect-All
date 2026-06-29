@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
-import 'package:medi_connect/modules/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
 
 class PatientBookingBottomSheet extends StatefulWidget {
   const PatientBookingBottomSheet({super.key});
@@ -24,90 +22,6 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
   void initState() {
     super.initState();
     context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
-  }
-
-  void _confirmBooking(BuildContext context, UserModel doc) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-        title: Text("Confirm Appointment", style: AppTextStyles.titleLarge),
-        content: Text(
-          "Do you want to book an appointment with ${doc.name}?\nConsultation Fee: ₹ ${doc.consultationFee ?? 500}",
-          style: TextStyle(color: isDark ? Colors.white70 : Colors.black87),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final authState = context.read<AuthBloc>().state;
-              if (authState is Authenticated) {
-                final user = UserModel.fromEntity(authState.user);
-                final updatedMetadata = Map<String, dynamic>.from(
-                  user.metadata ?? {},
-                );
-                final currentApts = List<dynamic>.from(
-                  updatedMetadata['appointments'] ??
-                      [
-                        {
-                          'doctor': 'Dr. Sarah Johnson',
-                          'specialty': 'Cardiologist',
-                          'time': 'June 12, 10:30 AM',
-                          'type': 'Cardiology Clinic',
-                        },
-                        {
-                          'doctor': 'Dr. Michael Chen',
-                          'specialty': 'Neurologist',
-                          'time': 'June 15, 02:00 PM',
-                          'type': 'Neurology Clinic',
-                        },
-                      ],
-                );
-
-                final newApt = {
-                  'doctor': doc.name ?? 'Dr. Specialist',
-                  'specialty': doc.specialization ?? 'General Medicine',
-                  'time': 'June 18, 09:30 AM',
-                  'type': doc.department ?? 'General Clinic',
-                };
-
-                currentApts.insert(0, newApt);
-                updatedMetadata['appointments'] = currentApts;
-
-                final updatedUser = user.copyWith(metadata: updatedMetadata);
-
-                // Save to database
-                await GetIt.instance<DoctorStaffRemoteDataSource>()
-                    .updateDoctorStaffMember(updatedUser);
-
-                // Update local auth state
-                if (context.mounted) {
-                  context.read<AuthBloc>().add(UserUpdated(updatedUser));
-                }
-              }
-              if (ctx.mounted) Navigator.pop(ctx); // Close dialog
-              if (context.mounted) Navigator.pop(context); // Close bottom sheet
-
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      "Appointment booked with ${doc.name} successfully.",
-                    ),
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                );
-              }
-            },
-            child: const Text("Confirm"),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -186,32 +100,9 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
       const UserModel(
         id: 'doc-1',
         email: 'sarah.j@mediconnect.com',
-        name: 'Dr. Sarah Johnson',
-        role: 'doctor',
-        specialization: 'Cardiologist',
-        department: 'Cardiology',
-        consultationFee: 1200.0,
-        experience: 12,
-      ),
-      const UserModel(
-        id: 'doc-2',
-        email: 'michael.c@mediconnect.com',
-        name: 'Dr. Michael Chen',
-        role: 'doctor',
-        specialization: 'Neurologist',
-        department: 'Neurology',
-        consultationFee: 1500.0,
-        experience: 9,
-      ),
-      const UserModel(
-        id: 'doc-3',
-        email: 'james.w@mediconnect.com',
-        name: 'Dr. James Wilson',
-        role: 'doctor',
-        specialization: 'Pediatrician',
-        department: 'Pediatrics',
-        consultationFee: 1000.0,
-        experience: 15,
+        firstName: 'Dr. Sarah',
+        lastName: 'Johnson',
+        role: UserRole.doctor,
       ),
     ];
 
@@ -246,7 +137,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
           ),
         ),
         title: Text(
-          doc.name ?? 'Dr. Specialist',
+          doc.fullName ?? 'Dr. Specialist',
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: isDark ? Colors.white : AppColors.textPrimary(context),
@@ -257,12 +148,12 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
           children: [
             SizedBox(height: 4.h),
             Text(
-              "${doc.specialization ?? 'General Medicine'} | Exp: ${doc.experience ?? 5} Yrs",
+              "'General Medicine'} | Exp: 5 Yrs",
               style: TextStyle(fontSize: 12.sp),
             ),
             SizedBox(height: 2.h),
             Text(
-              "Fee: ₹ ${doc.consultationFee ?? 500}",
+              "Fee: ₹ 500",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,
@@ -272,7 +163,8 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
           ],
         ),
         trailing: ElevatedButton(
-          onPressed: () => _confirmBooking(context, doc),
+          onPressed: () => {},
+          // onPressed: () => _confirmBooking(context, doc),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.secondary,
             elevation: 0,

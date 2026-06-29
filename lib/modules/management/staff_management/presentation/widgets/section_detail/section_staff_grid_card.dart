@@ -37,7 +37,7 @@ class SectionStaffGridCard extends StatelessWidget {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final status = stf.status;
+    final status = stf.status ?? 'Active';
 
     return Container(
       decoration: BoxDecoration(
@@ -107,7 +107,7 @@ class SectionStaffGridCard extends StatelessWidget {
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    stf.name ?? '',
+                    stf.fullName,
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textColor,
@@ -128,7 +128,7 @@ class SectionStaffGridCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
-                      stf.staffRole ?? AppStrings.supportStaff,
+                      stf.role.name,
                       style: TextStyle(
                         color: AppColors.secondary,
                         fontSize: 9.sp,

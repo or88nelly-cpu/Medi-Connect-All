@@ -22,10 +22,9 @@ class DoctorWelcomeBanner extends StatelessWidget {
         if (state is Authenticated) {
           final user = state.user;
           name =
-              user.name ??
-              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+              user.fullName;
           profileImage = user.profilePhoto;
-          specialty = user.specialization ?? 'General Practitioner';
+          specialty ='General Practitioner';
         }
 
         return Container(

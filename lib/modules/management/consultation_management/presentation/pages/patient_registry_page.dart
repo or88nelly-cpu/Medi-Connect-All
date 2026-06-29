@@ -128,8 +128,8 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   final queryLower = query.toLowerCase().trim();
                                   final count = patientsList.where((p) {
                                     if (queryLower.isEmpty) return true;
-                                    final name = (p.fullName ?? '').toLowerCase();
-                                    final uhid = (p.id ?? '')
+                                    final name = (p.fullName).toLowerCase();
+                                    final uhid = (p.id  )
                                         .toLowerCase();
                                     final phone = (p.phone ?? '')
                                         .toLowerCase();
@@ -344,14 +344,14 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                       'specialty': 'Customer Care',
                                       'doctor_name': 'Customer Care Department',
                                       'invoice_number':
-                                          'REG-${patient.id?.split('-').last ?? ""}',
+                                          'REG-${patient.id.split('-').last ?? ""}',
                                       'registration_fee': 200,
                                       'registration_payment_status':
                                           patient.status == 'Active'
                                           ? 'Paid'
                                           : 'Pending',
                                       'prescription_notes':
-                                          'Initial patient registration from Customer Care. UHID: ${patient.patientId ?? ""}.',
+                                          'Initial patient registration from Customer Care. UHID: ${patient.id ?? ""}.',
                                       'recorded_at':
                                           
                                           DateTime.now().toIso8601String(),

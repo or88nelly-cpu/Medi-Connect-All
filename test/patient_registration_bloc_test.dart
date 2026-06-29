@@ -189,10 +189,10 @@ void main() {
       expect(fakeRepository.registerCalled, true);
       expect(fakeRepository.registeredPatient?.firstName, 'John');
       expect(fakeRepository.registeredPatient?.lastName, 'Doe');
-      expect(fakeRepository.registeredPatient?.phoneNumber, '9876543210');
+      expect(fakeRepository.registeredPatient?.phone, '9876543210');
       expect(
-        fakeRepository.registeredPatient?.patientId,
-        bloc.state.generatedUHID,
+        fakeRepository.sentMrdRecord?['prescription_notes'].toString(),
+        contains(bloc.state.generatedUHID),
       );
       expect(fakeRepository.sentMrdRecord?['patient_name'], 'John Doe');
     },
@@ -253,8 +253,8 @@ void main() {
       expect(fakeRepository.updatedPatient?.id, 'test-user-id');
       expect(fakeRepository.updatedPatient?.firstName, 'Sarah');
       expect(fakeRepository.updatedPatient?.lastName, 'Smith');
-      expect(fakeRepository.updatedPatient?.name, 'Sarah Smith');
-      expect(fakeRepository.updatedPatient?.phoneNumber, '9876543212');
+      expect(fakeRepository.updatedPatient?.fullName, 'Sarah Smith');
+      expect(fakeRepository.updatedPatient?.phone, '9876543212');
     },
   );
 }
