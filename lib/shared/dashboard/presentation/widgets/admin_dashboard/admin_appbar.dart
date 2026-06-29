@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/constants/app_fonts.dart';
 import 'package:medi_connect/core/functions/dashboard_utils.dart';
@@ -38,19 +39,15 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
         if (state is Authenticated) {
           final user = state.user;
           name =
-              user.name ??
-              (user.firstName != null
-                  ? "${user.firstName} ${user.lastName ?? ''}".trim()
-                  : "Administrator");
+              user.fullName ;
 
           accessLevel =
-              user.accessLevel ??
-              (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
+             user.role.value.toUpperCase();
 
           profileImage = ProfileImageHelper.resolveImagePath(
-            user.profileImage,
+            user.profilePhoto,
 
-            user.role,
+            user.role.value,
             user.gender,
           );
         }

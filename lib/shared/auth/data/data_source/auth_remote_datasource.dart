@@ -77,7 +77,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         if (insertResponse.isEmpty) {
           throw const ServerException("Failed to auto-create user profile.");
         }
-        dbProfile = insertResponse.first as Map<String, dynamic>;
+        dbProfile = insertResponse.first;
       } else {
         dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
       }
@@ -224,7 +224,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         }).select();
 
         if (insertResponse.isNotEmpty) {
-          dbProfile = insertResponse.first as Map<String, dynamic>;
+          dbProfile = insertResponse.first;
         }
       } else {
         dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
@@ -309,7 +309,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         if (insertResponse.isEmpty) {
           return null;
         }
-        dbProfile = insertResponse.first as Map<String, dynamic>;
+        dbProfile = insertResponse.first;
       } else {
         dbProfile = _mergeProfileDetails(dbProfiles.first as Map<String, dynamic>);
       }

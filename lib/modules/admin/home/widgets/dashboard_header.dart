@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -305,9 +306,9 @@ class DashboardHeader extends StatelessWidget {
                 width: 78.r,
                 height: 78.r,
                 imagePath: ProfileImageHelper.resolveImagePath(
-                  user?.profileImage,
-                  user?.role ?? "admin",
-                  user?.gender,
+                  user?.profilePhoto,
+                  user?.role.value??"",
+                    user?.gender,
                 ),
               ),
             ),

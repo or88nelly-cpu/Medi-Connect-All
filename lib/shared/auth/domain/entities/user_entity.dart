@@ -1,123 +1,66 @@
 import 'package:equatable/equatable.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 class UserEntity extends Equatable {
   final String id;
-  final String email;
-  final String? name;
-  final String? phoneNumber;
-  final String role; // patient, doctor, staff, admin
-  final bool profileCompletionStatus;
-  final int onboardingStep;
-  final String status;
-  final String? department;
-  final String? qualification;
-  final Map<String, dynamic>? metadata;
-
-  // Stage 2 onboarding fields
-  final String? firstName;
-  final String? lastName;
-  final String? dateOfBirth;
-  final int? age;
+  final String? authUserId;
+  final String firstName;
+  final String? middleName;
+  final String lastName;
+  final String? email;
+  final String? phone;
   final String? gender;
-  final String? profileImage;
-  final String? address;
-  final String? emergencyContact;
+  final DateTime? dob;
   final String? bloodGroup;
-  final String? maritalStatus;
-
-  // Stage 3 onboarding fields
-  final String? employeeId;
-  final String? patientId;
-  final String? medicalRegistrationNumber;
-  final int? experience;
-  final String? specialization;
-  final double? consultationFee;
-  final String? availabilityStatus;
-  final String? staffRole;
-  final String? joiningDate;
-  final String? allergies;
-  final String? chronicDiseases;
-  final String? insuranceProvider;
-  final String? insuranceNumber;
-  final String? designation;
-  final String? accessLevel;
+  final String? profilePhoto;
+  final String? status;
+  final DateTime? lastLoginAt;
+  final DateTime? activeAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final UserRole role;
 
   const UserEntity({
     required this.id,
-    required this.email,
-    this.name,
-    this.phoneNumber,
-    required this.role,
-    this.profileCompletionStatus = false,
-    this.onboardingStep = 1,
-    this.status = 'Pending Registration',
-    this.department,
-    this.qualification,
-    this.metadata,
-    this.firstName,
-    this.lastName,
-    this.dateOfBirth,
-    this.age,
+    this.authUserId,
+    required this.firstName,
+    this.middleName,
+    required this.lastName,
+    this.email,
+    this.phone,
     this.gender,
-    this.profileImage,
-    this.address,
-    this.emergencyContact,
+    this.dob,
     this.bloodGroup,
-    this.maritalStatus,
-    this.employeeId,
-    this.patientId,
-    this.medicalRegistrationNumber,
-    this.experience,
-    this.specialization,
-    this.consultationFee,
-    this.availabilityStatus = 'Available',
-    this.staffRole,
-    this.joiningDate,
-    this.allergies,
-    this.chronicDiseases,
-    this.insuranceProvider,
-    this.insuranceNumber,
-    this.designation,
-    this.accessLevel,
+    this.profilePhoto,
+    this.status,
+    this.lastLoginAt,
+    this.activeAt,
+    this.createdAt,
+    this.updatedAt,
+    this.role = UserRole.patient,
   });
 
   @override
   List<Object?> get props => [
     id,
-    email,
-    name,
-    phoneNumber,
-    role,
-    profileCompletionStatus,
-    onboardingStep,
-    status,
-    department,
-    qualification,
-    metadata,
+    authUserId,
     firstName,
+    middleName,
     lastName,
-    dateOfBirth,
-    age,
+    email,
+    phone,
     gender,
-    profileImage,
-    address,
-    emergencyContact,
+    dob,
     bloodGroup,
-    maritalStatus,
-    employeeId,
-    patientId,
-    medicalRegistrationNumber,
-    experience,
-    specialization,
-    consultationFee,
-    availabilityStatus,
-    staffRole,
-    joiningDate,
-    allergies,
-    chronicDiseases,
-    insuranceProvider,
-    insuranceNumber,
-    designation,
-    accessLevel,
+    profilePhoto,
+    status,
+    lastLoginAt,
+    activeAt,
+    createdAt,
+    updatedAt,
+    role,
   ];
+  String get fullName {
+    return "$firstName ${middleName ?? ''} $lastName";
+  }
 }

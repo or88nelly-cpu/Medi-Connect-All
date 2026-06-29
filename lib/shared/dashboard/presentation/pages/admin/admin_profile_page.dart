@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
@@ -27,14 +28,13 @@ class AdminProfilePage extends StatelessWidget {
         if (state is Authenticated) {
           final user = state.user;
           name =
-              user.name ??
-              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
-          email = user.email;
-          phone = user.phoneNumber;
-          profileImage = user.profileImage;
-          accessLevel =
-              user.accessLevel ??
-              (user.role == 'admin' ? "Super Admin" : user.role.toUpperCase());
+              user.fullName 
+             ;
+          email = user.email??"";
+          phone = user.phone;
+          profileImage = user.profilePhoto;
+          accessLevel =user.role.value.toUpperCase()
+              ;
         }
 
         return SingleChildScrollView(

@@ -262,7 +262,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                 ),
                                 SizedBox(height: 6.h),
                                 DropdownButtonFormField<String>(
-                                  value: _selectedWard,
+                                  initialValue: _selectedWard,
                                   dropdownColor: isDark
                                       ? AppColors.terminalDarkCard
                                       : Colors.white,
@@ -395,7 +395,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                           }
 
                           return DropdownButtonFormField<UserModel>(
-                            value: _selectedDoctor,
+                            initialValue: _selectedDoctor,
                             hint: Text(
                               "Choose a doctor",
                               style: TextStyle(

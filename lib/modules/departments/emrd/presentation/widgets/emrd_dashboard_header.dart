@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
@@ -59,7 +58,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                 width: 170.w,
                 height: 120.h,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const SizedBox(),
+                errorBuilder: (_, _, _) => const SizedBox(),
               ),
             ),
           ),
@@ -73,8 +72,8 @@ class EmrdDashboardHeader extends StatelessWidget {
               child: CustomPaint(
                 painter: ECGPainter(
                   color: isDark
-                      ? Colors.white.withOpacity(0.03)
-                      : AppColors.primary.withOpacity(0.07),
+                      ? Colors.white.withValues(alpha: 0.03)
+                      : AppColors.primary.withValues(alpha: 0.07),
                 ),
               ),
             ),
@@ -99,12 +98,12 @@ class EmrdDashboardHeader extends StatelessWidget {
                           border: Border.all(
                             color: isDark
                                 ? Colors.white24
-                                : AppColors.primary.withOpacity(0.15),
+                                : AppColors.primary.withValues(alpha: 0.15),
                             width: 1.2,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
+                              color: Colors.black.withValues(alpha: 0.04),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -213,7 +212,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
+                                color: Colors.black.withValues(alpha: 0.05),
                                 blurRadius: 6,
                               ),
                             ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get_it/get_it.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
@@ -105,11 +106,10 @@ class _StaffDashboardBody extends StatelessWidget {
         if (state is Authenticated) {
           final user = state.user;
           name =
-              user.name ??
-              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+              user.fullName;
           if (name.isEmpty) name = 'Staff Member';
-          profileImage = user.profileImage;
-          roleLabel = user.staffRole ?? user.department ?? 'Medical Support';
+          profileImage = user.profilePhoto;
+          roleLabel = user.role.value;
         }
 
         return SafeArea(

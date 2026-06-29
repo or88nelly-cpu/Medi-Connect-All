@@ -92,9 +92,8 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
               String adminName = "Administrator";
               if (authState is Authenticated) {
                 adminName =
-                    authState.user.name ??
-                    "${authState.user.firstName ?? ''} ${authState.user.lastName ?? ''}"
-                        .trim();
+                    authState.user.fullName 
+                   ;
               }
 
               return BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(

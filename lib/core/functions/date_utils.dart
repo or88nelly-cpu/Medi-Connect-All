@@ -56,6 +56,56 @@ class AppDateUtils {
         date1.month == date2.month &&
         date1.day == date2.day;
   }
+  static String? calculateAge(DateTime? dob) {
+    if (dob == null) return null;
+
+    final now = DateTime.now();
+
+    int years = now.year - dob.year;
+    int months = now.month - dob.month;
+    int days = now.day - dob.day;
+
+    if (days < 0) {
+      months--;
+      final previousMonth = DateTime(now.year, now.month, 0);
+      days += previousMonth.day;
+    }
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    final totalDays = now.difference(dob).inDays;
+
+    // Less than 1 week
+    if (totalDays < 7) {
+      return '$totalDays day${totalDays == 1 ? '' : 's'}';
+    }
+
+    // Less than 1 month
+    if (years == 0 && months == 0) {
+      final weeks = totalDays ~/ 7;
+      return '$weeks week${weeks == 1 ? '' : 's'}';
+    }
+
+    // Less than 1 year
+    if (years == 0) {
+      return '$months month${months == 1 ? '' : 's'}';
+    }
+
+    // Less than 10 years
+    if (years < 10) {
+      if (months == 0) {
+        return '$years year${years == 1 ? '' : 's'}';
+      }
+      return '$years year${years == 1 ? '' : 's'} '
+          '$months month${months == 1 ? '' : 's'}';
+    }
+
+    // 10 years or above
+    return '$years year${years == 1 ? '' : 's'}';
+  }
 
   AppDateUtils._();
 }

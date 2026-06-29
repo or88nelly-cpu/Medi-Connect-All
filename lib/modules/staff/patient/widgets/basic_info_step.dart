@@ -133,10 +133,12 @@ class BasicInfoStep extends StatelessWidget {
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (val) {
-                          if (val == null || val.trim().isEmpty)
+                          if (val == null || val.trim().isEmpty) {
                             return AppStrings.requiredField;
-                          if (val.trim().length < 8)
+                          }
+                          if (val.trim().length < 8) {
                             return AppStrings.invalidPhone;
+                          }
                           return null;
                         },
                       ),
@@ -208,10 +210,12 @@ class BasicInfoStep extends StatelessWidget {
                         ),
                         keyboardType: TextInputType.number,
                         validator: (val) {
-                          if (val == null || val.trim().isEmpty)
+                          if (val == null || val.trim().isEmpty) {
                             return AppStrings.requiredField;
-                          if (val.trim().length != 6)
+                          }
+                          if (val.trim().length != 6) {
                             return "Enter 6 digit pincode";
+                          }
                           return null;
                         },
                       ),

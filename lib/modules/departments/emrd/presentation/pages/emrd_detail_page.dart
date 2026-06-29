@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -56,9 +57,9 @@ class EmrdDetailPage extends StatelessWidget {
                   String? gender;
 
                   if (authState is Authenticated) {
-                    userRole = authState.user.role;
-                    userName = authState.user.name ?? 'Staff Member';
-                    profileImage = authState.user.profileImage;
+                    userRole = authState.user.role.value;
+                    userName = authState.user.fullName ;
+                    profileImage = authState.user.profilePhoto;
                     gender = authState.user.gender;
                   }
 

@@ -9,9 +9,7 @@ import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/widgets/emrd_list_item_card.dart';
-import 'package:medi_connect/modules/management/consultation_management/presentation/widgets/emrd_record_details_sheet.dart';
 import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 
 class PatientRegistryPage extends StatefulWidget {
   const PatientRegistryPage({super.key});

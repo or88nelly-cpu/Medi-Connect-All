@@ -48,7 +48,7 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.01),
+            color: Colors.black.withValues(alpha: 0.01),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -134,7 +134,7 @@ class EMRDAnalyticsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paintGrid = Paint()
-      ..color = isDark ? Colors.white10 : Colors.black.withOpacity(0.05)
+      ..color = isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05)
       ..strokeWidth = 1;
 
     final paintLine = Paint()
@@ -206,7 +206,7 @@ class EMRDAnalyticsPainter extends CustomPainter {
     }
 
     final gradient = LinearGradient(
-      colors: [primaryColor.withOpacity(0.3), primaryColor.withOpacity(0.0)],
+      colors: [primaryColor.withValues(alpha: 0.3), primaryColor.withValues(alpha: 0.0)],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );
@@ -217,8 +217,8 @@ class EMRDAnalyticsPainter extends CustomPainter {
 
     final gradient2 = LinearGradient(
       colors: [
-        secondaryColor.withOpacity(0.2),
-        secondaryColor.withOpacity(0.0),
+        secondaryColor.withValues(alpha: 0.2),
+        secondaryColor.withValues(alpha: 0.0),
       ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,

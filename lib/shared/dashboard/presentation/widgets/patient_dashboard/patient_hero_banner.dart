@@ -30,9 +30,7 @@ class PatientHeroBanner extends StatelessWidget {
         if (state is Authenticated) {
           final user = state.user;
           name = user.name ??
-              (user.firstName != null
-                  ? '${user.firstName} ${user.lastName ?? ''}'.trim()
-                  : 'Patient');
+              ('${user.firstName} ${user.lastName ?? ''}'.trim());
           patientId = user.patientId ?? user.id.substring(0, 7).toUpperCase();
           profileImage = user.profileImage;
           gender = user.gender;

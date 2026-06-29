@@ -155,7 +155,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                             String? profileImage;
                             String? gender;
                             if (authState is Authenticated) {
-                              profileImage = authState.user.profileImage;
+                              profileImage = authState.user.profilePhoto;
                               gender = authState.user.gender;
                             }
                             return Padding(

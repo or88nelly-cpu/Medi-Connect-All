@@ -319,9 +319,7 @@ class _RoleDrawerHeader extends StatelessWidget {
           final user = state.user;
           name =
               user.name ??
-              (user.firstName != null
-                  ? '${user.firstName} ${user.lastName ?? ''}'.trim()
-                  : roleLabel);
+              ('${user.firstName} ${user.lastName ?? ''}'.trim());
           email = user.email;
           profileImage = user.profileImage;
         }
