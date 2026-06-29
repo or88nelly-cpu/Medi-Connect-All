@@ -20,7 +20,8 @@ class StaffOperationsPage extends StatelessWidget {
         String departmentTitle = 'Customer Care';
         if (state is Authenticated) {
           final role = state.user.role.name;
-          if (role.toLowerCase().contains('staff') || role.toLowerCase().contains('doctor')) {
+          if (role.toLowerCase().contains('staff') ||
+              role.toLowerCase().contains('doctor')) {
             departmentTitle = 'Customer Care';
           }
         }

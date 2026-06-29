@@ -217,7 +217,7 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
         }
       }
 
-      final double baseFee =  500.0;
+      final double baseFee = 500.0;
       final double finalFee = followUp ? 0.0 : baseFee;
 
       emit(

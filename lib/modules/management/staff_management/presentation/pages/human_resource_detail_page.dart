@@ -521,36 +521,33 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                   builder: (context, sortBy, _) {
                     // Filter staff
                     final filtered = sourceList.where((u) {
-                      final nameMatch = (u.fullName ?? '').toLowerCase().contains(
-                        searchQuery.toLowerCase(),
-                      );
-                      final roleMatch = u.role.name
+                      final nameMatch = (u.fullName ?? '')
                           .toLowerCase()
                           .contains(searchQuery.toLowerCase());
-                      final emailMatch = u.email?.toLowerCase().contains(
+                      final roleMatch = u.role.name.toLowerCase().contains(
                         searchQuery.toLowerCase(),
-                      )??false;
-                      final phoneMatch = (u.phone ?? '').contains(
-                        searchQuery,
                       );
+                      final emailMatch =
+                          u.email?.toLowerCase().contains(
+                            searchQuery.toLowerCase(),
+                          ) ??
+                          false;
+                      final phoneMatch = (u.phone ?? '').contains(searchQuery);
 
                       final matchesSearch =
                           nameMatch || roleMatch || emailMatch || phoneMatch;
                       final matchesStatus =
                           statusFilter == 'All' ||
-                          (u.status ?? 'Active').toLowerCase() == statusFilter.toLowerCase();
+                          (u.status ?? 'Active').toLowerCase() ==
+                              statusFilter.toLowerCase();
                       return matchesSearch && matchesStatus;
                     }).toList();
 
                     // Sort staff
                     if (sortBy == 'Name (A-Z)') {
-                      filtered.sort(
-                        (a, b) => a.fullName.compareTo(b.fullName),
-                      );
+                      filtered.sort((a, b) => a.fullName.compareTo(b.fullName));
                     } else if (sortBy == 'Name (Z-A)') {
-                      filtered.sort(
-                        (a, b) => b.fullName.compareTo(a.fullName),
-                      );
+                      filtered.sort((a, b) => b.fullName.compareTo(a.fullName));
                     }
 
                     return Column(

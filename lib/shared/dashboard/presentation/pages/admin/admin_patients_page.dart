@@ -73,7 +73,8 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
     if (dob == null) return 30;
     final now = DateTime.now();
     int age = now.year - dob.year;
-    if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
+    if (now.month < dob.month ||
+        (now.month == dob.month && now.day < dob.day)) {
       age--;
     }
     return age;
@@ -167,7 +168,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
 
                   final nameParts = nameController.text.trim().split(' ');
                   final firstName = nameParts.isNotEmpty ? nameParts.first : '';
-                  final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
+                  final lastName = nameParts.length > 1
+                      ? nameParts.sublist(1).join(' ')
+                      : '';
 
                   final newPatient = UserModel(
                     id: _generateUUID(),
@@ -179,7 +182,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                         : null,
                     role: UserRole.patient,
                     status: 'Active',
-                    dob: DateTime.now().subtract(Duration(days: 365 * (int.tryParse(ageController.text) ?? 30))),
+                    dob: DateTime.now().subtract(
+                      Duration(
+                        days: 365 * (int.tryParse(ageController.text) ?? 30),
+                      ),
+                    ),
                     gender: gender,
                     bloodGroup: blood,
                   );
@@ -202,9 +209,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
     final ageController = TextEditingController(
       text: _calculateAge(patient.dob).toString(),
     );
-    final phoneController = TextEditingController(
-      text: patient.phone ?? '',
-    );
+    final phoneController = TextEditingController(text: patient.phone ?? '');
     String gender = patient.gender ?? 'Male';
     String blood = patient.bloodGroup ?? 'O+';
 
@@ -296,7 +301,9 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 if (nameController.text.isNotEmpty) {
                   final nameParts = nameController.text.trim().split(' ');
                   final firstName = nameParts.isNotEmpty ? nameParts.first : '';
-                  final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
+                  final lastName = nameParts.length > 1
+                      ? nameParts.sublist(1).join(' ')
+                      : '';
 
                   final updatedPatient = UserModel(
                     id: patient.id,
@@ -308,7 +315,14 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                         : null,
                     role: UserRole.patient,
                     status: patient.status ?? 'Active',
-                    dob: patient.dob ?? DateTime.now().subtract(Duration(days: 365 * (int.tryParse(ageController.text) ?? 30))),
+                    dob:
+                        patient.dob ??
+                        DateTime.now().subtract(
+                          Duration(
+                            days:
+                                365 * (int.tryParse(ageController.text) ?? 30),
+                          ),
+                        ),
                     gender: gender,
                     bloodGroup: blood,
                     profilePhoto: patient.profilePhoto,

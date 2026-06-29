@@ -140,7 +140,8 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                     }
                                     return patients.where((UserModel p) {
                                       final name = p.fullName.toLowerCase();
-                                      final email = (p.email ?? '').toLowerCase();
+                                      final email = (p.email ?? '')
+                                          .toLowerCase();
                                       final search = textEditingValue.text
                                           .toLowerCase();
                                       return name.contains(search) ||
@@ -510,9 +511,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
         _selectedPatient != null &&
         _selectedDoctor != null) {
       // Update patient status to 'Admitted'
-      final updatedPatient = _selectedPatient!.copyWith(
-        status: 'Admitted',
-      );
+      final updatedPatient = _selectedPatient!.copyWith(status: 'Admitted');
 
       context.read<PatientBloc>().add(UpdatePatient(updatedPatient));
 

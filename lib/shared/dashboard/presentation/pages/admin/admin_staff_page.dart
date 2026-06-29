@@ -249,8 +249,7 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                                           searchQuery
                                                               .toLowerCase(),
                                                         );
-                                                final matchesCategory =
-                                                    true;
+                                                final matchesCategory = true;
                                                 final matchesStatus =
                                                     statusFilter == 'All' ||
                                                     stf.status?.toLowerCase() ==
@@ -265,13 +264,17 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                               if (sortBy == 'Name (A-Z)') {
                                                 filtered.sort(
                                                   (a, b) => (a.fullName ?? '')
-                                                      .compareTo(b.fullName ?? ''),
+                                                      .compareTo(
+                                                        b.fullName ?? '',
+                                                      ),
                                                 );
                                               } else if (sortBy ==
                                                   'Name (Z-A)') {
                                                 filtered.sort(
                                                   (a, b) => (b.fullName ?? '')
-                                                      .compareTo(a.fullName ?? ''),
+                                                      .compareTo(
+                                                        a.fullName ?? '',
+                                                      ),
                                                 );
                                               }
 

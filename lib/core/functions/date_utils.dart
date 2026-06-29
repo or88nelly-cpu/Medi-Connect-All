@@ -56,6 +56,7 @@ class AppDateUtils {
         date1.month == date2.month &&
         date1.day == date2.day;
   }
+
   static String? calculateAge(DateTime? dob) {
     if (dob == null) return null;
 

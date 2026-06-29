@@ -41,8 +41,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
   }
 
   void _findRecentAppointmentAndFetchEMR() async {
-    final displayName =
-        widget.patient.fullName;
+    final displayName = widget.patient.fullName;
 
     // Filter appointments for this patient
     final patientApts = widget.doctorApts.where((a) {
@@ -95,8 +94,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
   }
 
   void _showConsultationHistory() {
-    final displayName =
-        widget.patient.fullName;
+    final displayName = widget.patient.fullName;
 
     showModalBottomSheet(
       context: context,
@@ -112,8 +110,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final displayName =
-        widget.patient.fullName;
+    final displayName = widget.patient.fullName;
 
     final sheetBg = isDark ? AppColors.terminalDarkBg : Colors.white;
     final secondaryText = AppColors.textSecondary(context);

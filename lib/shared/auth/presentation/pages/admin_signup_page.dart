@@ -338,22 +338,22 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
       ),
       child: Form(
         key: _formKey,
-        child:  ValueListenableBuilder<bool>(
-              valueListenable: _isAgreedNotifier,
-              builder: (context, isAgreed, _) {
-                return SignUpForm(
-                  nameController: _nameController,
-                  emailController: _emailController,
-                  phoneController: _phoneController,
-                  passwordController: _passwordController,
-                  selectedRole: _selectedUserRole,
-                  isAgreed: isAgreed,
-                 //
-                  onAgreedChanged: (agreed) => _isAgreedNotifier.value = agreed,
-                  onRegisterPressed: _onRegisterPressed,
-                );
-              },
-            )
+        child: ValueListenableBuilder<bool>(
+          valueListenable: _isAgreedNotifier,
+          builder: (context, isAgreed, _) {
+            return SignUpForm(
+              nameController: _nameController,
+              emailController: _emailController,
+              phoneController: _phoneController,
+              passwordController: _passwordController,
+              selectedRole: _selectedUserRole,
+              isAgreed: isAgreed,
+              //
+              onAgreedChanged: (agreed) => _isAgreedNotifier.value = agreed,
+              onRegisterPressed: _onRegisterPressed,
+            );
+          },
+        ),
       ),
     );
   }
@@ -419,7 +419,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
     _phoneController.dispose();
     _passwordController.dispose();
     _isAgreedNotifier.dispose();
-   
+
     super.dispose();
   }
 }

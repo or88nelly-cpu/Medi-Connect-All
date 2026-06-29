@@ -28,7 +28,9 @@ class DoctorInfoCard extends StatelessWidget {
         : AppColors.terminalLightLabel;
 
     // Derived values
-    final dob = user.dob != null ? AppDateUtils.formatDate(user.dob!) : "12 Apr 1985";
+    final dob = user.dob != null
+        ? AppDateUtils.formatDate(user.dob!)
+        : "12 Apr 1985";
     final ageStrVal = AppDateUtils.calculateAge(user.dob);
     final ageStr = ageStrVal != null ? " ($ageStrVal)" : " (39 Y)";
     final gender = user.gender ?? "Male";

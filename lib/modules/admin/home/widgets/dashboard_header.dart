@@ -307,8 +307,8 @@ class DashboardHeader extends StatelessWidget {
                 height: 78.r,
                 imagePath: ProfileImageHelper.resolveImagePath(
                   user?.profilePhoto,
-                  user?.role.value??"",
-                    user?.gender,
+                  user?.role.value ?? "",
+                  user?.gender,
                 ),
               ),
             ),

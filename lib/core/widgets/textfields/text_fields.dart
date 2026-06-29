@@ -22,7 +22,7 @@ class AppTextField extends StatelessWidget {
   final VoidCallback? onTap;
   final bool obscureText;
   final BoxConstraints? suffixIconConstraints;
-final BoxConstraints? prefixIconConstraints;
+  final BoxConstraints? prefixIconConstraints;
   const AppTextField({
     super.key,
     this.controller,

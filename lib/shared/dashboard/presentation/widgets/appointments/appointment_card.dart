@@ -130,9 +130,7 @@ class AppointmentCard extends StatelessWidget {
       final patientState = context.watch<PatientBloc>().state;
       if (patientState is PatientLoaded) {
         final matches = patientState.patients.where(
-          (p) =>
-              p.id == appointment.patientId ||
-              p.id == appointment.patientId,
+          (p) => p.id == appointment.patientId || p.id == appointment.patientId,
         );
         if (matches.isNotEmpty) {
           patient = matches.first;
@@ -545,7 +543,9 @@ class AppointmentCard extends StatelessWidget {
             _buildInfoRow(AppStrings.gender, genderStr, isDark, context),
             _buildInfoRow(
               AppStrings.ageLabel,
-              patient?.dob != null ? "${AppDateUtils.calculateAge(patient!.dob!)}" : "N/A",
+              patient?.dob != null
+                  ? "${AppDateUtils.calculateAge(patient!.dob!)}"
+                  : "N/A",
               isDark,
               context,
             ),

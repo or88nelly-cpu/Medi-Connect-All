@@ -216,10 +216,7 @@ class _HealthPageState extends State<HealthPage> {
                           color: Colors.white,
                         ),
                       )
-                    : const Icon(
-                        Icons.save_rounded,
-                        color: Colors.white,
-                      ),
+                    : const Icon(Icons.save_rounded, color: Colors.white),
                 label: Text(
                   _isSaving ? 'Saving…' : 'Save Health Data',
                   style: AppTextStyles.buttonLarge.copyWith(
@@ -228,7 +225,9 @@ class _HealthPageState extends State<HealthPage> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.6),
+                  disabledBackgroundColor: AppColors.primary.withValues(
+                    alpha: 0.6,
+                  ),
                   padding: EdgeInsets.all(16.r),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14.r),
@@ -362,8 +361,8 @@ class _BmiCard extends StatelessWidget {
                 ),
                 // Indicator thumb
                 Positioned(
-                  left: (MediaQuery.of(context).size.width - 72.w) *
-                          bmiProgress -
+                  left:
+                      (MediaQuery.of(context).size.width - 72.w) * bmiProgress -
                       4,
                   top: 0,
                   child: Container(
@@ -559,9 +558,7 @@ class _BloodPressureField extends StatelessWidget {
                     TextField(
                       controller: sysController,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
@@ -601,9 +598,7 @@ class _BloodPressureField extends StatelessWidget {
                     TextField(
                       controller: diaController,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
@@ -633,10 +628,26 @@ class _HealthTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tips = [
-      ('Stay hydrated — drink 8 glasses of water daily', Icons.water_drop_rounded, Color(0xFF1A8CFF)),
-      ('Exercise for 30 minutes a day', Icons.directions_run_rounded, Color(0xFF22C55E)),
-      ('Get 7–8 hours of sleep every night', Icons.bedtime_rounded, Color(0xFF8B5CF6)),
-      ('Eat a balanced diet rich in fruits & vegetables', Icons.eco_rounded, Color(0xFF22C55E)),
+      (
+        'Stay hydrated — drink 8 glasses of water daily',
+        Icons.water_drop_rounded,
+        Color(0xFF1A8CFF),
+      ),
+      (
+        'Exercise for 30 minutes a day',
+        Icons.directions_run_rounded,
+        Color(0xFF22C55E),
+      ),
+      (
+        'Get 7–8 hours of sleep every night',
+        Icons.bedtime_rounded,
+        Color(0xFF8B5CF6),
+      ),
+      (
+        'Eat a balanced diet rich in fruits & vegetables',
+        Icons.eco_rounded,
+        Color(0xFF22C55E),
+      ),
     ];
 
     return Container(

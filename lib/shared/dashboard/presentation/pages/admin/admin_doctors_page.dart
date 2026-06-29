@@ -230,13 +230,13 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                               // 1. Filter
                                               final filtered = doctorsList.where(
                                                 (doc) {
-                                                  final matchesSearch =
-                                                      doc.fullName
-                                                          .toLowerCase()
-                                                          .contains(
-                                                            searchQuery
-                                                                .toLowerCase(),
-                                                          );
+                                                  final matchesSearch = doc
+                                                      .fullName
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchQuery
+                                                            .toLowerCase(),
+                                                      );
                                                   final matchesSection = true;
                                                   final matchesStatus =
                                                       statusFilter == 'All' ||
@@ -253,12 +253,14 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                               // 2. Sort
                                               if (sortBy == 'Name (A-Z)') {
                                                 filtered.sort(
-                                                  (a, b) => a.fullName.compareTo(b.fullName),
+                                                  (a, b) => a.fullName
+                                                      .compareTo(b.fullName),
                                                 );
                                               } else if (sortBy ==
                                                   'Name (Z-A)') {
                                                 filtered.sort(
-                                                  (a, b) => b.fullName.compareTo(a.fullName),
+                                                  (a, b) => b.fullName
+                                                      .compareTo(a.fullName),
                                                 );
                                               }
 

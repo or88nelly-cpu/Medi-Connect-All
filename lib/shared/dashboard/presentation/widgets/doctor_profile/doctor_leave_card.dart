@@ -122,7 +122,8 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
 
             final authState = context.watch<AuthBloc>().state;
             final isAdmin =
-                authState is Authenticated && authState.user.role == UserRole.admin;
+                authState is Authenticated &&
+                authState.user.role == UserRole.admin;
 
             return Container(
               margin: EdgeInsets.only(bottom: 12.h),

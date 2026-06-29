@@ -206,7 +206,10 @@ class EMRDAnalyticsPainter extends CustomPainter {
     }
 
     final gradient = LinearGradient(
-      colors: [primaryColor.withValues(alpha: 0.3), primaryColor.withValues(alpha: 0.0)],
+      colors: [
+        primaryColor.withValues(alpha: 0.3),
+        primaryColor.withValues(alpha: 0.0),
+      ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );

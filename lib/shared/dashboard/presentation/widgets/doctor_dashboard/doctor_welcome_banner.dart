@@ -21,10 +21,9 @@ class DoctorWelcomeBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.fullName;
+          name = user.fullName;
           profileImage = user.profilePhoto;
-          specialty ='General Practitioner';
+          specialty = 'General Practitioner';
         }
 
         return Container(

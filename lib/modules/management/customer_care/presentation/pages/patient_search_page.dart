@@ -739,15 +739,13 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                       valueListenable: _queryNotifier,
                       builder: (context, query, _) {
                         final filtered = patientsList.where((p) {
-                          final nameMatch = p.fullName
-                              .toLowerCase()
-                              .contains(query.toLowerCase());
-                          final phoneMatch = (p.phone ?? '').contains(
-                            query,
+                          final nameMatch = p.fullName.toLowerCase().contains(
+                            query.toLowerCase(),
                           );
-                          final uhidMatch = (p.id)
-                              .toLowerCase()
-                              .contains(query.toLowerCase());
+                          final phoneMatch = (p.phone ?? '').contains(query);
+                          final uhidMatch = (p.id).toLowerCase().contains(
+                            query.toLowerCase(),
+                          );
                           return nameMatch || phoneMatch || uhidMatch;
                         }).toList();
 

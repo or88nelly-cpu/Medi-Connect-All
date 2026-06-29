@@ -30,13 +30,10 @@ class PatientStep extends StatelessWidget {
 
     return '${hex(8)}-${hex(4)}-4${hex(3)}-${(random.nextInt(4) + 8).toRadixString(16)}${hex(3)}-${hex(12)}';
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container();
   }
-
- 
-
 }

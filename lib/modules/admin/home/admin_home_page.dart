@@ -45,7 +45,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
           return AdminHomeMobile(user: user);
         }
         return CustomScaffold(
-           drawer: AdminDrawer(),
+          drawer: AdminDrawer(),
           appBarNeeded: false,
           body: SingleChildScrollView(
             padding: EdgeInsets.symmetric(

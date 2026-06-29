@@ -22,7 +22,6 @@ class SignUpForm extends StatefulWidget {
   final ValueChanged<bool> onAgreedChanged;
   final VoidCallback onRegisterPressed;
   final UserRole selectedRole;
-  
 
   const SignUpForm({
     super.key,
@@ -36,7 +35,6 @@ class SignUpForm extends StatefulWidget {
     required this.onAgreedChanged,
     required this.onRegisterPressed,
     required this.selectedRole,
-   
   });
 
   @override
@@ -53,7 +51,6 @@ class _SignUpFormState extends State<SignUpForm> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // ── Role selection title ──
-       
         SizedBox(height: 24.h),
 
         // ── Email field ──
@@ -125,44 +122,42 @@ class _SignUpFormState extends State<SignUpForm> {
           labelText: label,
           controller: controller,
           obscureText: isPassword && _isPasswordObscured,
-          keyboardType: keyboardType??TextInputType.text,
+          keyboardType: keyboardType ?? TextInputType.text,
           validator: validator,
-           suffixIcon: isPassword
-                ? GestureDetector(
-                    onTap: () => setState(
-                      () => _isPasswordObscured = !_isPasswordObscured,
+          suffixIcon: isPassword
+              ? GestureDetector(
+                  onTap: () => setState(
+                    () => _isPasswordObscured = !_isPasswordObscured,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 12.w),
+                    child: Icon(
+                      _isPasswordObscured
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      color: AppColors.textSecondary(
+                        context,
+                      ).withValues(alpha: 0.5),
+                      size: 20.r,
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 12.w),
-                      child: Icon(
-                        _isPasswordObscured
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: AppColors.textSecondary(
-                          context,
-                        ).withValues(alpha: 0.5),
-                        size: 20.r,
-                      ),
-                    ),
-                  )
-                : null,
-            prefixIcon: Padding(
-              padding: EdgeInsets.only(
-                left: isDesktop ? 14.w : 10.w,
-                right: isDesktop ? 10.w : 6.w,
-              ),
-              child: Icon(
-                prefixIcon,
-                color: AppColors.textSecondary(context).withValues(alpha: 0.5),
-                size: isDesktop ? 20.r : 18.r,
-              ),
+                  ),
+                )
+              : null,
+          prefixIcon: Padding(
+            padding: EdgeInsets.only(
+              left: isDesktop ? 14.w : 10.w,
+              right: isDesktop ? 10.w : 6.w,
             ),
-            prefixIconConstraints: BoxConstraints(minWidth: 44.w),
-            suffixIconConstraints: isPassword
-                ? BoxConstraints(minWidth: 44.w)
-                : null,
-          
-            
+            child: Icon(
+              prefixIcon,
+              color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+              size: isDesktop ? 20.r : 18.r,
+            ),
+          ),
+          prefixIconConstraints: BoxConstraints(minWidth: 44.w),
+          suffixIconConstraints: isPassword
+              ? BoxConstraints(minWidth: 44.w)
+              : null,
         ),
         TextFormField(
           controller: controller,

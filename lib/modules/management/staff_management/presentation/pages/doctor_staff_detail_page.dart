@@ -56,8 +56,8 @@ class DoctorStaffDetailPage extends StatelessWidget {
                         width: 100.r,
                         height: 100.r,
                         decoration: BoxDecoration(
-                           shape: BoxShape.circle,
-                           border: Border.all(color: roleColor, width: 3),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: roleColor, width: 3),
                         ),
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
@@ -75,7 +75,10 @@ class DoctorStaffDetailPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(currentUser.email ?? '', style: AppTextStyles.bodyMedium),
+                      Text(
+                        currentUser.email ?? '',
+                        style: AppTextStyles.bodyMedium,
+                      ),
                       SizedBox(height: 8.h),
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -120,11 +123,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
                         context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow(
-                        "Department",
-                        "Human Resource",
-                        context,
-                      ),
+                      _buildInfoRow("Department", "Human Resource", context),
                     ],
                   ),
                 ),
@@ -144,19 +143,15 @@ class DoctorStaffDetailPage extends StatelessWidget {
                         context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow(
-                        "Designation",
-                        "Support Staff",
-                        context,
-                      ),
+                      _buildInfoRow("Designation", "Support Staff", context),
+                      Divider(color: AppColors.border(context), height: 1),
+                      _buildInfoRow("Shift", "Day Shift", context),
                       Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
-                        "Shift",
-                        "Day Shift",
+                        "Status",
+                        currentUser.status ?? 'Active',
                         context,
                       ),
-                      Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow("Status", currentUser.status ?? 'Active', context),
                     ],
                   ),
                 ),

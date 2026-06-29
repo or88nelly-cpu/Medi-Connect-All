@@ -106,7 +106,7 @@ class _PatientAppointmentsTabState extends State<_PatientAppointmentsTab> {
           return const Center(child: CircularProgressIndicator());
         }
         final user = UserModel.fromEntity(state.user);
-        final metadataApts=null;
+        final metadataApts = null;
         final List<Map<String, String>> appointments = [];
         if (metadataApts != null) {
           for (var item in metadataApts) {
@@ -257,7 +257,7 @@ class _PatientRecordsTab extends StatelessWidget {
         final List<Map<String, String>> records = [];
         if (state is Authenticated) {
           final user = state.user;
-          final metadataRecs =null;
+          final metadataRecs = null;
           if (metadataRecs != null) {
             for (var item in metadataRecs) {
               if (item is Map) {
@@ -502,10 +502,8 @@ class _PatientProfileTab extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.fullName 
-              ;
-          email = user.email??"";
+          name = user.fullName;
+          email = user.email ?? "";
           phone = user.phone;
           profileImage = user.phone;
           bloodGroup = user.bloodGroup ?? 'O+';

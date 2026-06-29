@@ -129,10 +129,8 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   final count = patientsList.where((p) {
                                     if (queryLower.isEmpty) return true;
                                     final name = (p.fullName).toLowerCase();
-                                    final uhid = (p.id  )
-                                        .toLowerCase();
-                                    final phone = (p.phone ?? '')
-                                        .toLowerCase();
+                                    final uhid = (p.id).toLowerCase();
+                                    final phone = (p.phone ?? '').toLowerCase();
 
                                     if (filter == 'UHID') {
                                       return uhid.contains(queryLower);
@@ -260,8 +258,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                 if (queryLower.isEmpty) return true;
                                 final name = (p.fullName ?? '').toLowerCase();
                                 final uhid = (p.id ?? '').toLowerCase();
-                                final phone = (p.phone ?? '')
-                                    .toLowerCase();
+                                final phone = (p.phone ?? '').toLowerCase();
 
                                 if (filter == 'UHID') {
                                   return uhid.contains(queryLower);
@@ -352,9 +349,8 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                           : 'Pending',
                                       'prescription_notes':
                                           'Initial patient registration from Customer Care. UHID: ${patient.id ?? ""}.',
-                                      'recorded_at':
-                                          
-                                          DateTime.now().toIso8601String(),
+                                      'recorded_at': DateTime.now()
+                                          .toIso8601String(),
                                     },
                                   );
 

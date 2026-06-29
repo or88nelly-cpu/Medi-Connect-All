@@ -100,7 +100,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                 "Consultant Cardiologist",
+                  "Consultant Cardiologist",
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -117,12 +117,12 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                     ),
                     SizedBox(width: 4.w),
                     Text(
-                       "Cardiology Department",
+                      "Cardiology Department",
                       style: TextStyle(color: labelColor, fontSize: 10.sp),
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                     'DOC1001',
+                      'DOC1001',
                       style: TextStyle(color: labelColor, fontSize: 10.sp),
                     ),
                   ],

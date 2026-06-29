@@ -24,7 +24,7 @@ class PatientQuickStats extends StatelessWidget {
           final recs = null;
           if (recs != null) recCount = recs.length;
 
-          final prescriptions =null;
+          final prescriptions = null;
           if (prescriptions != null) presCount = prescriptions.length;
         }
 

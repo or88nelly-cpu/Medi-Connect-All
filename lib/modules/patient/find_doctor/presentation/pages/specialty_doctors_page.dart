@@ -79,7 +79,11 @@ class _SpecialtyDoctorsPageState extends State<SpecialtyDoctorsPage> {
 
   double _mockRating(String id) {
     final ratings = {
-      'doc-1': 4.9, 'doc-2': 4.7, 'doc-3': 4.8, 'doc-4': 4.5, 'doc-5': 4.9,
+      'doc-1': 4.9,
+      'doc-2': 4.7,
+      'doc-3': 4.8,
+      'doc-4': 4.5,
+      'doc-5': 4.9,
     };
     return ratings[id] ?? 4.5 + (id.hashCode % 5) * 0.1;
   }
@@ -159,9 +163,7 @@ class _SpecialtyDoctorsPageState extends State<SpecialtyDoctorsPage> {
                           BlocProvider.value(
                             value: context.read<DoctorStaffBloc>(),
                           ),
-                          BlocProvider.value(
-                            value: context.read<AuthBloc>(),
-                          ),
+                          BlocProvider.value(value: context.read<AuthBloc>()),
                         ],
                         child: BookingFlowPage(
                           preselectedDoctor: doc,
@@ -258,7 +260,11 @@ class _DoctorCard extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Row(
                       children: [
-                        Icon(Icons.star_rounded, color: const Color(0xFFFFB547), size: 14.r),
+                        Icon(
+                          Icons.star_rounded,
+                          color: const Color(0xFFFFB547),
+                          size: 14.r,
+                        ),
                         SizedBox(width: 3.w),
                         Text(
                           rating.toStringAsFixed(1),
@@ -268,7 +274,11 @@ class _DoctorCard extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 10.w),
-                        Icon(Icons.work_outline_rounded, color: AppColors.textSecondary(context), size: 12.r),
+                        Icon(
+                          Icons.work_outline_rounded,
+                          color: AppColors.textSecondary(context),
+                          size: 12.r,
+                        ),
                         SizedBox(width: 3.w),
                         Text(
                           '5 yrs exp',

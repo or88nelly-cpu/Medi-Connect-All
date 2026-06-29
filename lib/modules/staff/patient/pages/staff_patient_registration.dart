@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,13 +80,15 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
     _bloc = PatientRegistrationBloc(GetIt.I<PatientRepository>());
 
     // Sync text-field changes to BLoC without setState.
-    void syncBasicInfo() => _bloc.add(BasicInfoUpdated(
-          firstName: _firstNameCtrl.text,
-          lastName: _lastNameCtrl.text,
-          email: _emailCtrl.text,
-          phone: _phoneCtrl.text,
-          dob: _dobCtrl.text,
-        ));
+    void syncBasicInfo() => _bloc.add(
+      BasicInfoUpdated(
+        firstName: _firstNameCtrl.text,
+        lastName: _lastNameCtrl.text,
+        email: _emailCtrl.text,
+        phone: _phoneCtrl.text,
+        dob: _dobCtrl.text,
+      ),
+    );
 
     for (final ctrl in [
       _firstNameCtrl,
@@ -99,44 +100,49 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
       ctrl.addListener(syncBasicInfo);
     }
 
-    void syncAddress() => _bloc.add(AddressUpdated(
-          place: _placeCtrl.text,
-          wardNum: _wardCtrl.text,
-        ));
+    void syncAddress() => _bloc.add(
+      AddressUpdated(place: _placeCtrl.text, wardNum: _wardCtrl.text),
+    );
 
     for (final ctrl in [_placeCtrl, _wardCtrl]) {
       ctrl.addListener(syncAddress);
     }
 
-    void syncInsurance() => _bloc.add(InsuranceUpdated(
-          insuranceProvider: _bloc.state.insuranceProvider,
-          insurancePolicyId: _policyIdCtrl.text,
-          insuranceValidTill: _validTillCtrl.text,
-        ));
+    void syncInsurance() => _bloc.add(
+      InsuranceUpdated(
+        insuranceProvider: _bloc.state.insuranceProvider,
+        insurancePolicyId: _policyIdCtrl.text,
+        insuranceValidTill: _validTillCtrl.text,
+      ),
+    );
 
     for (final ctrl in [_policyIdCtrl, _validTillCtrl]) {
       ctrl.addListener(syncInsurance);
     }
 
-    void syncMedical() => _bloc.add(MedicalInfoUpdated(
-          bloodGroup: _bloc.state.bloodGroup,
-          smoking: _bloc.state.smoking,
-          alcohol: _bloc.state.alcohol,
-          dietType: _bloc.state.dietType,
-          exercise: _bloc.state.exercise,
-          allergies: _allergiesCtrl.text,
-          otherDetails: _otherDetailsCtrl.text,
-        ));
+    void syncMedical() => _bloc.add(
+      MedicalInfoUpdated(
+        bloodGroup: _bloc.state.bloodGroup,
+        smoking: _bloc.state.smoking,
+        alcohol: _bloc.state.alcohol,
+        dietType: _bloc.state.dietType,
+        exercise: _bloc.state.exercise,
+        allergies: _allergiesCtrl.text,
+        otherDetails: _otherDetailsCtrl.text,
+      ),
+    );
 
     for (final ctrl in [_allergiesCtrl, _otherDetailsCtrl]) {
       ctrl.addListener(syncMedical);
     }
 
-    void syncEmergency() => _bloc.add(EmergencyContactUpdated(
-          emergencyName: _emergencyNameCtrl.text,
-          emergencyRelationship: _bloc.state.emergencyRelationship,
-          emergencyPhone: _emergencyPhoneCtrl.text,
-        ));
+    void syncEmergency() => _bloc.add(
+      EmergencyContactUpdated(
+        emergencyName: _emergencyNameCtrl.text,
+        emergencyRelationship: _bloc.state.emergencyRelationship,
+        emergencyPhone: _emergencyPhoneCtrl.text,
+      ),
+    );
 
     for (final ctrl in [_emergencyNameCtrl, _emergencyPhoneCtrl]) {
       ctrl.addListener(syncEmergency);
@@ -154,7 +160,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
 
   void _initPatientModeIfNeeded() {
     final authState = context.read<AuthBloc>().state;
-    if (authState is! Authenticated || authState.user.role != UserRole.patient) return;
+    if (authState is! Authenticated || authState.user.role != UserRole.patient)
+      return;
 
     final user = authState.user;
 
@@ -183,31 +190,35 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
     const String emergencyPhone = '';
 
     // Dispatch initialization event to BLoC.
-    _bloc.add(PatientModeInitialized(
-      userId: user.id,
-      firstName: firstName,
-      lastName: lastName,
-      email: user.email ?? '',
-      phone: user.phone ?? '',
-      dob: user.dob != null ? user.dob!.toIso8601String().split('T').first : '',
-      address: '', // address not in new model
-      sex: user.gender ?? 'Male',
-      bloodGroup: user.bloodGroup ?? 'O+',
-      insuranceProvider: 'Star Health Insurance', // not in new model
-      insurancePolicyId: '', // not in new model
-      allergies: '', // not in new model
-      emergencyName: emergencyName,
-      emergencyPhone: emergencyPhone,
-      emergencyRelationship: 'Wife', // not in new model
-      wardNum: '', // not in new model
-      insuranceValidTill: '', // not in new model
-      genderIdentity: 'Cisgender Male', // not in new model
-      smoking: 'No', // not in new model
-      alcohol: 'Occasionally', // not in new model
-      dietType: 'Non Vegetarian', // not in new model
-      exercise: 'Regular', // not in new model
-      otherDetails: '', // not in new model
-    ));
+    _bloc.add(
+      PatientModeInitialized(
+        userId: user.id,
+        firstName: firstName,
+        lastName: lastName,
+        email: user.email ?? '',
+        phone: user.phone ?? '',
+        dob: user.dob != null
+            ? user.dob!.toIso8601String().split('T').first
+            : '',
+        address: '', // address not in new model
+        sex: user.gender ?? 'Male',
+        bloodGroup: user.bloodGroup ?? 'O+',
+        insuranceProvider: 'Star Health Insurance', // not in new model
+        insurancePolicyId: '', // not in new model
+        allergies: '', // not in new model
+        emergencyName: emergencyName,
+        emergencyPhone: emergencyPhone,
+        emergencyRelationship: 'Wife', // not in new model
+        wardNum: '', // not in new model
+        insuranceValidTill: '', // not in new model
+        genderIdentity: 'Cisgender Male', // not in new model
+        smoking: 'No', // not in new model
+        alcohol: 'Occasionally', // not in new model
+        dietType: 'Non Vegetarian', // not in new model
+        exercise: 'Regular', // not in new model
+        otherDetails: '', // not in new model
+      ),
+    );
 
     // Automatically resume from saved onboarding step
     // if (user.onboardingStep > 1 && user.onboardingStep <= 3) {
@@ -351,8 +362,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
     PatientRegistrationState state,
   ) async {
     // Address auto-fill from pincode fetch
-    if (state.pincodeFetchedAddress.isNotEmpty &&
-        _placeCtrl.text.isEmpty) {
+    if (state.pincodeFetchedAddress.isNotEmpty && _placeCtrl.text.isEmpty) {
       _placeCtrl.text = state.place;
     }
 
@@ -371,18 +381,19 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
         final updatedUser = UserModel(
           id: user.id,
           email: user.email,
-         
+
           firstName: _firstNameCtrl.text.trim(),
           lastName: _lastNameCtrl.text.trim(),
           phone: _phoneCtrl.text.trim(),
-          dob: DateTime.tryParse(_dobCtrl.text.trim())??DateTime.now(),
+          dob: DateTime.tryParse(_dobCtrl.text.trim()) ?? DateTime.now(),
           gender: state.sex,
           bloodGroup: state.bloodGroup,
           role: UserRole.patient,
-         
+
           status: 'Active',
-          profilePhoto:
-              state.photoPath.isNotEmpty ? state.photoPath : user.profilePhoto,
+          profilePhoto: state.photoPath.isNotEmpty
+              ? state.photoPath
+              : user.profilePhoto,
           // a: state.pincodeFetchedAddress,
           // insuranceProvider: state.insuranceProvider,
           // insuranceNumber: _policyIdCtrl.text.trim().isNotEmpty
@@ -413,8 +424,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
       }
     }
 
-    if (state.status == PatientRegistrationStatus.failure &&
-        context.mounted) {
+    if (state.status == PatientRegistrationStatus.failure && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(state.errorMessage),
@@ -487,8 +497,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
               phoneCtrl: _phoneCtrl,
               dobCtrl: _dobCtrl,
               selectedSex: state.sex,
-              onSexChanged: (val) =>
-                  _bloc.add(SexUpdated(val)),
+              onSexChanged: (val) => _bloc.add(SexUpdated(val)),
               pincodeCtrl: _pincodeCtrl,
               placeCtrl: _placeCtrl,
               wardCtrl: _wardCtrl,
@@ -503,71 +512,85 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
               policyIdCtrl: _policyIdCtrl,
               validTillCtrl: _validTillCtrl,
               selectedProvider: state.insuranceProvider,
-              onProviderChanged: (val) => _bloc.add(InsuranceUpdated(
-                insuranceProvider: val,
-                insurancePolicyId: _policyIdCtrl.text,
-                insuranceValidTill: _validTillCtrl.text,
-              )),
+              onProviderChanged: (val) => _bloc.add(
+                InsuranceUpdated(
+                  insuranceProvider: val,
+                  insurancePolicyId: _policyIdCtrl.text,
+                  insuranceValidTill: _validTillCtrl.text,
+                ),
+              ),
               bloodGroup: state.bloodGroup,
-              onBloodGroupChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: val,
-                smoking: state.smoking,
-                alcohol: state.alcohol,
-                dietType: state.dietType,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onBloodGroupChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: val,
+                  smoking: state.smoking,
+                  alcohol: state.alcohol,
+                  dietType: state.dietType,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               smoking: state.smoking,
-              onSmokingChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: val,
-                alcohol: state.alcohol,
-                dietType: state.dietType,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onSmokingChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: val,
+                  alcohol: state.alcohol,
+                  dietType: state.dietType,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               alcohol: state.alcohol,
-              onAlcoholChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: state.smoking,
-                alcohol: val,
-                dietType: state.dietType,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onAlcoholChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: state.smoking,
+                  alcohol: val,
+                  dietType: state.dietType,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               dietType: state.dietType,
-              onDietTypeChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: state.smoking,
-                alcohol: state.alcohol,
-                dietType: val,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onDietTypeChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: state.smoking,
+                  alcohol: state.alcohol,
+                  dietType: val,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               exercise: state.exercise,
-              onExerciseChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: state.smoking,
-                alcohol: state.alcohol,
-                dietType: state.dietType,
-                exercise: val,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onExerciseChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: state.smoking,
+                  alcohol: state.alcohol,
+                  dietType: state.dietType,
+                  exercise: val,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               allergiesCtrl: _allergiesCtrl,
               otherDetailsCtrl: _otherDetailsCtrl,
               emergencyNameCtrl: _emergencyNameCtrl,
               emergencyPhoneCtrl: _emergencyPhoneCtrl,
               emergencyRelationship: state.emergencyRelationship,
-              onRelationshipChanged: (val) => _bloc.add(EmergencyContactUpdated(
-                emergencyName: _emergencyNameCtrl.text,
-                emergencyRelationship: val,
-                emergencyPhone: _emergencyPhoneCtrl.text,
-              )),
+              onRelationshipChanged: (val) => _bloc.add(
+                EmergencyContactUpdated(
+                  emergencyName: _emergencyNameCtrl.text,
+                  emergencyRelationship: val,
+                  emergencyPhone: _emergencyPhoneCtrl.text,
+                ),
+              ),
               alternatePhoneCtrl: _alternatePhoneCtrl,
             );
 
@@ -608,9 +631,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                     : RouteNames.staffDashboard,
               ),
               onSharePressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(AppStrings.idCardDownloadStarted),
-                ),
+                const SnackBar(content: Text(AppStrings.idCardDownloadStarted)),
               ),
             );
 

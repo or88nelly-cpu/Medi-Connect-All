@@ -27,14 +27,11 @@ class AdminProfilePage extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.fullName 
-             ;
-          email = user.email??"";
+          name = user.fullName;
+          email = user.email ?? "";
           phone = user.phone;
           profileImage = user.profilePhoto;
-          accessLevel =user.role.value.toUpperCase()
-              ;
+          accessLevel = user.role.value.toUpperCase();
         }
 
         return SingleChildScrollView(

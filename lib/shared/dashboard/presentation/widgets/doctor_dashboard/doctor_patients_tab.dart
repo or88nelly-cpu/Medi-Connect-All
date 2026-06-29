@@ -147,7 +147,8 @@ class DoctorPatientsTab extends StatelessWidget {
                                   "${p.firstName ?? ''} ${p.lastName ?? ''}"
                                       .trim();
                               final gender = p.gender ?? "Not Specified";
-                              final age = AppDateUtils.calculateAge(p.dob) ?? "N/A";
+                              final age =
+                                  AppDateUtils.calculateAge(p.dob) ?? "N/A";
 
                               // Find appointment specialty/reason or fallback to chronic diseases
                               final AppointmentEntity? matchingApt = doctorApts
@@ -158,9 +159,7 @@ class DoctorPatientsTab extends StatelessWidget {
                                         displayName.toLowerCase(),
                                     orElse: () => null,
                                   );
-                              final issue =
-                                 
-                                  "General Consultation";
+                              final issue = "General Consultation";
 
                               return Card(
                                 margin: EdgeInsets.only(bottom: 12.h),

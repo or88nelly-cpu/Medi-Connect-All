@@ -40,8 +40,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
   }
 
   void _loadSlots() {
-    final slotsByDate =
-         {};
+    final slotsByDate = {};
     final dateData = slotsByDate[_selectedDate] as Map<dynamic, dynamic>? ?? {};
     final durationData =
         dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
@@ -141,7 +140,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
     //   widget.user.metadata ?? {},
     // );
     final slotsByDate = Map<String, dynamic>.from(
-      {},// updatedMetadata['slots_by_date'] ?? {},
+      {}, // updatedMetadata['slots_by_date'] ?? {},
     );
     final dateData = Map<String, dynamic>.from(
       slotsByDate[_selectedDate] ?? {},

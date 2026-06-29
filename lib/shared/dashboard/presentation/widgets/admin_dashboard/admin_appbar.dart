@@ -38,11 +38,9 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.fullName ;
+          name = user.fullName;
 
-          accessLevel =
-             user.role.value.toUpperCase();
+          accessLevel = user.role.value.toUpperCase();
 
           profileImage = ProfileImageHelper.resolveImagePath(
             user.profilePhoto,

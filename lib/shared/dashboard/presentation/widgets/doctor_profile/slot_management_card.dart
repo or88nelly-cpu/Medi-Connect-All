@@ -115,7 +115,9 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Mock slot ${slot['time']} status changed to $newStatus")),
+      SnackBar(
+        content: Text("Mock slot ${slot['time']} status changed to $newStatus"),
+      ),
     );
   }
 

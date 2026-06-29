@@ -132,7 +132,7 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                 "Cardiology",
+                  "Cardiology",
                   style: TextStyle(color: labelColor, fontSize: 11.sp),
                 ),
                 SizedBox(height: 6.h),

@@ -64,7 +64,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
     // Personal details initialization
     _nameController = TextEditingController(text: widget.user.fullName);
     _dobController = TextEditingController(
-      text: AppDateUtils.formatDate(widget.user.dob??DateTime.now()),
+      text: AppDateUtils.formatDate(widget.user.dob ?? DateTime.now()),
     );
     _emailController = TextEditingController(text: widget.user.email);
 
@@ -76,10 +76,9 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
       rawPhone = rawPhone.replaceFirst("+91", "");
     }
     _phoneController = TextEditingController(text: rawPhone);
-    
 
     // Address details initialization
-    final addressParts =  [];
+    final addressParts = [];
     _address1Controller = TextEditingController(
       text: addressParts.isNotEmpty
           ? addressParts[0].trim()
@@ -101,10 +100,8 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
     );
 
     // Additional info initialization
-    _languages =["English", "Hindi", "Punjabi"];
-    _selectedConsultationModes =
-       
-        ["Video", "In-Person"];
+    _languages = ["English", "Hindi", "Punjabi"];
+    _selectedConsultationModes = ["Video", "In-Person"];
     _aboutController = TextEditingController(
       text:
           "Dr. ${widget.user.fullName ?? ''} is a dedicated medical specialist with over a decade of clinical excellence.",
@@ -137,9 +134,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
           "${_address1Controller.text}, ${_address2Controller.text}, ${_cityController.text}, $_selectedState, ${_pincodeController.text}";
 
       // Build metadata
-      final updatedMetadata = Map<String, dynamic>.from(
-        {},
-      );
+      final updatedMetadata = Map<String, dynamic>.from({});
       updatedMetadata['languages'] = _languages;
       updatedMetadata['consultation_modes'] = _selectedConsultationModes;
       updatedMetadata['about'] = _aboutController.text;
@@ -147,8 +142,6 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
       final formattedPhone = _phoneController.text.startsWith("+91")
           ? _phoneController.text
           : "+91 ${_phoneController.text}";
-
-     
     }
   }
 
@@ -300,4 +293,3 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
     );
   }
 }
-

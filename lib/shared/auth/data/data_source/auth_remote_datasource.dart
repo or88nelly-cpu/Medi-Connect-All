@@ -224,7 +224,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         final user = response.user!;
         final insertResponse =
             await _supabaseService.client.from('users').insert({
-              'id': user.id,
+              'auth_user_id': user.id,
               'email': user.email ?? email,
               'phone': user.phone ?? user.userMetadata?['phone'] as String?,
               'role': user.userMetadata?['role'] as String? ?? 'patient',
@@ -303,9 +303,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (user == null) return null;
 
       // Fetch profile from users table
-      final List<dynamic> dbProfiles = await _supabaseService.client.from(
-        AppTableNames.users,
-      );
+      final List<dynamic> dbProfiles = await _supabaseService.client
+          .from(AppTableNames.users)
+          .select()
+          .eq('auth_user_id', user.id);
 
       Map<String, dynamic> dbProfile;
       if (dbProfiles.isEmpty) {
@@ -314,7 +315,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         );
         final insertResponse =
             await _supabaseService.client.from('users').insert({
-              'id': user.id,
+              'auth_user_id': user.id,
               'email': user.email ?? '',
               'phone': user.phone ?? user.userMetadata?['phone'] as String?,
               'role':

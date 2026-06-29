@@ -64,7 +64,9 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
       'patient_id': patient.id,
       'blood_group': patient.bloodGroup,
       'date_of_birth': patient.dob?.toIso8601String(),
-      'age': patient.dob != null ? (DateTime.now().year - patient.dob!.year) : 30,
+      'age': patient.dob != null
+          ? (DateTime.now().year - patient.dob!.year)
+          : 30,
       'gender': patient.gender,
       'address': '',
       'emergency_contact': null,
@@ -101,7 +103,9 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
       'id': patient.id,
       'blood_group': patient.bloodGroup,
       'date_of_birth': patient.dob?.toIso8601String(),
-      'age': patient.dob != null ? (DateTime.now().year - patient.dob!.year) : 30,
+      'age': patient.dob != null
+          ? (DateTime.now().year - patient.dob!.year)
+          : 30,
       'gender': patient.gender,
       'address': '',
       'emergency_contact': null,

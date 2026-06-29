@@ -18,7 +18,9 @@ class EmrdAIAssistantPanel extends StatelessWidget {
     required Color color,
     required bool isDark,
   }) {
-    final Color pillBg = isDark ? Colors.white.withValues(alpha: 0.03) : Colors.white;
+    final Color pillBg = isDark
+        ? Colors.white.withValues(alpha: 0.03)
+        : Colors.white;
     final Color iconBg = color.withValues(alpha: 0.12);
     final Color textColor = isDark ? Colors.white : const Color(0xFF1E293B);
     final Color subColor = isDark ? Colors.white38 : const Color(0xFF64748B);

@@ -75,7 +75,7 @@ class PatientCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      patient.fullName   ?? 'Unnamed Patient',
+                      patient.fullName ?? 'Unnamed Patient',
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textColor,
@@ -115,7 +115,7 @@ class PatientCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  _buildStatusPill(status??""),
+                  _buildStatusPill(status ?? ""),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert, color: labelColor),
                     color: cardBg,

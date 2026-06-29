@@ -103,8 +103,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
           return const Center(child: Text("Please login to see schedule"));
         }
         final doctor = authState.user;
-        final docDisplayName =
-            doctor.fullName;
+        final docDisplayName = doctor.fullName;
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, aptState) {

@@ -30,9 +30,7 @@ class PatientServicesGrid extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          final providers = <BlocProvider>[
-            BlocProvider.value(value: authBloc),
-          ];
+          final providers = <BlocProvider>[BlocProvider.value(value: authBloc)];
           if (doctorBloc != null) {
             providers.add(BlocProvider.value(value: doctorBloc));
           }
@@ -71,7 +69,8 @@ class PatientServicesGrid extends StatelessWidget {
           title: title,
           icon: icon,
           gradientColors: gradient,
-          description: description ??
+          description:
+              description ??
               'This feature is coming soon. Stay tuned for updates!',
         ),
       ),

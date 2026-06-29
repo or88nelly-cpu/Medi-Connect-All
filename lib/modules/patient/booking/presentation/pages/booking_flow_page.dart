@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -104,20 +103,43 @@ const _kSpecialties = <_SpecialtyEntry>[
 ];
 
 const _kMorningSlots = [
-  '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+  '09:00 AM',
+  '09:30 AM',
+  '10:00 AM',
+  '10:30 AM',
+  '11:00 AM',
+  '11:30 AM',
 ];
 const _kAfternoonSlots = [
-  '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
+  '02:00 PM',
+  '02:30 PM',
+  '03:00 PM',
+  '03:30 PM',
+  '04:00 PM',
+  '04:30 PM',
 ];
-const _kEveningSlots = [
-  '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
-];
+const _kEveningSlots = ['05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM'];
 const _kBookedSlots = {'10:00 AM', '03:00 PM', '05:30 PM'};
 
 const _kPaymentMethods = [
-  {'id': 'UPI', 'label': 'UPI / BHIM', 'icon': Icons.account_balance_wallet_rounded, 'color': 0xFF4F7CFF},
-  {'id': 'CARD', 'label': 'Credit / Debit Card', 'icon': Icons.credit_card_rounded, 'color': 0xFF8B5CF6},
-  {'id': 'CASH', 'label': 'Pay at Clinic (Cash)', 'icon': Icons.payments_rounded, 'color': 0xFF22C55E},
+  {
+    'id': 'UPI',
+    'label': 'UPI / BHIM',
+    'icon': Icons.account_balance_wallet_rounded,
+    'color': 0xFF4F7CFF,
+  },
+  {
+    'id': 'CARD',
+    'label': 'Credit / Debit Card',
+    'icon': Icons.credit_card_rounded,
+    'color': 0xFF8B5CF6,
+  },
+  {
+    'id': 'CASH',
+    'label': 'Pay at Clinic (Cash)',
+    'icon': Icons.payments_rounded,
+    'color': 0xFF22C55E,
+  },
 ];
 
 const _kFallbackDoctors = <UserModel>[
@@ -180,7 +202,11 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
   String _bookingId = '';
 
   static const _stepLabels = [
-    'Specialty', 'Doctor', 'Slot', 'Payment', 'Done!',
+    'Specialty',
+    'Doctor',
+    'Slot',
+    'Payment',
+    'Done!',
   ];
 
   @override
@@ -193,7 +219,8 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
     if (widget.preselectedSpecialty != null) {
       try {
         _specialty = _kSpecialties.firstWhere(
-          (s) => s.name.toLowerCase() ==
+          (s) =>
+              s.name.toLowerCase() ==
               widget.preselectedSpecialty!.toLowerCase(),
         );
       } catch (_) {}
@@ -213,11 +240,16 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
 
   bool get _canGoNext {
     switch (_step) {
-      case 0: return _specialty != null;
-      case 1: return _doctor != null;
-      case 2: return _selectedSlot != null;
-      case 3: return true;
-      default: return false;
+      case 0:
+        return _specialty != null;
+      case 1:
+        return _doctor != null;
+      case 2:
+        return _selectedSlot != null;
+      case 3:
+        return true;
+      default:
+        return false;
     }
   }
 
@@ -248,8 +280,18 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
 
   String _shortDate(DateTime d) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${months[d.month - 1]} ${d.day}, ${d.year}';
   }
@@ -359,8 +401,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
             onPressed: (_canGoNext && !_isProcessing) ? _next : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
-              disabledBackgroundColor:
-                  AppColors.primary.withValues(alpha: 0.4),
+              disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
               padding: EdgeInsets.all(16.r),
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -432,7 +473,9 @@ class _StepIndicator extends StatelessWidget {
                   Expanded(
                     child: Container(
                       height: 2,
-                      color: isDone ? AppColors.primary : AppColors.border(context),
+                      color: isDone
+                          ? AppColors.primary
+                          : AppColors.border(context),
                     ),
                   ),
               ],
@@ -483,7 +526,9 @@ class _StepCircle extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
-                      color: isActive ? Colors.white : AppColors.textSecondary(context),
+                      color: isActive
+                          ? Colors.white
+                          : AppColors.textSecondary(context),
                     ),
                   ),
           ),
@@ -575,7 +620,9 @@ class _SpecialtyStep extends StatelessWidget {
                         boxShadow: isSelected
                             ? [
                                 BoxShadow(
-                                  color: sp.gradient.first.withValues(alpha: 0.3),
+                                  color: sp.gradient.first.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   blurRadius: 12,
                                   offset: const Offset(0, 4),
                                 ),
@@ -665,7 +712,8 @@ class _DoctorStep extends StatelessWidget {
   });
 
   List<UserModel> _filtered(List<UserModel> all) {
-    if (specialty == null) return all.where((d) => d.role == UserRole.doctor).toList();
+    if (specialty == null)
+      return all.where((d) => d.role == UserRole.doctor).toList();
     final res = all.where((d) {
       return d.role == UserRole.doctor;
     }).toList();
@@ -702,7 +750,8 @@ class _DoctorStep extends StatelessWidget {
         Expanded(
           child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
             builder: (context, state) {
-              final docs = state is DoctorStaffLoaded && state.doctors.isNotEmpty
+              final docs =
+                  state is DoctorStaffLoaded && state.doctors.isNotEmpty
                   ? _filtered(state.doctors)
                   : _kFallbackDoctors;
 
@@ -740,7 +789,8 @@ class _DoctorStep extends StatelessWidget {
                             height: 50.r,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: specialty?.gradient ??
+                                colors:
+                                    specialty?.gradient ??
                                     [AppColors.primary, AppColors.secondary],
                               ),
                               shape: BoxShape.circle,
@@ -807,7 +857,9 @@ class _DoctorStep extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: isSelected ? color : Colors.transparent,
                               border: Border.all(
-                                color: isSelected ? color : AppColors.border(context),
+                                color: isSelected
+                                    ? color
+                                    : AppColors.border(context),
                                 width: 1.5,
                               ),
                             ),
@@ -910,7 +962,9 @@ class _SlotStep extends StatelessWidget {
                       color: isSelected ? null : AppColors.card(context),
                       borderRadius: BorderRadius.circular(12.r),
                       border: Border.all(
-                        color: isSelected ? AppColors.primary : AppColors.border(context),
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.border(context),
                       ),
                     ),
                     child: Column(
@@ -920,7 +974,9 @@ class _SlotStep extends StatelessWidget {
                           _weekday(d.weekday),
                           style: TextStyle(
                             fontSize: 10.sp,
-                            color: isSelected ? Colors.white70 : AppColors.textSecondary(context),
+                            color: isSelected
+                                ? Colors.white70
+                                : AppColors.textSecondary(context),
                           ),
                         ),
                         SizedBox(height: 2.h),
@@ -929,7 +985,9 @@ class _SlotStep extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : AppColors.textPrimary(context),
+                            color: isSelected
+                                ? Colors.white
+                                : AppColors.textPrimary(context),
                           ),
                         ),
                       ],
@@ -1008,10 +1066,7 @@ class _SlotGroup extends StatelessWidget {
               onTap: isBooked ? null : () => onSelect(slot),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 14.w,
-                  vertical: 9.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 9.h),
                 decoration: BoxDecoration(
                   gradient: isSelected
                       ? const LinearGradient(
@@ -1021,8 +1076,8 @@ class _SlotGroup extends StatelessWidget {
                   color: isBooked
                       ? AppColors.border(context)
                       : isSelected
-                          ? null
-                          : AppColors.card(context),
+                      ? null
+                      : AppColors.card(context),
                   borderRadius: BorderRadius.circular(10.r),
                   border: Border.all(
                     color: isSelected
@@ -1034,14 +1089,16 @@ class _SlotGroup extends StatelessWidget {
                   slot,
                   style: TextStyle(
                     fontSize: 12.sp,
-                    fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: isSelected
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                     color: isBooked
-                        ? AppColors.textSecondary(context)
-                            .withValues(alpha: 0.5)
+                        ? AppColors.textSecondary(
+                            context,
+                          ).withValues(alpha: 0.5)
                         : isSelected
-                            ? Colors.white
-                            : AppColors.textPrimary(context),
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                     decoration: isBooked ? TextDecoration.lineThrough : null,
                   ),
                 ),
@@ -1078,8 +1135,18 @@ class _PaymentStep extends StatelessWidget {
 
   String _monthName(int m) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[(m - 1).clamp(0, 11)];
   }
@@ -1137,11 +1204,16 @@ class _PaymentStep extends StatelessWidget {
                 SizedBox(height: 8.h),
                 _SummaryRow(
                   label: 'Date & Time',
-                  value: '${_monthName(date.month)} ${date.day}, ${date.year} · $slot',
+                  value:
+                      '${_monthName(date.month)} ${date.day}, ${date.year} · $slot',
                   color: color,
                 ),
                 Divider(color: color.withValues(alpha: 0.2), height: 20.h),
-                _SummaryRow(label: 'Consultation Fee', value: '₹$fee', color: color),
+                _SummaryRow(
+                  label: 'Consultation Fee',
+                  value: '₹$fee',
+                  color: color,
+                ),
                 SizedBox(height: 6.h),
                 _SummaryRow(label: 'GST (18%)', value: '₹$tax', color: color),
                 Divider(color: color.withValues(alpha: 0.2), height: 16.h),
@@ -1219,8 +1291,9 @@ class _PaymentStep extends StatelessWidget {
                         label,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textPrimary(context),
-                          fontWeight:
-                              isSelected ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                         ),
                       ),
                     ),
@@ -1232,11 +1305,17 @@ class _PaymentStep extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: isSelected ? mColor : Colors.transparent,
                         border: Border.all(
-                          color: isSelected ? mColor : AppColors.border(context),
+                          color: isSelected
+                              ? mColor
+                              : AppColors.border(context),
                         ),
                       ),
                       child: isSelected
-                          ? Icon(Icons.check_rounded, color: Colors.white, size: 12.r)
+                          ? Icon(
+                              Icons.check_rounded,
+                              color: Colors.white,
+                              size: 12.r,
+                            )
                           : null,
                     ),
                   ],
@@ -1313,8 +1392,18 @@ class _ConfirmationStep extends StatelessWidget {
 
   String _monthName(int m) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[(m - 1).clamp(0, 11)];
   }
@@ -1346,11 +1435,7 @@ class _ConfirmationStep extends StatelessWidget {
                 ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.check_rounded,
-                color: Colors.white,
-                size: 50.r,
-              ),
+              child: Icon(Icons.check_rounded, color: Colors.white, size: 50.r),
             ),
           ),
           SizedBox(height: 24.h),

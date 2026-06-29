@@ -58,11 +58,13 @@ class PatientRegistrationBloc
   ) async {
     if (state.currentStep < _totalSteps) {
       final nextStep = state.currentStep + 1;
-      emit(state.copyWith(
-        currentStep: nextStep,
-        status: PatientRegistrationStatus.initial,
-      ));
-      
+      emit(
+        state.copyWith(
+          currentStep: nextStep,
+          status: PatientRegistrationStatus.initial,
+        ),
+      );
+
       // Save progress to DB if in patient self-onboarding mode
       if (state.isPatientMode && state.userId.isNotEmpty) {
         await _saveProgress(nextStep);
@@ -95,10 +97,12 @@ class PatientRegistrationBloc
       await _saveProgress(state.currentStep);
     }
 
-    emit(state.copyWith(
-      status: PatientRegistrationStatus.success,
-      currentStep: 4, // Redirect to dashboard / success flow
-    ));
+    emit(
+      state.copyWith(
+        status: PatientRegistrationStatus.success,
+        currentStep: 4, // Redirect to dashboard / success flow
+      ),
+    );
   }
 
   Future<void> _saveProgress(int step) async {
@@ -150,8 +154,7 @@ class PatientRegistrationBloc
             : 'Cisgender Male',
         smoking: event.smoking.isNotEmpty ? event.smoking : 'No',
         alcohol: event.alcohol.isNotEmpty ? event.alcohol : 'Occasionally',
-        dietType:
-            event.dietType.isNotEmpty ? event.dietType : 'Non Vegetarian',
+        dietType: event.dietType.isNotEmpty ? event.dietType : 'Non Vegetarian',
         exercise: event.exercise.isNotEmpty ? event.exercise : 'Regular',
         otherDetails: event.otherDetails,
       ),
@@ -177,10 +180,12 @@ class PatientRegistrationBloc
   ) async {
     final pin = event.pincode.trim();
     if (pin.length != 6) {
-      emit(state.copyWith(
-        pincodeFetchedAddress: 'Invalid pincode format (6 digits required)',
-        isFetchingAddress: false,
-      ));
+      emit(
+        state.copyWith(
+          pincodeFetchedAddress: 'Invalid pincode format (6 digits required)',
+          isFetchingAddress: false,
+        ),
+      );
       return;
     }
 
@@ -200,14 +205,17 @@ class PatientRegistrationBloc
       ),
     };
 
-    final result = addressMap[pin] ??
+    final result =
+        addressMap[pin] ??
         ('Local Area', '#10, Main Street, Local District, State - $pin');
 
-    emit(state.copyWith(
-      pincodeFetchedAddress: result.$2,
-      place: result.$1,
-      isFetchingAddress: false,
-    ));
+    emit(
+      state.copyWith(
+        pincodeFetchedAddress: result.$2,
+        place: result.$1,
+        isFetchingAddress: false,
+      ),
+    );
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -231,13 +239,15 @@ class PatientRegistrationBloc
   void _onBasicInfoUpdated(
     BasicInfoUpdated event,
     Emitter<PatientRegistrationState> emit,
-  ) => emit(state.copyWith(
-    firstName: event.firstName,
-    lastName: event.lastName,
-    email: event.email,
-    phone: event.phone,
-    dob: event.dob,
-  ));
+  ) => emit(
+    state.copyWith(
+      firstName: event.firstName,
+      lastName: event.lastName,
+      email: event.email,
+      phone: event.phone,
+      dob: event.dob,
+    ),
+  );
 
   void _onSexUpdated(
     SexUpdated event,
@@ -252,61 +262,69 @@ class PatientRegistrationBloc
   void _onMedicalInfoUpdated(
     MedicalInfoUpdated event,
     Emitter<PatientRegistrationState> emit,
-  ) => emit(state.copyWith(
-    bloodGroup: event.bloodGroup,
-    smoking: event.smoking,
-    alcohol: event.alcohol,
-    dietType: event.dietType,
-    exercise: event.exercise,
-    allergies: event.allergies,
-    otherDetails: event.otherDetails,
-  ));
+  ) => emit(
+    state.copyWith(
+      bloodGroup: event.bloodGroup,
+      smoking: event.smoking,
+      alcohol: event.alcohol,
+      dietType: event.dietType,
+      exercise: event.exercise,
+      allergies: event.allergies,
+      otherDetails: event.otherDetails,
+    ),
+  );
 
   void _onInsuranceUpdated(
     InsuranceUpdated event,
     Emitter<PatientRegistrationState> emit,
-  ) => emit(state.copyWith(
-    insuranceProvider: event.insuranceProvider,
-    insurancePolicyId: event.insurancePolicyId,
-    insuranceValidTill: event.insuranceValidTill,
-  ));
+  ) => emit(
+    state.copyWith(
+      insuranceProvider: event.insuranceProvider,
+      insurancePolicyId: event.insurancePolicyId,
+      insuranceValidTill: event.insuranceValidTill,
+    ),
+  );
 
   void _onEmergencyContactUpdated(
     EmergencyContactUpdated event,
     Emitter<PatientRegistrationState> emit,
-  ) => emit(state.copyWith(
-    emergencyName: event.emergencyName,
-    emergencyRelationship: event.emergencyRelationship,
-    emergencyPhone: event.emergencyPhone,
-  ));
+  ) => emit(
+    state.copyWith(
+      emergencyName: event.emergencyName,
+      emergencyRelationship: event.emergencyRelationship,
+      emergencyPhone: event.emergencyPhone,
+    ),
+  );
 
   void _onUpdateFormFields(
     UpdateFormFieldsEvent event,
     Emitter<PatientRegistrationState> emit,
-  ) => emit(state.copyWith(
-    firstName: event.firstName,
-    lastName: event.lastName,
-    email: event.email,
-    phone: event.phone,
-    dob: event.dob,
-    sex: event.sex,
-    genderIdentity: event.genderIdentity,
-    bloodGroup: event.bloodGroup,
-    place: event.place,
-    wardNum: event.wardNum,
-    insuranceProvider: event.insuranceProvider,
-    insurancePolicyId: event.insurancePolicyId,
-    insuranceValidTill: event.insuranceValidTill,
-    smoking: event.smoking,
-    alcohol: event.alcohol,
-    dietType: event.dietType,
-    exercise: event.exercise,
-    allergies: event.allergies,
-    otherDetails: event.otherDetails,
-    emergencyName: event.emergencyName,
-    emergencyRelationship: event.emergencyRelationship,
-    emergencyPhone: event.emergencyPhone,
-  ));
+  ) => emit(
+    state.copyWith(
+      firstName: event.firstName,
+      lastName: event.lastName,
+      email: event.email,
+      phone: event.phone,
+      dob: event.dob,
+      sex: event.sex,
+      genderIdentity: event.genderIdentity,
+      bloodGroup: event.bloodGroup,
+      place: event.place,
+      wardNum: event.wardNum,
+      insuranceProvider: event.insuranceProvider,
+      insurancePolicyId: event.insurancePolicyId,
+      insuranceValidTill: event.insuranceValidTill,
+      smoking: event.smoking,
+      alcohol: event.alcohol,
+      dietType: event.dietType,
+      exercise: event.exercise,
+      allergies: event.allergies,
+      otherDetails: event.otherDetails,
+      emergencyName: event.emergencyName,
+      emergencyRelationship: event.emergencyRelationship,
+      emergencyPhone: event.emergencyPhone,
+    ),
+  );
 
   // ─────────────────────────────────────────────────────────────
   // SUBMISSION
@@ -318,10 +336,12 @@ class PatientRegistrationBloc
   ) async {
     final validationError = _validateCommonFields();
     if (validationError != null) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: validationError,
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: validationError,
+        ),
+      );
       return;
     }
 
@@ -365,14 +385,18 @@ class PatientRegistrationBloc
     );
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: failure.message,
-      )),
-      (_) => emit(state.copyWith(
-        status: PatientRegistrationStatus.success,
-        currentStep: 4, // advance to success screen inside BLoC
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: failure.message,
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.success,
+          currentStep: 4, // advance to success screen inside BLoC
+        ),
+      ),
     );
   }
 
@@ -382,10 +406,12 @@ class PatientRegistrationBloc
   ) async {
     final validationError = _validateCommonFields();
     if (validationError != null) {
-      emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: validationError,
-      ));
+      emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: validationError,
+        ),
+      );
       return;
     }
 
@@ -404,14 +430,18 @@ class PatientRegistrationBloc
     final result = await _patientRepository.updatePatient(patientModel);
 
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: PatientRegistrationStatus.failure,
-        errorMessage: failure.message,
-      )),
-      (_) => emit(state.copyWith(
-        status: PatientRegistrationStatus.success,
-        currentStep: 4,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.failure,
+          errorMessage: failure.message,
+        ),
+      ),
+      (_) => emit(
+        state.copyWith(
+          status: PatientRegistrationStatus.success,
+          currentStep: 4,
+        ),
+      ),
     );
   }
 
@@ -446,8 +476,12 @@ class PatientRegistrationBloc
     int onboardingStep = 3,
   }) {
     final nameParts = name.trim().split(' ');
-    final firstName = nameParts.isNotEmpty ? nameParts.first : state.firstName.trim();
-    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : state.lastName.trim();
+    final firstName = nameParts.isNotEmpty
+        ? nameParts.first
+        : state.firstName.trim();
+    final lastName = nameParts.length > 1
+        ? nameParts.sublist(1).join(' ')
+        : state.lastName.trim();
 
     return UserModel(
       id: id,
@@ -466,9 +500,10 @@ class PatientRegistrationBloc
 
   String _generateUUID() {
     final random = Random();
-    String hex(int length) =>
-        List.generate(length, (_) => random.nextInt(16).toRadixString(16))
-            .join();
+    String hex(int length) => List.generate(
+      length,
+      (_) => random.nextInt(16).toRadixString(16),
+    ).join();
     return '${hex(8)}-${hex(4)}-4${hex(3)}-${(random.nextInt(4) + 8).toRadixString(16)}${hex(3)}-${hex(12)}';
   }
 }

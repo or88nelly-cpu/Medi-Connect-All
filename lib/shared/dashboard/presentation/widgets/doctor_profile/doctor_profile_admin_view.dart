@@ -171,7 +171,9 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                       initialStatus: 'Available',
                       onStatusChanged: (newStatus) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Availability changed to $newStatus")),
+                          SnackBar(
+                            content: Text("Availability changed to $newStatus"),
+                          ),
                         );
                       },
                     ),
@@ -299,8 +301,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final metadataConsultations =
-        null;
+    final metadataConsultations = null;
     final List<Map<String, dynamic>> patients = [];
     final Set<String> uniqueNames = {};
 
@@ -585,7 +586,9 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 Navigator.pop(ctx);
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Document '$docName' uploaded successfully")),
+                  SnackBar(
+                    content: Text("Document '$docName' uploaded successfully"),
+                  ),
                 );
               },
               child: const Text("Upload"),

@@ -101,8 +101,8 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: "Full Name"),
                 validator: (val) => val == null || val.isEmpty
-                     ? AppStrings.requiredField
-                     : null,
+                    ? AppStrings.requiredField
+                    : null,
               ),
               SizedBox(height: 12.h),
               TextFormField(
@@ -199,8 +199,12 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     final nameParts = _nameController.text.trim().split(' ');
-                    final firstName = nameParts.isNotEmpty ? nameParts.first : '';
-                    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
+                    final firstName = nameParts.isNotEmpty
+                        ? nameParts.first
+                        : '';
+                    final lastName = nameParts.length > 1
+                        ? nameParts.sublist(1).join(' ')
+                        : '';
 
                     final updatedUser = UserModel.fromEntity(widget.user)
                         .copyWith(
@@ -235,14 +239,12 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
 }
 
 extension on UserModel {
-  UserModel copyWith({
-    String? name,
-    String? phoneNumber,
-    String? gender,
-  }) {
+  UserModel copyWith({String? name, String? phoneNumber, String? gender}) {
     final nameParts = (name ?? fullName).trim().split(' ');
     final firstName = nameParts.isNotEmpty ? nameParts.first : '';
-    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : 'Staff';
+    final lastName = nameParts.length > 1
+        ? nameParts.sublist(1).join(' ')
+        : 'Staff';
     return UserModel(
       id: id,
       authUserId: authUserId,

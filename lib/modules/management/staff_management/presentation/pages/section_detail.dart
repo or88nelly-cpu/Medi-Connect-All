@@ -261,7 +261,8 @@ class _SectionDetailState extends State<SectionDetail>
                                                     );
                                             final matchesStatus =
                                                 statusFilter == 'All' ||
-                                                (u.status ?? 'Active').toLowerCase() ==
+                                                (u.status ?? 'Active')
+                                                        .toLowerCase() ==
                                                     statusFilter.toLowerCase();
                                             return matchesSearch &&
                                                 matchesStatus;
@@ -270,13 +271,15 @@ class _SectionDetailState extends State<SectionDetail>
                                           // Sort
                                           if (sortBy == 'Name (A-Z)') {
                                             filtered.sort(
-                                              (a, b) => a.fullName
-                                                  .compareTo(b.fullName),
+                                              (a, b) => a.fullName.compareTo(
+                                                b.fullName,
+                                              ),
                                             );
                                           } else if (sortBy == 'Name (Z-A)') {
                                             filtered.sort(
-                                              (a, b) => b.fullName
-                                                  .compareTo(a.fullName),
+                                              (a, b) => b.fullName.compareTo(
+                                                a.fullName,
+                                              ),
                                             );
                                           }
 
@@ -628,16 +631,32 @@ class _SectionDetailState extends State<SectionDetail>
 
                       if (state is DoctorStaffLoaded) {
                         activeDocs = state.doctors
-                            .where((d) => (d.status ?? 'Active').toLowerCase() == 'active')
+                            .where(
+                              (d) =>
+                                  (d.status ?? 'Active').toLowerCase() ==
+                                  'active',
+                            )
                             .length;
                         activeStf = state.staff
-                            .where((s) => (s.status ?? 'Active').toLowerCase() == 'active')
+                            .where(
+                              (s) =>
+                                  (s.status ?? 'Active').toLowerCase() ==
+                                  'active',
+                            )
                             .length;
                         docsLeave = state.doctors
-                            .where((d) => (d.status ?? 'Active').toLowerCase() == 'away')
+                            .where(
+                              (d) =>
+                                  (d.status ?? 'Active').toLowerCase() ==
+                                  'away',
+                            )
                             .length;
                         stfLeave = state.staff
-                            .where((s) => (s.status ?? 'Active').toLowerCase() == 'away')
+                            .where(
+                              (s) =>
+                                  (s.status ?? 'Active').toLowerCase() ==
+                                  'away',
+                            )
                             .length;
                       }
 

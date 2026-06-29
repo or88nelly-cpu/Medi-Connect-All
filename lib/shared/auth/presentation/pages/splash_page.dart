@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/constants/app_fonts.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -163,7 +164,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         // Wait to show the beautiful premium animations before navigating.
         await Future.delayed(const Duration(milliseconds: 2800));
         if (state is Authenticated) {
-          final role = state.user.role;
+          final role = state.user.role.value;
           if (mounted) {
             context.go('/$role/dashboard');
           }

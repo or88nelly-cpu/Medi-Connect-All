@@ -114,7 +114,11 @@ class QuickActionsRow extends StatelessWidget {
                           builder: (ctx) => ApplyLeaveBottomSheet(
                             onLeaveApplied: (leave) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Mock leave applied for ${leave['type']}")),
+                                SnackBar(
+                                  content: Text(
+                                    "Mock leave applied for ${leave['type']}",
+                                  ),
+                                ),
                               );
                             },
                           ),

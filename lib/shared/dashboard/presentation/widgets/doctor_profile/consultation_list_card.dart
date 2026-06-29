@@ -87,8 +87,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
   ];
 
   List<Map<String, dynamic>> get _consultations {
-    final metadataConsultations =
-        null;
+    final metadataConsultations = null;
     if (metadataConsultations != null) {
       return metadataConsultations.map((item) {
         final map = item as Map<dynamic, dynamic>;
@@ -136,16 +135,12 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
   void _updateConsultationStatus(
     Map<String, dynamic> consultation,
     String newStatus,
-  ) {
-    
-  }
+  ) {}
 
   void _updateConsultationVitals(
     Map<String, dynamic> consultation,
     Map<String, dynamic> vitals,
-  ) {
-   
-  }
+  ) {}
 
   void _showConsultationOptions(
     BuildContext context,

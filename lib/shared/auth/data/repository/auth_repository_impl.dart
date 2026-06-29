@@ -34,10 +34,7 @@ class AuthRepositoryImpl implements AuthRepository {
       //   'profile_completion_status',
       //   userModel.c.toString(),
       // );
-      await _secureStorage.write(
-        'user_role',
-        userModel.role.value,
-      );
+      await _secureStorage.write('user_role', userModel.role.value);
       return Right(userModel);
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message, code: e.code));

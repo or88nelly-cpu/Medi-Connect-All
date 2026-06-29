@@ -44,20 +44,17 @@ class RouteGuards {
 
     // User is authenticated.
     // Fetch profile completion status and role from secure storage
-    
+
     final cachedRole = await _secureStorageService.read('user_role');
 
-    
     final userRole =
         cachedRole ??
         _supabaseService.currentUser?.userMetadata?['role'] as String? ??
         UserRole.patient.value;
 
     // If profile is incomplete, redirect to profile completion flow
-    
 
     // If profile is complete but user is trying to access auth route or profile completion, redirect to dashboard
-  
 
     // Check role boundaries
     if (currentPath.startsWith('/patient') && userRole != 'patient') {

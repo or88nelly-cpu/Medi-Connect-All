@@ -99,7 +99,7 @@ class DoctorHeroCard extends StatelessWidget {
                           ),
                           SizedBox(width: 4.w),
                           Text(
-                            user.status??"",
+                            user.status ?? "",
                             style: TextStyle(
                               color: const Color(0xFF0F9F58),
                               fontSize: 9.sp,
@@ -123,8 +123,7 @@ class DoctorHeroCard extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            user.fullName  
-                                ,
+                            user.fullName,
                             style: AppTextStyles.titleMedium.copyWith(
                               color: textColor,
                               fontWeight: FontWeight.bold,
@@ -160,7 +159,7 @@ class DoctorHeroCard extends StatelessWidget {
                         ),
                         SizedBox(width: 4.w),
                         Text(
-                           "Cardiology Department",
+                          "Cardiology Department",
                           style: TextStyle(color: labelColor, fontSize: 11.sp),
                         ),
                       ],

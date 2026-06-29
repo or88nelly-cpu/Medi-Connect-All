@@ -8,7 +8,8 @@ class AppTableNames {
   static const String PgUserMappings = "_pg_user_mappings";
   static const String activityLogs = "activity_logs";
   static const String adminSettings = "admin_settings";
-  static const String administrableRoleAuthorizations = "administrable_role_authorizations";
+  static const String administrableRoleAuthorizations =
+      "administrable_role_authorizations";
   static const String admins = "admins";
   static const String admissions = "admissions";
   static const String advanceAllocations = "advance_allocations";
@@ -58,9 +59,11 @@ class AppTableNames {
   static const String characterSets = "character_sets";
   static const String chargeModules = "charge_modules";
   static const String chargeTransactions = "charge_transactions";
-  static const String checkConstraintRoutineUsage = "check_constraint_routine_usage";
+  static const String checkConstraintRoutineUsage =
+      "check_constraint_routine_usage";
   static const String checkConstraints = "check_constraints";
-  static const String collationCharacterSetApplicability = "collation_character_set_applicability";
+  static const String collationCharacterSetApplicability =
+      "collation_character_set_applicability";
   static const String collations = "collations";
   static const String columnColumnUsage = "column_column_usage";
   static const String columnDomainUsage = "column_domain_usage";
@@ -120,7 +123,8 @@ class AppTableNames {
   static const String floors = "floors";
   static const String flowState = "flow_state";
   static const String followups = "followups";
-  static const String foreignDataWrapperOptions = "foreign_data_wrapper_options";
+  static const String foreignDataWrapperOptions =
+      "foreign_data_wrapper_options";
   static const String foreignDataWrappers = "foreign_data_wrappers";
   static const String foreignServerOptions = "foreign_server_options";
   static const String foreignServers = "foreign_servers";
@@ -130,7 +134,8 @@ class AppTableNames {
   static const String hospitalSettings = "hospital_settings";
   static const String hospitals = "hospitals";
   static const String identities = "identities";
-  static const String informationSchemaCatalogName = "information_schema_catalog_name";
+  static const String informationSchemaCatalogName =
+      "information_schema_catalog_name";
   static const String inpatientMedications = "inpatient_medications";
   static const String inpatientVitals = "inpatient_vitals";
   static const String instances = "instances";
@@ -214,7 +219,8 @@ class AppTableNames {
   static const String pgAttribute = "pg_attribute";
   static const String pgAuthMembers = "pg_auth_members";
   static const String pgAuthid = "pg_authid";
-  static const String pgAvailableExtensionVersions = "pg_available_extension_versions";
+  static const String pgAvailableExtensionVersions =
+      "pg_available_extension_versions";
   static const String pgAvailableExtensions = "pg_available_extensions";
   static const String pgBackendMemoryContexts = "pg_backend_memory_contexts";
   static const String pgCast = "pg_cast";
@@ -265,7 +271,8 @@ class AppTableNames {
   static const String pgPublicationTables = "pg_publication_tables";
   static const String pgRange = "pg_range";
   static const String pgReplicationOrigin = "pg_replication_origin";
-  static const String pgReplicationOriginStatus = "pg_replication_origin_status";
+  static const String pgReplicationOriginStatus =
+      "pg_replication_origin_status";
   static const String pgReplicationSlots = "pg_replication_slots";
   static const String pgRewrite = "pg_rewrite";
   static const String pgRoles = "pg_roles";
@@ -294,7 +301,8 @@ class AppTableNames {
   static const String pgStatProgressBasebackup = "pg_stat_progress_basebackup";
   static const String pgStatProgressCluster = "pg_stat_progress_cluster";
   static const String pgStatProgressCopy = "pg_stat_progress_copy";
-  static const String pgStatProgressCreateIndex = "pg_stat_progress_create_index";
+  static const String pgStatProgressCreateIndex =
+      "pg_stat_progress_create_index";
   static const String pgStatProgressVacuum = "pg_stat_progress_vacuum";
   static const String pgStatRecoveryPrefetch = "pg_stat_recovery_prefetch";
   static const String pgStatReplication = "pg_stat_replication";
@@ -472,5 +480,4 @@ class AppTableNames {
   static const String workflowTaskHistory = "workflow_task_history";
   static const String workflowTasks = "workflow_tasks";
   static const String workflowTransitions = "workflow_transitions";
-
 }

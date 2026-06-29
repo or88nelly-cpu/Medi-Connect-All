@@ -33,8 +33,7 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final metadataConsultations =
-        null;
+    final metadataConsultations = null;
     final List<Map<String, dynamic>> consultations = [];
     if (metadataConsultations != null) {
       for (var item in metadataConsultations) {

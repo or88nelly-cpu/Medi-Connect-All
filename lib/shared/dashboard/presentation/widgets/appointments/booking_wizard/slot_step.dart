@@ -59,9 +59,7 @@ class SlotStep extends StatelessWidget {
 
     final formattedDate = DateFormat('dd MMM yyyy').format(state.selectedDate);
 
-    final slotsByDate =
-        
-        {};
+    final slotsByDate = {};
     final dateData = slotsByDate[formattedDate] as Map<dynamic, dynamic>? ?? {};
 
     String slotDuration = "10 Minutes";

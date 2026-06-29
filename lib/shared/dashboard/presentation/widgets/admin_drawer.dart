@@ -38,7 +38,6 @@ class AdminDrawer extends StatelessWidget {
                   icon: Icons.dashboard_outlined,
                   title: "Dashboard Home",
                   onTap: () {
-                    
                     context.pop();
                   },
                 ),
@@ -161,7 +160,6 @@ class AdminDrawer extends StatelessWidget {
                   icon: Icons.person_outline,
                   title: "Edit Profile",
                   onTap: () {
-                    
                     context.pop();
                   },
                 ),
@@ -207,12 +205,10 @@ class AdminDrawer extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.fullName ?? ("${user.firstName} ${user.lastName ?? ''}".trim());
-          email = user.email??"";
+          name = user.fullName;
+          email = user.email ?? "";
           profileImage = user.profilePhoto;
-          accessLevel =
-              user.role.value;
+          accessLevel = user.role.value;
         }
 
         return Container(
@@ -245,7 +241,9 @@ class AdminDrawer extends StatelessWidget {
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(
                         profileImage,
-                        state is Authenticated ? state.user.role.value : 'admin',
+                        state is Authenticated
+                            ? state.user.role.value
+                            : 'admin',
                         state is Authenticated ? state.user.gender : null,
                       ),
                       borderRadius: 30.r,
@@ -255,7 +253,6 @@ class AdminDrawer extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.edit_outlined, color: iconColor),
                     onPressed: () {
-                      
                       context.pop();
                     },
                   ),

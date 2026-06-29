@@ -33,20 +33,17 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-  
-
     final List<Map<String, dynamic>> consultations = [];
-    
-      consultations.addAll([
-        {"status": "Completed"},
-        {"status": "Completed"},
-        {"status": "Completed"},
-        {"status": "Booked"},
-        {"status": "Pending"},
-        {"status": "Booked"},
-        {"status": "Pending"},
-      ]);
-    
+
+    consultations.addAll([
+      {"status": "Completed"},
+      {"status": "Completed"},
+      {"status": "Completed"},
+      {"status": "Booked"},
+      {"status": "Pending"},
+      {"status": "Booked"},
+      {"status": "Pending"},
+    ]);
 
     final completedCount = consultations
         .where((c) => c['status'] == 'Completed')

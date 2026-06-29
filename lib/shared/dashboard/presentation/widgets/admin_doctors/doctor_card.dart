@@ -117,7 +117,7 @@ class DoctorCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  _buildStatusPill(status??""),
+                  _buildStatusPill(status ?? ""),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert, color: labelColor),
                     color: cardBg,

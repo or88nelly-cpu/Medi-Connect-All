@@ -58,7 +58,7 @@ class EmrdDetailPage extends StatelessWidget {
 
                   if (authState is Authenticated) {
                     userRole = authState.user.role.value;
-                    userName = authState.user.fullName ;
+                    userName = authState.user.fullName;
                     profileImage = authState.user.profilePhoto;
                     gender = authState.user.gender;
                   }

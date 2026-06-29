@@ -26,9 +26,7 @@ class ReviewStepView extends StatelessWidget {
     if (state is PatientLoaded) {
       try {
         return state.patients.firstWhere(
-          (p) =>
-              p.id == appointment.patientId ||
-              p.id == appointment.patientId,
+          (p) => p.id == appointment.patientId || p.id == appointment.patientId,
         );
       } catch (_) {
         return null;

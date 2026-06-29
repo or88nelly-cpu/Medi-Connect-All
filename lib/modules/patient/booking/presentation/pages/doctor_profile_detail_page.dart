@@ -182,7 +182,10 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                   SizedBox(height: 20.h),
 
                   // ── About ────────────────────────────────────────
-                  _SectionHeader(title: 'About', icon: Icons.info_outline_rounded),
+                  _SectionHeader(
+                    title: 'About',
+                    icon: Icons.info_outline_rounded,
+                  ),
                   SizedBox(height: 10.h),
                   Container(
                     padding: EdgeInsets.all(14.r),
@@ -217,8 +220,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                         final d = _nextSevenDays[i];
                         final isSelected = i == _selectedDateIndex;
                         return GestureDetector(
-                          onTap: () =>
-                              setState(() => _selectedDateIndex = i),
+                          onTap: () => setState(() => _selectedDateIndex = i),
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 200),
                             width: 50.w,
@@ -284,8 +286,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                               ],
                               child: BookingFlowPage(
                                 preselectedDoctor: doc,
-                                preselectedSpecialty:
-                                    'General Medicine',
+                                preselectedSpecialty: 'General Medicine',
                               ),
                             ),
                           ),

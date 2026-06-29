@@ -194,8 +194,12 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     final nameParts = _nameController.text.trim().split(' ');
-                    final firstName = nameParts.isNotEmpty ? nameParts.first : '';
-                    final lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : 'Staff';
+                    final firstName = nameParts.isNotEmpty
+                        ? nameParts.first
+                        : '';
+                    final lastName = nameParts.length > 1
+                        ? nameParts.sublist(1).join(' ')
+                        : 'Staff';
                     final newUser = UserModel(
                       id: _generateUUID(),
                       email: _emailController.text,

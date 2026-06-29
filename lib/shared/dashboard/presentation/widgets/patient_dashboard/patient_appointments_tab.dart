@@ -20,9 +20,7 @@ class PatientAppointmentsTab extends StatefulWidget {
 
 class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
   List<Map<String, String>> _resolveAppointments(UserModel user) {
-   
     final List<Map<String, String>> appointments = [];
-
 
     if (appointments.isEmpty) {
       appointments.addAll([
@@ -226,7 +224,6 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
         firstName: 'Dr. Sarah',
         lastName: 'Johnson',
         role: UserRole.doctor,
-        
       ),
       const UserModel(
         id: 'doc-2',
@@ -234,7 +231,6 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
         firstName: 'Dr. Michael',
         lastName: 'Chen',
         role: UserRole.doctor,
-        
       ),
       const UserModel(
         id: 'doc-3',
@@ -242,7 +238,6 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
         firstName: 'Dr. James',
         lastName: 'Wilson',
         role: UserRole.doctor,
-        
       ),
     ];
     return ListView.builder(
@@ -279,16 +274,13 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 2.h),
-            Text(
-              "${'General Medicine'} | Exp: ${5} Yrs",
-            ),
+            Text("${'General Medicine'} | Exp: ${5} Yrs"),
             Text("Fee: ₹ 500"),
           ],
         ),
         trailing: ElevatedButton(
           onPressed: () {
             Navigator.pop(ctx);
-           
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.secondary,
@@ -301,5 +293,4 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
       ),
     );
   }
-
- }
+}
