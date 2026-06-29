@@ -128,10 +128,10 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   final queryLower = query.toLowerCase().trim();
                                   final count = patientsList.where((p) {
                                     if (queryLower.isEmpty) return true;
-                                    final name = (p.name ?? '').toLowerCase();
-                                    final uhid = (p.patientId ?? '')
+                                    final name = (p.fullName ?? '').toLowerCase();
+                                    final uhid = (p.id ?? '')
                                         .toLowerCase();
-                                    final phone = (p.phoneNumber ?? '')
+                                    final phone = (p.phone ?? '')
                                         .toLowerCase();
 
                                     if (filter == 'UHID') {
@@ -258,9 +258,9 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                               final queryLower = query.toLowerCase().trim();
                               final filteredPatients = patientsList.where((p) {
                                 if (queryLower.isEmpty) return true;
-                                final name = (p.name ?? '').toLowerCase();
-                                final uhid = (p.patientId ?? '').toLowerCase();
-                                final phone = (p.phoneNumber ?? '')
+                                final name = (p.fullName ?? '').toLowerCase();
+                                final uhid = (p.id ?? '').toLowerCase();
+                                final phone = (p.phone ?? '')
                                     .toLowerCase();
 
                                 if (filter == 'UHID') {
@@ -340,11 +340,11 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                     orElse: () => {
                                       'patient_id': patient.id,
                                       'patient_name':
-                                          patient.name ?? 'Unnamed Patient',
+                                          patient.fullName ?? 'Unnamed Patient',
                                       'specialty': 'Customer Care',
                                       'doctor_name': 'Customer Care Department',
                                       'invoice_number':
-                                          'REG-${patient.patientId?.split('-').last ?? ""}',
+                                          'REG-${patient.id?.split('-').last ?? ""}',
                                       'registration_fee': 200,
                                       'registration_payment_status':
                                           patient.status == 'Active'
@@ -353,7 +353,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                       'prescription_notes':
                                           'Initial patient registration from Customer Care. UHID: ${patient.patientId ?? ""}.',
                                       'recorded_at':
-                                          patient.joiningDate ??
+                                          
                                           DateTime.now().toIso8601String(),
                                     },
                                   );

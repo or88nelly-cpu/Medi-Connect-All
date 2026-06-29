@@ -27,7 +27,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
         : AppColors.terminalLightLabel;
 
     final imgPath = ProfileImageHelper.resolveImagePath(
-      user.profileImage,
+      user.profilePhoto,
       user.role,
       user.gender,
     );

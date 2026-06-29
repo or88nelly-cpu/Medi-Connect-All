@@ -82,7 +82,7 @@ class DoctorStep extends StatelessWidget {
                         doc.name ??
                         "${doc.firstName ?? ''} ${doc.lastName ?? ''}".trim();
                     final avatarUrl =
-                        doc.profileImage ??
+                        doc.profilePhoto ??
                         "https://i.pravatar.cc/150?u=${doc.id}";
 
                     return Container(

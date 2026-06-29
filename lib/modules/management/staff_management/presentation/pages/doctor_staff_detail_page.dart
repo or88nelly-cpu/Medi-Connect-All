@@ -60,7 +60,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
                         ),
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
-                            currentUser.profileImage,
+                            currentUser.profilePhoto,
                             currentUser.role,
                             currentUser.gender,
                           ),

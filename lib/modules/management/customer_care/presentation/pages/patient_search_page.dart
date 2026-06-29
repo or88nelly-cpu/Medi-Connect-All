@@ -113,7 +113,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
-                            patient.profileImage,
+                            patient.profilePhoto,
                             'patient',
                             patient.gender,
                           ),

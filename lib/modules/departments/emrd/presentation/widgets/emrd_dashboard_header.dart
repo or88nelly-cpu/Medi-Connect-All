@@ -18,7 +18,7 @@ class EmrdDashboardHeader extends StatelessWidget {
     super.key,
     required this.name,
     required this.role,
-    required this.profileImage,
+    required this.profilePhoto,
     required this.gender,
     required this.stats,
     required this.isDark,

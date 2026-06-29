@@ -125,11 +125,11 @@ class PremiumAppointmentCard extends StatelessWidget {
 
     // Determine resolved profile image
     String? resolvedImagePath;
-    if (patient?.profileImage != null && patient!.profileImage!.isNotEmpty) {
-      resolvedImagePath = patient.profileImage;
+    if (patient?.profilePhoto != null && patient!.profilePhoto!.isNotEmpty) {
+      resolvedImagePath = patient.profilePhoto;
     } else {
       resolvedImagePath = ProfileImageHelper.resolveImagePath(
-        patient?.profileImage,
+        patient?.profilePhoto,
         'patient',
         patient?.gender,
       );

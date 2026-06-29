@@ -80,7 +80,7 @@ class ReviewStepView extends StatelessWidget {
     final phone = patient?.phoneNumber ?? '+91 98765 43210';
     final bloodGroup = patient?.bloodGroup ?? 'O+';
     final patientImg = ProfileImageHelper.resolveImagePath(
-      patient?.profileImage,
+      patient?.profilePhoto,
       'patient',
       gender,
     );

@@ -105,8 +105,7 @@ class _StaffDashboardBody extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.fullName;
+          name = user.fullName;
           if (name.isEmpty) name = 'Staff Member';
           profileImage = user.profilePhoto;
           roleLabel = user.role.value;
@@ -250,7 +249,7 @@ class _TopBar extends StatelessWidget {
 
   const _TopBar({
     required this.name,
-    required this.profileImage,
+    required this.profilePhoto,
     required this.roleLabel,
     required this.greeting,
     required this.state,

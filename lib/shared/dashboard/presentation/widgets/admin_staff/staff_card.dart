@@ -60,7 +60,7 @@ class StaffCard extends StatelessWidget {
                 child: ClipOval(
                   child: CustomImageView(
                     imagePath: ProfileImageHelper.resolveImagePath(
-                      stf.profileImage,
+                      stf.profilePhoto,
                       'staff',
                       stf.gender,
                     ),

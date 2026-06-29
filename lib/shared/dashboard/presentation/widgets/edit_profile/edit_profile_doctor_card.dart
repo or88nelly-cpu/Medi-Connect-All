@@ -52,10 +52,10 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                 backgroundColor: isDark
                     ? AppColors.terminalDarkBorder
                     : Colors.grey.shade200,
-                backgroundImage: widget.user.profileImage != null
-                    ? NetworkImage(widget.user.profileImage!)
+                backgroundImage: widget.user.profilePhoto != null
+                    ? NetworkImage(widget.user.profilePhoto!)
                     : null,
-                child: widget.user.profileImage == null
+                child: widget.user.profilePhoto == null
                     ? Icon(Icons.person, size: 40.r, color: labelColor)
                     : null,
               ),

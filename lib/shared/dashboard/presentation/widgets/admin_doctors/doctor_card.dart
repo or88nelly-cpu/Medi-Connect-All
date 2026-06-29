@@ -61,7 +61,7 @@ class DoctorCard extends StatelessWidget {
                 child: ClipOval(
                   child: CustomImageView(
                     imagePath: ProfileImageHelper.resolveImagePath(
-                      doc.profileImage,
+                      doc.profilePhoto,
                       'doctor',
                       doc.gender,
                     ),

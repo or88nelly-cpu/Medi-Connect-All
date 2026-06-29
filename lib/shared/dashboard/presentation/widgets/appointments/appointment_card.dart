@@ -145,11 +145,11 @@ class AppointmentCard extends StatelessWidget {
     // final patientNameLower = appointment.patientName.toLowerCase();
     String? resolvedImagePath;
 
-    if (patient?.profileImage != null && patient!.profileImage!.isNotEmpty) {
-      resolvedImagePath = patient.profileImage;
+    if (patient?.profilePhoto != null && patient!.profilePhoto!.isNotEmpty) {
+      resolvedImagePath = patient.profilePhoto;
     } else {
       resolvedImagePath = ProfileImageHelper.resolveImagePath(
-        patient?.profileImage,
+        patient?.profilePhoto,
         'patient',
         patient?.gender,
       );

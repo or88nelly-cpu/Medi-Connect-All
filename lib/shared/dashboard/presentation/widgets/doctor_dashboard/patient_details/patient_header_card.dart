@@ -70,9 +70,9 @@ class PatientHeaderCard extends StatelessWidget {
                   ? const Color(0xFF334155)
                   : const Color(0xFFE2E8F0),
               backgroundImage:
-                  patient.profileImage != null &&
-                      patient.profileImage!.isNotEmpty
-                  ? NetworkImage(patient.profileImage!) as ImageProvider
+                  patient.profilePhoto != null &&
+                      patient.profilePhoto!.isNotEmpty
+                  ? NetworkImage(patient.profilePhoto!) as ImageProvider
                   : AssetImage(defaultAvatar),
             ),
           ),

@@ -24,13 +24,13 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
     return (response as List<dynamic>).map((json) {
       final userJson = Map<String, dynamic>.from(json as Map);
       final patientJson = userJson.remove('patients');
-      
+
       if (patientJson is List && patientJson.isNotEmpty) {
         userJson.addAll(patientJson.first as Map<String, dynamic>);
       } else if (patientJson is Map<String, dynamic>) {
         userJson.addAll(patientJson);
       }
-      
+
       // Map DB snake_case fields back to CamelCase keys for UserModel compatibility
       if (userJson.containsKey('patient_id')) {
         userJson['patientId'] = userJson['patient_id'];
@@ -48,7 +48,8 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
         userJson['profileCompletionStatus'] = userJson['profile_completed'];
       }
       if (userJson.containsKey('profile_completion_status')) {
-        userJson['profileCompletionStatus'] = userJson['profile_completion_status'];
+        userJson['profileCompletionStatus'] =
+            userJson['profile_completion_status'];
       }
       if (userJson.containsKey('onboarding_step')) {
         userJson['onboardingStep'] = userJson['onboarding_step'];
@@ -78,7 +79,7 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
       'status': patient.status ?? 'Active',
       'first_name': patient.firstName,
       'last_name': patient.lastName,
-      'profile_photo': patient.profileImage,
+      'profile_photo': patient.profilePhoto,
     };
     await _supabase.from('users').upsert(userPayload);
 
@@ -116,7 +117,7 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
       'status': patient.status,
       'first_name': patient.firstName,
       'last_name': patient.lastName,
-      'profile_photo': patient.profileImage,
+      'profile_photo': patient.profilePhoto,
     };
     await _supabase.from('users').update(userPayload).eq('id', patient.id);
 

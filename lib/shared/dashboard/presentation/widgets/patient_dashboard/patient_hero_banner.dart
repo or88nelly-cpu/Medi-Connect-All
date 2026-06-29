@@ -29,10 +29,10 @@ class PatientHeroBanner extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name = user.name ??
-              ('${user.firstName} ${user.lastName ?? ''}'.trim());
+          name =
+              user.name ?? ('${user.firstName} ${user.lastName ?? ''}'.trim());
           patientId = user.patientId ?? user.id.substring(0, 7).toUpperCase();
-          profileImage = user.profileImage;
+          profileImage = user.profilePhoto;
           gender = user.gender;
         }
 
@@ -166,8 +166,9 @@ class PatientHeroBanner extends StatelessWidget {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color:
-                                      AppColors.primary.withValues(alpha: 0.07),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.07,
+                                  ),
                                   blurRadius: 4,
                                   offset: const Offset(0, 2),
                                 ),
@@ -287,8 +288,9 @@ class PatientHeroBanner extends StatelessWidget {
                               borderRadius: BorderRadius.circular(14.r),
                               boxShadow: [
                                 BoxShadow(
-                                  color:
-                                      AppColors.primary.withValues(alpha: 0.10),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.10,
+                                  ),
                                   blurRadius: 10,
                                   offset: const Offset(0, 4),
                                 ),
@@ -348,10 +350,7 @@ class PatientHeroBanner extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.r),
                               gradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFFECF3FF),
-                                  Color(0xFFF0F8FF),
-                                ],
+                                colors: [Color(0xFFECF3FF), Color(0xFFF0F8FF)],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
@@ -386,8 +385,9 @@ class PatientHeroBanner extends StatelessWidget {
                                         height: 38.r,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(8.r),
+                                          borderRadius: BorderRadius.circular(
+                                            8.r,
+                                          ),
                                           border: Border.all(
                                             color: const Color(0xFFDDE5FF),
                                           ),

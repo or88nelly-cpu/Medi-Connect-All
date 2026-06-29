@@ -58,7 +58,7 @@ class PatientCard extends StatelessWidget {
                 child: ClipOval(
                   child: CustomImageView(
                     imagePath: ProfileImageHelper.resolveImagePath(
-                      patient.profileImage,
+                      patient.profilePhoto,
                       'patient',
                       patient.gender,
                     ),
@@ -106,7 +106,7 @@ class PatientCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      "Age: ${patient.age ?? 'N/A'} | Blood: ${patient.bloodGroup ?? 'N/A'} | Phone: ${patient.phoneNumber ?? 'N/A'}",
+                      "Age: ${patient.age ?? 'N/A'} | Blood: ${patient.bloodGroup ?? 'N/A'} | Phone: ${patient.phone ?? 'N/A'}",
                       style: TextStyle(color: labelColor, fontSize: 11.sp),
                     ),
                   ],

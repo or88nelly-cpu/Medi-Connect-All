@@ -61,7 +61,7 @@ class _StaffDashboardBody extends StatelessWidget {
               user.name ??
               "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
           if (name.isEmpty) name = 'Staff Member';
-          profileImage = user.profileImage;
+          profileImage = user.profilePhoto;
           roleLabel = user.staffRole ?? user.department ?? 'Medical Support';
         }
 
@@ -204,7 +204,7 @@ class _TopBar extends StatelessWidget {
 
   const _TopBar({
     required this.name,
-    required this.profileImage,
+    required this.profilePhoto,
     required this.roleLabel,
     required this.greeting,
     required this.state,

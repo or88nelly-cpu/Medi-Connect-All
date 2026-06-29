@@ -35,7 +35,7 @@ class DoctorProfileTab extends StatelessWidget {
           email = user.email;
           phone = user.phoneNumber;
           specialty = user.specialization;
-          profileImage = user.profileImage;
+          profileImage = user.profilePhoto;
           regNumber = user.medicalRegistrationNumber ?? "REG-DOC-2819";
           experience = user.experience != null
               ? "${user.experience} Years"

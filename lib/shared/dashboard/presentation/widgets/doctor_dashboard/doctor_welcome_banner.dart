@@ -24,7 +24,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
           name =
               user.name ??
               "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
-          profileImage = user.profileImage;
+          profileImage = user.profilePhoto;
           specialty = user.specialization ?? 'General Practitioner';
         }
 

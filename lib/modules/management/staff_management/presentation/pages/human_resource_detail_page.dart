@@ -788,7 +788,7 @@ class _StaffListCard extends StatelessWidget {
             child: ClipOval(
               child: CustomImageView(
                 imagePath: ProfileImageHelper.resolveImagePath(
-                  staff.profileImage,
+                  staff.profilePhoto,
                   'staff',
                   staff.gender,
                 ),
@@ -934,7 +934,7 @@ class _StaffGridCard extends StatelessWidget {
                   child: ClipOval(
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(
-                        staff.profileImage,
+                        staff.profilePhoto,
                         'staff',
                         staff.gender,
                       ),
