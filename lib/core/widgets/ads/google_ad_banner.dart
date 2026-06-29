@@ -19,7 +19,8 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
   final List<Map<String, dynamic>> _ads = [
     {
       'title': 'Medi-Connect Premium',
-      'description': 'Unlimited 24/7 consultations with top cardiologists and neurologists for just ₹499/mo.',
+      'description':
+          'Unlimited 24/7 consultations with top cardiologists and neurologists for just ₹499/mo.',
       'tagline': 'Join Now',
       'gradient': [const Color(0xFF6366F1), const Color(0xFF4F46E5)],
       'badgeColor': const Color(0xFFEEF2FF),
@@ -28,7 +29,8 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
     },
     {
       'title': 'Medi-Lab Smart Checkup',
-      'description': 'Complete health profiles including Lipid, Thyroid & CBC with home sample collection. Flat 30% OFF.',
+      'description':
+          'Complete health profiles including Lipid, Thyroid & CBC with home sample collection. Flat 30% OFF.',
       'tagline': 'Book Today',
       'gradient': [const Color(0xFF0D9488), const Color(0xFF0F766E)],
       'badgeColor': const Color(0xFFF0FDFA),
@@ -37,7 +39,8 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
     },
     {
       'title': '2-Hour Pharmacy Delivery',
-      'description': 'Get essential medicines delivered to your doorstep. Use code HEALTH30 for flat 30% off.',
+      'description':
+          'Get essential medicines delivered to your doorstep. Use code HEALTH30 for flat 30% off.',
       'tagline': 'Order Now',
       'gradient': [const Color(0xFFEA580C), const Color(0xFFC2410C)],
       'badgeColor': const Color(0xFFFFF7ED),
@@ -46,7 +49,8 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
     },
     {
       'title': 'Free Diet Consultation',
-      'description': 'Consult with our certified clinical nutritionists for personalized diet and workout plans.',
+      'description':
+          'Consult with our certified clinical nutritionists for personalized diet and workout plans.',
       'tagline': 'Claim Offer',
       'gradient': [const Color(0xFF16A34A), const Color(0xFF15803D)],
       'badgeColor': const Color(0xFFF0FDF4),
@@ -144,7 +148,11 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
                   color: Colors.white.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.close_rounded, color: Colors.white, size: 12.sp),
+                child: Icon(
+                  Icons.close_rounded,
+                  color: Colors.white,
+                  size: 12.sp,
+                ),
               ),
             ),
           ),
@@ -199,7 +207,10 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
                 SizedBox(width: 8.w),
                 // Action Button Tagline
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 6.h,
+                  ),
                   decoration: BoxDecoration(
                     color: ad['badgeColor'] as Color,
                     borderRadius: BorderRadius.circular(10.r),

@@ -89,7 +89,9 @@ void main() {
         home: MultiBlocProvider(
           providers: [
             BlocProvider<ThemeCubit>(create: (_) => GetIt.I<ThemeCubit>()),
-            BlocProvider<AdminSettingsBloc>(create: (_) => GetIt.I<AdminSettingsBloc>()),
+            BlocProvider<AdminSettingsBloc>(
+              create: (_) => GetIt.I<AdminSettingsBloc>(),
+            ),
             BlocProvider<AuthBloc>(create: (_) => GetIt.I<AuthBloc>()),
           ],
           child: child,

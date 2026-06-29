@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -142,7 +141,10 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
               children: [
                 // Top bar
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 16.h,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -155,7 +157,10 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.close_rounded, color: Colors.white),
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: Colors.white,
+                        ),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
@@ -179,7 +184,9 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                     color: isDark
                         ? AppColors.terminalDarkCard
                         : AppColors.terminalLightCard,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(24.r),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -221,10 +228,14 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                                   margin: EdgeInsets.only(right: 10.w),
                                   padding: EdgeInsets.all(8.r),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary.withValues(alpha: 0.1),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.1,
+                                    ),
                                     borderRadius: BorderRadius.circular(12.r),
                                     border: Border.all(
-                                      color: AppColors.primary.withValues(alpha: 0.3),
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.3,
+                                      ),
                                     ),
                                   ),
                                   child: Column(
@@ -237,7 +248,9 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 11.sp,
-                                          color: isDark ? Colors.white : Colors.black87,
+                                          color: isDark
+                                              ? Colors.white
+                                              : Colors.black87,
                                         ),
                                       ),
                                       SizedBox(height: 2.h),
@@ -281,22 +294,14 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
             bottom: isTop ? null : 0,
             left: isLeft ? 0 : null,
             right: isLeft ? null : 0,
-            child: Container(
-              width: size.w,
-              height: thickness.h,
-              color: color,
-            ),
+            child: Container(width: size.w, height: thickness.h, color: color),
           ),
           Positioned(
             top: isTop ? 0 : null,
             bottom: isTop ? null : 0,
             left: isLeft ? 0 : null,
             right: isLeft ? null : 0,
-            child: Container(
-              width: thickness.w,
-              height: size.h,
-              color: color,
-            ),
+            child: Container(width: thickness.w, height: size.h, color: color),
           ),
         ],
       ),

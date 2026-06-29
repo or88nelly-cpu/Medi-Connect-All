@@ -18,7 +18,8 @@ class AttendanceProximityDialog extends StatefulWidget {
   });
 
   @override
-  State<AttendanceProximityDialog> createState() => _AttendanceProximityDialogState();
+  State<AttendanceProximityDialog> createState() =>
+      _AttendanceProximityDialogState();
 }
 
 class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
@@ -65,7 +66,8 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
       final timeStr = DateFormat('hh:mm a').format(now);
       final dateStr = now.toIso8601String().split('T').first;
 
-      final staffName = widget.user.name ??
+      final staffName =
+          widget.user.name ??
           "${widget.user.firstName ?? ''} ${widget.user.lastName ?? ''}".trim();
 
       await supabase.from('staff_attendance').insert({
@@ -114,10 +116,18 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     final currentLat = _isInsideHospital ? insideLat : outsideLat;
     final currentLng = _isInsideHospital ? insideLng : outsideLng;
@@ -142,7 +152,11 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                     color: AppColors.primary.withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.location_on_rounded, color: AppColors.primary, size: 24.r),
+                  child: Icon(
+                    Icons.location_on_rounded,
+                    color: AppColors.primary,
+                    size: 24.r,
+                  ),
                 ),
                 SizedBox(width: 12.w),
                 Expanded(
@@ -173,9 +187,12 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                         height: 80.r + (24.r * _pulseController.value),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: (isAllowed ? AppColors.success : AppColors.error).withValues(
-                            alpha: 0.15 * (1.0 - _pulseController.value),
-                          ),
+                          color:
+                              (isAllowed ? AppColors.success : AppColors.error)
+                                  .withValues(
+                                    alpha:
+                                        0.15 * (1.0 - _pulseController.value),
+                                  ),
                         ),
                       ),
                       Container(
@@ -183,20 +200,27 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                         height: 60.r + (16.r * _pulseController.value),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: (isAllowed ? AppColors.success : AppColors.error).withValues(
-                            alpha: 0.25 * (1.0 - _pulseController.value),
-                          ),
+                          color:
+                              (isAllowed ? AppColors.success : AppColors.error)
+                                  .withValues(
+                                    alpha:
+                                        0.25 * (1.0 - _pulseController.value),
+                                  ),
                         ),
                       ),
                       // Core Icon Indicator
                       CircleAvatar(
                         radius: 26.r,
-                        backgroundColor: (isAllowed ? AppColors.success : AppColors.error).withValues(
-                          alpha: 0.15,
-                        ),
+                        backgroundColor:
+                            (isAllowed ? AppColors.success : AppColors.error)
+                                .withValues(alpha: 0.15),
                         child: Icon(
-                          isAllowed ? Icons.verified_user_rounded : Icons.gpp_bad_rounded,
-                          color: isAllowed ? AppColors.success : AppColors.error,
+                          isAllowed
+                              ? Icons.verified_user_rounded
+                              : Icons.gpp_bad_rounded,
+                          color: isAllowed
+                              ? AppColors.success
+                              : AppColors.error,
                           size: 28.r,
                         ),
                       ),
@@ -211,7 +235,9 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
             Container(
               padding: EdgeInsets.all(12.r),
               decoration: BoxDecoration(
-                color: isDark ? Colors.white12 : Colors.black.withValues(alpha: 0.03),
+                color: isDark
+                    ? Colors.white12
+                    : Colors.black.withValues(alpha: 0.03),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(color: borderColor),
               ),
@@ -221,10 +247,17 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Hospital Location:", style: TextStyle(color: labelColor, fontSize: 11.sp)),
+                      Text(
+                        "Hospital Location:",
+                        style: TextStyle(color: labelColor, fontSize: 11.sp),
+                      ),
                       Text(
                         "$hospitalLat, $hospitalLng",
-                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11.sp),
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11.sp,
+                        ),
                       ),
                     ],
                   ),
@@ -232,10 +265,17 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Your Mock Location:", style: TextStyle(color: labelColor, fontSize: 11.sp)),
+                      Text(
+                        "Your Mock Location:",
+                        style: TextStyle(color: labelColor, fontSize: 11.sp),
+                      ),
                       Text(
                         "$currentLat, $currentLng",
-                        style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 11.sp),
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11.sp,
+                        ),
                       ),
                     ],
                   ),
@@ -243,11 +283,16 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Proximity Distance:", style: TextStyle(color: labelColor, fontSize: 11.sp)),
+                      Text(
+                        "Proximity Distance:",
+                        style: TextStyle(color: labelColor, fontSize: 11.sp),
+                      ),
                       Text(
                         distance,
                         style: TextStyle(
-                          color: isAllowed ? AppColors.success : AppColors.error,
+                          color: isAllowed
+                              ? AppColors.success
+                              : AppColors.error,
                           fontWeight: FontWeight.bold,
                           fontSize: 12.sp,
                         ),
@@ -265,7 +310,10 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
               children: [
                 Text(
                   "Location Simulation:",
-                  style: AppTextStyles.bodyMedium.copyWith(color: textColor, fontWeight: FontWeight.w600),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 Switch(
                   value: _isInsideHospital,
@@ -296,20 +344,36 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                 ),
                 SizedBox(width: 8.w),
                 ElevatedButton(
-                  onPressed: (!isAllowed || _isSubmitting) ? null : _submitAttendance,
+                  onPressed: (!isAllowed || _isSubmitting)
+                      ? null
+                      : _submitAttendance,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     disabledBackgroundColor: Colors.grey.shade400,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 10.h,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
                   ),
                   child: _isSubmitting
                       ? SizedBox(
                           width: 16.r,
                           height: 16.r,
-                          child: const CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                          child: const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
                         )
-                      : const Text("Check In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      : const Text(
+                          "Check In",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ],
             ),

@@ -39,7 +39,9 @@ class EmrdDetailCard extends StatelessWidget {
                 title,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white70 : AppColors.textPrimary(context),
+                  color: isDark
+                      ? Colors.white70
+                      : AppColors.textPrimary(context),
                 ),
               ),
             ],

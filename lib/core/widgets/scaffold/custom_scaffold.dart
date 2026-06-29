@@ -30,7 +30,8 @@ class CustomScaffold extends StatelessWidget {
       child: SafeArea(
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
-            final showAd = authState is Authenticated && authState.user.role != 'admin';
+            final showAd =
+                authState is Authenticated && authState.user.role != 'admin';
 
             return Scaffold(
               backgroundColor: Colors.transparent,

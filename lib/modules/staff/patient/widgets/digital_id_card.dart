@@ -169,7 +169,6 @@ class DigitalIdCard extends StatelessWidget {
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 8.sp,
-
                       ),
                     ),
                     Text(
@@ -178,7 +177,6 @@ class DigitalIdCard extends StatelessWidget {
                         color: isDark ? Colors.white70 : Colors.black87,
                         fontWeight: FontWeight.bold,
                         fontSize: 9.sp,
-                        
                       ),
                     ),
                   ],
@@ -290,7 +288,7 @@ class DigitalIdCard extends StatelessWidget {
                         "Date of Birth",
                         dobVal,
                         isDark,
-                         context: context
+                        context: context,
                       ),
                     ),
                     Expanded(
@@ -300,7 +298,7 @@ class DigitalIdCard extends StatelessWidget {
                         bloodVal,
                         isDark,
                         iconColor: AppColors.error,
-                         context: context
+                        context: context,
                       ),
                     ),
                   ],
@@ -314,17 +312,17 @@ class DigitalIdCard extends StatelessWidget {
                         "Mobile Number",
                         phoneVal,
                         isDark,
-                         context: context
+                        context: context,
                       ),
                     ),
                     Expanded(
                       child: _buildInfoItem(
                         Icons.location_on_outlined,
                         "Place",
-                       
+
                         placeVal,
                         isDark,
-                         context: context
+                        context: context,
                       ),
                     ),
                   ],

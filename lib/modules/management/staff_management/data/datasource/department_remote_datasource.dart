@@ -1,7 +1,7 @@
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/modules/management/staff_management/data/models/department_model.dart';
 
-const _kTable = 'department_master';
+const _kTable = 'departments';
 
 /// Remote data source for the Department feature backed by Supabase.
 abstract class DepartmentRemoteDataSource {

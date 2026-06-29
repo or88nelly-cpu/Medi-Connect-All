@@ -48,7 +48,9 @@ class CompleteConsultationState {
 }
 
 class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
-  CompleteConsultationCubit()
+  final double initialConsultationFee;
+
+  CompleteConsultationCubit({this.initialConsultationFee = 500.0})
     : super(
         CompleteConsultationState(
           medicines: [],
@@ -57,7 +59,7 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
           paymentConfirmed: false,
           invoiceNumber: '',
           emrSubmitted: false,
-          totalFee: 500.0,
+          totalFee: initialConsultationFee,
           currentStep: 1,
         ),
       ) {
@@ -191,7 +193,7 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
   }
 
   void updateTotalFee() {
-    double consultationFee = 500.00;
+    double consultationFee = initialConsultationFee;
     double medicineTotal = 0.0;
     for (final row in state.medicines) {
       final nameCtrl = row['name'] as TextEditingController?;

@@ -23,9 +23,7 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
       final totalPatients = (patientsRes as List).length;
 
       // 2. Total Records
-      final recordsRes = await supabase
-          .from('emr_records')
-          .select('id');
+      final recordsRes = await supabase.from('emr_records').select('id');
       final totalRecords = (recordsRes as List).length;
 
       // 3. Total Documents (we assume roughly 3 documents per EMR record: prescription, invoice, lab report)
@@ -39,9 +37,7 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
       final filesInTracking = (trackingRes as List).length;
 
       // 5. Coded Records (EMR Records that have medicines or notes)
-      final codedRes = await supabase
-          .from('emr_records')
-          .select('id');
+      final codedRes = await supabase.from('emr_records').select('id');
       final codedRecords = (codedRes as List).length;
 
       // 6. Pending Summaries (Completed appointments that don't have an EMR record generated yet)
@@ -67,7 +63,9 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
       final activeMlcCases = (mlcRes as List).length;
 
       // 9. Archived Records (records older than 7 days)
-      final archiveCutoff = DateTime.now().subtract(const Duration(days: 7)).toIso8601String();
+      final archiveCutoff = DateTime.now()
+          .subtract(const Duration(days: 7))
+          .toIso8601String();
       final archivedRes = await supabase
           .from('emr_records')
           .select('id')
@@ -75,22 +73,21 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
       final archivedRecords = (archivedRes as List).length;
 
       // 10. Generated Reports (all invoices)
-      final reportsRes = await supabase
-          .from('invoices')
-          .select('id');
+      final reportsRes = await supabase.from('invoices').select('id');
       final generatedReports = (reportsRes as List).length;
 
       // 11. NABH Compliance Score (Ratio of EMR records to completed appointments)
       double complianceScore = 92.0;
       final completedCount = (completedAppts as List).length;
       if (completedCount > 0) {
-        complianceScore = ((totalRecords / completedCount) * 100).clamp(50.0, 100.0);
+        complianceScore = ((totalRecords / completedCount) * 100).clamp(
+          50.0,
+          100.0,
+        );
       }
 
       // 12. Active Users (all users in database)
-      final usersRes = await supabase
-          .from('users')
-          .select('id');
+      final usersRes = await supabase.from('users').select('id');
       final activeUsers = (usersRes as List).length;
 
       // 13. Active Alerts (unresolved emergency alerts)
@@ -101,9 +98,7 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
       final activeAlerts = (alertsRes as List).length;
 
       // 14. Audit Records (all activity logs)
-      final auditRes = await supabase
-          .from('activity_logs')
-          .select('id');
+      final auditRes = await supabase.from('activity_logs').select('id');
       final auditRecords = (auditRes as List).length;
 
       // 15. Insurance Records (users with set insurance number)

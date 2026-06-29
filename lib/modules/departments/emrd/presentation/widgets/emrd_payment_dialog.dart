@@ -191,8 +191,12 @@ void showEmrdPaymentDialog({
                                   .maybeSingle();
 
                               if (response != null) {
-                                final currentStock = response['stock'] as int? ?? 0;
-                                final newStock = (currentStock - 1).clamp(0, 999999);
+                                final currentStock =
+                                    response['stock'] as int? ?? 0;
+                                final newStock = (currentStock - 1).clamp(
+                                  0,
+                                  999999,
+                                );
                                 await supabase
                                     .from('pharmacy_inventory')
                                     .update({'stock': newStock})
@@ -233,7 +237,8 @@ void showEmrdPaymentDialog({
                       if (localDataStr != null) {
                         final List<dynamic> list = jsonDecode(localDataStr);
                         for (final item in list) {
-                          if (item['appointment_id'] == record['appointment_id']) {
+                          if (item['appointment_id'] ==
+                              record['appointment_id']) {
                             if (isMedicine) {
                               item['medicine_payment_status'] = 'Paid';
                             } else {

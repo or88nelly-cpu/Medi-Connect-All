@@ -4,11 +4,7 @@ import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/modules/management/consultation_management/domain/usecases/get_emrd_stats_usecase.dart';
 import 'package:medi_connect/modules/management/consultation_management/domain/usecases/get_emr_records_usecase.dart';
 
-enum EmrdView {
-  dashboard,
-  medicalRecordManagement,
-  patientRegistry,
-}
+enum EmrdView { dashboard, medicalRecordManagement, patientRegistry }
 
 abstract class EmrdEvent extends Equatable {
   const EmrdEvent();
@@ -97,13 +93,12 @@ class EmrdBloc extends Bloc<EmrdEvent, EmrdState> {
     statsRes.fold((_) {}, (val) => stats = val);
     recordsRes.fold((_) {}, (val) => records = val);
 
-    emit(EmrdLoaded(stats, emrRecords: records, currentView: EmrdView.dashboard));
+    emit(
+      EmrdLoaded(stats, emrRecords: records, currentView: EmrdView.dashboard),
+    );
   }
 
-  void _onSwitchView(
-    SwitchEmrdView event,
-    Emitter<EmrdState> emit,
-  ) {
+  void _onSwitchView(SwitchEmrdView event, Emitter<EmrdState> emit) {
     if (state is EmrdLoaded) {
       emit((state as EmrdLoaded).copyWith(currentView: event.view));
     }

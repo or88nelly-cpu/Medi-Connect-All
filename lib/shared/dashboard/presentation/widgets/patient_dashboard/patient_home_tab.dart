@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/entities/department_entity.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/widgets/department_horizontal_list.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_welcome_banner.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_quick_stats.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/upcoming_appointments_card.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_hero_banner.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_services_grid.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_promo_footer.dart';
 
+/// The patient home tab — redesigned to match the MediConnect app mockup.
+///
+/// Layout (top to bottom):
+/// 1. Warning banner (if profile is incomplete)
+/// 2. [PatientHeroBanner]   – greeting card with name, patient ID, date
+/// 3. [PatientServicesGrid] – 12 quick-access service cards in a 2 or 4-col grid
+/// 4. [PatientPromoFooter]  – "Your Health, Our Priority" banner
 class PatientHomeTab extends StatelessWidget {
   const PatientHomeTab({super.key});
 
@@ -20,50 +28,99 @@ class PatientHomeTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Welcome Banner ──────────────────────────────
-          const PatientWelcomeBanner(),
-          SizedBox(height: 24.h),
-
-          // ── Quick Stats ─────────────────────────────────
-          Text(
-            AppStrings.patientQuickActions,
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 12.h),
-          const PatientQuickStats(),
-          SizedBox(height: 24.h),
-
-          // ── Upcoming Appointments ───────────────────────
-          Text(
-            AppStrings.upcomingAppointments,
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 12.h),
-          const UpcomingAppointmentsCard(),
-          SizedBox(height: 24.h),
-
-          // ── Departments ─────────────────────────────────
-          BlocBuilder<DepartmentBloc, DepartmentState>(
+          // ── Warning banner for incomplete profile ────────
+          BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              final List<DepartmentEntity> departments =
-                  state is DepartmentsLoaded
-                  ? state.sections
-                  : state is DepartmentActionSuccess
-                  ? (state.updatedDepartments)
-                        .where((e) => !e.consultation)
-                        .toList()
-                  : [];
-              return DepartmentHorizontalList(
-                departments: departments,
-                title: AppStrings.sections,
-                isAdmin: false,
-              );
+              if (state is Authenticated) {
+                final user = UserModel.fromEntity(state.user);
+                if (!user.profileCompletionStatus) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 16.h),
+                    padding: EdgeInsets.all(16.r),
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(16.r),
+                      border: Border.all(
+                        color: AppColors.error.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.warning_amber_rounded,
+                          color: AppColors.error,
+                          size: 24.r,
+                        ),
+                        SizedBox(width: 12.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Profile Incomplete",
+                                style: AppTextStyles.bodyMedium.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.error,
+                                ),
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                "Please complete your remaining steps to generate your UHID.",
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.push(
+                              RouteNames.patientRegistration,
+                              extra: {
+                                'isPatientMode': true,
+                                'user': user,
+                              },
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.error,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 8.h,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                            ),
+                          ),
+                          child: Text(
+                            "Complete Now",
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              }
+              return const SizedBox.shrink();
             },
           ),
+
+          // ── Hero banner ─────────────────────────────────
+          const PatientHeroBanner(),
+          SizedBox(height: 24.h),
+
+          // ── 12-item services grid ───────────────────────
+          const PatientServicesGrid(),
+          SizedBox(height: 24.h),
+
+          // ── Promo footer ────────────────────────────────
+          const PatientPromoFooter(),
           SizedBox(height: 80.h),
         ],
       ),

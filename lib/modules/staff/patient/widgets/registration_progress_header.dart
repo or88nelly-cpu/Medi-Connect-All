@@ -43,7 +43,9 @@ class RegistrationProgressHeader extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  isPatientMode ? "Complete Your Profile" : "Patient Registration",
+                  isPatientMode
+                      ? "Complete Your Profile"
+                      : "Patient Registration",
                   style: AppTextStyles.headingMedium.copyWith(
                     color: AppColors.textPrimary(context),
                     fontWeight: FontWeight.bold,
@@ -100,8 +102,8 @@ class RegistrationProgressHeader extends StatelessWidget {
         color: isCompleted
             ? AppColors.primary
             : isActive
-                ? AppColors.primary
-                : const Color(0xFFE2E8F0),
+            ? AppColors.primary
+            : const Color(0xFFE2E8F0),
         shape: BoxShape.circle,
         border: Border.all(
           color: isActive ? Colors.transparent : Colors.grey.shade300,
@@ -135,22 +137,24 @@ class RegistrationProgressHeader extends StatelessWidget {
   Widget _buildIllustration(int step, bool isDark) {
     // Return a responsive illustration based on step
     double size = 90.r;
-    
+
     if (step == 1) {
       // Step 1: Lady image or user profile illustration
       return Container(
         width: size,
         height: size,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.r)),
         child: CustomImageView(
           imagePath: "assets/images/lady_image.png",
           width: size,
           height: size,
           fit: BoxFit.contain,
           borderRadius: 16.r,
-          errorWidget: _buildFallbackIconIllustration(Icons.person_outline, const Color(0xFFE0E7FF), AppColors.primary),
+          errorWidget: _buildFallbackIconIllustration(
+            Icons.person_outline,
+            const Color(0xFFE0E7FF),
+            AppColors.primary,
+          ),
         ),
       );
     } else if (step == 2) {
@@ -187,11 +191,7 @@ class RegistrationProgressHeader extends StatelessWidget {
         ],
       ),
       child: Center(
-        child: Icon(
-          icon,
-          color: tint,
-          size: size * 0.5,
-        ),
+        child: Icon(icon, color: tint, size: size * 0.5),
       ),
     );
   }

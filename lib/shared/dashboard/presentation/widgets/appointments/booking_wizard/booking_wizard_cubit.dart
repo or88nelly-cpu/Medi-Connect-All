@@ -18,6 +18,9 @@ class BookingWizardState {
   final int currentWaitingCount;
   final bool isLoadingCounts;
   final String gender;
+  final double consultationFee;
+  final bool isFollowUp;
+  final bool isLoadingFeeCheck;
 
   BookingWizardState({
     required this.currentStep,
@@ -34,6 +37,9 @@ class BookingWizardState {
     required this.currentWaitingCount,
     required this.isLoadingCounts,
     required this.gender,
+    this.consultationFee = 0.0,
+    this.isFollowUp = false,
+    this.isLoadingFeeCheck = false,
   });
 
   BookingWizardState copyWith({
@@ -51,6 +57,9 @@ class BookingWizardState {
     int? currentWaitingCount,
     bool? isLoadingCounts,
     String? gender,
+    double? consultationFee,
+    bool? isFollowUp,
+    bool? isLoadingFeeCheck,
     bool clearSelectedPatient = false,
     bool clearSelectedSection = false,
     bool clearSelectedDoctor = false,
@@ -79,6 +88,9 @@ class BookingWizardState {
       currentWaitingCount: currentWaitingCount ?? this.currentWaitingCount,
       isLoadingCounts: isLoadingCounts ?? this.isLoadingCounts,
       gender: gender ?? this.gender,
+      consultationFee: consultationFee ?? this.consultationFee,
+      isFollowUp: isFollowUp ?? this.isFollowUp,
+      isLoadingFeeCheck: isLoadingFeeCheck ?? this.isLoadingFeeCheck,
     );
   }
 }
@@ -97,6 +109,9 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
           currentWaitingCount: 0,
           isLoadingCounts: false,
           gender: 'Male',
+          consultationFee: 0.0,
+          isFollowUp: false,
+          isLoadingFeeCheck: false,
         ),
       );
 
@@ -122,6 +137,7 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
 
   void selectPatient(UserModel? patient) {
     emit(state.copyWith(selectedPatient: patient, isCreatingPatient: false));
+    checkFollowUpStatus();
   }
 
   void setPatientSearchQuery(String query) {
@@ -147,11 +163,13 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
     if (doctor != null) {
       loadAppointmentCounts();
     }
+    checkFollowUpStatus();
   }
 
   void selectDate(DateTime date) {
     emit(state.copyWith(selectedDate: date, clearSelectedSlot: true));
     loadAppointmentCounts();
+    checkFollowUpStatus();
   }
 
   void selectSlotTime(String? time) {
@@ -164,6 +182,61 @@ class BookingWizardCubit extends Cubit<BookingWizardState> {
 
   void selectType(String type) {
     emit(state.copyWith(selectedType: type));
+  }
+
+  Future<void> checkFollowUpStatus() async {
+    final patient = state.selectedPatient;
+    final doctor = state.selectedDoctor;
+    if (patient == null || doctor == null) {
+      emit(state.copyWith(isFollowUp: false, consultationFee: 0.0));
+      return;
+    }
+
+    emit(state.copyWith(isLoadingFeeCheck: true));
+    try {
+      final res = await Supabase.instance.client
+          .from('appointments')
+          .select('appointment_date')
+          .eq('patient_id', patient.id)
+          .eq('doctor_id', doctor.id)
+          .neq('status', 'Cancelled');
+
+      final list = res as List<dynamic>? ?? [];
+      bool followUp = false;
+      for (final item in list) {
+        final dateStr = item['appointment_date'] as String?;
+        if (dateStr != null) {
+          final aptDate = DateTime.tryParse(dateStr);
+          if (aptDate != null) {
+            final diff = state.selectedDate.difference(aptDate).inDays.abs();
+            if (diff < 7) {
+              followUp = true;
+              break;
+            }
+          }
+        }
+      }
+
+      final double baseFee = doctor.consultationFee ?? 500.0;
+      final double finalFee = followUp ? 0.0 : baseFee;
+
+      emit(
+        state.copyWith(
+          isFollowUp: followUp,
+          consultationFee: finalFee,
+          isLoadingFeeCheck: false,
+        ),
+      );
+    } catch (e) {
+      final double baseFee = doctor.consultationFee ?? 500.0;
+      emit(
+        state.copyWith(
+          isFollowUp: false,
+          consultationFee: baseFee,
+          isLoadingFeeCheck: false,
+        ),
+      );
+    }
   }
 
   Future<void> loadAppointmentCounts() async {

@@ -393,14 +393,14 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
   }
 
   void _onRegisterPressed() {
-    if (!_isAgreedNotifier.value) {
-      showDialog(
-        context: context,
-        builder: (_) =>
-            const ErrorDialog(message: AppStrings.hipaaAgreementError),
-      );
-      return;
-    }
+    // if (!_isAgreedNotifier.value) {
+    //   showDialog(
+    //     context: context,
+    //     builder: (_) =>
+    //         const ErrorDialog(message: AppStrings.hipaaAgreementError),
+    //   );
+    //   return;
+    // }
 
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthBloc>().add(

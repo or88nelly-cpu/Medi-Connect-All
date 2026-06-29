@@ -20,10 +20,7 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
         Container(
           width: 10.r,
           height: 10.r,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         SizedBox(width: 6.w),
         Text(
@@ -62,11 +59,7 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.insights,
-                color: AppColors.primary,
-                size: 20.r,
-              ),
+              Icon(Icons.insights, color: AppColors.primary, size: 20.r),
               SizedBox(width: 10.w),
               Text(
                 "EMRD Performance & Trend Analytics",
@@ -106,9 +99,15 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildLegendItem("Digitization Accuracy (%)", const Color(0xFF6366F1)),
+              _buildLegendItem(
+                "Digitization Accuracy (%)",
+                const Color(0xFF6366F1),
+              ),
               SizedBox(width: 20.w),
-              _buildLegendItem("Storage Optimization (%)", const Color(0xFF10B981)),
+              _buildLegendItem(
+                "Storage Optimization (%)",
+                const Color(0xFF10B981),
+              ),
             ],
           ),
         ],
@@ -150,8 +149,7 @@ class EMRDAnalyticsPainter extends CustomPainter {
       ..strokeWidth = 3
       ..strokeCap = StrokeCap.round;
 
-    final fillPaint = Paint()
-      ..style = PaintingStyle.fill;
+    final fillPaint = Paint()..style = PaintingStyle.fill;
 
     const rows = 4;
     for (int i = 0; i <= rows; i++) {
@@ -212,25 +210,30 @@ class EMRDAnalyticsPainter extends CustomPainter {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );
-    fillPaint.shader = gradient.createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+    fillPaint.shader = gradient.createShader(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+    );
     canvas.drawPath(fillPath, fillPaint);
 
     final gradient2 = LinearGradient(
-      colors: [secondaryColor.withOpacity(0.2), secondaryColor.withOpacity(0.0)],
+      colors: [
+        secondaryColor.withOpacity(0.2),
+        secondaryColor.withOpacity(0.0),
+      ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );
     final fillPaint2 = Paint()
       ..style = PaintingStyle.fill
-      ..shader = gradient2.createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+      ..shader = gradient2.createShader(
+        Rect.fromLTWH(0, 0, size.width, size.height),
+      );
     canvas.drawPath(fillPath2, fillPaint2);
 
     canvas.drawPath(path, paintLine);
     canvas.drawPath(path2, paintLine2);
 
-    final textPainter = TextPainter(
-      textDirection: TextDirection.ltr,
-    );
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
     for (int i = 0; i < values.length; i++) {
       final x = i * stepX;
@@ -252,7 +255,10 @@ class EMRDAnalyticsPainter extends CustomPainter {
         ),
       );
       textPainter.layout();
-      textPainter.paint(canvas, Offset(x - textPainter.width / 2, size.height + 6));
+      textPainter.paint(
+        canvas,
+        Offset(x - textPainter.width / 2, size.height + 6),
+      );
     }
   }
 

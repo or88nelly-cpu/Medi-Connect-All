@@ -127,9 +127,19 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildSideToggleButton("Front Side", _isFront, () => setState(() => _isFront = true), isDark),
+                  _buildSideToggleButton(
+                    "Front Side",
+                    _isFront,
+                    () => setState(() => _isFront = true),
+                    isDark,
+                  ),
                   SizedBox(width: 12.w),
-                  _buildSideToggleButton("Back Side", !_isFront, () => setState(() => _isFront = false), isDark),
+                  _buildSideToggleButton(
+                    "Back Side",
+                    !_isFront,
+                    () => setState(() => _isFront = false),
+                    isDark,
+                  ),
                 ],
               ),
               SizedBox(height: 16.h),
@@ -173,9 +183,17 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
           ),
           child: Column(
             children: [
-              _buildReviewRow("Name", "${widget.firstName} ${widget.lastName}", context),
+              _buildReviewRow(
+                "Name",
+                "${widget.firstName} ${widget.lastName}",
+                context,
+              ),
               _buildReviewDivider(context),
-              _buildReviewRow("UHID", widget.uhid.isNotEmpty ? widget.uhid : "Generating...", context),
+              _buildReviewRow(
+                "UHID",
+                widget.uhid.isNotEmpty ? widget.uhid : "Generating...",
+                context,
+              ),
               _buildReviewDivider(context),
               _buildReviewRow("Date of Birth", widget.dob, context),
               _buildReviewDivider(context),
@@ -208,7 +226,11 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
                       color: AppColors.primary.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.receipt_long_outlined, color: AppColors.primary, size: 20.r),
+                    child: Icon(
+                      Icons.receipt_long_outlined,
+                      color: AppColors.primary,
+                      size: 20.r,
+                    ),
                   ),
                   SizedBox(width: 12.w),
                   Column(
@@ -248,7 +270,12 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
     );
   }
 
-  Widget _buildSideToggleButton(String text, bool isSelected, VoidCallback onTap, bool isDark) {
+  Widget _buildSideToggleButton(
+    String text,
+    bool isSelected,
+    VoidCallback onTap,
+    bool isDark,
+  ) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(8.r),
@@ -258,8 +285,8 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
           color: isSelected
               ? AppColors.primary
               : isDark
-                  ? const Color(0xFF1E293B)
-                  : const Color(0xFFF1F5F9),
+              ? const Color(0xFF1E293B)
+              : const Color(0xFFF1F5F9),
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Text(
@@ -268,8 +295,8 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
             color: isSelected
                 ? Colors.white
                 : isDark
-                    ? Colors.white60
-                    : Colors.black54,
+                ? Colors.white60
+                : Colors.black54,
             fontWeight: FontWeight.bold,
             fontSize: 9.sp,
           ),

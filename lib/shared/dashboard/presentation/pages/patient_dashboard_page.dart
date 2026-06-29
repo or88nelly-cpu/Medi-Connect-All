@@ -25,6 +25,7 @@ import 'package:medi_connect/modules/management/staff_management/presentation/bl
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/modules/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_home_tab.dart';
 
 class PatientDashboardPage extends StatefulWidget {
   const PatientDashboardPage({super.key});
@@ -69,7 +70,7 @@ class _PatientDashboardPageState extends State<PatientDashboardPage> {
               body: IndexedStack(
                 index: currentIndex,
                 children: [
-                  _PatientHomeTab(),
+                  const PatientHomeTab(),
                   const _PatientAppointmentsTab(),
                   const _PatientRecordsTab(),
                   const _PatientChatTab(),

@@ -133,9 +133,14 @@ class ConfirmStep extends StatelessWidget {
                 isDark,
                 context,
               ),
+              _buildReviewRow("Type", state.selectedType, isDark, context),
               _buildReviewRow(
-                "Type",
-                state.selectedType,
+                "Consultation Fee",
+                state.isLoadingFeeCheck
+                    ? "Calculating..."
+                    : state.isFollowUp
+                    ? "₹0.00 (Follow-up)"
+                    : "₹${state.consultationFee.toStringAsFixed(2)}",
                 isDark,
                 isLast: true,
                 context,

@@ -49,7 +49,7 @@ class SuccessStep extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 10.h),
-          
+
           // Green Success Tick Circle
           Container(
             width: 60.r,
@@ -228,7 +228,11 @@ class SuccessStep extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.share_outlined, color: AppColors.primary, size: 16.r),
+                Icon(
+                  Icons.share_outlined,
+                  color: AppColors.primary,
+                  size: 16.r,
+                ),
                 SizedBox(width: 8.w),
                 Text(
                   "Download / Share ID Card",

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,10 +57,18 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
 
   void _showPatientDetailSheet(BuildContext context, UserModel patient) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.terminalLightCard;
-    final borderColor = isDark ? AppColors.terminalDarkBorder : AppColors.terminalLightBorder;
-    final textColor = isDark ? AppColors.terminalDarkText : AppColors.terminalLightText;
-    final labelColor = isDark ? AppColors.terminalDarkLabel : AppColors.terminalLightLabel;
+    final cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.terminalLightCard;
+    final borderColor = isDark
+        ? AppColors.terminalDarkBorder
+        : AppColors.terminalLightBorder;
+    final textColor = isDark
+        ? AppColors.terminalDarkText
+        : AppColors.terminalLightText;
+    final labelColor = isDark
+        ? AppColors.terminalDarkLabel
+        : AppColors.terminalLightLabel;
 
     showModalBottomSheet(
       context: context,
@@ -138,7 +145,9 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                   vertical: 3.h,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withValues(alpha: 0.15),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.15,
+                                  ),
                                   borderRadius: BorderRadius.circular(4.r),
                                 ),
                                 child: Text(
@@ -177,19 +186,46 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                         ? Colors.white.withValues(alpha: 0.02)
                         : Colors.black.withValues(alpha: 0.01),
                     borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: borderColor.withValues(alpha: 0.5)),
+                    border: Border.all(
+                      color: borderColor.withValues(alpha: 0.5),
+                    ),
                   ),
                   child: Column(
                     children: [
-                      _buildDetailRow("Age", "${patient.age ?? 'N/A'} years", labelColor, textColor),
+                      _buildDetailRow(
+                        "Age",
+                        "${patient.age ?? 'N/A'} years",
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withValues(alpha: 0.3)),
-                      _buildDetailRow("Gender", patient.gender ?? 'N/A', labelColor, textColor),
+                      _buildDetailRow(
+                        "Gender",
+                        patient.gender ?? 'N/A',
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withValues(alpha: 0.3)),
-                      _buildDetailRow("Blood Group", patient.bloodGroup ?? 'N/A', labelColor, textColor),
+                      _buildDetailRow(
+                        "Blood Group",
+                        patient.bloodGroup ?? 'N/A',
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withValues(alpha: 0.3)),
-                      _buildDetailRow("Phone", patient.phoneNumber ?? 'N/A', labelColor, textColor),
+                      _buildDetailRow(
+                        "Phone",
+                        patient.phoneNumber ?? 'N/A',
+                        labelColor,
+                        textColor,
+                      ),
                       Divider(color: borderColor.withValues(alpha: 0.3)),
-                      _buildDetailRow("Email", patient.email, labelColor, textColor),
+                      _buildDetailRow(
+                        "Email",
+                        patient.email,
+                        labelColor,
+                        textColor,
+                      ),
                     ],
                   ),
                 ),
@@ -232,7 +268,9 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                               ? Colors.white.withValues(alpha: 0.02)
                               : Colors.black.withValues(alpha: 0.01),
                           borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(color: borderColor.withValues(alpha: 0.5)),
+                          border: Border.all(
+                            color: borderColor.withValues(alpha: 0.5),
+                          ),
                         ),
                         child: Text(
                           "No active vitals or recent EMR history records.",
@@ -255,7 +293,9 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                             ? Colors.white.withValues(alpha: 0.02)
                             : Colors.black.withValues(alpha: 0.01),
                         borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(color: borderColor.withValues(alpha: 0.5)),
+                        border: Border.all(
+                          color: borderColor.withValues(alpha: 0.5),
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,11 +324,19 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                                 ],
                               ),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w,
+                                  vertical: 3.h,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withValues(alpha: 0.1),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.1,
+                                  ),
                                   borderRadius: BorderRadius.circular(12.r),
-                                  border: Border.all(color: AppColors.primary, width: 0.5),
+                                  border: Border.all(
+                                    color: AppColors.primary,
+                                    width: 0.5,
+                                  ),
                                 ),
                                 child: Text(
                                   recent.status,
@@ -304,7 +352,10 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                           SizedBox(height: 6.h),
                           Text(
                             "Date: ${DateFormat('dd MMM yyyy').format(recent.appointmentDate)} | Time: ${recent.appointmentTime}",
-                            style: TextStyle(color: labelColor, fontSize: 11.sp),
+                            style: TextStyle(
+                              color: labelColor,
+                              fontSize: 11.sp,
+                            ),
                           ),
                           SizedBox(height: 12.h),
                           Divider(color: borderColor.withValues(alpha: 0.3)),
@@ -322,13 +373,44 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                             spacing: 8.w,
                             runSpacing: 8.h,
                             children: [
-                              _buildVitalBadge("BP", recent.bp ?? "--", Icons.favorite_border, Colors.red, isDark),
-                              _buildVitalBadge("Weight", recent.weight != null ? "${recent.weight} kg" : "--", Icons.scale_outlined, Colors.orange, isDark),
-                              _buildVitalBadge("Height", recent.height != null ? "${recent.height} cm" : "--", Icons.height, Colors.blue, isDark),
-                              _buildVitalBadge("Fever", recent.fever != null ? "${recent.fever} °F" : "--", Icons.thermostat_outlined, Colors.teal, isDark),
+                              _buildVitalBadge(
+                                "BP",
+                                recent.bp ?? "--",
+                                Icons.favorite_border,
+                                Colors.red,
+                                isDark,
+                              ),
+                              _buildVitalBadge(
+                                "Weight",
+                                recent.weight != null
+                                    ? "${recent.weight} kg"
+                                    : "--",
+                                Icons.scale_outlined,
+                                Colors.orange,
+                                isDark,
+                              ),
+                              _buildVitalBadge(
+                                "Height",
+                                recent.height != null
+                                    ? "${recent.height} cm"
+                                    : "--",
+                                Icons.height,
+                                Colors.blue,
+                                isDark,
+                              ),
+                              _buildVitalBadge(
+                                "Fever",
+                                recent.fever != null
+                                    ? "${recent.fever} °F"
+                                    : "--",
+                                Icons.thermostat_outlined,
+                                Colors.teal,
+                                isDark,
+                              ),
                             ],
                           ),
-                          if (recent.additionalVitals != null && recent.additionalVitals!.isNotEmpty) ...[
+                          if (recent.additionalVitals != null &&
+                              recent.additionalVitals!.isNotEmpty) ...[
                             SizedBox(height: 12.h),
                             Text(
                               "Additional Vitals:",
@@ -339,7 +421,11 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                               ),
                             ),
                             SizedBox(height: 6.h),
-                            _buildCustomVitalsDisplay(recent.additionalVitals!, isDark, borderColor),
+                            _buildCustomVitalsDisplay(
+                              recent.additionalVitals!,
+                              isDark,
+                              borderColor,
+                            ),
                           ],
                         ],
                       ),
@@ -355,24 +441,44 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
     );
   }
 
-  Widget _buildDetailRow(String label, String value, Color labelColor, Color valueColor) {
+  Widget _buildDetailRow(
+    String label,
+    String value,
+    Color labelColor,
+    Color valueColor,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(color: labelColor, fontSize: 12.sp)),
+          Text(
+            label,
+            style: TextStyle(color: labelColor, fontSize: 12.sp),
+          ),
           Text(
             value,
-            style: TextStyle(color: valueColor, fontWeight: FontWeight.w600, fontSize: 12.sp),
+            style: TextStyle(
+              color: valueColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 12.sp,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildVitalBadge(String label, String value, IconData icon, Color color, bool isDark) {
-    final bg = isDark ? color.withValues(alpha: 0.12) : color.withValues(alpha: 0.08);
+  Widget _buildVitalBadge(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+    bool isDark,
+  ) {
+    final bg = isDark
+        ? color.withValues(alpha: 0.12)
+        : color.withValues(alpha: 0.08);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(
@@ -395,14 +501,22 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
           ),
           Text(
             value,
-            style: TextStyle(color: color, fontSize: 11.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: color,
+              fontSize: 11.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCustomVitalsDisplay(String jsonStr, bool isDark, Color borderColor) {
+  Widget _buildCustomVitalsDisplay(
+    String jsonStr,
+    bool isDark,
+    Color borderColor,
+  ) {
     try {
       final Map<String, dynamic> custom = jsonDecode(jsonStr);
       if (custom.isEmpty) return const SizedBox();
@@ -413,7 +527,9 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: isDark ? Colors.white12 : Colors.black.withValues(alpha: 0.05),
+              color: isDark
+                  ? Colors.white12
+                  : Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(6.r),
               border: Border.all(color: borderColor.withValues(alpha: 0.4)),
             ),
@@ -479,7 +595,11 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
           SizedBox(width: 6.w),
           Text(
             label,
-            style: TextStyle(color: dotColor, fontSize: 10.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: dotColor,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
@@ -550,7 +670,9 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                         decoration: InputDecoration(
                           hintText: 'Search by UHID, Name, or Phone...',
                           hintStyle: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.textSecondary(context).withValues(alpha: 0.6),
+                            color: AppColors.textSecondary(
+                              context,
+                            ).withValues(alpha: 0.6),
                             fontSize: 14.sp,
                           ),
                           border: InputBorder.none,
@@ -605,7 +727,9 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                       return Center(
                         child: Text(
                           "No patients found in directory.",
-                          style: TextStyle(color: AppColors.textSecondary(context)),
+                          style: TextStyle(
+                            color: AppColors.textSecondary(context),
+                          ),
                         ),
                       );
                     }
@@ -614,9 +738,15 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                       valueListenable: _queryNotifier,
                       builder: (context, query, _) {
                         final filtered = patientsList.where((p) {
-                          final nameMatch = (p.name ?? '').toLowerCase().contains(query.toLowerCase());
-                          final phoneMatch = (p.phoneNumber ?? '').contains(query);
-                          final uhidMatch = (p.patientId ?? '').toLowerCase().contains(query.toLowerCase());
+                          final nameMatch = (p.name ?? '')
+                              .toLowerCase()
+                              .contains(query.toLowerCase());
+                          final phoneMatch = (p.phoneNumber ?? '').contains(
+                            query,
+                          );
+                          final uhidMatch = (p.patientId ?? '')
+                              .toLowerCase()
+                              .contains(query.toLowerCase());
                           return nameMatch || phoneMatch || uhidMatch;
                         }).toList();
 
@@ -642,7 +772,8 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                             final patient = filtered[index];
                             return PatientCard(
                               patient: patient,
-                              onTap: () => _showPatientDetailSheet(context, patient),
+                              onTap: () =>
+                                  _showPatientDetailSheet(context, patient),
                               onEdit: () {},
                               onDelete: () {},
                             );

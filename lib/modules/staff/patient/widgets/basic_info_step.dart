@@ -68,7 +68,11 @@ class BasicInfoStep extends StatelessWidget {
                         controller: firstNameCtrl,
                         labelText: "First Name *",
                         hintText: "Enter first name",
-                        prefixIcon: Icon(Icons.person_outline_rounded, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.person_outline_rounded,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         validator: (val) => val == null || val.trim().isEmpty
                             ? AppStrings.requiredField
                             : null,
@@ -80,7 +84,11 @@ class BasicInfoStep extends StatelessWidget {
                         controller: lastNameCtrl,
                         labelText: "Last Name *",
                         hintText: "Enter last name",
-                        prefixIcon: Icon(Icons.person_outline_rounded, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.person_outline_rounded,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         validator: (val) => val == null || val.trim().isEmpty
                             ? AppStrings.requiredField
                             : null,
@@ -93,11 +101,17 @@ class BasicInfoStep extends StatelessWidget {
                   controller: emailCtrl,
                   labelText: "Email Address (Optional)",
                   hintText: "Enter email address",
-                  prefixIcon: Icon(Icons.mail_outline_rounded, color: AppColors.primary, size: 20.r),
+                  prefixIcon: Icon(
+                    Icons.mail_outline_rounded,
+                    color: AppColors.primary,
+                    size: 20.r,
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (val) {
                     if (val != null && val.trim().isNotEmpty) {
-                      final hasMatch = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(val.trim());
+                      final hasMatch = RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(val.trim());
                       if (!hasMatch) return AppStrings.invalidEmail;
                     }
                     return null;
@@ -112,11 +126,17 @@ class BasicInfoStep extends StatelessWidget {
                         controller: phoneCtrl,
                         labelText: "Mobile Number *",
                         hintText: "Enter mobile number",
-                        prefixIcon: Icon(Icons.phone_outlined, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.phone_outlined,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         keyboardType: TextInputType.phone,
                         validator: (val) {
-                          if (val == null || val.trim().isEmpty) return AppStrings.requiredField;
-                          if (val.trim().length < 8) return AppStrings.invalidPhone;
+                          if (val == null || val.trim().isEmpty)
+                            return AppStrings.requiredField;
+                          if (val.trim().length < 8)
+                            return AppStrings.invalidPhone;
                           return null;
                         },
                       ),
@@ -127,17 +147,25 @@ class BasicInfoStep extends StatelessWidget {
                         controller: dobCtrl,
                         labelText: "Date of Birth *",
                         hintText: "DD / MM / YYYY",
-                        prefixIcon: Icon(Icons.calendar_today_outlined, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.calendar_today_outlined,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         readOnly: true,
                         onTap: () async {
                           final DateTime? picked = await showDatePicker(
                             context: context,
-                            initialDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
+                            initialDate: DateTime.now().subtract(
+                              const Duration(days: 365 * 18),
+                            ),
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now(),
                           );
                           if (picked != null) {
-                            dobCtrl.text = DateFormat('dd/MM/yyyy').format(picked);
+                            dobCtrl.text = DateFormat(
+                              'dd/MM/yyyy',
+                            ).format(picked);
                           }
                         },
                         validator: (val) => val == null || val.trim().isEmpty
@@ -173,11 +201,17 @@ class BasicInfoStep extends StatelessWidget {
                         controller: pincodeCtrl,
                         labelText: "Pincode *",
                         hintText: "Enter pincode",
-                        prefixIcon: Icon(Icons.pin_drop_outlined, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.pin_drop_outlined,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         keyboardType: TextInputType.number,
                         validator: (val) {
-                          if (val == null || val.trim().isEmpty) return AppStrings.requiredField;
-                          if (val.trim().length != 6) return "Enter 6 digit pincode";
+                          if (val == null || val.trim().isEmpty)
+                            return AppStrings.requiredField;
+                          if (val.trim().length != 6)
+                            return "Enter 6 digit pincode";
                           return null;
                         },
                       ),
@@ -186,12 +220,16 @@ class BasicInfoStep extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(top: 8.h),
                       child: ElevatedButton.icon(
-                        onPressed: isFetchingAddress || pincodeCtrl.text.length != 6
+                        onPressed:
+                            isFetchingAddress || pincodeCtrl.text.length != 6
                             ? null
                             : () => onFetchAddress(pincodeCtrl.text),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
-                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 16.h,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.r),
                           ),
@@ -202,10 +240,16 @@ class BasicInfoStep extends StatelessWidget {
                                 height: 14.r,
                                 child: const CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
                                 ),
                               )
-                            : Icon(Icons.my_location, color: Colors.white, size: 14.r),
+                            : Icon(
+                                Icons.my_location,
+                                color: Colors.white,
+                                size: 14.r,
+                              ),
                         label: Text(
                           "Fetch Address",
                           style: AppTextStyles.buttonMedium.copyWith(
@@ -224,10 +268,14 @@ class BasicInfoStep extends StatelessWidget {
                     width: double.infinity,
                     padding: EdgeInsets.all(12.r),
                     decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                      color: isDark
+                          ? const Color(0xFF1E293B)
+                          : const Color(0xFFF1F5F9),
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
-                        color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
+                        color: isDark
+                            ? const Color(0xFF334155)
+                            : const Color(0xFFE2E8F0),
                       ),
                     ),
                     child: Text(
@@ -244,7 +292,11 @@ class BasicInfoStep extends StatelessWidget {
                   controller: placeCtrl,
                   labelText: "Place / Locality *",
                   hintText: "Enter place / locality",
-                  prefixIcon: Icon(Icons.home_work_outlined, color: AppColors.primary, size: 20.r),
+                  prefixIcon: Icon(
+                    Icons.home_work_outlined,
+                    color: AppColors.primary,
+                    size: 20.r,
+                  ),
                   validator: (val) => val == null || val.trim().isEmpty
                       ? AppStrings.requiredField
                       : null,
@@ -254,7 +306,11 @@ class BasicInfoStep extends StatelessWidget {
                   controller: wardCtrl,
                   labelText: "Ward Number (Optional)",
                   hintText: "Enter ward number",
-                  prefixIcon: Icon(Icons.door_front_door_outlined, color: AppColors.primary, size: 20.r),
+                  prefixIcon: Icon(
+                    Icons.door_front_door_outlined,
+                    color: AppColors.primary,
+                    size: 20.r,
+                  ),
                 ),
               ],
             ),
@@ -275,7 +331,11 @@ class BasicInfoStep extends StatelessWidget {
     );
   }
 
-  Widget _buildCardContainer(BuildContext context, bool isDark, {required Widget child}) {
+  Widget _buildCardContainer(
+    BuildContext context,
+    bool isDark, {
+    required Widget child,
+  }) {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -288,10 +348,7 @@ class BasicInfoStep extends StatelessWidget {
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(
-          color: AppColors.border(context),
-          width: 1.w,
-        ),
+        border: Border.all(color: AppColors.border(context), width: 1.w),
       ),
       child: child,
     );
@@ -314,10 +371,38 @@ class BasicInfoStep extends StatelessWidget {
           spacing: 10.w,
           runSpacing: 10.h,
           children: [
-            _buildGenderCard(context, "Male", Icons.male, AppColors.blue, selectedSex == "Male", isDark),
-            _buildGenderCard(context, "Female", Icons.female, AppColors.pink, selectedSex == "Female", isDark),
-            _buildGenderCard(context, "Transgender", Icons.transgender, AppColors.purple, selectedSex == "Transgender", isDark),
-            _buildGenderCard(context, "Prefer not to say", Icons.lock_outline, AppColors.orange, selectedSex == "Prefer not to say", isDark),
+            _buildGenderCard(
+              context,
+              "Male",
+              Icons.male,
+              AppColors.blue,
+              selectedSex == "Male",
+              isDark,
+            ),
+            _buildGenderCard(
+              context,
+              "Female",
+              Icons.female,
+              AppColors.pink,
+              selectedSex == "Female",
+              isDark,
+            ),
+            _buildGenderCard(
+              context,
+              "Transgender",
+              Icons.transgender,
+              AppColors.purple,
+              selectedSex == "Transgender",
+              isDark,
+            ),
+            _buildGenderCard(
+              context,
+              "Prefer not to say",
+              Icons.lock_outline,
+              AppColors.orange,
+              selectedSex == "Prefer not to say",
+              isDark,
+            ),
           ],
         ),
       ],
@@ -334,7 +419,9 @@ class BasicInfoStep extends StatelessWidget {
   ) {
     final activeBg = AppColors.primary.withValues(alpha: 0.1);
     final activeBorder = AppColors.primary;
-    final inactiveBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
+    final inactiveBg = isDark
+        ? const Color(0xFF0F172A)
+        : const Color(0xFFF8FAFC);
     final inactiveBorder = AppColors.border(context);
 
     return InkWell(
@@ -362,7 +449,9 @@ class BasicInfoStep extends StatelessWidget {
             Text(
               value,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: isSelected ? AppColors.primary : AppColors.textPrimary(context),
+                color: isSelected
+                    ? AppColors.primary
+                    : AppColors.textPrimary(context),
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontSize: 10.sp,
               ),

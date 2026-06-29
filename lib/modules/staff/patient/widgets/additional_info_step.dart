@@ -139,7 +139,11 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                           controller: widget.policyIdCtrl,
                           labelText: "Policy Number",
                           hintText: "Enter policy number",
-                          prefixIcon: Icon(Icons.assignment_outlined, color: AppColors.primary, size: 20.r),
+                          prefixIcon: Icon(
+                            Icons.assignment_outlined,
+                            color: AppColors.primary,
+                            size: 20.r,
+                          ),
                         ),
                       ),
                       SizedBox(width: 12.w),
@@ -148,7 +152,11 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                           controller: widget.validTillCtrl,
                           labelText: "Policy Holder Name",
                           hintText: "Enter policy holder name",
-                          prefixIcon: Icon(Icons.person_outline_rounded, color: AppColors.primary, size: 20.r),
+                          prefixIcon: Icon(
+                            Icons.person_outline_rounded,
+                            color: AppColors.primary,
+                            size: 20.r,
+                          ),
                         ),
                       ),
                     ],
@@ -174,7 +182,16 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                         context: context,
                         label: "Blood Group",
                         value: widget.bloodGroup,
-                        items: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"],
+                        items: [
+                          "O+",
+                          "O-",
+                          "A+",
+                          "A-",
+                          "B+",
+                          "B-",
+                          "AB+",
+                          "AB-",
+                        ],
                         onChanged: widget.onBloodGroupChanged,
                         icon: Icons.bloodtype_outlined,
                         isDark: isDark,
@@ -249,14 +266,22 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                   controller: widget.allergiesCtrl,
                   labelText: "Allergies (If any)",
                   hintText: "e.g. Pollen, Peanuts, Medicines etc.",
-                  prefixIcon: Icon(Icons.healing_outlined, color: AppColors.primary, size: 20.r),
+                  prefixIcon: Icon(
+                    Icons.healing_outlined,
+                    color: AppColors.primary,
+                    size: 20.r,
+                  ),
                 ),
                 SizedBox(height: 16.h),
                 AppTextField(
                   controller: widget.otherDetailsCtrl,
                   labelText: "Existing Medical Conditions (If any)",
                   hintText: "e.g. Diabetes, Hypertension, Asthma etc.",
-                  prefixIcon: Icon(Icons.assignment_late_outlined, color: AppColors.primary, size: 20.r),
+                  prefixIcon: Icon(
+                    Icons.assignment_late_outlined,
+                    color: AppColors.primary,
+                    size: 20.r,
+                  ),
                 ),
               ],
             ),
@@ -279,7 +304,11 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                         controller: widget.emergencyNameCtrl,
                         labelText: "Contact Name *",
                         hintText: "Enter contact name",
-                        prefixIcon: Icon(Icons.person_outline_rounded, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.person_outline_rounded,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         validator: (val) => val == null || val.trim().isEmpty
                             ? AppStrings.requiredField
                             : null,
@@ -291,7 +320,16 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                         context: context,
                         label: "Relationship *",
                         value: widget.emergencyRelationship,
-                        items: ["Wife", "Husband", "Father", "Mother", "Brother", "Sister", "Friend", "Other"],
+                        items: [
+                          "Wife",
+                          "Husband",
+                          "Father",
+                          "Mother",
+                          "Brother",
+                          "Sister",
+                          "Friend",
+                          "Other",
+                        ],
                         onChanged: widget.onRelationshipChanged,
                         icon: Icons.people_outline_rounded,
                         isDark: isDark,
@@ -308,11 +346,17 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                         controller: widget.emergencyPhoneCtrl,
                         labelText: "Mobile Number *",
                         hintText: "Enter mobile number",
-                        prefixIcon: Icon(Icons.phone_outlined, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.phone_outlined,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         keyboardType: TextInputType.phone,
                         validator: (val) {
-                          if (val == null || val.trim().isEmpty) return AppStrings.requiredField;
-                          if (val.trim().length < 8) return AppStrings.invalidPhone;
+                          if (val == null || val.trim().isEmpty)
+                            return AppStrings.requiredField;
+                          if (val.trim().length < 8)
+                            return AppStrings.invalidPhone;
                           return null;
                         },
                       ),
@@ -323,7 +367,11 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                         controller: widget.alternatePhoneCtrl,
                         labelText: "Alternate Number (Optional)",
                         hintText: "Enter number",
-                        prefixIcon: Icon(Icons.phone_callback_outlined, color: AppColors.primary, size: 20.r),
+                        prefixIcon: Icon(
+                          Icons.phone_callback_outlined,
+                          color: AppColors.primary,
+                          size: 20.r,
+                        ),
                         keyboardType: TextInputType.phone,
                       ),
                     ),
@@ -348,7 +396,11 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
     );
   }
 
-  Widget _buildCardContainer(BuildContext context, bool isDark, {required Widget child}) {
+  Widget _buildCardContainer(
+    BuildContext context,
+    bool isDark, {
+    required Widget child,
+  }) {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -361,10 +413,7 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(
-          color: AppColors.border(context),
-          width: 1.w,
-        ),
+        border: Border.all(color: AppColors.border(context), width: 1.w),
       ),
       child: child,
     );
@@ -381,7 +430,9 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
   ) {
     final activeBg = AppColors.primary.withValues(alpha: 0.1);
     final activeBorder = AppColors.primary;
-    final inactiveBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
+    final inactiveBg = isDark
+        ? const Color(0xFF0F172A)
+        : const Color(0xFFF8FAFC);
     final inactiveBorder = AppColors.border(context);
 
     return InkWell(
@@ -412,7 +463,9 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                   Text(
                     title,
                     style: TextStyle(
-                      color: isSelected ? AppColors.primary : AppColors.textPrimary(context),
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.textPrimary(context),
                       fontWeight: FontWeight.bold,
                       fontSize: 10.5.sp,
                     ),
@@ -464,10 +517,7 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
           ),
           dropdownColor: AppColors.card(context),
           items: items.map((item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
+            return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),
           onChanged: (val) {
             if (val != null) onChanged(val);
@@ -475,15 +525,26 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: AppColors.primary, size: 16.r),
             filled: true,
-            fillColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
-            contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+            fillColor: isDark
+                ? const Color(0xFF0F172A)
+                : const Color(0xFFF8FAFC),
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 12.h,
+              horizontal: 16.w,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
-              borderSide: BorderSide(color: AppColors.border(context), width: 1.w),
+              borderSide: BorderSide(
+                color: AppColors.border(context),
+                width: 1.w,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
-              borderSide: BorderSide(color: AppColors.border(context), width: 1.w),
+              borderSide: BorderSide(
+                color: AppColors.border(context),
+                width: 1.w,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
