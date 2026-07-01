@@ -269,6 +269,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                 }
                               }).toList();
 
+    
                               if (filteredPatients.isEmpty) {
                                 return Card(
                                   elevation: 0,
