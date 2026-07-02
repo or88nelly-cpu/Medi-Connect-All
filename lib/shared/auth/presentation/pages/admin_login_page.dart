@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,11 +9,18 @@ import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/dialogs/dialogs.dart';
-import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/shared/auth/presentation/widgets/login_form.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+
+// Separate design widgets
+import 'package:medi_connect/shared/auth/presentation/widgets/login_branding.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/login_welcome_text.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/login_feature_badges.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/login_security_footer.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/floating_doctor_image.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/heartbeat_pulse_line.dart';
 
 class AdminLoginPage extends StatefulWidget {
   final bool showBackButton;
@@ -27,6 +35,13 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,69 +63,86 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
 
   Widget _contents() {
     final isDesktop = AppResponsive.isDesktop(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return CustomScaffold(
       appBarNeeded: false,
-      body: SingleChildScrollView(
-        child: isDesktop ? _buildDesktopLayout() : _buildMobileLayout(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: isDark
+                ? [
+                    Colors.black.withValues(alpha: 0.65),
+                    Colors.black.withValues(alpha: 0.40),
+                    Colors.black.withValues(alpha: 0.70),
+                  ]
+                : [
+                    Colors.black.withValues(alpha: 0.25),
+                    Colors.black.withValues(alpha: 0.10),
+                    Colors.black.withValues(alpha: 0.30),
+                  ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: isDesktop ? _buildDesktopLayout() : _buildMobileLayout(),
+          ),
+        ),
       ),
     );
   }
 
   // ─────────────────────────────────────────────────────────
-  // DESKTOP LAYOUT
+  // DESKTOP LAYOUT (Branding left, form right, doctor image center-aligned)
   // ─────────────────────────────────────────────────────────
   Widget _buildDesktopLayout() {
     final screenH = MediaQuery.sizeOf(context).height;
     return Container(
-      height: screenH,
-      padding: EdgeInsets.only(left: 60.w, right: 60.w, top: 40.h, bottom: 0.h),
+      height: screenH - 60.h,
+      padding: EdgeInsets.symmetric(horizontal: 60.w),
       child: Stack(
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Left column: branding + welcome + badges
+              // Left column: branding + welcome + feature badges
               Expanded(
-                flex: 8,
+                flex: 7,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildBranding(),
-                    SizedBox(height: 50.h),
-                    _buildWelcomeText(),
-                    SizedBox(height: 30.h),
-                    _buildFeatureBadges(),
+                    const LoginBranding(),
+                    SizedBox(height: 48.h),
+                    const LoginWelcomeText(),
+                    SizedBox(height: 36.h),
+                    const LoginFeatureBadges(),
                   ],
                 ),
               ),
 
-              // Center: person image (anchored to bottom)
-
-              // Right column: login form
+              // Right column: login form card + security footer
               Expanded(
-                flex: 4,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 30.h),
-                  child: Column(
-                    children: [
-                      _buildFormCard(),
-                      SizedBox(height: 24.h),
-                      _buildSecurityFooter(),
-                    ],
-                  ),
+                flex: 5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildFormCard(),
+                    SizedBox(height: 24.h),
+                    const LoginSecurityFooter(),
+                  ],
                 ),
               ),
             ],
           ),
+
+          // Doctor lady image overlay (bottom center) with premium floating animation
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.only(right: 100.w),
-              child: CustomImageView(
-                imagePath: AppAssets.ladyImagePng,
-                height: screenH * 0.72,
-                fit: BoxFit.contain,
-              ),
+              margin: EdgeInsets.only(right: 120.w),
+              child: FloatingDoctorImage(height: screenH * 0.70),
             ),
           ),
         ],
@@ -118,302 +150,102 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────
-  // MOBILE LAYOUT
-  // ─────────────────────────────────────────────────────────
   Widget _buildMobileLayout() {
-    return Column(
-      children: [
-        // Top hero section with branding + image
-        Stack(
-          children: [
-            // Light sky-blue gradient background for the hero section
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(
-                left: 20.w,
-                right: 20.w,
-                top: 24.h,
-                bottom: 0,
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.primary.withValues(alpha: 0.04),
-                    AppColors.background(context),
-                  ],
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    final screenH = MediaQuery.sizeOf(context).height;
+    return Container(
+      width: double.infinity,
+      color: Colors.transparent,
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+      child: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const LoginBranding(),
+              SizedBox(height: 12.h),
+
+              Stack(
                 children: [
-                  _buildBranding(),
-                  SizedBox(height: 24.h),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      // Left: welcome text + badges
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildWelcomeText(),
-                            SizedBox(height: 16.h),
-                            _buildFeatureBadges(),
-                            SizedBox(height: 20.h),
-                          ],
-                        ),
-                      ),
-                      // Right: lady image
-                      CustomImageView(
-                        imagePath: AppAssets.ladyImagePng,
-                        height: 220.h,
-                        fit: BoxFit.contain,
-                      ),
+                      FloatingDoctorImage(height: screenH * 0.25),
+                      SizedBox(width: 12.w),
+                      const Expanded(child: LoginWelcomeText()),
                     ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: screenH * 0.20),
+                    child: _buildFormCard(),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-
-        // Form section
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Transform.translate(
-            offset: Offset(0, -16.h),
-            child: _buildFormCard(),
+              SizedBox(height: 12.h),
+              const Center(child: LoginFeatureBadges()),
+              SizedBox(height: 12.h),
+              const LoginSecurityFooter(),
+            ],
           ),
-        ),
-
-        SizedBox(height: 16.h),
-        _buildSecurityFooter(),
-        SizedBox(height: 24.h),
-      ],
+        ],
+      ),
     );
   }
 
-  // ─────────────────────────────────────────────────────────
-  // SHARED COMPONENTS
-  // ─────────────────────────────────────────────────────────
+  /// The login form wrapped in a styled card (Premium Glassmorphic container with Heartbeat ECG)
+  Widget _buildFormCard() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDesktop = AppResponsive.isDesktop(context);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24.r),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 16.r, sigmaY: 16.r),
+        child: SizedBox(
+          width: isDesktop ? 400.w : double.infinity,
+          child: Stack(
+            children: [
+              // Heartbeat ECG pulse line animating inside glass card
+              Positioned(
+                bottom: 24.h,
+                left: 0,
+                right: 0,
+                child: Opacity(
+                  opacity: isDark ? 0.15 : 0.25,
+                  child: const HeartbeatPulseLine(height: 50),
+                ),
+              ),
 
-  /// Logo + "MediConnect" + "Multi Speciality Hospital"
-  Widget _buildBranding() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: EdgeInsets.all(8.r),
-          decoration: BoxDecoration(
-            color: AppColors.background(context),
-            borderRadius: BorderRadius.circular(14.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.08),
-                blurRadius: 16,
-                offset: const Offset(0, 4),
+              // Actual Form Card Contents
+              Container(
+                padding: EdgeInsets.all(24.r),
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? Colors.black.withValues(alpha: 0.40)
+                      : Colors.white.withValues(alpha: 0.50),
+                  borderRadius: BorderRadius.circular(24.r),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.25),
+                    width: 1.5.r,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.12),
+                      blurRadius: 30,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: LoginForm(
+                    email: _usernameController,
+                    password: _passwordController,
+                    onLoginPressed: _onLoginPressed,
+                  ),
+                ),
               ),
             ],
           ),
-          child: CustomImageView(
-            imagePath: AppAssets.logoIconPng,
-            width: 42.r,
-            height: 42.r,
-          ),
-        ),
-        SizedBox(width: 12.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Medi',
-                    style: AppTextStyles.headingMedium.copyWith(
-                      fontSize: 22.sp,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'Connect',
-                    style: AppTextStyles.headingMedium.copyWith(
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.textDarkNavy,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              'Multi Speciality Hospital',
-              style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textSecondary(context),
-                fontSize: 11.sp,
-                letterSpacing: 0.3,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  /// "Welcome Back!" + subtitle
-  Widget _buildWelcomeText() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Welcome Back!',
-          style: AppTextStyles.headingLarge.copyWith(
-            fontSize: AppResponsive.isDesktop(context) ? 32.sp : 26.sp,
-            fontWeight: FontWeight.w800,
-            color: AppColors.textPrimary(context),
-          ),
-        ),
-        SizedBox(height: 6.h),
-        Text(
-          'Login to access your\nhealthcare services',
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary(context),
-            height: 1.4,
-            fontSize: AppResponsive.isDesktop(context) ? 14.sp : 13.sp,
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Three rounded badges: Secure, Personalized, Seamless
-  Widget _buildFeatureBadges() {
-    final badges = [
-      _BadgeData(Icons.verified_rounded, 'Secure', AppColors.primary),
-      _BadgeData(
-        Icons.people_alt_rounded,
-        'Personalized',
-        AppColors.adminPrimary,
-      ),
-      _BadgeData(
-        Icons.auto_awesome_rounded,
-        'Seamless',
-        const Color(0xFF00B8A9),
-      ),
-    ];
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: badges
-          .map(
-            (b) => Padding(
-              padding: EdgeInsets.only(
-                right: AppResponsive.isDesktop(context) ? 12.w : 10.w,
-              ),
-              child: _buildBadge(b),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Widget _buildBadge(_BadgeData data) {
-    bool isDesktop = AppResponsive.isDesktop(context);
-    return Column(
-      children: [
-        Container(
-          width: isDesktop ? 52.r : 40.r,
-          height: isDesktop ? 52.r : 40.r,
-          decoration: BoxDecoration(
-            color: data.color.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(isDesktop ? 14.r : 8.r),
-            border: Border.all(
-              color: data.color.withValues(alpha: 0.15),
-              width: 1,
-            ),
-          ),
-          child: Icon(
-            data.icon,
-            color: data.color,
-            size: isDesktop ? 24.r : 18.r,
-          ),
-        ),
-        SizedBox(height: 6.h),
-        SizedBox(
-          child: Text(
-            data.label,
-            style: AppTextStyles.bodyXSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary(context),
-              fontSize: AppResponsive.isDesktop(context) ? 10.sp : 8.sp,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// The login form wrapped in a styled card
-  Widget _buildFormCard() {
-    return Container(
-      constraints: BoxConstraints(
-        maxWidth: AppResponsive.isDesktop(context) ? 380.w : double.infinity,
-      ),
-      padding: EdgeInsets.all(28.r),
-      decoration: BoxDecoration(
-        color: AppColors.card(context),
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(
-          color: AppColors.border(context).withValues(alpha: 0.5),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow(context),
-            blurRadius: 30,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Form(
-        key: _formKey,
-        child: LoginForm(
-          email: _usernameController,
-          password: _passwordController,
-          onLoginPressed: _onLoginPressed,
         ),
       ),
-    );
-  }
-
-  /// Security footer badge
-  Widget _buildSecurityFooter() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          padding: EdgeInsets.all(4.r),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            Icons.verified_user_rounded,
-            color: AppColors.primary,
-            size: 16.r,
-          ),
-        ),
-        SizedBox(width: 8.w),
-        Text(
-          'Your health data is safe and secure with us.',
-          style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.textSecondary(context),
-            fontSize: 12.sp,
-          ),
-        ),
-      ],
     );
   }
 
@@ -427,18 +259,4 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
       );
     }
   }
-
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-}
-
-class _BadgeData {
-  final IconData icon;
-  final String label;
-  final Color color;
-  const _BadgeData(this.icon, this.label, this.color);
 }

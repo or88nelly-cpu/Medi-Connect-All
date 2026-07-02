@@ -194,11 +194,20 @@ class _LoginFormState extends State<LoginForm> {
                 colors: [Color(0xFF4F6EFF), Color(0xFF3B5BFD)],
               ),
               borderRadius: BorderRadius.circular(14.r),
+              border: Border.all(
+                color: AppColors.secondary,
+                width: 2.r,
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  color: const Color(0xFF4F6EFF).withValues(alpha: 0.35),
+                  blurRadius: 14.r,
+                  offset: const Offset(-3, 5),
+                ),
+                BoxShadow(
+                  color: const Color(0xFF3B5BFD).withValues(alpha: 0.35),
+                  blurRadius: 14.r,
+                  offset: const Offset(3, 5),
                 ),
               ],
             ),

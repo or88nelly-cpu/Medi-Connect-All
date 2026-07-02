@@ -5,12 +5,18 @@ library;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/widgets/scaffold/background_wrapper.dart';
 import 'package:medi_connect/core/widgets/buttons/buttons.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+
+// Import separate modular widgets
+import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/background_painter.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/doctor_illustration.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/booking_illustration.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/security_illustration.dart';
+import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/animated_text.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -27,23 +33,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
     {
       'title': AppStrings.onboardingTitle1,
       'desc': AppStrings.onboardingDesc1,
-      'icon': 'healing',
     },
     {
       'title': AppStrings.onboardingTitle2,
       'desc': AppStrings.onboardingDesc2,
-      'icon': 'calendar_month',
     },
     {
       'title': AppStrings.onboardingTitle3,
       'desc': AppStrings.onboardingDesc3,
-      'icon': 'description',
     },
   ];
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BackgroundWrapper(
+    final isLastPage = _currentIndex == _slides.length - 1;
+
+    return OnboardingBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -51,18 +62,36 @@ class _OnboardingPageState extends State<OnboardingPage> {
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: TextButton(
-                    onPressed: () => context.go(RouteNames.login),
-                    child: Text(
-                      "Skip",
-                      style: AppTextStyles.labelMedium.copyWith(
-                        color: AppColors.primary,
+                // Top Skip Action (hidden on last page for clean UX)
+                AnimatedOpacity(
+                  opacity: isLastPage ? 0.0 : 1.0,
+                  duration: const Duration(milliseconds: 300),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: IgnorePointer(
+                      ignoring: isLastPage,
+                      child: TextButton(
+                        onPressed: () => context.go(RouteNames.login),
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                        ),
+                        child: Text(
+                          "Skip",
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
+
+                // Animated Illustrations & Text Content
                 Expanded(
                   child: PageView.builder(
                     controller: _pageController,
@@ -77,69 +106,69 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            radius: 70.r,
-                            backgroundColor: AppColors.primary.withValues(
-                              alpha: 0.08,
-                            ),
-                            child: Icon(
-                              _getIconData(slide['icon']!),
-                              size: 72.r,
-                              color: AppColors.primary,
-                            ),
-                          ),
+                          // Render the modular vector illustration for each slide
+                          _buildIllustration(index),
                           SizedBox(height: 48.h),
-                          Text(
-                            slide['title']!,
-                            style: AppTextStyles.headingMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 16.h),
-                          Text(
-                            slide['desc']!,
-                            style: AppTextStyles.bodyLarge.copyWith(
-                              color: AppColors.textSecondary(context),
-                            ),
-                            textAlign: TextAlign.center,
+                          
+                          // Staggered animated texts (Title & Description)
+                          OnboardingAnimatedText(
+                            title: slide['title']!,
+                            description: slide['desc']!,
                           ),
                         ],
                       );
                     },
                   ),
                 ),
+
+                // Custom Animated Page Indicators
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                     _slides.length,
                     (index) => AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      margin: EdgeInsets.symmetric(horizontal: 4.w),
-                      width: _currentIndex == index ? 24.w : 8.w,
+                      duration: const Duration(milliseconds: 350),
+                      margin: EdgeInsets.symmetric(horizontal: 5.w),
+                      width: _currentIndex == index ? 26.w : 8.w,
                       height: 8.h,
                       decoration: BoxDecoration(
                         color: _currentIndex == index
                             ? AppColors.primary
-                            : AppColors.border(context),
+                            : AppColors.primary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(4.r),
+                        boxShadow: _currentIndex == index
+                            ? [
+                                BoxShadow(
+                                  color: AppColors.primary.withValues(alpha: 0.35),
+                                  blurRadius: 8.r,
+                                  spreadRadius: 1.r,
+                                )
+                              ]
+                            : null,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 48.h),
-                PrimaryButton(
-                  text: _currentIndex == _slides.length - 1
-                      ? AppStrings.getStarted
-                      : AppStrings.next,
-                  onPressed: () {
-                    if (_currentIndex == _slides.length - 1) {
-                      context.go(RouteNames.login);
-                    } else {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeIn,
-                      );
-                    }
-                  },
+                SizedBox(height: 40.h),
+
+                // Navigation Trigger Button
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: PrimaryButton(
+                    text: isLastPage
+                        ? AppStrings.getStarted
+                        : AppStrings.next,
+                    onPressed: () {
+                      if (isLastPage) {
+                        context.go(RouteNames.login);
+                      } else {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOutCubic,
+                        );
+                      }
+                    },
+                  ),
                 ),
                 SizedBox(height: 16.h),
               ],
@@ -150,15 +179,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 
-  IconData _getIconData(String key) {
-    switch (key) {
-      case 'healing':
-        return Icons.healing_outlined;
-      case 'calendar_month':
-        return Icons.calendar_month_outlined;
-      case 'description':
+  Widget _buildIllustration(int index) {
+    switch (index) {
+      case 0:
+        return const OnboardingDoctorIllustration();
+      case 1:
+        return const OnboardingBookingIllustration();
+      case 2:
       default:
-        return Icons.description_outlined;
+        return const OnboardingSecurityIllustration();
     }
   }
 }

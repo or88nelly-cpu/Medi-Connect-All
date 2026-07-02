@@ -243,7 +243,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   scale: _logoScale,
                   child: Image.asset(
                     AppAssets.logoIconPng,
-                    width: 340.w,
+                    width: 180.r,
                     fit: BoxFit.contain,
                   ),
                 ),

@@ -115,131 +115,85 @@ class _SignUpFormState extends State<SignUpForm> {
   }) {
     final borderColor = AppColors.border(context);
     bool isDesktop = AppResponsive.isDesktop(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppTextField(
-          labelText: label,
-          controller: controller,
-          obscureText: isPassword && _isPasswordObscured,
-          keyboardType: keyboardType ?? TextInputType.text,
-          validator: validator,
-          suffixIcon: isPassword
-              ? GestureDetector(
-                  onTap: () => setState(
-                    () => _isPasswordObscured = !_isPasswordObscured,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 12.w),
-                    child: Icon(
-                      _isPasswordObscured
-                          ? Icons.visibility_outlined
-                          : Icons.visibility_off_outlined,
-                      color: AppColors.textSecondary(
-                        context,
-                      ).withValues(alpha: 0.5),
-                      size: 20.r,
-                    ),
-                  ),
-                )
-              : null,
-          prefixIcon: Padding(
-            padding: EdgeInsets.only(
-              left: isDesktop ? 14.w : 10.w,
-              right: isDesktop ? 10.w : 6.w,
-            ),
-            child: Icon(
-              prefixIcon,
-              color: AppColors.textSecondary(context).withValues(alpha: 0.5),
-              size: isDesktop ? 20.r : 18.r,
-            ),
-          ),
-          prefixIconConstraints: BoxConstraints(minWidth: 44.w),
-          suffixIconConstraints: isPassword
-              ? BoxConstraints(minWidth: 44.w)
-              : null,
+    return TextFormField(
+      controller: controller,
+      obscureText: isPassword && _isPasswordObscured,
+      keyboardType: keyboardType,
+      validator: validator,
+      style: AppTextStyles.bodyMedium.copyWith(
+        color: AppColors.textPrimary(context),
+        fontSize: 14.sp,
+      ),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: AppTextStyles.bodySmall.copyWith(
+          color: AppColors.textSecondary(context),
+          fontSize: isDesktop ? 12.sp : 10.sp,
+          fontWeight: FontWeight.w600,
         ),
-        TextFormField(
-          controller: controller,
-          obscureText: isPassword && _isPasswordObscured,
-          keyboardType: keyboardType,
-          validator: validator,
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textPrimary(context),
-            fontSize: 14.sp,
+        hintText: hint,
+        hintStyle: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+          fontSize: isDesktop ? 13.sp : 11.5.sp,
+        ),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        prefixIcon: Padding(
+          padding: EdgeInsets.only(
+            left: isDesktop ? 14.w : 10.w,
+            right: isDesktop ? 10.w : 6.w,
           ),
-          decoration: InputDecoration(
-            labelText: label,
-            labelStyle: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary(context),
-              fontSize: isDesktop ? 12.sp : 10.sp,
-              fontWeight: FontWeight.w600,
-            ),
-            hintText: hint,
-            hintStyle: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary(context).withValues(alpha: 0.5),
-              fontSize: isDesktop ? 13.sp : 11.5.sp,
-            ),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            prefixIcon: Padding(
-              padding: EdgeInsets.only(
-                left: isDesktop ? 14.w : 10.w,
-                right: isDesktop ? 10.w : 6.w,
-              ),
-              child: Icon(
-                prefixIcon,
-                color: AppColors.textSecondary(context).withValues(alpha: 0.5),
-                size: isDesktop ? 20.r : 18.r,
-              ),
-            ),
-            prefixIconConstraints: BoxConstraints(minWidth: 44.w),
-            suffixIcon: isPassword
-                ? GestureDetector(
-                    onTap: () => setState(
-                      () => _isPasswordObscured = !_isPasswordObscured,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 12.w),
-                      child: Icon(
-                        _isPasswordObscured
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: AppColors.textSecondary(
-                          context,
-                        ).withValues(alpha: 0.5),
-                        size: 20.r,
-                      ),
-                    ),
-                  )
-                : null,
-            suffixIconConstraints: isPassword
-                ? BoxConstraints(minWidth: 44.w)
-                : null,
-            filled: true,
-            fillColor: AppColors.background(context),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 16.h,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: borderColor, width: 1),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primary, width: 1.5),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.error, width: 1),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.error, width: 1.5),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
+          child: Icon(
+            prefixIcon,
+            color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+            size: isDesktop ? 20.r : 18.r,
           ),
         ),
-      ],
+        prefixIconConstraints: BoxConstraints(minWidth: 44.w),
+        suffixIcon: isPassword
+            ? GestureDetector(
+                onTap: () => setState(
+                  () => _isPasswordObscured = !_isPasswordObscured,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(right: 12.w),
+                  child: Icon(
+                    _isPasswordObscured
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: AppColors.textSecondary(
+                      context,
+                    ).withValues(alpha: 0.5),
+                    size: 20.r,
+                  ),
+                ),
+              )
+            : null,
+        suffixIconConstraints: isPassword
+            ? BoxConstraints(minWidth: 44.w)
+            : null,
+        filled: true,
+        fillColor: AppColors.background(context),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.h,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: borderColor, width: 1),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.error, width: 1),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.error, width: 1.5),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+      ),
     );
   }
 
@@ -260,11 +214,20 @@ class _SignUpFormState extends State<SignUpForm> {
                 colors: [Color(0xFF4F6EFF), Color(0xFF7B61FF)],
               ),
               borderRadius: BorderRadius.circular(14.r),
+              border: Border.all(
+                color: AppColors.secondary,
+                width: 2.r,
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  color: const Color(0xFF4F6EFF).withValues(alpha: 0.35),
+                  blurRadius: 14.r,
+                  offset: const Offset(-3, 5),
+                ),
+                BoxShadow(
+                  color: const Color(0xFF7B61FF).withValues(alpha: 0.35),
+                  blurRadius: 14.r,
+                  offset: const Offset(3, 5),
                 ),
               ],
             ),
