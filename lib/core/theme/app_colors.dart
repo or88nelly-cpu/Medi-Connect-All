@@ -9,12 +9,12 @@ class AppColors {
   // BRAND COLORS
   // =====================================================
 
-  static const Color primary = Color(0xFF4F2DFF);
-  static const Color primaryLight = Color(0xFF6A4DFF);
-  static const Color primaryDark = Color(0xFF2D1AFF);
+  static const Color primary = Color(0xFF0A3BB0);
+  static const Color primaryLight = Color(0xFF3B66FF);
+  static const Color primaryDark = Color(0xFF00227A);
   static const textLight = Colors.white;
 
-  static const Color secondary = Color(0xFF7B61FF);
+  static const Color secondary = Color(0xFFE0A926);
   static const Color accent = Color(0xFFFFB547);
   static const divider = Color(0xFFF3F4F6);
   static const surface = Colors.white;
@@ -31,10 +31,10 @@ class AppColors {
   static const adminGradient = [Color(0xFF7928CA), Color(0xFFFF0080)];
 
   // Floating medical cross opacity variants for splash
-  static const primaryOpacity20 = Color(0x330F6FFF);
-  static const primaryOpacity13 = Color(0x220F6FFF);
-  static const primaryOpacity12 = Color(0x1F0F6FFF);
-  static const primaryOpacity16 = Color(0x2A0F6FFF);
+  static const primaryOpacity20 = Color(0x330A3BB0);
+  static const primaryOpacity13 = Color(0x220A3BB0);
+  static const primaryOpacity12 = Color(0x1F0A3BB0);
+  static const primaryOpacity16 = Color(0x2A0A3BB0);
 
   // Dashboard Stat Card Colors
   static const infoIndigo = Color(0xFF3F51B5);
