@@ -138,7 +138,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
 
   Widget _buildBannerCard(BannerEntity banner) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+      margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
       elevation: 4,
       shadowColor: Colors.black.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
@@ -150,7 +150,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
         children: [
           CustomImageView(
             imagePath: banner.imageUrl,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
             errorWidget: Container(
               color: AppColors.primary.withValues(alpha: 0.1),
               alignment: Alignment.center,

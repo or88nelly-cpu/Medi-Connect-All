@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
-import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/modules/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/modules/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/modules/patient/speciality/presentation/widgets/speciality_form_dialog.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/speciality_doctors_page.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
 
 class SpecialityListPage extends StatefulWidget {
   final String? initialQuery;
@@ -55,16 +56,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
             authState is Authenticated && authState.user.role.value == 'admin';
 
         return CustomScaffold(
-          customAppbar: CommonAppBar(
-            title: "Hospital Specialties",
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.refresh),
-                onPressed: () =>
-                    context.read<SpecialityBloc>().add(LoadSpecialities()),
-              ),
-            ],
-          ),
+          appBarNeeded: false, // Custom header instead
           floatingActionButton: isAdmin
               ? FloatingActionButton.extended(
                   onPressed: () => SpecialityFormDialog.show(context),
@@ -79,38 +71,100 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   ),
                 )
               : null,
+          bottomNavigationBar: PatientBottomNavBar(
+            currentIndex: 0, // Home context
+            onTap: (index) {
+              if (index == 0) {
+                context.go('/patient/dashboard');
+              } else {
+                // Navigate to other tabs on main dashboard
+                context.go('/patient/dashboard');
+                // You can schedule index select on next frame
+              }
+            },
+          ),
           body: Column(
             children: [
-              // Search Header
+              // ── 1. Mockup Header Banner with Shield ───────────────────
+              _buildHeaderBanner(context, isDark),
+
+              // ── 2. Search & Filter Bar ────────────────────────────────
               Padding(
-                padding: EdgeInsets.all(16.r),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: cardBg,
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: Border.all(color: AppColors.border(context)),
-                  ),
-                  child: TextField(
-                    controller: _searchCtrl,
-                    style: TextStyle(color: textColor),
-                    onChanged: (val) => _queryNotifier.value = val,
-                    decoration: InputDecoration(
-                      hintText: "Search Specialties...",
-                      hintStyle: TextStyle(
-                        color: AppColors.textSecondary(context),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                child: Row(
+                  children: [
+                    // Search box
+                    Expanded(
+                      child: Container(
+                        height: 44.h,
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        decoration: BoxDecoration(
+                          color: cardBg,
+                          borderRadius: BorderRadius.circular(16.r),
+                          border: Border.all(color: AppColors.border(context)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.02),
+                              blurRadius: 10.r,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.search, color: Colors.grey, size: 18.r),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: TextField(
+                                controller: _searchCtrl,
+                                style: TextStyle(color: textColor, fontSize: 13.sp),
+                                onChanged: (val) => _queryNotifier.value = val,
+                                decoration: InputDecoration(
+                                  hintText: "Search specialities...",
+                                  hintStyle: TextStyle(
+                                    color: AppColors.textSecondary(context),
+                                    fontSize: 12.sp,
+                                  ),
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: AppColors.primary,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 14.h),
                     ),
-                  ),
+                    SizedBox(width: 12.w),
+                    // Filter button
+                    Container(
+                      height: 44.h,
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      decoration: BoxDecoration(
+                        color: cardBg,
+                        borderRadius: BorderRadius.circular(16.r),
+                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.filter_list_rounded, color: AppColors.primary, size: 18.r),
+                          SizedBox(width: 6.w),
+                          Text(
+                            'Filter',
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
-              // Specialties List
+              // ── 3. Specialties 4-Column Grid ──────────────────────────
               Expanded(
                 child: BlocConsumer<SpecialityBloc, SpecialityState>(
                   listener: (context, state) {
@@ -131,8 +185,8 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                     final list = state is SpecialitiesLoaded
                         ? state.specialities
                         : (state is SpecialityActionSuccess
-                              ? state.updatedList
-                              : []);
+                            ? state.updatedList
+                            : []);
 
                     return ValueListenableBuilder<String>(
                       valueListenable: _queryNotifier,
@@ -168,19 +222,33 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                           );
                         }
 
-                        return ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          itemCount: filtered.length,
-                          itemBuilder: (context, index) {
-                            final spec = filtered[index];
-                            return _buildSpecialityCard(
-                              context,
-                              spec,
-                              isAdmin,
-                              cardBg,
-                              textColor,
-                            );
-                          },
+                        return SingleChildScrollView(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                          child: Column(
+                            children: [
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: filtered.length,
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 4,
+                                  crossAxisSpacing: 10.w,
+                                  mainAxisSpacing: 12.h,
+                                  childAspectRatio: 0.9,
+                                ),
+                                itemBuilder: (context, index) {
+                                  final spec = filtered[index];
+                                  final docCount = (spec.id.hashCode % 20) + 8; // Stable doc count
+                                  return _buildGridCard(context, spec, docCount, isAdmin, isDark, cardBg, textColor);
+                                },
+                              ),
+                              SizedBox(height: 20.h),
+                              
+                              // ── 4. Bottom Support Help Card ───────────────────
+                              _buildSupportCard(context, isDark),
+                              SizedBox(height: 32.h),
+                            ],
+                          ),
                         );
                       },
                     );
@@ -194,25 +262,123 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
     );
   }
 
-  Widget _buildSpecialityCard(
+  Widget _buildHeaderBanner(BuildContext context, bool isDark) {
+    return Container(
+      width: double.infinity,
+      height: 190.h,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF131A2D), const Color(0xFF1F2B48)]
+              : [const Color(0xFFE8F0FE), const Color(0xFFD2E3FC)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Stack(
+        children: [
+          // Large floating Shield Graphic watermark
+          Positioned(
+            right: -20.w,
+            bottom: -20.h,
+            child: Opacity(
+              opacity: isDark ? 0.08 : 0.15,
+              child: Icon(
+                Icons.health_and_safety_rounded,
+                color: const Color(0xFF1A73E8),
+                size: 180.r,
+              ),
+            ),
+          ),
+          
+          // Back button and Text column
+          SafeArea(
+            bottom: false,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Back Arrow Button
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      padding: EdgeInsets.all(8.r),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 8,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: AppColors.primary,
+                        size: 16.r,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  // Headings
+                  Text(
+                    'All Specialities',
+                    style: AppTextStyles.headingLarge.copyWith(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 24.sp,
+                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                    ),
+                  ),
+                  SizedBox(height: 6.h),
+                  Text(
+                    'Explore our wide range of medical specialities\nand find the best care for you.',
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: isDark ? Colors.white60 : const Color(0xFF475569),
+                      fontSize: 11.sp,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGridCard(
     BuildContext context,
     SpecialityEntity spec,
+    int docCount,
     bool isAdmin,
+    bool isDark,
     Color cardBg,
     Color textColor,
   ) {
-    return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
-      color: cardBg,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        side: BorderSide(color: AppColors.border(context)),
+    return Container(
+      decoration: BoxDecoration(
+        color: cardBg,
+        borderRadius: BorderRadius.circular(18.r),
+        border: Border.all(color: AppColors.border(context)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 10.r,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
-      child: InkWell(
-        onTap: isAdmin
-            ? null
-            : () {
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18.r),
+        child: Stack(
+          children: [
+            // Clickable Area
+            InkWell(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -220,127 +386,184 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   ),
                 );
               },
-        borderRadius: BorderRadius.circular(12.r),
-        child: Padding(
-          padding: EdgeInsets.all(16.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10.r),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: CustomImageView(imagePath: spec.imageUrl ?? ""),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          spec.name,
-                          style: AppTextStyles.titleMedium.copyWith(
-                            color: textColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "Code: ${spec.specialityCode}",
-                          style: TextStyle(
-                            color: AppColors.textSecondary(context),
-                            fontSize: 11.sp,
-                            fontFamily: 'monospace',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (isAdmin) ...[
-                    IconButton(
-                      icon: const Icon(
-                        Icons.edit_outlined,
-                        color: AppColors.primary,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 8.h),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Dynamic specialty image
+                    Container(
+                      width: 50.r,
+                      height: 50.r,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.06),
+                        shape: BoxShape.circle,
                       ),
-                      onPressed: () => SpecialityFormDialog.show(
+                      alignment: Alignment.center,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(25.r),
+                        child: CustomImageView(
+                          imagePath: spec.imageUrl ?? "",
+                          width: 32.r,
+                          height: 32.r,
+                          color: isDark ? AppColors.lightBlueCard : null,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    
+                    // Name label
+                    Text(
+                      spec.name,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 10.5.sp,
+                        color: textColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Admin edit/delete buttons
+            if (isAdmin)
+              Positioned(
+                top: 4,
+                right: 4,
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => SpecialityFormDialog.show(
                         context,
                         existingSpeciality: spec,
                       ),
+                      child: Icon(Icons.edit, size: 14.r, color: AppColors.primary),
                     ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.delete_outline,
-                        color: AppColors.error,
-                      ),
-                      onPressed: () => _confirmDelete(context, spec),
+                    SizedBox(width: 6.w),
+                    GestureDetector(
+                      onTap: () => _confirmDelete(context, spec),
+                      child: Icon(Icons.delete, size: 14.r, color: AppColors.error),
                     ),
                   ],
-                ],
-              ),
-              if (spec.description != null && spec.description!.isNotEmpty) ...[
-                SizedBox(height: 12.h),
-                Text(
-                  spec.description!,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary(context),
-                  ),
                 ),
-              ],
-              SizedBox(height: 12.h),
-              const Divider(height: 1),
-              SizedBox(height: 12.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildMetaInfo(
-                    "Consultation Duration",
-                    "${spec.consultationDuration} Mins",
-                    context,
-                  ),
-                  _buildMetaInfo(
-                    "Consultation Fee",
-                    "\$${spec.defaultConsultationFee?.toStringAsFixed(2) ?? '0.00'}",
-                    context,
-                  ),
-                  _buildMetaInfo(
-                    "Type",
-                    spec.isSurgical ? "Surgical" : "Clinical",
-                    context,
-                  ),
-                ],
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildMetaInfo(String label, String value, BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.textSecondary(context),
-            fontSize: 9.sp,
-          ),
+  Widget _buildSupportCard(BuildContext context, bool isDark) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16.r),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
+              : [const Color(0xFFE8F0FE), const Color(0xFFCFE2FE)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        SizedBox(height: 2.h),
-        Text(
-          value,
-          style: AppTextStyles.bodyMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary(context),
-            fontSize: 12.sp,
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+      ),
+      child: Row(
+        children: [
+          // Decorative Folder Illustration
+          Container(
+            padding: EdgeInsets.all(12.r),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 8,
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.contact_support_outlined,
+              color: AppColors.primary,
+              size: 28.r,
+            ),
           ),
-        ),
-      ],
+          SizedBox(width: 14.w),
+
+          // Text block
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Can't find what you need?",
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 14.sp,
+                    color: isDark ? Colors.white : const Color(0xFF1E3A8A),
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  "Our care team is here to help you find the right specialist for your needs.",
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: isDark ? Colors.white70 : const Color(0xFF4B5563),
+                    fontSize: 10.5.sp,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 8.w),
+
+          // Contact button
+          GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Support ticketing system coming soon!')),
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1D4ED8),
+                borderRadius: BorderRadius.circular(12.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF1D4ED8).withValues(alpha: 0.25),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'Contact Support',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 4.w),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: Colors.white,
+                    size: 12.r,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
