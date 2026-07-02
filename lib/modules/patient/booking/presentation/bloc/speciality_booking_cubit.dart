@@ -225,7 +225,7 @@ class SpecialityBookingCubit extends Cubit<SpecialityBookingState> {
         'status': 'Confirmed',
         'type': 'Consultation',
         'token': token,
-        'amount': state.consultationFee,
+        'amount': state.consultationFee.round(),
       };
 
       await Supabase.instance.client.from('appointments').insert(appointmentData);
