@@ -3,34 +3,58 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  test('Reverse engineer doctor_availability columns directly', () async {
+  test('Auth and insert into doctor_availability', () async {
     final client = SupabaseClient(
       'https://ldxsdyvmfayxuaczmtuu.supabase.co',
       'sb_publishable_AHQA5xSNUg0vwHTGbdskHA_n6MD9Qdz',
     );
 
-    final payload = <String, dynamic>{};
-    const uuid = Uuid();
-    
-    // We try to find out what columns exist by trying to insert a dummy record
-    try {
-      print('Trying empty insert into doctor_availability...');
-      final res = await client.from('doctor_availability').insert(payload).select();
-      print('Insert success: $res');
-    } catch (e) {
-      print('Insert empty failed: $e');
-    }
+    final email = 'test_doc_${DateTime.now().millisecondsSinceEpoch}@example.com';
+    const password = 'Password123!';
 
-    // Let's try with doctor_id
     try {
-      final docId = uuid.v4();
-      print('Trying insert with doctor_id: $docId...');
-      final res = await client.from('doctor_availability').insert({
-        'doctor_id': docId,
-      }).select();
-      print('Insert with doctor_id success: $res');
+      print('Signing up test user: $email...');
+      final authRes = await client.auth.signUp(email: email, password: password);
+      final user = authRes.user;
+      if (user == null) {
+        print('Sign up failed: User is null');
+        return;
+      }
+      print('Sign up success: ${user.id}');
+
+      // Let's create users record as a doctor
+      try {
+        await client.from('users').insert({
+          'id': user.id,
+          'email': email,
+          'role': 'Doctor',
+          'first_name': 'Test',
+          'last_name': 'Doctor',
+          'status': 'Registered',
+        });
+        print('Created users record for doctor.');
+      } catch (e) {
+        print('Failed to create users record: $e');
+      }
+
+      // Now insert into doctor_availability
+      final payload = <String, dynamic>{
+        'doctor_id': user.id,
+      };
+      try {
+        final res = await client.from('doctor_availability').insert(payload).select();
+        print('Doctor availability insert success: $res');
+      } catch (e) {
+        print('Doctor availability insert failed: $e');
+      }
+
+      // Clean up user
+      try {
+        await client.from('users').delete().eq('id', user.id);
+        print('Cleaned up users record.');
+      } catch (_) {}
     } catch (e) {
-      print('Insert with doctor_id failed: $e');
+      print('Outer error: $e');
     }
   });
 }
