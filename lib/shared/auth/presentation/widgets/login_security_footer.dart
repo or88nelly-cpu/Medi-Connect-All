@@ -8,27 +8,30 @@ class LoginSecurityFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           padding: EdgeInsets.all(4.r),
           decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.1),
+            color: AppColors.primary.withValues(alpha: 0.15),
             shape: BoxShape.circle,
           ),
-          child: Icon(
+          child: const Icon(
             Icons.verified_user_rounded,
-            color: AppColors.primary,
-            size: 16.r,
+            color: AppColors.secondary, // Gold lock
+            size: 16,
           ),
         ),
         SizedBox(width: 8.w),
         Text(
-          'Your health data is safe and secure with us.',
+          'Your health data is safe and secure.',
           style: AppTextStyles.bodySmall.copyWith(
-            color: AppColors.textSecondary(context),
+            color: isDark ? Colors.white.withValues(alpha: 0.8) : Colors.black87,
             fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],

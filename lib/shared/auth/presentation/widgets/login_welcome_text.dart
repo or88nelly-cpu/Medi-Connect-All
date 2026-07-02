@@ -10,25 +10,30 @@ class LoginWelcomeText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDesktop = AppResponsive.isDesktop(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           'Welcome Back!',
           style: AppTextStyles.headingLarge.copyWith(
-            fontSize: isDesktop ? 32.sp : 26.sp,
+            fontSize: isDesktop ? 32.sp : 22.sp,
             fontWeight: FontWeight.w800,
-            color: AppColors.textPrimary(context),
+            color: isDark ? Colors.white : AppColors.primary,
           ),
+          textAlign: isDesktop ? TextAlign.left : TextAlign.center,
         ),
         SizedBox(height: 6.h),
         Text(
-          'Login to access your\nhealthcare services',
+          'Login to access your healthcare services',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary(context),
-            height: 1.4,
-            fontSize: isDesktop ? 14.sp : 13.sp,
+            color: isDark ? Colors.white.withValues(alpha: 0.8) : Colors.black87,
+            height: 1.3,
+            fontSize: isDesktop ? 14.sp : 12.sp,
           ),
+          textAlign: isDesktop ? TextAlign.left : TextAlign.center,
         ),
       ],
     );
