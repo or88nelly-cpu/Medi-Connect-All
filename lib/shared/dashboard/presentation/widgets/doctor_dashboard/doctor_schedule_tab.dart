@@ -11,6 +11,7 @@ import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_ap
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/premium_appointment_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/appointment_summary_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/consultation_complete_sheet.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/slot_management_grid.dart';
 
 class DoctorScheduleTab extends StatefulWidget {
   const DoctorScheduleTab({super.key});
@@ -23,6 +24,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
   DateTime _selectedDate = DateTime.now();
   String _searchQuery = "";
   String _selectedStatus = "All";
+  int _activeSubTab = 0; // 0 = Appointments List, 1 = Slot Management Grid
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -243,24 +245,158 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                     ),
                     SizedBox(height: 12.h),
 
-                    // Selected Date indicator
+                    SizedBox(height: 12.h),
 
-                    // Gradient summary card
-                    AppointmentSummaryCard(
-                      totalCount: totalCount,
-                      completedCount: completedCount,
-                      pendingCount: pendingCount,
-                      date: _selectedDate,
-                      cancelledCount: cancelledCount,
-                      onViewCalendar: () => _selectDate(context),
+                    // Custom sub-tab segmented controller
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20.h),
+                      padding: EdgeInsets.all(4.r),
+                      decoration: BoxDecoration(
+                        color: isDark ? const Color(0xFF1E293B) : Colors.grey[100],
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => setState(() => _activeSubTab = 0),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 10.h),
+                                decoration: BoxDecoration(
+                                  color: _activeSubTab == 0
+                                      ? (isDark ? const Color(0xFF0F6FFF) : Colors.white)
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  boxShadow: _activeSubTab == 0
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.05),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 2),
+                                          )
+                                        ]
+                                      : [],
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Appointments List",
+                                  style: TextStyle(
+                                    color: _activeSubTab == 0
+                                        ? (isDark ? Colors.white : const Color(0xFF0F6FFF))
+                                        : (isDark ? Colors.white60 : Colors.grey[600]),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => setState(() => _activeSubTab = 1),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 10.h),
+                                decoration: BoxDecoration(
+                                  color: _activeSubTab == 1
+                                      ? (isDark ? const Color(0xFF0F6FFF) : Colors.white)
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  boxShadow: _activeSubTab == 1
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.05),
+                                            blurRadius: 4,
+                                            offset: const Offset(0, 2),
+                                          )
+                                        ]
+                                      : [],
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Slot Management",
+                                  style: TextStyle(
+                                    color: _activeSubTab == 1
+                                        ? (isDark ? Colors.white : const Color(0xFF0F6FFF))
+                                        : (isDark ? Colors.white60 : Colors.grey[600]),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 20.h),
 
-                    // Search input
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
+                    if (_activeSubTab == 1) ...[
+                      SlotManagementGrid(
+                        selectedDate: _selectedDate,
+                        doctor: doctor,
+                      ),
+                    ] else ...[
+                      // Gradient summary card
+                      AppointmentSummaryCard(
+                        totalCount: totalCount,
+                        completedCount: completedCount,
+                        pendingCount: pendingCount,
+                        date: _selectedDate,
+                        cancelledCount: cancelledCount,
+                        onViewCalendar: () => _selectDate(context),
+                      ),
+                      SizedBox(height: 20.h),
+
+                      // Search input
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                color: isDark
+                                    ? AppColors.terminalDarkCard
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(12.r),
+                                border: Border.all(
+                                  color: AppColors.border(context),
+                                ),
+                              ),
+                              child: TextField(
+                                controller: _searchController,
+                                onChanged: (val) =>
+                                    setState(() => _searchQuery = val),
+                                style: TextStyle(
+                                  color: isDark
+                                      ? Colors.white
+                                      : AppColors.textPrimary(context),
+                                  fontSize: 12.sp,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: "Search patient, or specialty...",
+                                  hintStyle: TextStyle(
+                                    color: isDark
+                                        ? AppColors.terminalDarkFieldHint
+                                        : Colors.grey,
+                                    fontSize: 12.sp,
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: isDark
+                                        ? Colors.white54
+                                        : AppColors.textSecondary(context),
+                                    size: 16.r,
+                                  ),
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12.w,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 12.r),
                             height: 40.h,
                             decoration: BoxDecoration(
                               color: isDark
@@ -271,250 +407,204 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                 color: AppColors.border(context),
                               ),
                             ),
-                            child: TextField(
-                              controller: _searchController,
-                              onChanged: (val) =>
-                                  setState(() => _searchQuery = val),
-                              style: TextStyle(
-                                color: isDark
-                                    ? Colors.white
-                                    : AppColors.textPrimary(context),
-                                fontSize: 12.sp,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: "Search patient, or specialty...",
-                                hintStyle: TextStyle(
-                                  color: isDark
-                                      ? AppColors.terminalDarkFieldHint
-                                      : Colors.grey,
-                                  fontSize: 12.sp,
-                                ),
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: isDark
-                                      ? Colors.white54
-                                      : AppColors.textSecondary(context),
-                                  size: 16.r,
-                                ),
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(
-                                  //  vertical: 6.h,
-                                  horizontal: 12.w,
-                                ),
-                              ),
+                            child: Icon(
+                              Icons.filter_list,
+                              color: isDark
+                                  ? Colors.white70
+                                  : AppColors.textPrimary(context),
+                              size: 20.r,
                             ),
                           ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 12.r),
-                          height: 40.h,
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.terminalDarkCard
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(
-                              color: AppColors.border(context),
-                            ),
-                          ),
-                          child: Icon(
-                            Icons.filter_list,
-                            color: isDark
-                                ? Colors.white70
-                                : AppColors.textPrimary(context),
-                            size: 20.r,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
 
-                    // Status Chips
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        children:
-                            [
-                              'All',
-                              'Confirmed',
-                              'Pending',
-                              'Completed',
-                              'Cancelled',
-                            ].map((status) {
-                              final isSelected = _selectedStatus == status;
-                              return Padding(
-                                padding: EdgeInsets.only(right: 8.w),
-                                child: ChoiceChip(
-                                  label: Text(
-                                    status,
-                                    style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : _getChipTextColor(status, isDark),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12.sp,
+                      // Status Chips
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        child: Row(
+                          children:
+                              [
+                                'All',
+                                'Confirmed',
+                                'Pending',
+                                'Completed',
+                                'Cancelled',
+                              ].map((status) {
+                                final isSelected = _selectedStatus == status;
+                                return Padding(
+                                  padding: EdgeInsets.only(right: 8.w),
+                                  child: ChoiceChip(
+                                    label: Text(
+                                      status,
+                                      style: TextStyle(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : _getChipTextColor(status, isDark),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                    selected: isSelected,
+                                    selectedColor: const Color(0xFF0F6FFF),
+                                    backgroundColor: _getChipBgColor(
+                                      status,
+                                      isDark,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      side: BorderSide(
+                                        color: isSelected
+                                            ? Colors.transparent
+                                            : _getChipBorderColor(status, isDark),
+                                      ),
+                                    ),
+                                    showCheckmark: false,
+                                    onSelected: (selected) {
+                                      if (selected) {
+                                        setState(() {
+                                          _selectedStatus = status;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                );
+                              }).toList(),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+
+                      // Subtitle: Date
+                      Text(
+                        _isSameDay(_selectedDate, DateTime.now())
+                            ? "Today, ${DateFormat('dd MMMM yyyy').format(_selectedDate)}"
+                            : DateFormat('dd MMMM yyyy').format(_selectedDate),
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: isDark
+                              ? Colors.white
+                              : AppColors.textPrimary(context),
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // Timeline
+                      filteredApts.isEmpty
+                          ? Container(
+                              height: 200.h,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_today_outlined,
+                                    color: AppColors.textSecondary(
+                                      context,
+                                    ).withValues(alpha: 0.5),
+                                    size: 40.r,
+                                  ),
+                                  SizedBox(height: 12.h),
+                                  Text(
+                                    "No appointments found",
+                                    style: AppTextStyles.titleMedium.copyWith(
+                                      color: isDark
+                                          ? Colors.white54
+                                          : AppColors.textSecondary(context),
                                     ),
                                   ),
-                                  selected: isSelected,
-                                  selectedColor: const Color(0xFF0F6FFF),
-                                  backgroundColor: _getChipBgColor(
-                                    status,
-                                    isDark,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.r),
-                                    side: BorderSide(
-                                      color: isSelected
-                                          ? Colors.transparent
-                                          : _getChipBorderColor(status, isDark),
-                                    ),
-                                  ),
-                                  showCheckmark: false,
-                                  onSelected: (selected) {
-                                    if (selected) {
-                                      setState(() {
-                                        _selectedStatus = status;
-                                      });
-                                    }
-                                  },
-                                ),
-                              );
-                            }).toList(),
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
+                                ],
+                              ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: filteredApts.length,
+                              itemBuilder: (context, idx) {
+                                final apt = filteredApts[idx];
+                                final timeParts = apt.appointmentTime.split(" ");
+                                final timeVal = timeParts[0];
+                                final timePeriod = timeParts.length > 1
+                                    ? timeParts[1]
+                                    : "";
 
-                    // Subtitle: Date
-                    Text(
-                      _isSameDay(_selectedDate, DateTime.now())
-                          ? "Today, ${DateFormat('dd MMMM yyyy').format(_selectedDate)}"
-                          : DateFormat('dd MMMM yyyy').format(_selectedDate),
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: isDark
-                            ? Colors.white
-                            : AppColors.textPrimary(context),
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-
-                    // Timeline
-                    filteredApts.isEmpty
-                        ? Container(
-                            height: 200.h,
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.calendar_today_outlined,
-                                  color: AppColors.textSecondary(
-                                    context,
-                                  ).withValues(alpha: 0.5),
-                                  size: 40.r,
-                                ),
-                                SizedBox(height: 12.h),
-                                Text(
-                                  "No appointments found",
-                                  style: AppTextStyles.titleMedium.copyWith(
-                                    color: isDark
-                                        ? Colors.white54
-                                        : AppColors.textSecondary(context),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: filteredApts.length,
-                            itemBuilder: (context, idx) {
-                              final apt = filteredApts[idx];
-                              final timeParts = apt.appointmentTime.split(" ");
-                              final timeVal = timeParts[0];
-                              final timePeriod = timeParts.length > 1
-                                  ? timeParts[1]
-                                  : "";
-
-                              return IntrinsicHeight(
-                                child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    // Time Indicator
-                                    SizedBox(
-                                      width: 60.w,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 14.h),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              timeVal,
-                                              style: TextStyle(
-                                                color: isDark
-                                                    ? Colors.white
-                                                    : AppColors.textPrimary(
-                                                        context,
-                                                      ),
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.bold,
+                                return IntrinsicHeight(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      // Time Indicator
+                                      SizedBox(
+                                        width: 60.w,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(top: 14.h),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                timeVal,
+                                                style: TextStyle(
+                                                  color: isDark
+                                                      ? Colors.white
+                                                      : AppColors.textPrimary(
+                                                          context,
+                                                        ),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              timePeriod,
-                                              style: TextStyle(
-                                                color: isDark
-                                                    ? AppColors
-                                                          .terminalDarkLabel
-                                                    : AppColors.textSecondary(
-                                                        context,
-                                                      ),
-                                                fontSize: 10.sp,
-                                                fontWeight: FontWeight.bold,
+                                              Text(
+                                                timePeriod,
+                                                style: TextStyle(
+                                                  color: isDark
+                                                      ? AppColors
+                                                            .terminalDarkLabel
+                                                      : AppColors.textSecondary(
+                                                          context,
+                                                        ),
+                                                  fontSize: 10.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
 
-                                    // Timeline vertical line and dot
-                                    _buildTimelineIndicator(
-                                      _getStatusColor(apt.status),
-                                      idx,
-                                      filteredApts.length,
-                                    ),
-
-                                    // Card content
-                                    Expanded(
-                                      child: PremiumAppointmentCard(
-                                        appointment: apt,
-                                        onCancel: () {
-                                          context
-                                              .read<DoctorAppointmentsBloc>()
-                                              .add(
-                                                CancelDoctorAppointment(apt.id),
-                                              );
-                                        },
-                                        onComplete: () {
-                                          _showConsultationCompleteSheet(
-                                            context,
-                                            apt,
-                                          );
-                                        },
+                                      // Timeline vertical line and dot
+                                      _buildTimelineIndicator(
+                                        _getStatusColor(apt.status),
+                                        idx,
+                                        filteredApts.length,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
+
+                                      // Card content
+                                      Expanded(
+                                        child: PremiumAppointmentCard(
+                                          appointment: apt,
+                                          onCancel: () {
+                                            context
+                                                .read<DoctorAppointmentsBloc>()
+                                                .add(
+                                                  CancelDoctorAppointment(apt.id),
+                                                );
+                                          },
+                                          onComplete: () {
+                                            _showConsultationCompleteSheet(
+                                              context,
+                                              apt,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                    ],
                   ],
                 ),
               );
