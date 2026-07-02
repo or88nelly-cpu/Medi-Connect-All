@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/dashboard/data/models/pharmacy_item_model.dart';
 import 'package:medi_connect/shared/dashboard/data/models/lab_test_model.dart';
 import 'package:medi_connect/shared/dashboard/data/models/attendance_model.dart';
@@ -341,7 +342,7 @@ class AdminOperationsRemoteDataSourceImpl
       final usersResponse = await _supabase
           .from('users')
           .select()
-          .eq('role', 'staff');
+          .eq('role', UserRole.staff.value);
       final list = usersResponse as List<dynamic>? ?? [];
 
       if (list.isNotEmpty) {

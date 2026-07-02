@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 
@@ -18,7 +19,7 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
     final response = await _supabase
         .from('users')
         .select('*, patients(*)')
-        .eq('role', 'patient')
+        .eq('role', UserRole.patient.value)
         .isFilter('deleted_at', null);
 
     return (response as List<dynamic>).map((json) {
@@ -48,7 +49,7 @@ class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
       'email': patient.email,
       'name': patient.fullName,
       'phone': patient.phone,
-      'role': 'patient',
+      'role': UserRole.patient.value,
       'profile_completed': true,
       'onboarding_step': 3,
       'status': patient.status ?? 'Active',

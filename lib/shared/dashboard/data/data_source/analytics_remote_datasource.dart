@@ -2,6 +2,7 @@
 library;
 
 import 'package:medi_connect/core/models/exceptions.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/shared/dashboard/data/models/analytics_model.dart';
 import 'package:medi_connect/shared/dashboard/data/models/activity_log_model.dart';
@@ -36,17 +37,17 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
       final docsRes = await _supabase
           .from('users')
           .select('id')
-          .eq('role', 'doctor')
+          .eq('role', UserRole.doctor.value)
           .isFilter('deleted_at', null);
       final staffRes = await _supabase
           .from('users')
           .select('id')
-          .eq('role', 'staff')
+          .eq('role', UserRole.staff.value)
           .isFilter('deleted_at', null);
       final patientsRes = await _supabase
           .from('users')
           .select('id')
-          .eq('role', 'patient')
+          .eq('role', UserRole.patient.value)
           .isFilter('deleted_at', null);
 
       final totalDoctors = (docsRes as List).length;

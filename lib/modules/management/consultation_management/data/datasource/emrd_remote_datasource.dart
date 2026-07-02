@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 abstract class EmrdRemoteDataSource {
   Future<Map<String, dynamic>> getEmrdStats();
@@ -19,7 +20,7 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
       final patientsRes = await supabase
           .from('users')
           .select('id')
-          .eq('role', 'patient');
+          .eq('role', UserRole.patient.value);
       final totalPatients = (patientsRes as List).length;
 
       // 2. Total Records

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
@@ -15,7 +16,7 @@ class SpecialityBookingCubit extends Cubit<SpecialityBookingState> {
       final response = await Supabase.instance.client
           .from('users')
           .select('*, doctors(*)')
-          .eq('role', 'doctor');
+          .eq('role', UserRole.doctor.value);
 
       final list = response as List<dynamic>? ?? [];
       final doctorsList = <DoctorBookingInfo>[];

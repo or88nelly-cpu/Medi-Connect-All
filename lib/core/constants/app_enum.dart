@@ -5,13 +5,13 @@ extension UserRoleExtension on UserRole {
   String get value {
     switch (this) {
       case UserRole.patient:
-        return 'patient';
+        return 'Patient';
       case UserRole.admin:
-        return 'admin';
+        return 'Admin';
       case UserRole.doctor:
-        return 'doctor';
+        return 'Doctor';
       case UserRole.staff:
-        return 'staff';
+        return 'Staff';
     }
   }
 
