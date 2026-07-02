@@ -51,7 +51,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
       builder: (context, state) {
         if (state is BannerLoading) {
           return Container(
-            height: 160.h,
+            height: 190.h,
             alignment: Alignment.center,
             child: const CircularProgressIndicator(),
           );
@@ -60,7 +60,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
         if (state is BannerError) {
           final isDark = Theme.of(context).brightness == Brightness.dark;
           return Container(
-            height: 160.h,
+            height: 190.h,
             margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -110,7 +110,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
           return Column(
             children: [
               SizedBox(
-                height: 160.h,
+                height: 190.h,
                 child: PageView.builder(
                   controller: _pageController,
                   onPageChanged: (idx) {

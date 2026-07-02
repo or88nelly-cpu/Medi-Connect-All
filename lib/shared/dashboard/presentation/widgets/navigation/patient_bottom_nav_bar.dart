@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/admin_nav_item.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
 
 class PatientBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -42,52 +43,148 @@ class PatientBottomNavBar extends StatelessWidget {
       ),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AdminNavItem(
+              // 1. Home
+              _buildNavItem(
+                context,
                 index: 0,
                 outlineIcon: Icons.home_outlined,
                 solidIcon: Icons.home,
-                label: "Home",
-                currentIndex: currentIndex,
-                onTap: onTap,
+                label: 'Home',
               ),
-              AdminNavItem(
+
+              // 2. Health Record
+              _buildNavItem(
+                context,
                 index: 1,
-                outlineIcon: Icons.calendar_today_outlined,
-                solidIcon: Icons.calendar_today,
-                label: "Appointments",
-                currentIndex: currentIndex,
-                onTap: onTap,
+                outlineIcon: Icons.assignment_outlined,
+                solidIcon: Icons.assignment,
+                label: 'Health Record',
               ),
-              AdminNavItem(
+
+              // 3. Profile
+              _buildNavItem(
+                context,
                 index: 2,
-                outlineIcon: Icons.folder_open_outlined,
-                solidIcon: Icons.folder,
-                label: "Records",
-                currentIndex: currentIndex,
-                onTap: onTap,
-              ),
-              AdminNavItem(
-                index: 3,
-                outlineIcon: Icons.chat_bubble_outline,
-                solidIcon: Icons.chat_bubble,
-                label: "Chat",
-                currentIndex: currentIndex,
-                onTap: onTap,
-              ),
-              AdminNavItem(
-                index: 4,
                 outlineIcon: Icons.person_outline,
                 solidIcon: Icons.person,
-                label: "Profile",
-                currentIndex: currentIndex,
-                onTap: onTap,
+                label: 'Profile',
               ),
+
+              // 4. Premium (Mockup styled with golden crown pill background)
+              _buildPremiumNavItem(context),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(
+    BuildContext context, {
+    required int index,
+    required IconData outlineIcon,
+    required IconData solidIcon,
+    required String label,
+  }) {
+    final isSelected = currentIndex == index;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final color = isSelected
+        ? AppColors.primary
+        : (isDark ? Colors.white54 : AppColors.textSecondary(context));
+
+    return InkWell(
+      onTap: () => onTap(index),
+      borderRadius: BorderRadius.circular(16.r),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary.withValues(alpha: 0.08)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              isSelected ? solidIcon : outlineIcon,
+              color: color,
+              size: 20.r,
+            ),
+            SizedBox(height: 3.h),
+            Text(
+              label,
+              style: AppTextStyles.bodySmall.copyWith(
+                color: color,
+                fontSize: 8.5.sp,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPremiumNavItem(BuildContext context) {
+    const premiumIndex = 3;
+    final isSelected = currentIndex == premiumIndex;
+
+    return InkWell(
+      onTap: () => onTap(premiumIndex),
+      borderRadius: BorderRadius.circular(16.r),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? const LinearGradient(
+                  colors: [Color(0xFFF7C325), Color(0xFFE29E0D)],
+                )
+              : LinearGradient(
+                  colors: [
+                    const Color(0xFFF7C325).withValues(alpha: 0.08),
+                    const Color(0xFFE29E0D).withValues(alpha: 0.12),
+                  ],
+                ),
+          borderRadius: BorderRadius.circular(14.r),
+          border: Border.all(
+            color: AppColors.secondary.withValues(alpha: isSelected ? 1 : 0.4),
+            width: 1,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: AppColors.secondary.withValues(alpha: 0.25),
+                    blurRadius: 8.r,
+                    offset: const Offset(0, 3),
+                  )
+                ]
+              : null,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.workspace_premium_rounded,
+              color: isSelected ? Colors.white : AppColors.secondary,
+              size: 18.r,
+            ),
+            SizedBox(width: 6.w),
+            Text(
+              'Premium',
+              style: AppTextStyles.bodySmall.copyWith(
+                color: isSelected ? Colors.white : AppColors.secondary,
+                fontSize: 9.sp,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ],
         ),
       ),
     );

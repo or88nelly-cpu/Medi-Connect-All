@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_hero_banner.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_services_grid.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_promo_footer.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_action_banners.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_banner_carousel.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_specialities_section.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_health_overview.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_premium_banner.dart';
 
 /// The patient home tab — redesigned to match the MediConnect app mockup.
 ///
 /// Layout (top to bottom):
-/// 1. Warning banner (if profile is incomplete)
-/// 2. [PatientHeroBanner]   – greeting card with name, patient ID, date
-/// 3. [PatientBannerCarousel] – dynamic promotional banner slider
-/// 4. [PatientSpecialitiesSection] – horizontal specialty icons list with search bar
-/// 5. [PatientServicesGrid] – 12 quick-access service cards in a 2 or 4-col grid
-/// 6. [PatientPromoFooter]  – "Your Health, Our Priority" banner
+/// 1. [PatientActionBanners]   – Complete Registration and Payment Pending cards side-by-side
+/// 2. [PatientBannerCarousel]   – dynamic promotional banner slider
+/// 3. [PatientSpecialitiesSection] – 2x4 grid layout of medical specialties
+/// 4. [PatientHealthOverview] – Track Health Card and list of 4 vitals side-by-side
+/// 5. [PatientPremiumBanner]  – Purple "Go Premium for Better Care" banner
 class PatientHomeTab extends StatelessWidget {
   const PatientHomeTab({super.key});
 
@@ -25,24 +24,24 @@ class PatientHomeTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── Hero banner ─────────────────────────────────
-          const PatientHeroBanner(),
+          // ── Top Action Banners (Registration & Payment) ────
+          const PatientActionBanners(),
           SizedBox(height: 20.h),
 
-          // ── Dynamic Promo Banners ───────────────────────
+          // ── Dynamic Promo Banners (Taller Carousel) ───────────────────────
           const PatientBannerCarousel(),
           SizedBox(height: 20.h),
 
-          // ── Specialties section (Search + Horizontal list) ──
+          // ── Specialties section (2x4 Grid) ──
           const PatientSpecialitiesSection(),
           SizedBox(height: 20.h),
 
-          // ── 12-item services grid ───────────────────────
-          const PatientServicesGrid(),
+          // ── Health Overview (Vitals & Track Health Card) ──
+          const PatientHealthOverview(),
           SizedBox(height: 20.h),
 
-          // ── Promo footer ────────────────────────────────
-          const PatientPromoFooter(),
+          // ── Purple Promo Premium Banner ────────────────────────────────
+          const PatientPremiumBanner(),
           SizedBox(height: 80.h),
         ],
       ),
