@@ -16,6 +16,9 @@ import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_sett
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_recent_activity_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/bloc/banner_bloc.dart';
+import 'package:medi_connect/modules/patient/speciality/presentation/bloc/speciality_bloc.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
 
 class AppProviders {
   static List<BlocProvider> getProviders() {
@@ -47,6 +50,15 @@ class AppProviders {
       ),
       BlocProvider<DoctorAppointmentsBloc>(
         create: (_) => sl<DoctorAppointmentsBloc>(),
+      ),
+      BlocProvider<BannerBloc>(
+        create: (_) => sl<BannerBloc>(),
+      ),
+      BlocProvider<SpecialityBloc>(
+        create: (_) => sl<SpecialityBloc>(),
+      ),
+      BlocProvider<UserDetailsBloc>(
+        create: (_) => sl<UserDetailsBloc>(),
       ),
       ...getAllDepartmentsProviders(sl),
     ];

@@ -1,6 +1,9 @@
 class AppTableNames {
   AppTableNames._();
 
+  static const String banners = "banners";
+  static const String specialities = "specialities";
+
   static const String PgForeignDataWrappers = "_pg_foreign_data_wrappers";
   static const String PgForeignServers = "_pg_foreign_servers";
   static const String PgForeignTableColumns = "_pg_foreign_table_columns";
@@ -417,7 +420,6 @@ class AppTableNames {
   static const String services = "services";
   static const String sessions = "sessions";
   static const String shifts = "shifts";
-  static const String specialities = "specialities";
   static const String sqlFeatures = "sql_features";
   static const String sqlImplementationInfo = "sql_implementation_info";
   static const String sqlParts = "sql_parts";

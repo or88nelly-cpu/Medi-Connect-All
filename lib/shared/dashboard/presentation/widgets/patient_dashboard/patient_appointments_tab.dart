@@ -7,6 +7,8 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
@@ -19,133 +21,159 @@ class PatientAppointmentsTab extends StatefulWidget {
 }
 
 class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
-  List<Map<String, String>> _resolveAppointments(UserModel user) {
-    final List<Map<String, String>> appointments = [];
+  @override
+  void initState() {
+    super.initState();
+    context.read<AdminAppointmentsBloc>().add(LoadAppointments());
+  }
 
-    if (appointments.isEmpty) {
-      appointments.addAll([
-        {
-          'doctor': 'Dr. Sarah Johnson',
-          'specialty': 'Cardiologist',
-          'time': 'June 12, 10:30 AM',
-          'type': 'Cardiology Clinic',
-        },
-        {
-          'doctor': 'Dr. Michael Chen',
-          'specialty': 'Neurologist',
-          'time': 'June 15, 02:00 PM',
-          'type': 'Neurology Clinic',
-        },
-      ]);
-    }
-
-    return appointments;
+  String _formatDateTime(DateTime date, String timeStr) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return "${months[date.month - 1]} ${date.day}, $timeStr";
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        if (state is! Authenticated) {
+      builder: (context, authState) {
+        if (authState is! Authenticated) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final user = UserModel.fromEntity(state.user);
-        final appointments = _resolveAppointments(user);
+        final user = UserModel.fromEntity(authState.user);
 
-        return Padding(
-          padding: EdgeInsets.all(20.r),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(
+          builder: (context, aptState) {
+            List<AppointmentEntity> realApts = [];
+            if (aptState is AdminAppointmentsLoaded) {
+              realApts = aptState.appointments
+                  .where((apt) => apt.patientId == user.id)
+                  .toList();
+            }
+
+            return Padding(
+              padding: EdgeInsets.all(20.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppStrings.appointments,
+                        style: AppTextStyles.headingMedium.copyWith(
+                          fontSize: 22.sp,
+                        ),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () => _showBookDoctorDialog(context),
+                        icon: const Icon(Icons.search, color: Colors.white),
+                        label: const Text(
+                          'Book Doctor',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
                   Text(
-                    AppStrings.appointments,
-                    style: AppTextStyles.headingMedium.copyWith(
-                      fontSize: 22.sp,
+                    'My Scheduled Bookings',
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () => _showBookDoctorDialog(context),
-                    icon: const Icon(Icons.search, color: Colors.white),
-                    label: const Text(
-                      'Book Doctor',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                    ),
+                  SizedBox(height: 12.h),
+                  Expanded(
+                    child: aptState is AdminAppointmentsLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : realApts.isEmpty
+                            ? Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_month_outlined,
+                                      color: AppColors.textSecondary(context).withValues(alpha: 0.5),
+                                      size: 48.r,
+                                    ),
+                                    SizedBox(height: 12.h),
+                                    Text(
+                                      "No scheduled appointments found.",
+                                      style: AppTextStyles.bodyMedium.copyWith(
+                                        color: AppColors.textSecondary(context),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: realApts.length,
+                                itemBuilder: (context, idx) {
+                                  final apt = realApts[idx];
+                                  final doctorName = apt.doctorName;
+                                  final specialty = apt.specialty;
+                                  final type = apt.type;
+                                  final time = _formatDateTime(apt.appointmentDate, apt.appointmentTime);
+
+                                  return Card(
+                                    margin: EdgeInsets.only(bottom: 12.h),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.r),
+                                      side: BorderSide(color: AppColors.border(context)),
+                                    ),
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.all(16.r),
+                                      leading: CircleAvatar(
+                                        backgroundColor: AppColors.primary.withValues(
+                                          alpha: 0.1,
+                                        ),
+                                        child: const Icon(Icons.person, color: AppColors.primary),
+                                      ),
+                                      title: Text(
+                                        doctorName,
+                                        style: AppTextStyles.bodyMedium.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.textPrimary(context),
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        "$specialty | $type",
+                                      ),
+                                      trailing: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 8.w,
+                                          vertical: 4.h,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary.withValues(alpha: 0.1),
+                                          borderRadius: BorderRadius.circular(6.r),
+                                        ),
+                                        child: Text(
+                                          time,
+                                          style: TextStyle(
+                                            color: AppColors.primary,
+                                            fontSize: 9.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                   ),
                 ],
               ),
-              SizedBox(height: 16.h),
-              Text(
-                'My Scheduled Bookings',
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 12.h),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: appointments.length,
-                  itemBuilder: (context, idx) {
-                    final apt = appointments[idx];
-                    return Card(
-                      margin: EdgeInsets.only(bottom: 12.h),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        side: BorderSide(color: AppColors.border(context)),
-                      ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(16.r),
-                        leading: CircleAvatar(
-                          backgroundColor: AppColors.primary.withValues(
-                            alpha: 0.1,
-                          ),
-                          child: Icon(Icons.person, color: AppColors.primary),
-                        ),
-                        title: Text(
-                          apt['doctor']!,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary(context),
-                          ),
-                        ),
-                        subtitle: Text(
-                          "${apt['specialty']!} | ${apt['type']!}",
-                        ),
-                        trailing: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8.w,
-                            vertical: 4.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(6.r),
-                          ),
-                          child: Text(
-                            apt['time']!,
-                            style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 9.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );

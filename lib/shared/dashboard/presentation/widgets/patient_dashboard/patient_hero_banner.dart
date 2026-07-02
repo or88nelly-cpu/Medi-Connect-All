@@ -2,24 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
-import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_greeting.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_id_chip.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_tagline.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_avatar.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_date_card.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_hospital_card.dart';
 
 class PatientHeroBanner extends StatelessWidget {
   const PatientHeroBanner({super.key});
 
-  String _greeting() {
-    final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning,';
-    if (hour < 17) return 'Good Afternoon,';
-    return 'Good Evening,';
-  }
-
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final bgGradient = isDark
+        ? const LinearGradient(
+            colors: [Color(0xFF0D1B38), Color(0xFF10192C)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )
+        : const LinearGradient(
+            colors: [Color(0xFFEEF3FF), Color(0xFFF7F5FF)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          );
+
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         String name = 'Patient';
@@ -41,47 +51,16 @@ class PatientHeroBanner extends StatelessWidget {
               : AppAssets.femaleAvatarPng;
         }
 
-        final now = DateTime.now();
-        final dayNames = [
-          'Sunday',
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-        ];
-        final monthNames = [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December',
-        ];
-        final dayName = dayNames[now.weekday % 7];
-        final monthName = monthNames[now.month - 1];
-
         return Container(
           width: double.infinity,
           constraints: BoxConstraints(minHeight: 180.h),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFFEEF3FF), Color(0xFFF7F5FF)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            gradient: bgGradient,
             borderRadius: BorderRadius.circular(20.r),
-            border: Border.all(color: const Color(0xFFDDE5FF), width: 1),
+            border: Border.all(color: AppColors.border(context), width: 1),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF4F2DFF).withValues(alpha: 0.08),
+                color: AppColors.primary.withValues(alpha: 0.08),
                 blurRadius: 20,
                 offset: const Offset(0, 6),
               ),
@@ -119,149 +98,15 @@ class PatientHeroBanner extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Greeting
-                          Text(
-                            _greeting(),
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: const Color(0xFF6B7280),
-                              fontSize: 13.sp,
-                            ),
-                          ),
-                          SizedBox(height: 2.h),
-
-                          // Name + wave emoji
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  name,
-                                  style: AppTextStyles.headingMedium.copyWith(
-                                    color: const Color(0xFF0F2C59),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.sp,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              SizedBox(width: 4.w),
-                              Text('👋', style: TextStyle(fontSize: 18.sp)),
-                            ],
-                          ),
+                          PatientGreeting(name: name),
                           SizedBox(height: 8.h),
-
-                          // Patient ID chip
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 5.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.r),
-                              border: Border.all(
-                                color: const Color(0xFFDDE5FF),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.07,
-                                  ),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.person_outline,
-                                  size: 13.r,
-                                  color: AppColors.primary,
-                                ),
-                                SizedBox(width: 4.w),
-                                Text(
-                                  'Patient ID: $patientId',
-                                  style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 11.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          PatientIdChip(patientId: patientId),
                           SizedBox(height: 12.h),
-
-                          // Tagline
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.favorite_outline,
-                                size: 16.r,
-                                color: AppColors.primary,
-                              ),
-                              SizedBox(width: 6.w),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'We are here to',
-                                    style: AppTextStyles.bodySmall.copyWith(
-                                      color: const Color(0xFF6B7280),
-                                      fontSize: 11.sp,
-                                    ),
-                                  ),
-                                  Text(
-                                    'care for you',
-                                    style: AppTextStyles.bodyMedium.copyWith(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13.sp,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
+                          const PatientTagline(),
                           SizedBox(height: 14.h),
-
-                          // Patient avatar
-                          Container(
-                            width: 70.r,
-                            height: 70.r,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.primary.withValues(alpha: 0.2),
-                                width: 2,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.12,
-                                  ),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: ClipOval(
-                              child: CustomImageView(
-                                imagePath: ProfileImageHelper.resolveImagePath(
-                                  profileImage,
-                                  'patient',
-                                  state is Authenticated
-                                      ? state.user.gender
-                                      : null,
-                                ),
-                                borderRadius: 35.r,
-                              ),
-                            ),
+                          PatientAvatar(
+                            profileImage: profileImage,
+                            gender: gender,
                           ),
                         ],
                       ),
@@ -275,144 +120,9 @@ class PatientHeroBanner extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Date card
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 10.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(14.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.10,
-                                  ),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.calendar_month_rounded,
-                                  color: AppColors.primary,
-                                  size: 22.r,
-                                ),
-                                SizedBox(height: 4.h),
-                                Text(
-                                  '${now.day}',
-                                  style: TextStyle(
-                                    fontSize: 28.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color(0xFF0F2C59),
-                                    height: 1.1,
-                                  ),
-                                ),
-                                Text(
-                                  '$monthName ${now.year}',
-                                  style: TextStyle(
-                                    fontSize: 11.sp,
-                                    color: const Color(0xFF6B7280),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(height: 2.h),
-                                Container(
-                                  height: 2.h,
-                                  width: 24.w,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary,
-                                    borderRadius: BorderRadius.circular(2.r),
-                                  ),
-                                ),
-                                SizedBox(height: 2.h),
-                                Text(
-                                  dayName,
-                                  style: TextStyle(
-                                    fontSize: 11.sp,
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          const PatientDateCard(),
                           SizedBox(height: 8.h),
-
-                          // Hospital illustration placeholder
-                          Container(
-                            height: 80.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.r),
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFFECF3FF), Color(0xFFF0F8FF)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                            ),
-                            child: Stack(
-                              children: [
-                                // Sky background
-                                Positioned.fill(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Color(0xFFDBECFF),
-                                            Color(0xFFEDF5FF),
-                                          ],
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Hospital building (simplified icon)
-                                Center(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        width: 38.r,
-                                        height: 38.r,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(
-                                            8.r,
-                                          ),
-                                          border: Border.all(
-                                            color: const Color(0xFFDDE5FF),
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.local_hospital_rounded,
-                                          color: AppColors.primary,
-                                          size: 22.r,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4.h),
-                                      Text(
-                                        'HOSPITAL',
-                                        style: TextStyle(
-                                          fontSize: 8.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: const Color(0xFF4F6E9A),
-                                          letterSpacing: 1.2,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          const PatientHospitalCard(),
                         ],
                       ),
                     ),

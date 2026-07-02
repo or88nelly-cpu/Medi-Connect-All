@@ -31,5 +31,6 @@ class AppInitializer {
     configureDepartmentDependencies(sl);
     configurePatientDependencies(sl);
     configureAdminOperationsDependencies(sl);
+    configureAdditionalFeatures(sl);
   }
 }

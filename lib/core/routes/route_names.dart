@@ -36,5 +36,10 @@ class RouteNames {
   static const sectionDetail = 'sectionDetail';
   static const departmentDetail = 'departmentDetail';
 
+  static const specialities = '/specialities';
+  static const patientDetail = '/patient/detail';
+  static const doctorDetail = '/doctor/detail';
+  static const employeeDetail = '/employee/detail';
+
   RouteNames._();
 }

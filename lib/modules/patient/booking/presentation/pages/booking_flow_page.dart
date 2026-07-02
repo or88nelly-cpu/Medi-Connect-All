@@ -5,6 +5,8 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
@@ -275,7 +277,48 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
   }
 
   Future<void> _saveAppointment() async {
-    // metadata is no longer stored on UserModel
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated) {
+      final user = authState.user;
+      final dateStr = _selectedDate.toIso8601String().split('T').first;
+      final docName = _doctor?.fullName ?? 'Doctor';
+
+      // Generate initials for token
+      final cleanName = docName
+          .replaceAll(RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false), '')
+          .trim();
+      final parts = cleanName
+          .split(RegExp(r'\s+'))
+          .where((s) => s.isNotEmpty)
+          .toList();
+      String initials = 'DR';
+      if (parts.isNotEmpty) {
+        if (parts.length == 1) {
+          initials = parts[0]
+              .substring(0, parts[0].length >= 2 ? 2 : 1)
+              .toUpperCase();
+        } else {
+          initials =
+              '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
+        }
+      }
+      final token = '${initials}A${(DateTime.now().millisecondsSinceEpoch % 1000).toString().padLeft(3, '0')}';
+
+      context.read<AdminAppointmentsBloc>().add(
+        CreateAppointmentEvent({
+          'patient_id': user.id,
+          'patient_name': user.fullName,
+          'doctor_id': _doctor?.id ?? '',
+          'doctor_name': docName,
+          'specialty': _specialty?.name ?? '',
+          'appointment_date': dateStr,
+          'appointment_time': _selectedSlot ?? '',
+          'status': 'Confirmed',
+          'type': 'Consultation',
+          'token': token,
+        }),
+      );
+    }
   }
 
   String _shortDate(DateTime d) {
