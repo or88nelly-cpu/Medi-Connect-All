@@ -11,6 +11,7 @@ import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/modules/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/modules/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/modules/patient/speciality/presentation/widgets/speciality_form_dialog.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/pages/speciality_doctors_page.dart';
 
 class SpecialityListPage extends StatefulWidget {
   final String? initialQuery;
@@ -208,99 +209,112 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
         borderRadius: BorderRadius.circular(12.r),
         side: BorderSide(color: AppColors.border(context)),
       ),
-      child: Padding(
-        padding: EdgeInsets.all(16.r),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10.r),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    shape: BoxShape.circle,
+      child: InkWell(
+        onTap: isAdmin
+            ? null
+            : () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (ctx) => SpecialityDoctorsPage(speciality: spec),
                   ),
-                  child: CustomImageView(imagePath: spec.imageUrl ?? ""),
-                ),
-                SizedBox(width: 16.w),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        spec.name,
-                        style: AppTextStyles.titleMedium.copyWith(
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
+                );
+              },
+        borderRadius: BorderRadius.circular(12.r),
+        child: Padding(
+          padding: EdgeInsets.all(16.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10.r),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: CustomImageView(imagePath: spec.imageUrl ?? ""),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          spec.name,
+                          style: AppTextStyles.titleMedium.copyWith(
+                            color: textColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Code: ${spec.specialityCode}",
-                        style: TextStyle(
-                          color: AppColors.textSecondary(context),
-                          fontSize: 11.sp,
-                          fontFamily: 'monospace',
+                        Text(
+                          "Code: ${spec.specialityCode}",
+                          style: TextStyle(
+                            color: AppColors.textSecondary(context),
+                            fontSize: 11.sp,
+                            fontFamily: 'monospace',
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                  if (isAdmin) ...[
+                    IconButton(
+                      icon: const Icon(
+                        Icons.edit_outlined,
+                        color: AppColors.primary,
                       ),
-                    ],
+                      onPressed: () => SpecialityFormDialog.show(
+                        context,
+                        existingSpeciality: spec,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: AppColors.error,
+                      ),
+                      onPressed: () => _confirmDelete(context, spec),
+                    ),
+                  ],
+                ],
+              ),
+              if (spec.description != null && spec.description!.isNotEmpty) ...[
+                SizedBox(height: 12.h),
+                Text(
+                  spec.description!,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.textSecondary(context),
                   ),
                 ),
-                if (isAdmin) ...[
-                  IconButton(
-                    icon: const Icon(
-                      Icons.edit_outlined,
-                      color: AppColors.primary,
-                    ),
-                    onPressed: () => SpecialityFormDialog.show(
-                      context,
-                      existingSpeciality: spec,
-                    ),
+              ],
+              SizedBox(height: 12.h),
+              const Divider(height: 1),
+              SizedBox(height: 12.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildMetaInfo(
+                    "Consultation Duration",
+                    "${spec.consultationDuration} Mins",
+                    context,
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete_outline,
-                      color: AppColors.error,
-                    ),
-                    onPressed: () => _confirmDelete(context, spec),
+                  _buildMetaInfo(
+                    "Consultation Fee",
+                    "\$${spec.defaultConsultationFee?.toStringAsFixed(2) ?? '0.00'}",
+                    context,
+                  ),
+                  _buildMetaInfo(
+                    "Type",
+                    spec.isSurgical ? "Surgical" : "Clinical",
+                    context,
                   ),
                 ],
-              ],
-            ),
-            if (spec.description != null && spec.description!.isNotEmpty) ...[
-              SizedBox(height: 12.h),
-              Text(
-                spec.description!,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary(context),
-                ),
               ),
             ],
-            SizedBox(height: 12.h),
-            const Divider(height: 1),
-            SizedBox(height: 12.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildMetaInfo(
-                  "Consultation Duration",
-                  "${spec.consultationDuration} Mins",
-                  context,
-                ),
-                _buildMetaInfo(
-                  "Consultation Fee",
-                  "\$${spec.defaultConsultationFee?.toStringAsFixed(2) ?? '0.00'}",
-                  context,
-                ),
-                _buildMetaInfo(
-                  "Type",
-                  spec.isSurgical ? "Surgical" : "Clinical",
-                  context,
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
       ),
     );

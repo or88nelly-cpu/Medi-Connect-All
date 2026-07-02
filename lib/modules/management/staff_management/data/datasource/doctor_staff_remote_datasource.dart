@@ -109,7 +109,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
             .from('users')
             .select()
             .isFilter('deleted_at', null)
-            .eq('role', 'doctor');
+            .eq('role', "Doctor");
         final existingDocs = (docQuery as List<dynamic>)
             .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
             .toList();
@@ -153,7 +153,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
     if (departmentName.isEmpty || departmentName == 'All') {
       return list
-          .where((u) => u.role == 'doctor' || u.role == 'staff')
+          .where((u) => u.role == UserRole.doctor || u.role == UserRole.staff)
           .toList();
     }
     return list;

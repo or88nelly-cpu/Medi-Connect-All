@@ -5,6 +5,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/modules/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/pages/speciality_doctors_page.dart';
 
 class SpecialityHorizontalList extends StatelessWidget {
   final List<SpecialityEntity> specialities;
@@ -75,7 +76,14 @@ class SpecialityHorizontalList extends StatelessWidget {
               itemBuilder: (context, index) {
                 final spec = specialities[index];
                 return GestureDetector(
-                  onTap: () => context.push('/specialities'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => SpecialityDoctorsPage(speciality: spec),
+                      ),
+                    );
+                  },
                   child: Container(
                     width: 90.w,
                     margin: EdgeInsets.only(right: 12.w),
