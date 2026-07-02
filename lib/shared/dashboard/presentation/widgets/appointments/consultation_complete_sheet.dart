@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -42,7 +43,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
   void initState() {
     super.initState();
     final authState = context.read<AuthBloc>().state;
-    if (authState is Authenticated && authState.user.role == 'doctor') {
+    if (authState is Authenticated && authState.user.role == UserRole.doctor) {
       context.read<DoctorAppointmentsBloc>().add(LoadDoctorAppointments());
     } else {
       context.read<AdminAppointmentsBloc>().add(LoadAppointments());
@@ -101,7 +102,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     final patientName = apt.patientName;
 
     final authState = context.read<AuthBloc>().state;
-    if (authState is Authenticated && authState.user.role == 'doctor') {
+    if (authState is Authenticated && authState.user.role == UserRole.doctor) {
       context.read<DoctorAppointmentsBloc>().add(
         CompleteDoctorAppointment(apt.id),
       );

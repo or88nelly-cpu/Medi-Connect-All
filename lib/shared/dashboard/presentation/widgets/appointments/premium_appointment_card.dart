@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -933,7 +934,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                 try {
                   final authState = context.read<AuthBloc>().state;
                   if (authState is Authenticated &&
-                      authState.user.role == 'doctor') {
+                      authState.user.role == UserRole.doctor) {
                     context.read<DoctorAppointmentsBloc>().add(
                       UpdateDoctorAppointmentVitals(appointment.id, vitalsMap),
                     );

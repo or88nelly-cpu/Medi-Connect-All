@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/modules/management/staff_management/domain/repositories/doctor_staff_repository.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
@@ -20,8 +21,8 @@ class DoctorStaffBloc extends Bloc<DoctorStaffEvent, DoctorStaffState> {
     emit(DoctorStaffLoading());
     final result = await _repository.getDoctorStaff(event.departmentName);
     result.fold((failure) => emit(DoctorStaffError(failure.message)), (list) {
-      final doctors = list.where((u) => u.role == 'doctor').toList();
-      final staff = list.where((u) => u.role == 'staff').toList();
+      final doctors = list.where((u) => u.role == UserRole.doctor).toList();
+      final staff = list.where((u) => u.role == UserRole.staff).toList();
       emit(DoctorStaffLoaded(doctors: doctors, staff: staff));
     });
   }

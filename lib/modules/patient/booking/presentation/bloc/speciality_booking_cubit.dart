@@ -13,49 +13,86 @@ class SpecialityBookingCubit extends Cubit<SpecialityBookingState> {
   Future<void> loadDoctors(String specialityId, String specialityName) async {
     emit(state.copyWith(status: SpecialityBookingStatus.loading));
     try {
+      print('*** loadDoctors started for: ID=$specialityId, Name=$specialityName ***');
       final response = await Supabase.instance.client
           .from('users')
-          .select('*, doctors(*)')
-          .eq('role', UserRole.doctor.value);
+          .select('*, employees(*, doctors!doctors_employee_id_fkey(*))')
+          .eq('role', 'Doctor');
 
+      print('*** Supabase returned ${response.length} doctor users. ***');
       final list = response as List<dynamic>? ?? [];
       final doctorsList = <DoctorBookingInfo>[];
 
       for (final item in list) {
         final map = Map<String, dynamic>.from(item as Map);
-        final docListJson = map['doctors'];
+        print('*** Doctor User details: name=${map['name'] ?? map['first_name']}, role=${map['role']}, dept=${map['department']} ***');
+        
+        final empJson = map.remove('employees');
+        Map<String, dynamic>? rawEmpMap;
+        if (empJson is List && empJson.isNotEmpty) {
+          rawEmpMap = Map<String, dynamic>.from(empJson.first as Map);
+        } else if (empJson is Map<String, dynamic>) {
+          rawEmpMap = Map<String, dynamic>.from(empJson);
+        }
+
+        dynamic docListJson;
+        if (rawEmpMap != null) {
+          docListJson = rawEmpMap.remove('doctors');
+          map.addAll(rawEmpMap);
+        }
+
+        if (docListJson == null && map.containsKey('doctors')) {
+          docListJson = map.remove('doctors');
+        }
         
         DoctorModel? doctorModel;
+        Map<String, dynamic>? rawDocMap;
+
         if (docListJson is List && docListJson.isNotEmpty) {
-          final docMap = Map<String, dynamic>.from(docListJson.first as Map);
-          docMap['id'] = map['id'];
-          docMap['employee_id'] ??= 'EMP-${map['id'].hashCode.abs()}';
-          doctorModel = DoctorModel.fromJson(docMap);
+          rawDocMap = Map<String, dynamic>.from(docListJson.first as Map);
+          rawDocMap['id'] = map['id'];
+          rawDocMap['employee_id'] ??= rawEmpMap?['id'] ?? 'EMP-${map['id'].hashCode.abs()}';
+          doctorModel = DoctorModel.fromJson(rawDocMap);
         } else if (docListJson is Map<String, dynamic>) {
-          final docMap = Map<String, dynamic>.from(docListJson);
-          docMap['id'] = map['id'];
-          docMap['employee_id'] ??= 'EMP-${map['id'].hashCode.abs()}';
-          doctorModel = DoctorModel.fromJson(docMap);
+          rawDocMap = Map<String, dynamic>.from(docListJson);
+          rawDocMap['id'] = map['id'];
+          rawDocMap['employee_id'] ??= rawEmpMap?['id'] ?? 'EMP-${map['id'].hashCode.abs()}';
+          doctorModel = DoctorModel.fromJson(rawDocMap);
         }
 
         final userModel = UserModel.fromJson(map);
 
         bool isMatch = false;
-        if (doctorModel != null) {
-          if (doctorModel.specialityId == specialityId) {
-            isMatch = true;
-          }
-        }
         
+        // 1. Match by speciality_id
+        final specIdMatch = doctorModel != null && doctorModel.specialityId == specialityId;
+        if (specIdMatch) isMatch = true;
+
+        // 2. Match by specialization in doctors table
+        final specialization = rawDocMap?['specialization'] as String?;
+        final specNameMatch = specialization != null &&
+            specialization.toLowerCase() == specialityName.toLowerCase();
+        if (specNameMatch) isMatch = true;
+
+        // 3. Match by sub_speciality in doctors table
+        final subSpec = rawDocMap?['sub_speciality'] as String?;
+        final subSpecMatch = subSpec != null &&
+            subSpec.toLowerCase() == specialityName.toLowerCase();
+        if (subSpecMatch) isMatch = true;
+        
+        // 4. Match by department in users table
         final dept = map['department'] as String?;
-        if (dept != null && dept.toLowerCase() == specialityName.toLowerCase()) {
-          isMatch = true;
-        }
+        final deptMatch = dept != null &&
+            dept.toLowerCase() == specialityName.toLowerCase();
+        if (deptMatch) isMatch = true;
+
+        print('*** Match decision: name=${userModel.fullName}, specIdMatch=$specIdMatch (db value: ${doctorModel?.specialityId}), specNameMatch=$specNameMatch (db value: $specialization), subSpecMatch=$subSpecMatch (db value: $subSpec), deptMatch=$deptMatch (db value: $dept) -> final isMatch=$isMatch ***');
 
         if (isMatch) {
           doctorsList.add(DoctorBookingInfo(user: userModel, doctorInfo: doctorModel));
         }
       }
+      print('*** Final doctorsList count: ${doctorsList.length} ***');
 
       emit(state.copyWith(
         status: SpecialityBookingStatus.doctorsLoaded,

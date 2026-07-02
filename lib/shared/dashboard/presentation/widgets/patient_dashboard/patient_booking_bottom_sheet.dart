@@ -73,7 +73,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
                 }
 
                 final doctors = state.doctors
-                    .where((u) => u.role == 'doctor')
+                    .where((u) => u.role == UserRole.doctor)
                     .toList();
                 if (doctors.isEmpty) {
                   return _buildFallbackDoctorsList(context);

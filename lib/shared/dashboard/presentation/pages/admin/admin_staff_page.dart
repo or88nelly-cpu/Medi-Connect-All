@@ -206,7 +206,7 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                               List<UserModel> staffList = [];
                               if (state is DoctorStaffLoaded) {
                                 staffList = state.staff
-                                    .where((u) => u.role == 'staff')
+                                    .where((u) => u.role == UserRole.staff)
                                     .toList();
                               }
 
