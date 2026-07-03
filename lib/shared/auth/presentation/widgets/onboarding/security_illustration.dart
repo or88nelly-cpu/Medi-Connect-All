@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -23,7 +22,7 @@ class _OnboardingSecurityIllustrationState
   @override
   void initState() {
     super.initState();
-    
+
     // Float animation controller (for center card)
     _floatController = AnimationController(
       vsync: this,
@@ -31,10 +30,7 @@ class _OnboardingSecurityIllustrationState
     )..repeat(reverse: true);
 
     _floatAnim = Tween<double>(begin: -10.0, end: 10.0).animate(
-      CurvedAnimation(
-        parent: _floatController,
-        curve: Curves.easeInOutQuad,
-      ),
+      CurvedAnimation(parent: _floatController, curve: Curves.easeInOutQuad),
     );
 
     // Rotation animation controller (for outer orbital rings)
@@ -43,13 +39,15 @@ class _OnboardingSecurityIllustrationState
       duration: const Duration(seconds: 12),
     )..repeat();
 
-    _rotationClockwise = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _rotateController, curve: Curves.linear),
-    );
+    _rotationClockwise = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _rotateController, curve: Curves.linear));
 
-    _rotationCounterClockwise = Tween<double>(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(parent: _rotateController, curve: Curves.linear),
-    );
+    _rotationCounterClockwise = Tween<double>(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(CurvedAnimation(parent: _rotateController, curve: Curves.linear));
   }
 
   @override
@@ -179,10 +177,7 @@ class _OnboardingSecurityIllustrationState
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
-                      colors: [
-                        AppColors.primary,
-                        AppColors.primaryLight,
-                      ],
+                      colors: [AppColors.primary, AppColors.primaryLight],
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                     ),

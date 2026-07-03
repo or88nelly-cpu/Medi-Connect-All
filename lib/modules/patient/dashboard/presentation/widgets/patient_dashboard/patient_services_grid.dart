@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_service_item.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_service_item.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/booking_flow_page.dart';
 import 'package:medi_connect/modules/patient/find_doctor/presentation/pages/find_doctor_page.dart';

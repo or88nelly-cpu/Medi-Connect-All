@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
@@ -12,7 +11,6 @@ import 'package:medi_connect/modules/patient/speciality/domain/entities/speciali
 import 'package:medi_connect/modules/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/modules/patient/speciality/presentation/widgets/speciality_form_dialog.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/speciality_doctors_page.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
 
 class SpecialityListPage extends StatefulWidget {
   final String? initialQuery;
@@ -71,18 +69,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   ),
                 )
               : null,
-          bottomNavigationBar: PatientBottomNavBar(
-            currentIndex: 0, // Home context
-            onTap: (index) {
-              if (index == 0) {
-                context.go('/patient/dashboard');
-              } else {
-                // Navigate to other tabs on main dashboard
-                context.go('/patient/dashboard');
-                // You can schedule index select on next frame
-              }
-            },
-          ),
+
           body: Column(
             children: [
               // ── 1. Mockup Header Banner with Shield ───────────────────
@@ -117,7 +104,10 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                             Expanded(
                               child: TextField(
                                 controller: _searchCtrl,
-                                style: TextStyle(color: textColor, fontSize: 13.sp),
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 13.sp,
+                                ),
                                 onChanged: (val) => _queryNotifier.value = val,
                                 decoration: InputDecoration(
                                   hintText: "Search specialities...",
@@ -143,11 +133,17 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                       decoration: BoxDecoration(
                         color: cardBg,
                         borderRadius: BorderRadius.circular(16.r),
-                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                        border: Border.all(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                        ),
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.filter_list_rounded, color: AppColors.primary, size: 18.r),
+                          Icon(
+                            Icons.filter_list_rounded,
+                            color: AppColors.primary,
+                            size: 18.r,
+                          ),
                           SizedBox(width: 6.w),
                           Text(
                             'Filter',
@@ -185,8 +181,8 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                     final list = state is SpecialitiesLoaded
                         ? state.specialities
                         : (state is SpecialityActionSuccess
-                            ? state.updatedList
-                            : []);
+                              ? state.updatedList
+                              : []);
 
                     return ValueListenableBuilder<String>(
                       valueListenable: _queryNotifier,
@@ -223,27 +219,41 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                         }
 
                         return SingleChildScrollView(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
                           child: Column(
                             children: [
                               GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: filtered.length,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4,
-                                  crossAxisSpacing: 10.w,
-                                  mainAxisSpacing: 12.h,
-                                  childAspectRatio: 0.9,
-                                ),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 4,
+                                      crossAxisSpacing: 10.w,
+                                      mainAxisSpacing: 12.h,
+                                      childAspectRatio: 0.9,
+                                    ),
                                 itemBuilder: (context, index) {
                                   final spec = filtered[index];
-                                  final docCount = (spec.id.hashCode % 20) + 8; // Stable doc count
-                                  return _buildGridCard(context, spec, docCount, isAdmin, isDark, cardBg, textColor);
+                                  final docCount =
+                                      (spec.id.hashCode % 20) +
+                                      8; // Stable doc count
+                                  return _buildGridCard(
+                                    context,
+                                    spec,
+                                    docCount,
+                                    isAdmin,
+                                    isDark,
+                                    cardBg,
+                                    textColor,
+                                  );
                                 },
                               ),
                               SizedBox(height: 20.h),
-                              
+
                               // ── 4. Bottom Support Help Card ───────────────────
                               _buildSupportCard(context, isDark),
                               SizedBox(height: 32.h),
@@ -290,7 +300,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
               ),
             ),
           ),
-          
+
           // Back button and Text column
           SafeArea(
             bottom: false,
@@ -412,7 +422,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                       ),
                     ),
                     SizedBox(height: 8.h),
-                    
+
                     // Name label
                     Text(
                       spec.name,
@@ -442,12 +452,20 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                         context,
                         existingSpeciality: spec,
                       ),
-                      child: Icon(Icons.edit, size: 14.r, color: AppColors.primary),
+                      child: Icon(
+                        Icons.edit,
+                        size: 14.r,
+                        color: AppColors.primary,
+                      ),
                     ),
                     SizedBox(width: 6.w),
                     GestureDetector(
                       onTap: () => _confirmDelete(context, spec),
-                      child: Icon(Icons.delete, size: 14.r, color: AppColors.error),
+                      child: Icon(
+                        Icons.delete,
+                        size: 14.r,
+                        color: AppColors.error,
+                      ),
                     ),
                   ],
                 ),
@@ -526,7 +544,9 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
           GestureDetector(
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Support ticketing system coming soon!')),
+                const SnackBar(
+                  content: Text('Support ticketing system coming soon!'),
+                ),
               );
             },
             child: Container(

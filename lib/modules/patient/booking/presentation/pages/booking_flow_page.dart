@@ -285,7 +285,10 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
 
       // Generate initials for token
       final cleanName = docName
-          .replaceAll(RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false), '')
+          .replaceAll(
+            RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false),
+            '',
+          )
           .trim();
       final parts = cleanName
           .split(RegExp(r'\s+'))
@@ -302,7 +305,8 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
               '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
         }
       }
-      final token = '${initials}A${(DateTime.now().millisecondsSinceEpoch % 1000).toString().padLeft(3, '0')}';
+      final token =
+          '${initials}A${(DateTime.now().millisecondsSinceEpoch % 1000).toString().padLeft(3, '0')}';
 
       context.read<AdminAppointmentsBloc>().add(
         CreateAppointmentEvent({
@@ -755,8 +759,9 @@ class _DoctorStep extends StatelessWidget {
   });
 
   List<UserModel> _filtered(List<UserModel> all) {
-    if (specialty == null)
+    if (specialty == null) {
       return all.where((d) => d.role == UserRole.doctor).toList();
+    }
     final res = all.where((d) {
       return d.role == UserRole.doctor;
     }).toList();

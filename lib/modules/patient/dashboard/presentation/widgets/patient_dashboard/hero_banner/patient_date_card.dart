@@ -36,19 +36,14 @@ class PatientDateCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        horizontal: 12.w,
-        vertical: 10.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: AppColors.dashboardCardBg(context),
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: AppColors.border(context)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(
-              alpha: 0.10,
-            ),
+            color: AppColors.primary.withValues(alpha: 0.10),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

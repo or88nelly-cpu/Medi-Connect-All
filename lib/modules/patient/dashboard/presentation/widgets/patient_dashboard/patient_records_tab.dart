@@ -71,9 +71,7 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
             ),
           ),
           SizedBox(height: 16.h),
-          Expanded(
-            child: _buildBody(isDark),
-          ),
+          Expanded(child: _buildBody(isDark)),
         ],
       ),
     );
@@ -99,10 +97,7 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
               ),
             ),
             SizedBox(height: 4.h),
-            TextButton(
-              onPressed: _fetchRecords,
-              child: const Text("Retry"),
-            ),
+            TextButton(onPressed: _fetchRecords, child: const Text("Retry")),
           ],
         ),
       );
@@ -140,7 +135,7 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
         final dateStr = rec['recorded_at'] != null
             ? _formatDate(DateTime.parse(rec['recorded_at']))
             : 'Date Not Set';
-        
+
         final hasLab = (rec['lab_tests'] ?? '').toString().isNotEmpty;
 
         return Card(
@@ -171,9 +166,7 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
                 color: AppColors.textPrimary(context),
               ),
             ),
-            subtitle: Text(
-              "Doctor: $doctor \nDate: $dateStr",
-            ),
+            subtitle: Text("Doctor: $doctor \nDate: $dateStr"),
             trailing: const Icon(Icons.download_outlined),
             isThreeLine: true,
           ),
@@ -183,7 +176,20 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
   }
 
   String _formatDate(DateTime date) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return "${months[date.month - 1]} ${date.day}, ${date.year}";
   }
 }

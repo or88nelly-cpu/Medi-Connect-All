@@ -8,7 +8,6 @@ import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/functions/validators.dart';
-import 'package:medi_connect/core/widgets/textfields/text_fields.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -144,9 +143,8 @@ class _SignUpFormState extends State<SignUpForm> {
         prefixIconConstraints: BoxConstraints(minWidth: 44.w),
         suffixIcon: isPassword
             ? GestureDetector(
-                onTap: () => setState(
-                  () => _isPasswordObscured = !_isPasswordObscured,
-                ),
+                onTap: () =>
+                    setState(() => _isPasswordObscured = !_isPasswordObscured),
                 child: Padding(
                   padding: EdgeInsets.only(right: 12.w),
                   child: Icon(
@@ -166,10 +164,7 @@ class _SignUpFormState extends State<SignUpForm> {
             : null,
         filled: true,
         fillColor: AppColors.background(context),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 16.h,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: borderColor, width: 1),
           borderRadius: BorderRadius.circular(12.r),
@@ -207,10 +202,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 colors: [AppColors.primary, Color(0xFF7B61FF)],
               ),
               borderRadius: BorderRadius.circular(14.r),
-              border: Border.all(
-                color: AppColors.secondary,
-                width: 2.r,
-              ),
+              border: Border.all(color: AppColors.secondary, width: 2.r),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xFF4F6EFF).withValues(alpha: 0.35),
@@ -306,9 +298,10 @@ class _AnimatedButtonIconState extends State<AnimatedButtonIcon>
       duration: const Duration(milliseconds: 1000),
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.0, end: 6.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 6.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override

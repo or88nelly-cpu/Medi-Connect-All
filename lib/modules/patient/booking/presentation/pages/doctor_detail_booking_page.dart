@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_bloc.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/booking_payment_confirm_page.dart';
@@ -77,182 +77,9 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
             ? DateFormat('EEEE, d MMMM yyyy').format(state.selectedDate!)
             : 'Select Date';
 
-        return Scaffold(
-          backgroundColor: AppColors.scaffold(context),
+        return CustomScaffold(
+          // backgroundColor: AppColors.scaffold(context),
           // ── 1. Custom App Bar ───────────────────────
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            automaticallyImplyLeading: false,
-            toolbarHeight: 64.h,
-            titleSpacing: 0,
-            title: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Row(
-                children: [
-                  // Circular Back Button
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      padding: EdgeInsets.all(8.r),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 8,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: AppColors.primary,
-                        size: 16.r,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  // Brand Logo
-                  Image.asset(AppAssets.logoIconPng, width: 32.r, height: 32.r),
-                  SizedBox(width: 6.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'MediConnect',
-                        style: TextStyle(
-                          color: const Color(0xFF0A3BB0),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      Text(
-                        'Connecting Care. Empowering Health.',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 7.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-
-                  // Search icon
-                  Container(
-                    padding: EdgeInsets.all(6.r),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? AppColors.terminalDarkCard
-                          : Colors.grey.shade100,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.search,
-                      color: isDark ? Colors.white70 : Colors.black87,
-                      size: 20.r,
-                    ),
-                  ),
-                  SizedBox(width: 8.w),
-
-                  // Notification Bell with badge
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(6.r),
-                        decoration: BoxDecoration(
-                          color: isDark
-                              ? AppColors.terminalDarkCard
-                              : Colors.grey.shade100,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.notifications_none_rounded,
-                          color: isDark ? Colors.white70 : Colors.black87,
-                          size: 20.r,
-                        ),
-                      ),
-                      Positioned(
-                        top: -2,
-                        right: -2,
-                        child: Container(
-                          padding: EdgeInsets.all(4.r),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            '3',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 7.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 10.w),
-
-                  // Profile avatar with golden crown
-                  BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, authState) {
-                      String? profilePhoto;
-                      String? gender;
-                      if (authState is Authenticated) {
-                        profilePhoto = authState.user.profilePhoto;
-                        gender = authState.user.gender;
-                      }
-                      return Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(18.r),
-                            child: CustomImageView(
-                              imagePath: profilePhoto ?? "",
-                              width: 36.r,
-                              height: 36.r,
-                              fit: BoxFit.cover,
-                              errorWidget: Image.asset(
-                                gender == 'Male'
-                                    ? AppAssets.maleAvatarPng
-                                    : AppAssets.femaleAvatarPng,
-                                width: 36.r,
-                                height: 36.r,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: -2,
-                            right: -2,
-                            child: Container(
-                              padding: EdgeInsets.all(2.r),
-                              decoration: const BoxDecoration(
-                                color: AppColors.secondary,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.workspace_premium_rounded,
-                                color: Colors.white,
-                                size: 8.r,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-
           // ── Fixed Bottom Checkout Bar ──────────────────────────
           bottomNavigationBar: SafeArea(
             child: Container(
@@ -312,9 +139,9 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                             );
                           }
                         : () {
-                            context
-                                .read<SpecialityBookingBloc>()
-                                .add(ProceedToPayment());
+                            context.read<SpecialityBookingBloc>().add(
+                              ProceedToPayment(),
+                            );
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -770,8 +597,9 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                   state.selectedDate!.month == d.month &&
                   state.selectedDate!.day == d.day;
               return GestureDetector(
-                onTap: () =>
-                    context.read<SpecialityBookingBloc>().add(SelectDate(date: d)),
+                onTap: () => context.read<SpecialityBookingBloc>().add(
+                  SelectDate(date: d),
+                ),
                 child: Container(
                   width: 52.w,
                   margin: EdgeInsets.only(right: 8.w),
@@ -890,7 +718,11 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                   final isSelected = state.selectedSlot == slot;
 
                   return GestureDetector(
-                    onTap: isBooked ? null : () => context.read<SpecialityBookingBloc>().add(SelectSlot(slot: slot)),
+                    onTap: isBooked
+                        ? null
+                        : () => context.read<SpecialityBookingBloc>().add(
+                            SelectSlot(slot: slot),
+                          ),
                     child: Container(
                       decoration: BoxDecoration(
                         color: isBooked
@@ -900,7 +732,9 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                         border: Border.all(
                           color: isBooked
                               ? Colors.transparent
-                              : (isSelected ? const Color(0xFF3B5BFD) : AppColors.border(context)),
+                              : (isSelected
+                                    ? const Color(0xFF3B5BFD)
+                                    : AppColors.border(context)),
                         ),
                       ),
                       child: Column(
@@ -913,7 +747,9 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                               fontWeight: FontWeight.w900,
                               color: isBooked
                                   ? Colors.grey.shade400
-                                  : (isSelected ? Colors.white : const Color(0xFF0F172A)),
+                                  : (isSelected
+                                        ? Colors.white
+                                        : const Color(0xFF0F172A)),
                             ),
                           ),
                           SizedBox(height: 2.h),
@@ -924,7 +760,9 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                               fontWeight: FontWeight.bold,
                               color: isBooked
                                   ? Colors.grey.shade400
-                                  : (isSelected ? Colors.white70 : const Color(0xFF22C55E)),
+                                  : (isSelected
+                                        ? Colors.white70
+                                        : const Color(0xFF22C55E)),
                             ),
                           ),
                         ],

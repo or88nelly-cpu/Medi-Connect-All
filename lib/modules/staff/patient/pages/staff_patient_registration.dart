@@ -160,8 +160,10 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
 
   void _initPatientModeIfNeeded() {
     final authState = context.read<AuthBloc>().state;
-    if (authState is! Authenticated || authState.user.role != UserRole.patient)
+    if (authState is! Authenticated ||
+        authState.user.role != UserRole.patient) {
       return;
+    }
 
     final user = authState.user;
 

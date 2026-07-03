@@ -9,8 +9,6 @@ import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/dialogs/dialogs.dart';
 
-import 'package:medi_connect/core/constants/app_assets.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/widgets/signup_form.dart';
 
@@ -149,9 +147,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
             alignment: Alignment.bottomCenter,
             child: Container(
               margin: EdgeInsets.only(right: 120.w),
-              child: FloatingDoctorImage(
-                height: screenH * 0.70,
-              ),
+              child: FloatingDoctorImage(height: screenH * 0.70),
             ),
           ),
         ],
@@ -220,7 +216,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                   child: const HeartbeatPulseLine(height: 50),
                 ),
               ),
-              
+
               // Actual Form Card Contents
               Container(
                 padding: EdgeInsets.all(24.r),
@@ -253,7 +249,8 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                         passwordController: _passwordController,
                         selectedRole: _selectedUserRole,
                         isAgreed: isAgreed,
-                        onAgreedChanged: (agreed) => _isAgreedNotifier.value = agreed,
+                        onAgreedChanged: (agreed) =>
+                            _isAgreedNotifier.value = agreed,
                         onRegisterPressed: _onRegisterPressed,
                       );
                     },

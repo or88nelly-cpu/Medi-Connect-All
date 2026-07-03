@@ -11,11 +11,7 @@ class PatientTagline extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          Icons.favorite_outline,
-          size: 16.r,
-          color: AppColors.primary,
-        ),
+        Icon(Icons.favorite_outline, size: 16.r, color: AppColors.primary),
         SizedBox(width: 6.w),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

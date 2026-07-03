@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
@@ -35,7 +32,7 @@ class DoctorImageWidget extends StatelessWidget {
             photo = state.imageUrl;
             gender = state.gender;
           }
-   
+
           final isFemale =
               gender != null &&
               (gender.toLowerCase().contains('female') ||

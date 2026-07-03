@@ -13,10 +13,7 @@ class AppToast {
   }) {
     final overlayState = Overlay.of(context);
     final overlayEntry = OverlayEntry(
-      builder: (ctx) => _ToastWidget(
-        message: message,
-        type: type,
-      ),
+      builder: (ctx) => _ToastWidget(message: message, type: type),
     );
 
     overlayState.insert(overlayEntry);
@@ -33,10 +30,7 @@ class _ToastWidget extends StatelessWidget {
   final String message;
   final ToastType type;
 
-  const _ToastWidget({
-    required this.message,
-    required this.type,
-  });
+  const _ToastWidget({required this.message, required this.type});
 
   @override
   Widget build(BuildContext context) {

@@ -11,26 +11,19 @@ class PatientIdChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Truncate long UUIDs to fit neatly within the display chip and prevent overflows
-    final displayId = patientId.length > 15 
-        ? '${patientId.substring(0, 8)}...${patientId.substring(patientId.length - 4)}' 
+    final displayId = patientId.length > 15
+        ? '${patientId.substring(0, 8)}...${patientId.substring(patientId.length - 4)}'
         : patientId;
 
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 10.w,
-        vertical: 5.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
       decoration: BoxDecoration(
         color: AppColors.dashboardCardBg(context),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(
-          color: AppColors.border(context),
-        ),
+        border: Border.all(color: AppColors.border(context)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(
-              alpha: 0.07,
-            ),
+            color: AppColors.primary.withValues(alpha: 0.07),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -39,11 +32,7 @@ class PatientIdChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.person_outline,
-            size: 13.r,
-            color: AppColors.primary,
-          ),
+          Icon(Icons.person_outline, size: 13.r, color: AppColors.primary),
           SizedBox(width: 4.w),
           Flexible(
             child: Text(

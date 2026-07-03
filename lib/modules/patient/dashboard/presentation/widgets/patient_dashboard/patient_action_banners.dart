@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/constants/app_assets.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_action_card.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_action_card.dart';
 
 class PatientActionBanners extends StatelessWidget {
   const PatientActionBanners({super.key});

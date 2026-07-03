@@ -47,7 +47,7 @@ class SpecialityRepositoryImpl implements SpecialityRepository {
           .insert(model.toJson())
           .select()
           .single();
-      return Right(SpecialityModel.fromJson(response as Map<String, dynamic>));
+      return Right(SpecialityModel.fromJson(response));
     } catch (e, stackTrace) {
       developer.log(
         "Exception in createSpeciality",
@@ -71,7 +71,7 @@ class SpecialityRepositoryImpl implements SpecialityRepository {
           .eq('id', model.id)
           .select()
           .single();
-      return Right(SpecialityModel.fromJson(response as Map<String, dynamic>));
+      return Right(SpecialityModel.fromJson(response));
     } catch (e, stackTrace) {
       developer.log(
         "Exception in updateSpeciality",

@@ -27,9 +27,7 @@ class PatientAvatar extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(
-              alpha: 0.12,
-            ),
+            color: AppColors.primary.withValues(alpha: 0.12),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),

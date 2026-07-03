@@ -1,7 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:medi_connect/modules/patient/booking/domain/repositories/booking_repository.dart';
 import 'package:medi_connect/modules/patient/booking/domain/entities/doctor_booking_info.dart';
-import 'package:medi_connect/shared/auth/data/models/doctor_model.dart';
 import 'package:uuid/uuid.dart';
 
 class LoadDoctorsBySpecialtyUseCase {
@@ -9,7 +8,10 @@ class LoadDoctorsBySpecialtyUseCase {
 
   LoadDoctorsBySpecialtyUseCase(this._repository);
 
-  Future<List<DoctorBookingInfo>> call(String specialityId, String specialityName) async {
+  Future<List<DoctorBookingInfo>> call(
+    String specialityId,
+    String specialityName,
+  ) async {
     return _repository.getDoctorsBySpecialty(specialityId, specialityName);
   }
 }
@@ -18,7 +20,10 @@ class BookingSlotsResponse {
   final List<String> availableSlots;
   final List<String> bookedSlots;
 
-  BookingSlotsResponse({required this.availableSlots, required this.bookedSlots});
+  BookingSlotsResponse({
+    required this.availableSlots,
+    required this.bookedSlots,
+  });
 }
 
 class GetSlotsUseCase {
@@ -100,7 +105,8 @@ class GetSlotsUseCase {
 
           final displayHour = h > 12 ? h - 12 : (h == 0 ? 12 : h);
           final amPm = h >= 12 ? 'PM' : 'AM';
-          final timeStr = '${displayHour.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')} $amPm';
+          final timeStr =
+              '${displayHour.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')} $amPm';
 
           generatedSlots.add(timeStr);
           currentMins += 10; // 10 minutes interval
@@ -110,7 +116,8 @@ class GetSlotsUseCase {
 
     // 5. Block times that are in the past if the selected date is today
     final now = DateTime.now();
-    final isToday = selectedDate.year == now.year &&
+    final isToday =
+        selectedDate.year == now.year &&
         selectedDate.month == now.month &&
         selectedDate.day == now.day;
 
@@ -183,16 +190,23 @@ class BookAppointmentUseCase {
     final cleanDoc = doctorName
         .replaceAll(RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false), '')
         .trim();
-    final parts = cleanDoc.split(RegExp(r'\s+')).where((s) => s.isNotEmpty).toList();
+    final parts = cleanDoc
+        .split(RegExp(r'\s+'))
+        .where((s) => s.isNotEmpty)
+        .toList();
     String initials = 'DR';
     if (parts.isNotEmpty) {
       if (parts.length == 1) {
-        initials = parts[0].substring(0, parts[0].length >= 2 ? 2 : 1).toUpperCase();
+        initials = parts[0]
+            .substring(0, parts[0].length >= 2 ? 2 : 1)
+            .toUpperCase();
       } else {
-        initials = '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
+        initials =
+            '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
       }
     }
-    final token = '${initials}A${(DateTime.now().millisecondsSinceEpoch % 1000).toString().padLeft(3, '0')}';
+    final token =
+        '${initials}A${(DateTime.now().millisecondsSinceEpoch % 1000).toString().padLeft(3, '0')}';
 
     final appointmentData = {
       'patient_id': patientId,

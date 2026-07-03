@@ -3,16 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/widgets/custom_scaffold.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/modules/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/common/dashboard_tab_cubit.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/patient/widgets/patient_appbar.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_appbar.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_home_tab.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_premium_tab.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_profile_tab.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_records_tab.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_home_tab.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_premium_tab.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_profile_tab.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_records_tab.dart';
 
 class PatientDashboardPage extends StatefulWidget {
   const PatientDashboardPage({super.key});

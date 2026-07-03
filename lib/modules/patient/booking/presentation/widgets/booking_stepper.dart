@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 
 class BookingStepper extends StatelessWidget {
   final int currentStep;
 
-  const BookingStepper({
-    super.key,
-    required this.currentStep,
-  });
+  const BookingStepper({super.key, required this.currentStep});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +42,11 @@ class BookingStepper extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             step,
-            style: TextStyle(color: Colors.white, fontSize: 10.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         SizedBox(width: 4.w),

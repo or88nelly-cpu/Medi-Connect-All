@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
-import 'package:medi_connect/modules/patient/booking/presentation/bloc/doctor_image/doctor_image_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_analytics_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
@@ -52,14 +51,10 @@ class AppProviders {
       BlocProvider<DoctorAppointmentsBloc>(
         create: (_) => sl<DoctorAppointmentsBloc>(),
       ),
-      BlocProvider<BannerBloc>(
-        create: (_) => sl<BannerBloc>(),
-      ),
-      BlocProvider<SpecialityBloc>(
-        create: (_) => sl<SpecialityBloc>(),
-      ),
-     
-       BlocProvider<UserDetailsBloc>(create: (_) => sl<UserDetailsBloc>()),
+      BlocProvider<BannerBloc>(create: (_) => sl<BannerBloc>()),
+      BlocProvider<SpecialityBloc>(create: (_) => sl<SpecialityBloc>()),
+
+      BlocProvider<UserDetailsBloc>(create: (_) => sl<UserDetailsBloc>()),
       ...getAllDepartmentsProviders(sl),
     ];
   }

@@ -9,7 +9,7 @@ class PatientPremiumTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -58,28 +58,32 @@ class PatientPremiumTab extends StatelessWidget {
                 context,
                 icon: Icons.flash_on_rounded,
                 title: 'Priority Booking',
-                subtitle: 'Get doctor appointments instantly without long wait times.',
+                subtitle:
+                    'Get doctor appointments instantly without long wait times.',
               ),
               SizedBox(height: 16.h),
               _buildBenefitRow(
                 context,
                 icon: Icons.percent_rounded,
                 title: 'Exclusive Discounts',
-                subtitle: 'Save up to 20% on consultations, lab tests, and medicines.',
+                subtitle:
+                    'Save up to 20% on consultations, lab tests, and medicines.',
               ),
               SizedBox(height: 16.h),
               _buildBenefitRow(
                 context,
                 icon: Icons.analytics_outlined,
                 title: 'Health Insights',
-                subtitle: 'Get AI-driven summaries and predictions of your vitals history.',
+                subtitle:
+                    'Get AI-driven summaries and predictions of your vitals history.',
               ),
               SizedBox(height: 16.h),
               _buildBenefitRow(
                 context,
                 icon: Icons.ad_units_rounded,
                 title: 'Ad-free Experience',
-                subtitle: 'No interruptions or banners while searching and booking.',
+                subtitle:
+                    'No interruptions or banners while searching and booking.',
               ),
 
               SizedBox(height: 48.h),
@@ -88,7 +92,9 @@ class PatientPremiumTab extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Subscription purchase flow coming soon!')),
+                    const SnackBar(
+                      content: Text('Subscription purchase flow coming soon!'),
+                    ),
                   );
                 },
                 child: Container(
@@ -133,7 +139,7 @@ class PatientPremiumTab extends StatelessWidget {
     required String subtitle,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(

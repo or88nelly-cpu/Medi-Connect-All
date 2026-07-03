@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/quick_stat_card.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/quick_stat_card.dart';
 
 class PatientQuickStats extends StatelessWidget {
   const PatientQuickStats({super.key});

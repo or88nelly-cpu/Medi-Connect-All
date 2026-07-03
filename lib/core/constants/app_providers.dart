@@ -52,15 +52,9 @@ class AppProviders {
       BlocProvider<DoctorAppointmentsBloc>(
         create: (_) => sl<DoctorAppointmentsBloc>(),
       ),
-      BlocProvider<BannerBloc>(
-        create: (_) => sl<BannerBloc>(),
-      ),
-      BlocProvider<SpecialityBloc>(
-        create: (_) => sl<SpecialityBloc>(),
-      ),
-      BlocProvider<UserDetailsBloc>(
-        create: (_) => sl<UserDetailsBloc>(),
-      ),
+      BlocProvider<BannerBloc>(create: (_) => sl<BannerBloc>()),
+      BlocProvider<SpecialityBloc>(create: (_) => sl<SpecialityBloc>()),
+      BlocProvider<UserDetailsBloc>(create: (_) => sl<UserDetailsBloc>()),
       ...getAllDepartmentsProviders(sl),
     ];
   }

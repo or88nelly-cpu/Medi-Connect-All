@@ -47,10 +47,7 @@ class RouteGuards {
 
     final cachedRole = await _secureStorageService.read('user_role');
 
-    final userRole =
-        cachedRole ??
-        
-        UserRole.patient.value;
+    final userRole = cachedRole ?? UserRole.patient.value;
 
     // If profile is incomplete, redirect to profile completion flow
 

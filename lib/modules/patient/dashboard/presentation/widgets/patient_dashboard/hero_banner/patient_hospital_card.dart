@@ -9,7 +9,7 @@ class PatientHospitalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final skyGradient = isDark 
+    final skyGradient = isDark
         ? const [Color(0xFF16233B), Color(0xFF0C1424)]
         : const [Color(0xFFDBECFF), Color(0xFFEDF5FF)];
 
@@ -49,9 +49,7 @@ class PatientHospitalCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: buildingBg,
                     borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color: AppColors.border(context),
-                    ),
+                    border: Border.all(color: AppColors.border(context)),
                   ),
                   child: Icon(
                     Icons.local_hospital_rounded,

@@ -420,9 +420,7 @@ void configureAdditionalFeatures(GetIt sl) {
     );
   }
   if (!sl.isRegistered<BannerBloc>()) {
-    sl.registerFactory<BannerBloc>(
-      () => BannerBloc(sl<BannerRepository>()),
-    );
+    sl.registerFactory<BannerBloc>(() => BannerBloc(sl<BannerRepository>()));
   }
 
   // Specialities

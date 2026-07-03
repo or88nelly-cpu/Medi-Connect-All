@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_greeting.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_id_chip.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_tagline.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_avatar.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_date_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_hospital_card.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_greeting.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_id_chip.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_tagline.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_avatar.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_date_card.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/hero_banner/patient_hospital_card.dart';
 
 class PatientHeroBanner extends StatelessWidget {
   const PatientHeroBanner({super.key});

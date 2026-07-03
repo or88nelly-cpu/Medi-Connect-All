@@ -29,7 +29,9 @@ class PatientHealthOverview extends StatelessWidget {
             TextButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Vitals tracker details coming soon!')),
+                  const SnackBar(
+                    content: Text('Vitals tracker details coming soon!'),
+                  ),
                 );
               },
               child: Row(

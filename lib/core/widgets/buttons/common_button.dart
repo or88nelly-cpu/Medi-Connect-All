@@ -39,10 +39,10 @@ class CommonButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeColor = color ?? AppColors.primary;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     final resolvedBorderRadius = BorderRadius.circular(borderRadius ?? 12.r);
     final resolvedHeight = height ?? 50.h;
-    
+
     if (isOutline) {
       return SizedBox(
         width: width ?? double.infinity,
@@ -60,10 +60,7 @@ class CommonButton extends StatelessWidget {
     }
 
     if (isGradient && onPressed != null) {
-      final gradientColors = [
-        themeColor,
-        themeColor.withValues(alpha: 0.8),
-      ];
+      final gradientColors = [themeColor, themeColor.withValues(alpha: 0.8)];
 
       return Container(
         width: width ?? double.infinity,
@@ -88,9 +85,7 @@ class CommonButton extends StatelessWidget {
           child: InkWell(
             onTap: isLoading ? null : onPressed,
             borderRadius: resolvedBorderRadius,
-            child: Center(
-              child: _buildContent(context, Colors.white),
-            ),
+            child: Center(child: _buildContent(context, Colors.white)),
           ),
         ),
       );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
@@ -13,8 +12,6 @@ import 'package:medi_connect/modules/patient/booking/presentation/bloc/specialit
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/widgets/doctor_shimmer_loader.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/doctor_detail_booking_page.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
 
 class SpecialityDoctorsPage extends StatelessWidget {
   final SpecialityEntity speciality;
@@ -34,194 +31,18 @@ class SpecialityDoctorsPage extends StatelessWidget {
     final services = _getServices(speciality.name);
 
     return BlocProvider(
-      create: (context) =>
-          SpecialityBookingBloc()..add(LoadDoctors(specialityId: speciality.id, specialityName: speciality.name)),
+      create: (context) => SpecialityBookingBloc()
+        ..add(
+          LoadDoctors(
+            specialityId: speciality.id,
+            specialityName: speciality.name,
+          ),
+        ),
       child: Builder(
         builder: (context) {
           return CustomScaffold(
             appBarNeeded: true,
-            customAppbar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              automaticallyImplyLeading: false,
-              toolbarHeight: 64.h,
-              titleSpacing: 0,
-              title: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Row(
-                  children: [
-                    // Circular Back Button
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        padding: EdgeInsets.all(8.r),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 8,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: AppColors.primary,
-                          size: 16.r,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12.w),
-                    // Brand Logo
-                    Image.asset(
-                      AppAssets.logoIconPng,
-                      width: 32.r,
-                      height: 32.r,
-                    ),
-                    SizedBox(width: 6.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'MediConnect',
-                          style: TextStyle(
-                            color: const Color(0xFF0A3BB0),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        Text(
-                          'Connecting Care. Empowering Health.',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 7.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
 
-                    // Search Button
-                    Container(
-                      padding: EdgeInsets.all(6.r),
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? AppColors.terminalDarkCard
-                            : Colors.grey.shade100,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.search,
-                        color: isDark ? Colors.white70 : Colors.black87,
-                        size: 20.r,
-                      ),
-                    ),
-                    SizedBox(width: 8.w),
-
-                    // Notification Bell
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(6.r),
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.terminalDarkCard
-                                : Colors.grey.shade100,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.notifications_none_rounded,
-                            color: isDark ? Colors.white70 : Colors.black87,
-                            size: 20.r,
-                          ),
-                        ),
-                        Positioned(
-                          top: -2,
-                          right: -2,
-                          child: Container(
-                            padding: EdgeInsets.all(4.r),
-                            decoration: const BoxDecoration(
-                              color: Colors.red,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Text(
-                              '3',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 7.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 10.w),
-
-                    // Profile Avatar
-                    BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, authState) {
-                        String? profilePhoto;
-                        String? gender;
-                        if (authState is Authenticated) {
-                          profilePhoto = authState.user.profilePhoto;
-                          gender = authState.user.gender;
-                        }
-                        return Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(18.r),
-                              child: CustomImageView(
-                                imagePath: profilePhoto ?? "",
-                                width: 36.r,
-                                height: 36.r,
-                                fit: BoxFit.cover,
-                                errorWidget: Image.asset(
-                                  gender == 'Male'
-                                      ? AppAssets.maleAvatarPng
-                                      : AppAssets.femaleAvatarPng,
-                                  width: 36.r,
-                                  height: 36.r,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: -2,
-                              right: -2,
-                              child: Container(
-                                padding: EdgeInsets.all(2.r),
-                                decoration: const BoxDecoration(
-                                  color: AppColors.secondary,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.workspace_premium_rounded,
-                                  color: Colors.white,
-                                  size: 8.r,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            bottomNavigationBar: PatientBottomNavBar(
-              currentIndex: 0,
-              onTap: (index) {
-                context.go('/patient/dashboard');
-              },
-            ),
             body: BlocBuilder<SpecialityBookingBloc, SpecialityBookingState>(
               builder: (context, state) {
                 if (state.status == SpecialityBookingStatus.loading) {
@@ -365,11 +186,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildStatItem(
-            Icons.person_outline_rounded,
-            '${docCount}+',
-            'Doctors',
-          ),
+          _buildStatItem(Icons.person_outline_rounded, '$docCount+', 'Doctors'),
           _buildStatItem(
             Icons.calendar_today_outlined,
             '1200+',
@@ -634,7 +451,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                         ),
                         SizedBox(width: 2.w),
                         Text(
-                          '4.9 (128) • ${exp}+ Yrs',
+                          '4.9 (128) • $exp+ Yrs',
                           style: TextStyle(
                             color: Colors.grey.shade600,
                             fontSize: 7.sp,
@@ -648,7 +465,9 @@ class SpecialityDoctorsPage extends StatelessWidget {
                     // Book Now Button
                     GestureDetector(
                       onTap: () {
-                        context.read<SpecialityBookingBloc>().add(SelectDoctor(doctor: docInfo));
+                        context.read<SpecialityBookingBloc>().add(
+                          SelectDoctor(doctor: docInfo),
+                        );
                         Navigator.push(
                           context,
                           MaterialPageRoute(

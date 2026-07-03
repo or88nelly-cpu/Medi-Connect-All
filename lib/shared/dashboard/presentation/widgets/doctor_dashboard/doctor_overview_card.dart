@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
 class DoctorOverviewCard extends StatelessWidget {
@@ -26,7 +25,7 @@ class DoctorOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -50,20 +49,13 @@ class DoctorOverviewCard extends StatelessWidget {
                 padding: EdgeInsets.all(8.r),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [
-                      themeColor.withValues(alpha: 0.8),
-                      themeColor,
-                    ],
+                    colors: [themeColor.withValues(alpha: 0.8), themeColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 18.r,
-                ),
+                child: Icon(icon, color: Colors.white, size: 18.r),
               ),
               SizedBox(width: 8.w),
               Expanded(
@@ -185,7 +177,7 @@ class _SparklinePainter extends CustomPainter {
       final double y0 = getY(data[i - 1]);
       final double x1 = getX(i);
       final double y1 = getY(data[i]);
-      
+
       // Control points for a smooth cubic bezier curve
       final double cx0 = x0 + (x1 - x0) / 2;
       final double cy0 = y0;
@@ -202,10 +194,7 @@ class _SparklinePainter extends CustomPainter {
     // Draw the fill
     final fillPaint = Paint()
       ..shader = LinearGradient(
-        colors: [
-          color.withValues(alpha: 0.3),
-          color.withValues(alpha: 0.0),
-        ],
+        colors: [color.withValues(alpha: 0.3), color.withValues(alpha: 0.0)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));

@@ -39,7 +39,7 @@ import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_slo
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_attendance_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/doctor/doctor_dashboard_page.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/patient/patient_dashboard_page.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/pages/patient_dashboard_page.dart';
 
 // Banners & Specialties Feature
 import 'package:medi_connect/modules/patient/speciality/presentation/pages/speciality_list_page.dart';
@@ -221,27 +221,23 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: RouteNames.specialities,
-          builder: (context, state) => SpecialityListPage(
-            initialQuery: state.extra as String?,
-          ),
+          builder: (context, state) =>
+              SpecialityListPage(initialQuery: state.extra as String?),
         ),
         GoRoute(
           path: RouteNames.patientDetail,
-          builder: (context, state) => PatientDetailScreen(
-            userId: state.extra as String,
-          ),
+          builder: (context, state) =>
+              PatientDetailScreen(userId: state.extra as String),
         ),
         GoRoute(
           path: RouteNames.doctorDetail,
-          builder: (context, state) => DoctorDetailScreen(
-            userId: state.extra as String,
-          ),
+          builder: (context, state) =>
+              DoctorDetailScreen(userId: state.extra as String),
         ),
         GoRoute(
           path: RouteNames.employeeDetail,
-          builder: (context, state) => EmployeeDetailScreen(
-            userId: state.extra as String,
-          ),
+          builder: (context, state) =>
+              EmployeeDetailScreen(userId: state.extra as String),
         ),
       ],
     );

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/common/dashboard_tab_cubit.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
@@ -23,7 +21,11 @@ class DoctorHomeTab extends StatefulWidget {
 }
 
 class _DoctorHomeTabState extends State<DoctorHomeTab> {
-  DateTime _selectedDate = DateTime(2025, 6, 27); // Set default to mockup date Friday, 27 Jun 2025
+  DateTime _selectedDate = DateTime(
+    2025,
+    6,
+    27,
+  ); // Set default to mockup date Friday, 27 Jun 2025
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,9 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const Center(child: CircularProgressIndicator(color: Color(0xFF0F6FFF)));
+          return const Center(
+            child: CircularProgressIndicator(color: Color(0xFF0F6FFF)),
+          );
         }
         final doctor = authState.user;
         final docDisplayName = doctor.fullName;
@@ -61,15 +65,40 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
 
               if (doctorApts.isNotEmpty) {
                 final dateStr = DateFormat('yyyy-MM-dd').format(_selectedDate);
-                final selectedDateApts = doctorApts.where((a) => a.appointmentDate.toIso8601String().split('T').first == dateStr).toList();
-                
-                opCount = selectedDateApts.where((a) => a.type == 'Consultation' || a.type.toLowerCase().contains('op')).length;
+                final selectedDateApts = doctorApts
+                    .where(
+                      (a) =>
+                          a.appointmentDate
+                              .toIso8601String()
+                              .split('T')
+                              .first ==
+                          dateStr,
+                    )
+                    .toList();
+
+                opCount = selectedDateApts
+                    .where(
+                      (a) =>
+                          a.type == 'Consultation' ||
+                          a.type.toLowerCase().contains('op'),
+                    )
+                    .length;
                 ipCount = selectedDateApts.where((a) => a.type == 'IPD').length;
-                opProcCount = selectedDateApts.where((a) => a.type == 'Procedure').length;
-                ipProcCount = selectedDateApts.where((a) => a.type == 'IPD Procedure').length;
-                surgeryCount = selectedDateApts.where((a) => a.type == 'Surgery').length;
-                certCount = selectedDateApts.where((a) => a.status == 'Completed').length;
-                mrdCount = selectedDateApts.where((a) => a.status == 'Pending').length;
+                opProcCount = selectedDateApts
+                    .where((a) => a.type == 'Procedure')
+                    .length;
+                ipProcCount = selectedDateApts
+                    .where((a) => a.type == 'IPD Procedure')
+                    .length;
+                surgeryCount = selectedDateApts
+                    .where((a) => a.type == 'Surgery')
+                    .length;
+                certCount = selectedDateApts
+                    .where((a) => a.status == 'Completed')
+                    .length;
+                mrdCount = selectedDateApts
+                    .where((a) => a.status == 'Pending')
+                    .length;
               } else {
                 // Deterministic fallback based on selectedDate to match mockup values when empty
                 final dayOffset = _selectedDate.day % 5;
@@ -93,11 +122,15 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                     doctor: doctor,
                     onMenuTap: () => Scaffold.of(context).openDrawer(),
                     onSearchTap: () {
-                      context.read<DashboardTabCubit>().setTab(2); // Go to Patients search
+                      context.read<DashboardTabCubit>().setTab(
+                        2,
+                      ); // Go to Patients search
                     },
                     onNotificationsTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Loading notifications...")),
+                        const SnackBar(
+                          content: Text("Loading notifications..."),
+                        ),
                       );
                     },
                     datePickerPill: DoctorDatePickerPill(
@@ -109,10 +142,13 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                       },
                     ),
                   ),
-                  
+
                   // Body content with Grid layout
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 24.h,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -173,7 +209,9 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                             MedicalCertificatesCard(
                               count: certCount.toString().padLeft(2, '0'),
                               onViewAllTap: () {
-                                context.read<DashboardTabCubit>().setTab(3); // Go to certificates
+                                context.read<DashboardTabCubit>().setTab(
+                                  3,
+                                ); // Go to certificates
                               },
                             ),
                           ],
@@ -183,7 +221,9 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                         PendingMrdBanner(
                           count: mrdCount.toString().padLeft(2, '0'),
                           onViewDetailsTap: () {
-                            context.read<DashboardTabCubit>().setTab(1); // Go to Schedule/MRD
+                            context.read<DashboardTabCubit>().setTab(
+                              1,
+                            ); // Go to Schedule/MRD
                           },
                         ),
                       ],

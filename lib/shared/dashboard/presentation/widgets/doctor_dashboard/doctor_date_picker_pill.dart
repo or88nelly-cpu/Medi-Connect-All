@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
 class DoctorDatePickerPill extends StatelessWidget {
@@ -18,7 +17,7 @@ class DoctorDatePickerPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isToday = DateUtils.isSameDay(selectedDate, DateTime.now());
-    
+
     final formattedDate = DateFormat('dd MMM yyyy, EEEE').format(selectedDate);
 
     return InkWell(

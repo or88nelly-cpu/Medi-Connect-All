@@ -31,7 +31,20 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
   }
 
   String _formatDateTime(DateTime date, String timeStr) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return "${months[date.month - 1]} ${date.day}, $timeStr";
   }
 
@@ -98,14 +111,20 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                         icon: const Icon(Icons.search, color: Colors.white),
                         label: const Text(
                           'Book Doctor',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.r),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.w,
+                            vertical: 10.h,
+                          ),
                         ),
                       ),
                     ],
@@ -123,167 +142,213 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                     child: aptState is AdminAppointmentsLoading
                         ? const Center(child: CircularProgressIndicator())
                         : realApts.isEmpty
-                            ? Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.calendar_month_outlined,
-                                      color: AppColors.textSecondary(context).withValues(alpha: 0.3),
-                                      size: 56.r,
-                                    ),
-                                    SizedBox(height: 12.h),
-                                    Text(
-                                      "No scheduled appointments found.",
-                                      style: AppTextStyles.bodyMedium.copyWith(
-                                        color: AppColors.textSecondary(context),
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.calendar_month_outlined,
+                                  color: AppColors.textSecondary(
+                                    context,
+                                  ).withValues(alpha: 0.3),
+                                  size: 56.r,
                                 ),
-                              )
-                            : ListView.builder(
-                                itemCount: realApts.length,
-                                itemBuilder: (context, idx) {
-                                  final apt = realApts[idx];
-                                  final doctorName = apt.doctorName;
-                                  final specialty = apt.specialty;
-                                  final type = apt.type;
-                                  final time = _formatDateTime(apt.appointmentDate, apt.appointmentTime);
-                                  
-                                  // Dynamic Auto-Cancellation Check: 
-                                  // If appointment is Pending and past, it cancels automatically.
-                                  var displayStatus = apt.status;
-                                  var isUnpaidAndExpired = false;
-                                  if (apt.status.toLowerCase() == 'pending' && 
-                                      _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime)) {
-                                    displayStatus = 'Cancelled';
-                                    isUnpaidAndExpired = true;
-                                  } else if (apt.status.toLowerCase() != 'completed' &&
-                                             apt.status.toLowerCase() != 'cancelled' &&
-                                             _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime)) {
-                                    displayStatus = 'Pending Updation';
-                                  }
+                                SizedBox(height: 12.h),
+                                Text(
+                                  "No scheduled appointments found.",
+                                  style: AppTextStyles.bodyMedium.copyWith(
+                                    color: AppColors.textSecondary(context),
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: realApts.length,
+                            itemBuilder: (context, idx) {
+                              final apt = realApts[idx];
+                              final doctorName = apt.doctorName;
+                              final specialty = apt.specialty;
+                              final type = apt.type;
+                              final time = _formatDateTime(
+                                apt.appointmentDate,
+                                apt.appointmentTime,
+                              );
 
-                                  // Status Colors
-                                  Color statusColor = const Color(0xFF10B981); // Green Confirmed
-                                  if (displayStatus.toLowerCase() == 'pending') {
-                                    statusColor = const Color(0xFFF59E0B); // Orange Pending
-                                  } else if (displayStatus == 'Pending Updation') {
-                                    statusColor = const Color(0xFFD97706); // Amber/Orange Pending Updation
-                                  } else if (displayStatus.toLowerCase() == 'cancelled') {
-                                    statusColor = const Color(0xFFEF4444); // Red Cancelled
-                                  } else if (displayStatus.toLowerCase() == 'completed') {
-                                    statusColor = const Color(0xFF3B82F6); // Blue Completed
-                                  }
+                              // Dynamic Auto-Cancellation Check:
+                              // If appointment is Pending and past, it cancels automatically.
+                              var displayStatus = apt.status;
+                              var isUnpaidAndExpired = false;
+                              if (apt.status.toLowerCase() == 'pending' &&
+                                  _isAppointmentInPast(
+                                    apt.appointmentDate,
+                                    apt.appointmentTime,
+                                  )) {
+                                displayStatus = 'Cancelled';
+                                isUnpaidAndExpired = true;
+                              } else if (apt.status.toLowerCase() !=
+                                      'completed' &&
+                                  apt.status.toLowerCase() != 'cancelled' &&
+                                  _isAppointmentInPast(
+                                    apt.appointmentDate,
+                                    apt.appointmentTime,
+                                  )) {
+                                displayStatus = 'Pending Updation';
+                              }
 
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (ctx) => PatientAppointmentDetailPage(appointment: apt),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(bottom: 12.h),
-                                    padding: EdgeInsets.all(14.r),
-                                    decoration: BoxDecoration(
-                                      color: cardBg,
-                                      borderRadius: BorderRadius.circular(16.r),
-                                      border: Border.all(color: AppColors.border(context)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withValues(alpha: 0.02),
-                                          blurRadius: 10.r,
-                                          offset: const Offset(0, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      children: [
-                                         // Left Profile Icon
-                                         DoctorImageWidget(
-                                           doctorId: apt.doctorId,
-                                           size: 44.r,
-                                         ),
-                                        SizedBox(width: 12.w),
+                              // Status Colors
+                              Color statusColor = const Color(
+                                0xFF10B981,
+                              ); // Green Confirmed
+                              if (displayStatus.toLowerCase() == 'pending') {
+                                statusColor = const Color(
+                                  0xFFF59E0B,
+                                ); // Orange Pending
+                              } else if (displayStatus == 'Pending Updation') {
+                                statusColor = const Color(
+                                  0xFFD97706,
+                                ); // Amber/Orange Pending Updation
+                              } else if (displayStatus.toLowerCase() ==
+                                  'cancelled') {
+                                statusColor = const Color(
+                                  0xFFEF4444,
+                                ); // Red Cancelled
+                              } else if (displayStatus.toLowerCase() ==
+                                  'completed') {
+                                statusColor = const Color(
+                                  0xFF3B82F6,
+                                ); // Blue Completed
+                              }
 
-                                        // Summary block
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                doctorName,
-                                                style: AppTextStyles.bodyMedium.copyWith(
-                                                  fontWeight: FontWeight.w900,
-                                                  color: textColor,
-                                                ),
-                                              ),
-                                              SizedBox(height: 2.h),
-                                              Text(
-                                                "$specialty | $type",
-                                                style: TextStyle(
-                                                  fontSize: 9.5.sp,
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              if (isUnpaidAndExpired) ...[
-                                                SizedBox(height: 4.h),
-                                                Text(
-                                                  'Cancelled: Payment lapsed before consultation',
-                                                  style: TextStyle(
-                                                    fontSize: 7.5.sp,
-                                                    color: const Color(0xFFEF4444),
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ],
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (ctx) =>
+                                          PatientAppointmentDetailPage(
+                                            appointment: apt,
                                           ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 12.h),
+                                  padding: EdgeInsets.all(14.r),
+                                  decoration: BoxDecoration(
+                                    color: cardBg,
+                                    borderRadius: BorderRadius.circular(16.r),
+                                    border: Border.all(
+                                      color: AppColors.border(context),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.02,
                                         ),
+                                        blurRadius: 10.r,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      // Left Profile Icon
+                                      DoctorImageWidget(
+                                        doctorId: apt.doctorId,
+                                        size: 44.r,
+                                      ),
+                                      SizedBox(width: 12.w),
 
-                                        // Status Pill & Time
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                      // Summary block
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Container(
-                                              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                                              decoration: BoxDecoration(
-                                                color: statusColor.withValues(alpha: 0.1),
-                                                borderRadius: BorderRadius.circular(8.r),
-                                                border: Border.all(color: statusColor.withValues(alpha: 0.2)),
-                                              ),
-                                              child: Text(
-                                                displayStatus,
-                                                style: TextStyle(
-                                                  color: statusColor,
-                                                  fontSize: 8.5.sp,
-                                                  fontWeight: FontWeight.w900,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 6.h),
                                             Text(
-                                              time,
+                                              doctorName,
+                                              style: AppTextStyles.bodyMedium
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w900,
+                                                    color: textColor,
+                                                  ),
+                                            ),
+                                            SizedBox(height: 2.h),
+                                            Text(
+                                              "$specialty | $type",
                                               style: TextStyle(
-                                                color: AppColors.primary,
-                                                fontSize: 8.sp,
+                                                fontSize: 9.5.sp,
+                                                color: Colors.grey,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
+                                            if (isUnpaidAndExpired) ...[
+                                              SizedBox(height: 4.h),
+                                              Text(
+                                                'Cancelled: Payment lapsed before consultation',
+                                                style: TextStyle(
+                                                  fontSize: 7.5.sp,
+                                                  color: const Color(
+                                                    0xFFEF4444,
+                                                  ),
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+
+                                      // Status Pill & Time
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 10.w,
+                                              vertical: 4.h,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: statusColor.withValues(
+                                                alpha: 0.1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
+                                              border: Border.all(
+                                                color: statusColor.withValues(
+                                                  alpha: 0.2,
+                                                ),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              displayStatus,
+                                              style: TextStyle(
+                                                color: statusColor,
+                                                fontSize: 8.5.sp,
+                                                fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 6.h),
+                                          Text(
+                                            time,
+                                            style: TextStyle(
+                                              color: AppColors.primary,
+                                              fontSize: 8.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  );
-                                },
-                              ),
+                                ),
+                              );
+                            },
+                          ),
                   ),
                 ],
               ),

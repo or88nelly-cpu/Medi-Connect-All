@@ -8,9 +8,8 @@ import 'doctor_image_state.dart';
 class DoctorImageBloc extends Bloc<DoctorImageEvent, DoctorImageState> {
   final GetDoctorImageUseCase _getDoctorImage;
 
-  DoctorImageBloc({required GetDoctorImageUseCase getDoctorImage})
-    : _getDoctorImage = getDoctorImage,
-      super(DoctorImageInitial()) {
+  DoctorImageBloc({required this._getDoctorImage})
+    : super(DoctorImageInitial()) {
     on<LoadDoctorImage>(_onLoadDoctorImage);
   }
 

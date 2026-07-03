@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/widgets/animations/fade_in_slide.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_action_banners.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_banner_carousel.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_specialities_section.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_upcoming_appointments.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_health_overview.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_premium_banner.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_action_banners.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_banner_carousel.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_specialities_section.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_upcoming_appointments.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_health_overview.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/widgets/patient_dashboard/patient_premium_banner.dart';
 
 class PatientHomeTab extends StatelessWidget {
   const PatientHomeTab({super.key});
@@ -35,7 +35,7 @@ class PatientHomeTab extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 16.h),
             sliver: SliverList.separated(
               itemCount: _sections.length,
-              separatorBuilder: (_, __) => SizedBox(height: 4.h),
+              separatorBuilder: (_, _) => SizedBox(height: 4.h),
               itemBuilder: (_, index) {
                 return FadeInSlide(
                   delay: Duration(milliseconds: index * 120),

@@ -12,7 +12,10 @@ class SpecialityFormDialog extends StatefulWidget {
 
   const SpecialityFormDialog({super.key, this.existingSpeciality});
 
-  static void show(BuildContext context, {SpecialityEntity? existingSpeciality}) {
+  static void show(
+    BuildContext context, {
+    SpecialityEntity? existingSpeciality,
+  }) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -45,7 +48,7 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
     'orthopedics',
     'dermatology',
     'surgery',
-    'general'
+    'general',
   ];
 
   @override
@@ -56,13 +59,15 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
     _codeCtrl = TextEditingController(text: spec?.specialityCode ?? '');
     _descCtrl = TextEditingController(text: spec?.description ?? '');
     _feeCtrl = TextEditingController(
-        text: spec?.defaultConsultationFee != null
-            ? spec!.defaultConsultationFee!.toStringAsFixed(2)
-            : '0.00');
+      text: spec?.defaultConsultationFee != null
+          ? spec!.defaultConsultationFee!.toStringAsFixed(2)
+          : '0.00',
+    );
     _durationCtrl = TextEditingController(
-        text: spec?.consultationDuration != null
-            ? spec!.consultationDuration.toString()
-            : '15');
+      text: spec?.consultationDuration != null
+          ? spec!.consultationDuration.toString()
+          : '15',
+    );
     _selectedIcon = spec?.icon ?? 'cardiology';
     _isSurgical = spec?.isSurgical ?? false;
     _isActive = spec?.isActive ?? true;
@@ -88,8 +93,13 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
       backgroundColor: cardBg,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       title: Text(
-        widget.existingSpeciality == null ? "Add Speciality" : "Edit Speciality",
-        style: AppTextStyles.titleLarge.copyWith(color: textColor, fontWeight: FontWeight.bold),
+        widget.existingSpeciality == null
+            ? "Add Speciality"
+            : "Edit Speciality",
+        style: AppTextStyles.titleLarge.copyWith(
+          color: textColor,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       content: SizedBox(
         width: 320.w,
@@ -102,15 +112,21 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                 TextFormField(
                   controller: _nameCtrl,
                   style: TextStyle(color: textColor),
-                  decoration: const InputDecoration(labelText: "Speciality Name *"),
-                  validator: (val) => val == null || val.isEmpty ? "Name is required" : null,
+                  decoration: const InputDecoration(
+                    labelText: "Speciality Name *",
+                  ),
+                  validator: (val) =>
+                      val == null || val.isEmpty ? "Name is required" : null,
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _codeCtrl,
                   style: TextStyle(color: textColor),
-                  decoration: const InputDecoration(labelText: "Speciality Code *"),
-                  validator: (val) => val == null || val.isEmpty ? "Code is required" : null,
+                  decoration: const InputDecoration(
+                    labelText: "Speciality Code *",
+                  ),
+                  validator: (val) =>
+                      val == null || val.isEmpty ? "Code is required" : null,
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
@@ -121,7 +137,7 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                 ),
                 SizedBox(height: 12.h),
                 DropdownButtonFormField<String>(
-                  value: _selectedIcon,
+                  initialValue: _selectedIcon,
                   dropdownColor: cardBg,
                   style: TextStyle(color: textColor),
                   decoration: const InputDecoration(labelText: "Icon Category"),
@@ -147,8 +163,11 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                         controller: _feeCtrl,
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: textColor),
-                        decoration: const InputDecoration(labelText: r"Consultation Fee ($)"),
-                        validator: (val) => val == null || double.tryParse(val) == null
+                        decoration: const InputDecoration(
+                          labelText: r"Consultation Fee ($)",
+                        ),
+                        validator: (val) =>
+                            val == null || double.tryParse(val) == null
                             ? "Invalid fee"
                             : null,
                       ),
@@ -159,8 +178,11 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                         controller: _durationCtrl,
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: textColor),
-                        decoration: const InputDecoration(labelText: "Duration (mins)"),
-                        validator: (val) => val == null || int.tryParse(val) == null
+                        decoration: const InputDecoration(
+                          labelText: "Duration (mins)",
+                        ),
+                        validator: (val) =>
+                            val == null || int.tryParse(val) == null
                             ? "Invalid duration"
                             : null,
                       ),
@@ -169,7 +191,10 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                 ),
                 SizedBox(height: 16.h),
                 SwitchListTile(
-                  title: Text("Is Surgical", style: AppTextStyles.bodyMedium.copyWith(color: textColor)),
+                  title: Text(
+                    "Is Surgical",
+                    style: AppTextStyles.bodyMedium.copyWith(color: textColor),
+                  ),
                   value: _isSurgical,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (val) {
@@ -179,7 +204,10 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                   },
                 ),
                 SwitchListTile(
-                  title: Text("Is Active", style: AppTextStyles.bodyMedium.copyWith(color: textColor)),
+                  title: Text(
+                    "Is Active",
+                    style: AppTextStyles.bodyMedium.copyWith(color: textColor),
+                  ),
                   value: _isActive,
                   contentPadding: EdgeInsets.zero,
                   onChanged: (val) {
@@ -196,7 +224,10 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text("Cancel", style: TextStyle(color: AppColors.textSecondary(context))),
+          child: Text(
+            "Cancel",
+            style: TextStyle(color: AppColors.textSecondary(context)),
+          ),
         ),
         BlocConsumer<SpecialityBloc, SpecialityState>(
           listener: (context, state) {
@@ -225,9 +256,13 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                   );
 
                   if (widget.existingSpeciality == null) {
-                    context.read<SpecialityBloc>().add(CreateSpecialityEvent(entity));
+                    context.read<SpecialityBloc>().add(
+                      CreateSpecialityEvent(entity),
+                    );
                   } else {
-                    context.read<SpecialityBloc>().add(UpdateSpecialityEvent(entity));
+                    context.read<SpecialityBloc>().add(
+                      UpdateSpecialityEvent(entity),
+                    );
                   }
                 }
               },

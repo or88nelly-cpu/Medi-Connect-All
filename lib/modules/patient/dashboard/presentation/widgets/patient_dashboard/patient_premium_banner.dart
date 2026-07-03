@@ -58,7 +58,10 @@ class PatientPremiumBanner extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: AppColors.secondary.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.secondary, width: 1.5),
+                          border: Border.all(
+                            color: AppColors.secondary,
+                            width: 1.5,
+                          ),
                         ),
                         child: const Icon(
                           Icons.workspace_premium_outlined,
@@ -99,11 +102,18 @@ class PatientPremiumBanner extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Premium subscription flow coming soon!')),
+                            const SnackBar(
+                              content: Text(
+                                'Premium subscription flow coming soon!',
+                              ),
+                            ),
                           );
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.w,
+                            vertical: 8.h,
+                          ),
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [Color(0xFFF7C325), Color(0xFFE29E0D)],
@@ -140,7 +150,7 @@ class PatientPremiumBanner extends StatelessWidget {
                       ),
                     ],
                   ),
-                  
+
                   SizedBox(height: 18.h),
                   const Divider(color: Colors.white24, height: 1),
                   SizedBox(height: 14.h),
@@ -149,10 +159,22 @@ class PatientPremiumBanner extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildFeatureItem(Icons.flash_on_rounded, 'Priority Booking'),
-                      _buildFeatureItem(Icons.percent_rounded, 'Exclusive Discounts'),
-                      _buildFeatureItem(Icons.insights_rounded, 'Health Insights'),
-                      _buildFeatureItem(Icons.ad_units_rounded, 'Ad-free Experience'),
+                      _buildFeatureItem(
+                        Icons.flash_on_rounded,
+                        'Priority Booking',
+                      ),
+                      _buildFeatureItem(
+                        Icons.percent_rounded,
+                        'Exclusive Discounts',
+                      ),
+                      _buildFeatureItem(
+                        Icons.insights_rounded,
+                        'Health Insights',
+                      ),
+                      _buildFeatureItem(
+                        Icons.ad_units_rounded,
+                        'Ad-free Experience',
+                      ),
                     ],
                   ),
                 ],

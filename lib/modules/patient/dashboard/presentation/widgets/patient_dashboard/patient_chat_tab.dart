@@ -42,14 +42,14 @@ class _PatientChatTabState extends State<PatientChatTab> {
           .eq('patient_id', authState.user.id);
 
       final appointments = List<Map<String, dynamic>>.from(response);
-      
+
       // Group by doctor_id/doctor_name to create unique chat threads
       final Map<String, Map<String, dynamic>> grouped = {};
       for (final apt in appointments) {
         final docId = apt['doctor_id'] ?? '';
         final docName = apt['doctor_name'] ?? 'Doctor';
         final specialty = apt['specialty'] ?? 'General';
-        
+
         if (docId.isNotEmpty && !grouped.containsKey(docId)) {
           grouped[docId] = {
             'doctor_id': docId,
@@ -89,9 +89,7 @@ class _PatientChatTabState extends State<PatientChatTab> {
             ),
           ),
           SizedBox(height: 16.h),
-          Expanded(
-            child: _buildBody(),
-          ),
+          Expanded(child: _buildBody()),
         ],
       ),
     );
@@ -164,9 +162,7 @@ class _PatientChatTabState extends State<PatientChatTab> {
           child: ListTile(
             contentPadding: EdgeInsets.all(16.r),
             leading: CircleAvatar(
-              backgroundColor: AppColors.primary.withValues(
-                alpha: 0.1,
-              ),
+              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
               child: const Icon(Icons.person, color: AppColors.primary),
             ),
             title: Row(
@@ -205,7 +201,9 @@ class _PatientChatTabState extends State<PatientChatTab> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary(context).withValues(alpha: 0.7),
+                    color: AppColors.textSecondary(
+                      context,
+                    ).withValues(alpha: 0.7),
                   ),
                 ),
               ],
@@ -213,7 +211,9 @@ class _PatientChatTabState extends State<PatientChatTab> {
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("Chat room with ${thread['doctor_name']} is opening..."),
+                  content: Text(
+                    "Chat room with ${thread['doctor_name']} is opening...",
+                  ),
                   backgroundColor: AppColors.primary,
                 ),
               );

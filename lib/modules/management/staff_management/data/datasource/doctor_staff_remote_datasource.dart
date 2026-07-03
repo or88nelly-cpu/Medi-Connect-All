@@ -42,10 +42,12 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
       // Map DB snake_case fields back to CamelCase keys for UserModel compatibility
       if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
-      if (map.containsKey('profile_image'))
+      if (map.containsKey('profile_image')) {
         map['profileImage'] = map['profile_image'];
-      if (map.containsKey('profile_photo'))
+      }
+      if (map.containsKey('profile_photo')) {
         map['profileImage'] = map['profile_photo'];
+      }
       if (map.containsKey('profile_completion_status')) {
         map['profileCompletionStatus'] = map['profile_completion_status'];
       }
@@ -88,17 +90,21 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         list = (req as List<dynamic>).map((json) {
           final map = Map<String, dynamic>.from(json as Map);
           final docJson = map.remove('doctors');
-          if (docJson is List && docJson.isNotEmpty)
+          if (docJson is List && docJson.isNotEmpty) {
             map.addAll(docJson.first as Map<String, dynamic>);
+          }
           final empJson = map.remove('employees');
-          if (empJson is List && empJson.isNotEmpty)
+          if (empJson is List && empJson.isNotEmpty) {
             map.addAll(empJson.first as Map<String, dynamic>);
+          }
 
           if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
-          if (map.containsKey('profile_image'))
+          if (map.containsKey('profile_image')) {
             map['profileImage'] = map['profile_image'];
-          if (map.containsKey('profile_completion_status'))
+          }
+          if (map.containsKey('profile_completion_status')) {
             map['profileCompletionStatus'] = map['profile_completion_status'];
+          }
           return UserModel.fromJson(map);
         }).toList();
       } else if (departmentName == 'Cardiology' ||
@@ -134,17 +140,21 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
           list = (req as List<dynamic>).map((json) {
             final map = Map<String, dynamic>.from(json as Map);
             final docJson = map.remove('doctors');
-            if (docJson is List && docJson.isNotEmpty)
+            if (docJson is List && docJson.isNotEmpty) {
               map.addAll(docJson.first as Map<String, dynamic>);
+            }
             final empJson = map.remove('employees');
-            if (empJson is List && empJson.isNotEmpty)
+            if (empJson is List && empJson.isNotEmpty) {
               map.addAll(empJson.first as Map<String, dynamic>);
+            }
 
             if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
-            if (map.containsKey('profile_image'))
+            if (map.containsKey('profile_image')) {
               map['profileImage'] = map['profile_image'];
-            if (map.containsKey('profile_completion_status'))
+            }
+            if (map.containsKey('profile_completion_status')) {
               map['profileCompletionStatus'] = map['profile_completion_status'];
+            }
             return UserModel.fromJson(map);
           }).toList();
         }
