@@ -29,7 +29,7 @@ class PatientProfileTab extends StatelessWidget {
           name = user.fullName;
           email = user.email ?? "";
           phone = user.phone;
-          profileImage = user.phone;
+          profileImage = user.profilePhoto;
           bloodGroup = user.bloodGroup ?? 'O+';
           allergies = 'No Known Allergies';
         }

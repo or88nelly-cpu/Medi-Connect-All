@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,10 +35,14 @@ class DoctorImageWidget extends StatelessWidget {
             photo = state.imageUrl;
             gender = state.gender;
           }
-          final isFemale = gender != null &&
+   
+          final isFemale =
+              gender != null &&
               (gender.toLowerCase().contains('female') ||
                   gender.toLowerCase().contains('woman'));
-          final fallbackAvatar = isFemale ? AppAssets.femaleAvatarPng : AppAssets.maleAvatarPng;
+          final fallbackAvatar = isFemale
+              ? AppAssets.femaleAvatarPng
+              : AppAssets.maleAvatarPng;
 
           return ClipRRect(
             borderRadius: BorderRadius.circular(size / 2),

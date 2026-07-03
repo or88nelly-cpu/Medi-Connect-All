@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
+import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DoctorHeader extends StatelessWidget {
   final UserEntity doctor;
@@ -37,7 +39,10 @@ class DoctorHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final greeting = _getTimeGreeting();
-    final displayName = doctor.fullName.startsWith(RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false))
+    final displayName =
+        doctor.fullName.startsWith(
+          RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false),
+        )
         ? doctor.fullName
         : "Dr. ${doctor.fullName}";
 
@@ -88,12 +93,18 @@ class DoctorHeader extends StatelessWidget {
                         child: Container(
                           padding: EdgeInsets.all(8.r),
                           decoration: BoxDecoration(
-                            color: isDark ? Colors.white10 : const Color(0xFF0F6FFF).withValues(alpha: 0.1),
+                            color: isDark
+                                ? Colors.white10
+                                : const Color(
+                                    0xFF0F6FFF,
+                                  ).withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             Icons.menu_rounded,
-                            color: isDark ? Colors.white : const Color(0xFF0F6FFF),
+                            color: isDark
+                                ? Colors.white
+                                : const Color(0xFF0F6FFF),
                             size: 20.r,
                           ),
                         ),
@@ -117,7 +128,9 @@ class DoctorHeader extends StatelessWidget {
                               IconButton(
                                 icon: Icon(
                                   Icons.notifications_none_rounded,
-                                  color: isDark ? Colors.white70 : Colors.black87,
+                                  color: isDark
+                                      ? Colors.white70
+                                      : Colors.black87,
                                   size: 22.r,
                                 ),
                                 onPressed: onNotificationsTap,

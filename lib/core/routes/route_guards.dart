@@ -49,7 +49,7 @@ class RouteGuards {
 
     final userRole =
         cachedRole ??
-        _supabaseService.currentUser?.userMetadata?['role'] as String? ??
+        
         UserRole.patient.value;
 
     // If profile is incomplete, redirect to profile completion flow
@@ -57,25 +57,25 @@ class RouteGuards {
     // If profile is complete but user is trying to access auth route or profile completion, redirect to dashboard
 
     // Check role boundaries
-    if (currentPath.startsWith('/patient') && userRole != 'patient') {
+    if (currentPath.startsWith('/patient') && userRole != 'Patient') {
       AppLogger.warning(
         "Role mismatch. User with role '$userRole' tried to access patient path. Redirecting.",
       );
       return _getDashboardRouteForRole(userRole);
     }
-    if (currentPath.startsWith('/doctor') && userRole != 'doctor') {
+    if (currentPath.startsWith('/doctor') && userRole != 'Doctor') {
       AppLogger.warning(
         "Role mismatch. User with role '$userRole' tried to access doctor path. Redirecting.",
       );
       return _getDashboardRouteForRole(userRole);
     }
-    if (currentPath.startsWith('/staff') && userRole != 'staff') {
+    if (currentPath.startsWith('/staff') && userRole != 'Staff') {
       AppLogger.warning(
         "Role mismatch. User with role '$userRole' tried to access staff path. Redirecting.",
       );
       return _getDashboardRouteForRole(userRole);
     }
-    if (currentPath.startsWith('/admin') && userRole != 'admin') {
+    if (currentPath.startsWith('/admin') && userRole != 'Admin') {
       AppLogger.warning(
         "Role mismatch. User with role '$userRole' tried to access admin path. Redirecting.",
       );

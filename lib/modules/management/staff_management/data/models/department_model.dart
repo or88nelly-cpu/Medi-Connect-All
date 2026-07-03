@@ -14,7 +14,7 @@ class DepartmentModel extends DepartmentEntity {
   });
 
   factory DepartmentModel.fromJson(Map<String, dynamic> json) {
-    log(' Department json: $json', name: 'DepartmentModel');
+   
     return DepartmentModel(
       id: json['id'].toString(),
       name: json['name'] as String,
