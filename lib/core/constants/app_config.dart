@@ -4,6 +4,10 @@ library;
 
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/modules/patient/booking/data/datasources/booking_remote_datasource.dart';
+import 'package:medi_connect/modules/patient/booking/data/repositories/booking_repository_impl.dart';
+import 'package:medi_connect/modules/patient/booking/domain/repositories/booking_repository.dart';
+import 'package:medi_connect/modules/patient/booking/domain/usecases/booking_usecases.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/shared/auth/data/data_source/auth_remote_datasource.dart';
 import 'package:medi_connect/shared/auth/data/repository/auth_repository_impl.dart';
@@ -438,6 +442,33 @@ void configureAdditionalFeatures(GetIt sl) {
   if (!sl.isRegistered<UserDetailsBloc>()) {
     sl.registerFactory<UserDetailsBloc>(
       () => UserDetailsBloc(sl<UserDetailsRepository>()),
+    );
+  }
+
+  // Booking Feature Clean Architecture Mappings
+  if (!sl.isRegistered<BookingRemoteDataSource>()) {
+    sl.registerLazySingleton<BookingRemoteDataSource>(
+      () => BookingRemoteDataSourceImpl(sl<SupabaseService>()),
+    );
+  }
+  if (!sl.isRegistered<BookingRepository>()) {
+    sl.registerLazySingleton<BookingRepository>(
+      () => BookingRepositoryImpl(sl<BookingRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<LoadDoctorsBySpecialtyUseCase>()) {
+    sl.registerLazySingleton<LoadDoctorsBySpecialtyUseCase>(
+      () => LoadDoctorsBySpecialtyUseCase(sl<BookingRepository>()),
+    );
+  }
+  if (!sl.isRegistered<GetSlotsUseCase>()) {
+    sl.registerLazySingleton<GetSlotsUseCase>(
+      () => GetSlotsUseCase(sl<BookingRepository>()),
+    );
+  }
+  if (!sl.isRegistered<BookAppointmentUseCase>()) {
+    sl.registerLazySingleton<BookAppointmentUseCase>(
+      () => BookAppointmentUseCase(sl<BookingRepository>()),
     );
   }
 }

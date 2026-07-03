@@ -116,7 +116,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         // Wait to show the beautiful premium animations before navigating.
         await Future.delayed(const Duration(milliseconds: 2800));
         if (state is Authenticated) {
-          final role = state.user.role.value;
+          final role = state.user.role.value.toLowerCase();
           if (mounted) {
             context.go('/$role/dashboard');
           }

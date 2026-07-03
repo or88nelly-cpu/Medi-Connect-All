@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_action_banners.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_banner_carousel.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_specialities_section.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_upcoming_appointments.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_health_overview.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashboard/patient_premium_banner.dart';
 
@@ -12,8 +13,9 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/patient_dashb
 /// 1. [PatientActionBanners]   – Complete Registration and Payment Pending cards side-by-side
 /// 2. [PatientBannerCarousel]   – dynamic promotional banner slider
 /// 3. [PatientSpecialitiesSection] – 2x4 grid layout of medical specialties
-/// 4. [PatientHealthOverview] – Track Health Card and list of 4 vitals side-by-side
-/// 5. [PatientPremiumBanner]  – Purple "Go Premium for Better Care" banner
+/// 4. [PatientUpcomingAppointments] – dynamic list of upcoming appointments
+/// 5. [PatientHealthOverview] – Track Health Card and list of 4 vitals side-by-side
+/// 6. [PatientPremiumBanner]  – Purple "Go Premium for Better Care" banner
 class PatientHomeTab extends StatelessWidget {
   const PatientHomeTab({super.key});
 
@@ -34,6 +36,10 @@ class PatientHomeTab extends StatelessWidget {
 
           // ── Specialties section (2x4 Grid) ──
           const PatientSpecialitiesSection(),
+          SizedBox(height: 20.h),
+
+          // ── Upcoming Appointments ──
+          const PatientUpcomingAppointments(),
           SizedBox(height: 20.h),
 
           // ── Health Overview (Vitals & Track Health Card) ──

@@ -12,6 +12,7 @@ import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appo
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:intl/intl.dart';
 
 class PatientAppointmentsTab extends StatefulWidget {
   const PatientAppointmentsTab({super.key});
@@ -32,8 +33,31 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
     return "${months[date.month - 1]} ${date.day}, $timeStr";
   }
 
+  bool _isAppointmentInPast(DateTime date, String timeStr) {
+    try {
+      final format = DateFormat('hh:mm a');
+      final parsedTime = format.parse(timeStr.trim());
+      final combined = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+      return combined.isBefore(DateTime.now());
+    } catch (_) {
+      final now = DateTime.now();
+      final todayDateOnly = DateTime(now.year, now.month, now.day);
+      return date.isBefore(todayDateOnly);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
@@ -52,7 +76,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
             }
 
             return Padding(
-              padding: EdgeInsets.all(20.r),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,6 +87,8 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                         AppStrings.appointments,
                         style: AppTextStyles.headingMedium.copyWith(
                           fontSize: 22.sp,
+                          fontWeight: FontWeight.w900,
+                          color: const Color(0xFF1E3A8A),
                         ),
                       ),
                       ElevatedButton.icon(
@@ -70,13 +96,14 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                         icon: const Icon(Icons.search, color: Colors.white),
                         label: const Text(
                           'Book Doctor',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.r),
+                            borderRadius: BorderRadius.circular(10.r),
                           ),
+                          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
                         ),
                       ),
                     ],
@@ -86,6 +113,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                     'My Scheduled Bookings',
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: textColor,
                     ),
                   ),
                   SizedBox(height: 12.h),
@@ -99,15 +127,15 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                   children: [
                                     Icon(
                                       Icons.calendar_month_outlined,
-                                      color: AppColors.textSecondary(context).withValues(alpha: 0.5),
-                                      size: 48.r,
+                                      color: AppColors.textSecondary(context).withValues(alpha: 0.3),
+                                      size: 56.r,
                                     ),
                                     SizedBox(height: 12.h),
                                     Text(
                                       "No scheduled appointments found.",
                                       style: AppTextStyles.bodyMedium.copyWith(
                                         color: AppColors.textSecondary(context),
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ],
@@ -121,50 +149,125 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                   final specialty = apt.specialty;
                                   final type = apt.type;
                                   final time = _formatDateTime(apt.appointmentDate, apt.appointmentTime);
+                                  
+                                  // Dynamic Auto-Cancellation Check: 
+                                  // If appointment is Pending and past, it cancels automatically.
+                                  var displayStatus = apt.status;
+                                  var isUnpaidAndExpired = false;
+                                  if (apt.status.toLowerCase() == 'pending' && 
+                                      _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime)) {
+                                    displayStatus = 'Cancelled';
+                                    isUnpaidAndExpired = true;
+                                  }
 
-                                  return Card(
+                                  // Status Colors
+                                  Color statusColor = const Color(0xFF10B981); // Green Confirmed
+                                  if (displayStatus.toLowerCase() == 'pending') {
+                                    statusColor = const Color(0xFFF59E0B); // Orange Pending
+                                  } else if (displayStatus.toLowerCase() == 'cancelled') {
+                                    statusColor = const Color(0xFFEF4444); // Red Cancelled
+                                  } else if (displayStatus.toLowerCase() == 'completed') {
+                                    statusColor = const Color(0xFF3B82F6); // Blue Completed
+                                  }
+
+                                  return Container(
                                     margin: EdgeInsets.only(bottom: 12.h),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.r),
-                                      side: BorderSide(color: AppColors.border(context)),
+                                    padding: EdgeInsets.all(14.r),
+                                    decoration: BoxDecoration(
+                                      color: cardBg,
+                                      borderRadius: BorderRadius.circular(16.r),
+                                      border: Border.all(color: AppColors.border(context)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withValues(alpha: 0.02),
+                                          blurRadius: 10.r,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
                                     ),
-                                    child: ListTile(
-                                      contentPadding: EdgeInsets.all(16.r),
-                                      leading: CircleAvatar(
-                                        backgroundColor: AppColors.primary.withValues(
-                                          alpha: 0.1,
+                                    child: Row(
+                                      children: [
+                                        // Left Profile Icon
+                                        Container(
+                                          width: 44.r,
+                                          height: 44.r,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primary.withValues(alpha: 0.08),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: Icon(Icons.person_rounded, color: AppColors.primary, size: 24.r),
                                         ),
-                                        child: const Icon(Icons.person, color: AppColors.primary),
-                                      ),
-                                      title: Text(
-                                        doctorName,
-                                        style: AppTextStyles.bodyMedium.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.textPrimary(context),
-                                        ),
-                                      ),
-                                      subtitle: Text(
-                                        "$specialty | $type",
-                                      ),
-                                      trailing: Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w,
-                                          vertical: 4.h,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.primary.withValues(alpha: 0.1),
-                                          borderRadius: BorderRadius.circular(6.r),
-                                        ),
-                                        child: Text(
-                                          time,
-                                          style: TextStyle(
-                                            color: AppColors.primary,
-                                            fontSize: 9.sp,
-                                            fontWeight: FontWeight.bold,
+                                        SizedBox(width: 12.w),
+
+                                        // Summary block
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                doctorName,
+                                                style: AppTextStyles.bodyMedium.copyWith(
+                                                  fontWeight: FontWeight.w900,
+                                                  color: textColor,
+                                                ),
+                                              ),
+                                              SizedBox(height: 2.h),
+                                              Text(
+                                                "$specialty | $type",
+                                                style: TextStyle(
+                                                  fontSize: 9.5.sp,
+                                                  color: Colors.grey,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              if (isUnpaidAndExpired) ...[
+                                                SizedBox(height: 4.h),
+                                                Text(
+                                                  'Cancelled: Payment lapsed before consultation',
+                                                  style: TextStyle(
+                                                    fontSize: 7.5.sp,
+                                                    color: const Color(0xFFEF4444),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ],
                                           ),
                                         ),
-                                      ),
+
+                                        // Status Pill & Time
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                                              decoration: BoxDecoration(
+                                                color: statusColor.withValues(alpha: 0.1),
+                                                borderRadius: BorderRadius.circular(8.r),
+                                                border: Border.all(color: statusColor.withValues(alpha: 0.2)),
+                                              ),
+                                              child: Text(
+                                                displayStatus,
+                                                style: TextStyle(
+                                                  color: statusColor,
+                                                  fontSize: 8.5.sp,
+                                                  fontWeight: FontWeight.w900,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 6.h),
+                                            Text(
+                                              time,
+                                              style: TextStyle(
+                                                color: AppColors.primary,
+                                                fontSize: 8.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   );
                                 },

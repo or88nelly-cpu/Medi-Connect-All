@@ -1,18 +1,25 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/core/utils/app_toast.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_status.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_cubit.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/pages/booking_success_page.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/booking_stepper.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/payment_security_info.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/payment_appointment_summary_card.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/payment_methods_selector.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/payment_checkout_bar.dart';
+import 'package:intl/intl.dart';
 
-class BookingPaymentConfirmPage extends StatelessWidget {
+class BookingPaymentConfirmPage extends StatefulWidget {
   final String specialityName;
 
   const BookingPaymentConfirmPage({
@@ -21,287 +28,165 @@ class BookingPaymentConfirmPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-
-    return CustomScaffold(
-      customAppbar: const CommonAppBar(
-        title: "Payment Summary",
-      ),
-      body: BlocListener<SpecialityBookingCubit, SpecialityBookingState>(
-        listener: (context, state) {
-          if (state.status == SpecialityBookingStatus.success) {
-            // Show Success toast overlay
-            AppToast.show(
-              context,
-              "Appointment booked successfully!",
-              type: ToastType.success,
-            );
-            
-            // Pop back to the specialty doctors list and details screens
-            // popping 3 times takes us back to the home/dashboard or specialties page
-            int count = 0;
-            Navigator.popUntil(context, (_) => count++ >= 3);
-          } else if (state.status == SpecialityBookingStatus.error) {
-            // Show Error toast overlay
-            AppToast.show(
-              context,
-              state.errorMessage ?? "Failed to book appointment",
-              type: ToastType.error,
-            );
-          }
-        },
-        child: BlocBuilder<SpecialityBookingCubit, SpecialityBookingState>(
-          builder: (context, state) {
-            final docInfo = state.selectedDoctor;
-            final date = state.selectedDate;
-            final slot = state.selectedSlot;
-
-            if (docInfo == null || date == null || slot == null) {
-              return const Center(child: Text("Missing booking details."));
-            }
-
-            final fee = state.consultationFee;
-            final tax = fee * 0.18; // 18% tax
-            final total = fee + tax;
-
-            return Padding(
-              padding: EdgeInsets.all(16.r),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Booking Summary",
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary(context),
-                    ),
-                  ),
-                  SizedBox(height: 12.h),
-
-                  // Doctor / Date card
-                  Card(
-                    color: cardBg,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      side: BorderSide(color: AppColors.border(context)),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(16.r),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.person_outline, color: AppColors.primary, size: 24.r),
-                              SizedBox(width: 12.w),
-                              Expanded(
-                                child: Text(
-                                  docInfo.user.fullName,
-                                  style: AppTextStyles.bodyMedium.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textPrimary(context),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10.h),
-                          Row(
-                            children: [
-                              Icon(Icons.calendar_today_outlined, color: AppColors.primary, size: 20.r),
-                              SizedBox(width: 12.w),
-                              Text(
-                                "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.textPrimary(context),
-                                ),
-                              ),
-                              const Spacer(),
-                              Icon(Icons.access_time, color: AppColors.primary, size: 20.r),
-                              SizedBox(width: 6.w),
-                              Text(
-                                slot,
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  color: AppColors.textPrimary(context),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 24.h),
-
-                  Text(
-                    "Billing Breakdown",
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary(context),
-                    ),
-                  ),
-                  SizedBox(height: 12.h),
-
-                  // Billing Details card
-                  Card(
-                    color: cardBg,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      side: BorderSide(color: AppColors.border(context)),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(16.r),
-                      child: Column(
-                        children: [
-                          _BillingRow(
-                            label: "Consultation Fee",
-                            value: "\$${fee.toStringAsFixed(2)}",
-                          ),
-                          SizedBox(height: 10.h),
-                          _BillingRow(
-                            label: "Tax & Service Charge (18%)",
-                            value: "\$${tax.toStringAsFixed(2)}",
-                          ),
-                          SizedBox(height: 12.h),
-                          const Divider(height: 1),
-                          SizedBox(height: 12.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Total",
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.textPrimary(context),
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                              Text(
-                                "\$${total.toStringAsFixed(2)}",
-                                style: AppTextStyles.bodyMedium.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primary,
-                                  fontSize: 18.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 24.h),
-
-                  Text(
-                    "Payment Method",
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary(context),
-                    ),
-                  ),
-                  SizedBox(height: 12.h),
-
-                  // Selection of payment mode
-                  Card(
-                    color: cardBg,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      side: BorderSide(color: AppColors.border(context)),
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.payment, color: AppColors.primary),
-                      title: Text(
-                        "Pay at Hospital (Cash/Card)",
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary(context),
-                        ),
-                      ),
-                      subtitle: const Text("Complete payment at the reception counter"),
-                      trailing: Icon(
-                        Icons.check_circle,
-                        color: AppColors.success,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-
-                  // Confirm booking Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: state.status == SpecialityBookingStatus.loading
-                          ? null
-                          : () {
-                              final authState = context.read<AuthBloc>().state;
-                              if (authState is Authenticated) {
-                                final userModel = UserModel.fromEntity(authState.user);
-                                context.read<SpecialityBookingCubit>().confirmPayment(
-                                      context.read<AdminAppointmentsBloc>(),
-                                      userModel.id,
-                                      userModel.fullName,
-                                      specialityName,
-                                    );
-                              }
-                            },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(16.r),
-                        backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14.r),
-                        ),
-                      ),
-                      child: state.status == SpecialityBookingStatus.loading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : Text(
-                              "Confirm Appointment",
-                              style: AppTextStyles.buttonLarge.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
+  State<BookingPaymentConfirmPage> createState() => _BookingPaymentConfirmPageState();
 }
 
-class _BillingRow extends StatelessWidget {
-  final String label;
-  final String value;
+class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
+  final ValueNotifier<int> _selectedPaymentNotifier = ValueNotifier<int>(0);
 
-  const _BillingRow({required this.label, required this.value});
+  @override
+  void dispose() {
+    _selectedPaymentNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.bodyMedium.copyWith(
-            color: AppColors.textSecondary(context),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+
+    return BlocConsumer<SpecialityBookingCubit, SpecialityBookingState>(
+      listener: (context, state) {
+        if (state.status == SpecialityBookingStatus.success) {
+          final authState = context.read<AuthBloc>().state;
+          String patientName = 'Likhin Nelliyotan';
+          if (authState is Authenticated) {
+            patientName = authState.user.fullName;
+          }
+
+          final formattedDate = state.selectedDate != null
+              ? DateFormat('yyMMdd').format(state.selectedDate!)
+              : '250522';
+          final randomSuffix = (Random().nextInt(9000) + 1000).toString();
+          final bookingId = 'MCB$formattedDate$randomSuffix';
+
+          final paymentMethodsList = const ['UPI', 'Credit/Debit Card', 'Net Banking', 'Wallet', 'Pay Later'];
+          final selectedMethod = paymentMethodsList[_selectedPaymentNotifier.value];
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => BookingSuccessPage(
+                doctorName: state.selectedDoctor?.user.fullName ?? '',
+                doctorQual: state.selectedDoctor?.doctorInfo?.qualification ?? 'Specialist MD',
+                specialityName: widget.specialityName,
+                date: state.selectedDate ?? DateTime.now(),
+                slot: state.selectedSlot ?? '09:00 AM',
+                patientName: patientName,
+                amount: state.consultationFee,
+                bookingId: bookingId,
+                paymentMethod: selectedMethod,
+              ),
+            ),
+          );
+        } else if (state.status == SpecialityBookingStatus.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage ?? "Failed to book appointment")),
+          );
+        }
+      },
+      builder: (context, state) {
+        final docInfo = state.selectedDoctor;
+        final date = state.selectedDate;
+        final slot = state.selectedSlot;
+
+        if (docInfo == null || date == null || slot == null) {
+          return const Scaffold(
+            body: Center(child: Text("Missing booking details.")),
+          );
+        }
+
+        final fee = state.consultationFee;
+        final selectedDateStr = DateFormat('EEEE, d MMMM yyyy').format(date);
+
+        return CustomScaffold(
+          customAppbar: const CommonAppBar(
+            title: "Confirm & Pay",
           ),
-        ),
-        Text(
-          value,
-          style: AppTextStyles.bodyMedium.copyWith(
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary(context),
+          bottomNavigationBar: PaymentCheckoutBar(
+            fee: fee,
+            selectedPaymentNotifier: _selectedPaymentNotifier,
+            isLoading: state.status == SpecialityBookingStatus.loading,
+            cardBg: cardBg,
+            onCheckoutPressed: () {
+              final authState = context.read<AuthBloc>().state;
+              if (authState is Authenticated) {
+                final userModel = UserModel.fromEntity(authState.user);
+                final paymentMethodsList = const ['UPI', 'Credit/Debit Card', 'Net Banking', 'Wallet', 'Pay Later'];
+                final selectedMethod = paymentMethodsList[_selectedPaymentNotifier.value];
+
+                context.read<SpecialityBookingCubit>().confirmPayment(
+                      context.read<AdminAppointmentsBloc>(),
+                      userModel.id,
+                      userModel.fullName,
+                      widget.specialityName,
+                      selectedMethod,
+                    );
+              }
+            },
           ),
-        ),
-      ],
+          body: SingleChildScrollView(
+            padding: EdgeInsets.all(16.r),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const BookingStepper(currentStep: 3),
+                SizedBox(height: 20.h),
+
+                Text(
+                  'Confirm & Pay',
+                  style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w900, color: const Color(0xFF0F172A)),
+                ),
+                Text(
+                  'Complete your payment to confirm your appointment.',
+                  style: TextStyle(fontSize: 12.sp, color: Colors.grey, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 20.h),
+
+                PaymentAppointmentSummaryCard(
+                  docInfo: docInfo,
+                  dateStr: selectedDateStr,
+                  slot: slot,
+                  fee: fee,
+                  specialityName: widget.specialityName,
+                  cardBg: cardBg,
+                  textColor: textColor,
+                ),
+                SizedBox(height: 24.h),
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Choose Payment Method',
+                            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w900, color: const Color(0xFF0F172A)),
+                          ),
+                          SizedBox(height: 12.h),
+                          PaymentMethodsSelector(
+                            selectedPaymentNotifier: _selectedPaymentNotifier,
+                            cardBg: cardBg,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    const Expanded(
+                      flex: 4,
+                      child: PaymentSecurityInfo(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_status.dart';
 import 'package:medi_connect/modules/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_cubit.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';

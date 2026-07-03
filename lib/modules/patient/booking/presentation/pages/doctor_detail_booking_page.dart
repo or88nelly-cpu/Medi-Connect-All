@@ -860,74 +860,79 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
         SizedBox(height: 12.h),
 
         // Grid
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: _standardSlots.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            crossAxisSpacing: 8.w,
-            mainAxisSpacing: 8.h,
-            childAspectRatio: 1.8,
-          ),
-          itemBuilder: (context, idx) {
-            final slot = _standardSlots[idx];
-            final isBooked = idx == 7; // Mock last slot booked
-            final isSelected = state.selectedSlot == slot;
-
-            return GestureDetector(
-              onTap: isBooked
-                  ? null
-                  : () =>
-                        context.read<SpecialityBookingCubit>().selectSlot(slot),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: isBooked
-                      ? const Color(0xFFF1F5F9)
-                      : (isSelected ? const Color(0xFF3B5BFD) : cardBg),
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(
-                    color: isBooked
-                        ? Colors.transparent
-                        : (isSelected
-                              ? const Color(0xFF3B5BFD)
-                              : AppColors.border(context)),
+        state.availableSlots.isEmpty
+            ? Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  child: Text(
+                    'No available slots on this date. Please select another date.',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      slot,
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w900,
-                        color: isBooked
-                            ? Colors.grey.shade400
-                            : (isSelected
-                                  ? Colors.white
-                                  : const Color(0xFF0F172A)),
-                      ),
-                    ),
-                    SizedBox(height: 2.h),
-                    Text(
-                      isBooked ? 'Booked' : 'Available',
-                      style: TextStyle(
-                        fontSize: 7.5.sp,
-                        fontWeight: FontWeight.bold,
-                        color: isBooked
-                            ? Colors.grey.shade400
-                            : (isSelected
-                                  ? Colors.white70
-                                  : const Color(0xFF22C55E)),
-                      ),
-                    ),
-                  ],
+              )
+            : GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: state.availableSlots.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 8.w,
+                  mainAxisSpacing: 8.h,
+                  childAspectRatio: 1.8,
                 ),
+                itemBuilder: (context, idx) {
+                  final slot = state.availableSlots[idx];
+                  final isBooked = state.bookedSlots.contains(slot);
+                  final isSelected = state.selectedSlot == slot;
+
+                  return GestureDetector(
+                    onTap: isBooked ? null : () => context.read<SpecialityBookingCubit>().selectSlot(slot),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: isBooked
+                            ? const Color(0xFFF1F5F9)
+                            : (isSelected ? const Color(0xFF3B5BFD) : cardBg),
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(
+                          color: isBooked
+                              ? Colors.transparent
+                              : (isSelected ? const Color(0xFF3B5BFD) : AppColors.border(context)),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            slot,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w900,
+                              color: isBooked
+                                  ? Colors.grey.shade400
+                                  : (isSelected ? Colors.white : const Color(0xFF0F172A)),
+                            ),
+                          ),
+                          SizedBox(height: 2.h),
+                          Text(
+                            isBooked ? 'Booked' : 'Available',
+                            style: TextStyle(
+                              fontSize: 7.5.sp,
+                              fontWeight: FontWeight.bold,
+                              color: isBooked
+                                  ? Colors.grey.shade400
+                                  : (isSelected ? Colors.white70 : const Color(0xFF22C55E)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       ],
     );
   }

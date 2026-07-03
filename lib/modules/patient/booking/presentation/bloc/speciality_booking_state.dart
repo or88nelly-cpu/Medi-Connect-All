@@ -1,26 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/data/models/doctor_model.dart';
-
-enum SpecialityBookingStatus {
-  initial,
-  loading,
-  doctorsLoaded,
-  doctorDetail,
-  paymentPending,
-  success,
-  error,
-}
-
-class DoctorBookingInfo extends Equatable {
-  final UserModel user;
-  final DoctorModel? doctorInfo;
-
-  const DoctorBookingInfo({required this.user, this.doctorInfo});
-
-  @override
-  List<Object?> get props => [user, doctorInfo];
-}
+import 'package:medi_connect/modules/patient/booking/domain/entities/doctor_booking_info.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_status.dart';
 
 class SpecialityBookingState extends Equatable {
   final SpecialityBookingStatus status;
@@ -29,6 +9,7 @@ class SpecialityBookingState extends Equatable {
   final DateTime? selectedDate;
   final String? selectedSlot;
   final List<String> bookedSlots;
+  final List<String> availableSlots;
   final double consultationFee;
   final String? errorMessage;
 
@@ -39,6 +20,7 @@ class SpecialityBookingState extends Equatable {
     this.selectedDate,
     this.selectedSlot,
     this.bookedSlots = const [],
+    this.availableSlots = const [],
     this.consultationFee = 0.0,
     this.errorMessage,
   });
@@ -50,6 +32,7 @@ class SpecialityBookingState extends Equatable {
     DateTime? selectedDate,
     String? selectedSlot,
     List<String>? bookedSlots,
+    List<String>? availableSlots,
     double? consultationFee,
     String? errorMessage,
     bool clearSelectedDoctor = false,
@@ -63,6 +46,7 @@ class SpecialityBookingState extends Equatable {
       selectedDate: clearSelectedDate ? null : (selectedDate ?? this.selectedDate),
       selectedSlot: clearSelectedSlot ? null : (selectedSlot ?? this.selectedSlot),
       bookedSlots: bookedSlots ?? this.bookedSlots,
+      availableSlots: availableSlots ?? this.availableSlots,
       consultationFee: consultationFee ?? this.consultationFee,
       errorMessage: errorMessage ?? this.errorMessage,
     );
@@ -76,6 +60,7 @@ class SpecialityBookingState extends Equatable {
         selectedDate,
         selectedSlot,
         bookedSlots,
+        availableSlots,
         consultationFee,
         errorMessage,
       ];
