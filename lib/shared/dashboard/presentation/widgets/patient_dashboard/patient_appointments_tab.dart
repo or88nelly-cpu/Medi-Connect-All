@@ -160,12 +160,18 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                       _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime)) {
                                     displayStatus = 'Cancelled';
                                     isUnpaidAndExpired = true;
+                                  } else if (apt.status.toLowerCase() != 'completed' &&
+                                             apt.status.toLowerCase() != 'cancelled' &&
+                                             _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime)) {
+                                    displayStatus = 'Pending Updation';
                                   }
 
                                   // Status Colors
                                   Color statusColor = const Color(0xFF10B981); // Green Confirmed
                                   if (displayStatus.toLowerCase() == 'pending') {
                                     statusColor = const Color(0xFFF59E0B); // Orange Pending
+                                  } else if (displayStatus == 'Pending Updation') {
+                                    statusColor = const Color(0xFFD97706); // Amber/Orange Pending Updation
                                   } else if (displayStatus.toLowerCase() == 'cancelled') {
                                     statusColor = const Color(0xFFEF4444); // Red Cancelled
                                   } else if (displayStatus.toLowerCase() == 'completed') {

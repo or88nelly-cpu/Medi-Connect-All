@@ -200,14 +200,20 @@ class _PatientAllAppointmentsPageState extends State<PatientAllAppointmentsPage>
                               final time = _formatDateTime(apt.appointmentDate, apt.appointmentTime);
 
                               var displayStatus = apt.status;
-                              if (apt.status.toLowerCase() == 'pending' &&
-                                  !_isFutureAppointment(apt.appointmentDate, apt.appointmentTime)) {
+                              final isPast = !_isFutureAppointment(apt.appointmentDate, apt.appointmentTime);
+                              if (apt.status.toLowerCase() == 'pending' && isPast) {
                                 displayStatus = 'Cancelled';
+                              } else if (apt.status.toLowerCase() != 'completed' &&
+                                         apt.status.toLowerCase() != 'cancelled' &&
+                                         isPast) {
+                                displayStatus = 'Pending Updation';
                               }
 
                               Color statusColor = const Color(0xFF10B981); // Green Confirmed
                               if (displayStatus.toLowerCase() == 'pending') {
                                 statusColor = const Color(0xFFF59E0B);
+                              } else if (displayStatus == 'Pending Updation') {
+                                statusColor = const Color(0xFFD97706);
                               } else if (displayStatus.toLowerCase() == 'cancelled') {
                                 statusColor = const Color(0xFFEF4444);
                               } else if (displayStatus.toLowerCase() == 'completed') {

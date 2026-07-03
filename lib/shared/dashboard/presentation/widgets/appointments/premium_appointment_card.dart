@@ -50,6 +50,10 @@ class PremiumAppointmentCard extends StatelessWidget {
         return isDark
             ? AppColors.statusConfirmedBgDark
             : AppColors.statusConfirmedBgLight;
+      case 'Pending MRD':
+        return isDark
+            ? const Color(0xFF3B0764)
+            : const Color(0xFFF3E8FF);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingBgDark
@@ -72,6 +76,10 @@ class PremiumAppointmentCard extends StatelessWidget {
         return isDark
             ? AppColors.statusConfirmedTextDark
             : AppColors.statusConfirmedTextLight;
+      case 'Pending MRD':
+        return isDark
+            ? const Color(0xFFC084FC)
+            : const Color(0xFF7E22CE);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingTextDark
@@ -88,6 +96,25 @@ class PremiumAppointmentCard extends StatelessWidget {
     }
   }
 
+  bool _isAppointmentInPast(DateTime date, String timeStr) {
+    try {
+      final format = DateFormat('hh:mm a');
+      final parsedTime = format.parse(timeStr.trim());
+      final combined = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+      return combined.isBefore(DateTime.now());
+    } catch (_) {
+      final now = DateTime.now();
+      final todayDateOnly = DateTime(now.year, now.month, now.day);
+      return date.isBefore(todayDateOnly);
+    }
+  }
+
   String _cleanDoctorName(String raw) {
     String cleaned = raw.trim();
     if (cleaned.toLowerCase().startsWith('dr.')) {
@@ -101,8 +128,15 @@ class PremiumAppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final badgeBg = _getStatusBgColor(appointment.status, isDark);
-    final badgeText = _getStatusTextColor(appointment.status, isDark);
+    var displayStatus = appointment.status;
+    if (appointment.status.toLowerCase() != 'completed' &&
+        appointment.status.toLowerCase() != 'cancelled' &&
+        _isAppointmentInPast(appointment.appointmentDate, appointment.appointmentTime)) {
+      displayStatus = 'Pending MRD';
+    }
+
+    final badgeBg = _getStatusBgColor(displayStatus, isDark);
+    final badgeText = _getStatusTextColor(displayStatus, isDark);
     final formattedDate = DateFormat(
       'dd MMM yyyy',
     ).format(appointment.appointmentDate);
@@ -270,7 +304,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6.r),
                     ),
                     child: Text(
-                      appointment.status,
+                      displayStatus,
                       style: TextStyle(
                         color: badgeText,
                         fontSize: 9.sp,

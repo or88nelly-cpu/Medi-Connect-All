@@ -8,6 +8,10 @@ import 'package:medi_connect/modules/patient/booking/data/datasources/booking_re
 import 'package:medi_connect/modules/patient/booking/data/repositories/booking_repository_impl.dart';
 import 'package:medi_connect/modules/patient/booking/domain/repositories/booking_repository.dart';
 import 'package:medi_connect/modules/patient/booking/domain/usecases/booking_usecases.dart';
+import 'package:medi_connect/modules/patient/booking/data/datasources/doctor_image_remote_datasource.dart';
+import 'package:medi_connect/modules/patient/booking/data/repositories/doctor_image_repository_impl.dart';
+import 'package:medi_connect/modules/patient/booking/domain/repositories/doctor_image_repository.dart';
+import 'package:medi_connect/modules/patient/booking/domain/usecases/get_doctor_image_usecase.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/shared/auth/data/data_source/auth_remote_datasource.dart';
 import 'package:medi_connect/shared/auth/data/repository/auth_repository_impl.dart';
@@ -469,6 +473,23 @@ void configureAdditionalFeatures(GetIt sl) {
   if (!sl.isRegistered<BookAppointmentUseCase>()) {
     sl.registerLazySingleton<BookAppointmentUseCase>(
       () => BookAppointmentUseCase(sl<BookingRepository>()),
+    );
+  }
+
+  // Doctor Image Feature Clean Architecture Mappings
+  if (!sl.isRegistered<DoctorImageRemoteDataSource>()) {
+    sl.registerLazySingleton<DoctorImageRemoteDataSource>(
+      () => DoctorImageRemoteDataSourceImpl(sl<SupabaseService>().client),
+    );
+  }
+  if (!sl.isRegistered<DoctorImageRepository>()) {
+    sl.registerLazySingleton<DoctorImageRepository>(
+      () => DoctorImageRepositoryImpl(sl<DoctorImageRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<GetDoctorImageUseCase>()) {
+    sl.registerLazySingleton<GetDoctorImageUseCase>(
+      () => GetDoctorImageUseCase(sl<DoctorImageRepository>()),
     );
   }
 }

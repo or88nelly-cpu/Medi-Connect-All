@@ -81,10 +81,31 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     );
   }
 
+bool _isAppointmentInPast(DateTime date, String timeStr) {
+    try {
+      final format = DateFormat('hh:mm a');
+      final parsedTime = format.parse(timeStr.trim());
+      final combined = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+      return combined.isBefore(DateTime.now());
+    } catch (_) {
+      final now = DateTime.now();
+      final todayDateOnly = DateTime(now.year, now.month, now.day);
+      return date.isBefore(todayDateOnly);
+    }
+  }
+
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Confirmed':
         return AppColors.success;
+      case 'Pending MRD':
+        return AppColors.infoPurple;
       case 'Pending':
         return AppColors.warning;
       case 'Completed':
@@ -575,7 +596,13 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
 
                                       // Timeline vertical line and dot
                                       _buildTimelineIndicator(
-                                        _getStatusColor(apt.status),
+                                        _getStatusColor(
+                                          (apt.status.toLowerCase() != 'completed' &&
+                                           apt.status.toLowerCase() != 'cancelled' &&
+                                           _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime))
+                                              ? 'Pending MRD'
+                                              : apt.status
+                                        ),
                                         idx,
                                         filteredApts.length,
                                       ),
@@ -665,6 +692,10 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
         return isDark
             ? AppColors.statusConfirmedBgDark.withValues(alpha: 0.3)
             : AppColors.statusConfirmedBgLight;
+      case 'Pending MRD':
+        return isDark
+            ? const Color(0xFF3B0764).withValues(alpha: 0.3)
+            : const Color(0xFFF3E8FF);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingBgDark.withValues(alpha: 0.3)
@@ -686,6 +717,8 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     switch (status) {
       case 'Confirmed':
         return AppColors.success.withValues(alpha: 0.3);
+      case 'Pending MRD':
+        return AppColors.infoPurple.withValues(alpha: 0.3);
       case 'Pending':
         return AppColors.warning.withValues(alpha: 0.3);
       case 'Completed':
@@ -703,6 +736,10 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
         return isDark
             ? AppColors.statusConfirmedTextDark
             : AppColors.statusConfirmedTextLight;
+      case 'Pending MRD':
+        return isDark
+            ? const Color(0xFFC084FC)
+            : const Color(0xFF7E22CE);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingTextDark

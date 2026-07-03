@@ -5,12 +5,32 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
+import 'package:intl/intl.dart';
 
 class DoctorConsultationsCard extends StatelessWidget {
   const DoctorConsultationsCard({super.key});
 
   bool _isSameDay(DateTime d1, DateTime d2) {
     return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
+  }
+
+  bool _isAppointmentInPast(DateTime date, String timeStr) {
+    try {
+      final format = DateFormat('hh:mm a');
+      final parsedTime = format.parse(timeStr.trim());
+      final combined = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+      return combined.isBefore(DateTime.now());
+    } catch (_) {
+      final now = DateTime.now();
+      final todayDateOnly = DateTime(now.year, now.month, now.day);
+      return date.isBefore(todayDateOnly);
+    }
   }
 
   @override
@@ -260,7 +280,17 @@ class DoctorConsultationsCard extends StatelessWidget {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _buildStatusChip(apt.status, idx, isDark),
+                          Builder(
+                            builder: (context) {
+                              var displayStatus = apt.status;
+                              if (apt.status.toLowerCase() != 'completed' &&
+                                  apt.status.toLowerCase() != 'cancelled' &&
+                                  _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime)) {
+                                displayStatus = 'Pending MRD';
+                              }
+                              return _buildStatusChip(displayStatus, idx, isDark);
+                            },
+                          ),
                           SizedBox(width: 8.w),
                           Icon(
                             Icons.chevron_right,
@@ -291,6 +321,10 @@ class DoctorConsultationsCard extends StatelessWidget {
       bg = isDark ? const Color(0xFF064E3B) : const Color(0xFFE6F4EA);
       text = isDark ? const Color(0xFF34D399) : const Color(0xFF137333);
       icon = Icons.check;
+    } else if (status == 'Pending MRD') {
+      bg = isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF);
+      text = isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
+      icon = Icons.pending_actions_rounded;
     } else if (status == 'Completed') {
       bg = isDark ? const Color(0xFF581C87) : const Color(0xFFF3E8FF);
       text = isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
@@ -320,7 +354,7 @@ class DoctorConsultationsCard extends StatelessWidget {
           Icon(icon, color: text, size: 10.r),
           SizedBox(width: 4.w),
           Text(
-            status == 'Confirmed' ? 'Confirmed' : 'Upcoming',
+            status,
             style: TextStyle(
               color: text,
               fontSize: 8.sp,

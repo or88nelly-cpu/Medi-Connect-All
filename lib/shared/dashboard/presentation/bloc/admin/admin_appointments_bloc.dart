@@ -30,6 +30,11 @@ class UpdateAppointmentVitals extends AdminAppointmentsEvent {
   UpdateAppointmentVitals(this.id, this.vitals);
 }
 
+class ConfirmAppointmentPayment extends AdminAppointmentsEvent {
+  final String id;
+  ConfirmAppointmentPayment(this.id);
+}
+
 // States
 abstract class AdminAppointmentsState {}
 
@@ -66,6 +71,7 @@ class AdminAppointmentsBloc
     on<CancelAppointment>(_onCancelAppointment);
     on<CompleteAppointment>(_onCompleteAppointment);
     on<UpdateAppointmentVitals>(_onUpdateAppointmentVitals);
+    on<ConfirmAppointmentPayment>(_onConfirmAppointmentPayment);
   }
 
   Future<void> _onLoadAppointments(
@@ -136,6 +142,23 @@ class AdminAppointmentsBloc
     Emitter<AdminAppointmentsState> emit,
   ) async {
     final result = await _updateVitals(event.id, event.vitals);
+    result.fold((failure) => emit(AdminAppointmentsError(failure.message)), (
+      _,
+    ) {
+      add(LoadAppointments());
+      try {
+        GetIt.instance<DoctorAppointmentsBloc>().add(LoadDoctorAppointments());
+      } catch (e) {
+        // Fallback
+      }
+    });
+  }
+
+  Future<void> _onConfirmAppointmentPayment(
+    ConfirmAppointmentPayment event,
+    Emitter<AdminAppointmentsState> emit,
+  ) async {
+    final result = await _updateStatus(event.id, 'Confirmed');
     result.fold((failure) => emit(AdminAppointmentsError(failure.message)), (
       _,
     ) {
