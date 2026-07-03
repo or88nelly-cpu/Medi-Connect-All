@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/doctor_image_widget.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/pages/patient_appointment_detail_page.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
@@ -170,8 +172,17 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                     statusColor = const Color(0xFF3B82F6); // Blue Completed
                                   }
 
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 12.h),
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (ctx) => PatientAppointmentDetailPage(appointment: apt),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 12.h),
                                     padding: EdgeInsets.all(14.r),
                                     decoration: BoxDecoration(
                                       color: cardBg,
@@ -187,17 +198,11 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                     ),
                                     child: Row(
                                       children: [
-                                        // Left Profile Icon
-                                        Container(
-                                          width: 44.r,
-                                          height: 44.r,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.primary.withValues(alpha: 0.08),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: Icon(Icons.person_rounded, color: AppColors.primary, size: 24.r),
-                                        ),
+                                         // Left Profile Icon
+                                         DoctorImageWidget(
+                                           doctorId: apt.doctorId,
+                                           size: 44.r,
+                                         ),
                                         SizedBox(width: 12.w),
 
                                         // Summary block
@@ -269,6 +274,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                         ),
                                       ],
                                     ),
+                                  ),
                                   );
                                 },
                               ),

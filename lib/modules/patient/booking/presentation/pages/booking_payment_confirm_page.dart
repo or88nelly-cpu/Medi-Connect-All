@@ -9,8 +9,9 @@ import 'package:medi_connect/modules/patient/booking/presentation/bloc/specialit
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
-import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_cubit.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_bloc.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/medi_logo_loader.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/booking_success_page.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/widgets/booking_stepper.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/widgets/payment_security_info.dart';
@@ -46,7 +47,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
-    return BlocConsumer<SpecialityBookingCubit, SpecialityBookingState>(
+    return BlocConsumer<SpecialityBookingBloc, SpecialityBookingState>(
       listener: (context, state) {
         if (state.status == SpecialityBookingStatus.success) {
           final authState = context.read<AuthBloc>().state;
@@ -87,6 +88,12 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
         }
       },
       builder: (context, state) {
+        if (state.status == SpecialityBookingStatus.loading) {
+          return const Scaffold(
+            body: Center(child: MediLogoLoader()),
+          );
+        }
+
         final docInfo = state.selectedDoctor;
         final date = state.selectedDate;
         final slot = state.selectedSlot;
@@ -116,13 +123,13 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
                 final paymentMethodsList = const ['UPI', 'Credit/Debit Card', 'Net Banking', 'Wallet', 'Pay Later'];
                 final selectedMethod = paymentMethodsList[_selectedPaymentNotifier.value];
 
-                context.read<SpecialityBookingCubit>().confirmPayment(
-                      context.read<AdminAppointmentsBloc>(),
-                      userModel.id,
-                      userModel.fullName,
-                      widget.specialityName,
-                      selectedMethod,
-                    );
+                context.read<SpecialityBookingBloc>().add(ConfirmPayment(
+                      appointmentsBloc: context.read<AdminAppointmentsBloc>(),
+                      patientId: userModel.id,
+                      patientName: userModel.fullName,
+                      specialtyName: widget.specialityName,
+                      paymentMethod: selectedMethod,
+                    ));
               }
             },
           ),

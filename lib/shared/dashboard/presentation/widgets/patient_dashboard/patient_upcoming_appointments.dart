@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/doctor_image_widget.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/pages/patient_all_appointments_page.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/pages/patient_appointment_detail_page.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
@@ -13,10 +16,12 @@ class PatientUpcomingAppointments extends StatefulWidget {
   const PatientUpcomingAppointments({super.key});
 
   @override
-  State<PatientUpcomingAppointments> createState() => _PatientUpcomingAppointmentsState();
+  State<PatientUpcomingAppointments> createState() =>
+      _PatientUpcomingAppointmentsState();
 }
 
-class _PatientUpcomingAppointmentsState extends State<PatientUpcomingAppointments> {
+class _PatientUpcomingAppointmentsState
+    extends State<PatientUpcomingAppointments> {
   @override
   void initState() {
     super.initState();
@@ -39,7 +44,8 @@ class _PatientUpcomingAppointmentsState extends State<PatientUpcomingAppointment
     } catch (_) {
       final now = DateTime.now();
       final todayDateOnly = DateTime(now.year, now.month, now.day);
-      return date.isAfter(todayDateOnly) || date.isAtSameMomentAs(todayDateOnly);
+      return date.isAfter(todayDateOnly) ||
+          date.isAtSameMomentAs(todayDateOnly);
     }
   }
 
@@ -62,15 +68,23 @@ class _PatientUpcomingAppointmentsState extends State<PatientUpcomingAppointment
             List<AppointmentEntity> upcomingApts = [];
             if (aptState is AdminAppointmentsLoaded) {
               upcomingApts = aptState.appointments
-                  .where((apt) =>
-                      apt.patientId == user.id &&
-                      (apt.status.toLowerCase() == 'confirmed' || apt.status.toLowerCase() == 'pending') &&
-                      _isFutureAppointment(apt.appointmentDate, apt.appointmentTime))
+                  .where(
+                    (apt) =>
+                        apt.patientId == user.id &&
+                        (apt.status.toLowerCase() == 'confirmed' ||
+                            apt.status.toLowerCase() == 'pending') &&
+                        _isFutureAppointment(
+                          apt.appointmentDate,
+                          apt.appointmentTime,
+                        ),
+                  )
                   .toList();
 
               // Sort by date (closest upcoming first)
               upcomingApts.sort((a, b) {
-                final dateCompare = a.appointmentDate.compareTo(b.appointmentDate);
+                final dateCompare = a.appointmentDate.compareTo(
+                  b.appointmentDate,
+                );
                 if (dateCompare != 0) return dateCompare;
                 return a.appointmentTime.compareTo(b.appointmentTime);
               });
@@ -92,9 +106,12 @@ class _PatientUpcomingAppointmentsState extends State<PatientUpcomingAppointment
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Normally taps to view bookings tab
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Please select Bookings tab in bottom bar to view all!')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) =>
+                                const PatientAllAppointmentsPage(),
+                          ),
                         );
                       },
                       child: Text(
@@ -113,7 +130,12 @@ class _PatientUpcomingAppointmentsState extends State<PatientUpcomingAppointment
                 if (upcomingApts.isEmpty)
                   _buildNoUpcomingCard(context, cardBg, textColor)
                 else
-                  _buildUpcomingAptCard(context, upcomingApts.first, cardBg, textColor),
+                  _buildUpcomingAptCard(
+                    context,
+                    upcomingApts.first,
+                    cardBg,
+                    textColor,
+                  ),
               ],
             );
           },
@@ -122,7 +144,11 @@ class _PatientUpcomingAppointmentsState extends State<PatientUpcomingAppointment
     );
   }
 
-  Widget _buildNoUpcomingCard(BuildContext context, Color cardBg, Color textColor) {
+  Widget _buildNoUpcomingCard(
+    BuildContext context,
+    Color cardBg,
+    Color textColor,
+  ) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
@@ -167,103 +193,116 @@ class _PatientUpcomingAppointmentsState extends State<PatientUpcomingAppointment
     Color cardBg,
     Color textColor,
   ) {
-    final formattedDate = DateFormat('EEEE, d MMMM yyyy').format(apt.appointmentDate);
+    final formattedDate = DateFormat(
+      'EEEE, d MMMM yyyy',
+    ).format(apt.appointmentDate);
     final isPending = apt.status.toLowerCase() == 'pending';
-    final statusColor = isPending ? const Color(0xFFF59E0B) : const Color(0xFF10B981);
+    final statusColor = isPending
+        ? const Color(0xFFF59E0B)
+        : const Color(0xFF10B981);
 
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(16.r),
-      decoration: BoxDecoration(
-        color: cardBg,
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.border(context)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10.r,
-            offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => PatientAppointmentDetailPage(appointment: apt),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          // Doctor Avatar placeholder
-          Container(
-            width: 46.r,
-            height: 46.r,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.08),
-              shape: BoxShape.circle,
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16.r),
+        decoration: BoxDecoration(
+          color: cardBg,
+          borderRadius: BorderRadius.circular(20.r),
+          border: Border.all(color: AppColors.border(context)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.02),
+              blurRadius: 10.r,
+              offset: const Offset(0, 4),
             ),
-            alignment: Alignment.center,
-            child: Icon(Icons.person_rounded, color: AppColors.primary, size: 26.r),
-          ),
-          SizedBox(width: 14.w),
+          ],
+        ),
+        child: Row(
+          children: [
+            // Doctor Avatar placeholder
+            DoctorImageWidget(doctorId: apt.doctorId, size: 46.r),
+            SizedBox(width: 14.w),
 
-          // Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      apt.doctorName,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeight.w900,
-                        color: textColor,
+            // Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        apt.doctorName,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w900,
+                          color: textColor,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 4.w),
-                    Icon(Icons.verified_rounded, color: const Color(0xFF3B5BFD), size: 12.r),
-                  ],
-                ),
-                Text(
-                  '${apt.specialty} Specialty',
-                  style: TextStyle(
-                    fontSize: 9.sp,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
+                      SizedBox(width: 4.w),
+                      Icon(
+                        Icons.verified_rounded,
+                        color: const Color(0xFF3B5BFD),
+                        size: 12.r,
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: 8.h),
-                Row(
-                  children: [
-                    Icon(Icons.calendar_month_outlined, color: AppColors.primary, size: 12.r),
-                    SizedBox(width: 4.w),
-                    Text(
-                      '$formattedDate • ${apt.appointmentTime}',
-                      style: TextStyle(
-                        fontSize: 9.sp,
-                        color: textColor,
-                        fontWeight: FontWeight.w800,
-                      ),
+                  Text(
+                    '${apt.specialty} Specialty',
+                    style: TextStyle(
+                      fontSize: 9.sp,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          // Status Badge
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-            decoration: BoxDecoration(
-              color: statusColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(color: statusColor.withValues(alpha: 0.2)),
-            ),
-            child: Text(
-              isPending ? 'Pending Payment' : 'Confirmed',
-              style: TextStyle(
-                color: statusColor,
-                fontSize: 8.sp,
-                fontWeight: FontWeight.w900,
+                  ),
+                  SizedBox(height: 8.h),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month_outlined,
+                        color: AppColors.primary,
+                        size: 12.r,
+                      ),
+                      SizedBox(width: 4.w),
+                      Text(
+                        '$formattedDate • ${apt.appointmentTime}',
+                        style: TextStyle(
+                          fontSize: 9.sp,
+                          color: textColor,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+
+            // Status Badge
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+              decoration: BoxDecoration(
+                color: statusColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8.r),
+                border: Border.all(color: statusColor.withValues(alpha: 0.2)),
+              ),
+              child: Text(
+                isPending ? 'Pending Payment' : 'Confirmed',
+                style: TextStyle(
+                  color: statusColor,
+                  fontSize: 8.sp,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

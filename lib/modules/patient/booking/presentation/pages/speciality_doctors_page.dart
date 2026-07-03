@@ -9,8 +9,9 @@ import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_status.dart';
 import 'package:medi_connect/modules/patient/speciality/domain/entities/speciality_entity.dart';
-import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_cubit.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_bloc.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/widgets/doctor_shimmer_loader.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/doctor_detail_booking_page.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
@@ -34,7 +35,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) =>
-          SpecialityBookingCubit()..loadDoctors(speciality.id, speciality.name),
+          SpecialityBookingBloc()..add(LoadDoctors(specialityId: speciality.id, specialityName: speciality.name)),
       child: Builder(
         builder: (context) {
           return CustomScaffold(
@@ -221,10 +222,13 @@ class SpecialityDoctorsPage extends StatelessWidget {
                 context.go('/patient/dashboard');
               },
             ),
-            body: BlocBuilder<SpecialityBookingCubit, SpecialityBookingState>(
+            body: BlocBuilder<SpecialityBookingBloc, SpecialityBookingState>(
               builder: (context, state) {
                 if (state.status == SpecialityBookingStatus.loading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: DoctorShimmerLoader(),
+                  );
                 }
 
                 final docCount = state.doctors.length;
@@ -644,14 +648,12 @@ class SpecialityDoctorsPage extends StatelessWidget {
                     // Book Now Button
                     GestureDetector(
                       onTap: () {
-                        context.read<SpecialityBookingCubit>().selectDoctor(
-                          docInfo,
-                        );
+                        context.read<SpecialityBookingBloc>().add(SelectDoctor(doctor: docInfo));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (ctx) => BlocProvider.value(
-                              value: context.read<SpecialityBookingCubit>(),
+                              value: context.read<SpecialityBookingBloc>(),
                               child: DoctorDetailBookingPage(
                                 gradientColors: gradientColors,
                                 specialityName: speciality.name,

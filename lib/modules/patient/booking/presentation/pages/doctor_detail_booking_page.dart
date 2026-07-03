@@ -6,7 +6,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_cubit.dart';
+import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_bloc.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/bloc/speciality_booking_state.dart';
 import 'package:medi_connect/modules/patient/booking/presentation/pages/booking_payment_confirm_page.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
@@ -58,7 +58,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
-    return BlocBuilder<SpecialityBookingCubit, SpecialityBookingState>(
+    return BlocBuilder<SpecialityBookingBloc, SpecialityBookingState>(
       builder: (context, state) {
         final docInfo = state.selectedDoctor;
         if (docInfo == null) {
@@ -313,13 +313,13 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                           }
                         : () {
                             context
-                                .read<SpecialityBookingCubit>()
-                                .proceedToPayment();
+                                .read<SpecialityBookingBloc>()
+                                .add(ProceedToPayment());
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (ctx) => BlocProvider.value(
-                                  value: context.read<SpecialityBookingCubit>(),
+                                  value: context.read<SpecialityBookingBloc>(),
                                   child: BookingPaymentConfirmPage(
                                     specialityName: widget.specialityName,
                                   ),
@@ -771,7 +771,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                   state.selectedDate!.day == d.day;
               return GestureDetector(
                 onTap: () =>
-                    context.read<SpecialityBookingCubit>().selectDate(d),
+                    context.read<SpecialityBookingBloc>().add(SelectDate(date: d)),
                 child: Container(
                   width: 52.w,
                   margin: EdgeInsets.only(right: 8.w),
@@ -890,7 +890,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                   final isSelected = state.selectedSlot == slot;
 
                   return GestureDetector(
-                    onTap: isBooked ? null : () => context.read<SpecialityBookingCubit>().selectSlot(slot),
+                    onTap: isBooked ? null : () => context.read<SpecialityBookingBloc>().add(SelectSlot(slot: slot)),
                     child: Container(
                       decoration: BoxDecoration(
                         color: isBooked
