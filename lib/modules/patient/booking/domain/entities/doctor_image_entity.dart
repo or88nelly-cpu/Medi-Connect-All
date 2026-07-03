@@ -1,4 +1,5 @@
 class DoctorImageEntity {
   final String? imageUrl;
-  const DoctorImageEntity(this.imageUrl);
+  final String? gender;
+  const DoctorImageEntity(this.imageUrl, this.gender);
 }

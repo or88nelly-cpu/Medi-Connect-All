@@ -1,7 +1,13 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+class DoctorImageUrlAndGender {
+  final String? imageUrl;
+  final String? gender;
+  DoctorImageUrlAndGender(this.imageUrl, this.gender);
+}
+
 abstract class DoctorImageRemoteDataSource {
-  Future<String?> getDoctorImageUrl(String doctorId);
+  Future<DoctorImageUrlAndGender> getDoctorImageUrl(String doctorId);
 }
 
 class DoctorImageRemoteDataSourceImpl implements DoctorImageRemoteDataSource {
@@ -10,42 +16,44 @@ class DoctorImageRemoteDataSourceImpl implements DoctorImageRemoteDataSource {
   DoctorImageRemoteDataSourceImpl(this._supabase);
 
   @override
-  Future<String?> getDoctorImageUrl(String doctorId) async {
-    if (doctorId.isEmpty) return null;
+  Future<DoctorImageUrlAndGender> getDoctorImageUrl(String doctorId) async {
+    if (doctorId.isEmpty) return DoctorImageUrlAndGender(null, null);
 
-    // Path 1: Join doctors -> employees -> users (to retrieve profile_photo from users table)
+    // Path 1: Join doctors -> employees!doctors_employee_id_fkey -> users (to retrieve profile_photo and gender)
     try {
       final response = await _supabase
           .from('doctors')
-          .select('employees(users(profile_photo, profile_image))')
+          .select('employees!doctors_employee_id_fkey(users(profile_photo, profile_image, gender))')
           .eq('id', doctorId)
           .maybeSingle();
-      if (response != null && response['employees'] != null) {
-        final emp = response['employees'];
+      if (response != null && response['employees!doctors_employee_id_fkey'] != null) {
+        final emp = response['employees!doctors_employee_id_fkey'];
         if (emp is Map && emp['users'] != null) {
           final usr = emp['users'];
           if (usr is Map) {
             final img = (usr['profile_photo'] ?? usr['profile_image']) as String?;
-            if (img != null && img.isNotEmpty) return img;
+            final gen = usr['gender'] as String?;
+            return DoctorImageUrlAndGender(img, gen);
           }
         }
       }
     } catch (_) {}
 
-    // Path 2: Join doctors (linked by user_id) -> employees -> users
+    // Path 2: Join doctors (linked by user_id) -> employees!doctors_employee_id_fkey -> users
     try {
       final response = await _supabase
           .from('doctors')
-          .select('employees(users(profile_photo, profile_image))')
+          .select('employees!doctors_employee_id_fkey(users(profile_photo, profile_image, gender))')
           .eq('user_id', doctorId)
           .maybeSingle();
-      if (response != null && response['employees'] != null) {
-        final emp = response['employees'];
+      if (response != null && response['employees!doctors_employee_id_fkey'] != null) {
+        final emp = response['employees!doctors_employee_id_fkey'];
         if (emp is Map && emp['users'] != null) {
           final usr = emp['users'];
           if (usr is Map) {
             final img = (usr['profile_photo'] ?? usr['profile_image']) as String?;
-            if (img != null && img.isNotEmpty) return img;
+            final gen = usr['gender'] as String?;
+            return DoctorImageUrlAndGender(img, gen);
           }
         }
       }
@@ -55,12 +63,13 @@ class DoctorImageRemoteDataSourceImpl implements DoctorImageRemoteDataSource {
     try {
       final response = await _supabase
           .from('users')
-          .select('profile_photo, profile_image')
+          .select('profile_photo, profile_image, gender')
           .eq('id', doctorId)
           .maybeSingle();
       if (response != null) {
         final img = (response['profile_photo'] ?? response['profile_image']) as String?;
-        if (img != null && img.isNotEmpty) return img;
+        final gen = response['gender'] as String?;
+        return DoctorImageUrlAndGender(img, gen);
       }
     } catch (_) {}
 
@@ -68,18 +77,19 @@ class DoctorImageRemoteDataSourceImpl implements DoctorImageRemoteDataSource {
     try {
       final response = await _supabase
           .from('employees')
-          .select('users(profile_photo, profile_image)')
+          .select('users(profile_photo, profile_image, gender)')
           .eq('id', doctorId)
           .maybeSingle();
       if (response != null && response['users'] != null) {
         final usr = response['users'];
         if (usr is Map) {
           final img = (usr['profile_photo'] ?? usr['profile_image']) as String?;
-          if (img != null && img.isNotEmpty) return img;
+          final gen = usr['gender'] as String?;
+          return DoctorImageUrlAndGender(img, gen);
         }
       }
     } catch (_) {}
 
-    return null;
+    return DoctorImageUrlAndGender(null, null);
   }
 }

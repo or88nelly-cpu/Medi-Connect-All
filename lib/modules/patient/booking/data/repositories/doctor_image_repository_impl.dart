@@ -13,8 +13,8 @@ class DoctorImageRepositoryImpl implements DoctorImageRepository {
   @override
   Future<Either<Failure, DoctorImageEntity>> getDoctorImageUrl(String doctorId) async {
     try {
-      final imageUrl = await _remoteDataSource.getDoctorImageUrl(doctorId);
-      return Right(DoctorImageEntity(imageUrl));
+      final result = await _remoteDataSource.getDoctorImageUrl(doctorId);
+      return Right(DoctorImageEntity(result.imageUrl, result.gender));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

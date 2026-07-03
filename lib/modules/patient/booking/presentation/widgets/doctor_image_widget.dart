@@ -28,9 +28,16 @@ class DoctorImageWidget extends StatelessWidget {
       child: BlocBuilder<DoctorImageBloc, DoctorImageState>(
         builder: (context, state) {
           String? photo;
+          String? gender;
           if (state is DoctorImageLoaded) {
             photo = state.imageUrl;
+            gender = state.gender;
           }
+          final isFemale = gender != null &&
+              (gender.toLowerCase().contains('female') ||
+                  gender.toLowerCase().contains('woman'));
+          final fallbackAvatar = isFemale ? AppAssets.femaleAvatarPng : AppAssets.maleAvatarPng;
+
           return ClipRRect(
             borderRadius: BorderRadius.circular(size / 2),
             child: CustomImageView(
@@ -39,7 +46,7 @@ class DoctorImageWidget extends StatelessWidget {
               height: size,
               fit: BoxFit.cover,
               errorWidget: Image.asset(
-                AppAssets.maleAvatarPng,
+                fallbackAvatar,
                 width: size,
                 height: size,
                 fit: BoxFit.cover,
