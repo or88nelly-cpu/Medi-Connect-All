@@ -19,15 +19,50 @@ class PaymentMethodsSelector extends StatelessWidget {
       builder: (context, selectedIdx, _) {
         return Column(
           children: [
-            _buildPaymentOption(context, 0, Icons.qr_code_scanner_rounded, 'UPI', 'Pay using any UPI app', selectedIdx),
+            _buildPaymentOption(
+              context,
+              0,
+              Icons.qr_code_scanner_rounded,
+              'UPI',
+              'Pay using any UPI app',
+              selectedIdx,
+            ),
             SizedBox(height: 10.h),
-            _buildPaymentOption(context, 1, Icons.credit_card_rounded, 'Credit / Debit Card', 'Visa, MasterCard, Rupay & more', selectedIdx),
+            _buildPaymentOption(
+              context,
+              1,
+              Icons.credit_card_rounded,
+              'Credit / Debit Card',
+              'Visa, MasterCard, Rupay & more',
+              selectedIdx,
+            ),
             SizedBox(height: 10.h),
-            _buildPaymentOption(context, 2, Icons.account_balance_rounded, 'Net Banking', 'Pay using your bank account', selectedIdx),
+            _buildPaymentOption(
+              context,
+              2,
+              Icons.account_balance_rounded,
+              'Net Banking',
+              'Pay using your bank account',
+              selectedIdx,
+            ),
             SizedBox(height: 10.h),
-            _buildPaymentOption(context, 3, Icons.account_balance_wallet_rounded, 'Wallet', 'Paytm, Mobikwik & more', selectedIdx),
+            _buildPaymentOption(
+              context,
+              3,
+              Icons.account_balance_wallet_rounded,
+              'Wallet',
+              'Paytm, Mobikwik & more',
+              selectedIdx,
+            ),
             SizedBox(height: 10.h),
-            _buildPaymentOption(context, 4, Icons.pending_actions_rounded, 'Pay Later', 'Pay at counter or reception desk', selectedIdx),
+            _buildPaymentOption(
+              context,
+              4,
+              Icons.pending_actions_rounded,
+              'Pay Later',
+              'Pay at counter or reception desk',
+              selectedIdx,
+            ),
           ],
         );
       },
@@ -51,13 +86,19 @@ class PaymentMethodsSelector extends StatelessWidget {
           color: cardBg,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            color: isSelected ? const Color(0xFF3B5BFD) : AppColors.border(context),
+            color: isSelected
+                ? const Color(0xFF3B5BFD)
+                : AppColors.border(context),
             width: isSelected ? 1.5 : 1,
           ),
         ),
         child: Row(
           children: [
-            Icon(icon, color: isSelected ? const Color(0xFF3B5BFD) : Colors.grey, size: 22.r),
+            Icon(
+              icon,
+              color: isSelected ? const Color(0xFF3B5BFD) : Colors.grey,
+              size: 22.r,
+            ),
             SizedBox(width: 12.w),
             Expanded(
               child: Column(
@@ -68,12 +109,18 @@ class PaymentMethodsSelector extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11.5.sp,
                       fontWeight: FontWeight.w900,
-                      color: isSelected ? const Color(0xFF3B5BFD) : Colors.black87,
+                      color: isSelected
+                          ? const Color(0xFF3B5BFD)
+                          : Colors.black87,
                     ),
                   ),
                   Text(
                     desc,
-                    style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 8.sp,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -84,7 +131,9 @@ class PaymentMethodsSelector extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? const Color(0xFF3B5BFD) : Colors.grey.shade400,
+                  color: isSelected
+                      ? const Color(0xFF3B5BFD)
+                      : Colors.grey.shade400,
                   width: isSelected ? 4 : 1.5,
                 ),
               ),

@@ -67,7 +67,8 @@ class DoctorModel extends DoctorEntity {
       education: json['education'] as String?,
       signatureUrl: json['signature_url'] as String?,
       profilePhoto: json['profile_photo'] as String?,
-      acceptsOnlineConsultation: json['accepts_online_consultation'] as bool? ?? true,
+      acceptsOnlineConsultation:
+          json['accepts_online_consultation'] as bool? ?? true,
       isAvailable: json['is_available'] as bool? ?? true,
       userId: json['user_id'] as String?,
     );

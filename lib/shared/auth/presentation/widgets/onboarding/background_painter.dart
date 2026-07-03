@@ -5,10 +5,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 class OnboardingBackground extends StatelessWidget {
   final Widget child;
 
-  const OnboardingBackground({
-    super.key,
-    required this.child,
-  });
+  const OnboardingBackground({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -114,15 +111,23 @@ class BackgroundWavePainter extends CustomPainter {
       ..color = AppColors.primary.withValues(alpha: isDark ? 0.04 : 0.06)
       ..strokeWidth = 2.0.r
       ..style = PaintingStyle.stroke;
-    
+
     _drawCross(canvas, Offset(w * 0.85, h * 0.22), 8.r, crossPaint);
     _drawCross(canvas, Offset(w * 0.15, h * 0.72), 10.r, crossPaint);
     _drawCross(canvas, Offset(w * 0.1, h * 0.18), 6.r, crossPaint);
   }
 
   void _drawCross(Canvas canvas, Offset center, double size, Paint paint) {
-    canvas.drawLine(Offset(center.dx - size, center.dy), Offset(center.dx + size, center.dy), paint);
-    canvas.drawLine(Offset(center.dx, center.dy - size), Offset(center.dx, center.dy + size), paint);
+    canvas.drawLine(
+      Offset(center.dx - size, center.dy),
+      Offset(center.dx + size, center.dy),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(center.dx, center.dy - size),
+      Offset(center.dx, center.dy + size),
+      paint,
+    );
   }
 
   @override

@@ -18,8 +18,13 @@ void main() {
         'end_time': '13:00',
         'is_available': true,
       };
-      print('Attempting insert with UUID doctor_id and integer day_of_week: $payload');
-      final response = await client.from('doctor_availability').insert(payload).select();
+      print(
+        'Attempting insert with UUID doctor_id and integer day_of_week: $payload',
+      );
+      final response = await client
+          .from('doctor_availability')
+          .insert(payload)
+          .select();
       print('SUCCESS! Inserted: $response');
     } catch (e) {
       print('Failed: $e');

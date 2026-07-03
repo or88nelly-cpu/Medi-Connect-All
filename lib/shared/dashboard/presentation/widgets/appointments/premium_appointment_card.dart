@@ -51,9 +51,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             ? AppColors.statusConfirmedBgDark
             : AppColors.statusConfirmedBgLight;
       case 'Pending MRD':
-        return isDark
-            ? const Color(0xFF3B0764)
-            : const Color(0xFFF3E8FF);
+        return isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingBgDark
@@ -77,9 +75,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             ? AppColors.statusConfirmedTextDark
             : AppColors.statusConfirmedTextLight;
       case 'Pending MRD':
-        return isDark
-            ? const Color(0xFFC084FC)
-            : const Color(0xFF7E22CE);
+        return isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingTextDark
@@ -131,7 +127,10 @@ class PremiumAppointmentCard extends StatelessWidget {
     var displayStatus = appointment.status;
     if (appointment.status.toLowerCase() != 'completed' &&
         appointment.status.toLowerCase() != 'cancelled' &&
-        _isAppointmentInPast(appointment.appointmentDate, appointment.appointmentTime)) {
+        _isAppointmentInPast(
+          appointment.appointmentDate,
+          appointment.appointmentTime,
+        )) {
       displayStatus = 'Pending MRD';
     }
 

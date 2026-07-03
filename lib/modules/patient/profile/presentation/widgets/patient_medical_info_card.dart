@@ -7,10 +7,7 @@ import 'package:medi_connect/shared/auth/domain/entities/patient_entity.dart';
 class PatientMedicalInfoCard extends StatelessWidget {
   final PatientEntity patient;
 
-  const PatientMedicalInfoCard({
-    super.key,
-    required this.patient,
-  });
+  const PatientMedicalInfoCard({super.key, required this.patient});
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +35,36 @@ class PatientMedicalInfoCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _buildDetailRow("Blood Group", patient.bloodGroup ?? 'Not Specified', context),
-            _buildDetailRow("Height (cm)", patient.height != null ? "${patient.height} cm" : 'Not Set', context),
-            _buildDetailRow("Weight (kg)", patient.weight != null ? "${patient.weight} kg" : 'Not Set', context),
-            _buildDetailRow("Allergies", patient.allergies ?? 'No Known Allergies', context),
-            _buildDetailRow("Chronic Diseases", patient.chronicDiseases ?? 'No Chronic Diseases', context),
-            _buildDetailRow("Remarks/Notes", patient.remarks ?? 'None', context),
+            _buildDetailRow(
+              "Blood Group",
+              patient.bloodGroup ?? 'Not Specified',
+              context,
+            ),
+            _buildDetailRow(
+              "Height (cm)",
+              patient.height != null ? "${patient.height} cm" : 'Not Set',
+              context,
+            ),
+            _buildDetailRow(
+              "Weight (kg)",
+              patient.weight != null ? "${patient.weight} kg" : 'Not Set',
+              context,
+            ),
+            _buildDetailRow(
+              "Allergies",
+              patient.allergies ?? 'No Known Allergies',
+              context,
+            ),
+            _buildDetailRow(
+              "Chronic Diseases",
+              patient.chronicDiseases ?? 'No Chronic Diseases',
+              context,
+            ),
+            _buildDetailRow(
+              "Remarks/Notes",
+              patient.remarks ?? 'None',
+              context,
+            ),
           ],
         ),
       ),

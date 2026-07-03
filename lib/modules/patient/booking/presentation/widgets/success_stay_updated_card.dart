@@ -39,7 +39,11 @@ class SuccessStayUpdatedCard extends StatelessWidget {
               color: Color(0xFFF3E8FF),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.notifications_active_rounded, color: const Color(0xFF8B5CF6), size: 24.r),
+            child: Icon(
+              Icons.notifications_active_rounded,
+              color: const Color(0xFF8B5CF6),
+              size: 24.r,
+            ),
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -48,11 +52,19 @@ class SuccessStayUpdatedCard extends StatelessWidget {
               children: [
                 Text(
                   'Stay Updated',
-                  style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: textColor),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w900,
+                    color: textColor,
+                  ),
                 ),
                 Text(
                   'We will send you a reminder before your appointment.',
-                  style: TextStyle(fontSize: 8.5.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 8.5.sp,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: 8.h),
                 Wrap(
@@ -84,10 +96,18 @@ class SuccessStayUpdatedCard extends StatelessWidget {
         children: [
           Text(
             '$tag: $value',
-            style: TextStyle(color: Colors.grey.shade700, fontSize: 7.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.grey.shade700,
+              fontSize: 7.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(width: 3.w),
-          Icon(Icons.check_circle_rounded, color: const Color(0xFF10B981), size: 8.r),
+          Icon(
+            Icons.check_circle_rounded,
+            color: const Color(0xFF10B981),
+            size: 8.r,
+          ),
         ],
       ),
     );

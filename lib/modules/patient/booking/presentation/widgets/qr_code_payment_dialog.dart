@@ -9,10 +9,7 @@ import 'package:medi_connect/core/widgets/buttons/common_button.dart';
 class QRCodePaymentDialog extends StatelessWidget {
   final VoidCallback onConfirm;
 
-  const QRCodePaymentDialog({
-    super.key,
-    required this.onConfirm,
-  });
+  const QRCodePaymentDialog({super.key, required this.onConfirm});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +22,10 @@ class QRCodePaymentDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       title: Text(
         AppStrings.upiQrPayment,
-        style: AppTextStyles.titleLarge.copyWith(fontWeight: FontWeight.bold, color: textColor),
+        style: AppTextStyles.titleLarge.copyWith(
+          fontWeight: FontWeight.bold,
+          color: textColor,
+        ),
         textAlign: TextAlign.center,
       ),
       content: Column(
@@ -47,11 +47,16 @@ class QRCodePaymentDialog extends StatelessWidget {
               border: Border.all(color: Colors.grey[200]!),
             ),
             child: CustomImageView(
-              imagePath: '', // fallback to errorWidget which renders standard qr icon
+              imagePath:
+                  '', // fallback to errorWidget which renders standard qr icon
               width: 140.r,
               height: 140.r,
               fit: BoxFit.contain,
-              errorWidget: Icon(Icons.qr_code_2_rounded, size: 140.r, color: Colors.black87),
+              errorWidget: Icon(
+                Icons.qr_code_2_rounded,
+                size: 140.r,
+                color: Colors.black87,
+              ),
             ),
           ),
           SizedBox(height: 16.h),
@@ -62,7 +67,11 @@ class QRCodePaymentDialog extends StatelessWidget {
               SizedBox(width: 4.w),
               Text(
                 AppStrings.secureUpiGateway,
-                style: TextStyle(color: Colors.green, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),

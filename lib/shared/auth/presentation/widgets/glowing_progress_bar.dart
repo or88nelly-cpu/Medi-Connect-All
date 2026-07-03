@@ -24,10 +24,7 @@ class _GlowingProgressBarState extends State<GlowingProgressBar>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
     _progressAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOutCubic),
     );
@@ -73,7 +70,9 @@ class _GlowingProgressBarState extends State<GlowingProgressBar>
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primaryLight.withValues(alpha: 0.6),
+                            color: AppColors.primaryLight.withValues(
+                              alpha: 0.6,
+                            ),
                             blurRadius: 8.r,
                             spreadRadius: 1.r,
                             offset: const Offset(0, 0),

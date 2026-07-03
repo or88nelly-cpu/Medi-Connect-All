@@ -1,4 +1,3 @@
-
 import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/modules/patient/booking/data/datasources/doctor_image_remote_datasource.dart';
@@ -11,7 +10,9 @@ class DoctorImageRepositoryImpl implements DoctorImageRepository {
   DoctorImageRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, DoctorImageEntity>> getDoctorImageUrl(String doctorId) async {
+  Future<Either<Failure, DoctorImageEntity>> getDoctorImageUrl(
+    String doctorId,
+  ) async {
     try {
       final result = await _remoteDataSource.getDoctorImageUrl(doctorId);
       return Right(DoctorImageEntity(result.imageUrl, result.gender));

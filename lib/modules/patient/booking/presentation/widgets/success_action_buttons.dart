@@ -26,7 +26,11 @@ class SuccessActionButtons extends StatelessWidget {
           borderRadius: 10.r,
           color: AppColors.primary,
           onPressed: onDownloadReceipt,
-          icon: Icon(Icons.download_rounded, color: AppColors.primary, size: 14.r),
+          icon: Icon(
+            Icons.download_rounded,
+            color: AppColors.primary,
+            size: 14.r,
+          ),
         ),
         SizedBox(width: 12.w),
         CommonButton(

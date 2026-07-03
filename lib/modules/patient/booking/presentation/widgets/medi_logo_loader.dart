@@ -5,16 +5,14 @@ import 'package:medi_connect/core/constants/app_assets.dart';
 class MediLogoLoader extends StatefulWidget {
   final double? size;
 
-  const MediLogoLoader({
-    super.key,
-    this.size,
-  });
+  const MediLogoLoader({super.key, this.size});
 
   @override
   State<MediLogoLoader> createState() => _MediLogoLoaderState();
 }
 
-class _MediLogoLoaderState extends State<MediLogoLoader> with SingleTickerProviderStateMixin {
+class _MediLogoLoaderState extends State<MediLogoLoader>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -27,10 +25,7 @@ class _MediLogoLoaderState extends State<MediLogoLoader> with SingleTickerProvid
     )..repeat(reverse: true);
 
     _animation = Tween<double>(begin: 0.85, end: 1.15).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOutBack,
-      ),
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOutBack),
     );
   }
 

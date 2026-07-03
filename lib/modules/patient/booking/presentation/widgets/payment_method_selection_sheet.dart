@@ -73,7 +73,11 @@ class PaymentMethodSelectionSheet extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: AppColors.primary.withValues(alpha: 0.1),
                     ),
-                    child: Icon(Icons.qr_code_scanner_rounded, color: AppColors.primary, size: 24.r),
+                    child: Icon(
+                      Icons.qr_code_scanner_rounded,
+                      color: AppColors.primary,
+                      size: 24.r,
+                    ),
                   ),
                   SizedBox(width: 16.w),
                   Expanded(
@@ -126,7 +130,11 @@ class PaymentMethodSelectionSheet extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: Colors.green.withValues(alpha: 0.1),
                     ),
-                    child: Icon(Icons.payments_rounded, color: Colors.green, size: 24.r),
+                    child: Icon(
+                      Icons.payments_rounded,
+                      color: Colors.green,
+                      size: 24.r,
+                    ),
                   ),
                   SizedBox(width: 16.w),
                   Expanded(

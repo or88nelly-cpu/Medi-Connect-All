@@ -59,7 +59,8 @@ class _OnboardingBookingIllustrationState
           AnimatedBuilder(
             animation: _controller,
             builder: (context, _) {
-              final scale = 1.0 + 0.08 * math.sin(_controller.value * 2 * math.pi);
+              final scale =
+                  1.0 + 0.08 * math.sin(_controller.value * 2 * math.pi);
               return Container(
                 width: 190.r * scale,
                 height: 190.r * scale,
@@ -152,14 +153,16 @@ class _OnboardingBookingIllustrationState
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 5,
-                            crossAxisSpacing: 6.r,
-                            mainAxisSpacing: 6.r,
-                          ),
+                                crossAxisCount: 5,
+                                crossAxisSpacing: 6.r,
+                                mainAxisSpacing: 6.r,
+                              ),
                           itemCount: 20,
                           itemBuilder: (context, index) {
                             // Highlight 3 items in primary and secondary colors
-                            Color itemColor = Colors.grey.withValues(alpha: 0.15);
+                            Color itemColor = Colors.grey.withValues(
+                              alpha: 0.15,
+                            );
                             if (index == 7) itemColor = AppColors.secondary;
                             if (index == 12) itemColor = AppColors.primaryLight;
                             if (index == 13) itemColor = AppColors.primary;
@@ -228,10 +231,7 @@ class ClockNeedlePainter extends CustomPainter {
   final double angle;
   final Color needleColor;
 
-  ClockNeedlePainter({
-    required this.angle,
-    required this.needleColor,
-  });
+  ClockNeedlePainter({required this.angle, required this.needleColor});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -280,7 +280,7 @@ class ClockNeedlePainter extends CustomPainter {
       ..color = needleColor.withValues(alpha: 0.6)
       ..strokeWidth = 3.0.r
       ..strokeCap = StrokeCap.round;
-    
+
     final hourAngle = angle / 12 - math.pi / 6;
     final hourEnd = Offset(
       center.dx + (radius - 18.r) * math.cos(hourAngle - math.pi / 2),

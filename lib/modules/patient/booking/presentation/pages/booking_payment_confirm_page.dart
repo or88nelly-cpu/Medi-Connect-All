@@ -23,13 +23,11 @@ import 'package:intl/intl.dart';
 class BookingPaymentConfirmPage extends StatefulWidget {
   final String specialityName;
 
-  const BookingPaymentConfirmPage({
-    super.key,
-    required this.specialityName,
-  });
+  const BookingPaymentConfirmPage({super.key, required this.specialityName});
 
   @override
-  State<BookingPaymentConfirmPage> createState() => _BookingPaymentConfirmPageState();
+  State<BookingPaymentConfirmPage> createState() =>
+      _BookingPaymentConfirmPageState();
 }
 
 class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
@@ -62,15 +60,24 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
           final randomSuffix = (Random().nextInt(9000) + 1000).toString();
           final bookingId = 'MCB$formattedDate$randomSuffix';
 
-          final paymentMethodsList = const ['UPI', 'Credit/Debit Card', 'Net Banking', 'Wallet', 'Pay Later'];
-          final selectedMethod = paymentMethodsList[_selectedPaymentNotifier.value];
+          final paymentMethodsList = const [
+            'UPI',
+            'Credit/Debit Card',
+            'Net Banking',
+            'Wallet',
+            'Pay Later',
+          ];
+          final selectedMethod =
+              paymentMethodsList[_selectedPaymentNotifier.value];
 
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (ctx) => BookingSuccessPage(
                 doctorName: state.selectedDoctor?.user.fullName ?? '',
-                doctorQual: state.selectedDoctor?.doctorInfo?.qualification ?? 'Specialist MD',
+                doctorQual:
+                    state.selectedDoctor?.doctorInfo?.qualification ??
+                    'Specialist MD',
                 specialityName: widget.specialityName,
                 date: state.selectedDate ?? DateTime.now(),
                 slot: state.selectedSlot ?? '09:00 AM',
@@ -83,15 +90,15 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
           );
         } else if (state.status == SpecialityBookingStatus.error) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage ?? "Failed to book appointment")),
+            SnackBar(
+              content: Text(state.errorMessage ?? "Failed to book appointment"),
+            ),
           );
         }
       },
       builder: (context, state) {
         if (state.status == SpecialityBookingStatus.loading) {
-          return const Scaffold(
-            body: Center(child: MediLogoLoader()),
-          );
+          return const Scaffold(body: Center(child: MediLogoLoader()));
         }
 
         final docInfo = state.selectedDoctor;
@@ -108,9 +115,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
         final selectedDateStr = DateFormat('EEEE, d MMMM yyyy').format(date);
 
         return CustomScaffold(
-          customAppbar: const CommonAppBar(
-            title: "Confirm & Pay",
-          ),
+          customAppbar: const CommonAppBar(title: "Confirm & Pay"),
           bottomNavigationBar: PaymentCheckoutBar(
             fee: fee,
             selectedPaymentNotifier: _selectedPaymentNotifier,
@@ -120,16 +125,25 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
               final authState = context.read<AuthBloc>().state;
               if (authState is Authenticated) {
                 final userModel = UserModel.fromEntity(authState.user);
-                final paymentMethodsList = const ['UPI', 'Credit/Debit Card', 'Net Banking', 'Wallet', 'Pay Later'];
-                final selectedMethod = paymentMethodsList[_selectedPaymentNotifier.value];
+                final paymentMethodsList = const [
+                  'UPI',
+                  'Credit/Debit Card',
+                  'Net Banking',
+                  'Wallet',
+                  'Pay Later',
+                ];
+                final selectedMethod =
+                    paymentMethodsList[_selectedPaymentNotifier.value];
 
-                context.read<SpecialityBookingBloc>().add(ConfirmPayment(
-                      appointmentsBloc: context.read<AdminAppointmentsBloc>(),
-                      patientId: userModel.id,
-                      patientName: userModel.fullName,
-                      specialtyName: widget.specialityName,
-                      paymentMethod: selectedMethod,
-                    ));
+                context.read<SpecialityBookingBloc>().add(
+                  ConfirmPayment(
+                    appointmentsBloc: context.read<AdminAppointmentsBloc>(),
+                    patientId: userModel.id,
+                    patientName: userModel.fullName,
+                    specialtyName: widget.specialityName,
+                    paymentMethod: selectedMethod,
+                  ),
+                );
               }
             },
           ),
@@ -143,11 +157,19 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
 
                 Text(
                   'Confirm & Pay',
-                  style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w900, color: const Color(0xFF0F172A)),
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w900,
+                    color: const Color(0xFF0F172A),
+                  ),
                 ),
                 Text(
                   'Complete your payment to confirm your appointment.',
-                  style: TextStyle(fontSize: 12.sp, color: Colors.grey, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 SizedBox(height: 20.h),
 
@@ -172,7 +194,11 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
                         children: [
                           Text(
                             'Choose Payment Method',
-                            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w900, color: const Color(0xFF0F172A)),
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w900,
+                              color: const Color(0xFF0F172A),
+                            ),
                           ),
                           SizedBox(height: 12.h),
                           PaymentMethodsSelector(
@@ -183,10 +209,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
                       ),
                     ),
                     SizedBox(width: 16.w),
-                    const Expanded(
-                      flex: 4,
-                      child: PaymentSecurityInfo(),
-                    ),
+                    const Expanded(flex: 4, child: PaymentSecurityInfo()),
                   ],
                 ),
               ],

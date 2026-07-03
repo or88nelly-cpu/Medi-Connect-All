@@ -158,7 +158,11 @@ class PendingMrdBanner extends StatelessWidget {
                     right: 20.w,
                     child: Transform.rotate(
                       angle: 0.0,
-                      child: _buildMockDocPage(isDark, Colors.white, hasStamp: true),
+                      child: _buildMockDocPage(
+                        isDark,
+                        Colors.white,
+                        hasStamp: true,
+                      ),
                     ),
                   ),
                 ],
@@ -170,8 +174,14 @@ class PendingMrdBanner extends StatelessWidget {
     );
   }
 
-  Widget _buildMockDocPage(bool isDark, Color baseBgColor, {bool hasStamp = false}) {
-    final bgColor = isDark && baseBgColor == Colors.white ? const Color(0xFF334155) : baseBgColor;
+  Widget _buildMockDocPage(
+    bool isDark,
+    Color baseBgColor, {
+    bool hasStamp = false,
+  }) {
+    final bgColor = isDark && baseBgColor == Colors.white
+        ? const Color(0xFF334155)
+        : baseBgColor;
     final lineColor = isDark ? Colors.white24 : Colors.grey[200]!;
 
     return Container(

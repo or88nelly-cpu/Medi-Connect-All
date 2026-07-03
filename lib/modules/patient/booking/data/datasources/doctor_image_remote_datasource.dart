@@ -18,7 +18,6 @@ class DoctorImageRemoteDataSourceImpl implements DoctorImageRemoteDataSource {
   DoctorImageRemoteDataSourceImpl(this._supabase);
   @override
   Future<DoctorImageUrlAndGender> getDoctorImageUrl(String doctorId) async {
-    
     if (doctorId.isEmpty) {
       return DoctorImageUrlAndGender(null, null);
     }

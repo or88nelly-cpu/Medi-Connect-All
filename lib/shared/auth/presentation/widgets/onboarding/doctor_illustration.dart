@@ -104,10 +104,7 @@ class _OnboardingDoctorIllustrationState
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
-                      colors: [
-                        AppColors.primary,
-                        AppColors.primaryLight,
-                      ],
+                      colors: [AppColors.primary, AppColors.primaryLight],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -195,17 +192,10 @@ class _OnboardingDoctorIllustrationState
 
         return Transform.translate(
           offset: Offset(0, floatOffset),
-          child: Opacity(
-            opacity: opacity,
-            child: child,
-          ),
+          child: Opacity(opacity: opacity, child: child),
         );
       },
-      child: Icon(
-        Icons.add,
-        size: size,
-        color: color,
-      ),
+      child: Icon(Icons.add, size: size, color: color),
     );
   }
 }

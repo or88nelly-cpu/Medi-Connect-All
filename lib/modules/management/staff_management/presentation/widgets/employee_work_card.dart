@@ -7,10 +7,7 @@ import 'package:medi_connect/shared/auth/domain/entities/employee_entity.dart';
 class EmployeeWorkCard extends StatelessWidget {
   final EmployeeEntity employee;
 
-  const EmployeeWorkCard({
-    super.key,
-    required this.employee,
-  });
+  const EmployeeWorkCard({super.key, required this.employee});
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +35,63 @@ class EmployeeWorkCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _buildDetailRow("Department ID", employee.departmentId ?? 'Default', context),
-            _buildDetailRow("Designation ID", employee.designationId ?? 'Staff', context),
-            _buildDetailRow("Employment Type ID", employee.employmentTypeId ?? 'Full-time', context),
-            _buildDetailRow("Reporting Manager ID", employee.reportingManager ?? 'None', context),
-            _buildDetailRow("Last Login Time", employee.lastLoginAt != null ? employee.lastLoginAt!.toLocal().toString() : 'Never', context),
-            _buildDetailRow("Last Active Time", employee.activeAt != null ? employee.activeAt!.toLocal().toString() : 'Never', context),
-            _buildDetailRow("Last Login IP", employee.lastLoginIp ?? 'N/A', context),
-            _buildDetailRow("Last Login Device", employee.lastLoginDevice ?? 'N/A', context),
-            _buildDetailRow("Current Location", employee.currentLocation ?? 'Not Tracked', context),
-            _buildDetailRow("GPS Coordinates", employee.currentLatitude != null && employee.currentLongitude != null
-                ? "${employee.currentLatitude}, ${employee.currentLongitude}"
-                : 'N/A', context),
+            _buildDetailRow(
+              "Department ID",
+              employee.departmentId ?? 'Default',
+              context,
+            ),
+            _buildDetailRow(
+              "Designation ID",
+              employee.designationId ?? 'Staff',
+              context,
+            ),
+            _buildDetailRow(
+              "Employment Type ID",
+              employee.employmentTypeId ?? 'Full-time',
+              context,
+            ),
+            _buildDetailRow(
+              "Reporting Manager ID",
+              employee.reportingManager ?? 'None',
+              context,
+            ),
+            _buildDetailRow(
+              "Last Login Time",
+              employee.lastLoginAt != null
+                  ? employee.lastLoginAt!.toLocal().toString()
+                  : 'Never',
+              context,
+            ),
+            _buildDetailRow(
+              "Last Active Time",
+              employee.activeAt != null
+                  ? employee.activeAt!.toLocal().toString()
+                  : 'Never',
+              context,
+            ),
+            _buildDetailRow(
+              "Last Login IP",
+              employee.lastLoginIp ?? 'N/A',
+              context,
+            ),
+            _buildDetailRow(
+              "Last Login Device",
+              employee.lastLoginDevice ?? 'N/A',
+              context,
+            ),
+            _buildDetailRow(
+              "Current Location",
+              employee.currentLocation ?? 'Not Tracked',
+              context,
+            ),
+            _buildDetailRow(
+              "GPS Coordinates",
+              employee.currentLatitude != null &&
+                      employee.currentLongitude != null
+                  ? "${employee.currentLatitude}, ${employee.currentLongitude}"
+                  : 'N/A',
+              context,
+            ),
           ],
         ),
       ),

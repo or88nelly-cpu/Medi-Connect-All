@@ -71,18 +71,19 @@ class ConfirmPayment extends SpecialityBookingEvent {
 
   @override
   List<Object?> get props => [
-        appointmentsBloc,
-        patientId,
-        patientName,
-        specialtyName,
-        paymentMethod,
-      ];
+    appointmentsBloc,
+    patientId,
+    patientName,
+    specialtyName,
+    paymentMethod,
+  ];
 }
 
 class ResetBooking extends SpecialityBookingEvent {}
 
 // ── Bloc ────────────────────────────────────────────────────────────
-class SpecialityBookingBloc extends Bloc<SpecialityBookingEvent, SpecialityBookingState> {
+class SpecialityBookingBloc
+    extends Bloc<SpecialityBookingEvent, SpecialityBookingState> {
   final LoadDoctorsBySpecialtyUseCase _loadDoctorsUseCase;
   final GetSlotsUseCase _getSlotsUseCase;
   final BookAppointmentUseCase _bookAppointmentUseCase;
@@ -91,10 +92,13 @@ class SpecialityBookingBloc extends Bloc<SpecialityBookingEvent, SpecialityBooki
     LoadDoctorsBySpecialtyUseCase? loadDoctorsUseCase,
     GetSlotsUseCase? getSlotsUseCase,
     BookAppointmentUseCase? bookAppointmentUseCase,
-  })  : _loadDoctorsUseCase = loadDoctorsUseCase ?? GetIt.instance<LoadDoctorsBySpecialtyUseCase>(),
-        _getSlotsUseCase = getSlotsUseCase ?? GetIt.instance<GetSlotsUseCase>(),
-        _bookAppointmentUseCase = bookAppointmentUseCase ?? GetIt.instance<BookAppointmentUseCase>(),
-        super(const SpecialityBookingState()) {
+  }) : _loadDoctorsUseCase =
+           loadDoctorsUseCase ??
+           GetIt.instance<LoadDoctorsBySpecialtyUseCase>(),
+       _getSlotsUseCase = getSlotsUseCase ?? GetIt.instance<GetSlotsUseCase>(),
+       _bookAppointmentUseCase =
+           bookAppointmentUseCase ?? GetIt.instance<BookAppointmentUseCase>(),
+       super(const SpecialityBookingState()) {
     on<LoadDoctors>(_onLoadDoctors);
     on<SelectDoctor>(_onSelectDoctor);
     on<SelectDate>(_onSelectDate);
@@ -104,42 +108,62 @@ class SpecialityBookingBloc extends Bloc<SpecialityBookingEvent, SpecialityBooki
     on<ResetBooking>(_onResetBooking);
   }
 
-  Future<void> _onLoadDoctors(LoadDoctors event, Emitter<SpecialityBookingState> emit) async {
+  Future<void> _onLoadDoctors(
+    LoadDoctors event,
+    Emitter<SpecialityBookingState> emit,
+  ) async {
     emit(state.copyWith(status: SpecialityBookingStatus.loading));
     try {
-      final doctorsList = await _loadDoctorsUseCase(event.specialityId, event.specialityName);
-      emit(state.copyWith(
-        status: SpecialityBookingStatus.doctorsLoaded,
-        doctors: doctorsList,
-      ));
+      final doctorsList = await _loadDoctorsUseCase(
+        event.specialityId,
+        event.specialityName,
+      );
+      emit(
+        state.copyWith(
+          status: SpecialityBookingStatus.doctorsLoaded,
+          doctors: doctorsList,
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(
-        status: SpecialityBookingStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: SpecialityBookingStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
-  void _onSelectDoctor(SelectDoctor event, Emitter<SpecialityBookingState> emit) {
+  void _onSelectDoctor(
+    SelectDoctor event,
+    Emitter<SpecialityBookingState> emit,
+  ) {
     final fee = event.doctor.doctorInfo?.consultationFee ?? 500.0;
-    emit(state.copyWith(
-      selectedDoctor: event.doctor,
-      consultationFee: fee,
-      clearSelectedDate: true,
-      clearSelectedSlot: true,
-      status: SpecialityBookingStatus.doctorDetail,
-    ));
+    emit(
+      state.copyWith(
+        selectedDoctor: event.doctor,
+        consultationFee: fee,
+        clearSelectedDate: true,
+        clearSelectedSlot: true,
+        status: SpecialityBookingStatus.doctorDetail,
+      ),
+    );
   }
 
-  Future<void> _onSelectDate(SelectDate event, Emitter<SpecialityBookingState> emit) async {
+  Future<void> _onSelectDate(
+    SelectDate event,
+    Emitter<SpecialityBookingState> emit,
+  ) async {
     final doctor = state.selectedDoctor;
     if (doctor == null) return;
 
-    emit(state.copyWith(
-      selectedDate: event.date,
-      clearSelectedSlot: true,
-      status: SpecialityBookingStatus.doctorDetail,
-    ));
+    emit(
+      state.copyWith(
+        selectedDate: event.date,
+        clearSelectedSlot: true,
+        status: SpecialityBookingStatus.doctorDetail,
+      ),
+    );
 
     try {
       final response = await _getSlotsUseCase(
@@ -147,47 +171,54 @@ class SpecialityBookingBloc extends Bloc<SpecialityBookingEvent, SpecialityBooki
         selectedDate: event.date,
       );
 
-      emit(state.copyWith(
-        bookedSlots: response.bookedSlots,
-        availableSlots: response.availableSlots,
-      ));
+      emit(
+        state.copyWith(
+          bookedSlots: response.bookedSlots,
+          availableSlots: response.availableSlots,
+        ),
+      );
     } catch (_) {
-      emit(state.copyWith(
-        bookedSlots: const [],
-        availableSlots: const [],
-      ));
+      emit(state.copyWith(bookedSlots: const [], availableSlots: const []));
     }
   }
 
   void _onSelectSlot(SelectSlot event, Emitter<SpecialityBookingState> emit) {
-    emit(state.copyWith(
-      selectedSlot: event.slot,
-    ));
+    emit(state.copyWith(selectedSlot: event.slot));
   }
 
-  void _onProceedToPayment(ProceedToPayment event, Emitter<SpecialityBookingState> emit) {
-    if (state.selectedDoctor == null || state.selectedDate == null || state.selectedSlot == null) {
-      emit(state.copyWith(
-        status: SpecialityBookingStatus.error,
-        errorMessage: "Please select doctor, date and slot time.",
-      ));
+  void _onProceedToPayment(
+    ProceedToPayment event,
+    Emitter<SpecialityBookingState> emit,
+  ) {
+    if (state.selectedDoctor == null ||
+        state.selectedDate == null ||
+        state.selectedSlot == null) {
+      emit(
+        state.copyWith(
+          status: SpecialityBookingStatus.error,
+          errorMessage: "Please select doctor, date and slot time.",
+        ),
+      );
       return;
     }
-    emit(state.copyWith(
-      status: SpecialityBookingStatus.paymentPending,
-    ));
+    emit(state.copyWith(status: SpecialityBookingStatus.paymentPending));
   }
 
-  Future<void> _onConfirmPayment(ConfirmPayment event, Emitter<SpecialityBookingState> emit) async {
+  Future<void> _onConfirmPayment(
+    ConfirmPayment event,
+    Emitter<SpecialityBookingState> emit,
+  ) async {
     final doctor = state.selectedDoctor;
     final date = state.selectedDate;
     final slot = state.selectedSlot;
 
     if (doctor == null || date == null || slot == null) {
-      emit(state.copyWith(
-        status: SpecialityBookingStatus.error,
-        errorMessage: "Invalid booking details.",
-      ));
+      emit(
+        state.copyWith(
+          status: SpecialityBookingStatus.error,
+          errorMessage: "Invalid booking details.",
+        ),
+      );
       return;
     }
 
@@ -208,18 +239,21 @@ class SpecialityBookingBloc extends Bloc<SpecialityBookingEvent, SpecialityBooki
 
       event.appointmentsBloc.add(LoadAppointments());
 
-      emit(state.copyWith(
-        status: SpecialityBookingStatus.success,
-      ));
+      emit(state.copyWith(status: SpecialityBookingStatus.success));
     } catch (e) {
-      emit(state.copyWith(
-        status: SpecialityBookingStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(
+          status: SpecialityBookingStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
-  void _onResetBooking(ResetBooking event, Emitter<SpecialityBookingState> emit) {
+  void _onResetBooking(
+    ResetBooking event,
+    Emitter<SpecialityBookingState> emit,
+  ) {
     emit(const SpecialityBookingState());
   }
 }

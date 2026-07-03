@@ -48,7 +48,7 @@ class BookingSuccessPage extends StatelessWidget {
     return CustomScaffold(
       customAppbar: const CommonAppBar(
         title: "Booking Completed",
-       // automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
       ),
       bottomNavigationBar: PatientBottomNavBar(
         currentIndex: 0,
@@ -60,10 +60,7 @@ class BookingSuccessPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         child: Column(
           children: [
-            SuccessHeader(
-              isPayLater: isPayLater,
-              isDark: isDark,
-            ),
+            SuccessHeader(isPayLater: isPayLater, isDark: isDark),
             SizedBox(height: 24.h),
 
             SuccessActionButtons(
@@ -93,10 +90,7 @@ class BookingSuccessPage extends StatelessWidget {
             ),
             SizedBox(height: 20.h),
 
-            SuccessStayUpdatedCard(
-              cardBg: cardBg,
-              textColor: textColor,
-            ),
+            SuccessStayUpdatedCard(cardBg: cardBg, textColor: textColor),
             SizedBox(height: 12.h),
 
             SuccessHelperCards(
@@ -117,7 +111,11 @@ class BookingSuccessPage extends StatelessWidget {
 
             Text(
               'Thank you for choosing MediConnect. ♥',
-              style: TextStyle(color: Colors.grey, fontSize: 9.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 9.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 24.h),
           ],

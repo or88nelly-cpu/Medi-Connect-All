@@ -80,7 +80,8 @@ class SpecialityHorizontalList extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (ctx) => SpecialityDoctorsPage(speciality: spec),
+                        builder: (ctx) =>
+                            SpecialityDoctorsPage(speciality: spec),
                       ),
                     );
                   },

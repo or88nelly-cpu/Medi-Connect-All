@@ -7,10 +7,7 @@ import 'package:medi_connect/shared/auth/domain/entities/doctor_entity.dart';
 class DoctorLicenseCard extends StatelessWidget {
   final DoctorEntity doctor;
 
-  const DoctorLicenseCard({
-    super.key,
-    required this.doctor,
-  });
+  const DoctorLicenseCard({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +35,36 @@ class DoctorLicenseCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _buildDetailRow("Doctor Code", doctor.doctorCode ?? 'Pending Assignment', context),
-            _buildDetailRow("Medical Registration No.", doctor.medicalRegistrationNumber ?? 'N/A', context),
-            _buildDetailRow("License Number", doctor.licenseNumber ?? 'N/A', context),
-            _buildDetailRow("Qualification", doctor.qualification ?? 'MD', context),
-            _buildDetailRow("Sub Specialty Area", doctor.subSpeciality ?? 'N/A', context),
-            _buildDetailRow("Is Consultant", doctor.isConsultant ? 'Yes' : 'No', context),
+            _buildDetailRow(
+              "Doctor Code",
+              doctor.doctorCode ?? 'Pending Assignment',
+              context,
+            ),
+            _buildDetailRow(
+              "Medical Registration No.",
+              doctor.medicalRegistrationNumber ?? 'N/A',
+              context,
+            ),
+            _buildDetailRow(
+              "License Number",
+              doctor.licenseNumber ?? 'N/A',
+              context,
+            ),
+            _buildDetailRow(
+              "Qualification",
+              doctor.qualification ?? 'MD',
+              context,
+            ),
+            _buildDetailRow(
+              "Sub Specialty Area",
+              doctor.subSpeciality ?? 'N/A',
+              context,
+            ),
+            _buildDetailRow(
+              "Is Consultant",
+              doctor.isConsultant ? 'Yes' : 'No',
+              context,
+            ),
           ],
         ),
       ),

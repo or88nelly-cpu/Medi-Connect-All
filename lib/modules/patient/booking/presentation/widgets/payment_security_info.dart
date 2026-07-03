@@ -48,12 +48,20 @@ class PaymentSecurityInfo extends StatelessWidget {
   Widget _buildSecurityBullet(String label) {
     return Row(
       children: [
-        Icon(Icons.check_circle_outline_rounded, color: const Color(0xFF10B981), size: 12.r),
+        Icon(
+          Icons.check_circle_outline_rounded,
+          color: const Color(0xFF10B981),
+          size: 12.r,
+        ),
         SizedBox(width: 6.w),
         Expanded(
           child: Text(
             label,
-            style: TextStyle(fontSize: 8.5.sp, color: Colors.grey.shade700, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 8.5.sp,
+              color: Colors.grey.shade700,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

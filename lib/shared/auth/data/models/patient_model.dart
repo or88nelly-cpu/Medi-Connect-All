@@ -49,8 +49,12 @@ class PatientModel extends PatientEntity {
       maritalStatus: json['marital_status'] as String?,
       occupation: json['occupation'] as String?,
       nationality: json['nationality'] as String?,
-      height: json['height'] != null ? (json['height'] as num).toDouble() : null,
-      weight: json['weight'] != null ? (json['weight'] as num).toDouble() : null,
+      height: json['height'] != null
+          ? (json['height'] as num).toDouble()
+          : null,
+      weight: json['weight'] != null
+          ? (json['weight'] as num).toDouble()
+          : null,
       guardianName: json['guardian_name'] as String?,
       guardianRelationship: json['guardian_relationship'] as String?,
       emergencyContactName: json['emergency_contact_name'] as String?,

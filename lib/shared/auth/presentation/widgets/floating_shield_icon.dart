@@ -6,11 +6,7 @@ class FloatingShieldIcon extends StatefulWidget {
   final double top;
   final double left;
 
-  const FloatingShieldIcon({
-    super.key,
-    required this.top,
-    required this.left,
-  });
+  const FloatingShieldIcon({super.key, required this.top, required this.left});
 
   @override
   State<FloatingShieldIcon> createState() => _FloatingShieldIconState();
@@ -55,10 +51,7 @@ class _FloatingShieldIconState extends State<FloatingShieldIcon>
         builder: (context, child) {
           return Transform.translate(
             offset: Offset(0, _yOffset.value),
-            child: Transform.scale(
-              scale: _glowScale.value,
-              child: child,
-            ),
+            child: Transform.scale(scale: _glowScale.value, child: child),
           );
         },
         child: Container(
@@ -88,11 +81,7 @@ class _FloatingShieldIconState extends State<FloatingShieldIcon>
                   color: AppColors.primary.withValues(alpha: 0.85),
                   size: 28.r,
                 ),
-                Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 16.r,
-                ),
+                Icon(Icons.add, color: Colors.white, size: 16.r),
               ],
             ),
           ),

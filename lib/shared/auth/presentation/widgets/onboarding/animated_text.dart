@@ -40,15 +40,13 @@ class _OnboardingAnimatedTextState extends State<OnboardingAnimatedText>
       ),
     );
 
-    _titleSlide = Tween<Offset>(
-      begin: const Offset(0.0, 0.35),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.0, 0.8, curve: Curves.easeOutCubic),
-      ),
-    );
+    _titleSlide =
+        Tween<Offset>(begin: const Offset(0.0, 0.35), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.0, 0.8, curve: Curves.easeOutCubic),
+          ),
+        );
 
     _descFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
@@ -57,15 +55,13 @@ class _OnboardingAnimatedTextState extends State<OnboardingAnimatedText>
       ),
     );
 
-    _descSlide = Tween<Offset>(
-      begin: const Offset(0.0, 0.25),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.2, 1.0, curve: Curves.easeOutCubic),
-      ),
-    );
+    _descSlide = Tween<Offset>(begin: const Offset(0.0, 0.25), end: Offset.zero)
+        .animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.2, 1.0, curve: Curves.easeOutCubic),
+          ),
+        );
 
     _controller.forward();
   }

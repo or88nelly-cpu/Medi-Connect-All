@@ -90,7 +90,7 @@ class SpecialityBloc extends Bloc<SpecialityEvent, SpecialityState> {
   ) async {
     emit(SpecialityLoading());
     final result = await _repository.getSpecialities();
-    
+
     result.fold(
       (failure) => emit(SpecialityError(failure)),
       (list) => emit(SpecialitiesLoaded(list)),
@@ -103,16 +103,17 @@ class SpecialityBloc extends Bloc<SpecialityEvent, SpecialityState> {
   ) async {
     emit(SpecialityLoading());
     final result = await _repository.createSpeciality(event.speciality);
-    await result.fold(
-      (failure) async => emit(SpecialityError(failure)),
-      (newSpeciality) async {
-        final loadRes = await _repository.getSpecialities();
-        loadRes.fold(
-          (failure) => emit(SpecialityError(failure)),
-          (list) => emit(SpecialityActionSuccess("Speciality created successfully", list)),
-        );
-      },
-    );
+    await result.fold((failure) async => emit(SpecialityError(failure)), (
+      newSpeciality,
+    ) async {
+      final loadRes = await _repository.getSpecialities();
+      loadRes.fold(
+        (failure) => emit(SpecialityError(failure)),
+        (list) => emit(
+          SpecialityActionSuccess("Speciality created successfully", list),
+        ),
+      );
+    });
   }
 
   Future<void> _onUpdateSpeciality(
@@ -121,16 +122,17 @@ class SpecialityBloc extends Bloc<SpecialityEvent, SpecialityState> {
   ) async {
     emit(SpecialityLoading());
     final result = await _repository.updateSpeciality(event.speciality);
-    await result.fold(
-      (failure) async => emit(SpecialityError(failure)),
-      (updatedSpeciality) async {
-        final loadRes = await _repository.getSpecialities();
-        loadRes.fold(
-          (failure) => emit(SpecialityError(failure)),
-          (list) => emit(SpecialityActionSuccess("Speciality updated successfully", list)),
-        );
-      },
-    );
+    await result.fold((failure) async => emit(SpecialityError(failure)), (
+      updatedSpeciality,
+    ) async {
+      final loadRes = await _repository.getSpecialities();
+      loadRes.fold(
+        (failure) => emit(SpecialityError(failure)),
+        (list) => emit(
+          SpecialityActionSuccess("Speciality updated successfully", list),
+        ),
+      );
+    });
   }
 
   Future<void> _onDeleteSpeciality(
@@ -139,15 +141,16 @@ class SpecialityBloc extends Bloc<SpecialityEvent, SpecialityState> {
   ) async {
     emit(SpecialityLoading());
     final result = await _repository.deleteSpeciality(event.id);
-    await result.fold(
-      (failure) async => emit(SpecialityError(failure)),
-      (_) async {
-        final loadRes = await _repository.getSpecialities();
-        loadRes.fold(
-          (failure) => emit(SpecialityError(failure)),
-          (list) => emit(SpecialityActionSuccess("Speciality deleted successfully", list)),
-        );
-      },
-    );
+    await result.fold((failure) async => emit(SpecialityError(failure)), (
+      _,
+    ) async {
+      final loadRes = await _repository.getSpecialities();
+      loadRes.fold(
+        (failure) => emit(SpecialityError(failure)),
+        (list) => emit(
+          SpecialityActionSuccess("Speciality deleted successfully", list),
+        ),
+      );
+    });
   }
 }

@@ -64,13 +64,24 @@ class SuccessHelperCards extends StatelessWidget {
             children: [
               Icon(icon, color: AppColors.primary, size: 16.r),
               SizedBox(width: 6.w),
-              Text(title, style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w900, color: textColor)),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w900,
+                  color: textColor,
+                ),
+              ),
             ],
           ),
           SizedBox(height: 4.h),
           Text(
             sub,
-            style: TextStyle(fontSize: 7.5.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 7.5.sp,
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 10.h),
           GestureDetector(
@@ -85,7 +96,11 @@ class SuccessHelperCards extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 buttonText,
-                style: TextStyle(color: AppColors.primary, fontSize: 8.5.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 8.5.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

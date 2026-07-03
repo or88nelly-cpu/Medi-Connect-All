@@ -13,7 +13,8 @@ class FloatingConnectingIcons extends StatefulWidget {
   });
 
   @override
-  State<FloatingConnectingIcons> createState() => _FloatingConnectingIconsState();
+  State<FloatingConnectingIcons> createState() =>
+      _FloatingConnectingIconsState();
 }
 
 class _FloatingConnectingIconsState extends State<FloatingConnectingIcons>
@@ -61,9 +62,7 @@ class _FloatingConnectingIconsState extends State<FloatingConnectingIcons>
             children: [
               // Dashed connecting line
               Positioned.fill(
-                child: CustomPaint(
-                  painter: DashedCurvePainter(),
-                ),
+                child: CustomPaint(painter: DashedCurvePainter()),
               ),
 
               // Top circle: Stethoscope
@@ -122,11 +121,7 @@ class _FloatingConnectingIconsState extends State<FloatingConnectingIcons>
         ],
       ),
       child: Center(
-        child: Icon(
-          icon,
-          color: AppColors.primary,
-          size: 24.r,
-        ),
+        child: Icon(icon, color: AppColors.primary, size: 24.r),
       ),
     );
   }
@@ -151,8 +146,10 @@ class DashedCurvePainter extends CustomPainter {
     for (int i = 0; i <= segments; i++) {
       final t = i / segments;
       // Quadratic Bezier formula
-      final dx = (1 - t) * (1 - t) * p1.dx + 2 * (1 - t) * t * pc.dx + t * t * p2.dx;
-      final dy = (1 - t) * (1 - t) * p1.dy + 2 * (1 - t) * t * pc.dy + t * t * p2.dy;
+      final dx =
+          (1 - t) * (1 - t) * p1.dx + 2 * (1 - t) * t * pc.dx + t * t * p2.dx;
+      final dy =
+          (1 - t) * (1 - t) * p1.dy + 2 * (1 - t) * t * pc.dy + t * t * p2.dy;
       final point = Offset(dx, dy);
 
       if (i > 0 && draw) {

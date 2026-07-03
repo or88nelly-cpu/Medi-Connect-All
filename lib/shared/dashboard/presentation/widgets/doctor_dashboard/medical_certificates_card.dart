@@ -18,10 +18,7 @@ class MedicalCertificatesCard extends StatelessWidget {
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFF0EA5E9),
-            Color(0xFF0D9488),
-          ],
+          colors: [Color(0xFF0EA5E9), Color(0xFF0D9488)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

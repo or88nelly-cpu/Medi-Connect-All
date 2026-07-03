@@ -7,10 +7,7 @@ import 'package:medi_connect/shared/auth/domain/entities/patient_entity.dart';
 class PatientInsuranceInfoCard extends StatelessWidget {
   final PatientEntity patient;
 
-  const PatientInsuranceInfoCard({
-    super.key,
-    required this.patient,
-  });
+  const PatientInsuranceInfoCard({super.key, required this.patient});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +35,16 @@ class PatientInsuranceInfoCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _buildDetailRow("Insurance Provider", patient.insuranceProvider ?? 'Not Provided', context),
-            _buildDetailRow("Policy / Insurance Number", patient.insuranceNumber ?? 'Not Provided', context),
+            _buildDetailRow(
+              "Insurance Provider",
+              patient.insuranceProvider ?? 'Not Provided',
+              context,
+            ),
+            _buildDetailRow(
+              "Policy / Insurance Number",
+              patient.insuranceNumber ?? 'Not Provided',
+              context,
+            ),
           ],
         ),
       ),

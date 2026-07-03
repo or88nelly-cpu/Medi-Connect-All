@@ -42,9 +42,15 @@ class SpecialityBookingState extends Equatable {
     return SpecialityBookingState(
       status: status ?? this.status,
       doctors: doctors ?? this.doctors,
-      selectedDoctor: clearSelectedDoctor ? null : (selectedDoctor ?? this.selectedDoctor),
-      selectedDate: clearSelectedDate ? null : (selectedDate ?? this.selectedDate),
-      selectedSlot: clearSelectedSlot ? null : (selectedSlot ?? this.selectedSlot),
+      selectedDoctor: clearSelectedDoctor
+          ? null
+          : (selectedDoctor ?? this.selectedDoctor),
+      selectedDate: clearSelectedDate
+          ? null
+          : (selectedDate ?? this.selectedDate),
+      selectedSlot: clearSelectedSlot
+          ? null
+          : (selectedSlot ?? this.selectedSlot),
       bookedSlots: bookedSlots ?? this.bookedSlots,
       availableSlots: availableSlots ?? this.availableSlots,
       consultationFee: consultationFee ?? this.consultationFee,
@@ -54,14 +60,14 @@ class SpecialityBookingState extends Equatable {
 
   @override
   List<Object?> get props => [
-        status,
-        doctors,
-        selectedDoctor,
-        selectedDate,
-        selectedSlot,
-        bookedSlots,
-        availableSlots,
-        consultationFee,
-        errorMessage,
-      ];
+    status,
+    doctors,
+    selectedDoctor,
+    selectedDate,
+    selectedSlot,
+    bookedSlots,
+    availableSlots,
+    consultationFee,
+    errorMessage,
+  ];
 }

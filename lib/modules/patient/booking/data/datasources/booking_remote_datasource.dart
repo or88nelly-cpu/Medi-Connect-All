@@ -1,9 +1,14 @@
 import 'package:medi_connect/core/network/supabase_service.dart';
 
 abstract class BookingRemoteDataSource {
-  Future<List<dynamic>> getDoctorsBySpecialty(String specialityId, String specialityName);
+  Future<List<dynamic>> getDoctorsBySpecialty(
+    String specialityId,
+    String specialityName,
+  );
   Future<List<dynamic>> getDoctorAvailability(String doctorId);
-  Future<void> saveDoctorAvailability(List<Map<String, dynamic>> availabilityList);
+  Future<void> saveDoctorAvailability(
+    List<Map<String, dynamic>> availabilityList,
+  );
   Future<List<dynamic>> getBookedAppointments(String doctorId, String dateStr);
   Future<void> saveAppointment(Map<String, dynamic> data);
 }
@@ -14,7 +19,10 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   BookingRemoteDataSourceImpl(this._supabase);
 
   @override
-  Future<List<dynamic>> getDoctorsBySpecialty(String specialityId, String specialityName) async {
+  Future<List<dynamic>> getDoctorsBySpecialty(
+    String specialityId,
+    String specialityName,
+  ) async {
     final response = await _supabase.client
         .from('users')
         .select('*, employees(*, doctors!doctors_employee_id_fkey(*))')
@@ -32,12 +40,17 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   }
 
   @override
-  Future<void> saveDoctorAvailability(List<Map<String, dynamic>> availabilityList) async {
+  Future<void> saveDoctorAvailability(
+    List<Map<String, dynamic>> availabilityList,
+  ) async {
     await _supabase.client.from('doctor_availability').insert(availabilityList);
   }
 
   @override
-  Future<List<dynamic>> getBookedAppointments(String doctorId, String dateStr) async {
+  Future<List<dynamic>> getBookedAppointments(
+    String doctorId,
+    String dateStr,
+  ) async {
     final response = await _supabase.client
         .from('appointments')
         .select('appointment_time')

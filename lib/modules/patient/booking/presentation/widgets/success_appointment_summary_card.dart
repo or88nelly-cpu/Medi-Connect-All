@@ -44,7 +44,11 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
         children: [
           Text(
             'Appointment Summary',
-            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: textColor),
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w900,
+              color: textColor,
+            ),
           ),
           const Divider(height: 16),
           Row(
@@ -78,31 +82,54 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
                                   doctorName,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w900, color: textColor),
+                                  style: TextStyle(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w900,
+                                    color: textColor,
+                                  ),
                                 ),
                               ),
-                              Icon(Icons.verified_rounded, color: const Color(0xFF3B5BFD), size: 10.r),
+                              Icon(
+                                Icons.verified_rounded,
+                                color: const Color(0xFF3B5BFD),
+                                size: 10.r,
+                              ),
                             ],
                           ),
                           Text(
                             doctorQual,
-                            style: TextStyle(fontSize: 8.5.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 8.5.sp,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           SizedBox(height: 4.h),
                           Text(
                             'MediConnect Hospital',
-                            style: TextStyle(fontSize: 7.5.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 7.5.sp,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           SizedBox(height: 4.h),
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 2.h,
+                            ),
                             decoration: BoxDecoration(
                               color: const Color(0xFFFFECEF),
                               borderRadius: BorderRadius.circular(6.r),
                             ),
                             child: Text(
                               specialityName,
-                              style: TextStyle(color: const Color(0xFFFF296D), fontSize: 7.sp, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                color: const Color(0xFFFF296D),
+                                fontSize: 7.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -122,7 +149,11 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
                     _buildSummaryItem('Time', slot, textColor),
                     _buildSummaryItem('Patient', patientName, textColor),
                     _buildSummaryItem('Booking ID', bookingId, textColor),
-                    _buildSummaryItem(isPayLater ? 'Amount Due' : 'Amount Paid', '₹${amount.toStringAsFixed(0)}', const Color(0xFF22C55E)),
+                    _buildSummaryItem(
+                      isPayLater ? 'Amount Due' : 'Amount Paid',
+                      '₹${amount.toStringAsFixed(0)}',
+                      const Color(0xFF22C55E),
+                    ),
                   ],
                 ),
               ),
@@ -139,8 +170,22 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold)),
-          Text(val, style: TextStyle(fontSize: 8.sp, color: textColor, fontWeight: FontWeight.w900)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 8.sp,
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            val,
+            style: TextStyle(
+              fontSize: 8.sp,
+              color: textColor,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
         ],
       ),
     );

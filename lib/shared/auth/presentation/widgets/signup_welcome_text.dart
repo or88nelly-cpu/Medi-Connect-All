@@ -11,9 +11,11 @@ class SignupWelcomeText extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktop = AppResponsive.isDesktop(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Column(
-      crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: isDesktop
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
@@ -29,7 +31,9 @@ class SignupWelcomeText extends StatelessWidget {
         Text(
           'Join us to access world-class healthcare services',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white.withValues(alpha: 0.8) : Colors.black87,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.8)
+                : Colors.black87,
             height: 1.3,
             fontSize: isDesktop ? 14.sp : 12.sp,
           ),

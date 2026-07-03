@@ -53,7 +53,9 @@ class SuccessHeader extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         Text(
-          isPayLater ? 'Your appointment is scheduled' : 'Your appointment is confirmed',
+          isPayLater
+              ? 'Your appointment is scheduled'
+              : 'Your appointment is confirmed',
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w900,
@@ -86,7 +88,11 @@ class SuccessHeader extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.verified_user_rounded, color: const Color(0xFF3B5BFD), size: 14.r),
+              Icon(
+                Icons.verified_user_rounded,
+                color: const Color(0xFF3B5BFD),
+                size: 14.r,
+              ),
               SizedBox(width: 6.w),
               Text(
                 isPayLater

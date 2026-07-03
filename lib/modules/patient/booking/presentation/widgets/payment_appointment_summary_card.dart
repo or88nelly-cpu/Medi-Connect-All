@@ -79,31 +79,54 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
                               docInfo.user.fullName,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: textColor),
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w900,
+                                color: textColor,
+                              ),
                             ),
                           ),
-                          Icon(Icons.verified_rounded, color: const Color(0xFF3B5BFD), size: 12.r),
+                          Icon(
+                            Icons.verified_rounded,
+                            color: const Color(0xFF3B5BFD),
+                            size: 12.r,
+                          ),
                         ],
                       ),
                       Text(
                         docInfo.doctorInfo?.qualification ?? 'Specialist MD',
-                        style: TextStyle(fontSize: 9.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 9.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 6.h),
                       Text(
                         'MediConnect Hospital',
-                        style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 8.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 6.h),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 2.h,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFFFECEF),
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           specialityName,
-                          style: TextStyle(color: const Color(0xFFFF296D), fontSize: 8.sp, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: const Color(0xFFFF296D),
+                            fontSize: 8.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -124,47 +147,83 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.calendar_month_outlined, color: AppColors.primary, size: 14.r),
+                      Icon(
+                        Icons.calendar_month_outlined,
+                        color: AppColors.primary,
+                        size: 14.r,
+                      ),
                       SizedBox(width: 4.w),
                       Text(
                         'Date',
-                        style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 8.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
                   Text(
                     dateStr,
-                    style: TextStyle(fontSize: 9.5.sp, fontWeight: FontWeight.w900, color: textColor),
+                    style: TextStyle(
+                      fontSize: 9.5.sp,
+                      fontWeight: FontWeight.w900,
+                      color: textColor,
+                    ),
                   ),
                   SizedBox(height: 12.h),
                   Row(
                     children: [
-                      Icon(Icons.access_time_outlined, color: AppColors.primary, size: 14.r),
+                      Icon(
+                        Icons.access_time_outlined,
+                        color: AppColors.primary,
+                        size: 14.r,
+                      ),
                       SizedBox(width: 4.w),
                       Text(
                         'Time',
-                        style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 8.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
                   Text(
                     slot,
-                    style: TextStyle(fontSize: 9.5.sp, fontWeight: FontWeight.w900, color: textColor),
+                    style: TextStyle(
+                      fontSize: 9.5.sp,
+                      fontWeight: FontWeight.w900,
+                      color: textColor,
+                    ),
                   ),
                   SizedBox(height: 12.h),
                   Row(
                     children: [
-                      Icon(Icons.person_outline_rounded, color: AppColors.primary, size: 14.r),
+                      Icon(
+                        Icons.person_outline_rounded,
+                        color: AppColors.primary,
+                        size: 14.r,
+                      ),
                       SizedBox(width: 4.w),
                       Text(
                         'Patient',
-                        style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 8.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
                   Text(
                     patientName,
-                    style: TextStyle(fontSize: 9.5.sp, fontWeight: FontWeight.w900, color: textColor),
+                    style: TextStyle(
+                      fontSize: 9.5.sp,
+                      fontWeight: FontWeight.w900,
+                      color: textColor,
+                    ),
                   ),
                 ],
               ),
@@ -178,15 +237,33 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildFeeItem('Consultation Fee', '₹${fee.toStringAsFixed(0)}', textColor),
+                _buildFeeItem(
+                  'Consultation Fee',
+                  '₹${fee.toStringAsFixed(0)}',
+                  textColor,
+                ),
                 _buildFeeItem('Platform Fee', '₹0', textColor),
                 _buildFeeItem('Taxes & Charges', '₹0', textColor),
                 const Divider(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Total Amount', style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.bold, color: textColor)),
-                    Text('₹${fee.toStringAsFixed(0)}', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w900, color: const Color(0xFF3B5BFD))),
+                    Text(
+                      'Total Amount',
+                      style: TextStyle(
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                    ),
+                    Text(
+                      '₹${fee.toStringAsFixed(0)}',
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w900,
+                        color: const Color(0xFF3B5BFD),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -203,8 +280,22 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold)),
-          Text(value, style: TextStyle(fontSize: 8.sp, color: textColor, fontWeight: FontWeight.bold)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 8.sp,
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 8.sp,
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );

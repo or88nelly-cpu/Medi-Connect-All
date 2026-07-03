@@ -194,10 +194,7 @@ class _LoginFormState extends State<LoginForm> {
                 colors: [AppColors.primary, Color(0xFF3B5BFD)],
               ),
               borderRadius: BorderRadius.circular(14.r),
-              border: Border.all(
-                color: AppColors.secondary,
-                width: 2.r,
-              ),
+              border: Border.all(color: AppColors.secondary, width: 2.r),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xFF4F6EFF).withValues(alpha: 0.35),
@@ -292,9 +289,10 @@ class _AnimatedButtonIconState extends State<AnimatedButtonIcon>
       duration: const Duration(milliseconds: 1000),
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.0, end: 6.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 6.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override

@@ -24,10 +24,23 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
   List<AppointmentModel> _appointments = [];
 
   final List<String> _morningSlots = [
-    '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'
+    '09:00 AM',
+    '09:30 AM',
+    '10:00 AM',
+    '10:30 AM',
+    '11:00 AM',
+    '11:30 AM',
   ];
   final List<String> _afternoonSlots = [
-    '12:00 PM', '12:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'
+    '12:00 PM',
+    '12:30 PM',
+    '02:00 PM',
+    '02:30 PM',
+    '03:00 PM',
+    '03:30 PM',
+    '04:00 PM',
+    '04:30 PM',
+    '05:00 PM',
   ];
 
   @override
@@ -39,7 +52,8 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
   @override
   void didUpdateWidget(covariant SlotManagementGrid oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.selectedDate != widget.selectedDate || oldWidget.doctor.id != widget.doctor.id) {
+    if (oldWidget.selectedDate != widget.selectedDate ||
+        oldWidget.doctor.id != widget.doctor.id) {
       _loadSlots();
     }
   }
@@ -66,9 +80,9 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error loading slots: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error loading slots: $e')));
       }
     }
   }
@@ -115,7 +129,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     if (_isLoading) {
       return const Center(
         child: Padding(
@@ -128,11 +142,19 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionHeader("Morning Session", Icons.wb_sunny_outlined, const Color(0xFFEAB308)),
+        _buildSectionHeader(
+          "Morning Session",
+          Icons.wb_sunny_outlined,
+          const Color(0xFFEAB308),
+        ),
         SizedBox(height: 12.h),
         _buildSlotGrid(_morningSlots, isDark),
         SizedBox(height: 24.h),
-        _buildSectionHeader("Afternoon Session", Icons.nights_stay_outlined, const Color(0xFF0F6FFF)),
+        _buildSectionHeader(
+          "Afternoon Session",
+          Icons.nights_stay_outlined,
+          const Color(0xFF0F6FFF),
+        ),
         SizedBox(height: 12.h),
         _buildSlotGrid(_afternoonSlots, isDark),
       ],
@@ -208,7 +230,9 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
             overflow: TextOverflow.ellipsis,
           );
         } else if (isBlocked) {
-          cardBg = isDark ? const Color(0xFF881337).withValues(alpha: 0.1) : const Color(0xFFFFF1F2);
+          cardBg = isDark
+              ? const Color(0xFF881337).withValues(alpha: 0.1)
+              : const Color(0xFFFFF1F2);
           borderCol = const Color(0xFFFDA4AF);
           textCol = const Color(0xFFE11D48);
           statusIndicator = Text(
@@ -270,7 +294,11 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
                     else if (isBlocked)
                       Icon(Icons.block_rounded, color: borderCol, size: 10.r)
                     else
-                      Icon(Icons.check_circle_outline_rounded, color: const Color(0xFF10B981), size: 10.r),
+                      Icon(
+                        Icons.check_circle_outline_rounded,
+                        color: const Color(0xFF10B981),
+                        size: 10.r,
+                      ),
                   ],
                 ),
                 SizedBox(height: 2.h),

@@ -43,7 +43,11 @@ class PaymentCheckoutBar extends StatelessWidget {
                     children: [
                       Text(
                         'Total Amount',
-                        style: TextStyle(fontSize: 10.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         '₹${fee.toStringAsFixed(0)}',
@@ -57,23 +61,37 @@ class PaymentCheckoutBar extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.verified_user_rounded, color: const Color(0xFF10B981), size: 14.r),
+                      Icon(
+                        Icons.verified_user_rounded,
+                        color: const Color(0xFF10B981),
+                        size: 14.r,
+                      ),
                       SizedBox(width: 4.w),
                       Text(
                         'Secure Payment\nSSL Encrypted',
-                        style: TextStyle(fontSize: 8.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 8.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
                   CommonButton(
-                    text: isPayLater ? 'Confirm Booking' : 'Pay ₹${fee.toStringAsFixed(0)}',
+                    text: isPayLater
+                        ? 'Confirm Booking'
+                        : 'Pay ₹${fee.toStringAsFixed(0)}',
                     isLoading: isLoading,
                     width: 170.w,
                     height: 48.h,
                     borderRadius: 16.r,
                     color: const Color(0xFF3B5BFD),
                     onPressed: onCheckoutPressed,
-                    icon: Icon(Icons.chevron_right_rounded, color: Colors.white, size: 16.r),
+                    icon: Icon(
+                      Icons.chevron_right_rounded,
+                      color: Colors.white,
+                      size: 16.r,
+                    ),
                   ),
                 ],
               ),
@@ -85,7 +103,11 @@ class PaymentCheckoutBar extends StatelessWidget {
                   SizedBox(width: 4.w),
                   Text(
                     'By proceeding, you agree to our Terms & Conditions',
-                    style: TextStyle(color: Colors.grey, fontSize: 8.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),

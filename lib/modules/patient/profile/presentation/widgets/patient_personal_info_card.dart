@@ -41,12 +41,32 @@ class PatientPersonalInfoCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _buildDetailRow("UHID / Patient No", patient.patientNo ?? 'Not Assigned', context),
-            _buildDetailRow("Registration Source", patient.registrationSource ?? 'Online', context),
-            _buildDetailRow("Referred By", patient.referredBy ?? 'Self', context),
-            _buildDetailRow("Marital Status", patient.maritalStatus ?? 'Single', context),
+            _buildDetailRow(
+              "UHID / Patient No",
+              patient.patientNo ?? 'Not Assigned',
+              context,
+            ),
+            _buildDetailRow(
+              "Registration Source",
+              patient.registrationSource ?? 'Online',
+              context,
+            ),
+            _buildDetailRow(
+              "Referred By",
+              patient.referredBy ?? 'Self',
+              context,
+            ),
+            _buildDetailRow(
+              "Marital Status",
+              patient.maritalStatus ?? 'Single',
+              context,
+            ),
             _buildDetailRow("Occupation", patient.occupation ?? 'N/A', context),
-            _buildDetailRow("Nationality", patient.nationality ?? 'N/A', context),
+            _buildDetailRow(
+              "Nationality",
+              patient.nationality ?? 'N/A',
+              context,
+            ),
             _buildDetailRow("Address", patient.address ?? 'Not Set', context),
           ],
         ),
@@ -69,7 +89,9 @@ class PatientPersonalInfoCard extends StatelessWidget {
           Flexible(
             child: Text(
               value,
-              textAlign: Alignment.centerRight.x > 0 ? TextAlign.end : TextAlign.start,
+              textAlign: Alignment.centerRight.x > 0
+                  ? TextAlign.end
+                  : TextAlign.start,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary(context),

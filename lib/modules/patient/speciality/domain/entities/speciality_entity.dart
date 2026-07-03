@@ -31,17 +31,17 @@ class SpecialityEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        specialityCode,
-        name,
-        description,
-        imageUrl,
-        icon,
-        consultationDuration,
-        defaultConsultationFee,
-        isSurgical,
-        isActive,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    specialityCode,
+    name,
+    description,
+    imageUrl,
+    icon,
+    consultationDuration,
+    defaultConsultationFee,
+    isSurgical,
+    isActive,
+    createdAt,
+    updatedAt,
+  ];
 }

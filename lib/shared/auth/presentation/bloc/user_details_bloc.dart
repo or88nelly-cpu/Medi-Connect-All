@@ -108,14 +108,16 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     Emitter<UserDetailsState> emit,
   ) async {
     emit(UserDetailsLoading());
-    final result = await _repository.updatePatientProfile(event.userId, event.data);
-    result.fold(
-      (failure) => emit(UserDetailsError(failure.message)),
-      (_) {
-        emit(const UserDetailsActionSuccess("Patient profile updated successfully"));
-        add(FetchUserDetails(event.userId));
-      },
+    final result = await _repository.updatePatientProfile(
+      event.userId,
+      event.data,
     );
+    result.fold((failure) => emit(UserDetailsError(failure.message)), (_) {
+      emit(
+        const UserDetailsActionSuccess("Patient profile updated successfully"),
+      );
+      add(FetchUserDetails(event.userId));
+    });
   }
 
   Future<void> _onUpdateEmployeeDetails(
@@ -123,14 +125,16 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     Emitter<UserDetailsState> emit,
   ) async {
     emit(UserDetailsLoading());
-    final result = await _repository.updateEmployeeProfile(event.userId, event.data);
-    result.fold(
-      (failure) => emit(UserDetailsError(failure.message)),
-      (_) {
-        emit(const UserDetailsActionSuccess("Employee profile updated successfully"));
-        add(FetchUserDetails(event.userId));
-      },
+    final result = await _repository.updateEmployeeProfile(
+      event.userId,
+      event.data,
     );
+    result.fold((failure) => emit(UserDetailsError(failure.message)), (_) {
+      emit(
+        const UserDetailsActionSuccess("Employee profile updated successfully"),
+      );
+      add(FetchUserDetails(event.userId));
+    });
   }
 
   Future<void> _onUpdateDoctorDetails(
@@ -138,13 +142,15 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     Emitter<UserDetailsState> emit,
   ) async {
     emit(UserDetailsLoading());
-    final result = await _repository.updateDoctorProfile(event.userId, event.data);
-    result.fold(
-      (failure) => emit(UserDetailsError(failure.message)),
-      (_) {
-        emit(const UserDetailsActionSuccess("Doctor profile updated successfully"));
-        add(FetchUserDetails(event.userId));
-      },
+    final result = await _repository.updateDoctorProfile(
+      event.userId,
+      event.data,
     );
+    result.fold((failure) => emit(UserDetailsError(failure.message)), (_) {
+      emit(
+        const UserDetailsActionSuccess("Doctor profile updated successfully"),
+      );
+      add(FetchUserDetails(event.userId));
+    });
   }
 }

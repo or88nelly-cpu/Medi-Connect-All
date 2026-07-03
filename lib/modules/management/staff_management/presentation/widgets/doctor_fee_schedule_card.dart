@@ -7,10 +7,7 @@ import 'package:medi_connect/shared/auth/domain/entities/doctor_entity.dart';
 class DoctorFeeScheduleCard extends StatelessWidget {
   final DoctorEntity doctor;
 
-  const DoctorFeeScheduleCard({
-    super.key,
-    required this.doctor,
-  });
+  const DoctorFeeScheduleCard({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +35,31 @@ class DoctorFeeScheduleCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _buildDetailRow("Initial Consultation Fee", "\$${doctor.consultationFee.toStringAsFixed(2)}", context),
-            _buildDetailRow("Follow-up Consultation Fee", "\$${doctor.followupFee.toStringAsFixed(2)}", context),
-            _buildDetailRow("Consultation Duration", "${doctor.consultationDuration} Mins", context),
-            _buildDetailRow("Accepts Online Consultations", doctor.acceptsOnlineConsultation ? 'Yes' : 'No', context),
-            _buildDetailRow("Is Currently Available", doctor.isAvailable ? 'Yes' : 'No', context),
+            _buildDetailRow(
+              "Initial Consultation Fee",
+              "\$${doctor.consultationFee.toStringAsFixed(2)}",
+              context,
+            ),
+            _buildDetailRow(
+              "Follow-up Consultation Fee",
+              "\$${doctor.followupFee.toStringAsFixed(2)}",
+              context,
+            ),
+            _buildDetailRow(
+              "Consultation Duration",
+              "${doctor.consultationDuration} Mins",
+              context,
+            ),
+            _buildDetailRow(
+              "Accepts Online Consultations",
+              doctor.acceptsOnlineConsultation ? 'Yes' : 'No',
+              context,
+            ),
+            _buildDetailRow(
+              "Is Currently Available",
+              doctor.isAvailable ? 'Yes' : 'No',
+              context,
+            ),
           ],
         ),
       ),

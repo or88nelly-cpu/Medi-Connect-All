@@ -7,10 +7,7 @@ import 'package:medi_connect/shared/auth/domain/entities/doctor_entity.dart';
 class DoctorBiographyCard extends StatelessWidget {
   final DoctorEntity doctor;
 
-  const DoctorBiographyCard({
-    super.key,
-    required this.doctor,
-  });
+  const DoctorBiographyCard({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +47,9 @@ class DoctorBiographyCard extends StatelessWidget {
             _buildInfoRow("Education", doctor.education ?? 'N/A', context),
             _buildInfoRow(
               "Spoken Languages",
-              doctor.languages != null ? doctor.languages!.join(', ') : 'English',
+              doctor.languages != null
+                  ? doctor.languages!.join(', ')
+                  : 'English',
               context,
             ),
           ],

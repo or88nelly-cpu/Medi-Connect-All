@@ -17,7 +17,9 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
   UserDetailsRepositoryImpl(this._supabase);
 
   @override
-  Future<Either<Failure, AppUserEntity>> getFullUserProfile(String userId) async {
+  Future<Either<Failure, AppUserEntity>> getFullUserProfile(
+    String userId,
+  ) async {
     try {
       // 1. Fetch from users table
       final userResponse = await _supabase
@@ -86,9 +88,10 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
     Map<String, dynamic> data,
   ) async {
     try {
-      await _supabase
-          .from(AppTableNames.patients)
-          .upsert({'user_id': userId, ...data}, onConflict: 'user_id');
+      await _supabase.from(AppTableNames.patients).upsert({
+        'user_id': userId,
+        ...data,
+      }, onConflict: 'user_id');
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -101,9 +104,10 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
     Map<String, dynamic> data,
   ) async {
     try {
-      await _supabase
-          .from(AppTableNames.employees)
-          .upsert({'user_id': userId, ...data}, onConflict: 'user_id');
+      await _supabase.from(AppTableNames.employees).upsert({
+        'user_id': userId,
+        ...data,
+      }, onConflict: 'user_id');
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -116,9 +120,10 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
     Map<String, dynamic> data,
   ) async {
     try {
-      await _supabase
-          .from(AppTableNames.doctors)
-          .upsert({'user_id': userId, ...data}, onConflict: 'user_id');
+      await _supabase.from(AppTableNames.doctors).upsert({
+        'user_id': userId,
+        ...data,
+      }, onConflict: 'user_id');
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

@@ -9,7 +9,7 @@ class LoginSecurityFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -29,7 +29,9 @@ class LoginSecurityFooter extends StatelessWidget {
         Text(
           'Your health data is safe and secure.',
           style: AppTextStyles.bodySmall.copyWith(
-            color: isDark ? Colors.white.withValues(alpha: 0.8) : Colors.black87,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.8)
+                : Colors.black87,
             fontSize: 12.sp,
             fontWeight: FontWeight.w600,
           ),

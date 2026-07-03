@@ -49,7 +49,10 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                 children: [
                   Icon(Icons.error_outline, size: 64.r, color: AppColors.error),
                   SizedBox(height: 16.h),
-                  Text("Error: ${state.error}", style: AppTextStyles.bodyMedium),
+                  Text(
+                    "Error: ${state.error}",
+                    style: AppTextStyles.bodyMedium,
+                  ),
                 ],
               ),
             );
@@ -82,7 +85,10 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           height: 100.r,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: AppColors.accent, width: 3),
+                            border: Border.all(
+                              color: AppColors.accent,
+                              width: 3,
+                            ),
                           ),
                           child: CustomImageView(
                             imagePath: ProfileImageHelper.resolveImagePath(
@@ -109,7 +115,10 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                         ),
                         SizedBox(height: 8.h),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 4.h,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.accent.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(20.r),

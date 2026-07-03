@@ -6,10 +6,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 class HeartbeatPulseLine extends StatefulWidget {
   final double height;
 
-  const HeartbeatPulseLine({
-    super.key,
-    this.height = 60,
-  });
+  const HeartbeatPulseLine({super.key, this.height = 60});
 
   @override
   State<HeartbeatPulseLine> createState() => _HeartbeatPulseLineState();
@@ -42,11 +39,7 @@ class _HeartbeatPulseLineState extends State<HeartbeatPulseLine>
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, _) {
-          return CustomPaint(
-            painter: ECGPainter(
-              progress: _controller.value,
-            ),
-          );
+          return CustomPaint(painter: ECGPainter(progress: _controller.value));
         },
       ),
     );
@@ -164,7 +157,7 @@ class ECGPainter extends CustomPainter {
       ..style = PaintingStyle.fill
       //..shadowColor = Colors.white
       ..imageFilter = null;
-    
+
     // Find approximate Y coordinate of the dot along the path
     // We scan our points to interpolate the dot's current Y coordinate based on glowX
     double dotY = midY;
@@ -199,19 +192,9 @@ class ECGPainter extends CustomPainter {
   }) {
     final edgeColor = sideColor ?? Colors.transparent;
     return LinearGradient(
-      colors: [
-        edgeColor,
-        glowColor,
-        edgeColor,
-      ],
-      begin: Alignment(
-        ((center.dx - width) / center.dx).clamp(-1.0, 1.0),
-        0,
-      ),
-      end: Alignment(
-        ((center.dx + width) / center.dx).clamp(-1.0, 1.0),
-        0,
-      ),
+      colors: [edgeColor, glowColor, edgeColor],
+      begin: Alignment(((center.dx - width) / center.dx).clamp(-1.0, 1.0), 0),
+      end: Alignment(((center.dx + width) / center.dx).clamp(-1.0, 1.0), 0),
     );
   }
 

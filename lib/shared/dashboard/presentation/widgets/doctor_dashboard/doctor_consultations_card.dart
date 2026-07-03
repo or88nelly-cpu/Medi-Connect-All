@@ -285,10 +285,17 @@ class DoctorConsultationsCard extends StatelessWidget {
                               var displayStatus = apt.status;
                               if (apt.status.toLowerCase() != 'completed' &&
                                   apt.status.toLowerCase() != 'cancelled' &&
-                                  _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime)) {
+                                  _isAppointmentInPast(
+                                    apt.appointmentDate,
+                                    apt.appointmentTime,
+                                  )) {
                                 displayStatus = 'Pending MRD';
                               }
-                              return _buildStatusChip(displayStatus, idx, isDark);
+                              return _buildStatusChip(
+                                displayStatus,
+                                idx,
+                                isDark,
+                              );
                             },
                           ),
                           SizedBox(width: 8.w),

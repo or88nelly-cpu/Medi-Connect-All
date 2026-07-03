@@ -30,18 +30,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int _currentIndex = 0;
 
   final List<Map<String, String>> _slides = [
-    {
-      'title': AppStrings.onboardingTitle1,
-      'desc': AppStrings.onboardingDesc1,
-    },
-    {
-      'title': AppStrings.onboardingTitle2,
-      'desc': AppStrings.onboardingDesc2,
-    },
-    {
-      'title': AppStrings.onboardingTitle3,
-      'desc': AppStrings.onboardingDesc3,
-    },
+    {'title': AppStrings.onboardingTitle1, 'desc': AppStrings.onboardingDesc1},
+    {'title': AppStrings.onboardingTitle2, 'desc': AppStrings.onboardingDesc2},
+    {'title': AppStrings.onboardingTitle3, 'desc': AppStrings.onboardingDesc3},
   ];
 
   @override
@@ -109,7 +100,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           // Render the modular vector illustration for each slide
                           _buildIllustration(index),
                           SizedBox(height: 48.h),
-                          
+
                           // Staggered animated texts (Title & Description)
                           OnboardingAnimatedText(
                             title: slide['title']!,
@@ -139,10 +130,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         boxShadow: _currentIndex == index
                             ? [
                                 BoxShadow(
-                                  color: AppColors.primary.withValues(alpha: 0.35),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.35,
+                                  ),
                                   blurRadius: 8.r,
                                   spreadRadius: 1.r,
-                                )
+                                ),
                               ]
                             : null,
                       ),
@@ -155,9 +148,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   child: PrimaryButton(
-                    text: isLastPage
-                        ? AppStrings.getStarted
-                        : AppStrings.next,
+                    text: isLastPage ? AppStrings.getStarted : AppStrings.next,
                     onPressed: () {
                       if (isLastPage) {
                         context.go(RouteNames.login);

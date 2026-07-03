@@ -9,7 +9,8 @@ class DoctorShimmerLoader extends StatefulWidget {
   State<DoctorShimmerLoader> createState() => _DoctorShimmerLoaderState();
 }
 
-class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader> with SingleTickerProviderStateMixin {
+class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -21,12 +22,10 @@ class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader> with SingleTi
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.45, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
+    _animation = Tween<double>(
+      begin: 0.45,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -38,7 +37,9 @@ class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader> with SingleTi
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0);
+    final baseColor = isDark
+        ? const Color(0xFF334155)
+        : const Color(0xFFE2E8F0);
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
 
     return FadeTransition(
