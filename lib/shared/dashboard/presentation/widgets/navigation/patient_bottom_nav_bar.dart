@@ -26,7 +26,7 @@ class PatientBottomNavBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(28.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? .30 : .08),
+              color: Colors.black.withValues(alpha: isDark ? .30 : .08),
               blurRadius: 25,
               offset: const Offset(0, 8),
             ),

@@ -51,7 +51,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
       builder: (context, state) {
         if (state is BannerLoading) {
           return Container(
-            height: 190.h,
+            height: 200.h,
             alignment: Alignment.center,
             child: const CircularProgressIndicator(),
           );
@@ -81,7 +81,8 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
                 ),
                 SizedBox(height: 6.h),
                 TextButton(
-                  onPressed: () => context.read<BannerBloc>().add(LoadBanners()),
+                  onPressed: () =>
+                      context.read<BannerBloc>().add(LoadBanners()),
                   child: Text(
                     "Retry",
                     style: TextStyle(
@@ -107,27 +108,30 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
             if (_timer == null) _startAutoPlay(banners.length);
           });
 
-          return Column(
-            children: [
-              SizedBox(
-                height: 190.h,
-                child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: (idx) {
-                    setState(() {
-                      _currentPage = idx;
-                    });
-                  },
-                  itemCount: banners.length,
-                  itemBuilder: (context, index) {
-                    final banner = banners[index];
-                    return _buildBannerCard(banner);
-                  },
+          return Container(
+            decoration: BoxDecoration(color: Colors.transparent),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200.h,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    onPageChanged: (idx) {
+                      setState(() {
+                        _currentPage = idx;
+                      });
+                    },
+                    itemCount: banners.length,
+                    itemBuilder: (context, index) {
+                      final banner = banners[index];
+                      return _buildBannerCard(banner);
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(height: 8.h),
-              _buildIndicators(banners.length),
-            ],
+                SizedBox(height: 8.h),
+                _buildIndicators(banners.length),
+              ],
+            ),
           );
         }
 
@@ -138,19 +142,17 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
 
   Widget _buildBannerCard(BannerEntity banner) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
+      margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.h),
       elevation: 4,
       shadowColor: Colors.black.withValues(alpha: 0.1),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       clipBehavior: Clip.antiAlias,
       child: Stack(
         fit: StackFit.expand,
         children: [
           CustomImageView(
             imagePath: banner.imageUrl,
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
             errorWidget: Container(
               color: AppColors.primary.withValues(alpha: 0.1),
               alignment: Alignment.center,

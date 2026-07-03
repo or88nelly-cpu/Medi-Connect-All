@@ -81,7 +81,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     );
   }
 
-bool _isAppointmentInPast(DateTime date, String timeStr) {
+  bool _isAppointmentInPast(DateTime date, String timeStr) {
     try {
       final format = DateFormat('hh:mm a');
       final parsedTime = format.parse(timeStr.trim());
@@ -273,7 +273,9 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                       margin: EdgeInsets.only(bottom: 20.h),
                       padding: EdgeInsets.all(4.r),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF1E293B) : Colors.grey[100],
+                        color: isDark
+                            ? const Color(0xFF1E293B)
+                            : Colors.grey[100],
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Row(
@@ -285,16 +287,20 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                                 padding: EdgeInsets.symmetric(vertical: 10.h),
                                 decoration: BoxDecoration(
                                   color: _activeSubTab == 0
-                                      ? (isDark ? const Color(0xFF0F6FFF) : Colors.white)
+                                      ? (isDark
+                                            ? const Color(0xFF0F6FFF)
+                                            : Colors.white)
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(10.r),
                                   boxShadow: _activeSubTab == 0
                                       ? [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(0.05),
+                                            color: Colors.black.withValues(
+                                              alpha: 0.05,
+                                            ),
                                             blurRadius: 4,
                                             offset: const Offset(0, 2),
-                                          )
+                                          ),
                                         ]
                                       : [],
                                 ),
@@ -303,8 +309,12 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                                   "Appointments List",
                                   style: TextStyle(
                                     color: _activeSubTab == 0
-                                        ? (isDark ? Colors.white : const Color(0xFF0F6FFF))
-                                        : (isDark ? Colors.white60 : Colors.grey[600]),
+                                        ? (isDark
+                                              ? Colors.white
+                                              : const Color(0xFF0F6FFF))
+                                        : (isDark
+                                              ? Colors.white60
+                                              : Colors.grey[600]),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp,
                                   ),
@@ -319,16 +329,20 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                                 padding: EdgeInsets.symmetric(vertical: 10.h),
                                 decoration: BoxDecoration(
                                   color: _activeSubTab == 1
-                                      ? (isDark ? const Color(0xFF0F6FFF) : Colors.white)
+                                      ? (isDark
+                                            ? const Color(0xFF0F6FFF)
+                                            : Colors.white)
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(10.r),
                                   boxShadow: _activeSubTab == 1
                                       ? [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(0.05),
+                                            color: Colors.black.withValues(
+                                              alpha: 0.05,
+                                            ),
                                             blurRadius: 4,
                                             offset: const Offset(0, 2),
-                                          )
+                                          ),
                                         ]
                                       : [],
                                 ),
@@ -337,8 +351,12 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                                   "Slot Management",
                                   style: TextStyle(
                                     color: _activeSubTab == 1
-                                        ? (isDark ? Colors.white : const Color(0xFF0F6FFF))
-                                        : (isDark ? Colors.white60 : Colors.grey[600]),
+                                        ? (isDark
+                                              ? Colors.white
+                                              : const Color(0xFF0F6FFF))
+                                        : (isDark
+                                              ? Colors.white60
+                                              : Colors.grey[600]),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp,
                                   ),
@@ -478,7 +496,10 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                                       side: BorderSide(
                                         color: isSelected
                                             ? Colors.transparent
-                                            : _getChipBorderColor(status, isDark),
+                                            : _getChipBorderColor(
+                                                status,
+                                                isDark,
+                                              ),
                                       ),
                                     ),
                                     showCheckmark: false,
@@ -544,7 +565,9 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                               itemCount: filteredApts.length,
                               itemBuilder: (context, idx) {
                                 final apt = filteredApts[idx];
-                                final timeParts = apt.appointmentTime.split(" ");
+                                final timeParts = apt.appointmentTime.split(
+                                  " ",
+                                );
                                 final timeVal = timeParts[0];
                                 final timePeriod = timeParts.length > 1
                                     ? timeParts[1]
@@ -597,11 +620,16 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                                       // Timeline vertical line and dot
                                       _buildTimelineIndicator(
                                         _getStatusColor(
-                                          (apt.status.toLowerCase() != 'completed' &&
-                                           apt.status.toLowerCase() != 'cancelled' &&
-                                           _isAppointmentInPast(apt.appointmentDate, apt.appointmentTime))
+                                          (apt.status.toLowerCase() !=
+                                                      'completed' &&
+                                                  apt.status.toLowerCase() !=
+                                                      'cancelled' &&
+                                                  _isAppointmentInPast(
+                                                    apt.appointmentDate,
+                                                    apt.appointmentTime,
+                                                  ))
                                               ? 'Pending MRD'
-                                              : apt.status
+                                              : apt.status,
                                         ),
                                         idx,
                                         filteredApts.length,
@@ -615,7 +643,9 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
                                             context
                                                 .read<DoctorAppointmentsBloc>()
                                                 .add(
-                                                  CancelDoctorAppointment(apt.id),
+                                                  CancelDoctorAppointment(
+                                                    apt.id,
+                                                  ),
                                                 );
                                           },
                                           onComplete: () {
@@ -737,9 +767,7 @@ bool _isAppointmentInPast(DateTime date, String timeStr) {
             ? AppColors.statusConfirmedTextDark
             : AppColors.statusConfirmedTextLight;
       case 'Pending MRD':
-        return isDark
-            ? const Color(0xFFC084FC)
-            : const Color(0xFF7E22CE);
+        return isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingTextDark
