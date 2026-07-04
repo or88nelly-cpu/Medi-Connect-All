@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/images/
 
+
     - assets/animations/
     - assets/images/department/
   fonts:
