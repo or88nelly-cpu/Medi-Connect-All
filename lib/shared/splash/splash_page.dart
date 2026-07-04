@@ -15,7 +15,6 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 
-// Separate premium splash widgets
 import 'package:medi_connect/shared/auth/presentation/widgets/heartbeat_pulse_line.dart';
 import 'package:medi_connect/shared/auth/presentation/widgets/glowing_progress_bar.dart';
 
