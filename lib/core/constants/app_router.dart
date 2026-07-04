@@ -6,7 +6,7 @@ import 'package:medi_connect/core/routes/route_guards.dart' show RouteGuards;
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_signup_page.dart';
-import 'package:medi_connect/shared/auth/presentation/pages/splash_page.dart';
+import 'package:medi_connect/shared/splash/splash_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/staff/staff_dashboard_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_add_slot_page.dart';
 import 'package:medi_connect/modules/admin/home/admin_home_page.dart';
@@ -24,7 +24,7 @@ import 'package:medi_connect/modules/management/staff_management/presentation/pa
 import 'package:medi_connect/modules/management/staff_management/presentation/pages/section_list_page.dart';
 import 'package:medi_connect/modules/staff/patient/pages/staff_patient_registration.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/presentation/pages/onboarding_page.dart';
+import 'package:medi_connect/shared/onboarding/onboarding_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_audit_logs_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_doctors_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_emergencies_page.dart';

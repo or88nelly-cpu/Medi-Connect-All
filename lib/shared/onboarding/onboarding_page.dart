@@ -12,11 +12,11 @@ import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
 // Import separate modular widgets
-import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/background_painter.dart';
-import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/doctor_illustration.dart';
-import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/booking_illustration.dart';
-import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/security_illustration.dart';
-import 'package:medi_connect/shared/auth/presentation/widgets/onboarding/animated_text.dart';
+import 'package:medi_connect/shared/onboarding/widgets/background_painter.dart';
+import 'package:medi_connect/shared/onboarding/widgets/doctor_illustration.dart';
+import 'package:medi_connect/shared/onboarding/widgets/booking_illustration.dart';
+import 'package:medi_connect/shared/onboarding/widgets/security_illustration.dart';
+import 'package:medi_connect/shared/onboarding/widgets/animated_text.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
