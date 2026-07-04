@@ -3,7 +3,7 @@
 library;
 
 import 'package:flutter/widgets.dart';
-import 'package:medi_connect/core/services/app_logger.dart';
+import 'package:medi_connect/boot_strap/services/app_logger.dart';
 
 class AppNavigationObserver extends NavigatorObserver {
   @override

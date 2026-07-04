@@ -88,13 +88,6 @@ class PrescriptionsPage extends StatelessWidget {
   ];
 
   List<Map<String, dynamic>> _resolveConsultations(AuthState state) {
-    if (state is Authenticated) {
-      final raw =
-          state.user.metadata?['consultations'] as List<dynamic>?;
-      if (raw != null && raw.isNotEmpty) {
-        return raw.map((e) => Map<String, dynamic>.from(e as Map)).toList();
-      }
-    }
     return _mockConsultations;
   }
 
@@ -194,7 +187,10 @@ class PrescriptionsPage extends StatelessWidget {
               // Consultation list
               Expanded(
                 child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 4.h,
+                  ),
                   itemCount: consultations.length,
                   separatorBuilder: (context, _) => SizedBox(height: 12.h),
                   itemBuilder: (context, index) {
@@ -226,10 +222,7 @@ class _ConsultationCard extends StatelessWidget {
   final Map<String, dynamic> consultation;
   final VoidCallback onTap;
 
-  const _ConsultationCard({
-    required this.consultation,
-    required this.onTap,
-  });
+  const _ConsultationCard({required this.consultation, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -326,7 +319,8 @@ class _ConsultationCard extends StatelessWidget {
                   Row(
                     children: [
                       _Tag(
-                        label: '$medicines medicine${medicines != 1 ? 's' : ''}',
+                        label:
+                            '$medicines medicine${medicines != 1 ? 's' : ''}',
                         color: const Color(0xFF8B5CF6),
                       ),
                       SizedBox(width: 6.w),

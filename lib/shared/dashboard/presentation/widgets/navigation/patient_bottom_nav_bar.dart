@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/admin_nav_item.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
 
 class PatientBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -15,76 +16,181 @@ class PatientBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final surfaceColor = Theme.of(context).colorScheme.surface;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: surfaceColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(28.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: isDark ? .30 : .08),
+              blurRadius: 25,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
-        border: Border(
-          top: BorderSide(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.08)
-                : Colors.black.withValues(alpha: 0.06),
-            width: 1,
-          ),
+        child: Row(
+          children: [
+            Expanded(
+              child: _navItem(
+                context,
+                0,
+                Icons.home_outlined,
+                Icons.home_rounded,
+                "Home",
+              ),
+            ),
+            Expanded(
+              child: _navItem(
+                context,
+                1,
+                Icons.assignment_outlined,
+                Icons.assignment_rounded,
+                "Records",
+              ),
+            ),
+            Expanded(
+              child: _navItem(
+                context,
+                2,
+                Icons.person_outline,
+                Icons.person,
+                "Profile",
+              ),
+            ),
+            Expanded(child: _premiumItem(context)),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-            blurRadius: 20.r,
-            offset: const Offset(0, -4),
-          ),
-        ],
       ),
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    );
+  }
+
+  Widget _navItem(
+    BuildContext context,
+    int index,
+    IconData outline,
+    IconData filled,
+    String title,
+  ) {
+    final selected = currentIndex == index;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(20.r),
+      onTap: () => onTap(index),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeOutBack,
+        padding: EdgeInsets.symmetric(vertical: 8.h),
+        decoration: BoxDecoration(
+          color: selected
+              ? AppColors.primary.withAlpha(25)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(18.r),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedScale(
+              duration: const Duration(milliseconds: 350),
+              curve: Curves.easeOutBack,
+              scale: selected ? 1.18 : 1,
+              child: Icon(
+                selected ? filled : outline,
+                size: 24.r,
+                color: selected
+                    ? AppColors.primary
+                    : (isDark ? Colors.white60 : Colors.grey.shade600),
+              ),
+            ),
+            SizedBox(height: 4.h),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 250),
+              style: AppTextStyles.bodySmall.copyWith(
+                fontSize: selected ? 10.sp : 9.sp,
+                fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+                color: selected ? AppColors.primary : Colors.grey,
+              ),
+              child: Text(title),
+            ),
+            SizedBox(height: 5.h),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+              width: selected ? 20.w : 0,
+              height: 4.h,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _premiumItem(BuildContext context) {
+    final selected = currentIndex == 3;
+
+    return InkWell(
+      onTap: () => onTap(3),
+      borderRadius: BorderRadius.circular(20.r),
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 350),
+        scale: selected ? 1.08 : 1,
+        curve: Curves.easeOutBack,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeOut,
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18.r),
+            gradient: LinearGradient(
+              colors: selected
+                  ? const [Color(0xffFFD54F), Color(0xffFFB300)]
+                  : [
+                      const Color(0xffFFD54F).withAlpha(51),
+                      const Color(0xffFFB300).withAlpha(31),
+                    ],
+            ),
+            border: Border.all(color: const Color(0xffF4B400)),
+            boxShadow: selected
+                ? [
+                    BoxShadow(
+                      color: Colors.amber.withAlpha(85),
+                      blurRadius: 18,
+                      spreadRadius: 2,
+                    ),
+                  ]
+                : [],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              AdminNavItem(
-                index: 0,
-                outlineIcon: Icons.home_outlined,
-                solidIcon: Icons.home,
-                label: "Home",
-                currentIndex: currentIndex,
-                onTap: onTap,
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: selected ? 0.15 : 0),
+                duration: const Duration(milliseconds: 400),
+                builder: (_, value, child) {
+                  return Transform.rotate(angle: value, child: child);
+                },
+                child: Icon(
+                  Icons.workspace_premium_rounded,
+                  color: selected ? Colors.white : const Color(0xffD89B00),
+                  size: 24.r,
+                ),
               ),
-              AdminNavItem(
-                index: 1,
-                outlineIcon: Icons.calendar_today_outlined,
-                solidIcon: Icons.calendar_today,
-                label: "Appointments",
-                currentIndex: currentIndex,
-                onTap: onTap,
-              ),
-              AdminNavItem(
-                index: 2,
-                outlineIcon: Icons.folder_open_outlined,
-                solidIcon: Icons.folder,
-                label: "Records",
-                currentIndex: currentIndex,
-                onTap: onTap,
-              ),
-              AdminNavItem(
-                index: 3,
-                outlineIcon: Icons.chat_bubble_outline,
-                solidIcon: Icons.chat_bubble,
-                label: "Chat",
-                currentIndex: currentIndex,
-                onTap: onTap,
-              ),
-              AdminNavItem(
-                index: 4,
-                outlineIcon: Icons.person_outline,
-                solidIcon: Icons.person,
-                label: "Profile",
-                currentIndex: currentIndex,
-                onTap: onTap,
+              SizedBox(height: 4.h),
+              Text(
+                "Premium",
+                style: AppTextStyles.bodySmall.copyWith(
+                  fontSize: 9.sp,
+                  fontWeight: FontWeight.bold,
+                  color: selected ? Colors.white : const Color(0xffD89B00),
+                ),
               ),
             ],
           ),

@@ -57,12 +57,10 @@ class _StaffDashboardBody extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.name ??
-              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
-          if (name.isEmpty) name = 'Staff Member';
-          profileImage = user.profileImage;
-          roleLabel = user.staffRole ?? user.department ?? 'Medical Support';
+          name = user.fullName;
+          if (name.trim().isEmpty) name = 'Staff Member';
+          profileImage = user.profilePhoto;
+          roleLabel = user.role.name;
         }
 
         return SafeArea(
@@ -72,7 +70,7 @@ class _StaffDashboardBody extends StatelessWidget {
               children: [
                 _TopBar(
                   name: name,
-                  profileImage: profileImage,
+                  profilePhoto: profileImage,
                   roleLabel: roleLabel,
                   greeting: greeting,
                   state: state,
@@ -197,14 +195,14 @@ class _StaffDashboardBody extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 class _TopBar extends StatelessWidget {
   final String name;
-  final String? profileImage;
+  final String? profilePhoto;
   final String roleLabel;
   final String greeting;
   final AuthState state;
 
   const _TopBar({
     required this.name,
-    required this.profileImage,
+    required this.profilePhoto,
     required this.roleLabel,
     required this.greeting,
     required this.state,
@@ -381,7 +379,7 @@ class _TopBar extends StatelessWidget {
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
-                            profileImage,
+                            profilePhoto,
                             'staff',
                             state is Authenticated
                                 ? (state as Authenticated).user.gender

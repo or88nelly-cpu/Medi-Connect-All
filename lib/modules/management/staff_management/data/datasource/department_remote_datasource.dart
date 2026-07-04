@@ -34,6 +34,7 @@ class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
     final response = await _supabase
         .from(_kTable)
         .select()
+        .eq('is_clinical', false)
         .order('name', ascending: true);
     return (response as List<dynamic>)
         .map((json) => DepartmentModel.fromJson(json as Map<String, dynamic>))

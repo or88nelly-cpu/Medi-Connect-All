@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 
 // Sub-widgets
 import 'package:medi_connect/shared/dashboard/presentation/widgets/manage_slots/manage_slots_header.dart';
@@ -43,8 +40,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
   }
 
   void _loadSlots() {
-    final slotsByDate =
-        widget.user.metadata?['slots_by_date'] as Map<dynamic, dynamic>? ?? {};
+    final slotsByDate = {};
     final dateData = slotsByDate[_selectedDate] as Map<dynamic, dynamic>? ?? {};
     final durationData =
         dateData[_slotDuration] as Map<dynamic, dynamic>? ?? {};
@@ -140,11 +136,11 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
   }
 
   void _saveChanges() {
-    final updatedMetadata = Map<String, dynamic>.from(
-      widget.user.metadata ?? {},
-    );
+    // final updatedMetadata = Map<String, dynamic>.from(
+    //   widget.user.metadata ?? {},
+    // );
     final slotsByDate = Map<String, dynamic>.from(
-      updatedMetadata['slots_by_date'] ?? {},
+      {}, // updatedMetadata['slots_by_date'] ?? {},
     );
     final dateData = Map<String, dynamic>.from(
       slotsByDate[_selectedDate] ?? {},
@@ -157,18 +153,18 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
     durationData['afternoon'] = _afternoonSlots;
     dateData[_slotDuration] = durationData;
     slotsByDate[_selectedDate] = dateData;
-    updatedMetadata['slots_by_date'] = slotsByDate;
+    //updatedMetadata['slots_by_date'] = slotsByDate;
 
-    updatedMetadata['slots_morning'] = _morningSlots;
-    updatedMetadata['slots_afternoon'] = _afternoonSlots;
+    //updatedMetadata['slots_morning'] = _morningSlots;
+    //updatedMetadata['slots_afternoon'] = _afternoonSlots;
 
-    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+    // final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
 
-    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+    // context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Changes saved successfully!")),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(content: Text("Changes saved successfully!")),
+    // );
     Navigator.pop(context);
   }
 

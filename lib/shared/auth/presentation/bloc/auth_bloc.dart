@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/shared/auth/domain/use_cases/forgot_password_usecase.dart';

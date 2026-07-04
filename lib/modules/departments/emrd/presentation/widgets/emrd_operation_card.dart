@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
 
 class EmrdOperationCard extends StatelessWidget {
   final String title;
@@ -30,7 +29,7 @@ class EmrdOperationCard extends StatelessWidget {
     final Color cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
     final Color borderCol = isDark
         ? Colors.white10
-        : accentColor.withOpacity(0.12);
+        : accentColor.withValues(alpha: 0.12);
     final Color titleColor = isDark
         ? Colors.white
         : AppColors.textPrimary(context);
@@ -46,7 +45,7 @@ class EmrdOperationCard extends StatelessWidget {
         boxShadow: [
           if (!isDark)
             BoxShadow(
-              color: accentColor.withOpacity(0.06),
+              color: accentColor.withValues(alpha: 0.06),
               blurRadius: 16,
               offset: const Offset(0, 6),
             ),
@@ -64,8 +63,8 @@ class EmrdOperationCard extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
-            splashColor: accentColor.withOpacity(0.05),
-            hoverColor: accentColor.withOpacity(0.02),
+            splashColor: accentColor.withValues(alpha: 0.05),
+            hoverColor: accentColor.withValues(alpha: 0.02),
             child: Padding(
               padding: EdgeInsets.all(14.r),
               child: Column(
@@ -84,8 +83,8 @@ class EmrdOperationCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  accentColor.withOpacity(0.2),
-                                  accentColor.withOpacity(0.05),
+                                  accentColor.withValues(alpha: 0.2),
+                                  accentColor.withValues(alpha: 0.05),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -110,7 +109,7 @@ class EmrdOperationCard extends StatelessWidget {
                                     BoxShadow(
                                       color: const Color(
                                         0xFFEF4444,
-                                      ).withOpacity(0.3),
+                                      ).withValues(alpha: 0.3),
                                       blurRadius: 4,
                                       offset: const Offset(0, 2),
                                     ),
@@ -179,7 +178,7 @@ class EmrdOperationCard extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.all(5.r),
                         decoration: BoxDecoration(
-                          color: accentColor.withOpacity(0.12),
+                          color: accentColor.withValues(alpha: 0.12),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(

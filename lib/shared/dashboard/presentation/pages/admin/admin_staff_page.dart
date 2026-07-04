@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
@@ -205,7 +206,7 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                               List<UserModel> staffList = [];
                               if (state is DoctorStaffLoaded) {
                                 staffList = state.staff
-                                    .where((u) => u.role == 'staff')
+                                    .where((u) => u.role == UserRole.staff)
                                     .toList();
                               }
 
@@ -236,25 +237,22 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                                 stf,
                                               ) {
                                                 final matchesSearch =
-                                                    (stf.name ?? '')
+                                                    (stf.fullName ?? '')
                                                         .toLowerCase()
                                                         .contains(
                                                           searchQuery
                                                               .toLowerCase(),
                                                         ) ||
-                                                    (stf.staffRole ?? '')
+                                                    (stf.role.value ?? '')
                                                         .toLowerCase()
                                                         .contains(
                                                           searchQuery
                                                               .toLowerCase(),
                                                         );
-                                                final matchesCategory =
-                                                    selectedFilter == 'All' ||
-                                                    stf.department ==
-                                                        selectedFilter;
+                                                final matchesCategory = true;
                                                 final matchesStatus =
                                                     statusFilter == 'All' ||
-                                                    stf.status.toLowerCase() ==
+                                                    stf.status?.toLowerCase() ==
                                                         statusFilter
                                                             .toLowerCase();
                                                 return matchesSearch &&
@@ -265,14 +263,18 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                               // 2. Sort
                                               if (sortBy == 'Name (A-Z)') {
                                                 filtered.sort(
-                                                  (a, b) => (a.name ?? '')
-                                                      .compareTo(b.name ?? ''),
+                                                  (a, b) => (a.fullName ?? '')
+                                                      .compareTo(
+                                                        b.fullName ?? '',
+                                                      ),
                                                 );
                                               } else if (sortBy ==
                                                   'Name (Z-A)') {
                                                 filtered.sort(
-                                                  (a, b) => (b.name ?? '')
-                                                      .compareTo(a.name ?? ''),
+                                                  (a, b) => (b.fullName ?? '')
+                                                      .compareTo(
+                                                        a.fullName ?? '',
+                                                      ),
                                                 );
                                               }
 

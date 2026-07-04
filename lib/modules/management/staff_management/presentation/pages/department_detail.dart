@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
@@ -206,10 +207,10 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
 
                     final filtered = staff.where((stf) {
                       final matchesSearch =
-                          (stf.name ?? '').toLowerCase().contains(
+                          (stf.fullName ?? '').toLowerCase().contains(
                             _searchQuery.toLowerCase(),
                           ) ||
-                          (stf.staffRole ?? '').toLowerCase().contains(
+                          (stf.role.value ?? '').toLowerCase().contains(
                             _searchQuery.toLowerCase(),
                           );
                       return matchesSearch;
@@ -250,14 +251,14 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                               ),
                             ),
                             title: Text(
-                              stf.name ?? '',
+                              stf.fullName,
                               style: AppTextStyles.bodyMedium.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: textColor,
                               ),
                             ),
                             subtitle: Text(
-                              stf.staffRole ?? 'Support Staff',
+                              stf.role.value,
                               style: TextStyle(color: labelColor),
                             ),
                             trailing: Row(

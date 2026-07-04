@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/add_slot/add_slot_header.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/add_slot/additional_options_card.dart';
@@ -81,36 +78,36 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
       currentMin += minutes;
     }
 
-    final updatedMetadata = Map<String, dynamic>.from(
-      widget.user.metadata ?? {},
-    );
-    final slotsByDate = Map<String, dynamic>.from(
-      updatedMetadata['slots_by_date'] ?? {},
-    );
-    final dateData = Map<String, dynamic>.from(slotsByDate[_date] ?? {});
-    final durationData = Map<String, dynamic>.from(dateData[_duration] ?? {});
+    // final updatedMetadata = Map<String, dynamic>.from(
+    //   widget.user.metadata ?? {},
+    // );
+    // final slotsByDate = Map<String, dynamic>.from(
+    //   updatedMetadata['slots_by_date'] ?? {},
+    // );
+    // final dateData = Map<String, dynamic>.from(slotsByDate[_date] ?? {});
+    // final durationData = Map<String, dynamic>.from(dateData[_duration] ?? {});
 
-    if (_session.toLowerCase() == "morning") {
-      durationData['morning'] = generatedList;
-    } else {
-      durationData['afternoon'] = generatedList;
-    }
+    // if (_session.toLowerCase() == "morning") {
+    //   durationData['morning'] = generatedList;
+    // } else {
+    //   durationData['afternoon'] = generatedList;
+    // }
 
-    dateData[_duration] = durationData;
-    slotsByDate[_date] = dateData;
-    updatedMetadata['slots_by_date'] = slotsByDate;
+    // dateData[_duration] = durationData;
+    // slotsByDate[_date] = dateData;
+    // updatedMetadata['slots_by_date'] = slotsByDate;
 
-    final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
+    // final updatedUser = widget.user.copyWith(metadata: updatedMetadata);
 
-    context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
+    // context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          "Successfully created ${generatedList.length} $_type slots on $_date for ${widget.user.name ?? 'Doctor'}.",
-        ),
-      ),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text(
+    //       "Successfully created ${generatedList.length} $_type slots on $_date for ${widget.user.name ?? 'Doctor'}.",
+    //     ),
+    //   ),
+    // );
     Navigator.pop(context);
   }
 

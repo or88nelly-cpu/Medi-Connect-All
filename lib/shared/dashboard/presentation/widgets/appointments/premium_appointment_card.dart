@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
@@ -48,6 +50,8 @@ class PremiumAppointmentCard extends StatelessWidget {
         return isDark
             ? AppColors.statusConfirmedBgDark
             : AppColors.statusConfirmedBgLight;
+      case 'Pending MRD':
+        return isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingBgDark
@@ -70,6 +74,8 @@ class PremiumAppointmentCard extends StatelessWidget {
         return isDark
             ? AppColors.statusConfirmedTextDark
             : AppColors.statusConfirmedTextLight;
+      case 'Pending MRD':
+        return isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingTextDark
@@ -86,6 +92,25 @@ class PremiumAppointmentCard extends StatelessWidget {
     }
   }
 
+  bool _isAppointmentInPast(DateTime date, String timeStr) {
+    try {
+      final format = DateFormat('hh:mm a');
+      final parsedTime = format.parse(timeStr.trim());
+      final combined = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+      return combined.isBefore(DateTime.now());
+    } catch (_) {
+      final now = DateTime.now();
+      final todayDateOnly = DateTime(now.year, now.month, now.day);
+      return date.isBefore(todayDateOnly);
+    }
+  }
+
   String _cleanDoctorName(String raw) {
     String cleaned = raw.trim();
     if (cleaned.toLowerCase().startsWith('dr.')) {
@@ -99,8 +124,18 @@ class PremiumAppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final badgeBg = _getStatusBgColor(appointment.status, isDark);
-    final badgeText = _getStatusTextColor(appointment.status, isDark);
+    var displayStatus = appointment.status;
+    if (appointment.status.toLowerCase() != 'completed' &&
+        appointment.status.toLowerCase() != 'cancelled' &&
+        _isAppointmentInPast(
+          appointment.appointmentDate,
+          appointment.appointmentTime,
+        )) {
+      displayStatus = 'Pending MRD';
+    }
+
+    final badgeBg = _getStatusBgColor(displayStatus, isDark);
+    final badgeText = _getStatusTextColor(displayStatus, isDark);
     final formattedDate = DateFormat(
       'dd MMM yyyy',
     ).format(appointment.appointmentDate);
@@ -111,9 +146,7 @@ class PremiumAppointmentCard extends StatelessWidget {
       final patientState = context.watch<PatientBloc>().state;
       if (patientState is PatientLoaded) {
         final matches = patientState.patients.where(
-          (p) =>
-              p.id == appointment.patientId ||
-              p.patientId == appointment.patientId,
+          (p) => p.id == appointment.patientId || p.id == appointment.patientId,
         );
         if (matches.isNotEmpty) {
           patient = matches.first;
@@ -125,11 +158,11 @@ class PremiumAppointmentCard extends StatelessWidget {
 
     // Determine resolved profile image
     String? resolvedImagePath;
-    if (patient?.profileImage != null && patient!.profileImage!.isNotEmpty) {
-      resolvedImagePath = patient.profileImage;
+    if (patient?.profilePhoto != null && patient!.profilePhoto!.isNotEmpty) {
+      resolvedImagePath = patient.profilePhoto;
     } else {
       resolvedImagePath = ProfileImageHelper.resolveImagePath(
-        patient?.profileImage,
+        patient?.profilePhoto,
         'patient',
         patient?.gender,
       );
@@ -270,7 +303,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6.r),
                     ),
                     child: Text(
-                      appointment.status,
+                      displayStatus,
                       style: TextStyle(
                         color: badgeText,
                         fontSize: 9.sp,
@@ -478,7 +511,7 @@ class PremiumAppointmentCard extends StatelessWidget {
               _buildInfoRow(AppStrings.gender, genderStr, isDark, context),
               _buildInfoRow(
                 AppStrings.ageLabel,
-                patient?.age != null ? "${patient!.age} years" : "N/A",
+                AppDateUtils.calculateAge(patient?.dob) ?? "N/A",
                 isDark,
                 context,
               ),
@@ -934,7 +967,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                 try {
                   final authState = context.read<AuthBloc>().state;
                   if (authState is Authenticated &&
-                      authState.user.role == 'doctor') {
+                      authState.user.role == UserRole.doctor) {
                     context.read<DoctorAppointmentsBloc>().add(
                       UpdateDoctorAppointmentVitals(appointment.id, vitalsMap),
                     );

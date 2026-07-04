@@ -250,14 +250,18 @@ class ConsultationListItem extends StatelessWidget {
     }
 
     final List<String> parts = [];
-    if (appointment.bp != null && appointment.bp!.isNotEmpty)
+    if (appointment.bp != null && appointment.bp!.isNotEmpty) {
       parts.add("BP: ${appointment.bp}");
-    if (appointment.weight != null && appointment.weight!.isNotEmpty)
+    }
+    if (appointment.weight != null && appointment.weight!.isNotEmpty) {
       parts.add("Wt: ${appointment.weight}");
-    if (appointment.height != null && appointment.height!.isNotEmpty)
+    }
+    if (appointment.height != null && appointment.height!.isNotEmpty) {
       parts.add("Ht: ${appointment.height}");
-    if (appointment.fever != null && appointment.fever!.isNotEmpty)
+    }
+    if (appointment.fever != null && appointment.fever!.isNotEmpty) {
       parts.add("Temp: ${appointment.fever}");
+    }
 
     return Container(
       width: double.infinity,

@@ -9,7 +9,7 @@ class CustomScaffold extends StatelessWidget {
   final Widget? body;
   final Widget?
   bottomNavigationBar; // Changing type to Widget? to allow premium custom navigations
-  final FloatingActionButton? floatingActionButton;
+  final Widget? floatingActionButton;
   final Widget? drawer;
 
   const CustomScaffold({

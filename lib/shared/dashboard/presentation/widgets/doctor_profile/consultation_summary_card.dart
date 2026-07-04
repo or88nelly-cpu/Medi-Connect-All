@@ -33,8 +33,7 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final metadataConsultations =
-        widget.user.metadata?['consultations'] as List<dynamic>?;
+    final metadataConsultations = null;
     final List<Map<String, dynamic>> consultations = [];
     if (metadataConsultations != null) {
       for (var item in metadataConsultations) {

@@ -31,8 +31,7 @@ class RegistrationBottomBar extends StatelessWidget {
       buildWhen: (prev, curr) =>
           prev.status != curr.status || prev.currentStep != curr.currentStep,
       builder: (context, state) {
-        final isLoading =
-            state.status == PatientRegistrationStatus.loading;
+        final isLoading = state.status == PatientRegistrationStatus.loading;
         final isLastStep = currentStep >= totalSteps;
 
         return Container(
@@ -63,9 +62,7 @@ class RegistrationBottomBar extends StatelessWidget {
                 child: _buildPrimaryButton(
                   context,
                   isLoading: isLoading,
-                  label: isLastStep
-                      ? AppStrings.confirm
-                      : AppStrings.next,
+                  label: isLastStep ? AppStrings.confirm : AppStrings.next,
                 ),
               ),
             ],
@@ -77,8 +74,9 @@ class RegistrationBottomBar extends StatelessWidget {
 
   Widget _buildSkipButton(BuildContext context) {
     return TextButton(
-      onPressed: () =>
-          context.read<PatientRegistrationBloc>().add(const SkipOnboardingRequested()),
+      onPressed: () => context.read<PatientRegistrationBloc>().add(
+        const SkipOnboardingRequested(),
+      ),
       style: TextButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 14.h),
         shape: RoundedRectangleBorder(
@@ -99,8 +97,9 @@ class RegistrationBottomBar extends StatelessWidget {
 
   Widget _buildBackButton(BuildContext context) {
     return OutlinedButton(
-      onPressed: () =>
-          context.read<PatientRegistrationBloc>().add(const StepBackRequested()),
+      onPressed: () => context.read<PatientRegistrationBloc>().add(
+        const StepBackRequested(),
+      ),
       style: OutlinedButton.styleFrom(
         side: const BorderSide(color: AppColors.primary, width: 1.5),
         padding: EdgeInsets.symmetric(vertical: 14.h),

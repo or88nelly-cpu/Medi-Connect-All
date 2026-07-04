@@ -5,10 +5,11 @@ library;
 import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 
-import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/shared/auth/data/data_source/auth_remote_datasource.dart';
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 import 'package:medi_connect/shared/auth/domain/repositories/auth_repository.dart';
@@ -29,11 +30,11 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
       );
-      await _secureStorage.write(
-        'profile_completion_status',
-        userModel.profileCompletionStatus.toString(),
-      );
-      await _secureStorage.write('user_role', userModel.role);
+      // await _secureStorage.write(
+      //   'profile_completion_status',
+      //   userModel.c.toString(),
+      // );
+      await _secureStorage.write('user_role', userModel.role.value);
       return Right(userModel);
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message, code: e.code));
@@ -49,7 +50,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String email,
     required String password,
     required String name,
-    required String role,
+    required UserRole role,
     String? phoneNumber,
   }) async {
     try {
@@ -62,11 +63,11 @@ class AuthRepositoryImpl implements AuthRepository {
         phoneNumber: phoneNumber,
       );
       log("AuthRepositoryImpl: User Model: ${userModel.toJson()}");
-      await _secureStorage.write(
-        'profile_completion_status',
-        userModel.profileCompletionStatus.toString(),
-      );
-      await _secureStorage.write('user_role', userModel.role);
+      // await _secureStorage.write(
+      //   'profile_completion_status',
+      //   userModel.profileCompletionStatus.toString(),
+      // );
+      await _secureStorage.write('user_role', userModel.role.value);
       return Right(userModel);
     } on AuthException catch (e) {
       log("AuthException: ${e.message}");
@@ -90,11 +91,11 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         token: token,
       );
-      await _secureStorage.write(
-        'profile_completion_status',
-        userModel.profileCompletionStatus.toString(),
-      );
-      await _secureStorage.write('user_role', userModel.role);
+      // await _secureStorage.write(
+      //   'profile_completion_status',
+      //   userModel.profileCompletionStatus.toString(),
+      // );
+      await _secureStorage.write('user_role', userModel.role.value);
       return Right(userModel);
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message, code: e.code));
@@ -156,11 +157,11 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final userModel = await _remoteDataSource.getCurrentUser();
       if (userModel != null) {
-        await _secureStorage.write(
-          'profile_completion_status',
-          userModel.profileCompletionStatus.toString(),
-        );
-        await _secureStorage.write('user_role', userModel.role);
+        // await _secureStorage.write(
+        //   'profile_completion_status',
+        //   userModel.profileCompletionStatus.toString(),
+        // );
+        await _secureStorage.write('user_role', userModel.role.value);
       } else {
         await _secureStorage.delete('profile_completion_status');
         await _secureStorage.delete('user_role');

@@ -273,8 +273,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
                           horizontal: 16.w,
                           vertical: 4.h,
                         ),
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: crossCount,
                           crossAxisSpacing: 12.w,
                           mainAxisSpacing: 12.h,
@@ -312,10 +311,7 @@ class _SpecialtyCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              data.gradient.first,
-              data.gradient.last,
-            ],
+            colors: [data.gradient.first, data.gradient.last],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

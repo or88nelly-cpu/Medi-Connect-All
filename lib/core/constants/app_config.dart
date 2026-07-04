@@ -4,7 +4,15 @@ library;
 
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/modules/patient/booking/data/datasources/booking_remote_datasource.dart';
+import 'package:medi_connect/modules/patient/booking/data/repositories/booking_repository_impl.dart';
+import 'package:medi_connect/modules/patient/booking/domain/repositories/booking_repository.dart';
+import 'package:medi_connect/modules/patient/booking/domain/usecases/booking_usecases.dart';
+import 'package:medi_connect/modules/patient/booking/data/datasources/doctor_image_remote_datasource.dart';
+import 'package:medi_connect/modules/patient/booking/data/repositories/doctor_image_repository_impl.dart';
+import 'package:medi_connect/modules/patient/booking/domain/repositories/doctor_image_repository.dart';
+import 'package:medi_connect/modules/patient/booking/domain/usecases/get_doctor_image_usecase.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/shared/auth/data/data_source/auth_remote_datasource.dart';
 import 'package:medi_connect/shared/auth/data/repository/auth_repository_impl.dart';
 import 'package:medi_connect/shared/auth/domain/repositories/auth_repository.dart';
@@ -52,6 +60,21 @@ import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_sett
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_recent_activity_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
+
+// Banners Feature
+import 'package:medi_connect/modules/patient/dashboard/domain/repositories/banner_repository.dart';
+import 'package:medi_connect/modules/patient/dashboard/data/repositories/banner_repository_impl.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/bloc/banner_bloc.dart';
+
+// Specialities Feature
+import 'package:medi_connect/modules/patient/speciality/domain/repositories/speciality_repository.dart';
+import 'package:medi_connect/modules/patient/speciality/data/repositories/speciality_repository_impl.dart';
+import 'package:medi_connect/modules/patient/speciality/presentation/bloc/speciality_bloc.dart';
+
+// UserDetails / Profiles Feature
+import 'package:medi_connect/shared/auth/domain/repositories/user_details_repository.dart';
+import 'package:medi_connect/shared/auth/data/repositories/user_details_repository_impl.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -387,4 +410,84 @@ void configureAdminOperationsDependencies(GetIt sl) {
       updateVitals: sl<UpdateAppointmentVitalsUseCase>(),
     ),
   );
+}
+
+void configureAdditionalFeatures(GetIt sl) {
+  // Banners
+  if (!sl.isRegistered<BannerRepository>()) {
+    sl.registerLazySingleton<BannerRepository>(
+      () => BannerRepositoryImpl(sl<SupabaseService>()),
+    );
+  }
+  if (!sl.isRegistered<BannerBloc>()) {
+    sl.registerFactory<BannerBloc>(() => BannerBloc(sl<BannerRepository>()));
+  }
+
+  // Specialities
+  if (!sl.isRegistered<SpecialityRepository>()) {
+    sl.registerLazySingleton<SpecialityRepository>(
+      () => SpecialityRepositoryImpl(sl<SupabaseService>()),
+    );
+  }
+  if (!sl.isRegistered<SpecialityBloc>()) {
+    sl.registerFactory<SpecialityBloc>(
+      () => SpecialityBloc(sl<SpecialityRepository>()),
+    );
+  }
+
+  // UserDetails / Profiles
+  if (!sl.isRegistered<UserDetailsRepository>()) {
+    sl.registerLazySingleton<UserDetailsRepository>(
+      () => UserDetailsRepositoryImpl(sl<SupabaseService>()),
+    );
+  }
+  if (!sl.isRegistered<UserDetailsBloc>()) {
+    sl.registerFactory<UserDetailsBloc>(
+      () => UserDetailsBloc(sl<UserDetailsRepository>()),
+    );
+  }
+
+  // Booking Feature Clean Architecture Mappings
+  if (!sl.isRegistered<BookingRemoteDataSource>()) {
+    sl.registerLazySingleton<BookingRemoteDataSource>(
+      () => BookingRemoteDataSourceImpl(sl<SupabaseService>()),
+    );
+  }
+  if (!sl.isRegistered<BookingRepository>()) {
+    sl.registerLazySingleton<BookingRepository>(
+      () => BookingRepositoryImpl(sl<BookingRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<LoadDoctorsBySpecialtyUseCase>()) {
+    sl.registerLazySingleton<LoadDoctorsBySpecialtyUseCase>(
+      () => LoadDoctorsBySpecialtyUseCase(sl<BookingRepository>()),
+    );
+  }
+  if (!sl.isRegistered<GetSlotsUseCase>()) {
+    sl.registerLazySingleton<GetSlotsUseCase>(
+      () => GetSlotsUseCase(sl<BookingRepository>()),
+    );
+  }
+  if (!sl.isRegistered<BookAppointmentUseCase>()) {
+    sl.registerLazySingleton<BookAppointmentUseCase>(
+      () => BookAppointmentUseCase(sl<BookingRepository>()),
+    );
+  }
+
+  // Doctor Image Feature Clean Architecture Mappings
+  if (!sl.isRegistered<DoctorImageRemoteDataSource>()) {
+    sl.registerLazySingleton<DoctorImageRemoteDataSource>(
+      () => DoctorImageRemoteDataSourceImpl(sl<SupabaseService>().client),
+    );
+  }
+  if (!sl.isRegistered<DoctorImageRepository>()) {
+    sl.registerLazySingleton<DoctorImageRepository>(
+      () => DoctorImageRepositoryImpl(sl<DoctorImageRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<GetDoctorImageUseCase>()) {
+    sl.registerLazySingleton<GetDoctorImageUseCase>(
+      () => GetDoctorImageUseCase(sl<DoctorImageRepository>()),
+    );
+  }
 }

@@ -33,26 +33,17 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
 
-    final metadataConsultations =
-        widget.user.metadata?['consultations'] as List<dynamic>?;
     final List<Map<String, dynamic>> consultations = [];
-    if (metadataConsultations != null) {
-      for (var item in metadataConsultations) {
-        if (item is Map) {
-          consultations.add({'status': (item['status'] ?? '').toString()});
-        }
-      }
-    } else {
-      consultations.addAll([
-        {"status": "Completed"},
-        {"status": "Completed"},
-        {"status": "Completed"},
-        {"status": "Booked"},
-        {"status": "Pending"},
-        {"status": "Booked"},
-        {"status": "Pending"},
-      ]);
-    }
+
+    consultations.addAll([
+      {"status": "Completed"},
+      {"status": "Completed"},
+      {"status": "Completed"},
+      {"status": "Booked"},
+      {"status": "Pending"},
+      {"status": "Booked"},
+      {"status": "Pending"},
+    ]);
 
     final completedCount = consultations
         .where((c) => c['status'] == 'Completed')

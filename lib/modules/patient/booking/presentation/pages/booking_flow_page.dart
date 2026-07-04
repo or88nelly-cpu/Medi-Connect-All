@@ -1,16 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_state.dart';
-import 'package:medi_connect/modules/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Data helpers
@@ -106,46 +105,73 @@ const _kSpecialties = <_SpecialtyEntry>[
 ];
 
 const _kMorningSlots = [
-  '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+  '09:00 AM',
+  '09:30 AM',
+  '10:00 AM',
+  '10:30 AM',
+  '11:00 AM',
+  '11:30 AM',
 ];
 const _kAfternoonSlots = [
-  '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
+  '02:00 PM',
+  '02:30 PM',
+  '03:00 PM',
+  '03:30 PM',
+  '04:00 PM',
+  '04:30 PM',
 ];
-const _kEveningSlots = [
-  '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
-];
+const _kEveningSlots = ['05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM'];
 const _kBookedSlots = {'10:00 AM', '03:00 PM', '05:30 PM'};
 
 const _kPaymentMethods = [
-  {'id': 'UPI', 'label': 'UPI / BHIM', 'icon': Icons.account_balance_wallet_rounded, 'color': 0xFF4F7CFF},
-  {'id': 'CARD', 'label': 'Credit / Debit Card', 'icon': Icons.credit_card_rounded, 'color': 0xFF8B5CF6},
-  {'id': 'CASH', 'label': 'Pay at Clinic (Cash)', 'icon': Icons.payments_rounded, 'color': 0xFF22C55E},
+  {
+    'id': 'UPI',
+    'label': 'UPI / BHIM',
+    'icon': Icons.account_balance_wallet_rounded,
+    'color': 0xFF4F7CFF,
+  },
+  {
+    'id': 'CARD',
+    'label': 'Credit / Debit Card',
+    'icon': Icons.credit_card_rounded,
+    'color': 0xFF8B5CF6,
+  },
+  {
+    'id': 'CASH',
+    'label': 'Pay at Clinic (Cash)',
+    'icon': Icons.payments_rounded,
+    'color': 0xFF22C55E,
+  },
 ];
 
 const _kFallbackDoctors = <UserModel>[
   UserModel(
-    id: 'doc-1', email: 'sarah.j@mediconnect.com',
-    name: 'Dr. Sarah Johnson', role: 'doctor',
-    specialization: 'Cardiologist', department: 'Cardiology',
-    consultationFee: 1200.0, experience: 12,
+    id: 'doc-1',
+    email: 'sarah.j@mediconnect.com',
+    firstName: 'Dr. Sarah',
+    lastName: 'Johnson',
+    role: UserRole.doctor,
   ),
   UserModel(
-    id: 'doc-2', email: 'michael.c@mediconnect.com',
-    name: 'Dr. Michael Chen', role: 'doctor',
-    specialization: 'Neurologist', department: 'Neurology',
-    consultationFee: 1500.0, experience: 9,
+    id: 'doc-2',
+    email: 'michael.c@mediconnect.com',
+    firstName: 'Dr. Michael',
+    lastName: 'Chen',
+    role: UserRole.doctor,
   ),
   UserModel(
-    id: 'doc-3', email: 'james.w@mediconnect.com',
-    name: 'Dr. James Wilson', role: 'doctor',
-    specialization: 'Pediatrician', department: 'Pediatrics',
-    consultationFee: 1000.0, experience: 15,
+    id: 'doc-3',
+    email: 'james.w@mediconnect.com',
+    firstName: 'Dr. James',
+    lastName: 'Wilson',
+    role: UserRole.doctor,
   ),
   UserModel(
-    id: 'doc-4', email: 'priya.s@mediconnect.com',
-    name: 'Dr. Priya Sharma', role: 'doctor',
-    specialization: 'General Physician', department: 'General Medicine',
-    consultationFee: 600.0, experience: 7,
+    id: 'doc-4',
+    email: 'priya.s@mediconnect.com',
+    firstName: 'Dr. Priya',
+    lastName: 'Sharma',
+    role: UserRole.doctor,
   ),
 ];
 
@@ -178,7 +204,11 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
   String _bookingId = '';
 
   static const _stepLabels = [
-    'Specialty', 'Doctor', 'Slot', 'Payment', 'Done!',
+    'Specialty',
+    'Doctor',
+    'Slot',
+    'Payment',
+    'Done!',
   ];
 
   @override
@@ -191,7 +221,8 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
     if (widget.preselectedSpecialty != null) {
       try {
         _specialty = _kSpecialties.firstWhere(
-          (s) => s.name.toLowerCase() ==
+          (s) =>
+              s.name.toLowerCase() ==
               widget.preselectedSpecialty!.toLowerCase(),
         );
       } catch (_) {}
@@ -211,11 +242,16 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
 
   bool get _canGoNext {
     switch (_step) {
-      case 0: return _specialty != null;
-      case 1: return _doctor != null;
-      case 2: return _selectedSlot != null;
-      case 3: return true;
-      default: return false;
+      case 0:
+        return _specialty != null;
+      case 1:
+        return _doctor != null;
+      case 2:
+        return _selectedSlot != null;
+      case 3:
+        return true;
+      default:
+        return false;
     }
   }
 
@@ -241,34 +277,68 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
   }
 
   Future<void> _saveAppointment() async {
-    try {
-      final state = context.read<AuthBloc>().state;
-      if (state is! Authenticated) return;
-      final user = UserModel.fromEntity(state.user);
-      final meta = Map<String, dynamic>.from(user.metadata ?? {});
-      final apts = List<dynamic>.from(meta['appointments'] ?? []);
-      apts.insert(0, {
-        'doctor': _doctor?.name ?? 'Dr. Specialist',
-        'specialty': _specialty?.name ?? _doctor?.specialization ?? '',
-        'time': '${_shortDate(_selectedDate)}, $_selectedSlot',
-        'type': _doctor?.department ?? _specialty?.name ?? '',
-        'bookingId': _bookingId,
-        'paymentMethod': _paymentMethod,
-      });
-      meta['appointments'] = apts;
-      final updated = user.copyWith(metadata: meta);
-      await GetIt.instance<DoctorStaffRemoteDataSource>()
-          .updateDoctorStaffMember(updated);
-      if (mounted) {
-        context.read<AuthBloc>().add(UserUpdated(updated));
+    final authState = context.read<AuthBloc>().state;
+    if (authState is Authenticated) {
+      final user = authState.user;
+      final dateStr = _selectedDate.toIso8601String().split('T').first;
+      final docName = _doctor?.fullName ?? 'Doctor';
+
+      // Generate initials for token
+      final cleanName = docName
+          .replaceAll(
+            RegExp(r'^(dr\.|dr|Dr\.|Dr)\s+', caseSensitive: false),
+            '',
+          )
+          .trim();
+      final parts = cleanName
+          .split(RegExp(r'\s+'))
+          .where((s) => s.isNotEmpty)
+          .toList();
+      String initials = 'DR';
+      if (parts.isNotEmpty) {
+        if (parts.length == 1) {
+          initials = parts[0]
+              .substring(0, parts[0].length >= 2 ? 2 : 1)
+              .toUpperCase();
+        } else {
+          initials =
+              '${parts.first[0].toUpperCase()}${parts.last[0].toUpperCase()}';
+        }
       }
-    } catch (_) {}
+      final token =
+          '${initials}A${(DateTime.now().millisecondsSinceEpoch % 1000).toString().padLeft(3, '0')}';
+
+      context.read<AdminAppointmentsBloc>().add(
+        CreateAppointmentEvent({
+          'patient_id': user.id,
+          'patient_name': user.fullName,
+          'doctor_id': _doctor?.id ?? '',
+          'doctor_name': docName,
+          'specialty': _specialty?.name ?? '',
+          'appointment_date': dateStr,
+          'appointment_time': _selectedSlot ?? '',
+          'status': 'Confirmed',
+          'type': 'Consultation',
+          'token': token,
+        }),
+      );
+    }
   }
 
   String _shortDate(DateTime d) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${months[d.month - 1]} ${d.day}, ${d.year}';
   }
@@ -378,8 +448,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
             onPressed: (_canGoNext && !_isProcessing) ? _next : null,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
-              disabledBackgroundColor:
-                  AppColors.primary.withValues(alpha: 0.4),
+              disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
               padding: EdgeInsets.all(16.r),
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -451,7 +520,9 @@ class _StepIndicator extends StatelessWidget {
                   Expanded(
                     child: Container(
                       height: 2,
-                      color: isDone ? AppColors.primary : AppColors.border(context),
+                      color: isDone
+                          ? AppColors.primary
+                          : AppColors.border(context),
                     ),
                   ),
               ],
@@ -502,7 +573,9 @@ class _StepCircle extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
-                      color: isActive ? Colors.white : AppColors.textSecondary(context),
+                      color: isActive
+                          ? Colors.white
+                          : AppColors.textSecondary(context),
                     ),
                   ),
           ),
@@ -594,7 +667,9 @@ class _SpecialtyStep extends StatelessWidget {
                         boxShadow: isSelected
                             ? [
                                 BoxShadow(
-                                  color: sp.gradient.first.withValues(alpha: 0.3),
+                                  color: sp.gradient.first.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   blurRadius: 12,
                                   offset: const Offset(0, 4),
                                 ),
@@ -684,12 +759,11 @@ class _DoctorStep extends StatelessWidget {
   });
 
   List<UserModel> _filtered(List<UserModel> all) {
-    if (specialty == null) return all.where((d) => d.role == 'doctor').toList();
-    final sp = specialty!.name.toLowerCase();
+    if (specialty == null) {
+      return all.where((d) => d.role == UserRole.doctor).toList();
+    }
     final res = all.where((d) {
-      final spec = (d.specialization ?? '').toLowerCase();
-      final dept = (d.department ?? '').toLowerCase();
-      return (d.role == 'doctor') && (spec.contains(sp) || dept.contains(sp));
+      return d.role == UserRole.doctor;
     }).toList();
     return res.isEmpty ? _kFallbackDoctors : res;
   }
@@ -724,7 +798,8 @@ class _DoctorStep extends StatelessWidget {
         Expanded(
           child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
             builder: (context, state) {
-              final docs = state is DoctorStaffLoaded && state.doctors.isNotEmpty
+              final docs =
+                  state is DoctorStaffLoaded && state.doctors.isNotEmpty
                   ? _filtered(state.doctors)
                   : _kFallbackDoctors;
 
@@ -762,7 +837,8 @@ class _DoctorStep extends StatelessWidget {
                             height: 50.r,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: specialty?.gradient ??
+                                colors:
+                                    specialty?.gradient ??
                                     [AppColors.primary, AppColors.secondary],
                               ),
                               shape: BoxShape.circle,
@@ -779,7 +855,7 @@ class _DoctorStep extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  doc.name ?? 'Dr. Specialist',
+                                  doc.fullName,
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.textPrimary(context),
@@ -787,7 +863,7 @@ class _DoctorStep extends StatelessWidget {
                                 ),
                                 SizedBox(height: 2.h),
                                 Text(
-                                  doc.specialization ?? 'General Medicine',
+                                  'General Medicine',
                                   style: AppTextStyles.bodySmall.copyWith(
                                     color: color,
                                     fontWeight: FontWeight.w600,
@@ -811,7 +887,7 @@ class _DoctorStep extends StatelessWidget {
                                     ),
                                     SizedBox(width: 8.w),
                                     Text(
-                                      '${doc.experience ?? 5} yrs · ₹${(doc.consultationFee ?? 500).toInt()}',
+                                      '5 yrs · ₹500',
                                       style: AppTextStyles.bodySmall.copyWith(
                                         color: AppColors.textSecondary(context),
                                       ),
@@ -829,7 +905,9 @@ class _DoctorStep extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: isSelected ? color : Colors.transparent,
                               border: Border.all(
-                                color: isSelected ? color : AppColors.border(context),
+                                color: isSelected
+                                    ? color
+                                    : AppColors.border(context),
                                 width: 1.5,
                               ),
                             ),
@@ -900,7 +978,7 @@ class _SlotStep extends StatelessWidget {
           if (doctor != null) ...[
             SizedBox(height: 4.h),
             Text(
-              'With ${doctor!.name ?? 'Doctor'}',
+              'With ${doctor!.fullName}',
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textSecondary(context),
               ),
@@ -932,7 +1010,9 @@ class _SlotStep extends StatelessWidget {
                       color: isSelected ? null : AppColors.card(context),
                       borderRadius: BorderRadius.circular(12.r),
                       border: Border.all(
-                        color: isSelected ? AppColors.primary : AppColors.border(context),
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.border(context),
                       ),
                     ),
                     child: Column(
@@ -942,7 +1022,9 @@ class _SlotStep extends StatelessWidget {
                           _weekday(d.weekday),
                           style: TextStyle(
                             fontSize: 10.sp,
-                            color: isSelected ? Colors.white70 : AppColors.textSecondary(context),
+                            color: isSelected
+                                ? Colors.white70
+                                : AppColors.textSecondary(context),
                           ),
                         ),
                         SizedBox(height: 2.h),
@@ -951,7 +1033,9 @@ class _SlotStep extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : AppColors.textPrimary(context),
+                            color: isSelected
+                                ? Colors.white
+                                : AppColors.textPrimary(context),
                           ),
                         ),
                       ],
@@ -1030,10 +1114,7 @@ class _SlotGroup extends StatelessWidget {
               onTap: isBooked ? null : () => onSelect(slot),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 14.w,
-                  vertical: 9.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 9.h),
                 decoration: BoxDecoration(
                   gradient: isSelected
                       ? const LinearGradient(
@@ -1043,8 +1124,8 @@ class _SlotGroup extends StatelessWidget {
                   color: isBooked
                       ? AppColors.border(context)
                       : isSelected
-                          ? null
-                          : AppColors.card(context),
+                      ? null
+                      : AppColors.card(context),
                   borderRadius: BorderRadius.circular(10.r),
                   border: Border.all(
                     color: isSelected
@@ -1056,14 +1137,16 @@ class _SlotGroup extends StatelessWidget {
                   slot,
                   style: TextStyle(
                     fontSize: 12.sp,
-                    fontWeight:
-                        isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: isSelected
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                     color: isBooked
-                        ? AppColors.textSecondary(context)
-                            .withValues(alpha: 0.5)
+                        ? AppColors.textSecondary(
+                            context,
+                          ).withValues(alpha: 0.5)
                         : isSelected
-                            ? Colors.white
-                            : AppColors.textPrimary(context),
+                        ? Colors.white
+                        : AppColors.textPrimary(context),
                     decoration: isBooked ? TextDecoration.lineThrough : null,
                   ),
                 ),
@@ -1100,15 +1183,25 @@ class _PaymentStep extends StatelessWidget {
 
   String _monthName(int m) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[(m - 1).clamp(0, 11)];
   }
 
   @override
   Widget build(BuildContext context) {
-    final fee = (doctor?.consultationFee ?? 500).toInt();
+    final fee = 500;
     final tax = (fee * 0.18).round();
     final total = fee + tax;
     final color = specialty?.gradient.first ?? AppColors.primary;
@@ -1147,23 +1240,28 @@ class _PaymentStep extends StatelessWidget {
                 Divider(color: color.withValues(alpha: 0.2), height: 16.h),
                 _SummaryRow(
                   label: 'Doctor',
-                  value: doctor?.name ?? 'Dr. Specialist',
+                  value: doctor?.fullName ?? 'Dr. Specialist',
                   color: color,
                 ),
                 SizedBox(height: 8.h),
                 _SummaryRow(
                   label: 'Specialty',
-                  value: specialty?.name ?? doctor?.specialization ?? '',
+                  value: specialty?.name ?? 'General Medicine',
                   color: color,
                 ),
                 SizedBox(height: 8.h),
                 _SummaryRow(
                   label: 'Date & Time',
-                  value: '${_monthName(date.month)} ${date.day}, ${date.year} · $slot',
+                  value:
+                      '${_monthName(date.month)} ${date.day}, ${date.year} · $slot',
                   color: color,
                 ),
                 Divider(color: color.withValues(alpha: 0.2), height: 20.h),
-                _SummaryRow(label: 'Consultation Fee', value: '₹$fee', color: color),
+                _SummaryRow(
+                  label: 'Consultation Fee',
+                  value: '₹$fee',
+                  color: color,
+                ),
                 SizedBox(height: 6.h),
                 _SummaryRow(label: 'GST (18%)', value: '₹$tax', color: color),
                 Divider(color: color.withValues(alpha: 0.2), height: 16.h),
@@ -1241,8 +1339,9 @@ class _PaymentStep extends StatelessWidget {
                         label,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: AppColors.textPrimary(context),
-                          fontWeight:
-                              isSelected ? FontWeight.bold : FontWeight.normal,
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                         ),
                       ),
                     ),
@@ -1254,11 +1353,17 @@ class _PaymentStep extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: isSelected ? mColor : Colors.transparent,
                         border: Border.all(
-                          color: isSelected ? mColor : AppColors.border(context),
+                          color: isSelected
+                              ? mColor
+                              : AppColors.border(context),
                         ),
                       ),
                       child: isSelected
-                          ? Icon(Icons.check_rounded, color: Colors.white, size: 12.r)
+                          ? Icon(
+                              Icons.check_rounded,
+                              color: Colors.white,
+                              size: 12.r,
+                            )
                           : null,
                     ),
                   ],
@@ -1335,8 +1440,18 @@ class _ConfirmationStep extends StatelessWidget {
 
   String _monthName(int m) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[(m - 1).clamp(0, 11)];
   }
@@ -1368,11 +1483,7 @@ class _ConfirmationStep extends StatelessWidget {
                 ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.check_rounded,
-                color: Colors.white,
-                size: 50.r,
-              ),
+              child: Icon(Icons.check_rounded, color: Colors.white, size: 50.r),
             ),
           ),
           SizedBox(height: 24.h),
@@ -1450,14 +1561,14 @@ class _ConfirmationStep extends StatelessWidget {
                 _ConfirmRow(
                   icon: Icons.person_rounded,
                   label: 'Doctor',
-                  value: doctor?.name ?? 'Dr. Specialist',
+                  value: doctor?.fullName ?? 'Dr. Specialist',
                   color: AppColors.primary,
                 ),
                 SizedBox(height: 10.h),
                 _ConfirmRow(
                   icon: Icons.medical_services_rounded,
                   label: 'Specialty',
-                  value: specialty?.name ?? doctor?.specialization ?? '',
+                  value: specialty?.name ?? 'General Medicine',
                   color: specialty?.gradient.first ?? AppColors.secondary,
                 ),
                 SizedBox(height: 10.h),

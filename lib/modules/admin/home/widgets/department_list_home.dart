@@ -104,10 +104,14 @@ class DepartmentListHome extends StatelessWidget {
                     itemCount: isLoading ? 24 : loadedList.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: 16.w,
-                      mainAxisSpacing: 16.h,
-                      childAspectRatio: MediaQuery.of(context).size.width < 600
-                          ? 1.3
+                      crossAxisSpacing: MediaQuery.of(context).size.width < 700
+                          ? 12.w
+                          : 16.w,
+                      mainAxisSpacing: MediaQuery.of(context).size.width < 700
+                          ? 12.h
+                          : 16.h,
+                      childAspectRatio: MediaQuery.of(context).size.width < 700
+                          ? 1.1
                           : 1.9, // Responsive aspect ratio to prevent mobile overflow
                     ),
                     itemBuilder: (_, index) {
@@ -134,10 +138,8 @@ class DepartmentListHome extends StatelessWidget {
       return 5;
     } else if (width > 700) {
       return 4;
-    } else if (width > 500) {
-      return 3;
     } else {
-      return 2;
+      return 3;
     }
   }
 }

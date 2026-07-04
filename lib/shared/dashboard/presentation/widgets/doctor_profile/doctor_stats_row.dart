@@ -20,13 +20,11 @@ class DoctorStatsRow extends StatelessWidget {
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
 
-    final expString = user.experience != null
-        ? "${user.experience} Years"
-        : "12+ Years";
-    final qualString = user.qualification ?? "MBBS, MD (Cardiology)";
-    final specString = user.specialization ?? "Cardiology";
-    final rating = user.metadata?['rating']?.toString() ?? "4.8";
-    final reviewsCount = user.metadata?['reviews_count']?.toString() ?? "128";
+    final expString = "12+ Years";
+    final qualString = "MBBS, MD (Cardiology)";
+    final specString = "Cardiology";
+    final rating = "4.8";
+    final reviewsCount = "128";
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),

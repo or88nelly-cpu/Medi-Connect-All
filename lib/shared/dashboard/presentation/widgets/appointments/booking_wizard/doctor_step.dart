@@ -79,10 +79,10 @@ class DoctorStep extends StatelessWidget {
                     final doc = list[idx];
                     final isSelected = state.selectedDoctor?.id == doc.id;
                     final nameStr =
-                        doc.name ??
+                        doc.fullName ??
                         "${doc.firstName ?? ''} ${doc.lastName ?? ''}".trim();
                     final avatarUrl =
-                        doc.profileImage ??
+                        doc.profilePhoto ??
                         "https://i.pravatar.cc/150?u=${doc.id}";
 
                     return Container(
@@ -129,7 +129,7 @@ class DoctorStep extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          "${doc.specialization ?? 'General Specialist'}  |  Fee: ₹${doc.consultationFee ?? 500}",
+                          " 'General Specialist'}  |  Fee: ₹500",
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isDark
                                 ? Colors.white70

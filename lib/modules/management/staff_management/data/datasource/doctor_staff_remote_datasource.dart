@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 
@@ -14,21 +15,24 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
   @override
   Future<List<UserModel>> getDoctorStaff(String departmentName) async {
-    final query = _supabase.from('users').select('*, doctors(*), employees(*)').isFilter('deleted_at', null);
+    final query = _supabase
+        .from('users')
+        .select('*, doctors(*), employees(*)')
+        .isFilter('deleted_at', null);
     final response = await (departmentName.isNotEmpty && departmentName != 'All'
         ? query.eq('department', departmentName)
         : query);
 
     var list = (response as List<dynamic>).map((json) {
       final map = Map<String, dynamic>.from(json as Map);
-      
+
       final docJson = map.remove('doctors');
       if (docJson is List && docJson.isNotEmpty) {
         map.addAll(docJson.first as Map<String, dynamic>);
       } else if (docJson is Map<String, dynamic>) {
         map.addAll(docJson);
       }
-      
+
       final empJson = map.remove('employees');
       if (empJson is List && empJson.isNotEmpty) {
         map.addAll(empJson.first as Map<String, dynamic>);
@@ -38,8 +42,12 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
       // Map DB snake_case fields back to CamelCase keys for UserModel compatibility
       if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
-      if (map.containsKey('profile_image')) map['profileImage'] = map['profile_image'];
-      if (map.containsKey('profile_photo')) map['profileImage'] = map['profile_photo'];
+      if (map.containsKey('profile_image')) {
+        map['profileImage'] = map['profile_image'];
+      }
+      if (map.containsKey('profile_photo')) {
+        map['profileImage'] = map['profile_photo'];
+      }
       if (map.containsKey('profile_completion_status')) {
         map['profileCompletionStatus'] = map['profile_completion_status'];
       }
@@ -82,13 +90,21 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         list = (req as List<dynamic>).map((json) {
           final map = Map<String, dynamic>.from(json as Map);
           final docJson = map.remove('doctors');
-          if (docJson is List && docJson.isNotEmpty) map.addAll(docJson.first as Map<String, dynamic>);
+          if (docJson is List && docJson.isNotEmpty) {
+            map.addAll(docJson.first as Map<String, dynamic>);
+          }
           final empJson = map.remove('employees');
-          if (empJson is List && empJson.isNotEmpty) map.addAll(empJson.first as Map<String, dynamic>);
-          
+          if (empJson is List && empJson.isNotEmpty) {
+            map.addAll(empJson.first as Map<String, dynamic>);
+          }
+
           if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
-          if (map.containsKey('profile_image')) map['profileImage'] = map['profile_image'];
-          if (map.containsKey('profile_completion_status')) map['profileCompletionStatus'] = map['profile_completion_status'];
+          if (map.containsKey('profile_image')) {
+            map['profileImage'] = map['profile_image'];
+          }
+          if (map.containsKey('profile_completion_status')) {
+            map['profileCompletionStatus'] = map['profile_completion_status'];
+          }
           return UserModel.fromJson(map);
         }).toList();
       } else if (departmentName == 'Cardiology' ||
@@ -99,7 +115,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
             .from('users')
             .select()
             .isFilter('deleted_at', null)
-            .eq('role', 'doctor');
+            .eq('role', "Doctor");
         final existingDocs = (docQuery as List<dynamic>)
             .map((json) => UserModel.fromJson(json as Map<String, dynamic>))
             .toList();
@@ -110,26 +126,35 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
               await createDoctorStaffMember(doc);
             } catch (_) {}
           }
-          final req = await (departmentName.isNotEmpty && departmentName != 'All'
-              ? _supabase
-                    .from('users')
-                    .select('*, doctors(*), employees(*)')
-                    .isFilter('deleted_at', null)
-                    .eq('department', departmentName)
-              : _supabase
-                    .from('users')
-                    .select('*, doctors(*), employees(*)')
-                    .isFilter('deleted_at', null));
+          final req =
+              await (departmentName.isNotEmpty && departmentName != 'All'
+                  ? _supabase
+                        .from('users')
+                        .select('*, doctors(*), employees(*)')
+                        .isFilter('deleted_at', null)
+                        .eq('department', departmentName)
+                  : _supabase
+                        .from('users')
+                        .select('*, doctors(*), employees(*)')
+                        .isFilter('deleted_at', null));
           list = (req as List<dynamic>).map((json) {
             final map = Map<String, dynamic>.from(json as Map);
             final docJson = map.remove('doctors');
-            if (docJson is List && docJson.isNotEmpty) map.addAll(docJson.first as Map<String, dynamic>);
+            if (docJson is List && docJson.isNotEmpty) {
+              map.addAll(docJson.first as Map<String, dynamic>);
+            }
             final empJson = map.remove('employees');
-            if (empJson is List && empJson.isNotEmpty) map.addAll(empJson.first as Map<String, dynamic>);
-            
+            if (empJson is List && empJson.isNotEmpty) {
+              map.addAll(empJson.first as Map<String, dynamic>);
+            }
+
             if (map.containsKey('phone')) map['phoneNumber'] = map['phone'];
-            if (map.containsKey('profile_image')) map['profileImage'] = map['profile_image'];
-            if (map.containsKey('profile_completion_status')) map['profileCompletionStatus'] = map['profile_completion_status'];
+            if (map.containsKey('profile_image')) {
+              map['profileImage'] = map['profile_image'];
+            }
+            if (map.containsKey('profile_completion_status')) {
+              map['profileCompletionStatus'] = map['profile_completion_status'];
+            }
             return UserModel.fromJson(map);
           }).toList();
         }
@@ -138,7 +163,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
     if (departmentName.isEmpty || departmentName == 'All') {
       return list
-          .where((u) => u.role == 'doctor' || u.role == 'staff')
+          .where((u) => u.role == UserRole.doctor || u.role == UserRole.staff)
           .toList();
     }
     return list;
@@ -149,34 +174,34 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
     final userPayload = {
       'id': user.id,
       'email': user.email,
-      'name': user.name,
-      'phone': user.phoneNumber,
-      'role': user.role,
+      'name': user.fullName,
+      'phone': user.phone,
+      'role': user.role.value,
       'profile_completed': true,
       'status': 'Available',
-      'department': user.department,
+      'department': 'General',
     };
     await _supabase.from('users').upsert(userPayload);
 
-    if (user.role == 'doctor') {
+    if (user.role == UserRole.doctor) {
       final docPayload = {
         'id': user.id,
-        'medical_registration_number': user.medicalRegistrationNumber ?? 'REG-${user.id.hashCode.abs()}',
-        'experience': user.experience,
-        'specialization': user.specialization ?? user.staffRole,
-        'consultation_fee': user.consultationFee ?? 1000.0,
+        'medical_registration_number': 'REG-${user.id.hashCode.abs()}',
+        'experience': 5,
+        'specialization': 'General Medicine',
+        'consultation_fee': 500.0,
         'availability_status': 'Available',
       };
       await _supabase.from('doctors').upsert(docPayload);
     } else {
       final empPayload = {
         'id': user.id,
-        'employee_id': user.employeeId ?? 'EMP-${user.id.hashCode.abs()}',
-        'joining_date': user.joiningDate ?? DateTime.now().toIso8601String().split('T').first,
-        'department': user.department ?? 'Staff Department',
-        'designation': user.designation ?? user.staffRole,
-        'qualification': user.qualification ?? 'B.Sc',
-        'staff_role': user.staffRole,
+        'employee_id': 'EMP-${user.id.hashCode.abs()}',
+        'joining_date': DateTime.now().toIso8601String().split('T').first,
+        'department': 'Human Resource',
+        'designation': 'Support Staff',
+        'qualification': 'B.Sc',
+        'staff_role': 'staff',
       };
       await _supabase.from('employees').upsert(empPayload);
     }
@@ -189,35 +214,35 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
     final userPayload = {
       'id': user.id,
       'email': user.email,
-      'name': user.name,
-      'phone': user.phoneNumber,
-      'role': user.role,
-      'status': user.status,
-      'department': user.department,
-      'profile_completed': user.profileCompletionStatus,
-      'onboarding_step': user.onboardingStep,
+      'name': user.fullName,
+      'phone': user.phone,
+      'role': user.role.value,
+      'status': user.status ?? 'Available',
+      'department': 'General',
+      'profile_completed': true,
+      'onboarding_step': 3,
     };
     await _supabase.from('users').update(userPayload).eq('id', user.id);
 
-    if (user.role == 'doctor') {
+    if (user.role == UserRole.doctor) {
       final docPayload = {
         'id': user.id,
-        'medical_registration_number': user.medicalRegistrationNumber,
-        'experience': user.experience,
-        'specialization': user.specialization,
-        'consultation_fee': user.consultationFee,
+        'medical_registration_number': 'REG-${user.id.hashCode.abs()}',
+        'experience': 5,
+        'specialization': 'General Medicine',
+        'consultation_fee': 500.0,
         'availability_status': user.status ?? 'Available',
       };
       await _supabase.from('doctors').upsert(docPayload);
     } else {
       final empPayload = {
         'id': user.id,
-        'employee_id': user.employeeId,
-        'joining_date': user.joiningDate,
-        'department': user.department,
-        'designation': user.designation,
-        'qualification': user.qualification,
-        'staff_role': user.staffRole,
+        'employee_id': 'EMP-${user.id.hashCode.abs()}',
+        'joining_date': DateTime.now().toIso8601String().split('T').first,
+        'department': 'Human Resource',
+        'designation': 'Support Staff',
+        'qualification': 'B.Sc',
+        'staff_role': 'staff',
       };
       await _supabase.from('employees').upsert(empPayload);
     }
@@ -238,201 +263,165 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
     return [
       const UserModel(
         id: 'hr-seed-1',
-        name: 'John Smith',
-        staffRole: 'HR Manager',
-        department: 'Human Resource',
+        firstName: 'John',
+        lastName: 'Smith',
         email: 'john.smith@hospital.com',
         status: 'Active',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'Management'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-2',
-        name: 'Emily Johnson',
-        staffRole: 'HR Executive',
-        department: 'Human Resource',
+        firstName: 'Emily',
+        lastName: 'Johnson',
         email: 'emily.j@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Recruitment'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-3',
-        name: 'Michael Brown',
-        staffRole: 'Payroll Specialist',
-        department: 'Human Resource',
+        firstName: 'Michael',
+        lastName: 'Brown',
         email: 'michael.b@hospital.com',
         status: 'Active',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'Payroll'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-4',
-        name: 'Sophia Williams',
-        staffRole: 'HR Generalist',
-        department: 'Human Resource',
+        firstName: 'Sophia',
+        lastName: 'Williams',
         email: 'sophia.w@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Employee Relations'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-5',
-        name: 'David Miller',
-        staffRole: 'Training Coordinator',
-        department: 'Human Resource',
+        firstName: 'David',
+        lastName: 'Miller',
         email: 'david.m@hospital.com',
         status: 'Away',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'Training & Development'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-6',
-        name: 'Olivia Jones',
-        staffRole: 'Recruitment Specialist',
-        department: 'Human Resource',
+        firstName: 'Olivia',
+        lastName: 'Jones',
         email: 'olivia.j@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Recruitment'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-7',
-        name: 'James Davis',
-        staffRole: 'HR Assistant',
-        department: 'Human Resource',
+        firstName: 'James',
+        lastName: 'Davis',
         email: 'james.d@hospital.com',
         status: 'Active',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'HR Operations'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-8',
-        name: 'Isabella Garcia',
-        staffRole: 'Benefits Specialist',
-        department: 'Human Resource',
+        firstName: 'Isabella',
+        lastName: 'Garcia',
         email: 'isabella.g@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Payroll & Benefits'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-9',
-        name: 'Robert Martinez',
-        staffRole: 'Training Specialist',
-        department: 'Human Resource',
+        firstName: 'Robert',
+        lastName: 'Martinez',
         email: 'robert.m@hospital.com',
         status: 'Inactive',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'Training & Development'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-10',
-        name: 'Mia Rodriguez',
-        staffRole: 'HR Generalist',
-        department: 'Human Resource',
+        firstName: 'Mia',
+        lastName: 'Rodriguez',
         email: 'mia.r@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Employee Relations'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-11',
-        name: 'William Wilson',
-        staffRole: 'HR Manager (Compensation)',
-        department: 'Human Resource',
+        firstName: 'William',
+        lastName: 'Wilson',
         email: 'william.w@hospital.com',
         status: 'Active',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'Management'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-12',
-        name: 'Abigail Anderson',
-        staffRole: 'Talent Acquisition Partner',
-        department: 'Human Resource',
+        firstName: 'Abigail',
+        lastName: 'Anderson',
         email: 'abigail.a@hospital.com',
         status: 'Away',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Recruitment'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-13',
-        name: 'Joseph Thomas',
-        staffRole: 'HR Specialist',
-        department: 'Human Resource',
+        firstName: 'Joseph',
+        lastName: 'Thomas',
         email: 'joseph.t@hospital.com',
         status: 'Active',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'HR Operations'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-14',
-        name: 'Elizabeth Taylor',
-        staffRole: 'Payroll Coordinator',
-        department: 'Human Resource',
+        firstName: 'Elizabeth',
+        lastName: 'Taylor',
         email: 'elizabeth.t@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Payroll'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-15',
-        name: 'Charles Moore',
-        staffRole: 'Onboarding Coordinator',
-        department: 'Human Resource',
+        firstName: 'Charles',
+        lastName: 'Moore',
         email: 'charles.m@hospital.com',
         status: 'Active',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'Recruitment'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-16',
-        name: 'Margaret Jackson',
-        staffRole: 'Employee Relations Specialist',
-        department: 'Human Resource',
+        firstName: 'Margaret',
+        lastName: 'Jackson',
         email: 'margaret.j@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Employee Relations'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-17',
-        name: 'Richard Martin',
-        staffRole: 'HR Systems Analyst',
-        department: 'Human Resource',
+        firstName: 'Richard',
+        lastName: 'Martin',
         email: 'richard.m@hospital.com',
         status: 'Active',
         gender: 'male',
-        role: 'staff',
-        metadata: {'sub_department': 'HR Operations'},
+        role: UserRole.staff,
       ),
       const UserModel(
         id: 'hr-seed-18',
-        name: 'Dorothy Lee',
-        staffRole: 'Compliance Officer',
-        department: 'Human Resource',
+        firstName: 'Dorothy',
+        lastName: 'Lee',
         email: 'dorothy.l@hospital.com',
         status: 'Active',
         gender: 'female',
-        role: 'staff',
-        metadata: {'sub_department': 'Legal & Compliance'},
+        role: UserRole.staff,
       ),
     ];
   }
@@ -442,36 +431,27 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
       const UserModel(
         id: 'doc-seed-1',
         email: 'sarah.j@mediconnect.com',
-        name: 'Dr. Sarah Johnson',
-        role: 'doctor',
-        specialization: 'Cardiologist',
-        department: 'Cardiology',
-        consultationFee: 1200.0,
-        experience: 12,
+        firstName: 'Dr. Sarah',
+        lastName: 'Johnson',
+        role: UserRole.doctor,
         gender: 'Female',
         status: 'Available',
       ),
       const UserModel(
         id: 'doc-seed-2',
         email: 'michael.c@mediconnect.com',
-        name: 'Dr. Michael Chen',
-        role: 'doctor',
-        specialization: 'Neurologist',
-        department: 'Neurology',
-        consultationFee: 1500.0,
-        experience: 9,
+        firstName: 'Dr. Michael',
+        lastName: 'Chen',
+        role: UserRole.doctor,
         gender: 'Male',
         status: 'Available',
       ),
       const UserModel(
         id: 'doc-seed-3',
         email: 'james.w@mediconnect.com',
-        name: 'Dr. James Wilson',
-        role: 'doctor',
-        specialization: 'Pediatrician',
-        department: 'Pediatrics',
-        consultationFee: 1000.0,
-        experience: 15,
+        firstName: 'Dr. James',
+        lastName: 'Wilson',
+        role: UserRole.doctor,
         gender: 'Male',
         status: 'Available',
       ),

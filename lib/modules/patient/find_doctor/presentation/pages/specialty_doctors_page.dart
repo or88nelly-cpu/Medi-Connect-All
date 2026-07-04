@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
@@ -37,68 +38,52 @@ class _SpecialtyDoctorsPageState extends State<SpecialtyDoctorsPage> {
     const UserModel(
       id: 'doc-1',
       email: 'sarah.j@mediconnect.com',
-      name: 'Dr. Sarah Johnson',
-      role: 'doctor',
-      specialization: 'Cardiologist',
-      department: 'Cardiology',
-      consultationFee: 1200.0,
-      experience: 12,
+      firstName: 'Dr. Sarah',
+      lastName: 'Johnson',
+      role: UserRole.doctor,
     ),
     const UserModel(
       id: 'doc-2',
       email: 'michael.c@mediconnect.com',
-      name: 'Dr. Michael Chen',
-      role: 'doctor',
-      specialization: 'Neurologist',
-      department: 'Neurology',
-      consultationFee: 1500.0,
-      experience: 9,
+      firstName: 'Dr. Michael',
+      lastName: 'Chen',
+      role: UserRole.doctor,
     ),
     const UserModel(
       id: 'doc-3',
       email: 'james.w@mediconnect.com',
-      name: 'Dr. James Wilson',
-      role: 'doctor',
-      specialization: 'Pediatrician',
-      department: 'Pediatrics',
-      consultationFee: 1000.0,
-      experience: 15,
+      firstName: 'Dr. James',
+      lastName: 'Wilson',
+      role: UserRole.doctor,
     ),
     const UserModel(
       id: 'doc-4',
       email: 'priya.s@mediconnect.com',
-      name: 'Dr. Priya Sharma',
-      role: 'doctor',
-      specialization: 'General Physician',
-      department: 'General Medicine',
-      consultationFee: 600.0,
-      experience: 7,
+      firstName: 'Dr. Priya',
+      lastName: 'Sharma',
+      role: UserRole.doctor,
     ),
     const UserModel(
       id: 'doc-5',
       email: 'raj.k@mediconnect.com',
-      name: 'Dr. Rajesh Kumar',
-      role: 'doctor',
-      specialization: 'Orthopedic Surgeon',
-      department: 'Orthopedics',
-      consultationFee: 1800.0,
-      experience: 18,
+      firstName: 'Dr. Rajesh',
+      lastName: 'Kumar',
+      role: UserRole.doctor,
     ),
   ];
 
   List<UserModel> _filterDoctors(List<UserModel> all) {
-    final sp = widget.specialty.toLowerCase();
-    final filtered = all.where((d) {
-      final spec = (d.specialization ?? '').toLowerCase();
-      final dept = (d.department ?? '').toLowerCase();
-      return spec.contains(sp) || dept.contains(sp);
-    }).toList();
+    final filtered = all.where((d) => d.role == UserRole.doctor).toList();
     return filtered.isEmpty ? _mockDoctors : filtered;
   }
 
   double _mockRating(String id) {
     final ratings = {
-      'doc-1': 4.9, 'doc-2': 4.7, 'doc-3': 4.8, 'doc-4': 4.5, 'doc-5': 4.9,
+      'doc-1': 4.9,
+      'doc-2': 4.7,
+      'doc-3': 4.8,
+      'doc-4': 4.5,
+      'doc-5': 4.9,
     };
     return ratings[id] ?? 4.5 + (id.hashCode % 5) * 0.1;
   }
@@ -178,9 +163,7 @@ class _SpecialtyDoctorsPageState extends State<SpecialtyDoctorsPage> {
                           BlocProvider.value(
                             value: context.read<DoctorStaffBloc>(),
                           ),
-                          BlocProvider.value(
-                            value: context.read<AuthBloc>(),
-                          ),
+                          BlocProvider.value(value: context.read<AuthBloc>()),
                         ],
                         child: BookingFlowPage(
                           preselectedDoctor: doc,
@@ -260,7 +243,7 @@ class _DoctorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      doctor.name ?? 'Dr. Specialist',
+                      doctor.fullName,
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.textPrimary(context),
                         fontWeight: FontWeight.bold,
@@ -268,7 +251,7 @@ class _DoctorCard extends StatelessWidget {
                     ),
                     SizedBox(height: 2.h),
                     Text(
-                      doctor.specialization ?? doctor.department ?? 'General Medicine',
+                      'General Medicine',
                       style: AppTextStyles.bodySmall.copyWith(
                         color: gradientColors.first,
                         fontWeight: FontWeight.w600,
@@ -277,7 +260,11 @@ class _DoctorCard extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Row(
                       children: [
-                        Icon(Icons.star_rounded, color: const Color(0xFFFFB547), size: 14.r),
+                        Icon(
+                          Icons.star_rounded,
+                          color: const Color(0xFFFFB547),
+                          size: 14.r,
+                        ),
                         SizedBox(width: 3.w),
                         Text(
                           rating.toStringAsFixed(1),
@@ -287,10 +274,14 @@ class _DoctorCard extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 10.w),
-                        Icon(Icons.work_outline_rounded, color: AppColors.textSecondary(context), size: 12.r),
+                        Icon(
+                          Icons.work_outline_rounded,
+                          color: AppColors.textSecondary(context),
+                          size: 12.r,
+                        ),
                         SizedBox(width: 3.w),
                         Text(
-                          '${doctor.experience ?? 5} yrs exp',
+                          '5 yrs exp',
                           style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.textSecondary(context),
                           ),
@@ -310,7 +301,7 @@ class _DoctorCard extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      '₹${(doctor.consultationFee ?? 500).toInt()}',
+                      '₹500',
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,

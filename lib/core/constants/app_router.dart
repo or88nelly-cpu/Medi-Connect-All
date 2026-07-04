@@ -6,7 +6,7 @@ import 'package:medi_connect/core/routes/route_guards.dart' show RouteGuards;
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_signup_page.dart';
-import 'package:medi_connect/shared/auth/presentation/pages/splash_page.dart';
+import 'package:medi_connect/shared/splash/splash_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/staff/staff_dashboard_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_add_slot_page.dart';
 import 'package:medi_connect/modules/admin/home/admin_home_page.dart';
@@ -24,7 +24,7 @@ import 'package:medi_connect/modules/management/staff_management/presentation/pa
 import 'package:medi_connect/modules/management/staff_management/presentation/pages/section_list_page.dart';
 import 'package:medi_connect/modules/staff/patient/pages/staff_patient_registration.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/shared/auth/presentation/pages/onboarding_page.dart';
+import 'package:medi_connect/shared/onboarding/onboarding_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_audit_logs_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_doctors_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_emergencies_page.dart';
@@ -39,7 +39,15 @@ import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_slo
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_attendance_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/doctor/doctor_dashboard_page.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/patient/patient_dashboard_page.dart';
+import 'package:medi_connect/modules/patient/dashboard/presentation/pages/patient_dashboard_page.dart';
+
+// Banners & Specialties Feature
+import 'package:medi_connect/modules/patient/speciality/presentation/pages/speciality_list_page.dart';
+
+// Unified Profile Pages
+import 'package:medi_connect/modules/patient/profile/presentation/pages/patient_detail_screen.dart';
+import 'package:medi_connect/modules/management/staff_management/presentation/pages/doctor_detail_screen.dart';
+import 'package:medi_connect/modules/management/staff_management/presentation/pages/employee_detail_screen.dart';
 
 class AppRouterConfig {
   static GoRouter buildRouter() {
@@ -210,6 +218,26 @@ class AppRouterConfig {
           path: RouteNames.staffSettings,
           builder: (context, state) =>
               const AdminSettingsPage(isStandalone: true),
+        ),
+        GoRoute(
+          path: RouteNames.specialities,
+          builder: (context, state) =>
+              SpecialityListPage(initialQuery: state.extra as String?),
+        ),
+        GoRoute(
+          path: RouteNames.patientDetail,
+          builder: (context, state) =>
+              PatientDetailScreen(userId: state.extra as String),
+        ),
+        GoRoute(
+          path: RouteNames.doctorDetail,
+          builder: (context, state) =>
+              DoctorDetailScreen(userId: state.extra as String),
+        ),
+        GoRoute(
+          path: RouteNames.employeeDetail,
+          builder: (context, state) =>
+              EmployeeDetailScreen(userId: state.extra as String),
         ),
       ],
     );

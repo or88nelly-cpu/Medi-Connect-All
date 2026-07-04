@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -14,7 +15,7 @@ import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_
 import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_operation_card.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_ai_assistant_panel.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/widgets/emrd_admin_analytics_section.dart';
-import 'package:medi_connect/modules/departments/emrd/presentation/pages/patient_registry_page.dart';
+import 'package:medi_connect/modules/management/consultation_management/presentation/pages/patient_registry_page.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/medical_record_management_page.dart';
 import 'package:medi_connect/modules/departments/emrd/presentation/pages/emrd_consultations_page.dart';
 
@@ -56,9 +57,9 @@ class EmrdDetailPage extends StatelessWidget {
                   String? gender;
 
                   if (authState is Authenticated) {
-                    userRole = authState.user.role;
-                    userName = authState.user.name ?? 'Staff Member';
-                    profileImage = authState.user.profileImage;
+                    userRole = authState.user.role.value;
+                    userName = authState.user.fullName;
+                    profileImage = authState.user.profilePhoto;
                     gender = authState.user.gender;
                   }
 
@@ -71,7 +72,7 @@ class EmrdDetailPage extends StatelessWidget {
                         EmrdDashboardHeader(
                           name: userName,
                           role: userRole,
-                          profileImage: profileImage,
+                          profilePhoto: profileImage,
                           gender: gender,
                           stats: stats,
                           isDark: isDark,

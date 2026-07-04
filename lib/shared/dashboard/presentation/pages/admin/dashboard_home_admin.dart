@@ -7,6 +7,7 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/analytics_sec
 import 'package:medi_connect/shared/dashboard/presentation/widgets/operations_grid.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/pages/department_list_home.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/pages/section_list_home.dart';
+import 'package:medi_connect/modules/patient/speciality/presentation/widgets/speciality_list_home.dart';
 
 class DashboardHomeAdmin extends StatelessWidget {
   const DashboardHomeAdmin({super.key});
@@ -23,6 +24,8 @@ class DashboardHomeAdmin extends StatelessWidget {
           SectionListHome(),
           SizedBox(height: 8.r),
           DepartmentListHome(),
+          SizedBox(height: 8.r),
+          const SpecialityListHome(),
           SizedBox(height: 8.r),
           // Text(
           //   AppStrings.managementConsole,

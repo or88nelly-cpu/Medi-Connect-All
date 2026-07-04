@@ -6,6 +6,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'dart:math';
@@ -66,6 +67,17 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
     }
 
     return '${hex(8)}-${hex(4)}-4${hex(3)}-${(random.nextInt(4) + 8).toRadixString(16)}${hex(3)}-${hex(12)}';
+  }
+
+  int _calculateAge(DateTime? dob) {
+    if (dob == null) return 30;
+    final now = DateTime.now();
+    int age = now.year - dob.year;
+    if (now.month < dob.month ||
+        (now.month == dob.month && now.day < dob.day)) {
+      age--;
+    }
+    return age;
   }
 
   void _showAddPatientDialog(BuildContext context) {
@@ -154,20 +166,29 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       ? emailController.text.trim()
                       : 'patient-${Random().nextInt(900000) + 100000}@mediconnect.com';
 
+                  final nameParts = nameController.text.trim().split(' ');
+                  final firstName = nameParts.isNotEmpty ? nameParts.first : '';
+                  final lastName = nameParts.length > 1
+                      ? nameParts.sublist(1).join(' ')
+                      : '';
+
                   final newPatient = UserModel(
                     id: _generateUUID(),
                     email: emailVal,
-                    name: nameController.text.trim(),
-                    phoneNumber: phoneController.text.trim().isNotEmpty
+                    firstName: firstName,
+                    lastName: lastName,
+                    phone: phoneController.text.trim().isNotEmpty
                         ? phoneController.text.trim()
                         : null,
-                    role: 'patient',
-                    profileCompletionStatus: true,
+                    role: UserRole.patient,
                     status: 'Active',
-                    age: int.tryParse(ageController.text) ?? 30,
+                    dob: DateTime.now().subtract(
+                      Duration(
+                        days: 365 * (int.tryParse(ageController.text) ?? 30),
+                      ),
+                    ),
                     gender: gender,
                     bloodGroup: blood,
-                    patientId: 'PAT-${Random().nextInt(900000) + 100000}',
                   );
 
                   context.read<PatientBloc>().add(CreatePatient(newPatient));
@@ -183,14 +204,12 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
   }
 
   void _showEditPatientDialog(BuildContext context, UserModel patient) {
-    final nameController = TextEditingController(text: patient.name);
+    final nameController = TextEditingController(text: patient.fullName);
     final emailController = TextEditingController(text: patient.email);
     final ageController = TextEditingController(
-      text: patient.age?.toString() ?? '',
+      text: _calculateAge(patient.dob).toString(),
     );
-    final phoneController = TextEditingController(
-      text: patient.phoneNumber ?? '',
-    );
+    final phoneController = TextEditingController(text: patient.phone ?? '');
     String gender = patient.gender ?? 'Male';
     String blood = patient.bloodGroup ?? 'O+';
 
@@ -280,21 +299,33 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
             ElevatedButton(
               onPressed: () {
                 if (nameController.text.isNotEmpty) {
+                  final nameParts = nameController.text.trim().split(' ');
+                  final firstName = nameParts.isNotEmpty ? nameParts.first : '';
+                  final lastName = nameParts.length > 1
+                      ? nameParts.sublist(1).join(' ')
+                      : '';
+
                   final updatedPatient = UserModel(
                     id: patient.id,
                     email: emailController.text.trim(),
-                    name: nameController.text.trim(),
-                    phoneNumber: phoneController.text.trim().isNotEmpty
+                    firstName: firstName,
+                    lastName: lastName,
+                    phone: phoneController.text.trim().isNotEmpty
                         ? phoneController.text.trim()
                         : null,
-                    role: 'patient',
-                    profileCompletionStatus: patient.profileCompletionStatus,
-                    status: patient.status,
-                    age: int.tryParse(ageController.text) ?? patient.age,
+                    role: UserRole.patient,
+                    status: patient.status ?? 'Active',
+                    dob:
+                        patient.dob ??
+                        DateTime.now().subtract(
+                          Duration(
+                            days:
+                                365 * (int.tryParse(ageController.text) ?? 30),
+                          ),
+                        ),
                     gender: gender,
                     bloodGroup: blood,
-                    patientId: patient.patientId,
-                    profileImage: patient.profileImage,
+                    profilePhoto: patient.profilePhoto,
                   );
 
                   context.read<PatientBloc>().add(
@@ -317,7 +348,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
       builder: (ctx) => AlertDialog(
         title: const Text("Delete Patient"),
         content: Text(
-          "Are you sure you want to delete patient ${patient.name}?",
+          "Are you sure you want to delete patient ${patient.fullName}?",
         ),
         actions: [
           TextButton(
@@ -396,7 +427,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
-                            patient.profileImage,
+                            patient.profilePhoto,
                             'patient',
                             patient.gender,
                           ),
@@ -412,7 +443,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            patient.name ?? 'Unnamed Patient',
+                            patient.fullName,
                             style: AppTextStyles.titleLarge.copyWith(
                               color: textColor,
                               fontWeight: FontWeight.bold,
@@ -434,7 +465,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                   borderRadius: BorderRadius.circular(4.r),
                                 ),
                                 child: Text(
-                                  patient.patientId ?? 'PAT-N/A',
+                                  'PAT-N/A',
                                   style: TextStyle(
                                     color: AppColors.primary,
                                     fontSize: 11.sp,
@@ -443,7 +474,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                 ),
                               ),
                               SizedBox(width: 8.w),
-                              _buildStatusPill(patient.status),
+                              _buildStatusPill(patient.status ?? 'Active'),
                             ],
                           ),
                         ],
@@ -488,7 +519,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     children: [
                       _buildDetailRow(
                         "Age",
-                        "${patient.age ?? 'N/A'} years",
+                        "${_calculateAge(patient.dob)} years",
                         labelColor,
                         textColor,
                       ),
@@ -509,14 +540,14 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Phone",
-                        patient.phoneNumber ?? 'N/A',
+                        patient.phone ?? 'N/A',
                         labelColor,
                         textColor,
                       ),
                       Divider(color: borderColor.withValues(alpha: 0.3)),
                       _buildDetailRow(
                         "Email",
-                        patient.email,
+                        patient.email ?? 'N/A',
                         labelColor,
                         textColor,
                       ),
@@ -592,7 +623,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                 context.read<AdminAppointmentsBloc>().add(
                                   CreateAppointmentEvent({
                                     'patient_id': patient.id,
-                                    'patient_name': patient.name,
+                                    'patient_name': patient.fullName,
                                     'doctor_name': 'General Clinic',
                                     'specialty': 'OPD',
                                     'appointment_date': dateStr,
@@ -1420,12 +1451,12 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                             p,
                                           ) {
                                             final matchesSearch =
-                                                (p.name ?? '')
+                                                (p.fullName ?? '')
                                                     .toLowerCase()
                                                     .contains(
                                                       searchQuery.toLowerCase(),
                                                     ) ||
-                                                (p.phoneNumber ?? '').contains(
+                                                (p.phone ?? '').contains(
                                                   searchQuery,
                                                 );
                                             final matchesBlood =
@@ -1435,7 +1466,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                                     selectedBlood.toLowerCase();
                                             final matchesStatus =
                                                 statusFilter == 'All' ||
-                                                (p.status).toLowerCase() ==
+                                                (p.status)?.toLowerCase() ==
                                                     statusFilter.toLowerCase();
                                             return matchesSearch &&
                                                 matchesBlood &&
@@ -1445,27 +1476,13 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                           // 2. Sort
                                           if (sortBy == 'Name (A-Z)') {
                                             filtered.sort(
-                                              (a, b) => (a.name ?? '')
-                                                  .compareTo(b.name ?? ''),
+                                              (a, b) => (a.fullName ?? '')
+                                                  .compareTo(b.fullName ?? ''),
                                             );
                                           } else if (sortBy == 'Name (Z-A)') {
                                             filtered.sort(
-                                              (a, b) => (b.name ?? '')
-                                                  .compareTo(a.name ?? ''),
-                                            );
-                                          } else if (sortBy ==
-                                              'Age (Young-Old)') {
-                                            filtered.sort(
-                                              (a, b) => (a.age ?? 0).compareTo(
-                                                b.age ?? 0,
-                                              ),
-                                            );
-                                          } else if (sortBy ==
-                                              'Age (Old-Young)') {
-                                            filtered.sort(
-                                              (a, b) => (b.age ?? 0).compareTo(
-                                                a.age ?? 0,
-                                              ),
+                                              (a, b) => (b.fullName ?? '')
+                                                  .compareTo(a.fullName ?? ''),
                                             );
                                           }
 

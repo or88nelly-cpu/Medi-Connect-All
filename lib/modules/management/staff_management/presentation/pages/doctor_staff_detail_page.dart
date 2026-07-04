@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
@@ -33,7 +34,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
           }
         }
 
-        final isDoctor = currentUser.role == 'doctor';
+        final isDoctor = currentUser.role == UserRole.doctor;
         if (isDoctor) {
           return DoctorProfileAdminView(user: currentUser);
         }
@@ -42,7 +43,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
 
         return CustomScaffold(
           customAppbar: CommonAppBar(
-            title: "${currentUser.role.toUpperCase()} Details",
+            title: "${currentUser.role.value.toUpperCase()} Details",
           ),
           body: SingleChildScrollView(
             padding: EdgeInsets.all(20.r),
@@ -60,8 +61,8 @@ class DoctorStaffDetailPage extends StatelessWidget {
                         ),
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
-                            currentUser.profileImage,
-                            currentUser.role,
+                            currentUser.profilePhoto,
+                            currentUser.role.value,
                             currentUser.gender,
                           ),
                           borderRadius: 50.r,
@@ -69,14 +70,15 @@ class DoctorStaffDetailPage extends StatelessWidget {
                       ),
                       SizedBox(height: 12.h),
                       Text(
-                        currentUser.name ??
-                            "${currentUser.firstName ?? ''} ${currentUser.lastName ?? ''}"
-                                .trim(),
+                        currentUser.fullName.trim(),
                         style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(currentUser.email, style: AppTextStyles.bodyMedium),
+                      Text(
+                        currentUser.email ?? '',
+                        style: AppTextStyles.bodyMedium,
+                      ),
                       SizedBox(height: 8.h),
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -88,7 +90,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
-                          currentUser.role.toUpperCase(),
+                          currentUser.role.value.toUpperCase(),
                           style: TextStyle(
                             color: roleColor,
                             fontWeight: FontWeight.bold,
@@ -111,7 +113,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
                     children: [
                       _buildInfoRow(
                         "Phone",
-                        currentUser.phoneNumber ?? "Not Set",
+                        currentUser.phone ?? "Not Set",
                         context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
@@ -121,11 +123,7 @@ class DoctorStaffDetailPage extends StatelessWidget {
                         context,
                       ),
                       Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow(
-                        "Department",
-                        currentUser.department ?? "Not Assigned",
-                        context,
-                      ),
+                      _buildInfoRow("Department", "Human Resource", context),
                     ],
                   ),
                 ),
@@ -141,23 +139,19 @@ class DoctorStaffDetailPage extends StatelessWidget {
                     children: [
                       _buildInfoRow(
                         "Staff Role",
-                        currentUser.staffRole ?? "Not Set",
+                        currentUser.role.value,
                         context,
                       ),
+                      Divider(color: AppColors.border(context), height: 1),
+                      _buildInfoRow("Designation", "Support Staff", context),
+                      Divider(color: AppColors.border(context), height: 1),
+                      _buildInfoRow("Shift", "Day Shift", context),
                       Divider(color: AppColors.border(context), height: 1),
                       _buildInfoRow(
-                        "Designation",
-                        currentUser.designation ?? "Not Set",
+                        "Status",
+                        currentUser.status ?? 'Active',
                         context,
                       ),
-                      Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow(
-                        "Shift",
-                        currentUser.availabilityStatus ?? "Day Shift",
-                        context,
-                      ),
-                      Divider(color: AppColors.border(context), height: 1),
-                      _buildInfoRow("Status", currentUser.status, context),
                     ],
                   ),
                 ),

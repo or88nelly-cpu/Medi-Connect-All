@@ -242,7 +242,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        p.name ?? 'Unnamed',
+                                        p.fullName,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -255,7 +255,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                                       ),
                                       SizedBox(height: 2.h),
                                       Text(
-                                        p.patientId ?? 'No UHID',
+                                        p.id,
                                         style: TextStyle(
                                           fontSize: 9.sp,
                                           color: AppColors.primary,

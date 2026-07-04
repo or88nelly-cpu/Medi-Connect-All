@@ -33,11 +33,11 @@ class ConfirmStep extends StatelessWidget {
       'EEEE, dd MMM yyyy',
     ).format(state.selectedDate);
     final patientName =
-        state.selectedPatient!.name ??
+        state.selectedPatient!.fullName ??
         '${state.selectedPatient!.firstName} ${state.selectedPatient!.lastName}'
             .trim();
     final doctorName =
-        state.selectedDoctor!.name ??
+        state.selectedDoctor!.fullName ??
         '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
             .trim();
 

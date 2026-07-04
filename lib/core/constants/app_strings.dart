@@ -15,6 +15,16 @@ class AppStrings {
   static const getStarted = "Get Started";
   static const retry = "Retry";
   static const logout = "Logout";
+  static const completePayment = "Complete Payment";
+  static const selectPaymentMethod = "Select Payment Method";
+  static const payViaQRCode = "Pay via QR Code";
+  static const scanUpiPrompt = "Scan UPI/Static QR for instant activation";
+  static const payAtCounter = "Pay at Counter (COD)";
+  static const payAtCounterDesc = "Pay in cash at the clinic registration desk";
+  static const upiQrPayment = "UPI QR Code Payment";
+  static const scanToCompletePay = "Scan to complete your payment of ₹500";
+  static const secureUpiGateway = "Secure UPI Payment Gateway";
+  static const confirmPaymentBtn = "Confirm Payment";
 
   // Onboarding / Profile Completion
   static const completeYourProfile = "Complete Your Profile";

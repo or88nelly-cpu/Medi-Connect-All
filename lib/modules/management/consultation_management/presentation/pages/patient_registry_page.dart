@@ -9,9 +9,7 @@ import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/widgets/emrd_list_item_card.dart';
-import 'package:medi_connect/modules/management/consultation_management/presentation/widgets/emrd_record_details_sheet.dart';
 import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 
 class PatientRegistryPage extends StatefulWidget {
   const PatientRegistryPage({super.key});
@@ -130,11 +128,9 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   final queryLower = query.toLowerCase().trim();
                                   final count = patientsList.where((p) {
                                     if (queryLower.isEmpty) return true;
-                                    final name = (p.name ?? '').toLowerCase();
-                                    final uhid = (p.patientId ?? '')
-                                        .toLowerCase();
-                                    final phone = (p.phoneNumber ?? '')
-                                        .toLowerCase();
+                                    final name = (p.fullName).toLowerCase();
+                                    final uhid = (p.id).toLowerCase();
+                                    final phone = (p.phone ?? '').toLowerCase();
 
                                     if (filter == 'UHID') {
                                       return uhid.contains(queryLower);
@@ -260,10 +256,9 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                               final queryLower = query.toLowerCase().trim();
                               final filteredPatients = patientsList.where((p) {
                                 if (queryLower.isEmpty) return true;
-                                final name = (p.name ?? '').toLowerCase();
-                                final uhid = (p.patientId ?? '').toLowerCase();
-                                final phone = (p.phoneNumber ?? '')
-                                    .toLowerCase();
+                                final name = (p.fullName ?? '').toLowerCase();
+                                final uhid = (p.id ?? '').toLowerCase();
+                                final phone = (p.phone ?? '').toLowerCase();
 
                                 if (filter == 'UHID') {
                                   return uhid.contains(queryLower);
@@ -342,21 +337,20 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                     orElse: () => {
                                       'patient_id': patient.id,
                                       'patient_name':
-                                          patient.name ?? 'Unnamed Patient',
+                                          patient.fullName ?? 'Unnamed Patient',
                                       'specialty': 'Customer Care',
                                       'doctor_name': 'Customer Care Department',
                                       'invoice_number':
-                                          'REG-${patient.patientId?.split('-').last ?? ""}',
+                                          'REG-${patient.id.split('-').last ?? ""}',
                                       'registration_fee': 200,
                                       'registration_payment_status':
                                           patient.status == 'Active'
                                           ? 'Paid'
                                           : 'Pending',
                                       'prescription_notes':
-                                          'Initial patient registration from Customer Care. UHID: ${patient.patientId ?? ""}.',
-                                      'recorded_at':
-                                          patient.joiningDate ??
-                                          DateTime.now().toIso8601String(),
+                                          'Initial patient registration from Customer Care. UHID: ${patient.id ?? ""}.',
+                                      'recorded_at': DateTime.now()
+                                          .toIso8601String(),
                                     },
                                   );
 

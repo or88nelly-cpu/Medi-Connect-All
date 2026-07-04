@@ -7,8 +7,8 @@ class AppAssets {
   static const String hospitalPng = "assets/images/hospital.png";
   static const String commonPlaceholderPng =
       "assets/images/common_place_holder.png";
-  static const String splashBgMobPng = "assets/images/splash_screen_bg_mob.png";
-  static const String splashBgWebPng = "assets/images/splash_screen_bg_web.png";
+  static const String splashBgMobPng = "assets/images/splash_bg_mobile.png";
+  static const String splashBgWebPng = "assets/images/splash_bg_web.png";
   static const String commonBgMobPng = "assets/images/common_bg_mob.png";
   static const String commonBgWebPng = "assets/images/common_bg_web.png";
   static const String commonBgMobPngDark =

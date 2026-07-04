@@ -187,8 +187,14 @@ class MedicalInfoUpdated extends PatientRegistrationEvent {
   });
 
   @override
-  List<Object?> get props =>
-      [bloodGroup, smoking, alcohol, dietType, exercise, allergies];
+  List<Object?> get props => [
+    bloodGroup,
+    smoking,
+    alcohol,
+    dietType,
+    exercise,
+    allergies,
+  ];
 }
 
 class InsuranceUpdated extends PatientRegistrationEvent {
@@ -203,8 +209,11 @@ class InsuranceUpdated extends PatientRegistrationEvent {
   });
 
   @override
-  List<Object?> get props =>
-      [insuranceProvider, insurancePolicyId, insuranceValidTill];
+  List<Object?> get props => [
+    insuranceProvider,
+    insurancePolicyId,
+    insuranceValidTill,
+  ];
 }
 
 class EmergencyContactUpdated extends PatientRegistrationEvent {
@@ -219,8 +228,11 @@ class EmergencyContactUpdated extends PatientRegistrationEvent {
   });
 
   @override
-  List<Object?> get props =>
-      [emergencyName, emergencyRelationship, emergencyPhone];
+  List<Object?> get props => [
+    emergencyName,
+    emergencyRelationship,
+    emergencyPhone,
+  ];
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -314,4 +326,3 @@ class UpdateFormFieldsEvent extends PatientRegistrationEvent {
     emergencyPhone,
   ];
 }
-

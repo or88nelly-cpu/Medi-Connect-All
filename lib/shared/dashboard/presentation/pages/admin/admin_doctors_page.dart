@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
@@ -200,7 +201,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                               List<UserModel> doctorsList = [];
                               if (state is DoctorStaffLoaded) {
                                 doctorsList = state.doctors
-                                    .where((u) => u.role == 'doctor')
+                                    .where((u) => u.role == UserRole.doctor)
                                     .toList();
                               }
 
@@ -229,27 +230,17 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                               // 1. Filter
                                               final filtered = doctorsList.where(
                                                 (doc) {
-                                                  final matchesSearch =
-                                                      (doc.name ?? '')
-                                                          .toLowerCase()
-                                                          .contains(
-                                                            searchQuery
-                                                                .toLowerCase(),
-                                                          ) ||
-                                                      (doc.specialization ?? '')
-                                                          .toLowerCase()
-                                                          .contains(
-                                                            searchQuery
-                                                                .toLowerCase(),
-                                                          );
-                                                  final matchesSection =
-                                                      selectedSection ==
-                                                          'All' ||
-                                                      doc.department ==
-                                                          selectedSection;
+                                                  final matchesSearch = doc
+                                                      .fullName
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchQuery
+                                                            .toLowerCase(),
+                                                      );
+                                                  final matchesSection = true;
                                                   final matchesStatus =
                                                       statusFilter == 'All' ||
-                                                      doc.status
+                                                      (doc.status ?? 'Active')
                                                               .toLowerCase() ==
                                                           statusFilter
                                                               .toLowerCase();
@@ -262,24 +253,15 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                               // 2. Sort
                                               if (sortBy == 'Name (A-Z)') {
                                                 filtered.sort(
-                                                  (a, b) => (a.name ?? '')
-                                                      .compareTo(b.name ?? ''),
+                                                  (a, b) => a.fullName
+                                                      .compareTo(b.fullName),
                                                 );
                                               } else if (sortBy ==
                                                   'Name (Z-A)') {
                                                 filtered.sort(
-                                                  (a, b) => (b.name ?? '')
-                                                      .compareTo(a.name ?? ''),
+                                                  (a, b) => b.fullName
+                                                      .compareTo(a.fullName),
                                                 );
-                                              } else if (sortBy ==
-                                                  'Experience (High-Low)') {
-                                                filtered.sort((a, b) {
-                                                  final expA =
-                                                      (a.age ?? 35) - 25;
-                                                  final expB =
-                                                      (b.age ?? 35) - 25;
-                                                  return expB.compareTo(expA);
-                                                });
                                               }
 
                                               if (filtered.isEmpty) {

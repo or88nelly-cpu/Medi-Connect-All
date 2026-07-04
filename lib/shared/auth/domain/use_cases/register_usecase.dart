@@ -2,6 +2,7 @@
 library;
 
 import 'package:fpdart/fpdart.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 import 'package:medi_connect/shared/auth/domain/repositories/auth_repository.dart';
@@ -11,7 +12,7 @@ class RegisterParams {
   final String email;
   final String password;
   final String name;
-  final String role;
+  final UserRole role;
   final String? phoneNumber;
 
   const RegisterParams({

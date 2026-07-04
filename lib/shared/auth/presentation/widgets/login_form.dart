@@ -191,14 +191,20 @@ class _LoginFormState extends State<LoginForm> {
             height: 52.h,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF4F6EFF), Color(0xFF3B5BFD)],
+                colors: [AppColors.primary, Color(0xFF3B5BFD)],
               ),
               borderRadius: BorderRadius.circular(14.r),
+              border: Border.all(color: AppColors.secondary, width: 2.r),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
+                  color: const Color(0xFF4F6EFF).withValues(alpha: 0.35),
+                  blurRadius: 14.r,
+                  offset: const Offset(-3, 5),
+                ),
+                BoxShadow(
+                  color: const Color(0xFF3B5BFD).withValues(alpha: 0.35),
+                  blurRadius: 14.r,
+                  offset: const Offset(3, 5),
                 ),
               ],
             ),
@@ -212,14 +218,21 @@ class _LoginFormState extends State<LoginForm> {
                       strokeWidth: 2.5,
                     ),
                   )
-                : Text(
-                    'Login',
-                    style: AppTextStyles.buttonLarge.copyWith(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.3,
-                    ),
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Login',
+                        style: AppTextStyles.buttonLarge.copyWith(
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.3,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      const AnimatedButtonIcon(),
+                    ],
                   ),
           ),
         );
@@ -252,6 +265,56 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AnimatedButtonIcon extends StatefulWidget {
+  const AnimatedButtonIcon({super.key});
+
+  @override
+  State<AnimatedButtonIcon> createState() => _AnimatedButtonIconState();
+}
+
+class _AnimatedButtonIconState extends State<AnimatedButtonIcon>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 6.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(_animation.value, 0),
+          child: const Icon(
+            Icons.arrow_forward_rounded,
+            color: AppColors.secondary, // Golden color
+            size: 20,
+          ),
+        );
+      },
     );
   }
 }

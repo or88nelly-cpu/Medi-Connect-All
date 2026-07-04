@@ -353,10 +353,12 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (val) {
-                          if (val == null || val.trim().isEmpty)
+                          if (val == null || val.trim().isEmpty) {
                             return AppStrings.requiredField;
-                          if (val.trim().length < 8)
+                          }
+                          if (val.trim().length < 8) {
                             return AppStrings.invalidPhone;
+                          }
                           return null;
                         },
                       ),
@@ -510,7 +512,7 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
         ),
         SizedBox(height: 6.h),
         DropdownButtonFormField<String>(
-          value: val,
+          initialValue: val,
           style: AppTextStyles.bodyMedium.copyWith(
             fontSize: 11.sp,
             color: AppColors.textPrimary(context),

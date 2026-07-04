@@ -20,6 +20,7 @@ class AppointmentModel extends AppointmentEntity {
     super.headCircumference,
     super.additionalVitals,
     super.token,
+    super.amount,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -47,6 +48,7 @@ class AppointmentModel extends AppointmentEntity {
       headCircumference: json['head_circumference']?.toString(),
       additionalVitals: json['additional_vitals']?.toString(),
       token: json['token']?.toString(),
+      amount: json['amount'] != null ? (json['amount'] as num).toInt() : null,
     );
   }
 
@@ -67,5 +69,6 @@ class AppointmentModel extends AppointmentEntity {
     if (headCircumference != null) 'head_circumference': headCircumference,
     if (additionalVitals != null) 'additional_vitals': additionalVitals,
     if (token != null) 'token': token,
+    if (amount != null) 'amount': amount,
   };
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get_it/get_it.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
@@ -104,12 +105,10 @@ class _StaffDashboardBody extends StatelessWidget {
 
         if (state is Authenticated) {
           final user = state.user;
-          name =
-              user.name ??
-              "${user.firstName ?? ''} ${user.lastName ?? ''}".trim();
+          name = user.fullName;
           if (name.isEmpty) name = 'Staff Member';
-          profileImage = user.profileImage;
-          roleLabel = user.staffRole ?? user.department ?? 'Medical Support';
+          profileImage = user.profilePhoto;
+          roleLabel = user.role.value;
         }
 
         return SafeArea(
@@ -119,7 +118,7 @@ class _StaffDashboardBody extends StatelessWidget {
               children: [
                 _TopBar(
                   name: name,
-                  profileImage: profileImage,
+                  profilePhoto: profileImage,
                   roleLabel: roleLabel,
                   greeting: greeting,
                   state: state,
@@ -243,14 +242,14 @@ class _StaffDashboardBody extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 class _TopBar extends StatelessWidget {
   final String name;
-  final String? profileImage;
+  final String? profilePhoto;
   final String roleLabel;
   final String greeting;
   final AuthState state;
 
   const _TopBar({
     required this.name,
-    required this.profileImage,
+    required this.profilePhoto,
     required this.roleLabel,
     required this.greeting,
     required this.state,
@@ -427,7 +426,7 @@ class _TopBar extends StatelessWidget {
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
-                            profileImage,
+                            profilePhoto,
                             'staff',
                             state is Authenticated
                                 ? (state as Authenticated).user.gender

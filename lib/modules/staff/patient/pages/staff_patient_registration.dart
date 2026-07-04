@@ -1,14 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
-import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
@@ -81,13 +80,15 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
     _bloc = PatientRegistrationBloc(GetIt.I<PatientRepository>());
 
     // Sync text-field changes to BLoC without setState.
-    void syncBasicInfo() => _bloc.add(BasicInfoUpdated(
-          firstName: _firstNameCtrl.text,
-          lastName: _lastNameCtrl.text,
-          email: _emailCtrl.text,
-          phone: _phoneCtrl.text,
-          dob: _dobCtrl.text,
-        ));
+    void syncBasicInfo() => _bloc.add(
+      BasicInfoUpdated(
+        firstName: _firstNameCtrl.text,
+        lastName: _lastNameCtrl.text,
+        email: _emailCtrl.text,
+        phone: _phoneCtrl.text,
+        dob: _dobCtrl.text,
+      ),
+    );
 
     for (final ctrl in [
       _firstNameCtrl,
@@ -99,44 +100,49 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
       ctrl.addListener(syncBasicInfo);
     }
 
-    void syncAddress() => _bloc.add(AddressUpdated(
-          place: _placeCtrl.text,
-          wardNum: _wardCtrl.text,
-        ));
+    void syncAddress() => _bloc.add(
+      AddressUpdated(place: _placeCtrl.text, wardNum: _wardCtrl.text),
+    );
 
     for (final ctrl in [_placeCtrl, _wardCtrl]) {
       ctrl.addListener(syncAddress);
     }
 
-    void syncInsurance() => _bloc.add(InsuranceUpdated(
-          insuranceProvider: _bloc.state.insuranceProvider,
-          insurancePolicyId: _policyIdCtrl.text,
-          insuranceValidTill: _validTillCtrl.text,
-        ));
+    void syncInsurance() => _bloc.add(
+      InsuranceUpdated(
+        insuranceProvider: _bloc.state.insuranceProvider,
+        insurancePolicyId: _policyIdCtrl.text,
+        insuranceValidTill: _validTillCtrl.text,
+      ),
+    );
 
     for (final ctrl in [_policyIdCtrl, _validTillCtrl]) {
       ctrl.addListener(syncInsurance);
     }
 
-    void syncMedical() => _bloc.add(MedicalInfoUpdated(
-          bloodGroup: _bloc.state.bloodGroup,
-          smoking: _bloc.state.smoking,
-          alcohol: _bloc.state.alcohol,
-          dietType: _bloc.state.dietType,
-          exercise: _bloc.state.exercise,
-          allergies: _allergiesCtrl.text,
-          otherDetails: _otherDetailsCtrl.text,
-        ));
+    void syncMedical() => _bloc.add(
+      MedicalInfoUpdated(
+        bloodGroup: _bloc.state.bloodGroup,
+        smoking: _bloc.state.smoking,
+        alcohol: _bloc.state.alcohol,
+        dietType: _bloc.state.dietType,
+        exercise: _bloc.state.exercise,
+        allergies: _allergiesCtrl.text,
+        otherDetails: _otherDetailsCtrl.text,
+      ),
+    );
 
     for (final ctrl in [_allergiesCtrl, _otherDetailsCtrl]) {
       ctrl.addListener(syncMedical);
     }
 
-    void syncEmergency() => _bloc.add(EmergencyContactUpdated(
-          emergencyName: _emergencyNameCtrl.text,
-          emergencyRelationship: _bloc.state.emergencyRelationship,
-          emergencyPhone: _emergencyPhoneCtrl.text,
-        ));
+    void syncEmergency() => _bloc.add(
+      EmergencyContactUpdated(
+        emergencyName: _emergencyNameCtrl.text,
+        emergencyRelationship: _bloc.state.emergencyRelationship,
+        emergencyPhone: _emergencyPhoneCtrl.text,
+      ),
+    );
 
     for (final ctrl in [_emergencyNameCtrl, _emergencyPhoneCtrl]) {
       ctrl.addListener(syncEmergency);
@@ -154,77 +160,72 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
 
   void _initPatientModeIfNeeded() {
     final authState = context.read<AuthBloc>().state;
-    if (authState is! Authenticated || authState.user.role != 'patient') return;
+    if (authState is! Authenticated ||
+        authState.user.role != UserRole.patient) {
+      return;
+    }
 
     final user = authState.user;
 
-    // Split full name into first / last if individual parts are missing.
-    String firstName = user.firstName ?? '';
-    String lastName = user.lastName ?? '';
-    if (firstName.isEmpty && lastName.isEmpty && user.name != null) {
-      final parts = user.name!.trim().split(' ');
-      if (parts.isNotEmpty) firstName = parts[0];
-      if (parts.length > 1) lastName = parts.sublist(1).join(' ');
-    }
+    // firstName / lastName are required non-nullable in the new model.
+    final String firstName = user.firstName;
+    final String lastName = user.lastName;
 
     // Populate text controllers.
     _firstNameCtrl.text = firstName;
     _lastNameCtrl.text = lastName;
-    _emailCtrl.text = user.email;
-    _phoneCtrl.text = user.phoneNumber ?? '';
-    _dobCtrl.text = user.dateOfBirth ?? '';
-    _placeCtrl.text = user.address ?? '';
+    _emailCtrl.text = user.email ?? '';
+    _phoneCtrl.text = user.phone ?? '';
+    _dobCtrl.text = user.dob != null
+        ? user.dob!.toIso8601String().split('T').first
+        : '';
+    _placeCtrl.text = ''; // address not in new model
 
-    final meta = user.metadata ?? {};
-    _wardCtrl.text = meta['ward_num'] as String? ?? '';
-    _policyIdCtrl.text = user.insuranceNumber ?? '';
-    _validTillCtrl.text = meta['insurance_valid_till'] as String? ?? '';
-    _allergiesCtrl.text = meta['allergies'] as String? ?? '';
-    _otherDetailsCtrl.text = meta['other_details'] as String? ?? '';
+    // These fields no longer exist in the new UserModel — use empty defaults.
+    _wardCtrl.text = '';
+    _policyIdCtrl.text = '';
+    _validTillCtrl.text = '';
+    _allergiesCtrl.text = '';
+    _otherDetailsCtrl.text = '';
 
-    String emergencyName = '';
-    String emergencyPhone = '';
-    if (user.emergencyContact != null) {
-      try {
-        final ec = jsonDecode(user.emergencyContact!) as Map<String, dynamic>;
-        emergencyName = ec['name'] as String? ?? '';
-        emergencyPhone = ec['phone'] as String? ?? '';
-        _emergencyNameCtrl.text = emergencyName;
-        _emergencyPhoneCtrl.text = emergencyPhone;
-      } catch (_) {}
-    }
+    const String emergencyName = '';
+    const String emergencyPhone = '';
 
     // Dispatch initialization event to BLoC.
-    _bloc.add(PatientModeInitialized(
-      userId: user.id,
-      firstName: firstName,
-      lastName: lastName,
-      email: user.email,
-      phone: user.phoneNumber ?? '',
-      dob: user.dateOfBirth ?? '',
-      address: user.address ?? '',
-      sex: user.gender ?? 'Male',
-      bloodGroup: user.bloodGroup ?? 'O+',
-      insuranceProvider: user.insuranceProvider ?? 'Star Health Insurance',
-      insurancePolicyId: user.insuranceNumber ?? '',
-      allergies: meta['allergies'] as String? ?? '',
-      emergencyName: emergencyName,
-      emergencyPhone: emergencyPhone,
-      emergencyRelationship: meta['emergency_relationship'] as String? ?? 'Wife',
-      wardNum: meta['ward_num'] as String? ?? '',
-      insuranceValidTill: meta['insurance_valid_till'] as String? ?? '',
-      genderIdentity: meta['gender_identity'] as String? ?? 'Cisgender Male',
-      smoking: meta['smoking'] as String? ?? 'No',
-      alcohol: meta['alcohol'] as String? ?? 'Occasionally',
-      dietType: meta['diet_type'] as String? ?? 'Non Vegetarian',
-      exercise: meta['exercise'] as String? ?? 'Regular',
-      otherDetails: meta['other_details'] as String? ?? '',
-    ));
+    _bloc.add(
+      PatientModeInitialized(
+        userId: user.id,
+        firstName: firstName,
+        lastName: lastName,
+        email: user.email ?? '',
+        phone: user.phone ?? '',
+        dob: user.dob != null
+            ? user.dob!.toIso8601String().split('T').first
+            : '',
+        address: '', // address not in new model
+        sex: user.gender ?? 'Male',
+        bloodGroup: user.bloodGroup ?? 'O+',
+        insuranceProvider: 'Star Health Insurance', // not in new model
+        insurancePolicyId: '', // not in new model
+        allergies: '', // not in new model
+        emergencyName: emergencyName,
+        emergencyPhone: emergencyPhone,
+        emergencyRelationship: 'Wife', // not in new model
+        wardNum: '', // not in new model
+        insuranceValidTill: '', // not in new model
+        genderIdentity: 'Cisgender Male', // not in new model
+        smoking: 'No', // not in new model
+        alcohol: 'Occasionally', // not in new model
+        dietType: 'Non Vegetarian', // not in new model
+        exercise: 'Regular', // not in new model
+        otherDetails: '', // not in new model
+      ),
+    );
 
     // Automatically resume from saved onboarding step
-    if (user.onboardingStep > 1 && user.onboardingStep <= 3) {
-      _bloc.add(StepJumpRequested(user.onboardingStep));
-    }
+    // if (user.onboardingStep > 1 && user.onboardingStep <= 3) {
+    //   _bloc.add(StepJumpRequested(user.onboardingStep));
+    // }
   }
 
   @override
@@ -363,8 +364,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
     PatientRegistrationState state,
   ) async {
     // Address auto-fill from pincode fetch
-    if (state.pincodeFetchedAddress.isNotEmpty &&
-        _placeCtrl.text.isEmpty) {
+    if (state.pincodeFetchedAddress.isNotEmpty && _placeCtrl.text.isEmpty) {
       _placeCtrl.text = state.place;
     }
 
@@ -383,42 +383,42 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
         final updatedUser = UserModel(
           id: user.id,
           email: user.email,
-          name:
-              '${_firstNameCtrl.text.trim()} ${_lastNameCtrl.text.trim()}'.trim(),
+
           firstName: _firstNameCtrl.text.trim(),
           lastName: _lastNameCtrl.text.trim(),
-          phoneNumber: _phoneCtrl.text.trim(),
-          dateOfBirth: _dobCtrl.text.trim(),
+          phone: _phoneCtrl.text.trim(),
+          dob: DateTime.tryParse(_dobCtrl.text.trim()) ?? DateTime.now(),
           gender: state.sex,
           bloodGroup: state.bloodGroup,
-          role: 'patient',
-          profileCompletionStatus: true,
+          role: UserRole.patient,
+
           status: 'Active',
-          profileImage:
-              state.photoPath.isNotEmpty ? state.photoPath : user.profileImage,
-          address: state.pincodeFetchedAddress,
-          insuranceProvider: state.insuranceProvider,
-          insuranceNumber: _policyIdCtrl.text.trim().isNotEmpty
-              ? _policyIdCtrl.text.trim()
-              : null,
-          emergencyContact: jsonEncode({
-            'name': _emergencyNameCtrl.text.trim(),
-            'relationship': state.emergencyRelationship,
-            'phone': _emergencyPhoneCtrl.text.trim(),
-          }),
-          metadata: {
-            'gender_identity': state.genderIdentity,
-            'place': _placeCtrl.text.trim(),
-            'ward_num': _wardCtrl.text.trim(),
-            'insurance_valid_till': _validTillCtrl.text.trim(),
-            'smoking': state.smoking,
-            'alcohol': state.alcohol,
-            'diet_type': state.dietType,
-            'exercise': state.exercise,
-            'allergies': _allergiesCtrl.text.trim(),
-            'other_details': _otherDetailsCtrl.text.trim(),
-          },
-          patientId: state.generatedUHID,
+          profilePhoto: state.photoPath.isNotEmpty
+              ? state.photoPath
+              : user.profilePhoto,
+          // a: state.pincodeFetchedAddress,
+          // insuranceProvider: state.insuranceProvider,
+          // insuranceNumber: _policyIdCtrl.text.trim().isNotEmpty
+          //     ? _policyIdCtrl.text.trim()
+          //     : null,
+          // emergencyContact: jsonEncode({
+          //   'name': _emergencyNameCtrl.text.trim(),
+          //   'relationship': state.emergencyRelationship,
+          //   'phone': _emergencyPhoneCtrl.text.trim(),
+          // }),
+          // metadata: {
+          //   'gender_identity': state.genderIdentity,
+          //   'place': _placeCtrl.text.trim(),
+          //   'ward_num': _wardCtrl.text.trim(),
+          //   'insurance_valid_till': _validTillCtrl.text.trim(),
+          //   'smoking': state.smoking,
+          //   'alcohol': state.alcohol,
+          //   'diet_type': state.dietType,
+          //   'exercise': state.exercise,
+          //   'allergies': _allergiesCtrl.text.trim(),
+          //   'other_details': _otherDetailsCtrl.text.trim(),
+          // },
+          // patientId: state.generatedUHID,
         );
         if (context.mounted) {
           context.read<AuthBloc>().add(UserUpdated(updatedUser));
@@ -426,8 +426,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
       }
     }
 
-    if (state.status == PatientRegistrationStatus.failure &&
-        context.mounted) {
+    if (state.status == PatientRegistrationStatus.failure && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(state.errorMessage),
@@ -500,8 +499,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
               phoneCtrl: _phoneCtrl,
               dobCtrl: _dobCtrl,
               selectedSex: state.sex,
-              onSexChanged: (val) =>
-                  _bloc.add(SexUpdated(val)),
+              onSexChanged: (val) => _bloc.add(SexUpdated(val)),
               pincodeCtrl: _pincodeCtrl,
               placeCtrl: _placeCtrl,
               wardCtrl: _wardCtrl,
@@ -516,71 +514,85 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
               policyIdCtrl: _policyIdCtrl,
               validTillCtrl: _validTillCtrl,
               selectedProvider: state.insuranceProvider,
-              onProviderChanged: (val) => _bloc.add(InsuranceUpdated(
-                insuranceProvider: val,
-                insurancePolicyId: _policyIdCtrl.text,
-                insuranceValidTill: _validTillCtrl.text,
-              )),
+              onProviderChanged: (val) => _bloc.add(
+                InsuranceUpdated(
+                  insuranceProvider: val,
+                  insurancePolicyId: _policyIdCtrl.text,
+                  insuranceValidTill: _validTillCtrl.text,
+                ),
+              ),
               bloodGroup: state.bloodGroup,
-              onBloodGroupChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: val,
-                smoking: state.smoking,
-                alcohol: state.alcohol,
-                dietType: state.dietType,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onBloodGroupChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: val,
+                  smoking: state.smoking,
+                  alcohol: state.alcohol,
+                  dietType: state.dietType,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               smoking: state.smoking,
-              onSmokingChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: val,
-                alcohol: state.alcohol,
-                dietType: state.dietType,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onSmokingChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: val,
+                  alcohol: state.alcohol,
+                  dietType: state.dietType,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               alcohol: state.alcohol,
-              onAlcoholChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: state.smoking,
-                alcohol: val,
-                dietType: state.dietType,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onAlcoholChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: state.smoking,
+                  alcohol: val,
+                  dietType: state.dietType,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               dietType: state.dietType,
-              onDietTypeChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: state.smoking,
-                alcohol: state.alcohol,
-                dietType: val,
-                exercise: state.exercise,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onDietTypeChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: state.smoking,
+                  alcohol: state.alcohol,
+                  dietType: val,
+                  exercise: state.exercise,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               exercise: state.exercise,
-              onExerciseChanged: (val) => _bloc.add(MedicalInfoUpdated(
-                bloodGroup: state.bloodGroup,
-                smoking: state.smoking,
-                alcohol: state.alcohol,
-                dietType: state.dietType,
-                exercise: val,
-                allergies: _allergiesCtrl.text,
-                otherDetails: _otherDetailsCtrl.text,
-              )),
+              onExerciseChanged: (val) => _bloc.add(
+                MedicalInfoUpdated(
+                  bloodGroup: state.bloodGroup,
+                  smoking: state.smoking,
+                  alcohol: state.alcohol,
+                  dietType: state.dietType,
+                  exercise: val,
+                  allergies: _allergiesCtrl.text,
+                  otherDetails: _otherDetailsCtrl.text,
+                ),
+              ),
               allergiesCtrl: _allergiesCtrl,
               otherDetailsCtrl: _otherDetailsCtrl,
               emergencyNameCtrl: _emergencyNameCtrl,
               emergencyPhoneCtrl: _emergencyPhoneCtrl,
               emergencyRelationship: state.emergencyRelationship,
-              onRelationshipChanged: (val) => _bloc.add(EmergencyContactUpdated(
-                emergencyName: _emergencyNameCtrl.text,
-                emergencyRelationship: val,
-                emergencyPhone: _emergencyPhoneCtrl.text,
-              )),
+              onRelationshipChanged: (val) => _bloc.add(
+                EmergencyContactUpdated(
+                  emergencyName: _emergencyNameCtrl.text,
+                  emergencyRelationship: val,
+                  emergencyPhone: _emergencyPhoneCtrl.text,
+                ),
+              ),
               alternatePhoneCtrl: _alternatePhoneCtrl,
             );
 
@@ -621,9 +633,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                     : RouteNames.staffDashboard,
               ),
               onSharePressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(AppStrings.idCardDownloadStarted),
-                ),
+                const SnackBar(content: Text(AppStrings.idCardDownloadStarted)),
               ),
             );
 

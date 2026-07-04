@@ -3,6 +3,7 @@
 library;
 
 import 'package:fpdart/fpdart.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/models/failure.dart';
 
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
@@ -19,7 +20,7 @@ abstract class AuthRepository {
     required String email,
     required String password,
     required String name,
-    required String role,
+    required UserRole role,
     String? phoneNumber,
   });
 
