@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/booking_wizard/booking_wizard_cubit.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/booking_wizard/step_indicator.dart';

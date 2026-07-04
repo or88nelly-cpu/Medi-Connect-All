@@ -5,9 +5,9 @@ import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/analytics_section.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/operations_grid.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/department_list_home.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/section_list_home.dart';
-import 'package:medi_connect/modules/patient/speciality/presentation/widgets/speciality_list_home.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/pages/department_list_home.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/pages/section_list_home.dart';
+import 'package:medi_connect/features/patient/speciality/presentation/widgets/speciality_list_home.dart';
 
 class DashboardHomeAdmin extends StatelessWidget {
   const DashboardHomeAdmin({super.key});

@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
-import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';
-import 'package:medi_connect/modules/management/consultation_management/presentation/pages/patient_registration_record_detail_page.dart';
-import 'package:medi_connect/modules/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
+import 'package:medi_connect/features/admin/management/consultation_management/presentation/bloc/emrd_bloc.dart';
+import 'package:medi_connect/features/admin/management/consultation_management/presentation/pages/patient_registration_record_detail_page.dart';
+import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 
 class FakeSecureStorageService extends SecureStorageService {

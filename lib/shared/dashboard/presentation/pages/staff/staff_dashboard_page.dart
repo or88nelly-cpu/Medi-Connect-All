@@ -12,7 +12,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
-import 'package:medi_connect/modules/staff/operations/staff_operations_page.dart';
+import 'package:medi_connect/features/staff/operations/staff_operations_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/staff/attendance_proximity_dialog.dart';
 

@@ -14,7 +14,7 @@ import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_ap
 import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/doctor_bottom_nav_bar.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 
 // Extracted Doctor widgets
 import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/doctor_home_tab.dart';

@@ -13,7 +13,7 @@ import 'package:medi_connect/shared/dashboard/data/models/pharmacy_item_model.da
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_billing_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_pharmacy_bloc.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 

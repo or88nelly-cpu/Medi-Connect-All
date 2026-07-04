@@ -7,7 +7,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/patient_details_sheet.dart';
 
 class DoctorPatientsTab extends StatelessWidget {

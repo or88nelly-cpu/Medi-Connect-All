@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/booking_wizard/booking_wizard_cubit.dart';
 
 class SpecialtyStep extends StatelessWidget {

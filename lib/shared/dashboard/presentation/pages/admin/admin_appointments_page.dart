@@ -12,7 +12,7 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/premium_appointment_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/appointment_summary_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/consultation_complete_sheet.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 
 class AdminAppointmentsPage extends StatefulWidget {
   const AdminAppointmentsPage({super.key});
