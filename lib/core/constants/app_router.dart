@@ -38,7 +38,7 @@ import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_set
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_slot_config_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_attendance_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_page.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/doctor/doctor_dashboard_page.dart';
+import 'package:medi_connect/features/doctors/dashboard/doctor_dashboard_page.dart';
 import 'package:medi_connect/features/patient/dashboard/presentation/pages/patient_dashboard_page.dart';
 
 // Banners & Specialties Feature
