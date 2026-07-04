@@ -9,7 +9,7 @@ import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 
-import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/shared/auth/data/data_source/auth_remote_datasource.dart';
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 import 'package:medi_connect/shared/auth/domain/repositories/auth_repository.dart';

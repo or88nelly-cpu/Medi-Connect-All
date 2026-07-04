@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';

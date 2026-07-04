@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/modules/management/consultation_management/presentation/bloc/emrd_bloc.dart';

@@ -6,10 +6,10 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
-import 'package:medi_connect/core/services/app_logger.dart';
+import 'package:medi_connect/boot_strap/services/app_logger.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
-import 'package:medi_connect/core/services/secure_storage_service.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 
 class RouteGuards {
   final SupabaseService _supabaseService;
