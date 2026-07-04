@@ -3,7 +3,7 @@ name: Deploy Flutter Web
 on:
   push:
     branches:
-      - feat/patient_dash
+      - dev/feature/admin-section
 
 permissions:
   contents: read
