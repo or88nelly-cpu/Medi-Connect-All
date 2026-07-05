@@ -12,6 +12,7 @@ class RouteNames {
   // Role-based main landing pages
   static const patientDashboard = '/patient/dashboard';
   static const doctorDashboard = '/doctor/dashboard';
+  static const doctorOpInfo = '/doctor/op-info';
   static const staffDashboard = '/staff/dashboard';
   static const adminDashboard = '/admin/dashboard';
   static const patientRegistration = '/customer-care/patient-registration';

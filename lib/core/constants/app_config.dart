@@ -24,6 +24,7 @@ import 'package:medi_connect/shared/auth/domain/use_cases/register_usecase.dart'
 import 'package:medi_connect/shared/auth/domain/use_cases/reset_password_usecase.dart';
 import 'package:medi_connect/shared/auth/domain/use_cases/verify_otp_usecase.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
 import 'package:medi_connect/shared/dashboard/data/data_source/analytics_remote_datasource.dart';
 import 'package:medi_connect/shared/dashboard/data/repository/analytics_repository_impl.dart';
 import 'package:medi_connect/shared/dashboard/domain/repositories/analytics_repository.dart';
@@ -74,7 +75,11 @@ import 'package:medi_connect/features/patient/speciality/presentation/bloc/speci
 // UserDetails / Profiles Feature
 import 'package:medi_connect/shared/auth/domain/repositories/user_details_repository.dart';
 import 'package:medi_connect/shared/auth/data/repositories/user_details_repository_impl.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
+import 'package:medi_connect/features/doctors/opinfo/data/datasources/op_info_remote_datasource.dart';
+import 'package:medi_connect/features/doctors/opinfo/data/repositories/op_info_repository_impl.dart';
+import 'package:medi_connect/features/doctors/opinfo/domain/repositories/op_info_repository.dart';
+import 'package:medi_connect/features/doctors/opinfo/domain/usecases/get_op_info_usecase.dart';
+import 'package:medi_connect/features/doctors/opinfo/presentation/bloc/op_info_bloc.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -488,6 +493,31 @@ void configureAdditionalFeatures(GetIt sl) {
   if (!sl.isRegistered<GetDoctorImageUseCase>()) {
     sl.registerLazySingleton<GetDoctorImageUseCase>(
       () => GetDoctorImageUseCase(sl<DoctorImageRepository>()),
+    );
+  }
+
+  configureOpInfoDependencies(sl);
+}
+
+void configureOpInfoDependencies(GetIt sl) {
+  if (!sl.isRegistered<OpInfoRemoteDataSource>()) {
+    sl.registerLazySingleton<OpInfoRemoteDataSource>(
+      () => OpInfoRemoteDataSourceImpl(),
+    );
+  }
+  if (!sl.isRegistered<OpInfoRepository>()) {
+    sl.registerLazySingleton<OpInfoRepository>(
+      () => OpInfoRepositoryImpl(sl<OpInfoRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<GetOpInfoUseCase>()) {
+    sl.registerLazySingleton<GetOpInfoUseCase>(
+      () => GetOpInfoUseCase(sl<OpInfoRepository>()),
+    );
+  }
+  if (!sl.isRegistered<OpInfoBloc>()) {
+    sl.registerFactory<OpInfoBloc>(
+      () => OpInfoBloc(getOpInfo: sl<GetOpInfoUseCase>()),
     );
   }
 }

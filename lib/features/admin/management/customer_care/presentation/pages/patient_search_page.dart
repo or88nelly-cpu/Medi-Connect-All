@@ -609,7 +609,6 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-   
     return CustomScaffold(
       appBarNeeded: true,
       customAppbar: AppBar(

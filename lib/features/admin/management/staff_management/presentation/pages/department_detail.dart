@@ -207,10 +207,10 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
 
                     final filtered = staff.where((stf) {
                       final matchesSearch =
-                          (stf.fullName ).toLowerCase().contains(
+                          (stf.fullName).toLowerCase().contains(
                             _searchQuery.toLowerCase(),
                           ) ||
-                          (stf.role.value ).toLowerCase().contains(
+                          (stf.role.value).toLowerCase().contains(
                             _searchQuery.toLowerCase(),
                           );
                       return matchesSearch;

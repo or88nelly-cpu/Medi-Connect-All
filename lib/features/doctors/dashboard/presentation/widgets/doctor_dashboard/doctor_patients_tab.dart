@@ -8,7 +8,7 @@ import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/patient_details_sheet.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details_sheet.dart';
 
 class DoctorPatientsTab extends StatelessWidget {
   const DoctorPatientsTab({super.key});
@@ -21,9 +21,7 @@ class DoctorPatientsTab extends StatelessWidget {
           return const Center(child: Text("Please login to see patients"));
         }
         final doctor = authState.user;
-        final docDisplayName =
-            doctor.fullName ??
-            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName = doctor.fullName;
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, aptState) {
@@ -77,11 +75,7 @@ class DoctorPatientsTab extends StatelessWidget {
                     final matchId =
                         patientIds.contains(p.id) ||
                         (patientIds.contains(p.id));
-                    final displayName =
-                        (p.fullName ??
-                                "${p.firstName ?? ''} ${p.lastName ?? ''}"
-                                    .trim())
-                            .toLowerCase();
+                    final displayName = (p.fullName).toLowerCase();
                     final matchName = patientNames.contains(displayName);
                     return matchId || matchName;
                   }).toList();

@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/features/doctors/opinfo/domain/entities/op_procedure_entity.dart';
+import 'package:medi_connect/features/doctors/opinfo/presentation/widgets/op_info_status_badge.dart';
+
+class OpInfoAppointmentItem extends StatelessWidget {
+  final OpProcedureEntity procedure;
+  final VoidCallback? onTap;
+
+  const OpInfoAppointmentItem({super.key, required this.procedure, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10.h),
+        padding: EdgeInsets.all(12.r),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.darkCard : AppColors.lightCard,
+          borderRadius: BorderRadius.circular(14.r),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.lightShadow,
+              blurRadius: 6.r,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 36.r,
+              height: 36.r,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.infoPurple.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              child: Text(
+                procedure.tokenNumber.toString(),
+                style: AppTextStyles.bodySmall.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.infoPurple,
+                ),
+              ),
+            ),
+            SizedBox(width: 10.w),
+            ClipOval(
+              child: CustomImageView(
+                imagePath: ProfileImageHelper.resolveImagePath(
+                  procedure.profilePhoto,
+                  'patient',
+                  procedure.gender,
+                ),
+                width: 40.r,
+                height: 40.r,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    procedure.patientName,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary(context),
+                    ),
+                  ),
+                  Text(
+                    procedure.patientId,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textSecondary(context),
+                    ),
+                  ),
+                  Text(
+                    '${AppStrings.ageLabel}: ${procedure.age} • ${procedure.gender}',
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: AppColors.textSecondary(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  procedure.appointmentTime,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary(context),
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                OpInfoStatusBadge(status: procedure.status),
+              ],
+            ),
+            SizedBox(width: 4.w),
+            Icon(
+              Icons.chevron_right,
+              color: AppColors.textSecondary(context),
+              size: 20.r,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

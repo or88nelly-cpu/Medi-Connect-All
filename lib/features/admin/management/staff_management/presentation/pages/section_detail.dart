@@ -110,7 +110,7 @@ class _SectionDetailState extends State<SectionDetail>
     final bgColor = isDark
         ? AppColors.terminalDarkBg
         : AppColors.terminalLightBg;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;

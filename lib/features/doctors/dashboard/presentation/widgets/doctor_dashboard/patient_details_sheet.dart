@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/consultation_history_sheet.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/patient_details/patient_header_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/patient_details/vitals_grid_section.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/patient_details/recent_consultation_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/patient_details/emr_prescription_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/patient_details/consultation_history_sheet.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/patient_header_card.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/vitals_grid_section.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/recent_consultation_card.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/emr_prescription_card.dart';
 
 class PatientDetailsSheet extends StatefulWidget {
   final UserEntity patient;

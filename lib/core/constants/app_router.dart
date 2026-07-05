@@ -38,7 +38,8 @@ import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_set
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_slot_config_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_attendance_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_page.dart';
-import 'package:medi_connect/features/doctors/dashboard/doctor_dashboard_page.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/pages/doctor_dashboard_page.dart';
+import 'package:medi_connect/features/doctors/opinfo/presentation/pages/op_info_page.dart';
 import 'package:medi_connect/features/patient/dashboard/presentation/pages/patient_dashboard_page.dart';
 
 // Banners & Specialties Feature
@@ -93,6 +94,11 @@ class AppRouterConfig {
         GoRoute(
           path: '/doctor/dashboard',
           builder: (context, state) => const DoctorDashboardPage(),
+        ),
+        GoRoute(
+          path: RouteNames.doctorOpInfo,
+          builder: (context, state) =>
+              OpInfoPage(initialDate: state.extra as DateTime?),
         ),
         GoRoute(
           path: '/staff/dashboard',

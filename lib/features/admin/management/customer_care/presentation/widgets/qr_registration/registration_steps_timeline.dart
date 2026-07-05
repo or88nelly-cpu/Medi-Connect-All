@@ -96,7 +96,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
   Widget _buildHorizontalStep(BuildContext context, int idx, bool isDark) {
     final step = _steps[idx];
     final isLast = idx == _steps.length - 1;
-   
+
     final connectorColor = isDark ? Colors.white10 : Colors.grey[200]!;
 
     return Column(

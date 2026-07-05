@@ -320,12 +320,29 @@ class AppStrings {
   static const patientQuickActions = "Quick Actions";
 
   // Doctor Dashboard
+  static const goodMorning = "Good Morning";
+  static const goodAfternoon = "Good Afternoon";
+  static const goodEvening = "Good Evening";
   static const todaySchedule = "Today's Schedule";
   static const myPatients = "My Patients";
   static const activeConsultations = "Active Consultations";
   static const doctorQuickActions = "Quick Actions";
   static const noScheduleToday = "No appointments scheduled today.";
   static const startConsultation = "Start Consultation";
+  static const opInfoTitle = "OP Info";
+  static const opInfoSubtitle = "Overview of today's outpatient procedures";
+  static const opInfoTodaysDate = "TODAY'S DATE";
+  static const opInfoTodaysAppointments = "Today's Appointments";
+  static const opInfoSearchHint = "Search patient name or ID...";
+  static const opInfoTotalProcedures = "Total OP Procedures";
+  static const opInfoPendingProcedures = "Pending Procedures";
+  static const opInfoCompletedProcedures = "Completed Procedures";
+  static const opInfoCancelledProcedures = "Cancelled Procedures";
+  static const opInfoFilterAll = "All";
+  static const opInfoFilterPending = "Pending";
+  static const opInfoFilterCompleted = "Completed";
+  static const opInfoFilterCancelled = "Cancelled";
+  static const outPatients = "Out Patients";
 
   // Staff Dashboard
   static const myTasks = "My Tasks";

@@ -11,7 +11,7 @@ import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_ap
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/premium_appointment_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/appointment_summary_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/consultation_complete_sheet.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/slot_management_grid.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/slot_management_grid.dart';
 
 class DoctorScheduleTab extends StatefulWidget {
   const DoctorScheduleTab({super.key});

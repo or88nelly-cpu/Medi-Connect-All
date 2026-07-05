@@ -521,9 +521,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                   builder: (context, sortBy, _) {
                     // Filter staff
                     final filtered = sourceList.where((u) {
-                      final nameMatch = (u.fullName )
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase());
+                      final nameMatch = (u.fullName).toLowerCase().contains(
+                        searchQuery.toLowerCase(),
+                      );
                       final roleMatch = u.role.name.toLowerCase().contains(
                         searchQuery.toLowerCase(),
                       );

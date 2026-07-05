@@ -8,11 +8,6 @@ import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
-import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_consults_tab.dart';
-import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_home_tab.dart';
-import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_patients_tab.dart';
-import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_profile_tab.dart';
-import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_schedule_tab.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/common/dashboard_tab_cubit.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
@@ -22,6 +17,11 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/
 import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 
 // Extracted Doctor widgets
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_home_tab.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_schedule_tab.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_patients_tab.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_consults_tab.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_profile_tab.dart';
 
 class DoctorDashboardPage extends StatefulWidget {
   const DoctorDashboardPage({super.key});

@@ -38,7 +38,6 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeColor = color ?? AppColors.primary;
-    
 
     final resolvedBorderRadius = BorderRadius.circular(borderRadius ?? 12.r);
     final resolvedHeight = height ?? 50.h;

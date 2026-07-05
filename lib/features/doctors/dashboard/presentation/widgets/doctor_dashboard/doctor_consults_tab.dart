@@ -23,9 +23,7 @@ class DoctorConsultsTab extends StatelessWidget {
           return const Center(child: Text("Please login to see consultations"));
         }
         final doctor = authState.user;
-        final docDisplayName =
-            doctor.fullName ??
-            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName = doctor.fullName;
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, state) {

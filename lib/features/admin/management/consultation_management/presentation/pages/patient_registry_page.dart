@@ -336,19 +336,18 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                         r['specialty'] == 'Customer Care',
                                     orElse: () => {
                                       'patient_id': patient.id,
-                                      'patient_name':
-                                          patient.fullName ,
+                                      'patient_name': patient.fullName,
                                       'specialty': 'Customer Care',
                                       'doctor_name': 'Customer Care Department',
                                       'invoice_number':
-                                          'REG-${patient.id.split('-').last }',
+                                          'REG-${patient.id.split('-').last}',
                                       'registration_fee': 200,
                                       'registration_payment_status':
                                           patient.status == 'Active'
                                           ? 'Paid'
                                           : 'Pending',
                                       'prescription_notes':
-                                          'Initial patient registration from Customer Care. UHID: ${patient.id }.',
+                                          'Initial patient registration from Customer Care. UHID: ${patient.id}.',
                                       'recorded_at': DateTime.now()
                                           .toIso8601String(),
                                     },

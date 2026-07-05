@@ -43,9 +43,7 @@ class DoctorConsultationsCard extends StatelessWidget {
           return const SizedBox.shrink();
         }
         final doctor = authState.user;
-        final docDisplayName =
-            doctor.fullName ??
-            "${doctor.firstName ?? ''} ${doctor.lastName ?? ''}".trim();
+        final docDisplayName = doctor.fullName;
 
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, state) {

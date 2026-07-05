@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/common/dashboard_tab_cubit.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 
 // Extracted separate widgets
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/doctor_header.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/doctor_date_picker_pill.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/doctor_overview_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/medical_certificates_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_dashboard/pending_mrd_banner.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_header.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_date_picker_pill.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/doctor_overview_card.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/medical_certificates_card.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/pending_mrd_banner.dart';
 
 class DoctorHomeTab extends StatefulWidget {
   const DoctorHomeTab({super.key});
@@ -29,8 +31,6 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
@@ -169,6 +169,10 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                               trend: "+12%",
                               themeColor: const Color(0xFF0F6FFF),
                               sparklineData: const [10, 15, 12, 18, 14, 22, 20],
+                              onTap: () => context.push(
+                                RouteNames.doctorOpInfo,
+                                extra: _selectedDate,
+                              ),
                             ),
                             DoctorOverviewCard(
                               icon: Icons.single_bed_rounded,

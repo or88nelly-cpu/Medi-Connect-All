@@ -301,7 +301,7 @@ class QrCodePainter extends CustomPainter {
       final outer = Paint()
         ..color = color
         ..style = PaintingStyle.fill;
-    
+
       final innerSquare = Paint()
         ..color = color
         ..style = PaintingStyle.fill;
