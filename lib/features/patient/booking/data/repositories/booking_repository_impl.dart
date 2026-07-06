@@ -46,13 +46,13 @@ class BookingRepositoryImpl implements BookingRepository {
 
       if (docListJson is List && docListJson.isNotEmpty) {
         rawDocMap = Map<String, dynamic>.from(docListJson.first as Map);
-        rawDocMap['id'] = map['id'];
+        rawDocMap['user_id'] ??= map['id'];
         rawDocMap['employee_id'] ??=
             rawEmpMap?['id'] ?? 'EMP-${map['id'].hashCode.abs()}';
         doctorModel = DoctorModel.fromJson(rawDocMap);
       } else if (docListJson is Map<String, dynamic>) {
         rawDocMap = Map<String, dynamic>.from(docListJson);
-        rawDocMap['id'] = map['id'];
+        rawDocMap['user_id'] ??= map['id'];
         rawDocMap['employee_id'] ??=
             rawEmpMap?['id'] ?? 'EMP-${map['id'].hashCode.abs()}';
         doctorModel = DoctorModel.fromJson(rawDocMap);

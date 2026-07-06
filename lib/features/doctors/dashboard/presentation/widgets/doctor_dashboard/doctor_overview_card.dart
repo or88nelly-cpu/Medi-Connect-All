@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 
 class DoctorOverviewCard extends StatelessWidget {
   final IconData icon;
@@ -26,14 +27,14 @@ class DoctorOverviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = AppColors.isDark(context);
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E293B) : Colors.white,
+          color: isDark ? AppColors.darkCard : AppColors.surface,
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
@@ -66,7 +67,7 @@ class DoctorOverviewCard extends StatelessWidget {
                   child: Text(
                     title,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: isDark ? const Color(0xFF38BDF8) : themeColor,
+                      color: isDark ? AppColors.terminalDarkLabel : themeColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 11.sp,
                     ),
@@ -81,7 +82,7 @@ class DoctorOverviewCard extends StatelessWidget {
             Text(
               count,
               style: AppTextStyles.headingLarge.copyWith(
-                color: isDark ? Colors.white : Colors.black87,
+                color: isDark ? Colors.white : AppColors.lightTextPrimary,
                 fontWeight: FontWeight.w900,
                 fontSize: 28.sp,
               ),
@@ -91,7 +92,9 @@ class DoctorOverviewCard extends StatelessWidget {
             Text(
               subtitle,
               style: AppTextStyles.bodySmall.copyWith(
-                color: isDark ? Colors.white38 : Colors.grey[500],
+                color: isDark
+                    ? AppColors.darkTextSecondary
+                    : AppColors.lightTextSecondary,
                 fontSize: 10.sp,
               ),
             ),

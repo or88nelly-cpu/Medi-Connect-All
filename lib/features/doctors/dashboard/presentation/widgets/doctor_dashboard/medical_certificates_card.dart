@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
 
 class MedicalCertificatesCard extends StatelessWidget {
   final String count;
@@ -51,7 +52,7 @@ class MedicalCertificatesCard extends StatelessWidget {
               SizedBox(width: 8.w),
               Expanded(
                 child: Text(
-                  "Medical Certificates",
+                  AppStrings.medicalCertificatesTitle,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: Colors.white.withValues(alpha: 0.9),
                     fontWeight: FontWeight.bold,
@@ -74,7 +75,7 @@ class MedicalCertificatesCard extends StatelessWidget {
           ),
           SizedBox(height: 2.h),
           Text(
-            "Certificates Issued",
+            AppStrings.medicalCertificatesSubtitle,
             style: AppTextStyles.bodySmall.copyWith(
               color: Colors.white.withValues(alpha: 0.7),
               fontSize: 10.sp,
@@ -94,7 +95,7 @@ class MedicalCertificatesCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "View All",
+                    AppStrings.viewAll,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 10.sp,

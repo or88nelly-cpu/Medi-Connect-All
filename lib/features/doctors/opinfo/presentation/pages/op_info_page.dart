@@ -30,7 +30,7 @@ class OpInfoPage extends StatelessWidget {
           bloc.add(
             OpInfoLoadRequested(
               doctorId: authState.user.id,
-              date: initialDate ?? DateTime(2026, 6, 27),
+              date: initialDate ?? DateTime.now(),
             ),
           );
         }
@@ -47,11 +47,10 @@ class _OpInfoBody extends StatelessWidget {
   void _retry(BuildContext context) {
     final authState = context.read<AuthBloc>().state;
     if (authState is Authenticated) {
+      final state = context.read<OpInfoBloc>().state;
+      final date = state is OpInfoLoaded ? state.selectedDate : DateTime.now();
       context.read<OpInfoBloc>().add(
-        OpInfoLoadRequested(
-          doctorId: authState.user.id,
-          date: DateTime(2026, 6, 27),
-        ),
+        OpInfoLoadRequested(doctorId: authState.user.id, date: date),
       );
     }
   }

@@ -343,6 +343,21 @@ class AppStrings {
   static const opInfoFilterCompleted = "Completed";
   static const opInfoFilterCancelled = "Cancelled";
   static const outPatients = "Out Patients";
+  static const ipInfoTitle = "IP Info";
+  static const ipInfoSubtitle = "In Patients";
+  static const opProceduresTitle = "OP Procedures";
+  static const opProceduresSubtitle = "Today's Procedures";
+  static const ipProceduresTitle = "IP Procedures";
+  static const ipProceduresSubtitle = "Today's Procedures";
+  static const surgeriesTitle = "Surgeries";
+  static const surgeriesSubtitle = "Today's Surgeries";
+  static const medicalCertificatesTitle = "Medical Certificates";
+  static const medicalCertificatesSubtitle = "Certificates Issued";
+  static const pendingMrdTitle = "Pending MRD";
+  static const pendingMrdSubtitle = "Pending Records";
+  static const slotConfigTitle = "Slot Config";
+  static const slotConfigSubtitle = "Slots Available";
+  static const slotConfigManage = "Set Availability";
 
   // Staff Dashboard
   static const myTasks = "My Tasks";

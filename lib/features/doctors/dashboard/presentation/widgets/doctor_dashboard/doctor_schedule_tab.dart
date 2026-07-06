@@ -10,8 +10,14 @@ import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/premium_appointment_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/appointment_summary_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/consultation_complete_sheet.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/slot_management_grid.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/schedule_timeline_indicator.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/schedule_status_chips.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/pages/patient_visit_detail_page.dart';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
+import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 class DoctorScheduleTab extends StatefulWidget {
   const DoctorScheduleTab({super.key});
@@ -73,11 +79,50 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     BuildContext context,
     AppointmentEntity apt,
   ) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) => ConsultationCompleteSheet(appointment: apt),
+    UserModel? patientUser;
+    try {
+      final patientState = context.read<PatientBloc>().state;
+      if (patientState is PatientLoaded) {
+        final matches = patientState.patients.where(
+          (p) =>
+              p.id == apt.patientId ||
+              p.fullName.toLowerCase().trim() ==
+                  apt.patientName.toLowerCase().trim(),
+        );
+        if (matches.isNotEmpty) {
+          patientUser = matches.first;
+        }
+      }
+    } catch (_) {}
+
+    final patientEntity = patientUser != null
+        ? UserEntity(
+            id: patientUser.id,
+            //fullName: patientUser.fullName,
+            firstName: patientUser.firstName,
+            lastName: patientUser.lastName,
+            email: patientUser.email ?? '',
+            phone: patientUser.phone,
+            role: UserRole.patient,
+            dob: patientUser.dob,
+            gender: patientUser.gender,
+            bloodGroup: patientUser.bloodGroup,
+            profilePhoto: patientUser.profilePhoto,
+          )
+        : UserEntity(
+            id: apt.patientId ?? '',
+            firstName: apt.patientName.split(" ").first,
+            lastName: apt.patientName.split(" ").first,
+            email: '',
+            role: UserRole.patient,
+          );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            PatientVisitDetailPage(appointment: apt, patient: patientEntity),
+      ),
     );
   }
 
@@ -191,9 +236,22 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
 
               // Filter current appointments list
               final filteredApts = targetDateApts.where((a) {
+                var displayStatus = a.status;
+                if (a.status.toLowerCase() != 'completed' &&
+                    a.status.toLowerCase() != 'cancelled' &&
+                    _isAppointmentInPast(
+                      a.appointmentDate,
+                      a.appointmentTime,
+                    )) {
+                  displayStatus = 'Pending MRD';
+                }
+
                 final matchesStatus =
                     _selectedStatus == 'All' ||
-                    a.status.toLowerCase() == _selectedStatus.toLowerCase();
+                    displayStatus.toLowerCase() ==
+                        _selectedStatus.toLowerCase() ||
+                    (_selectedStatus == 'Pending' &&
+                        displayStatus == 'Pending MRD');
 
                 final matchesSearch =
                     a.patientName.toLowerCase().contains(
@@ -459,61 +517,13 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                       SizedBox(height: 16.h),
 
                       // Status Chips
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        child: Row(
-                          children:
-                              [
-                                'All',
-                                'Confirmed',
-                                'Pending',
-                                'Completed',
-                                'Cancelled',
-                              ].map((status) {
-                                final isSelected = _selectedStatus == status;
-                                return Padding(
-                                  padding: EdgeInsets.only(right: 8.w),
-                                  child: ChoiceChip(
-                                    label: Text(
-                                      status,
-                                      style: TextStyle(
-                                        color: isSelected
-                                            ? Colors.white
-                                            : _getChipTextColor(status, isDark),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                    selected: isSelected,
-                                    selectedColor: const Color(0xFF0F6FFF),
-                                    backgroundColor: _getChipBgColor(
-                                      status,
-                                      isDark,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.r),
-                                      side: BorderSide(
-                                        color: isSelected
-                                            ? Colors.transparent
-                                            : _getChipBorderColor(
-                                                status,
-                                                isDark,
-                                              ),
-                                      ),
-                                    ),
-                                    showCheckmark: false,
-                                    onSelected: (selected) {
-                                      if (selected) {
-                                        setState(() {
-                                          _selectedStatus = status;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                );
-                              }).toList(),
-                        ),
+                      ScheduleStatusChips(
+                        selectedStatus: _selectedStatus,
+                        onStatusSelected: (status) {
+                          setState(() {
+                            _selectedStatus = status;
+                          });
+                        },
                       ),
                       SizedBox(height: 20.h),
 
@@ -618,8 +628,8 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                       ),
 
                                       // Timeline vertical line and dot
-                                      _buildTimelineIndicator(
-                                        _getStatusColor(
+                                      ScheduleTimelineIndicator(
+                                        color: _getStatusColor(
                                           (apt.status.toLowerCase() !=
                                                       'completed' &&
                                                   apt.status.toLowerCase() !=
@@ -631,8 +641,8 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                               ? 'Pending MRD'
                                               : apt.status,
                                         ),
-                                        idx,
-                                        filteredApts.length,
+                                        index: idx,
+                                        totalCount: filteredApts.length,
                                       ),
 
                                       // Card content
@@ -672,115 +682,5 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
         );
       },
     );
-  }
-
-  Widget _buildTimelineIndicator(Color color, int index, int totalCount) {
-    return SizedBox(
-      width: 24.w,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Line
-          if (totalCount > 1)
-            Positioned(
-              top: index == 0 ? 24.h : 0,
-              bottom: index == totalCount - 1 ? 24.h : 0,
-              child: Container(
-                width: 2.w,
-                color: AppColors.border(context).withValues(alpha: 0.5),
-              ),
-            ),
-          // Dot
-          Positioned(
-            top: 24.h,
-            child: Container(
-              width: 10.r,
-              height: 10.r,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-                border: Border.all(color: Colors.white, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: color.withValues(alpha: 0.4),
-                    blurRadius: 4,
-                    spreadRadius: 1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Color _getChipBgColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.1);
-    switch (status) {
-      case 'Confirmed':
-        return isDark
-            ? AppColors.statusConfirmedBgDark.withValues(alpha: 0.3)
-            : AppColors.statusConfirmedBgLight;
-      case 'Pending MRD':
-        return isDark
-            ? const Color(0xFF3B0764).withValues(alpha: 0.3)
-            : const Color(0xFFF3E8FF);
-      case 'Pending':
-        return isDark
-            ? AppColors.statusPendingBgDark.withValues(alpha: 0.3)
-            : AppColors.statusPendingBgLight;
-      case 'Completed':
-        return isDark
-            ? AppColors.statusCompletedBgDark.withValues(alpha: 0.3)
-            : AppColors.statusCompletedBgLight;
-      case 'Cancelled':
-      default:
-        return isDark
-            ? AppColors.statusCancelledBgDark.withValues(alpha: 0.3)
-            : AppColors.statusCancelledBgLight;
-    }
-  }
-
-  Color _getChipBorderColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.3);
-    switch (status) {
-      case 'Confirmed':
-        return AppColors.success.withValues(alpha: 0.3);
-      case 'Pending MRD':
-        return AppColors.infoPurple.withValues(alpha: 0.3);
-      case 'Pending':
-        return AppColors.warning.withValues(alpha: 0.3);
-      case 'Completed':
-        return AppColors.infoPurple.withValues(alpha: 0.3);
-      case 'Cancelled':
-      default:
-        return AppColors.error.withValues(alpha: 0.3);
-    }
-  }
-
-  Color _getChipTextColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF);
-    switch (status) {
-      case 'Confirmed':
-        return isDark
-            ? AppColors.statusConfirmedTextDark
-            : AppColors.statusConfirmedTextLight;
-      case 'Pending MRD':
-        return isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
-      case 'Pending':
-        return isDark
-            ? AppColors.statusPendingTextDark
-            : AppColors.statusPendingTextLight;
-      case 'Completed':
-        return isDark
-            ? AppColors.statusCompletedTextDark
-            : AppColors.statusCompletedTextLight;
-      case 'Cancelled':
-      default:
-        return isDark
-            ? AppColors.statusCancelledTextDark
-            : AppColors.statusCancelledTextLight;
-    }
   }
 }

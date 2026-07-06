@@ -289,129 +289,101 @@ class PremiumAppointmentCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Status Badge
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 8.w,
-                      vertical: 3.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: badgeBg,
-                      borderRadius: BorderRadius.circular(6.r),
-                    ),
-                    child: Text(
-                      displayStatus,
-                      style: TextStyle(
-                        color: badgeText,
-                        fontSize: 9.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 4.w),
-                  // Popup Actions Menu
-                  PopupMenuButton<String>(
-                    icon: Icon(
-                      Icons.more_vert_outlined,
-                      size: 16.r,
-                      color: isDark
-                          ? Colors.white70
-                          : AppColors.textSecondary(context),
-                    ),
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(minWidth: 140.w),
-                    onSelected: (val) {
-                      if (val == 'complete') {
-                        onComplete();
-                      } else if (val == 'cancel') {
-                        onCancel();
-                      } else if (val == 'details') {
-                        _showAppointmentDetailsDialog(
-                          context,
-                          patient,
-                          formattedDate,
-                        );
-                      } else if (val == 'vitals') {
-                        _showVitalsEntryDialog(context);
-                      }
-                    },
-                    itemBuilder: (ctx) => [
-                      PopupMenuItem(
-                        value: 'details',
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.info_outline,
-                              size: 16.r,
-                              color: AppColors.primary,
-                            ),
-                            SizedBox(width: 8.w),
-                            Text(
-                              "View Details",
-                              style: TextStyle(fontSize: 12.sp),
-                            ),
-                          ],
+              // Popup Actions Menu
+              PopupMenuButton<String>(
+                icon: Icon(
+                  Icons.more_vert_outlined,
+                  size: 16.r,
+                  color: isDark
+                      ? Colors.white70
+                      : AppColors.textSecondary(context),
+                ),
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(minWidth: 140.w),
+                onSelected: (val) {
+                  if (val == 'complete') {
+                    onComplete();
+                  } else if (val == 'cancel') {
+                    onCancel();
+                  } else if (val == 'details') {
+                    _showAppointmentDetailsDialog(
+                      context,
+                      patient,
+                      formattedDate,
+                    );
+                  } else if (val == 'vitals') {
+                    _showVitalsEntryDialog(context);
+                  }
+                },
+                itemBuilder: (ctx) => [
+                  PopupMenuItem(
+                    value: 'details',
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          size: 16.r,
+                          color: AppColors.primary,
                         ),
-                      ),
-                      if (appointment.status == 'Confirmed' ||
-                          appointment.status == 'Pending') ...[
-                        PopupMenuItem(
-                          value: 'vitals',
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.thermostat_outlined,
-                                size: 16.r,
-                                color: Colors.orange,
-                              ),
-                              SizedBox(width: 8.w),
-                              Text(
-                                "Record Vitals",
-                                style: TextStyle(fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 'complete',
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle_outline,
-                                size: 16.r,
-                                color: AppColors.success,
-                              ),
-                              SizedBox(width: 8.w),
-                              Text(
-                                "Complete Consult",
-                                style: TextStyle(fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                        PopupMenuItem(
-                          value: 'cancel',
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.cancel_outlined,
-                                size: 16.r,
-                                color: AppColors.error,
-                              ),
-                              SizedBox(width: 8.w),
-                              Text(
-                                "Cancel Booking",
-                                style: TextStyle(fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                        ),
+                        SizedBox(width: 8.w),
+                        Text("View Details", style: TextStyle(fontSize: 12.sp)),
                       ],
-                    ],
+                    ),
                   ),
+                  if (appointment.status == 'Confirmed' ||
+                      appointment.status == 'Pending') ...[
+                    PopupMenuItem(
+                      value: 'vitals',
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.thermostat_outlined,
+                            size: 16.r,
+                            color: Colors.orange,
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            "Record Vitals",
+                            style: TextStyle(fontSize: 12.sp),
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'complete',
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.check_circle_outline,
+                            size: 16.r,
+                            color: AppColors.success,
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            "Complete Consult",
+                            style: TextStyle(fontSize: 12.sp),
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'cancel',
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.cancel_outlined,
+                            size: 16.r,
+                            color: AppColors.error,
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            "Cancel Booking",
+                            style: TextStyle(fontSize: 12.sp),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ],
               ),
               SizedBox(height: 6.h),
@@ -440,25 +412,54 @@ class PremiumAppointmentCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 6.h),
-              // OPD / Slot Badge
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.white12 : const Color(0xFFEFF6FF),
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-                child: Text(
-                  appointment.token != null && appointment.token!.isNotEmpty
-                      ? (appointment.token!.toUpperCase().contains("OPD")
-                            ? appointment.token!
-                            : "OPD - ${appointment.token}")
-                      : "OPD - 1",
-                  style: TextStyle(
-                    color: isDark ? AppColors.accent : AppColors.primary,
-                    fontSize: 9.sp,
-                    fontWeight: FontWeight.bold,
+              // Badges Row
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // OPD / Slot Badge
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 3.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isDark ? Colors.white12 : const Color(0xFFEFF6FF),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                    child: Text(
+                      appointment.token != null && appointment.token!.isNotEmpty
+                          ? (appointment.token!.toUpperCase().contains("OPD")
+                                ? appointment.token!
+                                : "OPD - ${appointment.token}")
+                          : "OPD - 1",
+                      style: TextStyle(
+                        color: isDark ? AppColors.accent : AppColors.primary,
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 6.w),
+                  // Status Badge
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 3.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: badgeBg,
+                      borderRadius: BorderRadius.circular(6.r),
+                    ),
+                    child: Text(
+                      displayStatus,
+                      style: TextStyle(
+                        color: badgeText,
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

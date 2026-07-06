@@ -11,6 +11,7 @@ import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doc
 import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/vitals_grid_section.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/recent_consultation_card.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/patient_details/emr_prescription_card.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/pages/patient_visit_detail_page.dart';
 
 class PatientDetailsSheet extends StatefulWidget {
   final UserEntity patient;
@@ -110,7 +111,6 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final displayName = widget.patient.fullName;
 
     final sheetBg = isDark ? AppColors.terminalDarkBg : Colors.white;
     final secondaryText = AppColors.textSecondary(context);
@@ -121,152 +121,216 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
       minChildSize: 0.5,
       maxChildSize: 0.95,
       builder: (ctx, scrollCtrl) {
-        return Container(
-          decoration: BoxDecoration(
-            color: sheetBg,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 10,
-                spreadRadius: 2,
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              // Pull Bar indicator
-              SizedBox(height: 12.h),
-              Container(
-                width: 40.w,
-                height: 4.h,
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.white24 : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              SizedBox(height: 16.h),
+        final showStartVisit =
+            _recentApt != null &&
+            _recentApt!.status != 'Completed' &&
+            _recentApt!.status != 'Cancelled';
 
-              // Title Header
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppStrings.patientProfile,
-                      style: AppTextStyles.titleLarge.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: primaryText,
-                      ),
-                    ),
-                    // Close button inside a grey circle/outline to match mockup
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        padding: EdgeInsets.all(4.r),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: isDark
-                              ? const Color(0xFF1E293B)
-                              : const Color(0xFFF1F5F9),
-                          border: Border.all(
-                            color: isDark
-                                ? const Color(0xFF334155)
-                                : const Color(0xFFE2E8F0),
-                          ),
-                        ),
-                        child: Icon(
-                          Icons.close,
-                          size: 18.r,
-                          color: secondaryText,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 12.h),
-              const Divider(height: 1),
-
-              // Content Body
-              Expanded(
-                child: ListView(
-                  controller: scrollCtrl,
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          bottomNavigationBar: showStartVisit
+              ? Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 20.w,
-                    vertical: 16.h,
+                    vertical: 12.h,
                   ),
-                  children: [
-                    // Patient Header Card
-                    PatientHeaderCard(patient: widget.patient),
-                    SizedBox(height: 20.h),
-
-                    // Vitals Section
-                    VitalsGridSection(
-                      recentApt: _recentApt,
-                      onViewAll: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "Vitals history view is under development",
-                            ),
-                            backgroundColor: AppColors.primary,
-                          ),
-                        );
-                      },
+                  decoration: BoxDecoration(
+                    color: sheetBg,
+                    border: Border(
+                      top: BorderSide(
+                        color: AppColors.border(context),
+                        width: 0.8,
+                      ),
                     ),
-                    SizedBox(height: 20.h),
-
-                    // Recent Consultation Section
-                    RecentConsultationCard(
-                      recentApt: _recentApt,
-                      onViewAll: _showConsultationHistory,
-                    ),
-                    SizedBox(height: 20.h),
-
-                    // Prescription & Notes Section
-                    EmrPrescriptionCard(
-                      emrRecord: _emrRecord,
-                      isLoading: _isLoadingEMR,
-                      onViewAll: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "EMR history view is under development",
-                            ),
-                            backgroundColor: AppColors.primary,
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context); // close sheet
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PatientVisitDetailPage(
+                            appointment: _recentApt!,
+                            patient: widget.patient,
                           ),
-                        );
-                      },
-                      onInvoicePdfPressed: () {
-                        if (_emrRecord != null) {
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0F6FFF),
+                      foregroundColor: Colors.white,
+                      minimumSize: Size(double.infinity, 48.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.play_circle_fill_rounded, size: 20),
+                        SizedBox(width: 8.w),
+                        const Text(
+                          "Start Consultation / Edit Today's Visit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : null,
+          body: Container(
+            decoration: BoxDecoration(
+              color: sheetBg,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(24),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.15),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                // Pull Bar indicator
+                SizedBox(height: 12.h),
+                Container(
+                  width: 40.w,
+                  height: 4.h,
+                  decoration: BoxDecoration(
+                    color: isDark ? Colors.white24 : Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+
+                // Title Header
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppStrings.patientProfile,
+                        style: AppTextStyles.titleLarge.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: primaryText,
+                        ),
+                      ),
+                      // Close button inside a grey circle/outline to match mockup
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          padding: EdgeInsets.all(4.r),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isDark
+                                ? const Color(0xFF1E293B)
+                                : const Color(0xFFF1F5F9),
+                            border: Border.all(
+                              color: isDark
+                                  ? const Color(0xFF334155)
+                                  : const Color(0xFFE2E8F0),
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            size: 18.r,
+                            color: secondaryText,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 12.h),
+                const Divider(height: 1),
+
+                // Content Body
+                Expanded(
+                  child: ListView(
+                    controller: scrollCtrl,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.w,
+                      vertical: 16.h,
+                    ),
+                    children: [
+                      // Patient Header Card
+                      PatientHeaderCard(patient: widget.patient),
+                      SizedBox(height: 20.h),
+
+                      // Vitals Section
+                      VitalsGridSection(
+                        recentApt: _recentApt,
+                        onViewAll: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text(
-                                "PDF Invoice generated: ${_emrRecord!['invoice_number']}",
+                                "Vitals history view is under development",
                               ),
                               backgroundColor: AppColors.primary,
                             ),
                           );
-                        }
-                      },
-                      onShareRxPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "Sharing prescription with patient...",
+                        },
+                      ),
+                      SizedBox(height: 20.h),
+
+                      // Recent Consultation Section
+                      RecentConsultationCard(
+                        recentApt: _recentApt,
+                        onViewAll: _showConsultationHistory,
+                      ),
+                      SizedBox(height: 20.h),
+
+                      // Prescription & Notes Section
+                      EmrPrescriptionCard(
+                        emrRecord: _emrRecord,
+                        isLoading: _isLoadingEMR,
+                        onViewAll: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "EMR history view is under development",
+                              ),
+                              backgroundColor: AppColors.primary,
                             ),
-                            backgroundColor: AppColors.success,
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 24.h),
-                  ],
+                          );
+                        },
+                        onInvoicePdfPressed: () {
+                          if (_emrRecord != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "PDF Invoice generated: ${_emrRecord!['invoice_number']}",
+                                ),
+                                backgroundColor: AppColors.primary,
+                              ),
+                            );
+                          }
+                        },
+                        onShareRxPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Sharing prescription with patient...",
+                              ),
+                              backgroundColor: AppColors.success,
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 24.h),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

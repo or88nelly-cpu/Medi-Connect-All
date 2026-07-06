@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
 
 class PendingMrdBanner extends StatelessWidget {
   final String count;
@@ -64,7 +65,7 @@ class PendingMrdBanner extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Pending MRD",
+                        AppStrings.pendingMrdTitle,
                         style: AppTextStyles.bodyMedium.copyWith(
                           color: const Color(0xFFE11D48),
                           fontWeight: FontWeight.bold,
@@ -86,7 +87,7 @@ class PendingMrdBanner extends StatelessWidget {
                           ),
                           SizedBox(width: 6.w),
                           Text(
-                            "Pending Records",
+                            AppStrings.pendingMrdSubtitle,
                             style: AppTextStyles.bodySmall.copyWith(
                               color: isDark ? Colors.white38 : Colors.grey[500],
                               fontSize: 10.sp,
@@ -101,7 +102,7 @@ class PendingMrdBanner extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              "View Details",
+                              AppStrings.viewDetails,
                               style: TextStyle(
                                 color: const Color(0xFFE11D48),
                                 fontSize: 10.sp,

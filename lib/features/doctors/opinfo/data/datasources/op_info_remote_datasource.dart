@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/features/doctors/opinfo/data/models/op_procedure_model.dart';
 import 'package:medi_connect/features/doctors/opinfo/domain/entities/op_info_summary_entity.dart';
 
@@ -9,183 +11,165 @@ abstract class OpInfoRemoteDataSource {
 }
 
 class OpInfoRemoteDataSourceImpl implements OpInfoRemoteDataSource {
-  static const _mockProcedures = [
-    {
-      'id': '1',
-      'token_number': 101,
-      'patient_id': 'OPD - LNA002',
-      'patient_name': 'Arjun Nambiar',
-      'age': '3 Years',
-      'gender': 'Male',
-      'appointment_time': '09:20 AM',
-      'status': 'Pending',
-      'profile_photo': null,
-    },
-    {
-      'id': '2',
-      'token_number': 102,
-      'patient_id': 'OPD - LNA003',
-      'patient_name': 'Meera Krishnan',
-      'age': '28 Years',
-      'gender': 'Female',
-      'appointment_time': '09:45 AM',
-      'status': 'Completed',
-      'profile_photo': null,
-    },
-    {
-      'id': '3',
-      'token_number': 103,
-      'patient_id': 'OPD - LNA004',
-      'patient_name': 'Rahul Menon',
-      'age': '45 Years',
-      'gender': 'Male',
-      'appointment_time': '10:10 AM',
-      'status': 'Pending',
-      'profile_photo': null,
-    },
-    {
-      'id': '4',
-      'token_number': 104,
-      'patient_id': 'OPD - LNA005',
-      'patient_name': 'Ananya Pillai',
-      'age': '12 Years',
-      'gender': 'Female',
-      'appointment_time': '10:35 AM',
-      'status': 'Completed',
-      'profile_photo': null,
-    },
-    {
-      'id': '5',
-      'token_number': 105,
-      'patient_id': 'OPD - LNA006',
-      'patient_name': 'Vikram Das',
-      'age': '56 Years',
-      'gender': 'Male',
-      'appointment_time': '11:00 AM',
-      'status': 'Pending',
-      'profile_photo': null,
-    },
-    {
-      'id': '6',
-      'token_number': 106,
-      'patient_id': 'OPD - LNA007',
-      'patient_name': 'Priya Thomas',
-      'age': '34 Years',
-      'gender': 'Female',
-      'appointment_time': '11:25 AM',
-      'status': 'Completed',
-      'profile_photo': null,
-    },
-    {
-      'id': '7',
-      'token_number': 107,
-      'patient_id': 'OPD - LNA008',
-      'patient_name': 'Suresh Kumar',
-      'age': '62 Years',
-      'gender': 'Male',
-      'appointment_time': '11:50 AM',
-      'status': 'Cancelled',
-      'profile_photo': null,
-    },
-    {
-      'id': '8',
-      'token_number': 108,
-      'patient_id': 'OPD - LNA009',
-      'patient_name': 'Deepa Nair',
-      'age': '41 Years',
-      'gender': 'Female',
-      'appointment_time': '12:15 PM',
-      'status': 'Pending',
-      'profile_photo': null,
-    },
-    {
-      'id': '9',
-      'token_number': 109,
-      'patient_id': 'OPD - LNA010',
-      'patient_name': 'Kiran Raj',
-      'age': '19 Years',
-      'gender': 'Male',
-      'appointment_time': '12:40 PM',
-      'status': 'Completed',
-      'profile_photo': null,
-    },
-    {
-      'id': '10',
-      'token_number': 110,
-      'patient_id': 'OPD - LNA011',
-      'patient_name': 'Lakshmi Iyer',
-      'age': '52 Years',
-      'gender': 'Female',
-      'appointment_time': '01:05 PM',
-      'status': 'Pending',
-      'profile_photo': null,
-    },
-    {
-      'id': '11',
-      'token_number': 111,
-      'patient_id': 'OPD - LNA012',
-      'patient_name': 'Manoj Varma',
-      'age': '38 Years',
-      'gender': 'Male',
-      'appointment_time': '01:30 PM',
-      'status': 'Completed',
-      'profile_photo': null,
-    },
-    {
-      'id': '12',
-      'token_number': 112,
-      'patient_id': 'OPD - LNA013',
-      'patient_name': 'Sneha Bose',
-      'age': '25 Years',
-      'gender': 'Female',
-      'appointment_time': '02:00 PM',
-      'status': 'Pending',
-      'profile_photo': null,
-    },
-    {
-      'id': '13',
-      'token_number': 113,
-      'patient_id': 'OPD - LNA014',
-      'patient_name': 'Harish Chandran',
-      'age': '48 Years',
-      'gender': 'Male',
-      'appointment_time': '02:25 PM',
-      'status': 'Completed',
-      'profile_photo': null,
-    },
-    {
-      'id': '14',
-      'token_number': 114,
-      'patient_id': 'OPD - LNA015',
-      'patient_name': 'Nisha George',
-      'age': '31 Years',
-      'gender': 'Female',
-      'appointment_time': '02:50 PM',
-      'status': 'Pending',
-      'profile_photo': null,
-    },
-  ];
+  final SupabaseService _supabaseService;
+
+  OpInfoRemoteDataSourceImpl(this._supabaseService);
+
+  Future<String> _resolveDoctorId(String userId) async {
+    try {
+      final response = await _supabaseService.client
+          .from('doctors')
+          .select('id')
+          .eq('user_id', userId)
+          .maybeSingle();
+      if (response != null && response['id'] != null) {
+        return response['id'] as String;
+      }
+    } catch (_) {}
+    return userId;
+  }
+
+  bool _isAppointmentInPast(DateTime date, String timeStr) {
+    try {
+      final format = DateFormat('hh:mm a');
+      final parsedTime = format.parse(timeStr.trim());
+      final combined = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+      return combined.isBefore(DateTime.now());
+    } catch (_) {
+      final now = DateTime.now();
+      final todayDateOnly = DateTime(now.year, now.month, now.day);
+      return date.isBefore(todayDateOnly);
+    }
+  }
 
   @override
   Future<OpInfoSummaryEntity> getOpInfo({
     required String doctorId,
     required DateTime date,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 300));
+    final dateStr = date.toIso8601String().split('T').first;
+    final resolvedDoctorId = await _resolveDoctorId(doctorId);
 
-    final procedures = _mockProcedures
-        .map((json) => OpProcedureModel.fromJson(json))
+    final response = await _supabaseService.client
+        .from('appointments')
+        .select()
+        .or('doctor_id.eq.$doctorId,doctor_id.eq.$resolvedDoctorId')
+        .eq('appointment_date', dateStr);
+
+    final list = response as List<dynamic>? ?? [];
+
+    final patientIds = list
+        .map((apt) => apt['patient_id'] as String?)
+        .where((id) => id != null && id.isNotEmpty)
+        .cast<String>()
+        .toSet()
         .toList();
 
-    int pending = 0, completed = 0, cancelled = 0;
-    for (final p in procedures) {
-      switch (p.status.toLowerCase()) {
+    final Map<String, Map<String, dynamic>> patientProfiles = {};
+    if (patientIds.isNotEmpty) {
+      try {
+        final usersResponse = await _supabaseService.client
+            .from('users')
+            .select('*, patients(*)')
+            .inFilter('id', patientIds);
+
+        final usersList = usersResponse as List<dynamic>? ?? [];
+        for (final user in usersList) {
+          final userMap = Map<String, dynamic>.from(user as Map);
+          patientProfiles[userMap['id'] as String] = userMap;
+        }
+      } catch (e) {
+        // Fallback or log
+      }
+    }
+
+    final List<OpProcedureModel> procedures = [];
+
+    int pending = 0;
+    int completed = 0;
+    int cancelled = 0;
+
+    for (final apt in list) {
+      final tokenStr = apt['token'] as String? ?? '';
+      int tokenNum = 1;
+      final digitsOnly = tokenStr.replaceAll(RegExp(r'\D'), '');
+      if (digitsOnly.isNotEmpty) {
+        tokenNum = int.tryParse(digitsOnly) ?? 1;
+      }
+
+      var displayStatus = apt['status'] as String? ?? 'Pending';
+      if (displayStatus.toLowerCase() != 'completed' &&
+          displayStatus.toLowerCase() != 'cancelled' &&
+          _isAppointmentInPast(
+            date,
+            apt['appointment_time'] as String? ?? '',
+          )) {
+        displayStatus = 'Pending MRD';
+      }
+
+      final patientIdStr = apt['patient_id']?.toString() ?? '';
+      final userMap = patientProfiles[patientIdStr];
+      String ageStr = '30 Years';
+      String genderStr = 'Male';
+
+      if (userMap != null) {
+        final patientMap = userMap['patients'] as Map<String, dynamic>?;
+        if (patientMap != null) {
+          final ageVal = patientMap['age'];
+          if (ageVal != null) {
+            ageStr = '$ageVal Years';
+          } else {
+            final dobStr = patientMap['date_of_birth'] ?? userMap['dob'];
+            if (dobStr != null) {
+              final dob = DateTime.tryParse(dobStr as String);
+              if (dob != null) {
+                ageStr = '${DateTime.now().year - dob.year} Years';
+              }
+            }
+          }
+
+          if (patientMap['gender'] != null) {
+            genderStr = patientMap['gender'] as String;
+          }
+        } else if (userMap['gender'] != null) {
+          genderStr = userMap['gender'] as String;
+        }
+      }
+
+      final procedure = OpProcedureModel(
+        id: apt['id']?.toString() ?? '',
+        tokenNumber: tokenNum,
+        patientId: patientIdStr,
+        patientName: apt['patient_name']?.toString() ?? '',
+        age: ageStr,
+        gender: genderStr,
+        appointmentTime: apt['appointment_time']?.toString() ?? '',
+        status: displayStatus,
+        profilePhoto: userMap?['profile_photo']?.toString(),
+      );
+
+      procedures.add(procedure);
+
+      switch (displayStatus.toLowerCase()) {
         case 'pending':
+        case 'pending mrd':
           pending++;
+          break;
         case 'completed':
           completed++;
+          break;
         case 'cancelled':
           cancelled++;
+          break;
+        default:
+          pending++;
+          break;
       }
     }
 

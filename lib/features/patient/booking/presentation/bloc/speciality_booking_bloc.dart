@@ -167,7 +167,7 @@ class SpecialityBookingBloc
 
     try {
       final response = await _getSlotsUseCase(
-        doctorId: doctor.user.id,
+        doctorId: doctor.doctorInfo?.id ?? doctor.user.id,
         selectedDate: event.date,
       );
 
@@ -228,7 +228,7 @@ class SpecialityBookingBloc
       await _bookAppointmentUseCase(
         patientId: event.patientId,
         patientName: event.patientName,
-        doctorId: doctor.user.id,
+        doctorId: doctor.doctorInfo?.id ?? doctor.user.id,
         doctorName: doctor.user.fullName,
         specialty: event.specialtyName,
         date: date,

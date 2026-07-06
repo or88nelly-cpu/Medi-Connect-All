@@ -78,7 +78,9 @@ class OpInfoAppointmentItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    procedure.patientId,
+                    procedure.patientId.length > 8
+                        ? 'PAT-${procedure.patientId.substring(0, 8).toUpperCase()}'
+                        : procedure.patientId,
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.textSecondary(context),
                     ),

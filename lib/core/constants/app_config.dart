@@ -80,6 +80,12 @@ import 'package:medi_connect/features/doctors/opinfo/data/repositories/op_info_r
 import 'package:medi_connect/features/doctors/opinfo/domain/repositories/op_info_repository.dart';
 import 'package:medi_connect/features/doctors/opinfo/domain/usecases/get_op_info_usecase.dart';
 import 'package:medi_connect/features/doctors/opinfo/presentation/bloc/op_info_bloc.dart';
+import 'package:medi_connect/features/doctors/dashboard/data/datasources/doctor_dashboard_remote_data_source.dart';
+import 'package:medi_connect/features/doctors/dashboard/data/repositories/doctor_dashboard_repository_impl.dart';
+import 'package:medi_connect/features/doctors/dashboard/domain/repositories/doctor_dashboard_repository.dart';
+import 'package:medi_connect/features/doctors/dashboard/domain/usecases/get_doctor_dashboard_stats_usecase.dart';
+import 'package:medi_connect/features/doctors/dashboard/domain/usecases/get_pending_mrd_records_usecase.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/doctor_dashboard_bloc.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -497,12 +503,44 @@ void configureAdditionalFeatures(GetIt sl) {
   }
 
   configureOpInfoDependencies(sl);
+  configureDoctorDashboardDependencies(sl);
+}
+
+void configureDoctorDashboardDependencies(GetIt sl) {
+  if (!sl.isRegistered<DoctorDashboardRemoteDataSource>()) {
+    sl.registerLazySingleton<DoctorDashboardRemoteDataSource>(
+      () => DoctorDashboardRemoteDataSourceImpl(sl<SupabaseService>()),
+    );
+  }
+  if (!sl.isRegistered<DoctorDashboardRepository>()) {
+    sl.registerLazySingleton<DoctorDashboardRepository>(
+      () =>
+          DoctorDashboardRepositoryImpl(sl<DoctorDashboardRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<GetDoctorDashboardStatsUseCase>()) {
+    sl.registerLazySingleton<GetDoctorDashboardStatsUseCase>(
+      () => GetDoctorDashboardStatsUseCase(sl<DoctorDashboardRepository>()),
+    );
+  }
+  if (!sl.isRegistered<GetPendingMrdRecordsUseCase>()) {
+    sl.registerLazySingleton<GetPendingMrdRecordsUseCase>(
+      () => GetPendingMrdRecordsUseCase(sl<DoctorDashboardRepository>()),
+    );
+  }
+  if (!sl.isRegistered<DoctorDashboardBloc>()) {
+    sl.registerFactory<DoctorDashboardBloc>(
+      () => DoctorDashboardBloc(
+        getStatsUseCase: sl<GetDoctorDashboardStatsUseCase>(),
+      ),
+    );
+  }
 }
 
 void configureOpInfoDependencies(GetIt sl) {
   if (!sl.isRegistered<OpInfoRemoteDataSource>()) {
     sl.registerLazySingleton<OpInfoRemoteDataSource>(
-      () => OpInfoRemoteDataSourceImpl(),
+      () => OpInfoRemoteDataSourceImpl(sl<SupabaseService>()),
     );
   }
   if (!sl.isRegistered<OpInfoRepository>()) {
