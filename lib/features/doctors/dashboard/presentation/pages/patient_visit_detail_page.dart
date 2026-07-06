@@ -37,6 +37,9 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
   // Navigation active date
   late DateTime _activeVisitDate;
 
+  // List of all appointment dates for the patient
+  List<DateTime> _appointmentDates = [];
+
   // Vitals Controllers
   late TextEditingController _bpCtrl;
   late TextEditingController _pulseCtrl;
@@ -84,6 +87,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     _vitalsNotesCtrl = TextEditingController();
 
     _loadDataForDate(_activeVisitDate);
+    _loadAppointmentDates();
   }
 
   @override
@@ -232,6 +236,44 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     }
   }
 
+  Future<void> _loadAppointmentDates() async {
+    try {
+      final supabase = GetIt.I<SupabaseService>().client;
+      final response = await supabase
+          .from('appointments')
+          .select('appointment_date')
+          .eq('patient_id', widget.patient.id);
+
+      if (response.isNotEmpty) {
+        final List<DateTime> dates = [];
+        for (final item in response) {
+          if (item['appointment_date'] != null) {
+            final date = DateTime.tryParse(item['appointment_date']);
+            if (date != null) {
+              dates.add(DateTime(date.year, date.month, date.day));
+            }
+          }
+        }
+
+        // Add today's date if not present
+        final today = DateTime.now();
+        final todayDateOnly = DateTime(today.year, today.month, today.day);
+        if (!dates.any((d) => _isSameDay(d, todayDateOnly))) {
+          dates.add(todayDateOnly);
+        }
+
+        // Sort dates chronologically
+        dates.sort((a, b) => a.compareTo(b));
+
+        setState(() {
+          _appointmentDates = dates;
+        });
+      }
+    } catch (e) {
+      debugPrint("Error loading appointment dates: $e");
+    }
+  }
+
   Future<void> _loadDataForDate(DateTime date) async {
     final isToday = _isSameDay(date, DateTime.now());
     if (isToday) {
@@ -299,12 +341,62 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     }
   }
 
-  void _changeDate(int offset) {
-    final nextDate = _activeVisitDate.add(Duration(days: offset));
-    setState(() {
-      _activeVisitDate = nextDate;
-    });
-    _loadDataForDate(nextDate);
+  void _navigateToPreviousAppointment() {
+    final currentDateOnly = DateTime(
+      _activeVisitDate.year,
+      _activeVisitDate.month,
+      _activeVisitDate.day,
+    );
+
+    DateTime? prevDate;
+    for (final date in _appointmentDates.reversed) {
+      if (date.isBefore(currentDateOnly)) {
+        prevDate = date;
+        break;
+      }
+    }
+
+    if (prevDate != null) {
+      setState(() {
+        _activeVisitDate = prevDate!;
+      });
+      _loadDataForDate(prevDate);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("No previous appointments found for this patient."),
+        ),
+      );
+    }
+  }
+
+  void _navigateToNextAppointment() {
+    final currentDateOnly = DateTime(
+      _activeVisitDate.year,
+      _activeVisitDate.month,
+      _activeVisitDate.day,
+    );
+
+    DateTime? nextDate;
+    for (final date in _appointmentDates) {
+      if (date.isAfter(currentDateOnly)) {
+        nextDate = date;
+        break;
+      }
+    }
+
+    if (nextDate != null) {
+      setState(() {
+        _activeVisitDate = nextDate!;
+      });
+      _loadDataForDate(nextDate);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("No future appointments found for this patient."),
+        ),
+      );
+    }
   }
 
   double _calculateBMI() {
@@ -324,9 +416,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
         title: Text('Add $title Point'),
         content: TextField(
           controller: ctrl,
-          decoration: const InputDecoration(
-            hintText: 'Enter clinical point...',
-          ),
+          decoration: const InputDecoration(hintText: 'Enter clinical point...'),
           autofocus: true,
         ),
         actions: [
@@ -354,9 +444,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     final medName = _medicineSearchCtrl.text.trim();
     if (medName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please select or search a medicine name'),
-        ),
+        const SnackBar(content: Text('Please select or search a medicine name')),
       );
       return;
     }
@@ -377,15 +465,12 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     setState(() => _isSaving = true);
     try {
       final supabase = GetIt.I<SupabaseService>().client;
-      await supabase
-          .from('appointments')
-          .update({
-            'bp': _bpCtrl.text,
-            'weight': _weightCtrl.text,
-            'height': _heightCtrl.text,
-            'fever': _tempCtrl.text,
-          })
-          .eq('id', widget.appointment.id);
+      await supabase.from('appointments').update({
+        'bp': _bpCtrl.text,
+        'weight': _weightCtrl.text,
+        'height': _heightCtrl.text,
+        'fever': _tempCtrl.text,
+      }).eq('id', widget.appointment.id);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -416,16 +501,13 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
       final apt = widget.appointment;
 
       // 1. Update appointment status and vitals
-      await supabase
-          .from('appointments')
-          .update({
-            'status': 'Completed',
-            'bp': _bpCtrl.text,
-            'weight': _weightCtrl.text,
-            'height': _heightCtrl.text,
-            'fever': _tempCtrl.text,
-          })
-          .eq('id', apt.id);
+      await supabase.from('appointments').update({
+        'status': 'Completed',
+        'bp': _bpCtrl.text,
+        'weight': _weightCtrl.text,
+        'height': _heightCtrl.text,
+        'fever': _tempCtrl.text,
+      }).eq('id', apt.id);
 
       // 2. Build clinical notes summary for EMR
       final notesBuffer = StringBuffer();
@@ -446,16 +528,11 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
       }
 
       final medicinesStr = _medicines
-          .map(
-            (m) =>
-                '${m['type']} ${m['name']} (${m['dosage']}, ${m['frequency']}, ${m['days']})',
-          )
+          .map((m) => '${m['type']} ${m['name']} (${m['dosage']}, ${m['frequency']}, ${m['days']})')
           .join('\n');
 
       final recordedAtStr = DateTime.now().toIso8601String();
-      final suffix = DateTime.now().millisecondsSinceEpoch.toString().substring(
-        8,
-      );
+      final suffix = DateTime.now().millisecondsSinceEpoch.toString().substring(8);
       final invoiceNum = 'INV-$suffix';
 
       final emrRecordData = {
@@ -558,10 +635,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
           ),
           bottomNavigationBar: isToday
               ? Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 12.h,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
                   decoration: BoxDecoration(
                     color: cardBg,
                     border: Border(
@@ -591,10 +665,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: _isSaving ? null : _saveAndClose,
-                          icon: const Icon(
-                            Icons.check_circle_outline,
-                            size: 18,
-                          ),
+                          icon: const Icon(Icons.check_circle_outline, size: 18),
                           label: const Text(
                             'Save & Close Visit',
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -615,13 +686,12 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                 )
               : null,
           body: _isLoadingData
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
               : SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 12.h,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -635,8 +705,8 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                       // 2. Date Navigation Row
                       VisitDatePickerRow(
                         date: _activeVisitDate,
-                        onPreviousPressed: () => _changeDate(-1),
-                        onNextPressed: () => _changeDate(1),
+                        onPreviousPressed: _navigateToPreviousAppointment,
+                        onNextPressed: _navigateToNextAppointment,
                       ),
                       SizedBox(height: 16.h),
 
@@ -661,14 +731,11 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                       VisitListSection(
                         points: _historyPoints,
                         title: 'History',
-                        description:
-                            'Past illness, surgeries, medications, etc.',
+                        description: 'Past illness, surgeries, medications, etc.',
                         icon: Icons.history,
                         iconColor: const Color(0xFF8B5CF6),
-                        onAddPressed: () =>
-                            _addPointDialog(_historyPoints, 'History'),
-                        onRemovePressed: (idx) =>
-                            setState(() => _historyPoints.removeAt(idx)),
+                        onAddPressed: () => _addPointDialog(_historyPoints, 'History'),
+                        onRemovePressed: (idx) => setState(() => _historyPoints.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 16.h),
@@ -680,10 +747,8 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         description: 'Clinical notes and examination findings',
                         icon: Icons.assignment_outlined,
                         iconColor: const Color(0xFF10B981),
-                        onAddPressed: () =>
-                            _addPointDialog(_doctorsNotes, "Doctor's Notes"),
-                        onRemovePressed: (idx) =>
-                            setState(() => _doctorsNotes.removeAt(idx)),
+                        onAddPressed: () => _addPointDialog(_doctorsNotes, "Doctor's Notes"),
+                        onRemovePressed: (idx) => setState(() => _doctorsNotes.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 16.h),
@@ -695,12 +760,8 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         description: 'Patient reported symptoms and concerns',
                         icon: Icons.chat_bubble_outline,
                         iconColor: const Color(0xFFF59E0B),
-                        onAddPressed: () => _addPointDialog(
-                          _chiefComplaints,
-                          'Chief Complaints',
-                        ),
-                        onRemovePressed: (idx) =>
-                            setState(() => _chiefComplaints.removeAt(idx)),
+                        onAddPressed: () => _addPointDialog(_chiefComplaints, 'Chief Complaints'),
+                        onRemovePressed: (idx) => setState(() => _chiefComplaints.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 16.h),
@@ -713,16 +774,12 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         selectedDosage: _selectedDosage,
                         selectedFreq: _selectedFreq,
                         selectedDuration: _selectedDuration,
-                        onTypeChanged: (v) =>
-                            setState(() => _selectedMedType = v),
-                        onDosageChanged: (v) =>
-                            setState(() => _selectedDosage = v),
+                        onTypeChanged: (v) => setState(() => _selectedMedType = v),
+                        onDosageChanged: (v) => setState(() => _selectedDosage = v),
                         onFreqChanged: (v) => setState(() => _selectedFreq = v),
-                        onDurationChanged: (v) =>
-                            setState(() => _selectedDuration = v),
+                        onDurationChanged: (v) => setState(() => _selectedDuration = v),
                         onAddMedicine: _addMedicine,
-                        onRemoveMedicine: (idx) =>
-                            setState(() => _medicines.removeAt(idx)),
+                        onRemoveMedicine: (idx) => setState(() => _medicines.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 20.h),
