@@ -127,6 +127,9 @@ class _OpInfoBody extends StatelessWidget {
                       OpInfoAppointmentsSection(
                         procedures: state.filteredProcedures,
                         totalCount: state.summary.total,
+                        selectedDate: state.selectedDate,
+                        doctorName: authState.user.fullName,
+                        specialty: 'General Physician',
                       ),
                     ],
                   ),

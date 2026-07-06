@@ -647,23 +647,31 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
 
                                       // Card content
                                       Expanded(
-                                        child: PremiumAppointmentCard(
-                                          appointment: apt,
-                                          onCancel: () {
-                                            context
-                                                .read<DoctorAppointmentsBloc>()
-                                                .add(
-                                                  CancelDoctorAppointment(
-                                                    apt.id,
-                                                  ),
-                                                );
-                                          },
-                                          onComplete: () {
+                                        child: GestureDetector(
+                                          onTap: () {
                                             _showConsultationCompleteSheet(
                                               context,
                                               apt,
                                             );
                                           },
+                                          child: PremiumAppointmentCard(
+                                            appointment: apt,
+                                            onCancel: () {
+                                              context
+                                                  .read<DoctorAppointmentsBloc>()
+                                                  .add(
+                                                    CancelDoctorAppointment(
+                                                      apt.id,
+                                                    ),
+                                                  );
+                                            },
+                                            onComplete: () {
+                                              _showConsultationCompleteSheet(
+                                                context,
+                                                apt,
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ],

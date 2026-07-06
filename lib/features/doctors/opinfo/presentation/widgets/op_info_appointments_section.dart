@@ -5,15 +5,25 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/features/doctors/opinfo/domain/entities/op_procedure_entity.dart';
 import 'package:medi_connect/features/doctors/opinfo/presentation/widgets/op_info_appointment_item.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/pages/patient_visit_detail_page.dart';
+import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
+import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 class OpInfoAppointmentsSection extends StatelessWidget {
   final List<OpProcedureEntity> procedures;
   final int totalCount;
+  final DateTime selectedDate;
+  final String doctorName;
+  final String specialty;
 
   const OpInfoAppointmentsSection({
     super.key,
     required this.procedures,
     required this.totalCount,
+    required this.selectedDate,
+    required this.doctorName,
+    required this.specialty,
   });
 
   @override
@@ -45,7 +55,48 @@ class OpInfoAppointmentsSection extends StatelessWidget {
             )
           else
             ...procedures.map(
-              (p) => OpInfoAppointmentItem(procedure: p, onTap: () {}),
+              (p) => OpInfoAppointmentItem(
+                procedure: p,
+                onTap: () {
+                  final parts = p.patientName.trim().split(' ');
+                  final fName = parts.isNotEmpty ? parts.first : p.patientName;
+                  final lName = parts.length > 1 ? parts.sublist(1).join(' ') : '';
+
+                  final patientEntity = UserEntity(
+                    id: p.patientId,
+                    firstName: fName,
+                    lastName: lName,
+                    email: '',
+                    gender: p.gender,
+                    role: UserRole.patient,
+                    profilePhoto: p.profilePhoto,
+                  );
+
+                  final appointmentEntity = AppointmentEntity(
+                    id: p.id,
+                    patientId: p.patientId,
+                    patientName: p.patientName,
+                    doctorId: '',
+                    doctorName: doctorName,
+                    specialty: specialty,
+                    appointmentDate: selectedDate,
+                    appointmentTime: p.appointmentTime,
+                    status: p.status,
+                    type: 'OPD',
+                    token: 'OPD - ${p.tokenNumber}',
+                  );
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PatientVisitDetailPage(
+                        appointment: appointmentEntity,
+                        patient: patientEntity,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
         ],
       ),
