@@ -21,6 +21,8 @@ class AppointmentModel extends AppointmentEntity {
     super.additionalVitals,
     super.token,
     super.amount,
+    super.patientPhoto,
+    super.patientGender,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,8 @@ class AppointmentModel extends AppointmentEntity {
       additionalVitals: json['additional_vitals']?.toString(),
       token: json['token']?.toString(),
       amount: json['amount'] != null ? (json['amount'] as num).toInt() : null,
+      patientPhoto: json['patient_photo']?.toString(),
+      patientGender: json['patient_gender']?.toString(),
     );
   }
 
@@ -70,5 +74,7 @@ class AppointmentModel extends AppointmentEntity {
     if (additionalVitals != null) 'additional_vitals': additionalVitals,
     if (token != null) 'token': token,
     if (amount != null) 'amount': amount,
+    if (patientPhoto != null) 'patient_photo': patientPhoto,
+    if (patientGender != null) 'patient_gender': patientGender,
   };
 }

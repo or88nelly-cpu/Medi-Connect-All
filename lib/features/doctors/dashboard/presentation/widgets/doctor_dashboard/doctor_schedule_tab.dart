@@ -43,6 +43,13 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     return d1.year == d2.year && d1.month == d2.month && d1.day == d2.day;
   }
 
+  bool _matchPatient(UserModel p, AppointmentEntity apt) {
+    if (p.id == apt.patientId) return true;
+    final cleanPName = p.fullName.replaceAll(RegExp(r'\s+'), ' ').toLowerCase().trim();
+    final cleanAptName = apt.patientName.replaceAll(RegExp(r'\s+'), ' ').toLowerCase().trim();
+    return cleanPName == cleanAptName;
+  }
+
   Future<void> _selectDate(BuildContext context) async {
     final picked = await showDatePicker(
       context: context,
@@ -63,7 +70,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
       final patientState = context.read<PatientBloc>().state;
       if (patientState is PatientLoaded) {
         final matches = patientState.patients.where(
-          (p) => p.id == apt.patientId || p.fullName.toLowerCase().trim() == apt.patientName.toLowerCase().trim(),
+          (p) => _matchPatient(p, apt),
         );
         if (matches.isNotEmpty) {
           patientUser = matches.first;
@@ -79,15 +86,16 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
             email: patientUser.email ?? '',
             gender: patientUser.gender,
             role: UserRole.patient,
-            profilePhoto: patientUser.profilePhoto,
+            profilePhoto: patientUser.profilePhoto ?? apt.patientPhoto,
           )
         : UserEntity(
             id: apt.patientId ?? '',
             firstName: apt.patientName,
             lastName: '',
             email: '',
-            gender: 'Male',
+            gender: apt.patientGender ?? 'Male',
             role: UserRole.patient,
+            profilePhoto: apt.patientPhoto,
           );
 
     Navigator.push(
@@ -316,26 +324,13 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                           itemCount: filteredApts.length,
                           itemBuilder: (context, idx) {
                             final apt = filteredApts[idx];
-                            UserModel? patientUser;
-                            try {
-                              final patientState = context.read<PatientBloc>().state;
-                              if (patientState is PatientLoaded) {
-                                final matches = patientState.patients.where(
-                                  (p) => p.id == apt.patientId || p.fullName.toLowerCase().trim() == apt.patientName.toLowerCase().trim(),
-                                );
-                                if (matches.isNotEmpty) {
-                                  patientUser = matches.first;
-                                }
-                              }
-                            } catch (_) {}
-
                             return ScheduleAppointmentItem(
                               appointment: apt,
                               index: idx,
                               totalCount: filteredApts.length,
                               isDark: isDark,
-                              patientPhoto: patientUser?.profilePhoto,
-                              patientGender: patientUser?.gender,
+                              patientPhoto: apt.patientPhoto,
+                              patientGender: apt.patientGender,
                               onTap: () => _showConsultationCompleteSheet(context, apt),
                               onCancel: () {
                                 context.read<DoctorAppointmentsBloc>().add(CancelDoctorAppointment(apt.id));

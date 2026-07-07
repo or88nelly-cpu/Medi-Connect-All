@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/features/doctors/dashboard/data/models/doctor_dashboard_stats_model.dart';
 import 'package:medi_connect/features/doctors/dashboard/data/models/mrd_record_model.dart';

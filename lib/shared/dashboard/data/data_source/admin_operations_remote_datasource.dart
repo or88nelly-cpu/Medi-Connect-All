@@ -736,9 +736,52 @@ class AdminOperationsRemoteDataSourceImpl
           .select()
           .order('created_at', ascending: false);
       final list = response as List<dynamic>? ?? [];
-      final result = list
-          .map((e) => AppointmentModel.fromJson(e as Map<String, dynamic>))
+
+      // Fetch patient profiles
+      final patientIds = list
+          .map((apt) => apt['patient_id'] as String?)
+          .where((id) => id != null && id.isNotEmpty)
+          .cast<String>()
+          .toSet()
           .toList();
+
+      final Map<String, Map<String, dynamic>> patientProfiles = {};
+      if (patientIds.isNotEmpty) {
+        try {
+          final usersResponse = await _supabase
+              .from('users')
+              .select('*, patients(*)')
+              .inFilter('id', patientIds);
+
+          final usersList = usersResponse as List<dynamic>? ?? [];
+          for (final user in usersList) {
+            final userMap = Map<String, dynamic>.from(user as Map);
+            patientProfiles[userMap['id'] as String] = userMap;
+          }
+        } catch (_) {}
+      }
+
+      final result = list.map((e) {
+        final aptJson = Map<String, dynamic>.from(e as Map);
+        final patientIdStr = aptJson['patient_id']?.toString() ?? '';
+        final userMap = patientProfiles[patientIdStr];
+        String genderStr = 'Male';
+
+        if (userMap != null) {
+          final patientMap = userMap['patients'] as Map<String, dynamic>?;
+          if (patientMap != null) {
+            if (patientMap['gender'] != null) {
+              genderStr = patientMap['gender'] as String;
+            }
+          } else if (userMap['gender'] != null) {
+            genderStr = userMap['gender'] as String;
+          }
+        }
+
+        aptJson['patient_photo'] = userMap?['profile_photo']?.toString();
+        aptJson['patient_gender'] = genderStr;
+        return AppointmentModel.fromJson(aptJson);
+      }).toList();
 
       // Save cache locally
       try {

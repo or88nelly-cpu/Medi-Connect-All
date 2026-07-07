@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
 import 'package:medi_connect/core/functions/date_utils.dart';
 
@@ -46,15 +47,11 @@ class VisitPatientHeader extends StatelessWidget {
               CircleAvatar(
                 radius: 36.r,
                 backgroundColor: Colors.white24,
-                backgroundImage:
-                    patient.profilePhoto != null &&
-                        patient.profilePhoto!.isNotEmpty
-                    ? NetworkImage(patient.profilePhoto!) as ImageProvider
-                    : AssetImage(
-                        patient.gender?.toLowerCase() == 'female'
-                            ? 'assets/images/female_avatar.png'
-                            : 'assets/images/male_avatar.png',
-                      ),
+                backgroundImage: ProfileImageHelper.getAvatarImage(
+                  patient.profilePhoto,
+                  'patient',
+                  patient.gender,
+                ),
               ),
               Container(
                 padding: EdgeInsets.all(4.r),
