@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
+import 'package:medi_connect/features/doctors/ip_info/presentation/bloc/ip_info_bloc.dart';
+import 'package:medi_connect/features/doctors/op_procedures/presentation/bloc/op_procedures_bloc.dart';
 import 'package:medi_connect/features/doctors/opinfo/presentation/bloc/op_info_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_analytics_bloc.dart';
@@ -60,6 +62,9 @@ class AppProviders {
 
       BlocProvider<UserDetailsBloc>(create: (_) => sl<UserDetailsBloc>()),
       BlocProvider<OpInfoBloc>(create: (_) => sl<OpInfoBloc>()),
+      BlocProvider<IpInfoBloc>(create: (_) => sl<IpInfoBloc>()),
+      BlocProvider<OpProceduresBloc>(create: (_) => sl<OpProceduresBloc>()),
+     // BlocProvider<IpP>(create: (_) => sl<IpInfoBloc>()),
       BlocProvider<DoctorDashboardBloc>(
         create: (_) => sl<DoctorDashboardBloc>(),
       ),

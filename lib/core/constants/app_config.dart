@@ -4,6 +4,16 @@ library;
 
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/features/doctors/ip_info/data/datasources/ip_info_remote_datasource.dart';
+import 'package:medi_connect/features/doctors/ip_info/data/repositories/ip_info_repository_impl.dart';
+import 'package:medi_connect/features/doctors/ip_info/domain/repositories/ip_info_repository.dart';
+import 'package:medi_connect/features/doctors/ip_info/domain/usecases/get_ip_occupancy_usecase.dart';
+import 'package:medi_connect/features/doctors/ip_info/presentation/bloc/ip_info_bloc.dart';
+import 'package:medi_connect/features/doctors/op_procedures/data/datasources/op_procedures_remote_datasource.dart';
+import 'package:medi_connect/features/doctors/op_procedures/data/repositories/op_procedures_repository_impl.dart';
+import 'package:medi_connect/features/doctors/op_procedures/domain/repositories/op_procedures_repository.dart';
+import 'package:medi_connect/features/doctors/op_procedures/domain/usecases/get_op_procedures_usecase.dart';
+import 'package:medi_connect/features/doctors/op_procedures/presentation/bloc/op_procedures_bloc.dart';
 import 'package:medi_connect/features/patient/booking/data/datasources/booking_remote_datasource.dart';
 import 'package:medi_connect/features/patient/booking/data/repositories/booking_repository_impl.dart';
 import 'package:medi_connect/features/patient/booking/domain/repositories/booking_repository.dart';
@@ -544,6 +554,61 @@ void configureDoctorDashboardDependencies(GetIt sl) {
       () => PendingMrdBloc(sl<GetPendingMrdRecordsUseCase>()),
     );
   }
+
+  // IP Info
+if (!sl.isRegistered<IpInfoRemoteDataSource>()) {
+  sl.registerLazySingleton<IpInfoRemoteDataSource>(
+    () => IpInfoRemoteDataSourceImpl(sl<SupabaseService>()),
+  );
+}
+
+if (!sl.isRegistered<IpInfoRepository>()) {
+  sl.registerLazySingleton<IpInfoRepository>(
+    () => IpInfoRepositoryImpl(sl<IpInfoRemoteDataSource>()),
+  );
+}
+
+if (!sl.isRegistered<GetIpOccupancyUseCase>()) {
+  sl.registerLazySingleton<GetIpOccupancyUseCase>(
+    () => GetIpOccupancyUseCase(sl<IpInfoRepository>()),
+  );
+}
+
+if (!sl.isRegistered<IpInfoBloc>()) {
+  sl.registerFactory<IpInfoBloc>(
+    () => IpInfoBloc(
+      getIpOccupancy: sl<GetIpOccupancyUseCase>(),
+    ),
+  );
+}
+
+  // OP Procedures
+  // OP Procedures
+if (!sl.isRegistered<OpProceduresRemoteDataSource>()) {
+  sl.registerLazySingleton<OpProceduresRemoteDataSource>(
+    () => OpProceduresRemoteDataSourceImpl(sl<SupabaseService>()),
+  );
+}
+
+if (!sl.isRegistered<OpProceduresRepository>()) {
+  sl.registerLazySingleton<OpProceduresRepository>(
+    () => OpProceduresRepositoryImpl(sl<OpProceduresRemoteDataSource>()),
+  );
+}
+
+if (!sl.isRegistered<GetOpProceduresUseCase>()) {
+  sl.registerLazySingleton<GetOpProceduresUseCase>(
+    () => GetOpProceduresUseCase(sl<OpProceduresRepository>()),
+  );
+}
+
+if (!sl.isRegistered<OpProceduresBloc>()) {
+  sl.registerFactory<OpProceduresBloc>(
+    () => OpProceduresBloc(
+      getOpProcedures: sl<GetOpProceduresUseCase>(),
+    ),
+  );
+}
 }
 
 void configureOpInfoDependencies(GetIt sl) {
