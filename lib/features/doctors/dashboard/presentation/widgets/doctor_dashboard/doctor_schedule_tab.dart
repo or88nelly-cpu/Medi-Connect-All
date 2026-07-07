@@ -316,11 +316,26 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                           itemCount: filteredApts.length,
                           itemBuilder: (context, idx) {
                             final apt = filteredApts[idx];
+                            UserModel? patientUser;
+                            try {
+                              final patientState = context.read<PatientBloc>().state;
+                              if (patientState is PatientLoaded) {
+                                final matches = patientState.patients.where(
+                                  (p) => p.id == apt.patientId || p.fullName.toLowerCase().trim() == apt.patientName.toLowerCase().trim(),
+                                );
+                                if (matches.isNotEmpty) {
+                                  patientUser = matches.first;
+                                }
+                              }
+                            } catch (_) {}
+
                             return ScheduleAppointmentItem(
                               appointment: apt,
                               index: idx,
                               totalCount: filteredApts.length,
                               isDark: isDark,
+                              patientPhoto: patientUser?.profilePhoto,
+                              patientGender: patientUser?.gender,
                               onTap: () => _showConsultationCompleteSheet(context, apt),
                               onCancel: () {
                                 context.read<DoctorAppointmentsBloc>().add(CancelDoctorAppointment(apt.id));

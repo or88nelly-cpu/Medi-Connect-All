@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/widgets/doctor_dashboard/schedule_timeline_indicator.dart';
 
@@ -12,6 +13,8 @@ class ScheduleAppointmentItem extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onCancel;
   final VoidCallback onComplete;
+  final String? patientPhoto;
+  final String? patientGender;
 
   const ScheduleAppointmentItem({
     super.key,
@@ -22,6 +25,8 @@ class ScheduleAppointmentItem extends StatelessWidget {
     required this.onTap,
     required this.onCancel,
     required this.onComplete,
+    this.patientPhoto,
+    this.patientGender,
   });
 
   @override
@@ -206,7 +211,11 @@ class ScheduleAppointmentItem extends StatelessWidget {
             CircleAvatar(
               radius: 20.r,
               backgroundColor: isDark ? Colors.white10 : Colors.grey[100],
-              backgroundImage: AssetImage('assets/images/male_avatar.png'), // fallback to asset avatar
+              backgroundImage: ProfileImageHelper.getAvatarImage(
+                patientPhoto,
+                'patient',
+                patientGender,
+              ),
             ),
             SizedBox(width: 12.w),
             // Middle Details
