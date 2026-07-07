@@ -21,6 +21,10 @@ class MrdRecordModel extends MrdRecordEntity {
     super.createdAt,
     super.updatedAt,
     super.appointmentId,
+    super.patientName,
+    super.patientAge,
+    super.patientGender,
+    super.patientPhoto,
   });
 
   factory MrdRecordModel.fromJson(Map<String, dynamic> json) {
@@ -50,6 +54,10 @@ class MrdRecordModel extends MrdRecordEntity {
           ? DateTime.tryParse(json['updated_at'] as String)
           : null,
       appointmentId: json['appointment_id']?.toString(),
+      patientName: json['patient_name']?.toString(),
+      patientAge: json['patient_age']?.toString(),
+      patientGender: json['patient_gender']?.toString(),
+      patientPhoto: json['patient_photo']?.toString(),
     );
   }
 
@@ -70,5 +78,9 @@ class MrdRecordModel extends MrdRecordEntity {
     'status': status,
     if (recordDate != null) 'record_date': recordDate?.toIso8601String(),
     if (appointmentId != null) 'appointment_id': appointmentId,
+    if (patientName != null) 'patient_name': patientName,
+    if (patientAge != null) 'patient_age': patientAge,
+    if (patientGender != null) 'patient_gender': patientGender,
+    if (patientPhoto != null) 'patient_photo': patientPhoto,
   };
 }

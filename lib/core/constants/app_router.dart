@@ -40,6 +40,7 @@ import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_sta
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_page.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/pages/doctor_dashboard_page.dart';
 import 'package:medi_connect/features/doctors/opinfo/presentation/pages/op_info_page.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/pages/pending_mrd_page.dart';
 import 'package:medi_connect/features/patient/dashboard/presentation/pages/patient_dashboard_page.dart';
 
 // Banners & Specialties Feature
@@ -99,6 +100,10 @@ class AppRouterConfig {
           path: RouteNames.doctorOpInfo,
           builder: (context, state) =>
               OpInfoPage(initialDate: state.extra as DateTime?),
+        ),
+        GoRoute(
+          path: RouteNames.doctorPendingMrd,
+          builder: (context, state) => const PendingMrdPage(),
         ),
         GoRoute(
           path: '/staff/dashboard',

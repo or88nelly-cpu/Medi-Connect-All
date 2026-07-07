@@ -81,11 +81,15 @@ import 'package:medi_connect/features/doctors/opinfo/domain/repositories/op_info
 import 'package:medi_connect/features/doctors/opinfo/domain/usecases/get_op_info_usecase.dart';
 import 'package:medi_connect/features/doctors/opinfo/presentation/bloc/op_info_bloc.dart';
 import 'package:medi_connect/features/doctors/dashboard/data/datasources/doctor_dashboard_remote_data_source.dart';
+import 'package:medi_connect/features/doctors/dashboard/data/datasources/doctor_dashboard_remote_data_source_impl.dart';
 import 'package:medi_connect/features/doctors/dashboard/data/repositories/doctor_dashboard_repository_impl.dart';
 import 'package:medi_connect/features/doctors/dashboard/domain/repositories/doctor_dashboard_repository.dart';
 import 'package:medi_connect/features/doctors/dashboard/domain/usecases/get_doctor_dashboard_stats_usecase.dart';
 import 'package:medi_connect/features/doctors/dashboard/domain/usecases/get_pending_mrd_records_usecase.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/doctor_dashboard_bloc.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/pending_mrd/pending_mrd_bloc.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/pending_mrd/pending_mrd_event.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/pending_mrd/pending_mrd_state.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -533,6 +537,11 @@ void configureDoctorDashboardDependencies(GetIt sl) {
       () => DoctorDashboardBloc(
         getStatsUseCase: sl<GetDoctorDashboardStatsUseCase>(),
       ),
+    );
+  }
+  if (!sl.isRegistered<PendingMrdBloc>()) {
+    sl.registerFactory<PendingMrdBloc>(
+      () => PendingMrdBloc(sl<GetPendingMrdRecordsUseCase>()),
     );
   }
 }

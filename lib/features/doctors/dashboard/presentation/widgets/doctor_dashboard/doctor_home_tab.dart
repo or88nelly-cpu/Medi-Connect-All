@@ -233,9 +233,9 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                 '0',
                               ),
                               onViewDetailsTap: () {
-                                context.read<DashboardTabCubit>().setTab(
-                                  1,
-                                ); // Go to Schedule/MRD
+                                context.push(
+                                  RouteNames.doctorPendingMrd,
+                                );
                               },
                             ),
                           ],

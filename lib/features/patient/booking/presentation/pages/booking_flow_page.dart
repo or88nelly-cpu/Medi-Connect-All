@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
@@ -962,117 +963,153 @@ class _SlotStep extends StatelessWidget {
   bool _isSameDay(DateTime a, DateTime b) =>
       a.year == b.year && a.month == b.month && a.day == b.day;
 
+  Future<Set<String>> _fetchBookedSlots(String userId, DateTime date) async {
+    try {
+      String doctorId = userId;
+      final docRes = await Supabase.instance.client
+          .from('doctors')
+          .select('id')
+          .eq('user_id', userId)
+          .maybeSingle();
+      if (docRes != null && docRes['id'] != null) {
+        doctorId = docRes['id'] as String;
+      }
+
+      final dateStr = date.toIso8601String().split('T').first;
+      final response = await Supabase.instance.client
+          .from('appointments')
+          .select('appointment_time')
+          .eq('doctor_id', doctorId)
+          .eq('appointment_date', dateStr)
+          .neq('status', 'Cancelled');
+
+      final list = response as List<dynamic>? ?? [];
+      return list.map((item) => item['appointment_time']?.toString() ?? '').toSet();
+    } catch (_) {
+      return {};
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.r),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Select Date & Time',
-            style: AppTextStyles.headingSmall.copyWith(
-              color: AppColors.textPrimary(context),
-            ),
-          ),
-          if (doctor != null) ...[
-            SizedBox(height: 4.h),
-            Text(
-              'With ${doctor!.fullName}',
-              style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.textSecondary(context),
+    final doctorId = doctor?.id ?? '';
+
+    return FutureBuilder<Set<String>>(
+      future: _fetchBookedSlots(doctorId, selectedDate),
+      builder: (context, snapshot) {
+        final activeBookedSlots = snapshot.data ?? _kBookedSlots;
+
+        return SingleChildScrollView(
+          padding: EdgeInsets.all(16.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Select Date & Time',
+                style: AppTextStyles.headingSmall.copyWith(
+                  color: AppColors.textPrimary(context),
+                ),
               ),
-            ),
-          ],
-          SizedBox(height: 16.h),
-
-          // Date row
-          SizedBox(
-            height: 68.h,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: _days.length,
-              separatorBuilder: (context, _) => SizedBox(width: 10.w),
-              itemBuilder: (context, i) {
-                final d = _days[i];
-                final isSelected = _isSameDay(d, selectedDate);
-                return GestureDetector(
-                  onTap: () => onDateChanged(d),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: 50.w,
-                    decoration: BoxDecoration(
-                      gradient: isSelected
-                          ? const LinearGradient(
-                              colors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
-                            )
-                          : null,
-                      color: isSelected ? null : AppColors.card(context),
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.border(context),
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          _weekday(d.weekday),
-                          style: TextStyle(
-                            fontSize: 10.sp,
-                            color: isSelected
-                                ? Colors.white70
-                                : AppColors.textSecondary(context),
-                          ),
-                        ),
-                        SizedBox(height: 2.h),
-                        Text(
-                          '${d.day}',
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                            color: isSelected
-                                ? Colors.white
-                                : AppColors.textPrimary(context),
-                          ),
-                        ),
-                      ],
-                    ),
+              if (doctor != null) ...[
+                SizedBox(height: 4.h),
+                Text(
+                  'With ${doctor!.fullName}',
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textSecondary(context),
                   ),
-                );
-              },
-            ),
-          ),
-          SizedBox(height: 20.h),
+                ),
+              ],
+              SizedBox(height: 16.h),
 
-          // Time slots
-          _SlotGroup(
-            title: '🌅 Morning',
-            slots: _kMorningSlots,
-            bookedSlots: _kBookedSlots,
-            selectedSlot: selectedSlot,
-            onSelect: onSlotSelected,
+              // Date row
+              SizedBox(
+                height: 68.h,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _days.length,
+                  separatorBuilder: (context, _) => SizedBox(width: 10.w),
+                  itemBuilder: (context, i) {
+                    final d = _days[i];
+                    final isSelected = _isSameDay(d, selectedDate);
+                    return GestureDetector(
+                      onTap: () => onDateChanged(d),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: 50.w,
+                        decoration: BoxDecoration(
+                          gradient: isSelected
+                              ? const LinearGradient(
+                                  colors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
+                                )
+                              : null,
+                          color: isSelected ? null : AppColors.card(context),
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            color: isSelected
+                                ? AppColors.primary
+                                : AppColors.border(context),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _weekday(d.weekday),
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                color: isSelected
+                                    ? Colors.white70
+                                    : AppColors.textSecondary(context),
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              '${d.day}',
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: isSelected
+                                    ? Colors.white
+                                    : AppColors.textPrimary(context),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(height: 20.h),
+
+              // Time slots
+              _SlotGroup(
+                title: '🌅 Morning',
+                slots: _kMorningSlots,
+                bookedSlots: activeBookedSlots,
+                selectedSlot: selectedSlot,
+                onSelect: onSlotSelected,
+              ),
+              SizedBox(height: 14.h),
+              _SlotGroup(
+                title: '☀️ Afternoon',
+                slots: _kAfternoonSlots,
+                bookedSlots: activeBookedSlots,
+                selectedSlot: selectedSlot,
+                onSelect: onSlotSelected,
+              ),
+              SizedBox(height: 14.h),
+              _SlotGroup(
+                title: '🌆 Evening',
+                slots: _kEveningSlots,
+                bookedSlots: activeBookedSlots,
+                selectedSlot: selectedSlot,
+                onSelect: onSlotSelected,
+              ),
+            ],
           ),
-          SizedBox(height: 14.h),
-          _SlotGroup(
-            title: '☀️ Afternoon',
-            slots: _kAfternoonSlots,
-            bookedSlots: _kBookedSlots,
-            selectedSlot: selectedSlot,
-            onSelect: onSlotSelected,
-          ),
-          SizedBox(height: 14.h),
-          _SlotGroup(
-            title: '🌆 Evening',
-            slots: _kEveningSlots,
-            bookedSlots: _kBookedSlots,
-            selectedSlot: selectedSlot,
-            onSelect: onSlotSelected,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

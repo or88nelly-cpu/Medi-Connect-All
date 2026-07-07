@@ -1,7 +1,4 @@
-/// Service wrapper around the Supabase Flutter client.
-/// Exposes properties and helpers for Authentication, PostgreSQL, Storage, Realtime,
-/// and facilitates Row Level Security (RLS) policies.
-library;
+import 'dart:developer';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -35,4 +32,36 @@ class SupabaseService {
 
   /// Helper to get authorization token.
   String? get accessToken => _client.auth.currentSession?.accessToken;
+
+  /// Helper to resolve Doctor ID from User ID
+  Future<String> resolveDoctorId(String userId) async {
+    try {
+      // Get employee ID from users.id
+      final employee = await _client
+          .from('employees')
+          .select('id')
+          .eq('user_id', userId)
+          .maybeSingle();
+
+      if (employee == null) return userId;
+
+      final employeeId = employee['id'] as String;
+
+      // Get doctor ID from employee.id
+      final doctor = await _client
+          .from('doctors')
+          .select('id')
+          .eq('employee_id', employeeId)
+          .maybeSingle();
+      log("doctor $doctor");
+
+      if (doctor == null) return userId;
+
+      return doctor['id'] as String;
+    } catch (e, stackTrace) {
+      log('Error resolving doctor ID: $e');
+      log(stackTrace.toString());
+      return userId;
+    }
+  }
 }

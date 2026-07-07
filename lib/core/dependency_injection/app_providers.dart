@@ -21,11 +21,13 @@ import 'package:medi_connect/features/patient/dashboard/presentation/bloc/banner
 import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/doctor_dashboard_bloc.dart';
+import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/pending_mrd/pending_mrd_bloc.dart';
 
 class AppProviders {
   static List<BlocProvider> getProviders() {
     final sl = GetIt.instance;
     return [
+      BlocProvider<PendingMrdBloc>(create: (_) => sl<PendingMrdBloc>()),
       BlocProvider<ThemeCubit>(create: (_) => sl<ThemeCubit>()),
       BlocProvider<AuthBloc>(create: (_) => sl<AuthBloc>()),
       BlocProvider<DashboardAnalyticsBloc>(

@@ -15,20 +15,6 @@ class OpInfoRemoteDataSourceImpl implements OpInfoRemoteDataSource {
 
   OpInfoRemoteDataSourceImpl(this._supabaseService);
 
-  Future<String> _resolveDoctorId(String userId) async {
-    try {
-      final response = await _supabaseService.client
-          .from('doctors')
-          .select('id')
-          .eq('user_id', userId)
-          .maybeSingle();
-      if (response != null && response['id'] != null) {
-        return response['id'] as String;
-      }
-    } catch (_) {}
-    return userId;
-  }
-
   bool _isAppointmentInPast(DateTime date, String timeStr) {
     try {
       final format = DateFormat('hh:mm a');
@@ -54,7 +40,7 @@ class OpInfoRemoteDataSourceImpl implements OpInfoRemoteDataSource {
     required DateTime date,
   }) async {
     final dateStr = date.toIso8601String().split('T').first;
-    final resolvedDoctorId = await _resolveDoctorId(doctorId);
+    final resolvedDoctorId = await _supabaseService.resolveDoctorId(doctorId);
 
     final response = await _supabaseService.client
         .from('appointments')

@@ -21,6 +21,12 @@ class MrdRecordEntity extends Equatable {
   final DateTime? updatedAt;
   final String? appointmentId;
 
+  // Joined patient fields
+  final String? patientName;
+  final String? patientAge;
+  final String? patientGender;
+  final String? patientPhoto;
+
   const MrdRecordEntity({
     required this.id,
     required this.patientId,
@@ -41,28 +47,36 @@ class MrdRecordEntity extends Equatable {
     this.createdAt,
     this.updatedAt,
     this.appointmentId,
+    this.patientName,
+    this.patientAge,
+    this.patientGender,
+    this.patientPhoto,
   });
 
   @override
   List<Object?> get props => [
-    id,
-    patientId,
-    doctorId,
-    employeeId,
-    recordType,
-    title,
-    description,
-    fileUrl,
-    fileName,
-    fileSize,
-    mimeType,
-    isPaid,
-    paymentAmount,
-    paymentStatus,
-    status,
-    recordDate,
-    createdAt,
-    updatedAt,
-    appointmentId,
-  ];
+        id,
+        patientId,
+        doctorId,
+        employeeId,
+        recordType,
+        title,
+        description,
+        fileUrl,
+        fileName,
+        fileSize,
+        mimeType,
+        isPaid,
+        paymentAmount,
+        paymentStatus,
+        status,
+        recordDate,
+        createdAt,
+        updatedAt,
+        appointmentId,
+        patientName,
+        patientAge,
+        patientGender,
+        patientPhoto,
+      ];
 }
