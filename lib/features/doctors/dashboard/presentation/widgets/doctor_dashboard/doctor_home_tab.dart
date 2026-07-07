@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/features/doctors/ip_info/presentation/pages/ip_info_page.dart';
+import 'package:medi_connect/features/doctors/op_procedures/presentation/pages/op_procedures_page.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/common/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/doctor_dashboard_bloc.dart';
@@ -165,6 +167,14 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                 DoctorOverviewCard(
                                   icon: Icons.single_bed_rounded,
                                   title: AppStrings.ipInfoTitle,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => IpInfoPage(),
+                                      ),
+                                    );
+                                  },
                                   count: stats.ipCount.toString().padLeft(
                                     2,
                                     '0',
@@ -179,6 +189,14 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                   count: stats.opProceduresCount
                                       .toString()
                                       .padLeft(2, '0'),
+                                      onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => OpProceduresPage(),
+                                      ),
+                                    );
+                                  },
                                   subtitle: AppStrings.opProceduresSubtitle,
                                   trend: "+15%",
                                   themeColor: AppColors.purple,
@@ -186,6 +204,14 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                 DoctorOverviewCard(
                                   icon: Icons.healing_rounded,
                                   title: AppStrings.ipProceduresTitle,
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => IpInfoPage(),
+                                    //   ),
+                                    // );
+                                  },
                                   count: stats.ipProceduresCount
                                       .toString()
                                       .padLeft(2, '0'),
@@ -194,6 +220,7 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                   themeColor: AppColors.orange,
                                 ),
                                 DoctorOverviewCard(
+                                  
                                   icon: Icons.medical_services_rounded,
                                   title: AppStrings.surgeriesTitle,
                                   count: stats.surgeryCount.toString().padLeft(
@@ -233,9 +260,7 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                 '0',
                               ),
                               onViewDetailsTap: () {
-                                context.push(
-                                  RouteNames.doctorPendingMrd,
-                                );
+                                context.push(RouteNames.doctorPendingMrd);
                               },
                             ),
                           ],
