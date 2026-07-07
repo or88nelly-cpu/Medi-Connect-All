@@ -3,7 +3,6 @@ import 'package:medi_connect/features/doctors/dashboard/domain/usecases/get_pend
 import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/pending_mrd/pending_mrd_event.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/bloc/pending_mrd/pending_mrd_state.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/models/mrd_record_display_model.dart';
-import 'package:medi_connect/features/doctors/dashboard/data/models/mrd_record_model.dart';
 
 class PendingMrdBloc extends Bloc<PendingMrdEvent, PendingMrdState> {
   final GetPendingMrdRecordsUseCase _getPendingMrdRecordsUseCase;
@@ -27,34 +26,33 @@ class PendingMrdBloc extends Bloc<PendingMrdEvent, PendingMrdState> {
     final result = await _getPendingMrdRecordsUseCase(event.userId);
 
     result.fold((failure) => emit(PendingMrdError(failure.message)), (records) {
-      print("Pending MRD Records: $records");
       final List<MrdRecordDisplayModel> displayModels = [];
 
       for (final rec in records) {
-        String pendingAt = 'IP - Ward 3B';
-        String priority = 'High';
-        String pendingSince = '4h 30m';
+        String pendingAt = rec.recordType;
 
-        if (rec.id == 1 || rec.patientName?.contains("Arjun") == true) {
-          pendingAt = 'IP - Ward 3B';
-          priority = 'High';
-          pendingSince = '4h 30m';
-        } else if (rec.id == 2 || rec.patientName?.contains("Sneha") == true) {
-          pendingAt = 'IP - Room 205';
-          priority = 'Medium';
-          pendingSince = '3h 15m';
-        } else if (rec.id == 3 || rec.patientName?.contains("Vishnu") == true) {
-          pendingAt = 'Surgery';
-          priority = 'High';
-          pendingSince = '2h 05m';
-        } else if (rec.id == 4 || rec.patientName?.contains("Anjali") == true) {
-          pendingAt = 'IP - HDU';
-          priority = 'Medium';
-          pendingSince = '1h 40m';
-        } else if (rec.id == 5 || rec.patientName?.contains("Ramesh") == true) {
-          pendingAt = 'IP - ICU';
-          priority = 'Low';
-          pendingSince = '45m';
+        String priority = 'Medium';
+        if (rec.createdAt != null) {
+          final hoursPending = DateTime.now().difference(rec.createdAt!).inHours;
+          if (hoursPending >= 48) {
+            priority = 'High';
+          } else if (hoursPending >= 24) {
+            priority = 'Medium';
+          } else {
+            priority = 'Low';
+          }
+        }
+
+        String pendingSince = '1h';
+        if (rec.createdAt != null) {
+          final diff = DateTime.now().difference(rec.createdAt!);
+          if (diff.inDays > 0) {
+            pendingSince = '${diff.inDays}d';
+          } else if (diff.inHours > 0) {
+            pendingSince = '${diff.inHours}h ${diff.inMinutes % 60}m';
+          } else {
+            pendingSince = '${diff.inMinutes}m';
+          }
         }
 
         displayModels.add(
@@ -212,13 +210,40 @@ class PendingMrdBloc extends Bloc<PendingMrdEvent, PendingMrdState> {
   }
 
   Map<String, int> _calculateCounts(List<MrdRecordDisplayModel> items) {
+    int discharge = 0;
+    int operative = 0;
+    int signatures = 0;
+    int overdue = 0;
+    int returned = 0;
+    int consultation = 0;
+
+    for (final item in items) {
+      final type = item.record.recordType.toLowerCase();
+      if (type == 'discharge summary') {
+        discharge++;
+      } else if (type == 'operative notes') {
+        operative++;
+      } else if (type == 'digital signature') {
+        signatures++;
+      } else if (type == 'consultation') {
+        consultation++;
+      }
+
+      if (item.priority == 'High') {
+        overdue++;
+      } else if (item.priority == 'Low') {
+        returned++;
+      }
+    }
+
     return {
-      'discharge': 128,
-      'operative': 82,
-      'signatures': 64,
-      'overdue': 37,
-      'returned': 19,
-      'total': 330,
+      'discharge': discharge,
+      'operative': operative,
+      'signatures': signatures,
+      'consultation': consultation,
+      'overdue': overdue,
+      'returned': returned,
+      'total': items.length,
     };
   }
 
@@ -233,18 +258,24 @@ class PendingMrdBloc extends Bloc<PendingMrdEvent, PendingMrdState> {
     return items.where((item) {
       if (category != 'All Pending') {
         final type = item.record.recordType.toLowerCase();
-        if (category == 'Discharge Summary' && !type.contains('discharge'))
+        if (category == 'Discharge Summary' && type != 'discharge summary') {
           return false;
-        if (category == 'Operative Notes' && !type.contains('operative'))
+        }
+        if (category == 'Operative Notes' && type != 'operative notes') {
           return false;
-        if (category == 'Signatures' &&
-            !type.contains('signature') &&
-            !type.contains('digital'))
+        }
+        if (category == 'Signatures' && type != 'digital signature') {
           return false;
-        if (category == 'Overdue' && item.priority.toLowerCase() != 'high')
+        }
+        if (category == 'Consultation' && type != 'consultation') {
           return false;
-        if (category == 'Returned' && item.priority.toLowerCase() != 'low')
+        }
+        if (category == 'Overdue' && item.priority.toLowerCase() != 'high') {
           return false;
+        }
+        if (category == 'Returned' && item.priority.toLowerCase() != 'low') {
+          return false;
+        }
       }
 
       if (query.isNotEmpty) {

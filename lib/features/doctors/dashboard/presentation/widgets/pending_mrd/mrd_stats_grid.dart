@@ -22,12 +22,12 @@ class MrdStatsGrid extends StatelessWidget {
       mainAxisSpacing: 8.h,
       childAspectRatio: 1.15,
       children: [
-        _buildStatCard('Pending Discharge', counts['discharge'] ?? 128, const Color(0xFFE11D48)),
-        _buildStatCard('Pending Operative', counts['operative'] ?? 82, const Color(0xFFF59E0B)),
-        _buildStatCard('Digital Signatures', counts['signatures'] ?? 64, const Color(0xFF8B5CF6)),
-        _buildStatCard('Overdue MRD Files', counts['overdue'] ?? 37, const Color(0xFFEF4444)),
-        _buildStatCard('Returned Correction', counts['returned'] ?? 19, const Color(0xFF3B82F6)),
-        _buildStatCard('Total Pending Records', counts['total'] ?? 330, const Color(0xFF10B981)),
+        _buildStatCard('Pending Discharge', counts['discharge'] ?? 0, AppColors.red),
+        _buildStatCard('Pending Operative', counts['operative'] ?? 0, AppColors.orange),
+        _buildStatCard('Digital Signatures', counts['signatures'] ?? 0, AppColors.purple),
+        _buildStatCard('Overdue MRD Files', counts['overdue'] ?? 0, AppColors.error),
+        _buildStatCard('Returned Correction', counts['returned'] ?? 0, AppColors.info),
+        _buildStatCard('Total Pending Records', counts['total'] ?? 0, AppColors.success),
       ],
     );
   }
@@ -41,7 +41,7 @@ class MrdStatsGrid extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: isDark ? Colors.white10 : Colors.grey[150]!),
+        border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

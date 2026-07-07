@@ -120,7 +120,7 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
                   SizedBox(height: 20.h),
 
                   // 3. Stats Summary Grid Section
-                  state.counts == {}
+                  state.counts.isEmpty
                       ? const CircularProgressIndicator(
                           color: AppColors.primary,
                         )

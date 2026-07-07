@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/features/doctors/dashboard/presentation/models/mrd_record_display_model.dart';
 
 class MrdPatientTable extends StatelessWidget {
@@ -101,13 +102,11 @@ class MrdPatientTable extends StatelessWidget {
               CircleAvatar(
                 radius: 18.r,
                 backgroundColor: isDark ? Colors.white10 : Colors.grey[200],
-                backgroundImage: item.patientPhoto != null
-                    ? NetworkImage(item.patientPhoto!) as ImageProvider
-                    : AssetImage(
-                        item.patientGender.toLowerCase() == 'female'
-                            ? 'assets/images/female_avatar.png'
-                            : 'assets/images/male_avatar.png',
-                      ),
+                backgroundImage: ProfileImageHelper.getAvatarImage(
+                  item.patientPhoto,
+                  'patient',
+                  item.patientGender,
+                ),
               ),
               SizedBox(width: 10.w),
               Expanded(

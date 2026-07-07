@@ -20,6 +20,7 @@ class MrdCategoryChips extends StatelessWidget {
       'Discharge Summary',
       'Operative Notes',
       'Signatures',
+      'Consultation',
       'Overdue',
       'Returned',
     ];
@@ -31,16 +32,22 @@ class MrdCategoryChips extends StatelessWidget {
         children: categories.map((cat) {
           final isSelected = selectedCategory == cat;
           int count = 0;
-          if (cat == 'All Pending') count = counts['total'] ?? 330;
-          if (cat == 'Discharge Summary') count = counts['discharge'] ?? 128;
-          if (cat == 'Operative Notes') count = counts['operative'] ?? 82;
-          if (cat == 'Signatures') count = counts['signatures'] ?? 64;
-          if (cat == 'Overdue') count = counts['overdue'] ?? 37;
-          if (cat == 'Returned') count = counts['returned'] ?? 19;
+          if (cat == 'All Pending') count = counts['total'] ?? 0;
+          if (cat == 'Discharge Summary') count = counts['discharge'] ?? 0;
+          if (cat == 'Operative Notes') count = counts['operative'] ?? 0;
+          if (cat == 'Signatures') count = counts['signatures'] ?? 0;
+          if (cat == 'Consultation') count = counts['consultation'] ?? 0;
+          if (cat == 'Overdue') count = counts['overdue'] ?? 0;
+          if (cat == 'Returned') count = counts['returned'] ?? 0;
 
           return Padding(
             padding: EdgeInsets.only(right: 8.w),
             child: ChoiceChip(
+              avatar: Icon(
+                _getIconForCategory(cat),
+                size: 13.r,
+                color: isSelected ? Colors.white : Colors.grey[600],
+              ),
               label: Text('$cat ($count)'),
               selected: isSelected,
               onSelected: (val) {
@@ -67,5 +74,26 @@ class MrdCategoryChips extends StatelessWidget {
         }).toList(),
       ),
     );
+  }
+
+  IconData _getIconForCategory(String category) {
+    switch (category) {
+      case 'All Pending':
+        return Icons.folder_open;
+      case 'Discharge Summary':
+        return Icons.assignment_turned_in;
+      case 'Operative Notes':
+        return Icons.medical_services;
+      case 'Signatures':
+        return Icons.draw;
+      case 'Consultation':
+        return Icons.chat_bubble_outline;
+      case 'Overdue':
+        return Icons.error_outline;
+      case 'Returned':
+        return Icons.undo;
+      default:
+        return Icons.folder;
+    }
   }
 }
