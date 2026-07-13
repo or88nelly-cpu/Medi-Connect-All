@@ -52,6 +52,20 @@ class SelectSlot extends SpecialityBookingEvent {
   List<Object?> get props => [slot];
 }
 
+class UpdateReason extends SpecialityBookingEvent {
+  final String reason;
+  const UpdateReason({required this.reason});
+  @override
+  List<Object?> get props => [reason];
+}
+
+class UpdatePaymentMethod extends SpecialityBookingEvent {
+  final int index;
+  const UpdatePaymentMethod({required this.index});
+  @override
+  List<Object?> get props => [index];
+}
+
 class ProceedToPayment extends SpecialityBookingEvent {}
 
 class ConfirmPayment extends SpecialityBookingEvent {
@@ -105,6 +119,8 @@ class SpecialityBookingBloc
     on<SelectSlot>(_onSelectSlot);
     on<ProceedToPayment>(_onProceedToPayment);
     on<ConfirmPayment>(_onConfirmPayment);
+    on<UpdateReason>(_onUpdateReason);
+    on<UpdatePaymentMethod>(_onUpdatePaymentMethod);
     on<ResetBooking>(_onResetBooking);
   }
 
@@ -184,6 +200,20 @@ class SpecialityBookingBloc
 
   void _onSelectSlot(SelectSlot event, Emitter<SpecialityBookingState> emit) {
     emit(state.copyWith(selectedSlot: event.slot));
+  }
+
+  void _onUpdateReason(
+    UpdateReason event,
+    Emitter<SpecialityBookingState> emit,
+  ) {
+    emit(state.copyWith(reason: event.reason));
+  }
+
+  void _onUpdatePaymentMethod(
+    UpdatePaymentMethod event,
+    Emitter<SpecialityBookingState> emit,
+  ) {
+    emit(state.copyWith(paymentMethodIndex: event.index));
   }
 
   void _onProceedToPayment(

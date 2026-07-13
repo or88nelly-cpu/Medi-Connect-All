@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:medi_connect/features/patient/booking/domain/repositories/booking_repository.dart';
 import 'package:medi_connect/features/patient/booking/domain/entities/doctor_booking_info.dart';
+import 'package:medi_connect/core/services/app_logger.dart';
 import 'package:uuid/uuid.dart';
 
 class LoadDoctorsBySpecialtyUseCase {
@@ -70,7 +71,7 @@ class GetSlotsUseCase {
         await _repository.saveDoctorAvailability(defaultSchedules);
       } catch (e) {
         // Safe catch if RLS denies inserts for current user
-        print('Skipped database save for doctor_availability: $e');
+        AppLogger.warning('Skipped database save for doctor_availability: $e');
       }
       schedules = defaultSchedules;
     }

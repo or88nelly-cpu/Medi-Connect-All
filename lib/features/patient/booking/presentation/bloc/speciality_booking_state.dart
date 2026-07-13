@@ -11,6 +11,8 @@ class SpecialityBookingState extends Equatable {
   final List<String> bookedSlots;
   final List<String> availableSlots;
   final double consultationFee;
+  final String? reason;
+  final int paymentMethodIndex;
   final String? errorMessage;
 
   const SpecialityBookingState({
@@ -22,6 +24,8 @@ class SpecialityBookingState extends Equatable {
     this.bookedSlots = const [],
     this.availableSlots = const [],
     this.consultationFee = 0.0,
+    this.reason,
+    this.paymentMethodIndex = 0,
     this.errorMessage,
   });
 
@@ -34,6 +38,8 @@ class SpecialityBookingState extends Equatable {
     List<String>? bookedSlots,
     List<String>? availableSlots,
     double? consultationFee,
+    String? reason,
+    int? paymentMethodIndex,
     String? errorMessage,
     bool clearSelectedDoctor = false,
     bool clearSelectedSlot = false,
@@ -54,6 +60,8 @@ class SpecialityBookingState extends Equatable {
       bookedSlots: bookedSlots ?? this.bookedSlots,
       availableSlots: availableSlots ?? this.availableSlots,
       consultationFee: consultationFee ?? this.consultationFee,
+      reason: reason ?? this.reason,
+      paymentMethodIndex: paymentMethodIndex ?? this.paymentMethodIndex,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -68,6 +76,8 @@ class SpecialityBookingState extends Equatable {
     bookedSlots,
     availableSlots,
     consultationFee,
+    reason,
+    paymentMethodIndex,
     errorMessage,
   ];
 }

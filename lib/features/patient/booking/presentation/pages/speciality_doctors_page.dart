@@ -12,6 +12,7 @@ import 'package:medi_connect/features/patient/booking/presentation/bloc/speciali
 import 'package:medi_connect/features/patient/booking/presentation/bloc/speciality_booking_state.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/doctor_shimmer_loader.dart';
 import 'package:medi_connect/features/patient/booking/presentation/pages/doctor_detail_booking_page.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 
 class SpecialityDoctorsPage extends StatelessWidget {
   final SpecialityEntity speciality;
@@ -465,6 +466,9 @@ class SpecialityDoctorsPage extends StatelessWidget {
                     // Book Now Button
                     GestureDetector(
                       onTap: () {
+                        final authState = context.read<AuthBloc>().state;
+                        final user = authState is Authenticated ? authState.user : null;
+                        
                         context.read<SpecialityBookingBloc>().add(
                           SelectDoctor(doctor: docInfo),
                         );
@@ -474,8 +478,9 @@ class SpecialityDoctorsPage extends StatelessWidget {
                             builder: (ctx) => BlocProvider.value(
                               value: context.read<SpecialityBookingBloc>(),
                               child: DoctorDetailBookingPage(
-                                gradientColors: gradientColors,
-                                specialityName: speciality.name,
+                                doc: docInfo,
+                                specialityName: speciality.name, 
+                                user: user,
                               ),
                             ),
                           ),

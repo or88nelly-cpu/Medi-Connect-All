@@ -4,6 +4,7 @@ import 'package:medi_connect/core/constants/app_config.dart';
 import 'package:medi_connect/core/constants/core_config.dart';
 import 'package:medi_connect/core/constants/env_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AppInitializer {
   static Future<void> init() async {
@@ -11,6 +12,9 @@ class AppInitializer {
 
     // Load environment configurations.
     await EnvConfig.initialize();
+
+    // Initialize Google Mobile Ads
+    await MobileAds.instance.initialize();
 
     // Initialize Supabase.
     await Supabase.initialize(
