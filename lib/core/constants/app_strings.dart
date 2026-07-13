@@ -97,8 +97,19 @@ class AppStrings {
   static const invalidEmail = "Enter a valid email address";
   static const invalidPhone = "Enter a valid phone number";
   static const passwordTooShort = "Password must be at least 8 characters";
+  
+  // Standard Errors
   static const genericError = "Something went wrong. Please try again.";
-  static const otpInvalid = "Please enter a valid 6-digit OTP code";
+  static const networkError = "No internet connection. Please check your network.";
+  static const serverError = "Server unavailable. We are experiencing technical difficulties.";
+  static const unauthorizedError = "Unauthorized access or session expired. Please login again.";
+  static const notFoundError = "Data not found. The requested resource does not exist.";
+  static const timeoutError = "Request timed out. Please try again.";
+  static const maintenanceError = "System is currently under maintenance. We will be back shortly.";
+  static const emptyStateTitle = "Nothing here yet";
+  static const emptyStateSubtitle = "Looks like there's no data to display right now.";
+  static const accessDenied = "Access Denied";
+  static const accessDeniedDesc = "You don't have permission to perform this action.";
   static const passwordMismatch = "Passwords do not match";
 
   // Dialog & State Texts

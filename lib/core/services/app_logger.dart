@@ -2,10 +2,12 @@
 /// Handles API, Bloc, Navigation, and Error logging using the `logger` package.
 library;
 
+import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class AppLogger {
   static final Logger _logger = Logger(
+    filter: kReleaseMode ? ProductionFilter() : DevelopmentFilter(), // Suppress verbose logs in release
     printer: PrettyPrinter(
       methodCount: 2,
       errorMethodCount: 8,
@@ -31,8 +33,13 @@ class AppLogger {
   }
 
   /// Log error messages with stack traces (e.g. exceptions, crashes).
-  static void error(String message, [dynamic error, StackTrace? stackTrace]) {
+  static void error(String message, {dynamic error, StackTrace? stackTrace}) {
     _logger.e(message, error: error, stackTrace: stackTrace);
+  }
+
+  /// Log critical system-level failures.
+  static void critical(String message, {dynamic error, StackTrace? stackTrace}) {
+    _logger.f(message, error: error, stackTrace: stackTrace); // 'f' for fatal/critical
   }
 
   /// Specialized API request/response logging.
