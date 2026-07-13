@@ -8,7 +8,8 @@ import 'package:medi_connect/core/theme/app_theme.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
 
 import 'package:medi_connect/bootstrap/app_initializer.dart';
-import 'package:medi_connect/bootstrap/dependency_injection.dart';import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:medi_connect/bootstrap/dependency_injection.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 
 void main() async {
@@ -25,8 +26,7 @@ void main() async {
     },
     appRunner: () => runApp(SentryWidget(child: const MyApp())),
   );
-  // TODO: Remove this line after sending the first sample event to sentry.
-  await Sentry.captureException(Exception('This is a sample exception.'));
+  
 }
 
 class MyApp extends StatefulWidget {

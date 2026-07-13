@@ -7,6 +7,9 @@ import 'package:medi_connect/core/constants/env_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+
 class AppInitializer {
   static Future<void> init() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -14,8 +17,10 @@ class AppInitializer {
     // Load environment configurations.
     await EnvConfig.initialize();
 
-    // Initialize Google Mobile Ads
-    await MobileAds.instance.initialize();
+    // Initialize Google Mobile Ads only on supported platforms
+    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+      await MobileAds.instance.initialize();
+    }
 
     // Initialize Supabase.
     await Supabase.initialize(
