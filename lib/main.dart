@@ -7,8 +7,8 @@ import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/theme/app_theme.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
 
-import 'package:medi_connect/core/services/app_initializer.dart';
-import 'package:medi_connect/core/dependency_injection/app_providers.dart';
+import 'package:medi_connect/bootstrap/app_initializer.dart';
+import 'package:medi_connect/bootstrap/dependency_injection.dart';
 
 void main() async {
   await AppInitializer.init();

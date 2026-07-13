@@ -4,14 +4,14 @@ library;
 
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/modules/patient/booking/data/datasources/booking_remote_datasource.dart';
-import 'package:medi_connect/modules/patient/booking/data/repositories/booking_repository_impl.dart';
-import 'package:medi_connect/modules/patient/booking/domain/repositories/booking_repository.dart';
-import 'package:medi_connect/modules/patient/booking/domain/usecases/booking_usecases.dart';
-import 'package:medi_connect/modules/patient/booking/data/datasources/doctor_image_remote_datasource.dart';
-import 'package:medi_connect/modules/patient/booking/data/repositories/doctor_image_repository_impl.dart';
-import 'package:medi_connect/modules/patient/booking/domain/repositories/doctor_image_repository.dart';
-import 'package:medi_connect/modules/patient/booking/domain/usecases/get_doctor_image_usecase.dart';
+import 'package:medi_connect/features/patient/booking/data/datasources/booking_remote_datasource.dart';
+import 'package:medi_connect/features/patient/booking/data/repositories/booking_repository_impl.dart';
+import 'package:medi_connect/features/patient/booking/domain/repositories/booking_repository.dart';
+import 'package:medi_connect/features/patient/booking/domain/usecases/booking_usecases.dart';
+import 'package:medi_connect/features/patient/booking/data/datasources/doctor_image_remote_datasource.dart';
+import 'package:medi_connect/features/patient/booking/data/repositories/doctor_image_repository_impl.dart';
+import 'package:medi_connect/features/patient/booking/domain/repositories/doctor_image_repository.dart';
+import 'package:medi_connect/features/patient/booking/domain/usecases/get_doctor_image_usecase.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/shared/auth/data/data_source/auth_remote_datasource.dart';
 import 'package:medi_connect/shared/auth/data/repository/auth_repository_impl.dart';
@@ -30,23 +30,23 @@ import 'package:medi_connect/shared/dashboard/domain/repositories/analytics_repo
 import 'package:medi_connect/shared/dashboard/domain/use_cases/admin_analytics_usecases.dart';
 import 'package:medi_connect/shared/dashboard/domain/use_cases/get_analytics_usecase.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_analytics_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/data/datasource/department_remote_datasource.dart';
-import 'package:medi_connect/modules/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
-import 'package:medi_connect/modules/management/staff_management/data/repositories/department_repository_impl.dart';
-import 'package:medi_connect/modules/management/staff_management/data/repositories/doctor_staff_repository_impl.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/repositories/department_repository.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/repositories/doctor_staff_repository.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/use_cases/add_department_usecase.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/use_cases/delete_department_usecase.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/use_cases/get_departments_usecase.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/use_cases/update_department_usecase.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/management/staff_management/data/datasource/department_remote_datasource.dart';
+import 'package:medi_connect/features/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
+import 'package:medi_connect/features/management/staff_management/data/repositories/department_repository_impl.dart';
+import 'package:medi_connect/features/management/staff_management/data/repositories/doctor_staff_repository_impl.dart';
+import 'package:medi_connect/features/management/staff_management/domain/repositories/department_repository.dart';
+import 'package:medi_connect/features/management/staff_management/domain/repositories/doctor_staff_repository.dart';
+import 'package:medi_connect/features/management/staff_management/domain/use_cases/add_department_usecase.dart';
+import 'package:medi_connect/features/management/staff_management/domain/use_cases/delete_department_usecase.dart';
+import 'package:medi_connect/features/management/staff_management/domain/use_cases/get_departments_usecase.dart';
+import 'package:medi_connect/features/management/staff_management/domain/use_cases/update_department_usecase.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/core/constants/departments_config.dart';
-import 'package:medi_connect/modules/management/patient_management/data/datasource/patient_remote_datasource.dart';
-import 'package:medi_connect/modules/management/patient_management/data/repositories/patient_repository_impl.dart';
-import 'package:medi_connect/modules/management/patient_management/domain/repositories/patient_repository.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/management/patient_management/data/datasource/patient_remote_datasource.dart';
+import 'package:medi_connect/features/management/patient_management/data/repositories/patient_repository_impl.dart';
+import 'package:medi_connect/features/management/patient_management/domain/repositories/patient_repository.dart';
+import 'package:medi_connect/features/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/shared/dashboard/data/data_source/admin_operations_remote_datasource.dart';
 import 'package:medi_connect/shared/dashboard/data/repository/admin_operations_repository_impl.dart';
 import 'package:medi_connect/shared/dashboard/domain/repositories/admin_operations_repository.dart';
@@ -62,14 +62,14 @@ import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appo
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 
 // Banners Feature
-import 'package:medi_connect/modules/patient/dashboard/domain/repositories/banner_repository.dart';
-import 'package:medi_connect/modules/patient/dashboard/data/repositories/banner_repository_impl.dart';
-import 'package:medi_connect/modules/patient/dashboard/presentation/bloc/banner_bloc.dart';
+import 'package:medi_connect/features/patient/dashboard/domain/repositories/banner_repository.dart';
+import 'package:medi_connect/features/patient/dashboard/data/repositories/banner_repository_impl.dart';
+import 'package:medi_connect/features/patient/dashboard/presentation/bloc/banner_bloc.dart';
 
 // Specialities Feature
-import 'package:medi_connect/modules/patient/speciality/domain/repositories/speciality_repository.dart';
-import 'package:medi_connect/modules/patient/speciality/data/repositories/speciality_repository_impl.dart';
-import 'package:medi_connect/modules/patient/speciality/presentation/bloc/speciality_bloc.dart';
+import 'package:medi_connect/features/patient/speciality/domain/repositories/speciality_repository.dart';
+import 'package:medi_connect/features/patient/speciality/data/repositories/speciality_repository_impl.dart';
+import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
 
 // UserDetails / Profiles Feature
 import 'package:medi_connect/shared/auth/domain/repositories/user_details_repository.dart';

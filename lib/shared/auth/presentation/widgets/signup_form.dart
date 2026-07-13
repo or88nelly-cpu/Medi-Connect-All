@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/functions/app_responsive.dart';
-import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/functions/validators.dart';
@@ -49,10 +49,10 @@ class _SignUpFormState extends State<SignUpForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // ── Role selection title ──
+        // â”€â”€ Role selection title â”€â”€
         SizedBox(height: 24.h),
 
-        // ── Email field ──
+        // â”€â”€ Email field â”€â”€
         _buildTextField(
           controller: widget.emailController,
           label: 'Email Address',
@@ -62,7 +62,7 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         SizedBox(height: 14.h),
 
-        // ── Phone Number field ──
+        // â”€â”€ Phone Number field â”€â”€
         if (widget.phoneController != null) ...[
           _buildTextField(
             controller: widget.phoneController,
@@ -75,7 +75,7 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: 14.h),
         ],
 
-        // ── Password field ──
+        // â”€â”€ Password field â”€â”€
         _buildTextField(
           controller: widget.passwordController,
           label: 'Password',
@@ -86,23 +86,23 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         SizedBox(height: 22.h),
 
-        // ── Create Account Button ──
+        // â”€â”€ Create Account Button â”€â”€
         _buildCreateAccountButton(),
 
         SizedBox(height: 24.h),
 
-        // ── Login link ──
+        // â”€â”€ Login link â”€â”€
         _buildLoginLink(),
       ],
     );
   }
 
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // ROLE SELECTOR
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   // TEXT FIELD
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Widget _buildTextField({
     required TextEditingController? controller,
     required String label,
@@ -185,9 +185,9 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // CREATE ACCOUNT BUTTON
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Widget _buildCreateAccountButton() {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
@@ -248,9 +248,9 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // LOGIN LINK
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Widget _buildLoginLink() {
     return Center(
       child: GestureDetector(

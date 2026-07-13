@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/functions/validators.dart';
-import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
@@ -34,7 +34,7 @@ class _LoginFormState extends State<LoginForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // ── Title ──
+        // â”€â”€ Title â”€â”€
         Text(
           'Login to your account',
           style: AppTextStyles.headingSmall.copyWith(
@@ -45,7 +45,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
         SizedBox(height: 24.h),
 
-        // ── Email / Mobile Field ──
+        // â”€â”€ Email / Mobile Field â”€â”€
         _buildTextField(
           controller: widget.email,
           hint: 'Email or Mobile Number',
@@ -55,7 +55,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
         SizedBox(height: 14.h),
 
-        // ── Password Field ──
+        // â”€â”€ Password Field â”€â”€
         _buildTextField(
           controller: widget.password,
           hint: 'Password',
@@ -65,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
         ),
         SizedBox(height: 8.h),
 
-        // ── Forgot Password ──
+        // â”€â”€ Forgot Password â”€â”€
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
@@ -87,20 +87,20 @@ class _LoginFormState extends State<LoginForm> {
         ),
         SizedBox(height: 20.h),
 
-        // ── Login Button ──
+        // â”€â”€ Login Button â”€â”€
         _buildLoginButton(),
 
         SizedBox(height: 24.h),
 
-        // ── Sign Up Link ──
+        // â”€â”€ Sign Up Link â”€â”€
         _buildSignUpLink(),
       ],
     );
   }
 
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // TEXT FIELD
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Widget _buildTextField({
     required TextEditingController? controller,
     required String hint,
@@ -177,9 +177,9 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // LOGIN BUTTON
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Widget _buildLoginButton() {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
@@ -241,7 +241,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   // SIGN UP LINK
-  // ──────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Widget _buildSignUpLink() {
     return Center(
       child: GestureDetector(

@@ -7,7 +7,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/complete_consultation/complete_consultation_cubit.dart';
 
@@ -474,7 +474,7 @@ class ReviewStepView extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  '₹${cost.toStringAsFixed(2)}',
+                                  'â‚¹${cost.toStringAsFixed(2)}',
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.success,
@@ -596,7 +596,7 @@ class ReviewStepView extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '₹250.00',
+                              'â‚¹250.00',
                               style: AppTextStyles.bodyMedium.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.orange[700],
@@ -734,21 +734,21 @@ class ReviewStepView extends StatelessWidget {
               const Divider(height: 20),
               _buildBillRow(
                 'Consultation Fee',
-                '₹${consultFee.toStringAsFixed(2)}',
+                'â‚¹${consultFee.toStringAsFixed(2)}',
                 isDark,
                 context,
               ),
               if (medicineCost > 0)
                 _buildBillRow(
                   'Medicine Total',
-                  '₹${medicineCost.toStringAsFixed(2)}',
+                  'â‚¹${medicineCost.toStringAsFixed(2)}',
                   isDark,
                   context,
                 ),
               if (labCost > 0)
                 _buildBillRow(
                   'Lab Test Total',
-                  '₹${labCost.toStringAsFixed(2)}',
+                  'â‚¹${labCost.toStringAsFixed(2)}',
                   isDark,
                   context,
                 ),

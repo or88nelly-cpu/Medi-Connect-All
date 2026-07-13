@@ -13,7 +13,7 @@ import 'package:medi_connect/shared/dashboard/data/models/pharmacy_item_model.da
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_billing_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_pharmacy_bloc.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 
@@ -126,7 +126,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Payment of ₹${amount.toStringAsFixed(2)} confirmed for $patientName',
+          'Payment of â‚¹${amount.toStringAsFixed(2)} confirmed for $patientName',
         ),
         backgroundColor: AppColors.success,
         duration: const Duration(seconds: 3),
@@ -516,7 +516,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   ),
                                   SizedBox(height: 2.h),
                                   Text(
-                                    'Patient: ${apt.patientName} · Dr. $cleanDocName',
+                                    'Patient: ${apt.patientName} Â· Dr. $cleanDocName',
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: isDark
                                           ? Colors.white54

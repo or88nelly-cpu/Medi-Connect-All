@@ -15,7 +15,7 @@ import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/modules/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/management/patient_management/presentation/bloc/patient_bloc.dart';
 
 class AppointmentCard extends StatelessWidget {
   final AppointmentEntity appointment;
@@ -611,7 +611,7 @@ class AppointmentCard extends StatelessWidget {
             _buildInfoRow(
               AppStrings.temperature,
               appointment.fever != null && appointment.fever!.isNotEmpty
-                  ? "${appointment.fever} °F"
+                  ? "${appointment.fever} Â°F"
                   : "N/A",
               isDark,
               context,
@@ -875,7 +875,7 @@ class AppointmentCard extends StatelessWidget {
                             ],
                             _buildInfoRow(
                               AppStrings.medicineTotal,
-                              "₹${medAmount.toStringAsFixed(2)}",
+                              "â‚¹${medAmount.toStringAsFixed(2)}",
                               isDark,
                               context,
                             ),
@@ -913,7 +913,7 @@ class AppointmentCard extends StatelessWidget {
                             ],
                             _buildInfoRow(
                               AppStrings.labTestsTotal,
-                              "₹${labAmount.toStringAsFixed(2)}",
+                              "â‚¹${labAmount.toStringAsFixed(2)}",
                               isDark,
                               context,
                             ),

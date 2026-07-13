@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/modules/management/staff_management/domain/entities/department_entity.dart';
+import 'package:medi_connect/features/management/staff_management/domain/entities/department_entity.dart';
 
 class BookingWizardState {
   final int currentStep;

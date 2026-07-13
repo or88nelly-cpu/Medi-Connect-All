@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 
 // Sub-widgets
 import 'package:medi_connect/shared/dashboard/presentation/widgets/doctor_profile/doctor_profile_header.dart';
@@ -402,7 +402,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                     ),
                   ),
                   subtitle: Text(
-                    "Age: ${p['age']} • ${p['gender']} • Last Visit: ${p['lastVisit']}",
+                    "Age: ${p['age']} â€¢ ${p['gender']} â€¢ Last Visit: ${p['lastVisit']}",
                     style: TextStyle(color: labelColor, fontSize: 11.sp),
                   ),
                   trailing: Container(
@@ -536,7 +536,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                     ),
                   ),
                   subtitle: Text(
-                    "Issued: ${d['issueDate']} • Status: ${d['status']}",
+                    "Issued: ${d['issueDate']} â€¢ Status: ${d['status']}",
                     style: TextStyle(color: labelColor, fontSize: 11.sp),
                   ),
                   trailing: IconButton(

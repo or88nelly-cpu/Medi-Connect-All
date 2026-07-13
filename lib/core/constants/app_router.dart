@@ -1,28 +1,28 @@
 import 'package:go_router/go_router.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:medi_connect/core/routes/app_router.dart';
-import 'package:medi_connect/core/routes/route_guards.dart' show RouteGuards;
-import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/bootstrap/router.dart';
+import 'package:medi_connect/core/navigation/route_guards.dart' show RouteGuards;
+import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_signup_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/splash_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/staff/staff_dashboard_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_add_slot_page.dart';
-import 'package:medi_connect/modules/admin/home/admin_home_page.dart';
-import 'package:medi_connect/modules/management/consultation_management/presentation/pages/patient_registration_record_detail_page.dart';
-import 'package:medi_connect/modules/management/customer_care/presentation/pages/patient_registration_page.dart';
-import 'package:medi_connect/modules/management/customer_care/presentation/pages/patient_search_page.dart';
-import 'package:medi_connect/modules/management/customer_care/presentation/pages/qr_registration_page.dart';
-import 'package:medi_connect/modules/management/staff_management/data/models/department_model.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/department_detail.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/department_list_page.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/doctor_staff_create_page.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/doctor_staff_detail_page.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/doctor_staff_edit_page.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/section_detail.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/section_list_page.dart';
-import 'package:medi_connect/modules/staff/patient/pages/staff_patient_registration.dart';
+import 'package:medi_connect/features/admin/home/admin_home_page.dart';
+import 'package:medi_connect/features/management/consultation_management/presentation/pages/patient_registration_record_detail_page.dart';
+import 'package:medi_connect/features/management/customer_care/presentation/pages/patient_registration_page.dart';
+import 'package:medi_connect/features/management/customer_care/presentation/pages/patient_search_page.dart';
+import 'package:medi_connect/features/management/customer_care/presentation/pages/qr_registration_page.dart';
+import 'package:medi_connect/features/management/staff_management/data/models/department_model.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/department_detail.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/department_list_page.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/doctor_staff_create_page.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/doctor_staff_detail_page.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/doctor_staff_edit_page.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/section_detail.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/section_list_page.dart';
+import 'package:medi_connect/features/staff/patient/pages/staff_patient_registration.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/onboarding_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_audit_logs_page.dart';
@@ -39,15 +39,15 @@ import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_slo
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_attendance_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_staff_page.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/doctor/doctor_dashboard_page.dart';
-import 'package:medi_connect/modules/patient/dashboard/presentation/pages/patient_dashboard_page.dart';
+import 'package:medi_connect/features/patient/dashboard/presentation/pages/patient_dashboard_page.dart';
 
 // Banners & Specialties Feature
-import 'package:medi_connect/modules/patient/speciality/presentation/pages/speciality_list_page.dart';
+import 'package:medi_connect/features/patient/speciality/presentation/pages/speciality_list_page.dart';
 
 // Unified Profile Pages
-import 'package:medi_connect/modules/patient/profile/presentation/pages/patient_detail_screen.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/doctor_detail_screen.dart';
-import 'package:medi_connect/modules/management/staff_management/presentation/pages/employee_detail_screen.dart';
+import 'package:medi_connect/features/patient/profile/presentation/pages/patient_detail_screen.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/doctor_detail_screen.dart';
+import 'package:medi_connect/features/management/staff_management/presentation/pages/employee_detail_screen.dart';
 
 class AppRouterConfig {
   static GoRouter buildRouter() {

@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/services/unique_id_service.dart';
-import 'package:medi_connect/core/routes/route_guards.dart';
+import 'package:medi_connect/core/navigation/route_guards.dart';
 import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
 
