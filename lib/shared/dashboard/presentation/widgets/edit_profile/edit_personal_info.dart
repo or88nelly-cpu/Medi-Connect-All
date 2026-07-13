@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class EditPersonalInfo extends StatefulWidget {
   final TextEditingController nameController;
@@ -81,7 +82,7 @@ class _EditPersonalInfoState extends State<EditPersonalInfo> {
         : Colors.grey.shade50;
 
     final genders = ["Male", "Female", "Other"];
-    final bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+    final bloodGroups = AppConstants.bloodGroups;
 
     return Container(
       padding: EdgeInsets.all(16.r),

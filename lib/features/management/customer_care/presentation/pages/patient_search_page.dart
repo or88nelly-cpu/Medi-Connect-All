@@ -611,8 +611,6 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return CustomScaffold(
       appBarNeeded: true,
       customAppbar: AppBar(

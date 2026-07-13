@@ -7,16 +7,18 @@ class EnvConfig {
   static String _storageUrl =
       'https://ldxsdyvmfayxuaczmtuu.storage.supabase.co/storage/v1/s3';
   static String _storageBucket = 'medi_connect_store';
+  static final String _sentryDsn = '';
 
   static String get apiKey => _apiKey;
   static String get apiUrl => _apiUrl;
   static String get storageUrl => _storageUrl;
   static String get storageBucket => _storageBucket;
+  static String get sentryDsn => _sentryDsn;
 
   /// Loads configuration values. Checks secure storage first, otherwise parses .env and caches them.
   static Future<void> initialize() async {
     const secureStorage = FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      aOptions: AndroidOptions(),
       iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
     );
 

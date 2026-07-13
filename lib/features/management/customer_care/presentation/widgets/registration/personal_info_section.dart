@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/textfields/text_fields.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class PersonalInfoSection extends StatelessWidget {
   final TextEditingController firstNameCtrl;
@@ -284,7 +285,7 @@ class PersonalInfoSection extends StatelessWidget {
                                 'A-',
                                 'B+',
                                 'B-',
-                                'O+',
+                                AppConstants.defaultBloodGroup,
                                 'O-',
                                 'AB+',
                                 'AB-',

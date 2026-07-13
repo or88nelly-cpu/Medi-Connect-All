@@ -6,11 +6,11 @@ import 'package:fpdart/fpdart.dart';
 import 'package:equatable/equatable.dart';
 import 'package:medi_connect/core/models/failure.dart';
 
-abstract class UseCase<Type, Params> {
+abstract class UseCase<T, Params> {
   const UseCase();
 
   /// Executes the core business logic of the use case.
-  Future<Either<Failure, Type>> call(Params params);
+  Future<Either<Failure, T>> call(Params params);
 }
 
 /// Fallback params when a usecase does not require arguments.

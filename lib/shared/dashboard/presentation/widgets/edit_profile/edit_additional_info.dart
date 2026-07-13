@@ -33,7 +33,7 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
     super.initState();
     _charCount = widget.aboutController.text.length;
     widget.aboutController.addListener(() {
-      if (mounted) {
+      if (context.mounted) {
         setState(() {
           _charCount = widget.aboutController.text.length;
         });

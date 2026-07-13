@@ -14,6 +14,7 @@ import 'package:medi_connect/features/management/consultation_management/present
 import 'package:medi_connect/features/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
 import 'package:medi_connect/features/management/consultation_management/presentation/widgets/emrd_list_item_card.dart';
 import 'package:medi_connect/features/departments/emrd/presentation/widgets/emrd_record_details_sheet.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class PatientRegistrationRecordDetailPage extends StatefulWidget {
   final Map<String, dynamic> record;
@@ -342,7 +343,8 @@ class _PatientRegistrationRecordDetailPageState
           final phone = userMap?['phone_number'] ?? 'N/A';
           final dob = userMap?['date_of_birth'] ?? 'N/A';
           final sex = userMap?['gender'] ?? 'Male';
-          final bloodGroup = userMap?['blood_group'] ?? 'O+';
+          final bloodGroup =
+              userMap?['blood_group'] ?? AppConstants.defaultBloodGroup;
           final address =
               userMap?['address'] ??
               RegExp(r'Address:\s*([^\n]+)').firstMatch(notes)?.group(1) ??

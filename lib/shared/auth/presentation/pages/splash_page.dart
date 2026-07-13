@@ -35,7 +35,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   late Animation<double> _bgScale;
   late Animation<double> _logoFade;
   late Animation<double> _logoScale;
-  late Animation<double> _overlaysFade;
+
   late Animation<double> _bottomFade;
 
   @override
@@ -69,13 +69,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       CurvedAnimation(
         parent: _entranceController,
         curve: const Interval(0.0, 0.55, curve: Curves.easeOutBack),
-      ),
-    );
-
-    _overlaysFade = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _entranceController,
-        curve: const Interval(0.35, 0.75, curve: Curves.easeIn),
       ),
     );
 
@@ -117,11 +110,11 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
         await Future.delayed(const Duration(milliseconds: 2800));
         if (state is Authenticated) {
           final role = state.user.role.value.toLowerCase();
-          if (mounted) {
+          if (context.mounted) {
             context.go('/$role/dashboard');
           }
         } else if (state is Unauthenticated) {
-          if (mounted) {
+          if (context.mounted) {
             context.go(RouteNames.onboarding);
           }
         }

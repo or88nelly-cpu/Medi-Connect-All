@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class SectionListHome extends StatelessWidget {
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, authState) {
           final isAdmin =
-              authState is Authenticated && authState.user.role == 'admin';
+              authState is Authenticated &&
+              authState.user.role == UserRole.admin;
           return _sectionListContent(isAdmin: isAdmin);
         },
       ),

@@ -1,15 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class AdminPatientDialogs {
   static String generateUUID() {
@@ -41,7 +47,7 @@ class AdminPatientDialogs {
     final ageController = TextEditingController();
     final phoneController = TextEditingController();
     String gender = 'Male';
-    String blood = 'O+';
+    String blood = AppConstants.defaultBloodGroup;
 
     showDialog(
       context: context,
@@ -95,11 +101,9 @@ class AdminPatientDialogs {
                     SizedBox(width: 8.w),
                     DropdownButton<String>(
                       value: blood,
-                      items: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
-                          .map((b) {
-                            return DropdownMenuItem(value: b, child: Text(b));
-                          })
-                          .toList(),
+                      items: AppConstants.bloodGroups.map((b) {
+                        return DropdownMenuItem(value: b, child: Text(b));
+                      }).toList(),
                       onChanged: (val) {
                         if (val != null) setDialogState(() => blood = val);
                       },
@@ -166,7 +170,7 @@ class AdminPatientDialogs {
     );
     final phoneController = TextEditingController(text: patient.phone ?? '');
     String gender = patient.gender ?? 'Male';
-    String blood = patient.bloodGroup ?? 'O+';
+    String blood = patient.bloodGroup ?? AppConstants.defaultBloodGroup;
 
     showDialog(
       context: context,
@@ -225,18 +229,16 @@ class AdminPatientDialogs {
                             'A-',
                             'B+',
                             'B-',
-                            'O+',
+                            AppConstants.defaultBloodGroup,
                             'O-',
                             'AB+',
                             'AB-',
                           ].contains(blood)
                           ? blood
-                          : 'O+',
-                      items: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
-                          .map((b) {
-                            return DropdownMenuItem(value: b, child: Text(b));
-                          })
-                          .toList(),
+                          : AppConstants.defaultBloodGroup,
+                      items: AppConstants.bloodGroups.map((b) {
+                        return DropdownMenuItem(value: b, child: Text(b));
+                      }).toList(),
                       onChanged: (val) {
                         if (val != null) setDialogState(() => blood = val);
                       },
@@ -297,7 +299,7 @@ class AdminPatientDialogs {
     );
   }
 
-  void _confirmDeletePatient(BuildContext context, UserModel patient) {
+  static void confirmDeletePatient(BuildContext context, UserModel patient) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -445,7 +447,7 @@ class AdminPatientDialogs {
                       ),
                       onPressed: () {
                         Navigator.pop(ctx);
-                        _showEditPatientDialog(context, patient);
+                        showEditPatientDialog(context, patient);
                       },
                     ),
                   ],
@@ -829,7 +831,7 @@ class AdminPatientDialogs {
     );
   }
 
-  Widget _buildDetailRow(
+  static Widget _buildDetailRow(
     String label,
     String value,
     Color labelColor,
@@ -857,7 +859,7 @@ class AdminPatientDialogs {
     );
   }
 
-  Widget _buildVitalBadge(
+  static Widget _buildVitalBadge(
     String label,
     String value,
     IconData icon,
@@ -900,7 +902,7 @@ class AdminPatientDialogs {
     );
   }
 
-  Widget _buildCustomVitalsDisplay(
+  static Widget _buildCustomVitalsDisplay(
     String jsonStr,
     bool isDark,
     Color borderColor,
@@ -1284,6 +1286,53 @@ class AdminPatientDialogs {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  static Widget _buildStatusPill(String status) {
+    Color dotColor = AppColors.success;
+    Color bgPillColor = AppColors.success.withValues(alpha: 0.1);
+    String label = "Active";
+
+    if (status.toLowerCase().contains("away")) {
+      dotColor = AppColors.accent;
+      bgPillColor = AppColors.accent.withValues(alpha: 0.1);
+      label = "Away";
+    } else if (status.toLowerCase().contains("inactive")) {
+      dotColor = AppColors.error;
+      bgPillColor = AppColors.error.withValues(alpha: 0.1);
+      label = "Inactive";
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: bgPillColor,
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: dotColor.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6.w,
+            height: 6.w,
+            decoration: BoxDecoration(
+              color: dotColor,
+              shape: BoxShape.circle,
+            ),
+          ),
+          SizedBox(width: 4.w),
+          Text(
+            label,
+            style: TextStyle(
+              color: dotColor,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }

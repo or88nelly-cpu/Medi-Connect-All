@@ -34,14 +34,8 @@ class ConfirmStep extends StatelessWidget {
     final formattedDate = DateFormat(
       'EEEE, dd MMM yyyy',
     ).format(state.selectedDate);
-    final patientName =
-        state.selectedPatient!.fullName ??
-        '${state.selectedPatient!.firstName} ${state.selectedPatient!.lastName}'
-            .trim();
-    final doctorName =
-        state.selectedDoctor!.fullName ??
-        '${state.selectedDoctor!.firstName} ${state.selectedDoctor!.lastName}'
-            .trim();
+    final patientName = state.selectedPatient!.fullName;
+    final doctorName = state.selectedDoctor!.fullName;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

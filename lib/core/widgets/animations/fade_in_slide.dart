@@ -39,7 +39,7 @@ class _FadeInSlideState extends State<FadeInSlide>
       _controller.forward();
     } else {
       Future.delayed(widget.delay, () {
-        if (mounted) _controller.forward();
+        if (context.mounted) _controller.forward();
       });
     }
   }

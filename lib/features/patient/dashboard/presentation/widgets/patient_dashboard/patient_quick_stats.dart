@@ -17,7 +17,7 @@ class PatientQuickStats extends StatelessWidget {
         int presCount = 5;
 
         if (state is Authenticated) {
-          final user = state.user;
+          //  final user = state.user;
           final apts = null;
           if (apts != null) aptCount = apts.length;
 

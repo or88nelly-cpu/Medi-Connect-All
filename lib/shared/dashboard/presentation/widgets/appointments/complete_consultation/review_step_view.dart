@@ -10,6 +10,7 @@ import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/appointments/complete_consultation/complete_consultation_cubit.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class ReviewStepView extends StatelessWidget {
   final AppointmentEntity appointment;
@@ -77,7 +78,7 @@ class ReviewStepView extends StatelessWidget {
     final age = AppDateUtils.calculateAge(patient?.dob);
     final gender = patient?.gender ?? 'Female';
     final phone = patient?.phone ?? '+91 98765 43210';
-    final bloodGroup = patient?.bloodGroup ?? 'O+';
+    final bloodGroup = patient?.bloodGroup ?? AppConstants.defaultBloodGroup;
     final patientImg = ProfileImageHelper.resolveImagePath(
       patient?.profilePhoto,
       'patient',

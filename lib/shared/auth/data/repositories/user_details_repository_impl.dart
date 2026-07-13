@@ -57,7 +57,7 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
           employeeModel = EmployeeModel.fromJson(employeeResponse);
         }
 
-        if (role == 'doctor') {
+        if (role == UserRole.doctor.name) {
           final doctorResponse = await _supabase
               .from(AppTableNames.doctors)
               .select()

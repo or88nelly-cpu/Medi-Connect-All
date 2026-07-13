@@ -325,23 +325,23 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
     }
   }
 
-  String _shortDate(DateTime d) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${months[d.month - 1]} ${d.day}, ${d.year}';
-  }
+  // String _shortDate(DateTime d) {
+  //   const months = [
+  //     'Jan',
+  //     'Feb',
+  //     'Mar',
+  //     'Apr',
+  //     'May',
+  //     'Jun',
+  //     'Jul',
+  //     'Aug',
+  //     'Sep',
+  //     'Oct',
+  //     'Nov',
+  //     'Dec',
+  //   ];
+  //   return '${months[d.month - 1]} ${d.day}, ${d.year}';
+  // }
 
   @override
   Widget build(BuildContext context) {

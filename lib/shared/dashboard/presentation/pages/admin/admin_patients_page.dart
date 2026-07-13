@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/core/functions/profile_image_helper.dart';
-import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/management/patient_management/presentation/bloc/patient_bloc.dart';
-import 'dart:math';
-import 'dart:convert';
-import 'package:intl/intl.dart';
-import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 
 // Extracted sub-widgets
 import 'package:medi_connect/shared/dashboard/presentation/widgets/common/directory_pagination.dart';
@@ -22,6 +13,7 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_patient
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_patients/patient_filter_sort_row.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_patients/patient_card.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_patients/admin_patient_dialogs.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class AdminPatientsPage extends StatefulWidget {
   const AdminPatientsPage({super.key});
@@ -70,7 +62,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
       'A-',
       'B+',
       'B-',
-      'O+',
+      AppConstants.defaultBloodGroup,
       'O-',
       'AB+',
       'AB-',
@@ -178,17 +170,17 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                             p,
                                           ) {
                                             final matchesSearch =
-                                                (p.fullName ?? '')
+                                                (p.fullName)
                                                     .toLowerCase()
                                                     .contains(
                                                       searchQuery.toLowerCase(),
                                                     ) ||
-                                                (p.phone ?? '').contains(
+                                                (p.phone ?? "").contains(
                                                   searchQuery,
                                                 );
                                             final matchesBlood =
                                                 selectedBlood == 'All' ||
-                                                (p.bloodGroup ?? '')
+                                                (p.bloodGroup ?? "")
                                                         .toLowerCase() ==
                                                     selectedBlood.toLowerCase();
                                             final matchesStatus =
@@ -203,13 +195,15 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                           // 2. Sort
                                           if (sortBy == 'Name (A-Z)') {
                                             filtered.sort(
-                                              (a, b) => (a.fullName ?? '')
-                                                  .compareTo(b.fullName ?? ''),
+                                              (a, b) => (a.fullName).compareTo(
+                                                b.fullName,
+                                              ),
                                             );
                                           } else if (sortBy == 'Name (Z-A)') {
                                             filtered.sort(
-                                              (a, b) => (b.fullName ?? '')
-                                                  .compareTo(a.fullName ?? ''),
+                                              (a, b) => (b.fullName).compareTo(
+                                                a.fullName,
+                                              ),
                                             );
                                           }
 
@@ -271,7 +265,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                                             );
                                                           },
                                                           onDelete: () {
-                                                            _confirmDeletePatient(
+                                                            AdminPatientDialogs.confirmDeletePatient(
                                                               context,
                                                               patient,
                                                             );

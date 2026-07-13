@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 enum PatientRegistrationStatus { initial, loading, success, failure }
 
@@ -66,7 +67,7 @@ class PatientRegistrationState extends Equatable {
     this.pincodeFetchedAddress = '',
     this.isFetchingAddress = false,
     this.genderIdentity = 'Cisgender Male',
-    this.bloodGroup = 'O+',
+    this.bloodGroup = AppConstants.defaultBloodGroup,
     this.smoking = 'No',
     this.alcohol = 'Occasionally',
     this.dietType = 'Non Vegetarian',

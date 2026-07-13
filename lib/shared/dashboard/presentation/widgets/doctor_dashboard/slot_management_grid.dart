@@ -70,7 +70,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
           .eq('appointment_date', dateStr);
 
       final list = response as List<dynamic>? ?? [];
-      if (mounted) {
+      if (context.mounted) {
         setState(() {
           _appointments = list
               .map((e) => AppointmentModel.fromJson(e as Map<String, dynamic>))
@@ -79,7 +79,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
         });
       }
     } catch (e) {
-      if (mounted) {
+      if (context.mounted) {
         setState(() => _isLoading = false);
         ScaffoldMessenger.of(
           context,
@@ -118,7 +118,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
       }
       await _loadSlots();
     } catch (e) {
-      if (mounted) {
+      if (context.mounted) {
         setState(() => _isLoading = false);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error updating slot availability: $e')),

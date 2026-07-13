@@ -75,7 +75,7 @@ class PatientCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      patient.fullName ?? 'Unnamed Patient',
+                      patient.fullName,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: textColor,
@@ -95,7 +95,7 @@ class PatientCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           child: Text(
-                            patient.id ?? 'PAT-N/A',
+                            patient.id ,
                             style: TextStyle(
                               color: AppColors.primary,
                               fontSize: 10.sp,

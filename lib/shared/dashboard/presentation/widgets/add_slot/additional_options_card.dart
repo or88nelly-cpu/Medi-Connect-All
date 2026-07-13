@@ -145,7 +145,7 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
               ),
               Switch.adaptive(
                 value: _isRecurring,
-                activeColor: AppColors.primary,
+                activeTrackColor: AppColors.primary,
                 onChanged: (val) {
                   setState(() {
                     _isRecurring = val;

@@ -13,7 +13,7 @@ class StaffOperationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = AppColors.isDark(context);
+    
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {

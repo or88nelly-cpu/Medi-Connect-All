@@ -139,7 +139,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
           ),
         ),
         title: Text(
-          doc.fullName ?? 'Dr. Specialist',
+          doc.fullName,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
             color: isDark ? AppColors.surface : AppColors.textPrimary(context),

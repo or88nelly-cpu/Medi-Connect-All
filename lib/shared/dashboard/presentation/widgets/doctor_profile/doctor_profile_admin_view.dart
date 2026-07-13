@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_event.dart';

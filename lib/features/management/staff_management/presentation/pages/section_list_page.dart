@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,7 +44,8 @@ class SectionListPage extends StatelessWidget {
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, authState) {
           final isAdmin =
-              authState is Authenticated && authState.user.role == 'admin';
+              authState is Authenticated &&
+              authState.user.role == UserRole.admin;
           return _SectionListContent(isAdmin: isAdmin);
         },
       ),

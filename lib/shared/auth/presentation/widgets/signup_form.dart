@@ -327,11 +327,3 @@ class _AnimatedButtonIconState extends State<AnimatedButtonIcon>
     );
   }
 }
-
-class _RoleData {
-  final String key;
-  final String label;
-  final String subtitle;
-  final IconData icon;
-  const _RoleData(this.key, this.label, this.subtitle, this.icon);
-}

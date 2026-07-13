@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 
 class ProfileImageHelper {
   static String resolveImagePath(
@@ -12,15 +13,15 @@ class ProfileImageHelper {
     }
 
     final isFemale = gender?.toLowerCase() == 'female';
-    if (role == 'doctor') {
+    if (role == UserRole.doctor.name) {
       return isFemale
           ? AppAssets.femaleDoctorAvatarPng
           : AppAssets.maleDoctorAvatarPng;
-    } else if (role == 'staff') {
+    } else if (role == UserRole.staff.name) {
       return isFemale
           ? AppAssets.femaleStaffAvatarPng
           : AppAssets.maleStaffAvatarPng;
-    } else if (role == 'admin') {
+    } else if (role == UserRole.admin.name) {
       return isFemale
           ? AppAssets.femaleAdminAvatarPng
           : AppAssets.maleAdminAvatarPng;

@@ -4,11 +4,11 @@ class AppTableNames {
   static const String banners = "banners";
   static const String specialities = "specialities";
 
-  static const String PgForeignDataWrappers = "_pg_foreign_data_wrappers";
-  static const String PgForeignServers = "_pg_foreign_servers";
-  static const String PgForeignTableColumns = "_pg_foreign_table_columns";
-  static const String PgForeignTables = "_pg_foreign_tables";
-  static const String PgUserMappings = "_pg_user_mappings";
+  static const String pgForeignDataWrappers = "_pg_foreign_data_wrappers";
+  static const String pgForeignServers = "_pg_foreign_servers";
+  static const String pgForeignTableColumns = "_pg_foreign_table_columns";
+  static const String pgForeignTables = "_pg_foreign_tables";
+  static const String pgUserMappings = "_pg_user_mappings";
   static const String activityLogs = "activity_logs";
   static const String adminSettings = "admin_settings";
   static const String administrableRoleAuthorizations =
@@ -358,7 +358,6 @@ class AppTableNames {
   static const String pgType = "pg_type";
   static const String pgUser = "pg_user";
   static const String pgUserMapping = "pg_user_mapping";
-  static const String pgUserMappings = "pg_user_mappings";
   static const String pgViews = "pg_views";
   static const String pgWaitEvents = "pg_wait_events";
   static const String pharmacyInventory = "pharmacy_inventory";

@@ -26,6 +26,7 @@ import 'package:medi_connect/features/staff/patient/widgets/basic_info_step.dart
 import 'package:medi_connect/features/staff/patient/widgets/additional_info_step.dart';
 import 'package:medi_connect/features/staff/patient/widgets/review_confirm_step.dart';
 import 'package:medi_connect/features/staff/patient/widgets/success_step.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 /// Multi-step patient registration / self-onboarding wizard.
 ///
@@ -204,7 +205,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
             : '',
         address: '', // address not in new model
         sex: user.gender ?? 'Male',
-        bloodGroup: user.bloodGroup ?? 'O+',
+        bloodGroup: user.bloodGroup ?? AppConstants.defaultBloodGroup,
         insuranceProvider: 'Star Health Insurance', // not in new model
         insurancePolicyId: '', // not in new model
         allergies: '', // not in new model

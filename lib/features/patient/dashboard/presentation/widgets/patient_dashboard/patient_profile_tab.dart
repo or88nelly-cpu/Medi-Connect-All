@@ -9,6 +9,7 @@ import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/widgets/dialogs/dialogs.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class PatientProfileTab extends StatelessWidget {
   const PatientProfileTab({super.key});
@@ -21,7 +22,7 @@ class PatientProfileTab extends StatelessWidget {
         String email = "patient@mediconnect.com";
         String? phone = "+91 98765 43210";
         String? profileImage;
-        String bloodGroup = "O+";
+        String bloodGroup = AppConstants.defaultBloodGroup;
         String allergies = "Penicillin";
 
         if (state is Authenticated) {
@@ -30,7 +31,7 @@ class PatientProfileTab extends StatelessWidget {
           email = user.email ?? "";
           phone = user.phone;
           profileImage = user.profilePhoto;
-          bloodGroup = user.bloodGroup ?? 'O+';
+          bloodGroup = user.bloodGroup ?? AppConstants.defaultBloodGroup;
           allergies = 'No Known Allergies';
         }
 

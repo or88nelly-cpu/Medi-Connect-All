@@ -79,17 +79,19 @@ class _HealthPageState extends State<HealthPage> {
   Future<void> _save() async {
     setState(() => _isSaving = true);
     await Future.delayed(const Duration(milliseconds: 500));
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Health data saved successfully (local mock)!'),
-          backgroundColor: const Color(0xFF22C55E),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.r),
+    if (context.mounted) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Health data saved successfully (local mock)!'),
+            backgroundColor: const Color(0xFF22C55E),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.r),
+            ),
           ),
-        ),
-      );
+        );
+      }
       setState(() => _isSaving = false);
     }
   }

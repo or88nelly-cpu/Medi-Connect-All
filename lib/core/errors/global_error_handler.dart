@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:medi_connect/core/services/app_logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// Centralized global error handler for catching and logging unhandled exceptions.
 class GlobalErrorHandler {
@@ -12,6 +13,7 @@ class GlobalErrorHandler {
         error: details.exception,
         stackTrace: details.stack,
       );
+      Sentry.captureException(details.exception, stackTrace: details.stack);
     };
 
     // Catch asynchronous Dart errors
@@ -21,6 +23,7 @@ class GlobalErrorHandler {
         error: error,
         stackTrace: stack,
       );
+      Sentry.captureException(error, stackTrace: stack);
       return true; // Prevent default crash behavior
     };
 

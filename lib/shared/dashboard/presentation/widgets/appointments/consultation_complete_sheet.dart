@@ -235,6 +235,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
       await supabase.from('emr_records').insert(emrRecordData);
       savedToSupabase = true;
 
+      if (!context.mounted) return;
       // Deduct stock
       final pharmacyState = context.read<AdminPharmacyBloc>().state;
       if (pharmacyState is AdminPharmacyLoaded) {

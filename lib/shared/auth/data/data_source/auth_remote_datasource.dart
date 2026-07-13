@@ -368,19 +368,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           'id': id,
           'patient_id': 'CCH25-$randomNum',
         });
-      } else if (role == 'doctor') {
+      } else if (role == UserRole.doctor.name) {
         final randomNum = (Random().nextInt(9000) + 1000).toString();
         await _supabaseService.client.from('doctors').insert({
           'id': id,
           'medical_registration_number': 'REG-$randomNum',
         });
-      } else if (role == 'staff') {
+      } else if (role == UserRole.staff.name) {
         final randomNum = (Random().nextInt(9000) + 1000).toString();
         await _supabaseService.client.from('employees').insert({
           'id': id,
           'employee_id': 'EMP-$randomNum',
         });
-      } else if (role == 'admin') {
+      } else if (role == UserRole.admin.name) {
         await _supabaseService.client.from('admins').insert({
           'id': id,
           'access_level': 'Super Admin',

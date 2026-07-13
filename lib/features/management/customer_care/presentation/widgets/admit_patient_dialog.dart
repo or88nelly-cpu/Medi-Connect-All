@@ -9,6 +9,7 @@ import 'package:medi_connect/features/management/patient_management/presentation
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class AdmitPatientDialog extends StatefulWidget {
   const AdmitPatientDialog({super.key});
@@ -127,7 +128,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                             );
                           } else if (state is PatientLoaded) {
                             final patients = state.patients
-                                .where((p) => p.role == 'patient')
+                                .where((p) => p.role == UserRole.patient)
                                 .toList();
 
                             return Autocomplete<UserModel>(
@@ -232,7 +233,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                               SizedBox(width: 6.w),
                               Expanded(
                                 child: Text(
-                                  "Selected: ${_selectedPatient!.fullName} | Blood: ${_selectedPatient!.bloodGroup ?? 'O+'}",
+                                  "Selected: ${_selectedPatient!.fullName} | Blood: ${_selectedPatient!.bloodGroup ?? AppConstants.defaultBloodGroup}",
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600,
@@ -365,7 +366,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                           List<UserModel> doctors = [];
                           if (state is DoctorStaffLoaded) {
                             doctors = state.doctors
-                                .where((u) => u.role == 'doctor')
+                                .where((u) => u.role == UserRole.doctor)
                                 .toList();
                           }
 

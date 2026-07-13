@@ -35,7 +35,7 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
       size: widget.adSize,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          if (mounted) {
+          if (context.mounted) {
             setState(() {
               _isLoaded = true;
             });

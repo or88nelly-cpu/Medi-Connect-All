@@ -69,7 +69,7 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDoctor = widget.role == 'doctor';
+    final isDoctor = widget.role == UserRole.doctor.name;
 
     return CustomScaffold(
       customAppbar: CommonAppBar(title: "Add New ${widget.role.toUpperCase()}"),

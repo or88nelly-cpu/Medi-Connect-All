@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/core/widgets/dialogs/dialogs.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/management/staff_management/data/models/department_model.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
@@ -85,32 +84,13 @@ class _SectionDetailState extends State<SectionDetail>
     super.dispose();
   }
 
-  void _confirmDelete(BuildContext context, UserModel user) {
-    showDialog(
-      context: context,
-      builder: (ctx) => ConfirmationDialog(
-        title: "Delete Profile",
-        message:
-            "Are you sure you want to delete ${user.fullName}? This action cannot be undone.",
-        onConfirm: () {
-          context.read<DoctorStaffBloc>().add(
-            DeleteDoctorStaffMember(
-              userId: user.id,
-              departmentName: widget.section.name,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bgColor = isDark
         ? AppColors.terminalDarkBg
         : AppColors.terminalLightBg;
-    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
+    // final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;

@@ -4,6 +4,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class DoctorInfoCard extends StatelessWidget {
   final UserModel user;
@@ -34,7 +35,7 @@ class DoctorInfoCard extends StatelessWidget {
     final ageStrVal = AppDateUtils.calculateAge(user.dob);
     final ageStr = ageStrVal != null ? " ($ageStrVal)" : " (39 Y)";
     final gender = user.gender ?? "Male";
-    final bloodGroup = user.bloodGroup ?? "O+";
+    final bloodGroup = user.bloodGroup ?? AppConstants.defaultBloodGroup;
     final phone = user.phone ?? "+91 98765 43210";
     final address = "New Delhi, India";
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:medi_connect/core/constants/app_config.dart';
 import 'package:medi_connect/core/constants/core_config.dart';
 import 'package:medi_connect/core/constants/env_config.dart';
@@ -19,9 +20,14 @@ class AppInitializer {
     // Initialize Supabase.
     await Supabase.initialize(
       url: EnvConfig.apiUrl,
-      //   anonKey: EnvConfig.apiKey,
       publishableKey: EnvConfig.apiKey,
     );
+
+    // Initialize Sentry
+    await SentryFlutter.init((options) {
+      options.dsn = EnvConfig.sentryDsn; // Ensure this is added to EnvConfig
+      options.tracesSampleRate = 1.0;
+    });
 
     final sl = GetIt.instance;
 

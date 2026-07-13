@@ -8,11 +8,25 @@ import 'package:medi_connect/core/theme/app_theme.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
 
 import 'package:medi_connect/bootstrap/app_initializer.dart';
-import 'package:medi_connect/bootstrap/dependency_injection.dart';
+import 'package:medi_connect/bootstrap/dependency_injection.dart';import 'package:sentry_flutter/sentry_flutter.dart';
+
 
 void main() async {
   await AppInitializer.init();
-  runApp(const MyApp());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = 'https://82ef6c388c737bf706ad27b2681400df@o4511729566810112.ingest.de.sentry.io/4511729574215760';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+      // The sampling rate for profiling is relative to tracesSampleRate
+      // Setting to 1.0 will profile 100% of sampled transactions:
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(SentryWidget(child: const MyApp())),
+  );
+  // TODO: Remove this line after sending the first sample event to sentry.
+  await Sentry.captureException(Exception('This is a sample exception.'));
 }
 
 class MyApp extends StatefulWidget {

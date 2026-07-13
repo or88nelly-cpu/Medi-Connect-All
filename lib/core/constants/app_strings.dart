@@ -42,7 +42,7 @@ class AppStrings {
   static const consultations = "Consultations";
   static const medicalRecords = "Medical Records";
   static const dietPlans = "Diet Plans";
-  static const exercise_plans = "Exercise Plans";
+  static const exercisePlans = "Exercise Plans";
   static const notifications = "Notifications";
   static const profile = "Profile";
   static const payments = "Payments";

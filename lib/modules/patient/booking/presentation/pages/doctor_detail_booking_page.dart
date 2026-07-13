@@ -34,17 +34,6 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
   List<DateTime> get _nextSevenDays =>
       List.generate(7, (i) => DateTime.now().add(Duration(days: i)));
 
-  List<String> get _standardSlots => const [
-    '09:00 AM',
-    '09:30 AM',
-    '10:00 AM',
-    '10:30 AM',
-    '11:00 AM',
-    '11:30 AM',
-    '12:00 PM',
-    '12:30 PM',
-  ];
-
   @override
   void dispose() {
     _reasonCtrl.dispose();

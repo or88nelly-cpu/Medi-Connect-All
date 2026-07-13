@@ -77,36 +77,40 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
         'date': dateStr,
       });
 
-      if (mounted) {
+      if (context.mounted) {
         Navigator.of(context).pop();
         widget.onAttendanceMarked();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                const Icon(
-                  Icons.check_circle_rounded,
-                  color: AppColors.surface,
-                ),
-                SizedBox(width: 8.w),
-                const Text("Attendance marked successfully!"),
-              ],
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Row(
+                children: [
+                  const Icon(
+                    Icons.check_circle_rounded,
+                    color: AppColors.surface,
+                  ),
+                  SizedBox(width: 8.w),
+                  const Text("Attendance marked successfully!"),
+                ],
+              ),
+              backgroundColor: AppColors.success,
             ),
-            backgroundColor: AppColors.success,
-          ),
-        );
+          );
+        }
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Failed to mark attendance: $e"),
-            backgroundColor: AppColors.error,
-          ),
-        );
+      if (context.mounted) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Failed to mark attendance: $e"),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
       }
     } finally {
-      if (mounted) {
+      if (context.mounted) {
         setState(() {
           _isSubmitting = false;
         });

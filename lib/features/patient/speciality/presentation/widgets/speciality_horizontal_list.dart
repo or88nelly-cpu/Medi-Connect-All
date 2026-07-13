@@ -135,29 +135,4 @@ class SpecialityHorizontalList extends StatelessWidget {
       ],
     );
   }
-
-  IconData _getIconData(String? iconName) {
-    if (iconName == null) return Icons.local_hospital_outlined;
-    switch (iconName.toLowerCase()) {
-      case 'cardiology':
-      case 'heart':
-        return Icons.favorite_border;
-      case 'neurology':
-      case 'brain':
-        return Icons.psychology_outlined;
-      case 'pediatrics':
-      case 'child':
-        return Icons.child_care;
-      case 'orthopedics':
-      case 'bone':
-        return Icons.accessibility_new;
-      case 'dermatology':
-      case 'skin':
-        return Icons.clean_hands_outlined;
-      case 'surgery':
-        return Icons.medical_services_outlined;
-      default:
-        return Icons.local_hospital_outlined;
-    }
-  }
 }

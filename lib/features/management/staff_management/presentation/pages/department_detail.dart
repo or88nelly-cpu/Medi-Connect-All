@@ -82,7 +82,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
             extra: {'role': 'staff', 'department': widget.department.name},
           );
           if (res == true) {
-            if (mounted) {
+            if (context.mounted) {
               context.read<DoctorStaffBloc>().add(
                 LoadDoctorStaff(widget.department.name),
               );
@@ -210,10 +210,10 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
 
                     final filtered = staff.where((stf) {
                       final matchesSearch =
-                          (stf.fullName ?? '').toLowerCase().contains(
+                          (stf.fullName).toLowerCase().contains(
                             _searchQuery.toLowerCase(),
                           ) ||
-                          (stf.role.value ?? '').toLowerCase().contains(
+                          (stf.role.value).toLowerCase().contains(
                             _searchQuery.toLowerCase(),
                           );
                       return matchesSearch;
@@ -290,7 +290,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                                       extra: stf,
                                     );
                                     if (res == true) {
-                                      if (mounted) {
+                                      if (context.mounted) {
                                         context.read<DoctorStaffBloc>().add(
                                           LoadDoctorStaff(
                                             widget.department.name,

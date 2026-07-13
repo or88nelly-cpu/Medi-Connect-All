@@ -58,7 +58,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
       extra: {'role': 'staff', 'department': 'Human Resource'},
     );
     if (res == true) {
-      if (mounted) {
+      if (context.mounted) {
         context.read<DoctorStaffBloc>().add(
           const LoadDoctorStaff('Human Resource'),
         );
@@ -72,7 +72,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
       builder: (ctx) => ConfirmationDialog(
         title: "Delete Profile",
         message:
-            "Are you sure you want to delete ${user.fullName ?? 'this user'}? This action cannot be undone.",
+            "Are you sure you want to delete ${user.fullName}? This action cannot be undone.",
         onConfirm: () {
           context.read<DoctorStaffBloc>().add(
             DeleteDoctorStaffMember(
@@ -521,9 +521,9 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                   builder: (context, sortBy, _) {
                     // Filter staff
                     final filtered = sourceList.where((u) {
-                      final nameMatch = (u.fullName ?? '')
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase());
+                      final nameMatch = (u.fullName).toLowerCase().contains(
+                        searchQuery.toLowerCase(),
+                      );
                       final roleMatch = u.role.name.toLowerCase().contains(
                         searchQuery.toLowerCase(),
                       );

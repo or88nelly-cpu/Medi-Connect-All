@@ -5,6 +5,7 @@ import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/management/patient_management/domain/repositories/patient_repository.dart';
 import 'package:medi_connect/features/management/customer_care/presentation/bloc/patient_registration_event.dart';
 import 'package:medi_connect/features/management/customer_care/presentation/bloc/patient_registration_state.dart';
+import 'package:medi_connect/core/constants/app_constants.dart';
 
 class PatientRegistrationBloc
     extends Bloc<PatientRegistrationEvent, PatientRegistrationState> {
@@ -136,7 +137,9 @@ class PatientRegistrationBloc
         pincodeFetchedAddress: event.address,
         place: event.address,
         sex: event.sex.isNotEmpty ? event.sex : 'Male',
-        bloodGroup: event.bloodGroup.isNotEmpty ? event.bloodGroup : 'O+',
+        bloodGroup: event.bloodGroup.isNotEmpty
+            ? event.bloodGroup
+            : AppConstants.defaultBloodGroup,
         insuranceProvider: event.insuranceProvider.isNotEmpty
             ? event.insuranceProvider
             : 'Star Health Insurance',
