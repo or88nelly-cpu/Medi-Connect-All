@@ -52,7 +52,7 @@ class PatientServiceItem extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(12.r),
               ),
-              child: Icon(icon, color: Colors.white, size: 20.r),
+              child: Icon(icon, color: AppColors.surface, size: 20.r),
             ),
             SizedBox(height: 8.h),
 

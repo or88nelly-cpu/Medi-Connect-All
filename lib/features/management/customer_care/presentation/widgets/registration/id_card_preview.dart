@@ -44,7 +44,7 @@ class IdCardPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF09121F) : AppColors.surface;
     final borderColor = isDark
         ? const Color(0xFF16253B)
         : const Color(0xFFD3E0EE);
@@ -82,7 +82,7 @@ class IdCardPreview extends StatelessWidget {
                 "ID Card Preview",
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                  color: isDark ? AppColors.surface : const Color(0xFF0F2C59),
                 ),
               ),
             ],
@@ -139,7 +139,7 @@ class IdCardPreview extends StatelessWidget {
     final bgInactive = isDark
         ? const Color(0xFF0D182A)
         : const Color(0xFFEDF2F7);
-    final textActive = Colors.white;
+    final textActive = AppColors.surface;
     final textInactive = isDark
         ? const Color(0xFF5E98C7)
         : const Color(0xFF3F6D94);
@@ -237,7 +237,7 @@ class IdCardPreview extends StatelessWidget {
                           ),
                           child: Icon(
                             Icons.local_hospital_rounded,
-                            color: Colors.white,
+                            color: AppColors.surface,
                             size: 14.r,
                           ),
                         ),
@@ -249,7 +249,7 @@ class IdCardPreview extends StatelessWidget {
                               "City Care",
                               style: AppTextStyles.titleMedium.copyWith(
                                 color: isDark
-                                    ? Colors.white
+                                    ? AppColors.surface
                                     : const Color(0xFF0F2C59),
                                 fontWeight: FontWeight.bold,
                                 height: 1.1,
@@ -285,7 +285,7 @@ class IdCardPreview extends StatelessWidget {
                           uhid.isNotEmpty ? uhid : "CCH25-0001147",
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isDark
-                                ? Colors.white
+                                ? AppColors.surface
                                 : const Color(0xFF0F2C59),
                             fontWeight: FontWeight.bold,
                             fontSize: 10.sp,
@@ -304,7 +304,7 @@ class IdCardPreview extends StatelessWidget {
                     // Photo
                     CircleAvatar(
                       radius: 36.r,
-                      backgroundColor: isDark ? Colors.white12 : Colors.black12,
+                      backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
                       child: ClipOval(
                         child: photoPath.isNotEmpty
                             ? (kIsWeb ||
@@ -355,7 +355,7 @@ class IdCardPreview extends StatelessWidget {
                             name,
                             style: AppTextStyles.titleMedium.copyWith(
                               color: isDark
-                                  ? Colors.white
+                                  ? AppColors.surface
                                   : const Color(0xFF0F2C59),
                               fontWeight: FontWeight.bold,
                               fontSize: 15.sp,
@@ -384,7 +384,7 @@ class IdCardPreview extends StatelessWidget {
                                 phoneVal,
                                 style: AppTextStyles.bodySmall.copyWith(
                                   color: isDark
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : const Color(0xFF0F2C59),
                                   fontWeight: FontWeight.w600,
                                   fontSize: 10.sp,
@@ -402,7 +402,7 @@ class IdCardPreview extends StatelessWidget {
                       height: 60.r,
                       padding: EdgeInsets.all(4.r),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         borderRadius: BorderRadius.circular(6.r),
                       ),
                       child: CustomPaint(
@@ -453,7 +453,7 @@ class IdCardPreview extends StatelessWidget {
     final cardTextTitleColor = isDark
         ? const Color(0xFF5E98C7)
         : const Color(0xFF3F6D94);
-    final cardTextValueColor = isDark ? Colors.white : const Color(0xFF0C192E);
+    final cardTextValueColor = isDark ? AppColors.surface : const Color(0xFF0C192E);
 
     return Container(
       key: const ValueKey('back_side'),
@@ -618,7 +618,7 @@ class IdCardPreview extends StatelessWidget {
               width: double.infinity,
               padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
               decoration: BoxDecoration(
-                color: isDark ? Colors.black26 : Colors.white24,
+                color: isDark ? Colors.black26 : AppColors.surface24,
                 borderRadius: BorderRadius.circular(4.r),
               ),
               child: Center(
@@ -663,7 +663,7 @@ class QrCodePainter extends CustomPainter {
         ..color = color
         ..style = PaintingStyle.fill;
       final innerBg = Paint()
-        ..color = Colors.white
+        ..color = AppColors.surface
         ..style = PaintingStyle.fill;
       final innerSquare = Paint()
         ..color = color

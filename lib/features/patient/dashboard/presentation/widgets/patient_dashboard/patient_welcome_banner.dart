@@ -60,14 +60,14 @@ class PatientWelcomeBanner extends StatelessWidget {
                     Text(
                       AppStrings.welcomeUser,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.white70,
+                        color: AppColors.surface70,
                       ),
                     ),
                     SizedBox(height: 4.h),
                     Text(
                       name,
                       style: AppTextStyles.headingMedium.copyWith(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 1,
@@ -80,13 +80,13 @@ class PatientWelcomeBanner extends StatelessWidget {
                         vertical: 4.h,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white24,
+                        color: AppColors.surface24,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: Text(
                         'Patient Portal',
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -100,7 +100,7 @@ class PatientWelcomeBanner extends StatelessWidget {
                 height: 64.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white30, width: 2),
+                  border: Border.all(color: AppColors.surface30, width: 2),
                 ),
                 child: CustomImageView(
                   imagePath: ProfileImageHelper.resolveImagePath(

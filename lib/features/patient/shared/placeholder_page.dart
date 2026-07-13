@@ -70,7 +70,7 @@ class PlaceholderFeaturePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Icon(icon, color: Colors.white, size: 54.r),
+                  child: Icon(icon, color: AppColors.surface, size: 54.r),
                 ),
               ),
               SizedBox(height: 32.h),

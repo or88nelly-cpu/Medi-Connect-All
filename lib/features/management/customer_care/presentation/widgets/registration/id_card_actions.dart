@@ -16,7 +16,7 @@ class IdCardActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF09121F) : AppColors.surface;
     final borderColor = isDark
         ? const Color(0xFF16253B)
         : const Color(0xFFD3E0EE);
@@ -42,7 +42,7 @@ class IdCardActions extends StatelessWidget {
                 "ID Card Actions",
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                  color: isDark ? AppColors.surface : const Color(0xFF0F2C59),
                 ),
               ),
             ],
@@ -140,7 +140,7 @@ class IdCardActions extends StatelessWidget {
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? const Color(0xFF09121F)
-            : Colors.white,
+            : AppColors.surface,
         title: Row(
           children: [
             const Icon(Icons.check_circle, color: AppColors.success),

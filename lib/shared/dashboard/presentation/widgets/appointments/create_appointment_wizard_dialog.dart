@@ -185,7 +185,7 @@ class _CreateAppointmentWizardBottomSheetState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final sheetBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final sheetBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
 
     return BlocProvider(
       create: (context) => BookingWizardCubit(),
@@ -258,7 +258,7 @@ class _CreateAppointmentWizardBottomSheetState
                                 height: 4.h,
                                 decoration: BoxDecoration(
                                   color: isDark
-                                      ? Colors.white24
+                                      ? AppColors.surface24
                                       : Colors.grey[300],
                                   borderRadius: BorderRadius.circular(2),
                                 ),
@@ -277,7 +277,7 @@ class _CreateAppointmentWizardBottomSheetState
                                     "Booking Wizard",
                                     style: AppTextStyles.titleLarge.copyWith(
                                       color: isDark
-                                          ? Colors.white
+                                          ? AppColors.surface
                                           : AppColors.textPrimary(context),
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -287,7 +287,7 @@ class _CreateAppointmentWizardBottomSheetState
                                     icon: Icon(
                                       Icons.close,
                                       color: isDark
-                                          ? Colors.white54
+                                          ? AppColors.surface54
                                           : AppColors.textSecondary(context),
                                     ),
                                   ),

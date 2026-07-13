@@ -43,7 +43,7 @@ void showEmrdRecordDetailsSheet(
         builder: (sheetCtx, scrollCtrl) {
           return Container(
             decoration: BoxDecoration(
-              color: isDark ? AppColors.terminalDarkCard : Colors.white,
+              color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(24),
               ),
@@ -56,7 +56,7 @@ void showEmrdRecordDetailsSheet(
                   width: 40.w,
                   height: 4.h,
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white24 : Colors.grey[300],
+                    color: isDark ? AppColors.surface24 : Colors.grey[300],
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -82,7 +82,7 @@ void showEmrdRecordDetailsSheet(
                               "Date: $formattedDate",
                               style: AppTextStyles.bodySmall.copyWith(
                                 color: isDark
-                                    ? Colors.white54
+                                    ? AppColors.surface54
                                     : AppColors.textSecondary(context),
                               ),
                             ),
@@ -128,12 +128,12 @@ void showEmrdRecordDetailsSheet(
                               ),
                               icon: const Icon(
                                 Icons.picture_as_pdf,
-                                color: Colors.white,
+                                color: AppColors.surface,
                               ),
                               label: const Text(
                                 "Prescription",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -156,12 +156,12 @@ void showEmrdRecordDetailsSheet(
                               ),
                               icon: const Icon(
                                 Icons.picture_as_pdf,
-                                color: Colors.white,
+                                color: AppColors.surface,
                               ),
                               label: const Text(
                                 "Consultation Inv",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

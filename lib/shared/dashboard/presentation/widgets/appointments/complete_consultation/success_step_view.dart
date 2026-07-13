@@ -38,7 +38,7 @@ class SuccessStepView extends StatelessWidget {
       'dd MMM yyyy, hh:mm a',
     ).format(DateTime.now());
 
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
     final borderColor = AppColors.border(context);
 
     return Column(
@@ -75,7 +75,7 @@ class SuccessStepView extends StatelessWidget {
                   color: AppColors.success,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check, color: Colors.white, size: 36),
+                child: const Icon(Icons.check, color: AppColors.surface, size: 36),
               ),
               // Confetti mockup dots
               Positioned(
@@ -109,14 +109,14 @@ class SuccessStepView extends StatelessWidget {
           style: AppTextStyles.titleLarge.copyWith(
             fontWeight: FontWeight.bold,
             fontSize: 20.sp,
-            color: isDark ? Colors.white : AppColors.textPrimary(context),
+            color: isDark ? AppColors.surface : AppColors.textPrimary(context),
           ),
         ),
         SizedBox(height: 6.h),
         Text(
           'The consultation has been completed successfully.',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+            color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
           ),
           textAlign: TextAlign.center,
         ),
@@ -163,7 +163,7 @@ class SuccessStepView extends StatelessWidget {
               _buildSummaryRow(
                 Icons.payments_outlined,
                 'Amount Paid',
-                '₹${state.totalFee.toStringAsFixed(2)}',
+                'â‚¹${state.totalFee.toStringAsFixed(2)}',
                 isDark,
                 context,
                 isLast: true,
@@ -214,7 +214,7 @@ class SuccessStepView extends StatelessWidget {
                       'You can view the record in EMR Department.',
                       style: AppTextStyles.bodySmall.copyWith(
                         color: isDark
-                            ? Colors.white54
+                            ? AppColors.surface54
                             : AppColors.textSecondary(context),
                       ),
                     ),
@@ -256,7 +256,7 @@ class SuccessStepView extends StatelessWidget {
                 borderRadius: 10.r,
                 gradientColors: const [AppColors.primary, Colors.blueAccent],
                 textStyle: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontWeight: FontWeight.bold,
                   fontSize: 13.sp,
                 ),
@@ -303,7 +303,7 @@ class SuccessStepView extends StatelessWidget {
               label,
               style: AppTextStyles.bodySmall.copyWith(
                 color: isDark
-                    ? Colors.white54
+                    ? AppColors.surface54
                     : AppColors.textSecondary(context),
               ),
             ),
@@ -313,7 +313,7 @@ class SuccessStepView extends StatelessWidget {
               value,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : AppColors.textPrimary(context),
+                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
               ),
               textAlign: TextAlign.end,
             ),

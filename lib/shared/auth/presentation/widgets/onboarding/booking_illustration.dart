@@ -93,7 +93,7 @@ class _OnboardingBookingIllustrationState
               height: 140.r,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.r),
-                color: Colors.white,
+                color: AppColors.surface,
                 border: Border.all(
                   color: AppColors.primary.withValues(alpha: 0.15),
                   width: 1.5.r,
@@ -122,7 +122,7 @@ class _OnboardingBookingIllustrationState
                             width: 6.r,
                             height: 6.r,
                             decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: AppColors.surface,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -130,7 +130,7 @@ class _OnboardingBookingIllustrationState
                             width: 32.w,
                             height: 6.h,
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.3),
+                              color: AppColors.surface.withValues(alpha: 0.3),
                               borderRadius: BorderRadius.circular(3.r),
                             ),
                           ),
@@ -138,7 +138,7 @@ class _OnboardingBookingIllustrationState
                             width: 6.r,
                             height: 6.r,
                             decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: AppColors.surface,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -197,7 +197,7 @@ class _OnboardingBookingIllustrationState
                     height: 72.r,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white,
+                      color: AppColors.surface,
                       border: Border.all(
                         color: AppColors.primaryLight.withValues(alpha: 0.25),
                         width: 2.r,

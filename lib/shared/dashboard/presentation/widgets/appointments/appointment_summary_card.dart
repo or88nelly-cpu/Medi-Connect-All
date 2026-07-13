@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -92,7 +93,7 @@ class AppointmentSummaryCard extends StatelessWidget {
                   Text(
                     getScheduleTitle(date),
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: AppColors.surface70,
                       fontSize: 10.sp,
                       letterSpacing: 2,
                       fontWeight: FontWeight.w700,
@@ -107,7 +108,7 @@ class AppointmentSummaryCard extends StatelessWidget {
                       Text(
                         "$totalCount",
                         style: AppTextStyles.bodyLarge.copyWith(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w800,
                           height: 1,
@@ -117,7 +118,7 @@ class AppointmentSummaryCard extends StatelessWidget {
                       Text(
                         "Appointments",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
                         ),
@@ -167,7 +168,7 @@ class AppointmentSummaryCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 18.r),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.r),
-                        color: Colors.white,
+                        color: AppColors.surface,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -204,8 +205,8 @@ class AppointmentSummaryCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 12.r, horizontal: 20.r),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
-        color: Colors.white.withAlpha(20),
-        border: Border.all(color: Colors.white.withAlpha(20)),
+        color: AppColors.surface.withAlpha(20),
+        border: Border.all(color: AppColors.surface.withAlpha(20)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +223,7 @@ class AppointmentSummaryCard extends StatelessWidget {
               Text(
                 "$count",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -232,7 +233,7 @@ class AppointmentSummaryCard extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: Colors.white70,
+              color: AppColors.surface70,
               fontSize: 10.sp,
             ),
           ),

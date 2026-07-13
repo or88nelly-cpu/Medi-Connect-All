@@ -30,7 +30,7 @@ class SignupSecurityFooter extends StatelessWidget {
           'Your health data is safe and secure.',
           style: AppTextStyles.bodySmall.copyWith(
             color: isDark
-                ? Colors.white.withValues(alpha: 0.8)
+                ? AppColors.surface.withValues(alpha: 0.8)
                 : Colors.black87,
             fontSize: 12.sp,
             fontWeight: FontWeight.w600,

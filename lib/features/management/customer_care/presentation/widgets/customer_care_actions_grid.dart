@@ -123,17 +123,17 @@ class CustomerCareActionsGrid extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10.r),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.16),
+                color: AppColors.surface.withValues(alpha: 0.16),
                 borderRadius: BorderRadius.circular(14.r),
               ),
-              child: Icon(action.icon, color: Colors.white, size: 26.r),
+              child: Icon(action.icon, color: AppColors.surface, size: 26.r),
             ),
             const Spacer(),
             // Title
             Text(
               action.title,
               style: AppTextStyles.dashboardActionTitle.copyWith(
-                color: Colors.white,
+                color: AppColors.surface,
                 fontSize: 15.sp,
               ),
             ),
@@ -144,7 +144,7 @@ class CustomerCareActionsGrid extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.dashboardActionDesc.copyWith(
-                color: Colors.white.withValues(alpha: 0.8),
+                color: AppColors.surface.withValues(alpha: 0.8),
                 fontSize: 11.sp,
                 height: 1.25,
               ),
@@ -157,7 +157,7 @@ class CustomerCareActionsGrid extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(8.r),
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(

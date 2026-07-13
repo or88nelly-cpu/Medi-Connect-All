@@ -144,7 +144,7 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                     borderRadius: BorderRadius.circular(6.r),
                   ),
                 ),
-                child: const Icon(Icons.add, color: Colors.white),
+                child: const Icon(Icons.add, color: AppColors.surface),
               ),
             ],
           ),
@@ -189,7 +189,7 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                 label: Text(
                   mode,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : textColor,
+                    color: isSelected ? AppColors.surface : textColor,
                     fontSize: 10.5.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -202,7 +202,7 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                 side: BorderSide(
                   color: isSelected ? AppColors.primary : borderColor,
                 ),
-                checkmarkColor: Colors.white,
+                checkmarkColor: AppColors.surface,
                 onSelected: (_) => widget.onToggleConsultationMode(mode),
               );
             }).toList(),

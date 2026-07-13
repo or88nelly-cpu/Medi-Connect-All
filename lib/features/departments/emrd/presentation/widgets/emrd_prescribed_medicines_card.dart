@@ -75,11 +75,11 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
                 padding: EdgeInsets.all(12.r),
                 decoration: BoxDecoration(
                   color: isDark
-                      ? Colors.white.withValues(alpha: 0.02)
-                      : Colors.white,
+                      ? AppColors.surface.withValues(alpha: 0.02)
+                      : AppColors.surface,
                   borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(
-                    color: isDark ? Colors.white10 : Colors.grey[200]!,
+                    color: isDark ? AppColors.surface10 : Colors.grey[200]!,
                   ),
                 ),
                 child: Row(
@@ -157,7 +157,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
                             style: AppTextStyles.bodySmall.copyWith(
                               fontSize: 11.sp,
                               color: isDark
-                                  ? Colors.white54
+                                  ? AppColors.surface54
                                   : AppColors.textSecondary(context),
                             ),
                           ),
@@ -174,7 +174,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
             "No medicines prescribed.",
             style: AppTextStyles.bodySmall.copyWith(
               fontStyle: FontStyle.italic,
-              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
             ),
           ),
         SizedBox(height: 12.h),
@@ -185,7 +185,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Medicine Total: â‚¹${medAmount.toStringAsFixed(2)}",
+                  "Medicine Total: Ã¢â€šÂ¹${medAmount.toStringAsFixed(2)}",
                   style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -254,7 +254,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
                 child: Text(
                   "Pay Now",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

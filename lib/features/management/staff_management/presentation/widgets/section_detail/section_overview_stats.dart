@@ -22,7 +22,7 @@ class SectionOverviewStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final cardBg = isDark
         ? AppColors.terminalDarkCard
         : AppColors.terminalLightCard;
@@ -44,7 +44,7 @@ class SectionOverviewStats extends StatelessWidget {
       {
         'title': 'Patients Today',
         'value': '$patientsToday',
-        'subText': '↑$patientsChange% vs yesterday',
+        'subText': 'â†‘$patientsChange% vs yesterday',
         'subColor': AppColors.success,
         'icon': Icons.people_outline,
         'iconColor': AppColors.primary,
@@ -52,7 +52,7 @@ class SectionOverviewStats extends StatelessWidget {
       {
         'title': 'Appointments',
         'value': '$appointmentsToday',
-        'subText': '↑$appointmentsChange% vs yesterday',
+        'subText': 'â†‘$appointmentsChange% vs yesterday',
         'subColor': AppColors.success,
         'icon': Icons.calendar_today_outlined,
         'iconColor': AppColors.infoIndigo,

@@ -26,7 +26,7 @@ class DoctorStatCard extends StatelessWidget {
       //   width: 105.w,
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(
           color: isDark
@@ -71,7 +71,7 @@ class DoctorStatCard extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: isDark ? Colors.white70 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface70 : AppColors.textSecondary(context),
               fontSize: 10.sp,
               fontWeight: FontWeight.w500,
             ),

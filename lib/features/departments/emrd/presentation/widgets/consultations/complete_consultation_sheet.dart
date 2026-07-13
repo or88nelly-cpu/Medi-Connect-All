@@ -26,7 +26,7 @@ class CompleteConsultationSheet extends StatelessWidget {
         MediaQuery.of(context).viewInsets.bottom + 20.r,
       ),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.r),
           topRight: Radius.circular(20.r),
@@ -58,7 +58,7 @@ class CompleteConsultationSheet extends StatelessWidget {
             "Are you sure you want to mark this consultation as completed?",
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white70 : Colors.black87,
+              color: isDark ? AppColors.surface70 : Colors.black87,
             ),
           ),
           SizedBox(height: 16.h),
@@ -68,7 +68,7 @@ class CompleteConsultationSheet extends StatelessWidget {
             padding: EdgeInsets.all(16.r),
             decoration: BoxDecoration(
               color: isDark
-                  ? Colors.white.withValues(alpha: 0.03)
+                  ? AppColors.surface.withValues(alpha: 0.03)
                   : Colors.black.withValues(alpha: 0.02),
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: AppColors.border(context)),
@@ -131,7 +131,7 @@ class CompleteConsultationSheet extends StatelessWidget {
                   child: const Text(
                     "Complete",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -151,14 +151,14 @@ class CompleteConsultationSheet extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.bodySmall.copyWith(
-            color: isDark ? Colors.white60 : Colors.black54,
+            color: isDark ? AppColors.surface60 : Colors.black54,
           ),
         ),
         Text(
           value,
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : Colors.black87,
+            color: isDark ? AppColors.surface : Colors.black87,
           ),
         ),
       ],

@@ -55,7 +55,7 @@ class DoctorAlertsBanner extends StatelessWidget {
                   "You have 2 pending lab reports to review",
                   style: TextStyle(
                     color: isDark
-                        ? Colors.white70
+                        ? AppColors.surface70
                         : AppColors.textSecondary(context),
                     fontSize: 10.sp,
                   ),

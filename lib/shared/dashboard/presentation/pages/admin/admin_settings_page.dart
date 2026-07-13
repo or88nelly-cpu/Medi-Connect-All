@@ -313,7 +313,7 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
             child: Text(
               "Log Out",
               style: AppTextStyles.bodyMedium.copyWith(
-                color: Colors.white,
+                color: AppColors.surface,
                 fontWeight: FontWeight.w600,
               ),
             ),

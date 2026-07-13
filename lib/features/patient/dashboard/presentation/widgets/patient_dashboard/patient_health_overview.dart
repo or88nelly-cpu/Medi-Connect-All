@@ -9,7 +9,7 @@ class PatientHealthOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +89,7 @@ class PatientHealthOverview extends StatelessWidget {
                       style: AppTextStyles.titleMedium.copyWith(
                         fontWeight: FontWeight.w800,
                         fontSize: 15.sp,
-                        color: Colors.white,
+                        color: AppColors.surface,
                         height: 1.3,
                       ),
                     ),
@@ -97,7 +97,7 @@ class PatientHealthOverview extends StatelessWidget {
                     Text(
                       'Monitor your vitals and get insights to stay healthier every day.',
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
+                        color: AppColors.surface.withValues(alpha: 0.9),
                         fontSize: 10.5.sp,
                         height: 1.3,
                       ),
@@ -108,13 +108,13 @@ class PatientHealthOverview extends StatelessWidget {
                         width: 80.r,
                         height: 80.r,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.15),
+                          color: AppColors.surface.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
                         alignment: Alignment.center,
                         child: Icon(
                           Icons.favorite_rounded,
-                          color: Colors.white,
+                          color: AppColors.surface,
                           size: 40.r,
                         ),
                       ),
@@ -194,7 +194,7 @@ class PatientHealthOverview extends StatelessWidget {
       height: 58.h,
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: AppColors.border(context)),
       ),
@@ -235,7 +235,7 @@ class PatientHealthOverview extends StatelessWidget {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 11.5.sp,
-                    color: isDark ? Colors.white : AppColors.textDarkNavy,
+                    color: isDark ? AppColors.surface : AppColors.textDarkNavy,
                   ),
                 ),
               ],

@@ -92,7 +92,7 @@ class SectionDoctorGridCard extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 28.r,
-                    backgroundColor: isDark ? Colors.white12 : Colors.black12,
+                    backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
                     child: ClipOval(
                       child: CustomImageView(
                         imagePath: ProfileImageHelper.resolveImagePath(

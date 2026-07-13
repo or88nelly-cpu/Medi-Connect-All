@@ -234,7 +234,7 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
                           Text(
                             slot["time"] as String,
                             style: TextStyle(
-                              color: isDark ? Colors.white : Colors.black87,
+                              color: isDark ? AppColors.surface : Colors.black87,
                               fontWeight: FontWeight.w600,
                               fontSize: 10.sp,
                             ),

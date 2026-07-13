@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -172,7 +173,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
           style: AppTextStyles.titleMedium.copyWith(
             fontWeight: FontWeight.bold,
             fontSize: 14.sp,
-            color: isDark ? Colors.white70 : Colors.black87,
+            color: isDark ? AppColors.surface70 : Colors.black87,
           ),
         ),
       ],
@@ -244,9 +245,9 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
             ),
           );
         } else {
-          cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-          borderCol = isDark ? Colors.white10 : Colors.grey[200]!;
-          textCol = isDark ? Colors.white70 : Colors.black87;
+          cardBg = isDark ? const Color(0xFF1E293B) : AppColors.surface;
+          borderCol = isDark ? AppColors.surface10 : Colors.grey[200]!;
+          textCol = isDark ? AppColors.surface70 : Colors.black87;
           statusIndicator = Text(
             "Available",
             style: TextStyle(

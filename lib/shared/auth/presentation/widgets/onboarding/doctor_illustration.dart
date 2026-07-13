@@ -84,7 +84,7 @@ class _OnboardingDoctorIllustrationState
               height: 120.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: AppColors.surface,
                 border: Border.all(
                   color: AppColors.primary.withValues(alpha: 0.2),
                   width: 3.r,
@@ -111,7 +111,7 @@ class _OnboardingDoctorIllustrationState
                   ),
                   child: Icon(
                     Icons.supervisor_account_outlined,
-                    color: Colors.white,
+                    color: AppColors.surface,
                     size: 48.r,
                   ),
                 ),

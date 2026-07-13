@@ -298,9 +298,9 @@ class StaffDrawer extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Shared drawer header with role-specific gradient.
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _RoleDrawerHeader extends StatelessWidget {
   final List<Color> gradient;
   final String roleLabel;
@@ -345,7 +345,7 @@ class _RoleDrawerHeader extends StatelessWidget {
                 height: 60.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white24, width: 2),
+                  border: Border.all(color: AppColors.surface24, width: 2),
                 ),
                 child: CustomImageView(
                   imagePath: ProfileImageHelper.resolveImagePath(
@@ -360,7 +360,7 @@ class _RoleDrawerHeader extends StatelessWidget {
               Text(
                 name,
                 style: AppTextStyles.titleLarge.copyWith(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,
@@ -370,7 +370,7 @@ class _RoleDrawerHeader extends StatelessWidget {
                 Text(
                   email,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                    color: AppColors.surface70,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -379,13 +379,13 @@ class _RoleDrawerHeader extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: Colors.white24,
+                  color: AppColors.surface24,
                   borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Text(
                   roleLabel,
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -398,9 +398,9 @@ class _RoleDrawerHeader extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Reusable drawer list tile.
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _DrawerItem extends StatelessWidget {
   final IconData icon;
   final String title;

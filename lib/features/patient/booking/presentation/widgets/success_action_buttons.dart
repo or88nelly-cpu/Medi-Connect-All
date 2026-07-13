@@ -40,7 +40,7 @@ class SuccessActionButtons extends StatelessWidget {
           borderRadius: 10.r,
           color: AppColors.primary,
           onPressed: onViewAppointment,
-          icon: const Icon(Icons.chevron_right_rounded, color: Colors.white),
+          icon: const Icon(Icons.chevron_right_rounded, color: AppColors.surface),
         ),
       ],
     );

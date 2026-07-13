@@ -53,7 +53,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 12.sp,
-                color: isDark ? Colors.white : AppColors.textPrimary(context),
+                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
               ),
             ),
             Row(
@@ -84,7 +84,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                       vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
-                      color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                      color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(color: AppColors.border(context)),
                     ),
@@ -102,7 +102,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w600,
                             color: isDark
-                                ? Colors.white70
+                                ? AppColors.surface70
                                 : AppColors.textPrimary(context),
                           ),
                         ),
@@ -180,7 +180,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
       margin: EdgeInsets.only(right: 12.w),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.border(context)),
         boxShadow: isDark
@@ -212,7 +212,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 16.sp,
-                  color: isDark ? Colors.white : AppColors.terminalLightText,
+                  color: isDark ? AppColors.surface : AppColors.terminalLightText,
                 ),
               ),
             ],

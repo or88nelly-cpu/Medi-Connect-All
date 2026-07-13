@@ -51,7 +51,7 @@ class _GlowingProgressBarState extends State<GlowingProgressBar>
               height: 4.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(2.r),
-                color: Colors.white.withValues(alpha: 0.08),
+                color: AppColors.surface.withValues(alpha: 0.08),
               ),
               child: Stack(
                 children: [
@@ -64,7 +64,7 @@ class _GlowingProgressBarState extends State<GlowingProgressBar>
                           colors: [
                             AppColors.primary,
                             AppColors.primaryLight,
-                            Colors.white,
+                            AppColors.surface,
                           ],
                           stops: const [0.0, 0.75, 1.0],
                         ),

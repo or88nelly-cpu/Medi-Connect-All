@@ -91,7 +91,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
     final bgColor = isDark
         ? AppColors.terminalDarkBg
         : AppColors.terminalLightBg;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
@@ -206,7 +206,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
             child: CustomImageView(
               imagePath: 'assets/images/department/human-resource.png',
               fit: BoxFit.contain,
-              color: isDark ? Colors.white : const Color(0xFF7928CA),
+              color: isDark ? AppColors.surface : const Color(0xFF7928CA),
             ),
           ),
         ),
@@ -313,7 +313,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
           _currentPageNotifier.value = 1;
         },
         style: TextStyle(
-          color: isDark ? Colors.white : AppColors.terminalLightText,
+          color: isDark ? AppColors.surface : AppColors.terminalLightText,
           fontSize: 13.sp,
         ),
         decoration: InputDecoration(
@@ -449,7 +449,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
             Text(
               label,
               style: TextStyle(
-                color: isDark ? Colors.white : AppColors.terminalLightText,
+                color: isDark ? AppColors.surface : AppColors.terminalLightText,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
               ),
@@ -487,7 +487,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
           size: 18.r,
           color: isActive
               ? AppColors.primary
-              : (isDark ? Colors.white54 : Colors.black54),
+              : (isDark ? AppColors.surface54 : Colors.black54),
         ),
       ),
     );
@@ -764,7 +764,7 @@ class _StaffListCard extends StatelessWidget {
     final borderColor = isDark
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
@@ -781,7 +781,7 @@ class _StaffListCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 24.r,
-            backgroundColor: isDark ? Colors.white12 : Colors.black12,
+            backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
             child: ClipOval(
               child: CustomImageView(
                 imagePath: ProfileImageHelper.resolveImagePath(
@@ -879,7 +879,7 @@ class _StaffGridCard extends StatelessWidget {
     final borderColor = isDark
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
@@ -927,7 +927,7 @@ class _StaffGridCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 26.r,
-                  backgroundColor: isDark ? Colors.white12 : Colors.black12,
+                  backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
                   child: ClipOval(
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(
@@ -1045,7 +1045,7 @@ class _HRFunctionsGrid extends StatelessWidget {
     final cardBorder = isDark
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     final List<Map<String, dynamic>> functions = [
       {
@@ -1179,7 +1179,7 @@ class _HROverviewCards extends StatelessWidget {
     final cardBorder = isDark
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
@@ -1188,7 +1188,7 @@ class _HROverviewCards extends StatelessWidget {
       {
         'title': 'Total Employees',
         'value': '142',
-        'subText': 'â†‘ 5 this month',
+        'subText': 'Ã¢â€ â€˜ 5 this month',
         'subColor': AppColors.success,
         'icon': Icons.people_outline,
         'iconColor': const Color(0xFF7928CA),
@@ -1196,7 +1196,7 @@ class _HROverviewCards extends StatelessWidget {
       {
         'title': 'On Leave Today',
         'value': '12',
-        'subText': 'â†‘ 2 this month',
+        'subText': 'Ã¢â€ â€˜ 2 this month',
         'subColor': AppColors.success,
         'icon': Icons.calendar_month_outlined,
         'iconColor': AppColors.primary,
@@ -1204,7 +1204,7 @@ class _HROverviewCards extends StatelessWidget {
       {
         'title': 'New Hires',
         'value': '4',
-        'subText': 'â†‘ 1 this month',
+        'subText': 'Ã¢â€ â€˜ 1 this month',
         'subColor': AppColors.success,
         'icon': Icons.person_add_outlined,
         'iconColor': AppColors.accent,
@@ -1212,7 +1212,7 @@ class _HROverviewCards extends StatelessWidget {
       {
         'title': 'Pending Approvals',
         'value': '7',
-        'subText': 'â†‘ 3 this month',
+        'subText': 'Ã¢â€ â€˜ 3 this month',
         'subColor': AppColors.success,
         'icon': Icons.access_time_outlined,
         'iconColor': const Color(0xFF00C2A8),
@@ -1315,7 +1315,7 @@ class _HRQuickActions extends StatelessWidget {
     final cardBorder = isDark
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     final List<Map<String, dynamic>> actions = [
       {

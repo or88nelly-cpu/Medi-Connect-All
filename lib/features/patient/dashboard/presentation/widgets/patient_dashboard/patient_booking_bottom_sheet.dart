@@ -32,7 +32,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
       height: MediaQuery.of(context).size.height * 0.8,
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24.r),
           topRight: Radius.circular(24.r),
@@ -49,7 +49,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
                 "Find & Choose Doctor",
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                  color: isDark ? AppColors.surface : const Color(0xFF0F2C59),
                 ),
               ),
               IconButton(
@@ -122,7 +122,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
     return Card(
       margin: EdgeInsets.only(bottom: 12.h),
       elevation: 0,
-      color: isDark ? Colors.white.withValues(alpha: 0.02) : Colors.white,
+      color: isDark ? AppColors.surface.withValues(alpha: 0.02) : AppColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
         side: BorderSide(color: AppColors.border(context)),
@@ -140,7 +140,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
           doc.fullName ?? 'Dr. Specialist',
           style: AppTextStyles.bodyMedium.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? Colors.white : AppColors.textPrimary(context),
+            color: isDark ? AppColors.surface : AppColors.textPrimary(context),
           ),
         ),
         subtitle: Column(
@@ -153,7 +153,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
             ),
             SizedBox(height: 2.h),
             Text(
-              "Fee: â‚¹ 500",
+              "Fee: Ã¢â€šÂ¹ 500",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColors.primary,
@@ -175,7 +175,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
           ),
           child: const Text(
             "Book",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: AppColors.surface, fontWeight: FontWeight.bold),
           ),
         ),
       ),

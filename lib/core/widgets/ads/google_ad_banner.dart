@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +19,7 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
     {
       'title': 'Medi-Connect Premium',
       'description':
-          'Unlimited 24/7 consultations with top cardiologists and neurologists for just ₹499/mo.',
+          'Unlimited 24/7 consultations with top cardiologists and neurologists for just â‚¹499/mo.',
       'tagline': 'Join Now',
       'gradient': [const Color(0xFF6366F1), const Color(0xFF4F46E5)],
       'badgeColor': const Color(0xFFEEF2FF),
@@ -115,12 +116,12 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.info_outline, color: Colors.white70, size: 10.sp),
+                  Icon(Icons.info_outline, color: AppColors.surface70, size: 10.sp),
                   SizedBox(width: 3.w),
                   Text(
                     'Sponsored',
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: AppColors.surface70,
                       fontSize: 8.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -143,12 +144,12 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
               child: Container(
                 padding: EdgeInsets.all(4.r),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.15),
+                  color: AppColors.surface.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.close_rounded,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 12.sp,
                 ),
               ),
@@ -164,12 +165,12 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
                 Container(
                   padding: EdgeInsets.all(10.r),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: AppColors.surface.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     ad['icon'] as IconData,
-                    color: Colors.white,
+                    color: AppColors.surface,
                     size: 24.sp,
                   ),
                 ),
@@ -183,7 +184,7 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
                       Text(
                         ad['title'] as String,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -194,7 +195,7 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.9),
+                          color: AppColors.surface.withValues(alpha: 0.9),
                           fontSize: 10.sp,
                           height: 1.25,
                         ),

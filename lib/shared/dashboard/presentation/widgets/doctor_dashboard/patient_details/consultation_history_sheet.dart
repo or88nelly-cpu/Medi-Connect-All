@@ -31,10 +31,10 @@ class ConsultationHistorySheet extends StatelessWidget {
     // Take the top 5
     final top5 = recentConsultations.take(5).toList();
 
-    final sheetBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final primaryText = isDark ? Colors.white : AppColors.textDarkNavy;
+    final sheetBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final primaryText = isDark ? AppColors.surface : AppColors.textDarkNavy;
     final secondaryText = isDark
-        ? Colors.white54
+        ? AppColors.surface54
         : AppColors.textSecondary(context);
     final borderCol = AppColors.border(context);
 
@@ -57,7 +57,7 @@ class ConsultationHistorySheet extends StatelessWidget {
                 width: 40.w,
                 height: 4.h,
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.white24 : Colors.grey[300],
+                  color: isDark ? AppColors.surface24 : Colors.grey[300],
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -164,7 +164,7 @@ class ConsultationHistorySheet extends StatelessWidget {
                                               .copyWith(
                                                 fontWeight: FontWeight.bold,
                                                 color: isDark
-                                                    ? Colors.white
+                                                    ? AppColors.surface
                                                     : AppColors.textDarkNavy,
                                               ),
                                         ),
@@ -259,7 +259,7 @@ class ConsultationHistorySheet extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isDark ? Colors.white30 : Colors.grey[500],
+                color: isDark ? AppColors.surface30 : Colors.grey[500],
                 fontSize: 8.sp,
                 fontWeight: FontWeight.bold,
               ),
@@ -267,7 +267,7 @@ class ConsultationHistorySheet extends StatelessWidget {
             Text(
               value,
               style: TextStyle(
-                color: isDark ? Colors.white70 : AppColors.textDarkNavy,
+                color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.bold,
               ),

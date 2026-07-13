@@ -79,7 +79,7 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                   height: 78.r,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: .9),
+                    color: AppColors.surface.withValues(alpha: .9),
                   ),
                   child: Icon(
                     Icons.support_agent_rounded,
@@ -100,7 +100,7 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                           fontWeight: FontWeight.w900,
                           fontSize: 18.sp,
                           color: isDark
-                              ? Colors.white
+                              ? AppColors.surface
                               : const Color(0xff0F172A),
                         ),
                       ),
@@ -112,7 +112,7 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11.sp,
                           height: 1.5,
-                          color: isDark ? Colors.white70 : Colors.grey.shade700,
+                          color: isDark ? AppColors.surface70 : Colors.grey.shade700,
                         ),
                       ),
 
@@ -137,14 +137,14 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                             children: [
                               const Icon(
                                 Icons.call,
-                                color: Colors.white,
+                                color: AppColors.surface,
                                 size: 18,
                               ),
                               SizedBox(width: 8.w),
                               Text(
                                 "Contact Support",
                                 style: AppTextStyles.bodyMedium.copyWith(
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

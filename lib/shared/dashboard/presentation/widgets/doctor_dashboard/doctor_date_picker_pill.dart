@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -33,16 +34,16 @@ class DoctorDatePickerPill extends StatelessWidget {
                   ? ThemeData.dark().copyWith(
                       colorScheme: const ColorScheme.dark(
                         primary: Color(0xFF0F6FFF),
-                        onPrimary: Colors.white,
+                        onPrimary: AppColors.surface,
                         surface: Color(0xFF1E293B),
-                        onSurface: Colors.white,
+                        onSurface: AppColors.surface,
                       ),
                     )
                   : ThemeData.light().copyWith(
                       colorScheme: const ColorScheme.light(
                         primary: Color(0xFF0F6FFF),
-                        onPrimary: Colors.white,
-                        surface: Colors.white,
+                        onPrimary: AppColors.surface,
+                        surface: AppColors.surface,
                         onSurface: Colors.black,
                       ),
                     ),
@@ -58,7 +59,7 @@ class DoctorDatePickerPill extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E293B) : Colors.white,
+          color: isDark ? const Color(0xFF1E293B) : AppColors.surface,
           borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
@@ -91,7 +92,7 @@ class DoctorDatePickerPill extends StatelessWidget {
                 Text(
                   isToday ? "Today" : "Selected Date",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white38 : Colors.grey[600],
+                    color: isDark ? AppColors.surface38 : Colors.grey[600],
                     fontWeight: FontWeight.bold,
                     fontSize: 10.sp,
                   ),
@@ -100,7 +101,7 @@ class DoctorDatePickerPill extends StatelessWidget {
                 Text(
                   formattedDate,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: isDark ? Colors.white : Colors.black87,
+                    color: isDark ? AppColors.surface : Colors.black87,
                     fontWeight: FontWeight.bold,
                     fontSize: 12.sp,
                   ),
@@ -110,7 +111,7 @@ class DoctorDatePickerPill extends StatelessWidget {
             SizedBox(width: 16.w),
             Icon(
               Icons.keyboard_arrow_down_rounded,
-              color: isDark ? Colors.white60 : Colors.grey[600],
+              color: isDark ? AppColors.surface60 : Colors.grey[600],
               size: 18.r,
             ),
           ],

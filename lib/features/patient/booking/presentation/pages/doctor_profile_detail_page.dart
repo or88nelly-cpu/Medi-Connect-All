@@ -37,7 +37,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
       backgroundColor: AppColors.scaffold(context),
       body: CustomScrollView(
         slivers: [
-          // â”€â”€ Hero sliver appbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+          // Ã¢â€â‚¬Ã¢â€â‚¬ Hero sliver appbar Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
           SliverAppBar(
             expandedHeight: 220.h,
             pinned: true,
@@ -51,7 +51,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                 ),
                 child: const Icon(
                   Icons.arrow_back_rounded,
-                  color: Colors.white,
+                  color: AppColors.surface,
                 ),
               ),
               onPressed: () => Navigator.of(context).pop(),
@@ -75,7 +75,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                         width: 120.r,
                         height: 120.r,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.08),
+                          color: AppColors.surface.withValues(alpha: 0.08),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -87,7 +87,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                         width: 100.r,
                         height: 100.r,
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.06),
+                          color: AppColors.surface.withValues(alpha: 0.06),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -108,16 +108,16 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                               width: 72.r,
                               height: 72.r,
                               decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.25),
+                                color: AppColors.surface.withValues(alpha: 0.25),
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Colors.white54,
+                                  color: AppColors.surface54,
                                   width: 2,
                                 ),
                               ),
                               child: Icon(
                                 Icons.person_rounded,
-                                color: Colors.white,
+                                color: AppColors.surface,
                                 size: 36.r,
                               ),
                             ),
@@ -130,7 +130,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                   Text(
                                     doc.fullName,
                                     style: AppTextStyles.titleLarge.copyWith(
-                                      color: Colors.white,
+                                      color: AppColors.surface,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -138,7 +138,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                   Text(
                                     'General Medicine',
                                     style: AppTextStyles.bodyMedium.copyWith(
-                                      color: Colors.white70,
+                                      color: AppColors.surface70,
                                     ),
                                   ),
                                   SizedBox(height: 6.h),
@@ -153,7 +153,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                       Text(
                                         '4.8 (320 reviews)',
                                         style: AppTextStyles.bodySmall.copyWith(
-                                          color: Colors.white,
+                                          color: AppColors.surface,
                                         ),
                                       ),
                                     ],
@@ -177,11 +177,11 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // â”€â”€ Stats row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                  // Ã¢â€â‚¬Ã¢â€â‚¬ Stats row Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                   _StatsRow(doctor: doc, gradient: gradient),
                   SizedBox(height: 20.h),
 
-                  // â”€â”€ About â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                  // Ã¢â€â‚¬Ã¢â€â‚¬ About Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                   _SectionHeader(
                     title: 'About',
                     icon: Icons.info_outline_rounded,
@@ -204,7 +204,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                   ),
                   SizedBox(height: 20.h),
 
-                  // â”€â”€ Available Dates â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                  // Ã¢â€â‚¬Ã¢â€â‚¬ Available Dates Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                   _SectionHeader(
                     title: 'Available Dates',
                     icon: Icons.calendar_month_rounded,
@@ -246,7 +246,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                   style: TextStyle(
                                     fontSize: 10.sp,
                                     color: isSelected
-                                        ? Colors.white70
+                                        ? AppColors.surface70
                                         : AppColors.textSecondary(context),
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -258,7 +258,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
                                     color: isSelected
-                                        ? Colors.white
+                                        ? AppColors.surface
                                         : AppColors.textPrimary(context),
                                   ),
                                 ),
@@ -271,7 +271,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                   ),
                   SizedBox(height: 24.h),
 
-                  // â”€â”€ Book Now button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                  // Ã¢â€â‚¬Ã¢â€â‚¬ Book Now button Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
@@ -294,12 +294,12 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                       },
                       icon: const Icon(
                         Icons.calendar_today_rounded,
-                        color: Colors.white,
+                        color: AppColors.surface,
                       ),
                       label: Text(
                         'Book Appointment',
                         style: AppTextStyles.buttonLarge.copyWith(
-                          color: Colors.white,
+                          color: AppColors.surface,
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -353,7 +353,7 @@ class _StatsRow extends StatelessWidget {
         ),
         SizedBox(width: 10.w),
         _StatChip(
-          value: 'â‚¹500',
+          value: 'Ã¢â€šÂ¹500',
           label: 'Fee',
           icon: Icons.currency_rupee_rounded,
           color: const Color(0xFF22C55E),

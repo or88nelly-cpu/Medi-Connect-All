@@ -113,7 +113,7 @@ class ECGPainter extends CustomPainter {
 
     // 1. Draw the dim background heartbeat line
     final bgPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.12)
+      ..color = AppColors.surface.withValues(alpha: 0.12)
       ..strokeWidth = 1.5.r
       ..style = PaintingStyle.stroke;
     canvas.drawPath(path, bgPaint);
@@ -146,16 +146,16 @@ class ECGPainter extends CustomPainter {
     corePaint.shader = uiGradient(
       center: Offset(glowX, midY),
       width: glowWidth,
-      glowColor: Colors.white,
-      sideColor: Colors.white.withValues(alpha: 0.1),
+      glowColor: AppColors.surface,
+      sideColor: AppColors.surface.withValues(alpha: 0.1),
     ).createShader(Rect.fromLTWH(glowX - glowWidth, 0, glowWidth * 2, h));
     canvas.drawPath(path, corePaint);
 
     // 4. Draw a bright sparkling dot at the front of the active wave
     final dotPaint = Paint()
-      ..color = Colors.white
+      ..color = AppColors.surface
       ..style = PaintingStyle.fill
-      //..shadowColor = Colors.white
+      //..shadowColor = AppColors.surface
       ..imageFilter = null;
 
     // Find approximate Y coordinate of the dot along the path

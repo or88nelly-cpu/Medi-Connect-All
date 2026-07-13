@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -126,7 +127,7 @@ class _PatientActionCardState extends State<PatientActionCard>
                         height: 27.r,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: .8),
+                          color: AppColors.surface.withValues(alpha: .8),
                           boxShadow: [
                             BoxShadow(
                               color: widget.startColor.withValues(alpha: .15),
@@ -186,7 +187,7 @@ class _PatientActionCardState extends State<PatientActionCard>
                     style: AppTextStyles.headingSmall.copyWith(
                       fontWeight: FontWeight.w900,
                       fontSize: 12.sp,
-                      color: isDark ? Colors.white : const Color(0xff1C2333),
+                      color: isDark ? AppColors.surface : const Color(0xff1C2333),
                     ),
                   ),
 

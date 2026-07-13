@@ -110,7 +110,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                   children: [
                     CircleAvatar(
                       radius: 36.r,
-                      backgroundColor: isDark ? Colors.white12 : Colors.black12,
+                      backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
@@ -184,7 +184,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
                     color: isDark
-                        ? Colors.white.withValues(alpha: 0.02)
+                        ? AppColors.surface.withValues(alpha: 0.02)
                         : Colors.black.withValues(alpha: 0.01),
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
@@ -266,7 +266,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                         padding: EdgeInsets.all(16.r),
                         decoration: BoxDecoration(
                           color: isDark
-                              ? Colors.white.withValues(alpha: 0.02)
+                              ? AppColors.surface.withValues(alpha: 0.02)
                               : Colors.black.withValues(alpha: 0.01),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
@@ -291,7 +291,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                       padding: EdgeInsets.all(14.r),
                       decoration: BoxDecoration(
                         color: isDark
-                            ? Colors.white.withValues(alpha: 0.02)
+                            ? AppColors.surface.withValues(alpha: 0.02)
                             : Colors.black.withValues(alpha: 0.01),
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all(
@@ -402,7 +402,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                               _buildVitalBadge(
                                 "Fever",
                                 recent.fever != null
-                                    ? "${recent.fever} Â°F"
+                                    ? "${recent.fever} Ã‚Â°F"
                                     : "--",
                                 Icons.thermostat_outlined,
                                 Colors.teal,
@@ -495,7 +495,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
           Text(
             "$label: ",
             style: TextStyle(
-              color: isDark ? Colors.white70 : Colors.black87,
+              color: isDark ? AppColors.surface70 : Colors.black87,
               fontSize: 11.sp,
               fontWeight: FontWeight.w500,
             ),
@@ -529,7 +529,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
               color: isDark
-                  ? Colors.white12
+                  ? AppColors.surface12
                   : Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(6.r),
               border: Border.all(color: borderColor.withValues(alpha: 0.4)),
@@ -540,7 +540,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                 Text(
                   "${entry.key}: ",
                   style: TextStyle(
-                    color: isDark ? Colors.white70 : Colors.black87,
+                    color: isDark ? AppColors.surface70 : Colors.black87,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.bold,
                   ),

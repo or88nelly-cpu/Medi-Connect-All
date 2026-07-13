@@ -61,7 +61,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
             decoration: BoxDecoration(
-              color: isDark ? AppColors.terminalDarkCard : Colors.white,
+              color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
               border: Border(
                 bottom: BorderSide(color: AppColors.border(context)),
               ),
@@ -72,12 +72,12 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                 TextField(
                   controller: _searchController,
                   style: TextStyle(
-                    color: isDark ? Colors.white : Colors.black87,
+                    color: isDark ? AppColors.surface : Colors.black87,
                   ),
                   decoration: InputDecoration(
                     hintText: "Search by Patient or Doctor...",
                     hintStyle: TextStyle(
-                      color: isDark ? Colors.white38 : Colors.black38,
+                      color: isDark ? AppColors.surface38 : Colors.black38,
                     ),
                     prefixIcon: const Icon(Icons.search),
                     filled: true,
@@ -100,7 +100,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                   controller: _tabController,
                   labelColor: AppColors.primary,
                   unselectedLabelColor: isDark
-                      ? Colors.white60
+                      ? AppColors.surface60
                       : Colors.black54,
                   indicatorColor: AppColors.primary,
                   indicatorSize: TabBarIndicatorSize.tab,
@@ -193,13 +193,13 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
             Icon(
               Icons.calendar_today_outlined,
               size: 48.r,
-              color: isDark ? Colors.white24 : Colors.black26,
+              color: isDark ? AppColors.surface24 : Colors.black26,
             ),
             SizedBox(height: 12.h),
             Text(
               "No Consultations Found",
               style: AppTextStyles.bodyMedium.copyWith(
-                color: isDark ? Colors.white38 : Colors.black45,
+                color: isDark ? AppColors.surface38 : Colors.black45,
               ),
             ),
           ],
@@ -269,7 +269,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+        backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),
@@ -353,7 +353,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
             child: Text(
               "$label:",
               style: AppTextStyles.bodySmall.copyWith(
-                color: isDark ? Colors.white60 : Colors.black54,
+                color: isDark ? AppColors.surface60 : Colors.black54,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -362,7 +362,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
             child: Text(
               value,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: isDark ? Colors.white : Colors.black87,
+                color: isDark ? AppColors.surface : Colors.black87,
               ),
             ),
           ),

@@ -21,8 +21,8 @@ class SpecialityDoctorsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     final gradientColors = speciality.isSurgical
         ? [const Color(0xFFEF4444), const Color(0xFFB91C1C)]
@@ -58,18 +58,18 @@ class SpecialityDoctorsPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // â”€â”€ 2. Top Banner Header with Illustration & Title â”€â”€
+                      // Ã¢â€â‚¬Ã¢â€â‚¬ 2. Top Banner Header with Illustration & Title Ã¢â€â‚¬Ã¢â€â‚¬
                       _buildHeaderBanner(context, isDark),
 
-                      // â”€â”€ 3. Stats Row (Dynamic Doctor Count) â”€â”€
+                      // Ã¢â€â‚¬Ã¢â€â‚¬ 3. Stats Row (Dynamic Doctor Count) Ã¢â€â‚¬Ã¢â€â‚¬
                       _buildStatsRow(context, isDark, docCount),
                       SizedBox(height: 24.h),
 
-                      // â”€â”€ 4. Shortcuts Row â”€â”€
+                      // Ã¢â€â‚¬Ã¢â€â‚¬ 4. Shortcuts Row Ã¢â€â‚¬Ã¢â€â‚¬
                       _buildShortcutsRow(context, isDark),
                       SizedBox(height: 24.h),
 
-                      // â”€â”€ 5. Our Doctors Section (Only Database Data) â”€â”€
+                      // Ã¢â€â‚¬Ã¢â€â‚¬ 5. Our Doctors Section (Only Database Data) Ã¢â€â‚¬Ã¢â€â‚¬
                       _buildDoctorsSection(
                         context,
                         state,
@@ -80,7 +80,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                       ),
                       SizedBox(height: 24.h),
 
-                      // â”€â”€ 6. Services We Offer â”€â”€
+                      // Ã¢â€â‚¬Ã¢â€â‚¬ 6. Services We Offer Ã¢â€â‚¬Ã¢â€â‚¬
                       _buildServicesSection(
                         context,
                         services,
@@ -90,11 +90,11 @@ class SpecialityDoctorsPage extends StatelessWidget {
                       ),
                       SizedBox(height: 24.h),
 
-                      // â”€â”€ 7. About Section â”€â”€
+                      // Ã¢â€â‚¬Ã¢â€â‚¬ 7. About Section Ã¢â€â‚¬Ã¢â€â‚¬
                       _buildAboutSection(context, isDark),
                       SizedBox(height: 24.h),
 
-                      // â”€â”€ 8. Bottom Support Help Bar â”€â”€
+                      // Ã¢â€â‚¬Ã¢â€â‚¬ 8. Bottom Support Help Bar Ã¢â€â‚¬Ã¢â€â‚¬
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: _buildSupportCard(context, isDark),
@@ -155,7 +155,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                   style: AppTextStyles.headingLarge.copyWith(
                     fontWeight: FontWeight.w900,
                     fontSize: 24.sp,
-                    color: isDark ? Colors.white : const Color(0xFF0F172A),
+                    color: isDark ? AppColors.surface : const Color(0xFF0F172A),
                   ),
                 ),
                 SizedBox(height: 8.h),
@@ -163,7 +163,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                   speciality.description ??
                       'Comprehensive expert diagnostics, advanced surgical care, treatment, and lifestyle preventative management.',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white60 : const Color(0xFF475569),
+                    color: isDark ? AppColors.surface60 : const Color(0xFF475569),
                     fontSize: 11.5.sp,
                     height: 1.3,
                   ),
@@ -180,7 +180,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : AppColors.surface,
         border: Border(bottom: BorderSide(color: AppColors.border(context))),
       ),
       child: Row(
@@ -409,7 +409,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: const Color(0xFF22C55E),
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(color: AppColors.surface, width: 2),
                             ),
                           ),
                         ),
@@ -451,7 +451,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                         ),
                         SizedBox(width: 2.w),
                         Text(
-                          '4.9 (128) â€¢ $exp+ Yrs',
+                          '4.9 (128) Ã¢â‚¬Â¢ $exp+ Yrs',
                           style: TextStyle(
                             color: Colors.grey.shade600,
                             fontSize: 7.sp,
@@ -492,7 +492,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                         child: Text(
                           'Book Now',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             fontSize: 9.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -633,7 +633,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
             height: 70.r,
             padding: EdgeInsets.all(6.r),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(16.r),
               boxShadow: [
                 BoxShadow(
@@ -741,7 +741,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10.r),
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -785,7 +785,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
               child: Text(
                 'Talk to Care Team',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontSize: 9.sp,
                   fontWeight: FontWeight.bold,
                 ),

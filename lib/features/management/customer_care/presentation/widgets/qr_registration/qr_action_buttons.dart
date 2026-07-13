@@ -102,9 +102,9 @@ class QrActionButtons extends StatelessWidget {
     required VoidCallback onTap,
     required bool isDark,
   }) {
-    final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBgColor = isDark ? const Color(0xFF1E293B) : AppColors.surface;
     final borderCol = isDark
-        ? Colors.white10
+        ? AppColors.surface10
         : Colors.black.withValues(alpha: 0.05);
 
     return InkWell(
@@ -145,14 +145,14 @@ class QrActionButtons extends StatelessWidget {
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 12.sp,
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? AppColors.surface : const Color(0xFF1E293B),
                     ),
                   ),
                   SizedBox(height: 2.h),
                   Text(
                     subtitle,
                     style: AppTextStyles.bodyXSmall.copyWith(
-                      color: isDark ? Colors.white38 : Colors.grey[500],
+                      color: isDark ? AppColors.surface38 : Colors.grey[500],
                       fontSize: 9.sp,
                     ),
                     maxLines: 1,

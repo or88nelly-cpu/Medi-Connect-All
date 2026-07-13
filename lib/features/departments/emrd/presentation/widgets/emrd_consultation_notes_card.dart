@@ -27,7 +27,7 @@ class EmrdConsultationNotesCard extends StatelessWidget {
             record['prescription_notes'],
             style: AppTextStyles.bodyMedium.copyWith(
               height: 1.4,
-              color: isDark ? Colors.white70 : AppColors.textPrimary(context),
+              color: isDark ? AppColors.surface70 : AppColors.textPrimary(context),
             ),
           )
         else
@@ -35,7 +35,7 @@ class EmrdConsultationNotesCard extends StatelessWidget {
             "No additional notes.",
             style: AppTextStyles.bodySmall.copyWith(
               fontStyle: FontStyle.italic,
-              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
             ),
           ),
       ],

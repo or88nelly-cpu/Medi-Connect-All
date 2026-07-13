@@ -26,7 +26,7 @@ class DoctorActionButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 4.w),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.terminalDarkCard : Colors.white,
+          color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: AppColors.border(context), width: 1),
         ),
@@ -46,7 +46,7 @@ class DoctorActionButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isDark ? Colors.white : AppColors.textPrimary(context),
+                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
                 fontSize: 9.sp,
                 fontWeight: FontWeight.w600,
               ),

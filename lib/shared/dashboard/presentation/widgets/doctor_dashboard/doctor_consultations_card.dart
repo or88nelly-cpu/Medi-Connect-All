@@ -95,7 +95,7 @@ class DoctorConsultationsCard extends StatelessWidget {
               if (todayApts.isEmpty) {
                 return Card(
                   elevation: 0,
-                  color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                  color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14.r),
                     side: BorderSide(color: AppColors.border(context)),
@@ -127,7 +127,7 @@ class DoctorConsultationsCard extends StatelessWidget {
 
               return Card(
                 elevation: 0,
-                color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14.r),
                   side: BorderSide(color: AppColors.border(context)),
@@ -222,7 +222,7 @@ class DoctorConsultationsCard extends StatelessWidget {
                                   timePeriod,
                                   style: TextStyle(
                                     color: isDark
-                                        ? Colors.white30
+                                        ? AppColors.surface30
                                         : Colors.grey[400],
                                     fontSize: 9.sp,
                                     fontWeight: FontWeight.bold,
@@ -245,7 +245,7 @@ class DoctorConsultationsCard extends StatelessWidget {
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark
-                              ? Colors.white
+                              ? AppColors.surface
                               : AppColors.textPrimary(context),
                         ),
                       ),
@@ -258,7 +258,7 @@ class DoctorConsultationsCard extends StatelessWidget {
                               apt.type,
                               style: TextStyle(
                                 color: isDark
-                                    ? Colors.white60
+                                    ? AppColors.surface60
                                     : Colors.grey[600],
                                 fontSize: 11.sp,
                               ),
@@ -268,7 +268,7 @@ class DoctorConsultationsCard extends StatelessWidget {
                               patientType,
                               style: TextStyle(
                                 color: isDark
-                                    ? Colors.white30
+                                    ? AppColors.surface30
                                     : Colors.grey[400],
                                 fontSize: 9.sp,
                                 fontWeight: FontWeight.w500,
@@ -301,7 +301,7 @@ class DoctorConsultationsCard extends StatelessWidget {
                           SizedBox(width: 8.w),
                           Icon(
                             Icons.chevron_right,
-                            color: isDark ? Colors.white30 : Colors.grey[400],
+                            color: isDark ? AppColors.surface30 : Colors.grey[400],
                             size: 16.r,
                           ),
                         ],

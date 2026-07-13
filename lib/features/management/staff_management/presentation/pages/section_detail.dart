@@ -110,7 +110,7 @@ class _SectionDetailState extends State<SectionDetail>
     final bgColor = isDark
         ? AppColors.terminalDarkBg
         : AppColors.terminalLightBg;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
@@ -165,7 +165,7 @@ class _SectionDetailState extends State<SectionDetail>
                       controller: _tabController,
                       indicatorColor: AppColors.primary,
                       indicatorWeight: 3.h,
-                      labelColor: isDark ? Colors.white : AppColors.primary,
+                      labelColor: isDark ? AppColors.surface : AppColors.primary,
                       unselectedLabelColor: labelColor,
                       labelStyle: AppTextStyles.labelMedium.copyWith(
                         fontWeight: FontWeight.bold,

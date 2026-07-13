@@ -145,11 +145,11 @@ class DoctorConsultsTab extends StatelessWidget {
                                   },
                                   icon: const Icon(
                                     Icons.video_call,
-                                    color: Colors.white,
+                                    color: AppColors.surface,
                                   ),
                                   label: const Text(
                                     "Launch Consult",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: AppColors.surface),
                                   ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.secondary,

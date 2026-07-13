@@ -19,7 +19,7 @@ class RecentConsultationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
+    final titleColor = isDark ? AppColors.surface : AppColors.textDarkNavy;
     final borderCol = AppColors.border(context);
     final cardBg = isDark
         ? const Color(0xFF0F172A)
@@ -89,7 +89,7 @@ class RecentConsultationCard extends StatelessWidget {
                       "No consultation records found with you.",
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
-                            ? Colors.white38
+                            ? AppColors.surface38
                             : AppColors.textSecondary(context),
                       ),
                     ),
@@ -124,7 +124,7 @@ class RecentConsultationCard extends StatelessWidget {
                               style: AppTextStyles.bodyLarge.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: isDark
-                                    ? Colors.white
+                                    ? AppColors.surface
                                     : AppColors.textDarkNavy,
                               ),
                             ),
@@ -238,7 +238,7 @@ class RecentConsultationCard extends StatelessWidget {
               Text(
                 label,
                 style: TextStyle(
-                  color: isDark ? Colors.white30 : Colors.grey[500],
+                  color: isDark ? AppColors.surface30 : Colors.grey[500],
                   fontSize: 8.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -246,7 +246,7 @@ class RecentConsultationCard extends StatelessWidget {
               Text(
                 value,
                 style: TextStyle(
-                  color: isDark ? Colors.white70 : AppColors.textDarkNavy,
+                  color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
                   fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
                 ),

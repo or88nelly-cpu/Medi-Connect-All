@@ -39,7 +39,7 @@ class PatientPremiumTab extends StatelessWidget {
                 style: AppTextStyles.headingLarge.copyWith(
                   fontWeight: FontWeight.w800,
                   fontSize: 24.sp,
-                  color: isDark ? Colors.white : AppColors.primary,
+                  color: isDark ? AppColors.surface : AppColors.primary,
                 ),
               ),
               SizedBox(height: 8.h),
@@ -115,9 +115,9 @@ class PatientPremiumTab extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    'Subscribe Now • ₹299/mo',
+                    'Subscribe Now â€¢ â‚¹299/mo',
                     style: AppTextStyles.buttonLarge.copyWith(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w800,
                     ),
@@ -143,7 +143,7 @@ class PatientPremiumTab extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.border(context)),
       ),
@@ -168,7 +168,7 @@ class PatientPremiumTab extends StatelessWidget {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 15.sp,
-                    color: isDark ? Colors.white : AppColors.textDarkNavy,
+                    color: isDark ? AppColors.surface : AppColors.textDarkNavy,
                   ),
                 ),
                 SizedBox(height: 4.h),

@@ -55,7 +55,7 @@ class _SpecialitySearchBarState extends State<SpecialitySearchBar> {
               curve: Curves.easeOut,
               height: 56.h,
               decoration: BoxDecoration(
-                color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                 borderRadius: BorderRadius.circular(20.r),
                 border: Border.all(
                   color: _focused
@@ -146,7 +146,7 @@ class _SpecialitySearchBarState extends State<SpecialitySearchBar> {
                   ),
                 ],
               ),
-              child: Icon(Icons.tune_rounded, color: Colors.white, size: 24.r),
+              child: Icon(Icons.tune_rounded, color: AppColors.surface, size: 24.r),
             ),
           ),
         ],

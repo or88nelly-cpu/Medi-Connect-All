@@ -28,7 +28,7 @@ class EmrdBottomBanner extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10.r),
             decoration: BoxDecoration(
-              color: isDark ? Colors.blue.withValues(alpha: 0.1) : Colors.white,
+              color: isDark ? Colors.blue.withValues(alpha: 0.1) : AppColors.surface,
               shape: BoxShape.circle,
               boxShadow: isDark
                   ? null
@@ -57,7 +57,7 @@ class EmrdBottomBanner extends StatelessWidget {
                   style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark
-                        ? Colors.white
+                        ? AppColors.surface
                         : AppColors.textPrimary(context),
                   ),
                 ),
@@ -67,7 +67,7 @@ class EmrdBottomBanner extends StatelessWidget {
                   style: AppTextStyles.bodySmall.copyWith(
                     fontSize: 10.sp,
                     color: isDark
-                        ? Colors.white54
+                        ? AppColors.surface54
                         : AppColors.textSecondary(context),
                   ),
                 ),
@@ -80,7 +80,7 @@ class EmrdBottomBanner extends StatelessWidget {
             onPressed: onCreateEMR,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.surface,
               elevation: 0,
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               shape: RoundedRectangleBorder(

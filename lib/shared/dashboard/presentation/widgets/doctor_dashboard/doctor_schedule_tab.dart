@@ -219,7 +219,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                   children: [
                     // Greeting Header
                     Text(
-                      "${_greetingMessage()}, Dr. ${docDisplayName.replaceAll("Dr", "").replaceAll("dr.", "").trim()} 👋",
+                      "${_greetingMessage()}, Dr. ${docDisplayName.replaceAll("Dr", "").replaceAll("dr.", "").trim()} ðŸ‘‹",
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
                             ? AppColors.terminalDarkLabel
@@ -235,7 +235,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                           AppStrings.appointments,
                           style: AppTextStyles.headingMedium.copyWith(
                             color: isDark
-                                ? Colors.white
+                                ? AppColors.surface
                                 : AppColors.textPrimary(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 18.sp,
@@ -245,7 +245,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                           icon: Icon(
                             Icons.refresh,
                             color: isDark
-                                ? Colors.white70
+                                ? AppColors.surface70
                                 : AppColors.textSecondary(context),
                             size: 24.r,
                           ),
@@ -289,7 +289,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                   color: _activeSubTab == 0
                                       ? (isDark
                                             ? const Color(0xFF0F6FFF)
-                                            : Colors.white)
+                                            : AppColors.surface)
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(10.r),
                                   boxShadow: _activeSubTab == 0
@@ -310,10 +310,10 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                   style: TextStyle(
                                     color: _activeSubTab == 0
                                         ? (isDark
-                                              ? Colors.white
+                                              ? AppColors.surface
                                               : const Color(0xFF0F6FFF))
                                         : (isDark
-                                              ? Colors.white60
+                                              ? AppColors.surface60
                                               : Colors.grey[600]),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp,
@@ -331,7 +331,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                   color: _activeSubTab == 1
                                       ? (isDark
                                             ? const Color(0xFF0F6FFF)
-                                            : Colors.white)
+                                            : AppColors.surface)
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(10.r),
                                   boxShadow: _activeSubTab == 1
@@ -352,10 +352,10 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                   style: TextStyle(
                                     color: _activeSubTab == 1
                                         ? (isDark
-                                              ? Colors.white
+                                              ? AppColors.surface
                                               : const Color(0xFF0F6FFF))
                                         : (isDark
-                                              ? Colors.white60
+                                              ? AppColors.surface60
                                               : Colors.grey[600]),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 12.sp,
@@ -394,7 +394,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                               decoration: BoxDecoration(
                                 color: isDark
                                     ? AppColors.terminalDarkCard
-                                    : Colors.white,
+                                    : AppColors.surface,
                                 borderRadius: BorderRadius.circular(12.r),
                                 border: Border.all(
                                   color: AppColors.border(context),
@@ -406,7 +406,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                     setState(() => _searchQuery = val),
                                 style: TextStyle(
                                   color: isDark
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : AppColors.textPrimary(context),
                                   fontSize: 12.sp,
                                 ),
@@ -421,7 +421,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                   prefixIcon: Icon(
                                     Icons.search,
                                     color: isDark
-                                        ? Colors.white54
+                                        ? AppColors.surface54
                                         : AppColors.textSecondary(context),
                                     size: 16.r,
                                   ),
@@ -440,7 +440,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                             decoration: BoxDecoration(
                               color: isDark
                                   ? AppColors.terminalDarkCard
-                                  : Colors.white,
+                                  : AppColors.surface,
                               borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
                                 color: AppColors.border(context),
@@ -449,7 +449,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                             child: Icon(
                               Icons.filter_list,
                               color: isDark
-                                  ? Colors.white70
+                                  ? AppColors.surface70
                                   : AppColors.textPrimary(context),
                               size: 20.r,
                             ),
@@ -479,7 +479,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                       status,
                                       style: TextStyle(
                                         color: isSelected
-                                            ? Colors.white
+                                            ? AppColors.surface
                                             : _getChipTextColor(status, isDark),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12.sp,
@@ -525,7 +525,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark
-                              ? Colors.white
+                              ? AppColors.surface
                               : AppColors.textPrimary(context),
                           fontSize: 14.sp,
                         ),
@@ -552,7 +552,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                     "No appointments found",
                                     style: AppTextStyles.titleMedium.copyWith(
                                       color: isDark
-                                          ? Colors.white54
+                                          ? AppColors.surface54
                                           : AppColors.textSecondary(context),
                                     ),
                                   ),
@@ -591,7 +591,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                                 timeVal,
                                                 style: TextStyle(
                                                   color: isDark
-                                                      ? Colors.white
+                                                      ? AppColors.surface
                                                       : AppColors.textPrimary(
                                                           context,
                                                         ),
@@ -699,7 +699,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: color,
-                border: Border.all(color: Colors.white, width: 2),
+                border: Border.all(color: AppColors.surface, width: 2),
                 boxShadow: [
                   BoxShadow(
                     color: color.withValues(alpha: 0.4),

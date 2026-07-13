@@ -256,7 +256,7 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
                 ],
               ),
               Text(
-                "â‚¹50",
+                "Ã¢â€šÂ¹50",
                 style: TextStyle(
                   color: AppColors.textPrimary(context),
                   fontWeight: FontWeight.w900,
@@ -293,9 +293,9 @@ class _ReviewConfirmStepState extends State<ReviewConfirmStep> {
           text,
           style: TextStyle(
             color: isSelected
-                ? Colors.white
+                ? AppColors.surface
                 : isDark
-                ? Colors.white60
+                ? AppColors.surface60
                 : Colors.black54,
             fontWeight: FontWeight.bold,
             fontSize: 9.sp,

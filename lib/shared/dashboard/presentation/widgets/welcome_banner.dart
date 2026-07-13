@@ -49,7 +49,7 @@ class WelcomeBanner extends StatelessWidget {
                           width: 80.w,
                           height: 12.h,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                         ),
@@ -58,7 +58,7 @@ class WelcomeBanner extends StatelessWidget {
                           width: 160.w,
                           height: 20.h,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                         ),
@@ -67,7 +67,7 @@ class WelcomeBanner extends StatelessWidget {
                           width: 120.w,
                           height: 16.h,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                         ),
@@ -81,7 +81,7 @@ class WelcomeBanner extends StatelessWidget {
                         width: 64.r,
                         height: 64.r,
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -90,7 +90,7 @@ class WelcomeBanner extends StatelessWidget {
                         width: 70.w,
                         height: 18.h,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           borderRadius: BorderRadius.circular(4.r),
                         ),
                       ),

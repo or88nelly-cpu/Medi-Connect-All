@@ -22,7 +22,7 @@ class DoctorStep extends StatelessWidget {
         child: Text(
           "Please select a specialty section first.",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+            color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
           ),
         ),
       );
@@ -37,7 +37,7 @@ class DoctorStep extends StatelessWidget {
             "Select Doctor",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : AppColors.textPrimary(context),
+              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
             ),
           ),
         ),
@@ -66,7 +66,7 @@ class DoctorStep extends StatelessWidget {
                       "No doctors configured in ${state.selectedSection!.name}.",
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
-                            ? Colors.white54
+                            ? AppColors.surface54
                             : AppColors.textSecondary(context),
                       ),
                     ),
@@ -124,15 +124,15 @@ class DoctorStep extends StatelessWidget {
                           style: AppTextStyles.bodyMedium.copyWith(
                             fontWeight: FontWeight.bold,
                             color: isDark
-                                ? Colors.white
+                                ? AppColors.surface
                                 : AppColors.textPrimary(context),
                           ),
                         ),
                         subtitle: Text(
-                          " 'General Specialist'}  |  Fee: â‚¹500",
+                          " 'General Specialist'}  |  Fee: Ã¢â€šÂ¹500",
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isDark
-                                ? Colors.white70
+                                ? AppColors.surface70
                                 : AppColors.textSecondary(context),
                           ),
                         ),

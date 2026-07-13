@@ -41,10 +41,10 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(18.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: isDark ? Colors.white10 : AppColors.border(context),
+          color: isDark ? AppColors.surface10 : AppColors.border(context),
         ),
         boxShadow: [
           BoxShadow(
@@ -66,7 +66,7 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 15.sp,
-                  color: isDark ? Colors.white : AppColors.textPrimary(context),
+                  color: isDark ? AppColors.surface : AppColors.textPrimary(context),
                 ),
               ),
             ],
@@ -76,7 +76,7 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
             "Visual trend analysis for digitization rate and storage utilization",
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11.sp,
-              color: isDark ? Colors.white30 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface30 : AppColors.textSecondary(context),
             ),
           ),
           SizedBox(height: 20.h),
@@ -134,7 +134,7 @@ class EMRDAnalyticsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paintGrid = Paint()
-      ..color = isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05)
+      ..color = isDark ? AppColors.surface10 : Colors.black.withValues(alpha: 0.05)
       ..strokeWidth = 1;
 
     final paintLine = Paint()
@@ -243,16 +243,16 @@ class EMRDAnalyticsPainter extends CustomPainter {
       final y = size.height - (values[i] / maxVal) * size.height;
 
       canvas.drawCircle(Offset(x, y), 5, Paint()..color = primaryColor);
-      canvas.drawCircle(Offset(x, y), 3, Paint()..color = Colors.white);
+      canvas.drawCircle(Offset(x, y), 3, Paint()..color = AppColors.surface);
 
       final y2 = size.height - (values2[i] / maxVal) * size.height;
       canvas.drawCircle(Offset(x, y2), 5, Paint()..color = secondaryColor);
-      canvas.drawCircle(Offset(x, y2), 3, Paint()..color = Colors.white);
+      canvas.drawCircle(Offset(x, y2), 3, Paint()..color = AppColors.surface);
 
       textPainter.text = TextSpan(
         text: labels[i],
         style: TextStyle(
-          color: isDark ? Colors.white30 : Colors.black38,
+          color: isDark ? AppColors.surface30 : Colors.black38,
           fontSize: 10,
           fontWeight: FontWeight.w500,
         ),

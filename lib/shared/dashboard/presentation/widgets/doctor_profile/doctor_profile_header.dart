@@ -76,12 +76,12 @@ class DoctorProfileHeader extends StatelessWidget {
               icon: Icon(
                 Icons.visibility_outlined,
                 size: 14.sp,
-                color: isDark ? Colors.white : AppColors.primary,
+                color: isDark ? AppColors.surface : AppColors.primary,
               ),
               label: Text(
                 "View Public Profile",
                 style: TextStyle(
-                  color: isDark ? Colors.white : AppColors.primary,
+                  color: isDark ? AppColors.surface : AppColors.primary,
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
                 ),

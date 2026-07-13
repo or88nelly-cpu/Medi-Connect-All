@@ -222,7 +222,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                 value: filter,
                                 dropdownColor: isDark
                                     ? AppColors.terminalDarkCard
-                                    : Colors.white,
+                                    : AppColors.surface,
                                 style: TextStyle(
                                   color: textColor,
                                   fontWeight: FontWeight.bold,

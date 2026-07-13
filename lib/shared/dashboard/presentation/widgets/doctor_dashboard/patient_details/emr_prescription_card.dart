@@ -24,7 +24,7 @@ class EmrPrescriptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
+    final titleColor = isDark ? AppColors.surface : AppColors.textDarkNavy;
     final borderCol = AppColors.border(context);
     final cardBg = isDark
         ? const Color(0xFF0F172A)
@@ -100,7 +100,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                       "No EMR Prescription details recorded yet.",
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: isDark
-                            ? Colors.white38
+                            ? AppColors.surface38
                             : AppColors.textSecondary(context),
                       ),
                     ),
@@ -136,7 +136,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: isDark
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : AppColors.textDarkNavy,
                                 ),
                               ),
@@ -192,12 +192,12 @@ class EmrPrescriptionCard extends StatelessWidget {
                             icon: Icon(
                               Icons.share_outlined,
                               size: 16.r,
-                              color: Colors.white,
+                              color: AppColors.surface,
                             ),
                             label: Text(
                               AppStrings.shareRx,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.surface,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -230,7 +230,7 @@ class EmrPrescriptionCard extends StatelessWidget {
       return Text(
         "No medicines prescribed.",
         style: TextStyle(
-          color: isDark ? Colors.white30 : AppColors.textSecondary(context),
+          color: isDark ? AppColors.surface30 : AppColors.textSecondary(context),
           fontSize: 12.sp,
         ),
       );
@@ -262,7 +262,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                 name,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white70 : AppColors.textDarkNavy,
+                  color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
                   fontSize: 12.sp,
                 ),
               ),
@@ -272,7 +272,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                   details,
                   style: TextStyle(
                     color: isDark
-                        ? Colors.white38
+                        ? AppColors.surface38
                         : AppColors.textSecondary(context),
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w500,

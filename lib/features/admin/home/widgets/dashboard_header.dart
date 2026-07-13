@@ -37,11 +37,11 @@ class DashboardHeader extends StatelessWidget {
                 padding: EdgeInsets.all(10.r),
                 decoration: BoxDecoration(
                   color: isDark
-                      ? Colors.white.withValues(alpha: 0.04)
+                      ? AppColors.surface.withValues(alpha: 0.04)
                       : AppColors.primary.withValues(alpha: 0.08),
                   border: Border.all(
                     color: isDark
-                        ? Colors.white.withValues(alpha: 0.12)
+                        ? AppColors.surface.withValues(alpha: 0.12)
                         : AppColors.primary.withValues(alpha: 0.2),
                     width: 1.5,
                   ),
@@ -50,7 +50,7 @@ class DashboardHeader extends StatelessWidget {
                 child: Icon(
                   Icons.menu_outlined,
                   size: 28.r,
-                  color: isDark ? Colors.white : AppColors.primary,
+                  color: isDark ? AppColors.surface : AppColors.primary,
                 ),
               ),
             ),
@@ -90,7 +90,7 @@ class DashboardHeader extends StatelessWidget {
                           Container(
                             width: 1.2,
                             height: 60.h,
-                            color: Colors.white24,
+                            color: AppColors.surface24,
                           ),
                           SizedBox(width: 24.w),
                         ],
@@ -124,7 +124,7 @@ class DashboardHeader extends StatelessWidget {
           height: 58.r,
           padding: EdgeInsets.all(5.r),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10)],
           ),
@@ -138,7 +138,7 @@ class DashboardHeader extends StatelessWidget {
             Text(
               "MediConnect",
               style: AppTextStyles.bodyLarge.copyWith(
-                color: Colors.white,
+                color: AppColors.surface,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
                 letterSpacing: -0.5,
@@ -174,9 +174,9 @@ class DashboardHeader extends StatelessWidget {
           ),
         ),
         Text(
-          "Super Admin 👋",
+          "Super Admin ðŸ‘‹",
           style: AppTextStyles.headingLarge.copyWith(
-            color: Colors.white,
+            color: AppColors.surface,
             fontSize: isSmall ? 22.sp : 28.sp,
             fontWeight: FontWeight.w700,
             height: 1.05,
@@ -208,10 +208,10 @@ class DashboardHeader extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.r),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.25),
+          color: AppColors.surface.withValues(alpha: 0.25),
           width: 1.2,
         ),
-        color: Colors.white.withValues(alpha: 0.12),
+        color: AppColors.surface.withValues(alpha: 0.12),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.08),
@@ -227,7 +227,7 @@ class DashboardHeader extends StatelessWidget {
           Text(
             month,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.85),
+              color: AppColors.surface.withValues(alpha: 0.85),
               fontSize: 12.sp,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.8,
@@ -237,13 +237,13 @@ class DashboardHeader extends StatelessWidget {
           Container(
             width: 44.r,
             height: 1,
-            color: Colors.white.withValues(alpha: 0.15),
+            color: AppColors.surface.withValues(alpha: 0.15),
           ),
           SizedBox(height: 2.h),
           Text(
             day,
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.surface,
               fontSize: 26.sp,
               fontWeight: FontWeight.bold,
               height: 1.1,
@@ -266,7 +266,7 @@ class DashboardHeader extends StatelessWidget {
         Text(
           dateStr,
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.surface,
             fontSize: 16.sp,
             fontWeight: FontWeight.w700,
           ),
@@ -274,7 +274,7 @@ class DashboardHeader extends StatelessWidget {
         Text(
           dayStr,
           style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.7),
+            color: AppColors.surface.withValues(alpha: 0.7),
             fontSize: 13.sp,
             fontWeight: FontWeight.w500,
           ),
@@ -292,9 +292,9 @@ class DashboardHeader extends StatelessWidget {
           height: 82.r,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: AppColors.surface,
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.8),
+              color: AppColors.surface.withValues(alpha: 0.8),
               width: 2.5,
             ),
           ),
@@ -321,7 +321,7 @@ class DashboardHeader extends StatelessWidget {
             width: 28.r,
             height: 28.r,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               shape: BoxShape.circle,
               boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],
             ),

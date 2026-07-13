@@ -575,7 +575,7 @@ class EmrdPdfHelper {
                       return pw.Padding(
                         padding: const pw.EdgeInsets.only(left: 10, bottom: 2),
                         child: pw.Text(
-                          "• ${test.trim()}",
+                          "â€¢ ${test.trim()}",
                           style: const pw.TextStyle(
                             fontSize: 8.5,
                             color: textColor,
@@ -1393,7 +1393,7 @@ class EmrdPdfHelper {
                   ),
                   pw.SizedBox(height: 4),
                   pw.Text(
-                    "Received from ${record['patient_name'] ?? 'Mr. Rohan Kumar'}, an amount of (INR) ${NumberFormat.simpleCurrency(name: 'INR').format(grandTotal).replaceAll('₹', '')} Only",
+                    "Received from ${record['patient_name'] ?? 'Mr. Rohan Kumar'}, an amount of (INR) ${NumberFormat.simpleCurrency(name: 'INR').format(grandTotal).replaceAll('â‚¹', '')} Only",
                     style: pw.TextStyle(
                       fontSize: 8.5,
                       fontWeight: pw.FontWeight.bold,
@@ -1492,7 +1492,7 @@ class EmrdPdfHelper {
             duration: const Duration(seconds: 5),
             action: SnackBarAction(
               label: 'OPEN',
-              textColor: Colors.white,
+              textColor: AppColors.surface,
               onPressed: () {
                 try {
                   Process.run('explorer.exe', [file.path]);

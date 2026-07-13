@@ -13,14 +13,14 @@ class UhidDisplayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF09121F) : AppColors.surface;
     final borderColor = isDark
         ? const Color(0xFF16253B)
         : const Color(0xFFD3E0EE);
     final labelColor = isDark
         ? const Color(0xFF5E98C7)
         : const Color(0xFF3F6D94);
-    final valueColor = isDark ? Colors.white : const Color(0xFF0F2C59);
+    final valueColor = isDark ? AppColors.surface : const Color(0xFF0F2C59);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),

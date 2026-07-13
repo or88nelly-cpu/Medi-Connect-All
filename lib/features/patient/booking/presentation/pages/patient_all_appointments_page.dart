@@ -88,8 +88,8 @@ class _PatientAllAppointmentsPageState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
@@ -159,7 +159,7 @@ class _PatientAllAppointmentsPageState
                                 filter,
                                 style: TextStyle(
                                   color: isSelected
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : Colors.grey.shade600,
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w900,
@@ -411,7 +411,7 @@ class _PatientAllAppointmentsPageState
   }
 }
 
-// â”€â”€ ValueListenableBuilder helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬ ValueListenableBuilder helper Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 class ValueListenableBuilder2<A, B> extends StatelessWidget {
   final ValueNotifier<A> first;
   final ValueNotifier<B> second;

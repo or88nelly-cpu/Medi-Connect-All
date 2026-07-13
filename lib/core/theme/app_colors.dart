@@ -18,6 +18,14 @@ class AppColors {
   static const Color accent = Color(0xFFFFB547);
   static const divider = Color(0xFFF3F4F6);
   static const surface = Colors.white;
+  static const surface70 = Colors.white70;
+  static const surface60 = Colors.white60;
+  static const surface54 = Colors.white54;
+  static const surface38 = Colors.white38;
+  static const surface30 = Colors.white30;
+  static const surface24 = Colors.white24;
+  static const surface12 = Colors.white12;
+  static const surface10 = Colors.white10;
 
   // Admin and branding colors
   static const adminPrimary = Color(0xFF7928CA);

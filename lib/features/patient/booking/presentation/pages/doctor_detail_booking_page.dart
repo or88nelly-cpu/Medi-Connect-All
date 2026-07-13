@@ -55,8 +55,8 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return BlocBuilder<SpecialityBookingBloc, SpecialityBookingState>(
       builder: (context, state) {
@@ -79,8 +79,8 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
 
         return CustomScaffold(
           // backgroundColor: AppColors.scaffold(context),
-          // â”€â”€ 1. Custom App Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-          // â”€â”€ Fixed Bottom Checkout Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+          // Ã¢â€â‚¬Ã¢â€â‚¬ 1. Custom App Bar Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+          // Ã¢â€â‚¬Ã¢â€â‚¬ Fixed Bottom Checkout Bar Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
           bottomNavigationBar: SafeArea(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -108,7 +108,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                       Row(
                         children: [
                           Text(
-                            'â‚¹${fee.toStringAsFixed(0)}',
+                            'Ã¢â€šÂ¹${fee.toStringAsFixed(0)}',
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w900,
@@ -177,7 +177,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                           Text(
                             'Proceed to Pay',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppColors.surface,
                               fontSize: 13.sp,
                               fontWeight: FontWeight.bold,
                             ),
@@ -185,7 +185,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                           SizedBox(width: 6.w),
                           Icon(
                             Icons.chevron_right_rounded,
-                            color: Colors.white,
+                            color: AppColors.surface,
                             size: 16.r,
                           ),
                         ],
@@ -201,11 +201,11 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // â”€â”€ 2. Stepper Progress Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 2. Stepper Progress Bar Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildStepper(isDark),
                 SizedBox(height: 20.h),
 
-                // â”€â”€ 3. Doctor Info Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 3. Doctor Info Card Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildDoctorInfoCard(
                   context,
                   user,
@@ -216,27 +216,27 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                 ),
                 SizedBox(height: 20.h),
 
-                // â”€â”€ 4. Statistics Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 4. Statistics Row Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildStatsRow(isDark),
                 SizedBox(height: 24.h),
 
-                // â”€â”€ 5. Choose Appointment Date â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 5. Choose Appointment Date Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildDatePicker(context, state, isDark, cardBg),
                 SizedBox(height: 24.h),
 
-                // â”€â”€ 6. Select Time Slot â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 6. Select Time Slot Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildTimeSlotGrid(context, state, isDark, cardBg),
                 SizedBox(height: 24.h),
 
-                // â”€â”€ 7. Reason for Visit â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 7. Reason for Visit Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildReasonForVisit(isDark, cardBg, textColor),
                 SizedBox(height: 24.h),
 
-                // â”€â”€ 8. Select Patient â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 8. Select Patient Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildSelectPatientSection(isDark, cardBg, textColor),
                 SizedBox(height: 24.h),
 
-                // â”€â”€ 9. Booking Summary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 9. Booking Summary Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildBookingSummary(
                   user,
                   selectedDateStr,
@@ -248,7 +248,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                 ),
                 SizedBox(height: 24.h),
 
-                // â”€â”€ 10. Payment Method â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // Ã¢â€â‚¬Ã¢â€â‚¬ 10. Payment Method Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                 _buildPaymentMethodSection(isDark, cardBg, textColor),
                 SizedBox(height: 32.h),
               ],
@@ -292,7 +292,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
           child: Text(
             step,
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.surface,
               fontSize: 10.sp,
               fontWeight: FontWeight.bold,
             ),
@@ -358,7 +358,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                   decoration: BoxDecoration(
                     color: const Color(0xFF22C55E),
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
+                    border: Border.all(color: AppColors.surface, width: 2),
                   ),
                 ),
               ),
@@ -619,7 +619,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                         isSelected ? 'Today' : _weekdayAbbr(d.weekday),
                         style: TextStyle(
                           fontSize: 9.sp,
-                          color: isSelected ? Colors.white70 : Colors.grey,
+                          color: isSelected ? AppColors.surface70 : Colors.grey,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -630,7 +630,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w900,
                           color: isSelected
-                              ? Colors.white
+                              ? AppColors.surface
                               : const Color(0xFF0F172A),
                         ),
                       ),
@@ -748,7 +748,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                               color: isBooked
                                   ? Colors.grey.shade400
                                   : (isSelected
-                                        ? Colors.white
+                                        ? AppColors.surface
                                         : const Color(0xFF0F172A)),
                             ),
                           ),
@@ -761,7 +761,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                               color: isBooked
                                   ? Colors.grey.shade400
                                   : (isSelected
-                                        ? Colors.white70
+                                        ? AppColors.surface70
                                         : const Color(0xFF22C55E)),
                             ),
                           ),
@@ -895,7 +895,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                         ),
                         SizedBox(height: 2.h),
                         Text(
-                          '$gender â€¢ 31 Years â€¢ AB+',
+                          '$gender Ã¢â‚¬Â¢ 31 Years Ã¢â‚¬Â¢ AB+',
                           style: TextStyle(
                             fontSize: 9.sp,
                             color: Colors.grey,
@@ -998,7 +998,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                   ),
                   _buildSummaryItem(
                     'Consultation Fee',
-                    'â‚¹${fee.toStringAsFixed(0)}',
+                    'Ã¢â€šÂ¹${fee.toStringAsFixed(0)}',
                     textColor,
                   ),
                   const Divider(color: Colors.grey, height: 16),
@@ -1014,7 +1014,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                         ),
                       ),
                       Text(
-                        'â‚¹${fee.toStringAsFixed(0)}',
+                        'Ã¢â€šÂ¹${fee.toStringAsFixed(0)}',
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w900,

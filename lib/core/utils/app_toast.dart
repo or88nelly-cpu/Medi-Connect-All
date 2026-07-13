@@ -73,13 +73,13 @@ class _ToastWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(icon, color: Colors.white, size: 24.r),
+              Icon(icon, color: AppColors.surface, size: 24.r),
               SizedBox(width: 12.w),
               Expanded(
                 child: Text(
                   message,
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

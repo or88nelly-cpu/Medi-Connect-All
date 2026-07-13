@@ -45,7 +45,7 @@ class WizardFooterButtons extends StatelessWidget {
               child: Text(
                 "Back",
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: isDark ? Colors.white70 : Colors.black87,
+                  color: isDark ? AppColors.surface70 : Colors.black87,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -81,7 +81,7 @@ class WizardFooterButtons extends StatelessWidget {
               child: Text(
                 AppStrings.next,
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -102,7 +102,7 @@ class WizardFooterButtons extends StatelessWidget {
               child: Text(
                 "Book Appointment",
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontWeight: FontWeight.bold,
                 ),
               ),

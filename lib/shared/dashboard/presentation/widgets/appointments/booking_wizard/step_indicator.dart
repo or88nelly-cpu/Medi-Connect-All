@@ -27,7 +27,7 @@ class StepIndicator extends StatelessWidget {
         final isCompleted = currentStep > idx;
         final isActive = currentStep == idx;
         final iconColor = isActive
-            ? Colors.white
+            ? AppColors.surface
             : (isCompleted
                   ? AppColors.success
                   : (AppColors.textSecondary(context).withValues(alpha: 0.5)));
@@ -80,7 +80,7 @@ class StepIndicator extends StatelessWidget {
                       color: isActive
                           ? AppColors.primary
                           : (isDark
-                                ? Colors.white70
+                                ? AppColors.surface70
                                 : AppColors.textSecondary(context)),
                     ),
                   ),

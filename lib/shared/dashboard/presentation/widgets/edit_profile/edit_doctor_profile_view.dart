@@ -277,7 +277,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
                       child: const Text(
                         "Save Changes",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -38,7 +38,7 @@ class EmrdDashboardHeader extends StatelessWidget {
               : [
                   const Color(0xFFDCEBFF),
                   const Color(0xFFF1F6FF),
-                  Colors.white,
+                  AppColors.surface,
                 ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -72,7 +72,7 @@ class EmrdDashboardHeader extends StatelessWidget {
               child: CustomPaint(
                 painter: ECGPainter(
                   color: isDark
-                      ? Colors.white.withValues(alpha: 0.03)
+                      ? AppColors.surface.withValues(alpha: 0.03)
                       : AppColors.primary.withValues(alpha: 0.07),
                 ),
               ),
@@ -93,11 +93,11 @@ class EmrdDashboardHeader extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(9.r),
                         decoration: BoxDecoration(
-                          color: isDark ? Colors.white10 : Colors.white,
+                          color: isDark ? AppColors.surface10 : AppColors.surface,
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: isDark
-                                ? Colors.white24
+                                ? AppColors.surface24
                                 : AppColors.primary.withValues(alpha: 0.15),
                             width: 1.2,
                           ),
@@ -112,7 +112,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                         child: Icon(
                           Icons.arrow_back_ios_new_rounded,
                           size: 16.r,
-                          color: isDark ? Colors.white : AppColors.primary,
+                          color: isDark ? AppColors.surface : AppColors.primary,
                         ),
                       ),
                     ),
@@ -127,7 +127,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                               fontSize: 21.sp,
                               fontWeight: FontWeight.w900,
                               color: isDark
-                                  ? Colors.white
+                                  ? AppColors.surface
                                   : const Color(0xFF1E293B),
                               letterSpacing: -0.5,
                             ),
@@ -139,7 +139,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                               fontSize: 11.5.sp,
                               fontWeight: FontWeight.w500,
                               color: isDark
-                                  ? Colors.white54
+                                  ? AppColors.surface54
                                   : const Color(0xFF64748B),
                             ),
                           ),
@@ -153,11 +153,11 @@ class EmrdDashboardHeader extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(9.r),
                           decoration: BoxDecoration(
-                            color: isDark ? Colors.white10 : Colors.white,
+                            color: isDark ? AppColors.surface10 : AppColors.surface,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: isDark
-                                  ? Colors.white10
+                                  ? AppColors.surface10
                                   : Colors.grey[100]!,
                             ),
                           ),
@@ -165,7 +165,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                             Icons.notifications_outlined,
                             size: 21.r,
                             color: isDark
-                                ? Colors.white
+                                ? AppColors.surface
                                 : const Color(0xFF475569),
                           ),
                         ),
@@ -181,7 +181,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                                 border: Border.all(
                                   color: isDark
                                       ? const Color(0xFF1E293B)
-                                      : Colors.white,
+                                      : AppColors.surface,
                                   width: 1.5,
                                 ),
                               ),
@@ -189,7 +189,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                                 "$alertCount",
                                 style: TextStyle(
                                   fontSize: 8.sp,
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -207,7 +207,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isDark ? Colors.white24 : Colors.white,
+                              color: isDark ? AppColors.surface24 : AppColors.surface,
                               width: 1.5,
                             ),
                             boxShadow: [
@@ -238,7 +238,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                               border: Border.all(
                                 color: isDark
                                     ? const Color(0xFF1E293B)
-                                    : Colors.white,
+                                    : AppColors.surface,
                                 width: 1.5,
                               ),
                             ),

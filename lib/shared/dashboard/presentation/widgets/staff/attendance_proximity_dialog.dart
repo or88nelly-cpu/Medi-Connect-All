@@ -84,7 +84,7 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.check_circle_rounded, color: Colors.white),
+                const Icon(Icons.check_circle_rounded, color: AppColors.surface),
                 SizedBox(width: 8.w),
                 const Text("Attendance marked successfully!"),
               ],
@@ -234,7 +234,7 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
               padding: EdgeInsets.all(12.r),
               decoration: BoxDecoration(
                 color: isDark
-                    ? Colors.white12
+                    ? AppColors.surface12
                     : Colors.black.withValues(alpha: 0.03),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(color: borderColor),
@@ -361,14 +361,14 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                           width: 16.r,
                           height: 16.r,
                           child: const CircularProgressIndicator(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             strokeWidth: 2,
                           ),
                         )
                       : const Text(
                           "Check In",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

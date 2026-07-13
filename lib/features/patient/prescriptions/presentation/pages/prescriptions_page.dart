@@ -137,12 +137,12 @@ class PrescriptionsPage extends StatelessWidget {
                       width: 44.r,
                       height: 44.r,
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
+                        color: AppColors.surface.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Icon(
                         Icons.medication_rounded,
-                        color: Colors.white,
+                        color: AppColors.surface,
                         size: 24.r,
                       ),
                     ),
@@ -154,7 +154,7 @@ class PrescriptionsPage extends StatelessWidget {
                           Text(
                             'Previous Consultations',
                             style: AppTextStyles.titleSmall.copyWith(
-                              color: Colors.white,
+                              color: AppColors.surface,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -162,7 +162,7 @@ class PrescriptionsPage extends StatelessWidget {
                           Text(
                             '${consultations.length} consultation${consultations.length != 1 ? 's' : ''} found',
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: Colors.white70,
+                              color: AppColors.surface70,
                             ),
                           ),
                         ],
@@ -217,7 +217,7 @@ class PrescriptionsPage extends StatelessWidget {
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 class _ConsultationCard extends StatelessWidget {
   final Map<String, dynamic> consultation;
   final VoidCallback onTap;
@@ -263,7 +263,7 @@ class _ConsultationCard extends StatelessWidget {
               ),
               child: Icon(
                 Icons.medical_services_rounded,
-                color: Colors.white,
+                color: AppColors.surface,
                 size: 22.r,
               ),
             ),

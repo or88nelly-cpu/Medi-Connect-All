@@ -87,9 +87,9 @@ class RecentActivityCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isDesktop = MediaQuery.of(context).size.width > 950;
 
-    final cardBg = isDark ? AppColors.darkCard : Colors.white;
+    final cardBg = isDark ? AppColors.darkCard : AppColors.surface;
     final borderCol = isDark
-        ? Colors.white.withValues(alpha: 0.04)
+        ? AppColors.surface.withValues(alpha: 0.04)
         : Colors.black.withValues(alpha: 0.03);
 
     final rawActivities = activities.isNotEmpty
@@ -131,7 +131,7 @@ class RecentActivityCard extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.history,
-                    color: isDark ? Colors.white : AppColors.textDarkNavy,
+                    color: isDark ? AppColors.surface : AppColors.textDarkNavy,
                     size: 20.r,
                   ),
                   SizedBox(width: 10.w),
@@ -139,7 +139,7 @@ class RecentActivityCard extends StatelessWidget {
                     AppStrings.recentActivity,
                     style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : AppColors.textDarkNavy,
+                      color: isDark ? AppColors.surface : AppColors.textDarkNavy,
                       fontSize: 16.sp,
                     ),
                   ),
@@ -250,7 +250,7 @@ class RecentActivityCard extends StatelessWidget {
                       left.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white70 : AppColors.textDarkNavy,
+                        color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
                         fontSize: 13.sp,
                       ),
                     ),
@@ -272,9 +272,9 @@ class RecentActivityCard extends StatelessWidget {
                 height: 9.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isDark ? Colors.white24 : Colors.black12,
+                  color: isDark ? AppColors.surface24 : Colors.black12,
                   border: Border.all(
-                    color: isDark ? Colors.white60 : Colors.black26,
+                    color: isDark ? AppColors.surface60 : Colors.black26,
                     width: 1.5,
                   ),
                 ),
@@ -308,7 +308,7 @@ class RecentActivityCard extends StatelessWidget {
                       right.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white70 : AppColors.textDarkNavy,
+                        color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
                         fontSize: 13.sp,
                       ),
                     ),
@@ -319,7 +319,7 @@ class RecentActivityCard extends StatelessWidget {
                       right.time,
                       style: AppTextStyles.bodySmall.copyWith(
                         fontSize: 11.sp,
-                        color: isDark ? Colors.white38 : Colors.black38,
+                        color: isDark ? AppColors.surface38 : Colors.black38,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -352,9 +352,9 @@ class RecentActivityCard extends StatelessWidget {
                 height: 9.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isDark ? Colors.white24 : Colors.black12,
+                  color: isDark ? AppColors.surface24 : Colors.black12,
                   border: Border.all(
-                    color: isDark ? Colors.white60 : Colors.black26,
+                    color: isDark ? AppColors.surface60 : Colors.black26,
                     width: 1.5,
                   ),
                 ),
@@ -389,7 +389,7 @@ class RecentActivityCard extends StatelessWidget {
                       item.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white70 : AppColors.textDarkNavy,
+                        color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
                         fontSize: 13.sp,
                       ),
                     ),
@@ -400,7 +400,7 @@ class RecentActivityCard extends StatelessWidget {
                       item.time,
                       style: AppTextStyles.bodySmall.copyWith(
                         fontSize: 11.sp,
-                        color: isDark ? Colors.white38 : Colors.black38,
+                        color: isDark ? AppColors.surface38 : Colors.black38,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

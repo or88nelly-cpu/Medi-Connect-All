@@ -89,8 +89,8 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
             }
           }
         },
-        icon: const Icon(Icons.add, color: Colors.white),
-        label: const Text("Add Staff", style: TextStyle(color: Colors.white)),
+        icon: const Icon(Icons.add, color: AppColors.surface),
+        label: const Text("Add Staff", style: TextStyle(color: AppColors.surface)),
         backgroundColor: AppColors.primary,
       ),
       body: Column(
@@ -127,7 +127,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                 child: Icon(
                   Icons.local_hospital_outlined,
                   size: 60.r,
-                  color: Colors.white,
+                  color: AppColors.surface,
                 ),
               ),
             ),

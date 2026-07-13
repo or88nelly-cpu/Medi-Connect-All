@@ -164,7 +164,7 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
                   controller: _feeController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    labelText: "Consultation Fee (â‚¹)",
+                    labelText: "Consultation Fee (Ã¢â€šÂ¹)",
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -224,7 +224,7 @@ class _DoctorStaffCreatePageState extends State<DoctorStaffCreatePage> {
                 ),
                 child: Text(
                   "Create ${widget.role.toUpperCase()}",
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppColors.surface),
                 ),
               ),
             ],

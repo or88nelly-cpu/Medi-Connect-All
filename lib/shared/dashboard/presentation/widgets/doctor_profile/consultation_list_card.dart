@@ -271,7 +271,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
                     color: isDark
-                        ? Colors.white.withValues(alpha: 0.02)
+                        ? AppColors.surface.withValues(alpha: 0.02)
                         : Colors.black.withValues(alpha: 0.01),
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
@@ -384,7 +384,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     ),
                     _buildVitalBadge(
                       "Fever",
-                      item["fever"] != null ? "${item["fever"]} °F" : "--",
+                      item["fever"] != null ? "${item["fever"]} Â°F" : "--",
                       Icons.thermostat_outlined,
                       Colors.teal,
                       isDark,
@@ -429,12 +429,12 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     },
                     icon: const Icon(
                       Icons.add_moderator_outlined,
-                      color: Colors.white,
+                      color: AppColors.surface,
                     ),
                     label: const Text(
                       "Record / Update Vitals",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -509,7 +509,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
           Text(
             "$label: ",
             style: TextStyle(
-              color: isDark ? Colors.white70 : Colors.black87,
+              color: isDark ? AppColors.surface70 : Colors.black87,
               fontSize: 11.sp,
               fontWeight: FontWeight.w500,
             ),
@@ -543,7 +543,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
               color: isDark
-                  ? Colors.white12
+                  ? AppColors.surface12
                   : Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(6.r),
               border: Border.all(color: borderColor.withValues(alpha: 0.4)),
@@ -554,7 +554,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                 Text(
                   "${entry.key}: ",
                   style: TextStyle(
-                    color: isDark ? Colors.white70 : Colors.black87,
+                    color: isDark ? AppColors.surface70 : Colors.black87,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -709,7 +709,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style: TextStyle(color: textColor),
                   decoration: InputDecoration(
-                    labelText: "Fever / Temp (°F)",
+                    labelText: "Fever / Temp (Â°F)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 98.6",
                     hintStyle: TextStyle(
@@ -1370,12 +1370,12 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
         ),
         child: Row(
           children: [
-            Icon(icon, size: 12.sp, color: isSelected ? Colors.white : color),
+            Icon(icon, size: 12.sp, color: isSelected ? AppColors.surface : color),
             SizedBox(width: 4.w),
             Text(
               mode,
               style: TextStyle(
-                color: isSelected ? Colors.white : color,
+                color: isSelected ? AppColors.surface : color,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.bold,
               ),

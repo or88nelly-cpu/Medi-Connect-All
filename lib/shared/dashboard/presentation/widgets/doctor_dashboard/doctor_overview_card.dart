@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -29,7 +30,7 @@ class DoctorOverviewCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
@@ -55,7 +56,7 @@ class DoctorOverviewCard extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
-                child: Icon(icon, color: Colors.white, size: 18.r),
+                child: Icon(icon, color: AppColors.surface, size: 18.r),
               ),
               SizedBox(width: 8.w),
               Expanded(
@@ -77,7 +78,7 @@ class DoctorOverviewCard extends StatelessWidget {
           Text(
             count,
             style: AppTextStyles.headingLarge.copyWith(
-              color: isDark ? Colors.white : Colors.black87,
+              color: isDark ? AppColors.surface : Colors.black87,
               fontWeight: FontWeight.w900,
               fontSize: 28.sp,
             ),
@@ -87,7 +88,7 @@ class DoctorOverviewCard extends StatelessWidget {
           Text(
             subtitle,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : Colors.grey[500],
+              color: isDark ? AppColors.surface38 : Colors.grey[500],
               fontSize: 10.sp,
             ),
           ),

@@ -160,10 +160,10 @@ class DoctorProfileTab extends StatelessWidget {
                       }
                     }
                   },
-                  icon: const Icon(Icons.edit, color: Colors.white),
+                  icon: const Icon(Icons.edit, color: AppColors.surface),
                   label: const Text(
                     "Edit Profile",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.surface),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -179,10 +179,10 @@ class DoctorProfileTab extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () => _showLogoutDialog(context),
-                  icon: const Icon(Icons.logout, color: Colors.white),
+                  icon: const Icon(Icons.logout, color: AppColors.surface),
                   label: const Text(
                     "Sign Out",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.surface),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.error,

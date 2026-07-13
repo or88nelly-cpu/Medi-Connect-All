@@ -54,7 +54,7 @@ class RegistrationProgressHeader extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  "Step $currentStep of $totalSteps  •  $stepTitle",
+                  "Step $currentStep of $totalSteps  â€¢  $stepTitle",
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -112,11 +112,11 @@ class RegistrationProgressHeader extends StatelessWidget {
       ),
       child: Center(
         child: isCompleted
-            ? Icon(Icons.check, color: Colors.white, size: 14.r)
+            ? Icon(Icons.check, color: AppColors.surface, size: 14.r)
             : Text(
                 "$step",
                 style: TextStyle(
-                  color: isActive ? Colors.white : Colors.grey.shade600,
+                  color: isActive ? AppColors.surface : Colors.grey.shade600,
                   fontWeight: FontWeight.bold,
                   fontSize: 10.sp,
                 ),

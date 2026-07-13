@@ -13,7 +13,7 @@ class DepartmentCardShimmer extends StatelessWidget {
       highlightColor: AppColors.shimmerHighlight(context),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: Column(
@@ -23,14 +23,14 @@ class DepartmentCardShimmer extends StatelessWidget {
               width: 56.w,
               height: 56.w,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(16.r),
               ),
             ),
 
             SizedBox(height: 14.h),
 
-            Container(width: 90.w, height: 12.h, color: Colors.white),
+            Container(width: 90.w, height: 12.h, color: AppColors.surface),
           ],
         ),
       ),

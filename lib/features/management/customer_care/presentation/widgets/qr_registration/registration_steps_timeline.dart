@@ -70,7 +70,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
             "How it works for patients",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : const Color(0xFF1E293B),
+              color: isDark ? AppColors.surface : const Color(0xFF1E293B),
             ),
           ),
           SizedBox(height: 20.h),
@@ -97,7 +97,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
     final step = _steps[idx];
     final isLast = idx == _steps.length - 1;
     final dotColor = AppColors.primary;
-    final connectorColor = isDark ? Colors.white10 : Colors.grey[200]!;
+    final connectorColor = isDark ? AppColors.surface10 : Colors.grey[200]!;
 
     return Column(
       children: [
@@ -122,7 +122,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: isDark
-                          ? Colors.white10
+                          ? AppColors.surface10
                           : Colors.black.withValues(alpha: 0.05),
                     ),
                   ),
@@ -144,7 +144,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     child: Text(
                       step['step']!,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontSize: 8.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -172,7 +172,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 12.sp,
-                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                  color: isDark ? AppColors.surface : const Color(0xFF1E293B),
                 ),
               ),
               SizedBox(height: 4.h),
@@ -180,7 +180,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                 step['desc']!,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodyXSmall.copyWith(
-                  color: isDark ? Colors.white38 : Colors.grey[500],
+                  color: isDark ? AppColors.surface38 : Colors.grey[500],
                   fontSize: 10.sp,
                 ),
               ),
@@ -194,7 +194,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
   Widget _buildVerticalStep(BuildContext context, int idx, bool isDark) {
     final step = _steps[idx];
     final isLast = idx == _steps.length - 1;
-    final connectorColor = isDark ? Colors.white10 : Colors.grey[200]!;
+    final connectorColor = isDark ? AppColors.surface10 : Colors.grey[200]!;
 
     return IntrinsicHeight(
       child: Row(
@@ -232,7 +232,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                       child: Text(
                         step['step']!,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           fontSize: 8.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -259,14 +259,14 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 13.sp,
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? AppColors.surface : const Color(0xFF1E293B),
                     ),
                   ),
                   SizedBox(height: 4.h),
                   Text(
                     step['desc']!,
                     style: AppTextStyles.bodyXSmall.copyWith(
-                      color: isDark ? Colors.white38 : Colors.grey[500],
+                      color: isDark ? AppColors.surface38 : Colors.grey[500],
                       fontSize: 11.sp,
                     ),
                   ),

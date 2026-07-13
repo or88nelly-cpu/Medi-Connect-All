@@ -55,7 +55,7 @@ class PatientHeaderCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 2.r),
+              border: Border.all(color: AppColors.surface, width: 2.r),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.08),
@@ -87,16 +87,16 @@ class PatientHeaderCard extends StatelessWidget {
                   displayName,
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white : AppColors.textDarkNavy,
+                    color: isDark ? AppColors.surface : AppColors.textDarkNavy,
                     fontSize: 18.sp,
                   ),
                 ),
                 SizedBox(height: 3.h),
                 Text(
-                  "${AppStrings.agePrefix}$ageStr  •  ${AppStrings.genderPrefix}$gender",
+                  "${AppStrings.agePrefix}$ageStr  â€¢  ${AppStrings.genderPrefix}$gender",
                   style: AppTextStyles.bodySmall.copyWith(
                     color: isDark
-                        ? Colors.white70
+                        ? AppColors.surface70
                         : AppColors.textSecondary(context),
                     fontWeight: FontWeight.w500,
                   ),

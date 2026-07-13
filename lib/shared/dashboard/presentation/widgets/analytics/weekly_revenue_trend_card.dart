@@ -58,7 +58,7 @@ class WeeklyRevenueTrendCard extends StatelessWidget {
           ),
           SizedBox(height: 4.h),
           Text(
-            "₹ ${weeklyRevenue.toStringAsFixed(2)}",
+            "â‚¹ ${weeklyRevenue.toStringAsFixed(2)}",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
               color: textColor,
@@ -128,7 +128,7 @@ class _RevenueChartPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     final dotOutlinePaint = Paint()
-      ..color = Colors.white
+      ..color = AppColors.surface
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 

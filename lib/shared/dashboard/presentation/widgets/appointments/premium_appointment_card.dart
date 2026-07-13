@@ -172,7 +172,7 @@ class PremiumAppointmentCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.border(context), width: 1),
         boxShadow: isDark
@@ -194,7 +194,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             height: 46.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isDark ? Colors.white12 : const Color(0xFFF3F4F6),
+              color: isDark ? AppColors.surface12 : const Color(0xFFF3F4F6),
               border: Border.all(color: AppColors.border(context), width: 1),
             ),
             child: ClipOval(
@@ -220,7 +220,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 14.sp,
                     color: isDark
-                        ? Colors.white
+                        ? AppColors.surface
                         : AppColors.textPrimary(context),
                   ),
                 ),
@@ -233,7 +233,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                       Icons.healing_outlined,
                       size: 12.r,
                       color: isDark
-                          ? Colors.white70
+                          ? AppColors.surface70
                           : AppColors.textSecondary(context),
                     ),
                     SizedBox(width: 4.w),
@@ -243,7 +243,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11.sp,
                           color: isDark
-                              ? Colors.white60
+                              ? AppColors.surface60
                               : AppColors.textSecondary(context),
                         ),
                         maxLines: 1,
@@ -261,7 +261,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                       Icons.person_outline,
                       size: 12.r,
                       color: isDark
-                          ? Colors.white70
+                          ? AppColors.surface70
                           : AppColors.textSecondary(context),
                     ),
                     SizedBox(width: 4.w),
@@ -271,7 +271,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11.sp,
                           color: isDark
-                              ? Colors.white60
+                              ? AppColors.surface60
                               : AppColors.textSecondary(context),
                         ),
                         maxLines: 1,
@@ -318,7 +318,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                       Icons.more_vert_outlined,
                       size: 16.r,
                       color: isDark
-                          ? Colors.white70
+                          ? AppColors.surface70
                           : AppColors.textSecondary(context),
                     ),
                     padding: EdgeInsets.zero,
@@ -423,7 +423,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     Icons.access_time,
                     size: 11.r,
                     color: isDark
-                        ? Colors.white60
+                        ? AppColors.surface60
                         : AppColors.textSecondary(context),
                   ),
                   SizedBox(width: 4.w),
@@ -431,7 +431,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     appointment.appointmentTime,
                     style: TextStyle(
                       color: isDark
-                          ? Colors.white70
+                          ? AppColors.surface70
                           : AppColors.textPrimary(context),
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w600,
@@ -444,7 +444,7 @@ class PremiumAppointmentCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.white12 : const Color(0xFFEFF6FF),
+                  color: isDark ? AppColors.surface12 : const Color(0xFFEFF6FF),
                   borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Text(
@@ -478,7 +478,7 @@ class PremiumAppointmentCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+        backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         title: Row(
           children: [
             Icon(Icons.assignment_outlined, color: AppColors.primary),
@@ -582,7 +582,7 @@ class PremiumAppointmentCard extends StatelessWidget {
               _buildInfoRow(
                 AppStrings.temperature,
                 appointment.fever != null && appointment.fever!.isNotEmpty
-                    ? "${appointment.fever} Â°F"
+                    ? "${appointment.fever} Ã‚Â°F"
                     : "N/A",
                 isDark,
                 context,
@@ -601,7 +601,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                   style: AppTextStyles.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark
-                        ? Colors.white38
+                        ? AppColors.surface38
                         : AppColors.textSecondary(context),
                   ),
                 ),
@@ -779,7 +779,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                   ),
                   style: TextStyle(color: textColor),
                   decoration: InputDecoration(
-                    labelText: "Fever / Temp (Â°F)",
+                    labelText: "Fever / Temp (Ã‚Â°F)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 98.6",
                     hintStyle: TextStyle(

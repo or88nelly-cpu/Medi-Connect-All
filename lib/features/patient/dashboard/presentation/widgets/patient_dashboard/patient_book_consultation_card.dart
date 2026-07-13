@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -43,12 +44,12 @@ class PatientBookConsultationCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(10.r),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.15),
+                  color: AppColors.surface.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.medical_services_outlined,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 24,
                 ),
               ),
@@ -60,7 +61,7 @@ class PatientBookConsultationCard extends StatelessWidget {
                     Text(
                       "Book Consultation",
                       style: AppTextStyles.titleMedium.copyWith(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.bold,
                         fontSize: 16.sp,
                       ),
@@ -69,7 +70,7 @@ class PatientBookConsultationCard extends StatelessWidget {
                     Text(
                       "Consult our specialists online or in-person",
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.white.withValues(alpha: 0.8),
+                        color: AppColors.surface.withValues(alpha: 0.8),
                         fontSize: 11.sp,
                       ),
                     ),
@@ -85,7 +86,7 @@ class PatientBookConsultationCard extends StatelessWidget {
               Text(
                 "Find doctors & instant slots",
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.7),
+                  color: AppColors.surface.withValues(alpha: 0.7),
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -93,7 +94,7 @@ class PatientBookConsultationCard extends StatelessWidget {
               ElevatedButton(
                 onPressed: () => _openBookingSheet(context),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColors.surface,
                   foregroundColor: const Color(0xFF3B5BFF),
                   elevation: 0,
                   padding: EdgeInsets.symmetric(

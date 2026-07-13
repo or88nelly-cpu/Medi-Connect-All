@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -39,12 +40,12 @@ class MedicalCertificatesCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.r),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
+                  color: AppColors.surface.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Icon(
                   Icons.assignment_outlined,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 18.r,
                 ),
               ),
@@ -53,7 +54,7 @@ class MedicalCertificatesCard extends StatelessWidget {
                 child: Text(
                   "Medical Certificates",
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: AppColors.surface.withValues(alpha: 0.9),
                     fontWeight: FontWeight.bold,
                     fontSize: 11.sp,
                   ),
@@ -67,7 +68,7 @@ class MedicalCertificatesCard extends StatelessWidget {
           Text(
             count,
             style: AppTextStyles.headingLarge.copyWith(
-              color: Colors.white,
+              color: AppColors.surface,
               fontWeight: FontWeight.w900,
               fontSize: 28.sp,
             ),
@@ -76,7 +77,7 @@ class MedicalCertificatesCard extends StatelessWidget {
           Text(
             "Certificates Issued",
             style: AppTextStyles.bodySmall.copyWith(
-              color: Colors.white.withValues(alpha: 0.7),
+              color: AppColors.surface.withValues(alpha: 0.7),
               fontSize: 10.sp,
             ),
           ),
@@ -87,7 +88,7 @@ class MedicalCertificatesCard extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
+                color: AppColors.surface.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8.r),
               ),
               child: Row(
@@ -96,7 +97,7 @@ class MedicalCertificatesCard extends StatelessWidget {
                   Text(
                     "View All",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -104,7 +105,7 @@ class MedicalCertificatesCard extends StatelessWidget {
                   SizedBox(width: 4.w),
                   Icon(
                     Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
+                    color: AppColors.surface,
                     size: 8.r,
                   ),
                 ],

@@ -60,8 +60,8 @@ class PatientAppointmentDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     var displayStatus = appointment.status;
     var isExpiredPending = false;
@@ -208,7 +208,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
                             ),
                             SizedBox(width: 4.w),
                             Text(
-                              'MediConnect Hospital â€¢ OPD Room 3A',
+                              'MediConnect Hospital Ã¢â‚¬Â¢ OPD Room 3A',
                               style: TextStyle(
                                 fontSize: 8.5.sp,
                                 color: Colors.grey,
@@ -266,7 +266,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
                   ),
                   AppointmentDetailRow(
                     label: 'Consultation Fee',
-                    value: 'â‚¹${appointment.amount ?? 500}',
+                    value: 'Ã¢â€šÂ¹${appointment.amount ?? 500}',
                     valColor: AppColors.primary,
                   ),
                 ],
@@ -332,7 +332,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
                         if (appointment.fever != null)
                           AppointmentDetailRow(
                             label: 'Body Temperature',
-                            value: '${appointment.fever} Â°F',
+                            value: '${appointment.fever} Ã‚Â°F',
                             valColor: textColor,
                           ),
                         if (appointment.headCircumference != null)

@@ -195,11 +195,11 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
                     extra: widget.user,
                   );
                 },
-                icon: Icon(Icons.tune, size: 12.sp, color: Colors.white),
+                icon: Icon(Icons.tune, size: 12.sp, color: AppColors.surface),
                 label: Text(
                   "Manage Slots",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.bold,
                   ),

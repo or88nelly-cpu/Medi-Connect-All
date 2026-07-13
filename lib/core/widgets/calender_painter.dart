@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CalendarPainter extends CustomPainter {
@@ -29,7 +30,7 @@ class CalendarPainter extends CustomPainter {
     // Glass Overlay
     canvas.drawRRect(
       bodyRect,
-      Paint()..color = Colors.white.withValues(alpha: .08),
+      Paint()..color = AppColors.surface.withValues(alpha: .08),
     );
 
     // Border
@@ -38,7 +39,7 @@ class CalendarPainter extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.5
-        ..color = Colors.white.withValues(alpha: .3),
+        ..color = AppColors.surface.withValues(alpha: .3),
     );
 
     // Top Header Shape

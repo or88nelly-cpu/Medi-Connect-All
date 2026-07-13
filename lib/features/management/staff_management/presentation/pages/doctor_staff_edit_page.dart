@@ -169,7 +169,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                   controller: _feeController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    labelText: "Consultation Fee (â‚¹)",
+                    labelText: "Consultation Fee (Ã¢â€šÂ¹)",
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -227,7 +227,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                 ),
                 child: const Text(
                   "Save Changes",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: AppColors.surface),
                 ),
               ),
             ],

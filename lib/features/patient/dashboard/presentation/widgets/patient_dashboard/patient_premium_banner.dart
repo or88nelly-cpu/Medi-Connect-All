@@ -37,7 +37,7 @@ class PatientPremiumBanner extends StatelessWidget {
                 opacity: 0.12,
                 child: Icon(
                   Icons.workspace_premium_outlined,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 160.r,
                 ),
               ),
@@ -81,14 +81,14 @@ class PatientPremiumBanner extends StatelessWidget {
                               style: AppTextStyles.titleMedium.copyWith(
                                 fontWeight: FontWeight.w900,
                                 fontSize: 16.sp,
-                                color: Colors.white,
+                                color: AppColors.surface,
                               ),
                             ),
                             SizedBox(height: 2.h),
                             Text(
                               'Unlock exclusive benefits and healthcare insights.',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: Colors.white.withValues(alpha: 0.85),
+                                color: AppColors.surface.withValues(alpha: 0.85),
                                 fontSize: 10.5.sp,
                               ),
                             ),
@@ -133,7 +133,7 @@ class PatientPremiumBanner extends StatelessWidget {
                               Text(
                                 'Subscribe',
                                 style: AppTextStyles.bodySmall.copyWith(
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.w900,
                                 ),
@@ -141,7 +141,7 @@ class PatientPremiumBanner extends StatelessWidget {
                               SizedBox(width: 4.w),
                               Icon(
                                 Icons.chevron_right_rounded,
-                                color: Colors.white,
+                                color: AppColors.surface,
                                 size: 14.r,
                               ),
                             ],
@@ -152,7 +152,7 @@ class PatientPremiumBanner extends StatelessWidget {
                   ),
 
                   SizedBox(height: 18.h),
-                  const Divider(color: Colors.white24, height: 1),
+                  const Divider(color: AppColors.surface24, height: 1),
                   SizedBox(height: 14.h),
 
                   // Bottom Features Row
@@ -194,7 +194,7 @@ class PatientPremiumBanner extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.bodySmall.copyWith(
-            color: Colors.white.withValues(alpha: 0.9),
+            color: AppColors.surface.withValues(alpha: 0.9),
             fontSize: 8.sp,
             fontWeight: FontWeight.bold,
           ),

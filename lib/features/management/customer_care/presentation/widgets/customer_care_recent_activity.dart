@@ -197,9 +197,9 @@ class CustomerCareRecentActivity extends StatelessWidget {
                 height: 9.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isDark ? Colors.white24 : Colors.black12,
+                  color: isDark ? AppColors.surface24 : Colors.black12,
                   border: Border.all(
-                    color: isDark ? Colors.white60 : Colors.black26,
+                    color: isDark ? AppColors.surface60 : Colors.black26,
                     width: 1.5,
                   ),
                 ),

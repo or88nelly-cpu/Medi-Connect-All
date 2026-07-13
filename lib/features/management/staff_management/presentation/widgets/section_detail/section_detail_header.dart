@@ -173,11 +173,11 @@ class SectionDetailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final subtitleColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
-    final iconColor = isDark ? Colors.white : AppColors.primary;
+    final iconColor = isDark ? AppColors.surface : AppColors.primary;
     final actionBg = isDark
         ? AppColors.terminalDarkCard
         : AppColors.terminalLightCard;
@@ -224,13 +224,13 @@ class SectionDetailHeader extends StatelessWidget {
                   child: CustomImageView(
                     imagePath: imageAsset,
                     fit: BoxFit.contain,
-                    color: isDark ? Colors.white : AppColors.primary,
+                    color: isDark ? AppColors.surface : AppColors.primary,
                   ),
                 );
               }
               return Icon(
                 getDepartmentIcon(department.name),
-                color: isDark ? Colors.white : AppColors.primary,
+                color: isDark ? AppColors.surface : AppColors.primary,
                 size: 22.r,
               );
             },

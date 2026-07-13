@@ -50,7 +50,7 @@ class PaymentCheckoutBar extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '₹${fee.toStringAsFixed(0)}',
+                        'â‚¹${fee.toStringAsFixed(0)}',
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w900,
@@ -80,7 +80,7 @@ class PaymentCheckoutBar extends StatelessWidget {
                   CommonButton(
                     text: isPayLater
                         ? 'Confirm Booking'
-                        : 'Pay ₹${fee.toStringAsFixed(0)}',
+                        : 'Pay â‚¹${fee.toStringAsFixed(0)}',
                     isLoading: isLoading,
                     width: 170.w,
                     height: 48.h,
@@ -89,7 +89,7 @@ class PaymentCheckoutBar extends StatelessWidget {
                     onPressed: onCheckoutPressed,
                     icon: Icon(
                       Icons.chevron_right_rounded,
-                      color: Colors.white,
+                      color: AppColors.surface,
                       size: 16.r,
                     ),
                   ),

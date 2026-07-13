@@ -24,14 +24,14 @@ class InsuranceInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF09121F) : AppColors.surface;
     final borderColor = isDark
         ? const Color(0xFF16253B)
         : const Color(0xFFD3E0EE);
     final labelColor = isDark
         ? const Color(0xFF5E98C7)
         : const Color(0xFF3F6D94);
-    final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
+    final inputTextColor = isDark ? AppColors.surface : const Color(0xFF0C192E);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -51,7 +51,7 @@ class InsuranceInfoSection extends StatelessWidget {
                 "Insurance Information",
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                  color: isDark ? AppColors.surface : const Color(0xFF0F2C59),
                 ),
               ),
             ],
@@ -200,16 +200,16 @@ class InsuranceInfoSection extends StatelessWidget {
               ? ThemeData.dark().copyWith(
                   colorScheme: const ColorScheme.dark(
                     primary: AppColors.primary,
-                    onPrimary: Colors.white,
+                    onPrimary: AppColors.surface,
                     surface: Color(0xFF09121F),
-                    onSurface: Colors.white,
+                    onSurface: AppColors.surface,
                   ),
                 )
               : ThemeData.light().copyWith(
                   colorScheme: const ColorScheme.light(
                     primary: AppColors.primary,
-                    onPrimary: Colors.white,
-                    surface: Colors.white,
+                    onPrimary: AppColors.surface,
+                    surface: AppColors.surface,
                     onSurface: Colors.black87,
                   ),
                 ),

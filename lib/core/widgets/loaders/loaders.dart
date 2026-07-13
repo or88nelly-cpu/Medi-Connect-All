@@ -74,7 +74,7 @@ class ShimmerLoader extends StatelessWidget {
                 width: 50.w,
                 height: 50.h,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
@@ -83,14 +83,14 @@ class ShimmerLoader extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(width: 150.w, height: 16.h, color: Colors.white),
+                    Container(width: 150.w, height: 16.h, color: AppColors.surface),
                     SizedBox(height: 8.h),
-                    Container(width: 100.w, height: 12.h, color: Colors.white),
+                    Container(width: 100.w, height: 12.h, color: AppColors.surface),
                     SizedBox(height: 8.h),
                     Container(
                       width: double.infinity,
                       height: 12.h,
-                      color: Colors.white,
+                      color: AppColors.surface,
                     ),
                   ],
                 ),

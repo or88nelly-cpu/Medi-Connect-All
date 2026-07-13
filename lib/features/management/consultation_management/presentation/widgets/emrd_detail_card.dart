@@ -40,7 +40,7 @@ class EmrdDetailCard extends StatelessWidget {
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark
-                      ? Colors.white70
+                      ? AppColors.surface70
                       : AppColors.textPrimary(context),
                 ),
               ),
@@ -80,7 +80,7 @@ class EmrdInfoRow extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
             ),
           ),
           Text(

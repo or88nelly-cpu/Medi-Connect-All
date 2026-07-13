@@ -70,13 +70,13 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                   children: [
                     _buildStatCard(
                       "Total Revenue",
-                      "₹ ${totalRevenue.toStringAsFixed(2)}",
+                      "â‚¹ ${totalRevenue.toStringAsFixed(2)}",
                       AppColors.primary,
                     ),
                     SizedBox(width: 12.w),
                     _buildStatCard(
                       "Pending Bills",
-                      "₹ ${pendingBills.toStringAsFixed(2)}",
+                      "â‚¹ ${pendingBills.toStringAsFixed(2)}",
                       AppColors.warning,
                     ),
                   ],
@@ -168,7 +168,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "₹ ${inv.amount.toStringAsFixed(2)}",
+                                      "â‚¹ ${inv.amount.toStringAsFixed(2)}",
                                       style: AppTextStyles.titleMedium.copyWith(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14.sp,
@@ -265,7 +265,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.r),
           ),
-          backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+          backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
           child: Container(
             padding: EdgeInsets.all(24.r),
             width: 320.w,
@@ -350,7 +350,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                         ),
                       ),
                       Text(
-                        "₹ ${invoice.amount.toStringAsFixed(2)}",
+                        "â‚¹ ${invoice.amount.toStringAsFixed(2)}",
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
@@ -375,7 +375,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                     child: const Text(
                       "Done",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

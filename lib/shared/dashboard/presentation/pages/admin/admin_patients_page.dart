@@ -423,7 +423,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   children: [
                     CircleAvatar(
                       radius: 36.r,
-                      backgroundColor: isDark ? Colors.white12 : Colors.black12,
+                      backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(
@@ -508,7 +508,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
                     color: isDark
-                        ? Colors.white.withValues(alpha: 0.02)
+                        ? AppColors.surface.withValues(alpha: 0.02)
                         : Colors.black.withValues(alpha: 0.01),
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
@@ -590,7 +590,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                         padding: EdgeInsets.all(16.r),
                         decoration: BoxDecoration(
                           color: isDark
-                              ? Colors.white.withValues(alpha: 0.02)
+                              ? AppColors.surface.withValues(alpha: 0.02)
                               : Colors.black.withValues(alpha: 0.01),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
@@ -643,13 +643,13 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                               },
                               icon: const Icon(
                                 Icons.add,
-                                color: Colors.white,
+                                color: AppColors.surface,
                                 size: 16,
                               ),
                               label: const Text(
                                 "Create Quick Visit to Add Vitals",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -677,7 +677,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       padding: EdgeInsets.all(14.r),
                       decoration: BoxDecoration(
                         color: isDark
-                            ? Colors.white.withValues(alpha: 0.02)
+                            ? AppColors.surface.withValues(alpha: 0.02)
                             : Colors.black.withValues(alpha: 0.01),
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all(
@@ -789,7 +789,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                               _buildVitalBadge(
                                 "Fever",
                                 recent.fever != null
-                                    ? "${recent.fever} Â°F"
+                                    ? "${recent.fever} Ã‚Â°F"
                                     : "--",
                                 Icons.thermostat_outlined,
                                 Colors.teal,
@@ -840,12 +840,12 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                               },
                               icon: const Icon(
                                 Icons.edit_note_outlined,
-                                color: Colors.white,
+                                color: AppColors.surface,
                               ),
                               label: const Text(
                                 "Record / Update Vitals",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -925,7 +925,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
           Text(
             "$label: ",
             style: TextStyle(
-              color: isDark ? Colors.white70 : Colors.black87,
+              color: isDark ? AppColors.surface70 : Colors.black87,
               fontSize: 11.sp,
               fontWeight: FontWeight.w500,
             ),
@@ -959,7 +959,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
               color: isDark
-                  ? Colors.white12
+                  ? AppColors.surface12
                   : Colors.black.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(6.r),
               border: Border.all(color: borderColor.withValues(alpha: 0.4)),
@@ -970,7 +970,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 Text(
                   "${entry.key}: ",
                   style: TextStyle(
-                    color: isDark ? Colors.white70 : Colors.black87,
+                    color: isDark ? AppColors.surface70 : Colors.black87,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -1120,7 +1120,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style: TextStyle(color: textColor),
                   decoration: InputDecoration(
-                    labelText: "Fever / Temp (Â°F)",
+                    labelText: "Fever / Temp (Ã‚Â°F)",
                     labelStyle: TextStyle(color: labelColor),
                     hintText: "e.g., 98.6",
                     hintStyle: TextStyle(
@@ -1587,7 +1587,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                               heroTag: 'add_patient_fab',
                               onPressed: () => _showAddPatientDialog(context),
                               backgroundColor: AppColors.primary,
-                              child: const Icon(Icons.add, color: Colors.white),
+                              child: const Icon(Icons.add, color: AppColors.surface),
                             ),
                             SizedBox(height: 4.h),
                             Text(

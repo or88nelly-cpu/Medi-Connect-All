@@ -189,9 +189,9 @@ class AdminDrawer extends StatelessWidget {
         ? [AppColors.terminalDarkBgGrad1, AppColors.terminalDarkBgGrad2]
         : [AppColors.terminalLightBgGrad1, AppColors.terminalLightBgGrad2];
 
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
-    final subColor = isDark ? Colors.white70 : AppColors.terminalLightLabel;
-    final iconColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
+    final subColor = isDark ? AppColors.surface70 : AppColors.terminalLightLabel;
+    final iconColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final borderCol = isDark
         ? AppColors.terminalAccentCyan.withValues(alpha: 0.5)
         : AppColors.primary.withValues(alpha: 0.3);
@@ -278,7 +278,7 @@ class AdminDrawer extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.white12 : Colors.black12,
+                  color: isDark ? AppColors.surface12 : Colors.black12,
                   borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Text(

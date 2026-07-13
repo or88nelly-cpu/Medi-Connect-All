@@ -27,7 +27,7 @@ class AddressInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF09121F) : AppColors.surface;
     final borderColor = isDark
         ? const Color(0xFF16253B)
         : const Color(0xFFD3E0EE);
@@ -67,7 +67,7 @@ class AddressInfoSection extends StatelessWidget {
                 "Address Information",
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                  color: isDark ? AppColors.surface : const Color(0xFF0F2C59),
                 ),
               ),
             ],
@@ -122,14 +122,14 @@ class AddressInfoSection extends StatelessWidget {
                           child: const CircularProgressIndicator(
                             strokeWidth: 2,
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white,
+                              AppColors.surface,
                             ),
                           ),
                         )
                       : Text(
                           "Fetch Address",
                           style: AppTextStyles.buttonMedium.copyWith(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

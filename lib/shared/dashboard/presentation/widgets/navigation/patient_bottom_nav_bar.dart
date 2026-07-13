@@ -103,7 +103,7 @@ class PatientBottomNavBar extends StatelessWidget {
                 size: 24.r,
                 color: selected
                     ? AppColors.primary
-                    : (isDark ? Colors.white60 : Colors.grey.shade600),
+                    : (isDark ? AppColors.surface60 : Colors.grey.shade600),
               ),
             ),
             SizedBox(height: 4.h),
@@ -179,7 +179,7 @@ class PatientBottomNavBar extends StatelessWidget {
                 },
                 child: Icon(
                   Icons.workspace_premium_rounded,
-                  color: selected ? Colors.white : const Color(0xffD89B00),
+                  color: selected ? AppColors.surface : const Color(0xffD89B00),
                   size: 24.r,
                 ),
               ),
@@ -189,7 +189,7 @@ class PatientBottomNavBar extends StatelessWidget {
                 style: AppTextStyles.bodySmall.copyWith(
                   fontSize: 9.sp,
                   fontWeight: FontWeight.bold,
-                  color: selected ? Colors.white : const Color(0xffD89B00),
+                  color: selected ? AppColors.surface : const Color(0xffD89B00),
                 ),
               ),
             ],

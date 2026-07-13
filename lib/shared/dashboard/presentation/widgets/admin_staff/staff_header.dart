@@ -73,9 +73,9 @@ class StaffHeader extends StatelessWidget {
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final btnBg = isDark
-        ? Colors.white.withValues(alpha: 0.08)
+        ? AppColors.surface.withValues(alpha: 0.08)
         : Colors.black.withValues(alpha: 0.05);
-    final iconColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final iconColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return InkWell(
       onTap: onTap,

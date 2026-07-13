@@ -53,7 +53,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                     Text(
                       AppStrings.welcomeUser,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: Colors.white.withValues(alpha: 0.8),
+                        color: AppColors.surface.withValues(alpha: 0.8),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -61,7 +61,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                     Text(
                       name,
                       style: AppTextStyles.headingMedium.copyWith(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.bold,
                         fontSize: 24.sp,
                       ),
@@ -73,14 +73,14 @@ class DoctorWelcomeBanner extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.favorite,
-                          color: Colors.white,
+                          color: AppColors.surface,
                           size: 14,
                         ),
                         SizedBox(width: 6.w),
                         Text(
                           specialty,
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: Colors.white.withValues(alpha: 0.9),
+                            color: AppColors.surface.withValues(alpha: 0.9),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -95,7 +95,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                 height: 76.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2.5),
+                  border: Border.all(color: AppColors.surface, width: 2.5),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.08),

@@ -126,7 +126,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Payment of â‚¹${amount.toStringAsFixed(2)} confirmed for $patientName',
+          'Payment of Ã¢â€šÂ¹${amount.toStringAsFixed(2)} confirmed for $patientName',
         ),
         backgroundColor: AppColors.success,
         duration: const Duration(seconds: 3),
@@ -362,17 +362,17 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
   ) {
     final activeColor = AppColors.primary;
     final completedColor = AppColors.success;
-    final inactiveColor = isDark ? Colors.white24 : Colors.grey[300]!;
+    final inactiveColor = isDark ? AppColors.surface24 : Colors.grey[300]!;
 
     Color circleBg = inactiveColor;
     Color borderCol = inactiveColor;
-    Color textCol = isDark ? Colors.white38 : Colors.grey[600]!;
+    Color textCol = isDark ? AppColors.surface38 : Colors.grey[600]!;
     Widget child = Text(
       step.toString(),
       style: TextStyle(
         fontSize: 12.sp,
         fontWeight: FontWeight.bold,
-        color: isDark ? Colors.white70 : Colors.grey[700],
+        color: isDark ? AppColors.surface70 : Colors.grey[700],
       ),
     );
 
@@ -392,7 +392,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
       circleBg = completedColor;
       borderCol = completedColor;
       textCol = completedColor;
-      child = const Icon(Icons.check, color: Colors.white, size: 12);
+      child = const Icon(Icons.check, color: AppColors.surface, size: 12);
     }
 
     return Column(
@@ -428,7 +428,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
       margin: EdgeInsets.only(bottom: 14.h, left: 4.w, right: 4.w),
       color: isCompleted
           ? AppColors.success
-          : (isDark ? Colors.white12 : Colors.grey[200]),
+          : (isDark ? AppColors.surface12 : Colors.grey[200]),
     );
   }
 
@@ -436,7 +436,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final apt = widget.appointment;
-    final sheetBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final sheetBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
     final cleanDocName = _cleanDoctorName(apt.doctorName);
 
     if (_isLoadingFee) {
@@ -490,7 +490,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                               height: 4.h,
                               decoration: BoxDecoration(
                                 color: isDark
-                                    ? Colors.white24
+                                    ? AppColors.surface24
                                     : Colors.grey[300],
                                 borderRadius: BorderRadius.circular(2),
                               ),
@@ -509,17 +509,17 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                         : 'Complete Consultation',
                                     style: AppTextStyles.titleLarge.copyWith(
                                       color: isDark
-                                          ? Colors.white
+                                          ? AppColors.surface
                                           : AppColors.textPrimary(context),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   SizedBox(height: 2.h),
                                   Text(
-                                    'Patient: ${apt.patientName} Â· Dr. $cleanDocName',
+                                    'Patient: ${apt.patientName} Ã‚Â· Dr. $cleanDocName',
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: isDark
-                                          ? Colors.white54
+                                          ? AppColors.surface54
                                           : AppColors.textSecondary(context),
                                     ),
                                   ),
@@ -530,7 +530,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                 icon: Icon(
                                   Icons.close,
                                   color: isDark
-                                      ? Colors.white54
+                                      ? AppColors.surface54
                                       : AppColors.textSecondary(context),
                                 ),
                               ),
@@ -614,7 +614,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   onPressed: () => Navigator.pop(context),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: isDark
-                                        ? Colors.white70
+                                        ? AppColors.surface70
                                         : AppColors.textSecondary(context),
                                     side: BorderSide(
                                       color: AppColors.border(context),
@@ -640,7 +640,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   onPressed: () => cubit.nextStep(),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primary,
-                                    foregroundColor: Colors.white,
+                                    foregroundColor: AppColors.surface,
                                     padding: EdgeInsets.symmetric(
                                       vertical: 14.h,
                                     ),
@@ -669,7 +669,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   onPressed: () => cubit.previousStep(),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: isDark
-                                        ? Colors.white70
+                                        ? AppColors.surface70
                                         : AppColors.textSecondary(context),
                                     side: BorderSide(
                                       color: AppColors.border(context),
@@ -695,7 +695,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   onPressed: () => cubit.nextStep(),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.primary,
-                                    foregroundColor: Colors.white,
+                                    foregroundColor: AppColors.surface,
                                     padding: EdgeInsets.symmetric(
                                       vertical: 14.h,
                                     ),
@@ -724,7 +724,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   onPressed: () => cubit.previousStep(),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor: isDark
-                                        ? Colors.white70
+                                        ? AppColors.surface70
                                         : AppColors.textSecondary(context),
                                     side: BorderSide(
                                       color: AppColors.border(context),

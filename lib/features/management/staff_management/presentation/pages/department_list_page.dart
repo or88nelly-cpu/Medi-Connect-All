@@ -63,7 +63,7 @@ class _DepartmentListContent extends StatefulWidget {
 }
 
 class _DepartmentListContentState extends State<_DepartmentListContent> {
-  // ViewAll toggle â€” local UI-only state, acceptable with setState.
+  // ViewAll toggle Ã¢â‚¬â€ local UI-only state, acceptable with setState.
   final _showAllNotifier = ValueNotifier<bool>(false);
 
   @override
@@ -117,11 +117,11 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
           ? FloatingActionButton.extended(
               onPressed: () => DepartmentFormDialog.show(context),
               backgroundColor: AppColors.primary,
-              icon: const Icon(Icons.add, color: Colors.white),
+              icon: const Icon(Icons.add, color: AppColors.surface),
               label: Text(
                 AppStrings.addDepartment,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -150,8 +150,8 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // â”€â”€ Section header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-                  // â”€â”€ Department list â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                  // Ã¢â€â‚¬Ã¢â€â‚¬ Section header Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+                  // Ã¢â€â‚¬Ã¢â€â‚¬ Department list Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                   if (departments.isEmpty)
                     _EmptyState()
                   else

@@ -46,7 +46,7 @@ class ConsultationDetailPage extends StatelessWidget {
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: const Text('Downloading prescription PDF…'),
+                  content: const Text('Downloading prescription PDFâ€¦'),
                   behavior: SnackBarBehavior.floating,
                   backgroundColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
@@ -63,11 +63,11 @@ class ConsultationDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Doctor Header ──────────────────────────────────────
+            // â”€â”€ Doctor Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             _DoctorHeader(consultation: consultation),
             SizedBox(height: 16.h),
 
-            // ── Diagnosis & Symptoms ───────────────────────────────
+            // â”€â”€ Diagnosis & Symptoms â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             _SectionCard(
               title: 'Diagnosis & Symptoms',
               icon: Icons.medical_information_outlined,
@@ -86,7 +86,7 @@ class ConsultationDetailPage extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
 
-            // ── Medicines Prescribed ───────────────────────────────
+            // â”€â”€ Medicines Prescribed â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             _SectionCard(
               title: 'Medicines Prescribed',
               icon: Icons.medication_rounded,
@@ -116,7 +116,7 @@ class ConsultationDetailPage extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
 
-            // ── Doctor Notes ───────────────────────────────────────
+            // â”€â”€ Doctor Notes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             if ((consultation['notes'] as String? ?? '').isNotEmpty)
               _SectionCard(
                 title: "Doctor's Notes",
@@ -134,14 +134,14 @@ class ConsultationDetailPage extends StatelessWidget {
               ),
             SizedBox(height: 24.h),
 
-            // ── Download Button ────────────────────────────────────
+            // â”€â”€ Download Button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text('Downloading prescription PDF…'),
+                      content: const Text('Downloading prescription PDFâ€¦'),
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
@@ -150,11 +150,11 @@ class ConsultationDetailPage extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.download_rounded, color: Colors.white),
+                icon: const Icon(Icons.download_rounded, color: AppColors.surface),
                 label: Text(
                   'Download Prescription',
                   style: AppTextStyles.buttonMedium.copyWith(
-                    color: Colors.white,
+                    color: AppColors.surface,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -200,7 +200,7 @@ class ConsultationDetailPage extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _DoctorHeader extends StatelessWidget {
   final Map<String, dynamic> consultation;
   const _DoctorHeader({required this.consultation});
@@ -223,10 +223,10 @@ class _DoctorHeader extends StatelessWidget {
             width: 54.r,
             height: 54.r,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: AppColors.surface.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.person_rounded, color: Colors.white, size: 28.r),
+            child: Icon(Icons.person_rounded, color: AppColors.surface, size: 28.r),
           ),
           SizedBox(width: 14.w),
           Expanded(
@@ -236,7 +236,7 @@ class _DoctorHeader extends StatelessWidget {
                 Text(
                   consultation['doctor'] ?? 'Unknown Doctor',
                   style: AppTextStyles.titleMedium.copyWith(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -244,7 +244,7 @@ class _DoctorHeader extends StatelessWidget {
                 Text(
                   consultation['specialty'] ?? '',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                    color: AppColors.surface70,
                   ),
                 ),
                 SizedBox(height: 6.h),
@@ -252,14 +252,14 @@ class _DoctorHeader extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.calendar_today_rounded,
-                      color: Colors.white60,
+                      color: AppColors.surface60,
                       size: 12.r,
                     ),
                     SizedBox(width: 4.w),
                     Text(
                       consultation['date'] ?? '',
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: Colors.white70,
+                        color: AppColors.surface70,
                         fontSize: 11.sp,
                       ),
                     ),
@@ -271,13 +271,13 @@ class _DoctorHeader extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: AppColors.surface.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20.r),
             ),
             child: Text(
               'Completed',
               style: AppTextStyles.bodySmall.copyWith(
-                color: Colors.white,
+                color: AppColors.surface,
                 fontWeight: FontWeight.bold,
                 fontSize: 10.sp,
               ),
@@ -289,7 +289,7 @@ class _DoctorHeader extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _SectionCard extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -418,7 +418,7 @@ class _MedicineRow extends StatelessWidget {
               ),
               SizedBox(height: 2.h),
               Text(
-                '${medicine['dosage'] ?? ''} · ${medicine['frequency'] ?? ''} · ${medicine['duration'] ?? ''}',
+                '${medicine['dosage'] ?? ''} Â· ${medicine['frequency'] ?? ''} Â· ${medicine['duration'] ?? ''}',
                 style: AppTextStyles.bodySmall.copyWith(
                   color: AppColors.textSecondary(context),
                 ),

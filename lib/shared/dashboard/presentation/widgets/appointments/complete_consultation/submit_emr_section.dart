@@ -101,12 +101,12 @@ class SubmitEmrSection extends StatelessWidget {
               onPressed: state.paymentConfirmed ? onSubmitEMR : null,
               icon: const Icon(
                 Icons.cloud_upload_outlined,
-                color: Colors.white,
+                color: AppColors.surface,
               ),
               label: Text(
                 'Submit to EMR',
                 style: AppTextStyles.labelMedium.copyWith(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -170,7 +170,7 @@ class SubmitEmrSection extends StatelessWidget {
               style: AppTextStyles.bodySmall.copyWith(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : AppColors.textPrimary(context),
+                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
               ),
             ),
           ),

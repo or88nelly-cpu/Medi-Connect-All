@@ -22,7 +22,7 @@ class VitalsGridSection extends StatelessWidget {
     final hc = recentApt?.headCircumference ?? "N/A";
     final status = recentApt?.status ?? "N/A";
 
-    final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
+    final titleColor = isDark ? AppColors.surface : AppColors.textDarkNavy;
     final borderCol = AppColors.border(context);
 
     return Column(
@@ -110,7 +110,7 @@ class VitalsGridSection extends StatelessWidget {
               label: AppStrings.temperature,
               value: temp.contains("F") || temp.contains("C") || temp == "N/A"
                   ? temp
-                  : "$temp°F",
+                  : "$tempÂ°F",
               icon: Icons.thermostat,
               iconColor: const Color(0xFFF59E0B),
               isDark: isDark,
@@ -153,12 +153,12 @@ class VitalsGridSection extends StatelessWidget {
   }) {
     final textCol = AppColors.textPrimary(context);
     final subTextCol = isDark
-        ? Colors.white38
+        ? AppColors.surface38
         : AppColors.textSecondary(context);
-    final cardBg = isDark ? const Color(0xFF0F172A) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF0F172A) : AppColors.surface;
 
     final displayVal =
-        value == "N/A kg" || value == "N/A cm" || value == "N/A°F"
+        value == "N/A kg" || value == "N/A cm" || value == "N/AÂ°F"
         ? "N/A"
         : value;
     final isNA = displayVal == "N/A";

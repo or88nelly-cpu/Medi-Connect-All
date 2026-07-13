@@ -68,7 +68,7 @@ class AdminDepartmentCard extends StatelessWidget {
               ),
               child: CustomImageView(
                 imagePath: department.imageUrl ?? "",
-                color: Colors.white,
+                color: AppColors.surface,
               ),
             ),
 
@@ -82,7 +82,7 @@ class AdminDepartmentCard extends StatelessWidget {
               style: AppTextStyles.bodyMedium.copyWith(
                 fontSize: fontSize,
                 fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white : AppColors.textDarkNavy,
+                color: isDark ? AppColors.surface : AppColors.textDarkNavy,
               ),
             ),
           ],

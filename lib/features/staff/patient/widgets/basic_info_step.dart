@@ -245,19 +245,19 @@ class BasicInfoStep extends StatelessWidget {
                                 child: const CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white,
+                                    AppColors.surface,
                                   ),
                                 ),
                               )
                             : Icon(
                                 Icons.my_location,
-                                color: Colors.white,
+                                color: AppColors.surface,
                                 size: 14.r,
                               ),
                         label: Text(
                           "Fetch Address",
                           style: AppTextStyles.buttonMedium.copyWith(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             fontSize: 9.sp,
                             fontWeight: FontWeight.bold,
                           ),

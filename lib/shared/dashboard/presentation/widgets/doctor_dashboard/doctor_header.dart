@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -91,7 +92,7 @@ class DoctorHeader extends StatelessWidget {
                           padding: EdgeInsets.all(8.r),
                           decoration: BoxDecoration(
                             color: isDark
-                                ? Colors.white10
+                                ? AppColors.surface10
                                 : const Color(
                                     0xFF0F6FFF,
                                   ).withValues(alpha: 0.1),
@@ -100,7 +101,7 @@ class DoctorHeader extends StatelessWidget {
                           child: Icon(
                             Icons.menu_rounded,
                             color: isDark
-                                ? Colors.white
+                                ? AppColors.surface
                                 : const Color(0xFF0F6FFF),
                             size: 20.r,
                           ),
@@ -113,7 +114,7 @@ class DoctorHeader extends StatelessWidget {
                           IconButton(
                             icon: Icon(
                               Icons.search_rounded,
-                              color: isDark ? Colors.white70 : Colors.black87,
+                              color: isDark ? AppColors.surface70 : Colors.black87,
                               size: 20.r,
                             ),
                             onPressed: onSearchTap,
@@ -126,7 +127,7 @@ class DoctorHeader extends StatelessWidget {
                                 icon: Icon(
                                   Icons.notifications_none_rounded,
                                   color: isDark
-                                      ? Colors.white70
+                                      ? AppColors.surface70
                                       : Colors.black87,
                                   size: 22.r,
                                 ),
@@ -144,7 +145,7 @@ class DoctorHeader extends StatelessWidget {
                                   child: Text(
                                     "3",
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: AppColors.surface,
                                       fontSize: 8.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -161,7 +162,7 @@ class DoctorHeader extends StatelessWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: isDark ? Colors.white24 : Colors.white,
+                                color: isDark ? AppColors.surface24 : AppColors.surface,
                                 width: 1.5,
                               ),
                               boxShadow: [
@@ -194,7 +195,7 @@ class DoctorHeader extends StatelessWidget {
                   Text(
                     greeting,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: isDark ? Colors.white60 : Colors.grey[600],
+                      color: isDark ? AppColors.surface60 : Colors.grey[600],
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -204,7 +205,7 @@ class DoctorHeader extends StatelessWidget {
                       Text(
                         displayName,
                         style: AppTextStyles.headingMedium.copyWith(
-                          color: isDark ? Colors.white : Colors.black87,
+                          color: isDark ? AppColors.surface : Colors.black87,
                           fontWeight: FontWeight.bold,
                           fontSize: 26.sp,
                         ),
@@ -221,7 +222,7 @@ class DoctorHeader extends StatelessWidget {
                   Text(
                     "Here's your overview for today",
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: isDark ? Colors.white38 : Colors.grey[500],
+                      color: isDark ? AppColors.surface38 : Colors.grey[500],
                       fontSize: 12.sp,
                     ),
                   ),

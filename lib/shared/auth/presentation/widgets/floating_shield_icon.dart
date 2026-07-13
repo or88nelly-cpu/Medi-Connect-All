@@ -81,7 +81,7 @@ class _FloatingShieldIconState extends State<FloatingShieldIcon>
                   color: AppColors.primary.withValues(alpha: 0.85),
                   size: 28.r,
                 ),
-                Icon(Icons.add, color: Colors.white, size: 16.r),
+                Icon(Icons.add, color: AppColors.surface, size: 16.r),
               ],
             ),
           ),

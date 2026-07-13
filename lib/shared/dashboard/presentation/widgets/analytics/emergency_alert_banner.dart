@@ -39,7 +39,7 @@ class EmergencyAlertBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.gpp_bad, color: Colors.white, size: 40.r),
+          Icon(Icons.gpp_bad, color: AppColors.surface, size: 40.r),
           SizedBox(width: 8.r),
           Expanded(
             child: Column(
@@ -63,9 +63,9 @@ class EmergencyAlertBanner extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  "Emergency Ward • Room 502 • Triggered $alertTime",
+                  "Emergency Ward â€¢ Room 502 â€¢ Triggered $alertTime",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: Colors.white70,
+                    color: AppColors.surface70,
                     fontSize: 7.sp,
                   ),
                   maxLines: 1,

@@ -212,7 +212,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                               SizedBox(height: 16.h),
                               // Greeting Header
                               Text(
-                                "${_greetingMessage()}, Dr. ${adminName.replaceAll("Dr.", "").replaceAll("dr.", "").trim()} ðŸ‘‹",
+                                "${_greetingMessage()}, Dr. ${adminName.replaceAll("Dr.", "").replaceAll("dr.", "").trim()} Ã°Å¸â€˜â€¹",
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   color: AppColors.textSecondary(context),
                                   fontWeight: FontWeight.w600,
@@ -320,7 +320,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                       decoration: BoxDecoration(
                                         color: isDark
                                             ? AppColors.terminalDarkCard
-                                            : Colors.white,
+                                            : AppColors.surface,
                                         borderRadius: BorderRadius.circular(
                                           12.r,
                                         ),
@@ -369,7 +369,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                     decoration: BoxDecoration(
                                       color: isDark
                                           ? AppColors.terminalDarkCard
-                                          : Colors.white,
+                                          : AppColors.surface,
                                       borderRadius: BorderRadius.circular(12.r),
                                       border: Border.all(
                                         color: AppColors.border(context),
@@ -407,7 +407,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                               status,
                                               style: TextStyle(
                                                 color: isSelected
-                                                    ? Colors.white
+                                                    ? AppColors.surface
                                                     : _getChipTextColor(
                                                         status,
                                                         isDark,

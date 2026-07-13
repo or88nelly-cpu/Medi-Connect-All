@@ -35,14 +35,14 @@ class LifestyleInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
+    final cardBg = isDark ? const Color(0xFF09121F) : AppColors.surface;
     final borderColor = isDark
         ? const Color(0xFF16253B)
         : const Color(0xFFD3E0EE);
     final labelColor = isDark
         ? const Color(0xFF5E98C7)
         : const Color(0xFF3F6D94);
-    final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
+    final inputTextColor = isDark ? AppColors.surface : const Color(0xFF0C192E);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -66,7 +66,7 @@ class LifestyleInfoSection extends StatelessWidget {
                 "Lifestyle Details",
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                  color: isDark ? AppColors.surface : const Color(0xFF0F2C59),
                 ),
               ),
             ],

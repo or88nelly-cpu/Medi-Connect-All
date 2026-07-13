@@ -296,7 +296,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
     final borderColor = isDark
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
@@ -387,7 +387,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
-                    backgroundColor: isDark ? Colors.white10 : Colors.black12,
+                    backgroundColor: isDark ? AppColors.surface10 : Colors.black12,
                     child: Icon(
                       p['gender'] == 'Male' ? Icons.male : Icons.female,
                       color: AppColors.primary,
@@ -402,7 +402,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                     ),
                   ),
                   subtitle: Text(
-                    "Age: ${p['age']} â€¢ ${p['gender']} â€¢ Last Visit: ${p['lastVisit']}",
+                    "Age: ${p['age']} Ã¢â‚¬Â¢ ${p['gender']} Ã¢â‚¬Â¢ Last Visit: ${p['lastVisit']}",
                     style: TextStyle(color: labelColor, fontSize: 11.sp),
                   ),
                   trailing: Container(
@@ -440,7 +440,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
     final borderColor = isDark
         ? AppColors.terminalDarkBorder
         : AppColors.terminalLightBorder;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final labelColor = isDark
         ? AppColors.terminalDarkLabel
         : AppColors.terminalLightLabel;
@@ -536,7 +536,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                     ),
                   ),
                   subtitle: Text(
-                    "Issued: ${d['issueDate']} â€¢ Status: ${d['status']}",
+                    "Issued: ${d['issueDate']} Ã¢â‚¬Â¢ Status: ${d['status']}",
                     style: TextStyle(color: labelColor, fontSize: 11.sp),
                   ),
                   trailing: IconButton(

@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -52,7 +53,7 @@ class PendingMrdBanner extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.assignment_turned_in_rounded,
-                    color: Colors.white,
+                    color: AppColors.surface,
                     size: 26.r,
                   ),
                 ),
@@ -79,7 +80,7 @@ class PendingMrdBanner extends StatelessWidget {
                           Text(
                             count,
                             style: AppTextStyles.headingMedium.copyWith(
-                              color: isDark ? Colors.white : Colors.black87,
+                              color: isDark ? AppColors.surface : Colors.black87,
                               fontWeight: FontWeight.w900,
                               fontSize: 22.sp,
                             ),
@@ -88,7 +89,7 @@ class PendingMrdBanner extends StatelessWidget {
                           Text(
                             "Pending Records",
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: isDark ? Colors.white38 : Colors.grey[500],
+                              color: isDark ? AppColors.surface38 : Colors.grey[500],
                               fontSize: 10.sp,
                             ),
                           ),
@@ -160,7 +161,7 @@ class PendingMrdBanner extends StatelessWidget {
                       angle: 0.0,
                       child: _buildMockDocPage(
                         isDark,
-                        Colors.white,
+                        AppColors.surface,
                         hasStamp: true,
                       ),
                     ),
@@ -179,10 +180,10 @@ class PendingMrdBanner extends StatelessWidget {
     Color baseBgColor, {
     bool hasStamp = false,
   }) {
-    final bgColor = isDark && baseBgColor == Colors.white
+    final bgColor = isDark && baseBgColor == AppColors.surface
         ? const Color(0xFF334155)
         : baseBgColor;
-    final lineColor = isDark ? Colors.white24 : Colors.grey[200]!;
+    final lineColor = isDark ? AppColors.surface24 : Colors.grey[200]!;
 
     return Container(
       width: 42.w,
@@ -199,7 +200,7 @@ class PendingMrdBanner extends StatelessWidget {
           ),
         ],
         border: Border.all(
-          color: isDark ? Colors.white10 : Colors.grey[200]!,
+          color: isDark ? AppColors.surface10 : Colors.grey[200]!,
           width: 0.5,
         ),
       ),
@@ -225,7 +226,7 @@ class PendingMrdBanner extends StatelessWidget {
                   color: Color(0xFFF43F5E),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.check, color: Colors.white, size: 6.r),
+                child: Icon(Icons.check, color: AppColors.surface, size: 6.r),
               ),
             )
           else

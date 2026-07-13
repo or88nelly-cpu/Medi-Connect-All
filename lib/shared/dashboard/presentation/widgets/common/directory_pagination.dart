@@ -25,7 +25,7 @@ class DirectoryPagination extends StatelessWidget {
         : AppColors.terminalLightText;
     final activeBg = AppColors.primary;
     final inactiveBg = isDark
-        ? Colors.white.withValues(alpha: 0.05)
+        ? AppColors.surface.withValues(alpha: 0.05)
         : Colors.black.withValues(alpha: 0.05);
 
     return Padding(
@@ -70,7 +70,7 @@ class DirectoryPagination extends StatelessWidget {
                     child: Text(
                       pageNum.toString(),
                       style: TextStyle(
-                        color: isActive ? Colors.white : textColor,
+                        color: isActive ? AppColors.surface : textColor,
                         fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -102,8 +102,8 @@ class DirectoryPagination extends StatelessWidget {
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final iconColor = onTap != null
-        ? (isDark ? Colors.white : AppColors.terminalLightText)
-        : (isDark ? Colors.white30 : Colors.black26);
+        ? (isDark ? AppColors.surface : AppColors.terminalLightText)
+        : (isDark ? AppColors.surface30 : Colors.black26);
 
     return InkWell(
       onTap: onTap,

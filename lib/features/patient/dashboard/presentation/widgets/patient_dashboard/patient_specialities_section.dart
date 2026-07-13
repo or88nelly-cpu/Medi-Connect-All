@@ -28,7 +28,7 @@ class _PatientSpecialitiesSectionState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +105,7 @@ class _PatientSpecialitiesSectionState
                       decoration: BoxDecoration(
                         color: isDark
                             ? AppColors.terminalDarkCard
-                            : Colors.white,
+                            : AppColors.surface,
                         borderRadius: BorderRadius.circular(16.r),
                         border: Border.all(color: AppColors.border(context)),
                         boxShadow: [
@@ -169,7 +169,7 @@ class _PatientSpecialitiesSectionState
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                      color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                       borderRadius: BorderRadius.circular(16.r),
                       border: Border.all(color: AppColors.border(context)),
                       boxShadow: [

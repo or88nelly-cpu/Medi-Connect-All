@@ -70,8 +70,8 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
@@ -108,11 +108,11 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                       ),
                       ElevatedButton.icon(
                         onPressed: () => _showBookDoctorDialog(context),
-                        icon: const Icon(Icons.search, color: Colors.white),
+                        icon: const Icon(Icons.search, color: AppColors.surface),
                         label: const Text(
                           'Book Doctor',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -483,7 +483,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
           children: [
             SizedBox(height: 2.h),
             Text("${'General Medicine'} | Exp: ${5} Yrs"),
-            Text("Fee: â‚¹ 500"),
+            Text("Fee: Ã¢â€šÂ¹ 500"),
           ],
         ),
         trailing: ElevatedButton(
@@ -496,7 +496,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
               borderRadius: BorderRadius.circular(6.r),
             ),
           ),
-          child: const Text('Book', style: TextStyle(color: Colors.white)),
+          child: const Text('Book', style: TextStyle(color: AppColors.surface)),
         ),
       ),
     );

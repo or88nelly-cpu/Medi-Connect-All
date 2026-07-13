@@ -41,11 +41,11 @@ class DepartmentListHome extends StatelessWidget {
             return Container(
               margin: margin,
               decoration: BoxDecoration(
-                color: isDark ? AppColors.darkCard : Colors.white,
+                color: isDark ? AppColors.darkCard : AppColors.surface,
                 borderRadius: BorderRadius.circular(28.r),
                 border: Border.all(
                   color: isDark
-                      ? Colors.white.withValues(alpha: 0.04)
+                      ? AppColors.surface.withValues(alpha: 0.04)
                       : Colors.black.withValues(alpha: 0.03),
                   width: 1.2,
                 ),
@@ -71,7 +71,7 @@ class DepartmentListHome extends StatelessWidget {
                             Icons.grid_view_outlined,
                             size: 24.r,
                             color: isDark
-                                ? Colors.white
+                                ? AppColors.surface
                                 : const Color(0xFF0F2C59),
                           ),
                           SizedBox(width: 12.w),
@@ -80,7 +80,7 @@ class DepartmentListHome extends StatelessWidget {
                             style: AppTextStyles.bodyLarge.copyWith(
                               fontSize: 18.sp,
                               color: isDark
-                                  ? Colors.white
+                                  ? AppColors.surface
                                   : const Color(0xFF0F2C59),
                               fontWeight: FontWeight.bold,
                             ),

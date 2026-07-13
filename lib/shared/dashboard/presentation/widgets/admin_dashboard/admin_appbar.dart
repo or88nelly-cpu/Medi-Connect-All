@@ -164,7 +164,7 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
       child: Container(
         width: double.infinity,
         height: 70.h,
-        color: Colors.white,
+        color: AppColors.surface,
       ),
     );
   }

@@ -13,7 +13,7 @@ class SectionQuickAccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final cardBg = isDark
         ? AppColors.terminalDarkCard
         : AppColors.terminalLightCard;

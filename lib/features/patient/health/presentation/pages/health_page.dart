@@ -120,7 +120,7 @@ class _HealthPageState extends State<HealthPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── BMI Card ─────────────────────────────────────────
+            // â”€â”€ BMI Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             _BmiCard(
               bmi: _bmi,
               bmiCategory: _bmiCategory,
@@ -129,7 +129,7 @@ class _HealthPageState extends State<HealthPage> {
             ),
             SizedBox(height: 20.h),
 
-            // ── Vitals Section ────────────────────────────────────
+            // â”€â”€ Vitals Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Text(
               'Your Vitals',
               style: AppTextStyles.titleMedium.copyWith(
@@ -198,11 +198,11 @@ class _HealthPageState extends State<HealthPage> {
             ),
             SizedBox(height: 24.h),
 
-            // ── Health Tips ───────────────────────────────────────
+            // â”€â”€ Health Tips â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             _HealthTipsCard(),
             SizedBox(height: 24.h),
 
-            // ── Save Button ───────────────────────────────────────
+            // â”€â”€ Save Button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -213,14 +213,14 @@ class _HealthPageState extends State<HealthPage> {
                         height: 16.r,
                         child: const CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: Colors.white,
+                          color: AppColors.surface,
                         ),
                       )
-                    : const Icon(Icons.save_rounded, color: Colors.white),
+                    : const Icon(Icons.save_rounded, color: AppColors.surface),
                 label: Text(
-                  _isSaving ? 'Saving…' : 'Save Health Data',
+                  _isSaving ? 'Savingâ€¦' : 'Save Health Data',
                   style: AppTextStyles.buttonLarge.copyWith(
-                    color: Colors.white,
+                    color: AppColors.surface,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -244,9 +244,9 @@ class _HealthPageState extends State<HealthPage> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // BMI Card
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _BmiCard extends StatelessWidget {
   final double bmi;
   final String bmiCategory;
@@ -309,7 +309,7 @@ class _BmiCard extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(bottom: 6.h),
                         child: Text(
-                          'kg/m²',
+                          'kg/mÂ²',
                           style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.textSecondary(context),
                           ),
@@ -369,7 +369,7 @@ class _BmiCard extends StatelessWidget {
                     width: 10.r,
                     height: 10.h,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       shape: BoxShape.circle,
                       border: Border.all(color: bmiColor, width: 2),
                       boxShadow: [
@@ -424,9 +424,9 @@ class _BmiCard extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Vital field
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _VitalField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
@@ -493,9 +493,9 @@ class _VitalField extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Blood pressure field (systolic/diastolic)
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _BloodPressureField extends StatelessWidget {
   final TextEditingController sysController;
   final TextEditingController diaController;
@@ -621,15 +621,15 @@ class _BloodPressureField extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Health tips card
-// ─────────────────────────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class _HealthTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tips = [
       (
-        'Stay hydrated — drink 8 glasses of water daily',
+        'Stay hydrated â€” drink 8 glasses of water daily',
         Icons.water_drop_rounded,
         Color(0xFF1A8CFF),
       ),
@@ -639,7 +639,7 @@ class _HealthTipsCard extends StatelessWidget {
         Color(0xFF22C55E),
       ),
       (
-        'Get 7–8 hours of sleep every night',
+        'Get 7â€“8 hours of sleep every night',
         Icons.bedtime_rounded,
         Color(0xFF8B5CF6),
       ),

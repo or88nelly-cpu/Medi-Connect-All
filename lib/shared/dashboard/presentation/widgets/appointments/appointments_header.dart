@@ -23,7 +23,7 @@ class AppointmentsHeader extends StatelessWidget {
               AppStrings.appointments,
               style: AppTextStyles.headingMedium.copyWith(
                 fontSize: 16.sp,
-                color: isDark ? Colors.white : AppColors.textPrimary(context),
+                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
               ),
             ),
 
@@ -31,7 +31,7 @@ class AppointmentsHeader extends StatelessWidget {
               "Manage and track all patient appointments",
               style: AppTextStyles.bodySmall.copyWith(
                 color: isDark
-                    ? Colors.white54
+                    ? AppColors.surface54
                     : AppColors.textSecondary(context),
                 fontSize: 12.sp,
               ),

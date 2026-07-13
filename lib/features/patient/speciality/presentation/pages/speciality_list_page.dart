@@ -45,8 +45,8 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
@@ -59,11 +59,11 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
               ? FloatingActionButton.extended(
                   onPressed: () => SpecialityFormDialog.show(context),
                   backgroundColor: AppColors.primary,
-                  icon: const Icon(Icons.add, color: Colors.white),
+                  icon: const Icon(Icons.add, color: AppColors.surface),
                   label: Text(
                     "Add Speciality",
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -72,10 +72,10 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
 
           body: Column(
             children: [
-              // â”€â”€ 1. Mockup Header Banner with Shield â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+              // Ã¢â€â‚¬Ã¢â€â‚¬ 1. Mockup Header Banner with Shield Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
               _buildHeaderBanner(context, isDark),
 
-              // â”€â”€ 2. Search & Filter Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+              // Ã¢â€â‚¬Ã¢â€â‚¬ 2. Search & Filter Bar Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 child: Row(
@@ -160,7 +160,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                 ),
               ),
 
-              // â”€â”€ 3. Specialties 4-Column Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+              // Ã¢â€â‚¬Ã¢â€â‚¬ 3. Specialties 4-Column Grid Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
               Expanded(
                 child: BlocConsumer<SpecialityBloc, SpecialityState>(
                   listener: (context, state) {
@@ -254,7 +254,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                               ),
                               SizedBox(height: 20.h),
 
-                              // â”€â”€ 4. Bottom Support Help Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                              // Ã¢â€â‚¬Ã¢â€â‚¬ 4. Bottom Support Help Card Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
                               _buildSupportCard(context, isDark),
                               SizedBox(height: 32.h),
                             ],
@@ -315,7 +315,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                     child: Container(
                       padding: EdgeInsets.all(8.r),
                       decoration: const BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
@@ -339,14 +339,14 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                     style: AppTextStyles.headingLarge.copyWith(
                       fontWeight: FontWeight.w900,
                       fontSize: 24.sp,
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      color: isDark ? AppColors.surface : const Color(0xFF0F172A),
                     ),
                   ),
                   SizedBox(height: 6.h),
                   Text(
                     'Explore our wide range of medical specialities\nand find the best care for you.',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark ? Colors.white60 : const Color(0xFF475569),
+                      color: isDark ? AppColors.surface60 : const Color(0xFF475569),
                       fontSize: 11.sp,
                       height: 1.3,
                     ),
@@ -497,7 +497,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
           Container(
             padding: EdgeInsets.all(12.r),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
@@ -524,14 +524,14 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w900,
                     fontSize: 14.sp,
-                    color: isDark ? Colors.white : const Color(0xFF1E3A8A),
+                    color: isDark ? AppColors.surface : const Color(0xFF1E3A8A),
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   "Our care team is here to help you find the right specialist for your needs.",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white70 : const Color(0xFF4B5563),
+                    color: isDark ? AppColors.surface70 : const Color(0xFF4B5563),
                     fontSize: 10.5.sp,
                   ),
                 ),
@@ -567,7 +567,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   Text(
                     'Contact Support',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -575,7 +575,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   SizedBox(width: 4.w),
                   Icon(
                     Icons.chevron_right_rounded,
-                    color: Colors.white,
+                    color: AppColors.surface,
                     size: 12.r,
                   ),
                 ],

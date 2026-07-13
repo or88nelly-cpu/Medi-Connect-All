@@ -85,7 +85,7 @@ class CommonButton extends StatelessWidget {
           child: InkWell(
             onTap: isLoading ? null : onPressed,
             borderRadius: resolvedBorderRadius,
-            child: Center(child: _buildContent(context, Colors.white)),
+            child: Center(child: _buildContent(context, AppColors.surface)),
           ),
         ),
       );
@@ -102,7 +102,7 @@ class CommonButton extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: resolvedBorderRadius),
           padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w),
         ),
-        child: _buildContent(context, textColor ?? Colors.white),
+        child: _buildContent(context, textColor ?? AppColors.surface),
       ),
     );
   }

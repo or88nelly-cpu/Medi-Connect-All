@@ -26,15 +26,15 @@ class EmrdOperationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final Color cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
     final Color borderCol = isDark
-        ? Colors.white10
+        ? AppColors.surface10
         : accentColor.withValues(alpha: 0.12);
     final Color titleColor = isDark
-        ? Colors.white
+        ? AppColors.surface
         : AppColors.textPrimary(context);
     final Color subColor = isDark
-        ? Colors.white54
+        ? AppColors.surface54
         : AppColors.textSecondary(context);
 
     return Container(
@@ -119,7 +119,7 @@ class EmrdOperationCard extends StatelessWidget {
                                   "$badgeCount",
                                   style: TextStyle(
                                     fontSize: 8.sp,
-                                    color: Colors.white,
+                                    color: AppColors.surface,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

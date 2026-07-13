@@ -14,8 +14,8 @@ class QRCodePaymentDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return AlertDialog(
       backgroundColor: cardBg,
@@ -42,7 +42,7 @@ class QRCodePaymentDialog extends StatelessWidget {
             height: 180.r,
             padding: EdgeInsets.all(12.r),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: Colors.grey[200]!),
             ),

@@ -103,7 +103,7 @@ class ReviewStepView extends StatelessWidget {
     final double labCost = state.selectedTests.length * 250.0;
     //final double totalCost = consultFee + medicineCost + labCost;
 
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
     final borderColor = AppColors.border(context);
 
     return Column(
@@ -144,7 +144,7 @@ class ReviewStepView extends StatelessWidget {
                             style: AppTextStyles.titleMedium.copyWith(
                               fontWeight: FontWeight.bold,
                               color: isDark
-                                  ? Colors.white
+                                  ? AppColors.surface
                                   : AppColors.textPrimary(context),
                             ),
                           ),
@@ -206,7 +206,7 @@ class ReviewStepView extends StatelessWidget {
                           '$age Years, $gender',
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isDark
-                                ? Colors.white70
+                                ? AppColors.surface70
                                 : AppColors.textSecondary(context),
                           ),
                         ),
@@ -226,7 +226,7 @@ class ReviewStepView extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 11.sp,
                             color: isDark
-                                ? Colors.white54
+                                ? AppColors.surface54
                                 : AppColors.textSecondary(context),
                           ),
                         ),
@@ -242,7 +242,7 @@ class ReviewStepView extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 11.sp,
                             color: isDark
-                                ? Colors.white54
+                                ? AppColors.surface54
                                 : AppColors.textSecondary(context),
                           ),
                         ),
@@ -290,7 +290,7 @@ class ReviewStepView extends StatelessWidget {
                           style: AppTextStyles.titleMedium.copyWith(
                             fontWeight: FontWeight.bold,
                             color: isDark
-                                ? Colors.white
+                                ? AppColors.surface
                                 : AppColors.textPrimary(context),
                           ),
                         ),
@@ -307,7 +307,7 @@ class ReviewStepView extends StatelessWidget {
                       appointment.specialty,
                       style: AppTextStyles.bodySmall.copyWith(
                         color: isDark
-                            ? Colors.white70
+                            ? AppColors.surface70
                             : AppColors.textSecondary(context),
                       ),
                     ),
@@ -363,7 +363,7 @@ class ReviewStepView extends StatelessWidget {
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark
-                              ? Colors.white
+                              ? AppColors.surface
                               : AppColors.textPrimary(context),
                         ),
                       ),
@@ -401,7 +401,7 @@ class ReviewStepView extends StatelessWidget {
                   'No medicines prescribed.',
                   style: AppTextStyles.bodySmall.copyWith(
                     color: isDark
-                        ? Colors.white38
+                        ? AppColors.surface38
                         : AppColors.textSecondary(context),
                   ),
                 )
@@ -455,7 +455,7 @@ class ReviewStepView extends StatelessWidget {
                                     style: AppTextStyles.bodyMedium.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: isDark
-                                          ? Colors.white
+                                          ? AppColors.surface
                                           : AppColors.textPrimary(context),
                                     ),
                                   ),
@@ -464,7 +464,7 @@ class ReviewStepView extends StatelessWidget {
                                     '${strength.isNotEmpty ? "$strength, " : ""}$freq, $days Days',
                                     style: AppTextStyles.bodySmall.copyWith(
                                       color: isDark
-                                          ? Colors.white54
+                                          ? AppColors.surface54
                                           : AppColors.textSecondary(context),
                                     ),
                                   ),
@@ -474,7 +474,7 @@ class ReviewStepView extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  'â‚¹${cost.toStringAsFixed(2)}',
+                                  'Ã¢â€šÂ¹${cost.toStringAsFixed(2)}',
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.success,
@@ -539,7 +539,7 @@ class ReviewStepView extends StatelessWidget {
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark
-                              ? Colors.white
+                              ? AppColors.surface
                               : AppColors.textPrimary(context),
                         ),
                       ),
@@ -571,7 +571,7 @@ class ReviewStepView extends StatelessWidget {
                   'No lab tests scheduled.',
                   style: AppTextStyles.bodySmall.copyWith(
                     color: isDark
-                        ? Colors.white38
+                        ? AppColors.surface38
                         : AppColors.textSecondary(context),
                   ),
                 )
@@ -588,7 +588,7 @@ class ReviewStepView extends StatelessWidget {
                             style: AppTextStyles.bodyMedium.copyWith(
                               fontWeight: FontWeight.w600,
                               color: isDark
-                                  ? Colors.white
+                                  ? AppColors.surface
                                   : AppColors.textPrimary(context),
                             ),
                           ),
@@ -596,7 +596,7 @@ class ReviewStepView extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'â‚¹250.00',
+                              'Ã¢â€šÂ¹250.00',
                               style: AppTextStyles.bodyMedium.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.orange[700],
@@ -655,7 +655,7 @@ class ReviewStepView extends StatelessWidget {
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isDark
-                              ? Colors.white
+                              ? AppColors.surface
                               : AppColors.textPrimary(context),
                         ),
                       ),
@@ -689,7 +689,7 @@ class ReviewStepView extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontStyle: FontStyle.italic,
                         color: isDark
-                            ? Colors.white70
+                            ? AppColors.surface70
                             : AppColors.textPrimary(context),
                       ),
                     ),
@@ -725,7 +725,7 @@ class ReviewStepView extends StatelessWidget {
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isDark
-                          ? Colors.white
+                          ? AppColors.surface
                           : AppColors.textPrimary(context),
                     ),
                   ),
@@ -734,21 +734,21 @@ class ReviewStepView extends StatelessWidget {
               const Divider(height: 20),
               _buildBillRow(
                 'Consultation Fee',
-                'â‚¹${consultFee.toStringAsFixed(2)}',
+                'Ã¢â€šÂ¹${consultFee.toStringAsFixed(2)}',
                 isDark,
                 context,
               ),
               if (medicineCost > 0)
                 _buildBillRow(
                   'Medicine Total',
-                  'â‚¹${medicineCost.toStringAsFixed(2)}',
+                  'Ã¢â€šÂ¹${medicineCost.toStringAsFixed(2)}',
                   isDark,
                   context,
                 ),
               if (labCost > 0)
                 _buildBillRow(
                   'Lab Test Total',
-                  'â‚¹${labCost.toStringAsFixed(2)}',
+                  'Ã¢â€šÂ¹${labCost.toStringAsFixed(2)}',
                   isDark,
                   context,
                 ),
@@ -816,7 +816,7 @@ class ReviewStepView extends StatelessWidget {
                               fontSize: 10.sp,
                               fontStyle: FontStyle.italic,
                               color: isDark
-                                  ? Colors.white54
+                                  ? AppColors.surface54
                                   : AppColors.textSecondary(context),
                             ),
                           ),
@@ -826,7 +826,7 @@ class ReviewStepView extends StatelessWidget {
                             style: AppTextStyles.bodySmall.copyWith(
                               fontWeight: FontWeight.bold,
                               color: isDark
-                                  ? Colors.white
+                                  ? AppColors.surface
                                   : AppColors.textPrimary(context),
                             ),
                           ),
@@ -872,14 +872,14 @@ class ReviewStepView extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
             ),
           ),
           Text(
             value,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : AppColors.textPrimary(context),
+              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
             ),
           ),
         ],

@@ -61,7 +61,7 @@ class EmrdInvestigationsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Lab Test Total: â‚¹${labAmount.toStringAsFixed(2)}",
+                    "Lab Test Total: Ã¢â€šÂ¹${labAmount.toStringAsFixed(2)}",
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -130,7 +130,7 @@ class EmrdInvestigationsCard extends StatelessWidget {
                   child: Text(
                     "Pay Now",
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -142,7 +142,7 @@ class EmrdInvestigationsCard extends StatelessWidget {
             "No lab tests scheduled.",
             style: AppTextStyles.bodySmall.copyWith(
               fontStyle: FontStyle.italic,
-              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
             ),
           ),
       ],

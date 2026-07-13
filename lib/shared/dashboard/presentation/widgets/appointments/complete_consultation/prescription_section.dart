@@ -52,7 +52,7 @@ class PrescriptionSection extends StatelessWidget {
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isDark
-                          ? Colors.white70
+                          ? AppColors.surface70
                           : AppColors.textPrimary(context),
                     ),
                   ),
@@ -65,7 +65,7 @@ class PrescriptionSection extends StatelessWidget {
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isDark
-                          ? Colors.white70
+                          ? AppColors.surface70
                           : AppColors.textPrimary(context),
                     ),
                   ),
@@ -78,7 +78,7 @@ class PrescriptionSection extends StatelessWidget {
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isDark
-                          ? Colors.white70
+                          ? AppColors.surface70
                           : AppColors.textPrimary(context),
                     ),
                   ),
@@ -137,14 +137,14 @@ class PrescriptionSection extends StatelessWidget {
                                 focusNode: fieldFocusNode,
                                 style: AppTextStyles.bodyMedium.copyWith(
                                   color: isDark
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : AppColors.textPrimary(context),
                                 ),
                                 decoration: InputDecoration(
                                   hintText: 'Search medicine...',
                                   hintStyle: AppTextStyles.bodySmall.copyWith(
                                     color: isDark
-                                        ? Colors.white38
+                                        ? AppColors.surface38
                                         : AppColors.textSecondary(context),
                                   ),
                                   filled: true,
@@ -184,7 +184,7 @@ class PrescriptionSection extends StatelessWidget {
                                   elevation: 4.0,
                                   color: isDark
                                       ? AppColors.terminalDarkCard
-                                      : Colors.white,
+                                      : AppColors.surface,
                                   borderRadius: BorderRadius.circular(8.r),
                                   child: Container(
                                     width: 250.w,
@@ -273,7 +273,7 @@ class PrescriptionSection extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '₹${option.sellPrice}',
+                                                  'â‚¹${option.sellPrice}',
                                                   style: AppTextStyles.bodySmall
                                                       .copyWith(
                                                         fontWeight:
@@ -303,7 +303,7 @@ class PrescriptionSection extends StatelessWidget {
                             'Strength: ${dosageCtrl.text}',
                             style: AppTextStyles.bodySmall.copyWith(
                               color: isDark
-                                  ? Colors.white38
+                                  ? AppColors.surface38
                                   : AppColors.textSecondary(context),
                               fontSize: 10.sp,
                             ),
@@ -321,14 +321,14 @@ class PrescriptionSection extends StatelessWidget {
                     controller: freqCtrl,
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: isDark
-                          ? Colors.white
+                          ? AppColors.surface
                           : AppColors.textPrimary(context),
                     ),
                     decoration: InputDecoration(
                       hintText: 'e.g. 1-0-1',
                       hintStyle: AppTextStyles.bodySmall.copyWith(
                         color: isDark
-                            ? Colors.white38
+                            ? AppColors.surface38
                             : AppColors.textSecondary(context),
                       ),
                       filled: true,
@@ -365,14 +365,14 @@ class PrescriptionSection extends StatelessWidget {
                     keyboardType: TextInputType.number,
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: isDark
-                          ? Colors.white
+                          ? AppColors.surface
                           : AppColors.textPrimary(context),
                     ),
                     decoration: InputDecoration(
                       hintText: 'Days',
                       hintStyle: AppTextStyles.bodySmall.copyWith(
                         color: isDark
-                            ? Colors.white38
+                            ? AppColors.surface38
                             : AppColors.textSecondary(context),
                       ),
                       filled: true,
@@ -448,12 +448,12 @@ class PrescriptionSection extends StatelessWidget {
           controller: prescriptionNotesCtrl,
           maxLines: 3,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white : AppColors.textPrimary(context),
+            color: isDark ? AppColors.surface : AppColors.textPrimary(context),
           ),
           decoration: InputDecoration(
             hintText: 'Prescription notes / doctor remarks...',
             hintStyle: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
             ),
             filled: true,
             fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],

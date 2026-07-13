@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medi_connect/core/widgets/calender_painter.dart';
@@ -44,7 +45,7 @@ class DynamicCalendar3D extends StatelessWidget {
                     Text(
                       month,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.w700,
                         fontSize: size * .12,
                       ),
@@ -53,7 +54,7 @@ class DynamicCalendar3D extends StatelessWidget {
                     Text(
                       day,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.w900,
                         fontSize: size * .28,
                         height: .9,
@@ -77,7 +78,7 @@ class DynamicCalendar3D extends StatelessWidget {
                               margin: const EdgeInsets.all(1),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2),
-                                color: Colors.white.withValues(alpha: .12),
+                                color: AppColors.surface.withValues(alpha: .12),
                               ),
                             );
                           },

@@ -97,7 +97,7 @@ class _OnboardingSecurityIllustrationState
                           width: 4.r,
                           height: 4.r,
                           decoration: const BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -157,7 +157,7 @@ class _OnboardingSecurityIllustrationState
               height: 110.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: AppColors.surface,
                 border: Border.all(
                   color: AppColors.primary.withValues(alpha: 0.15),
                   width: 3.r,
@@ -188,7 +188,7 @@ class _OnboardingSecurityIllustrationState
                       children: [
                         Icon(
                           Icons.shield_outlined,
-                          color: Colors.white,
+                          color: AppColors.surface,
                           size: 44.r,
                         ),
                         Padding(

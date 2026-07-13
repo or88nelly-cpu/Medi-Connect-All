@@ -23,7 +23,7 @@ class SignupWelcomeText extends StatelessWidget {
           style: AppTextStyles.headingLarge.copyWith(
             fontSize: isDesktop ? 32.sp : 22.sp,
             fontWeight: FontWeight.w800,
-            color: isDark ? Colors.white : AppColors.primary,
+            color: isDark ? AppColors.surface : AppColors.primary,
           ),
           textAlign: isDesktop ? TextAlign.left : TextAlign.center,
         ),
@@ -32,7 +32,7 @@ class SignupWelcomeText extends StatelessWidget {
           'Join us to access world-class healthcare services',
           style: AppTextStyles.bodyMedium.copyWith(
             color: isDark
-                ? Colors.white.withValues(alpha: 0.8)
+                ? AppColors.surface.withValues(alpha: 0.8)
                 : Colors.black87,
             height: 1.3,
             fontSize: isDesktop ? 14.sp : 12.sp,

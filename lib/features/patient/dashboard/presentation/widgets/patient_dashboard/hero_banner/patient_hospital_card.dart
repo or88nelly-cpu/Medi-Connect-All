@@ -13,7 +13,7 @@ class PatientHospitalCard extends StatelessWidget {
         ? const [Color(0xFF16233B), Color(0xFF0C1424)]
         : const [Color(0xFFDBECFF), Color(0xFFEDF5FF)];
 
-    final buildingBg = isDark ? Color(0xFF09121F) : Colors.white;
+    final buildingBg = isDark ? Color(0xFF09121F) : AppColors.surface;
 
     return Container(
       height: 80.h,

@@ -151,7 +151,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                       Text(
                         "Scan Patient QR/UHID",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -159,7 +159,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                       IconButton(
                         icon: const Icon(
                           Icons.close_rounded,
-                          color: Colors.white,
+                          color: AppColors.surface,
                         ),
                         onPressed: () => Navigator.pop(context),
                       ),
@@ -171,7 +171,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                 Text(
                   "Align the QR code within the frame",
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.8),
+                    color: AppColors.surface.withValues(alpha: 0.8),
                     fontSize: 12.sp,
                   ),
                 ),
@@ -196,7 +196,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                         "Simulate QR Scan (Select Demo Patient)",
                         style: AppTextStyles.bodyMedium.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: isDark ? AppColors.surface : Colors.black,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -205,7 +205,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                         Text(
                           "No demo patients available.",
                           style: TextStyle(
-                            color: isDark ? Colors.white54 : Colors.black54,
+                            color: isDark ? AppColors.surface54 : Colors.black54,
                             fontSize: 11.sp,
                           ),
                           textAlign: TextAlign.center,
@@ -249,7 +249,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                                           fontWeight: FontWeight.bold,
                                           fontSize: 11.sp,
                                           color: isDark
-                                              ? Colors.white
+                                              ? AppColors.surface
                                               : Colors.black87,
                                         ),
                                       ),

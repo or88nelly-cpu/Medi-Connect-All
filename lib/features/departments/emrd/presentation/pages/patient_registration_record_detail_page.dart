@@ -116,7 +116,7 @@ class _PatientRegistrationRecordDetailPageState
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? const Color(0xFF09121F)
-            : Colors.white,
+            : AppColors.surface,
         title: Row(
           children: [
             const Icon(Icons.check_circle, color: AppColors.success, size: 28),
@@ -134,7 +134,7 @@ class _PatientRegistrationRecordDetailPageState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Registration payment of â‚¹200.00 has been successfully processed for $patientName.",
+              "Registration payment of Ã¢â€šÂ¹200.00 has been successfully processed for $patientName.",
               style: AppTextStyles.bodyMedium,
             ),
             SizedBox(height: 12.h),
@@ -156,7 +156,7 @@ class _PatientRegistrationRecordDetailPageState
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx),
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: const Text("OK", style: TextStyle(color: Colors.white)),
+            child: const Text("OK", style: TextStyle(color: AppColors.surface)),
           ),
         ],
       ),
@@ -169,7 +169,7 @@ class _PatientRegistrationRecordDetailPageState
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? const Color(0xFF09121F)
-            : Colors.white,
+            : AppColors.surface,
         title: Row(
           children: [
             Icon(Icons.print, color: AppColors.primary, size: 24.r),
@@ -197,7 +197,7 @@ class _PatientRegistrationRecordDetailPageState
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? const Color(0xFF09121F)
-            : Colors.white,
+            : AppColors.surface,
         title: Row(
           children: [
             Icon(Icons.download, color: AppColors.primary, size: 24.r),
@@ -245,7 +245,7 @@ class _PatientRegistrationRecordDetailPageState
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark
-                      ? Colors.white70
+                      ? AppColors.surface70
                       : AppColors.textPrimary(context),
                 ),
               ),
@@ -273,7 +273,7 @@ class _PatientRegistrationRecordDetailPageState
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
             ),
           ),
           Flexible(
@@ -529,7 +529,7 @@ class _PatientRegistrationRecordDetailPageState
                       style: AppTextStyles.bodySmall.copyWith(
                         fontStyle: FontStyle.italic,
                         color: isDark
-                            ? Colors.white30
+                            ? AppColors.surface30
                             : AppColors.textSecondary(context),
                       ),
                     ),
@@ -555,7 +555,7 @@ class _PatientRegistrationRecordDetailPageState
                         side: BorderSide(color: AppColors.border(context)),
                       ),
                       color: isDark
-                          ? Colors.white.withValues(alpha: 0.02)
+                          ? AppColors.surface.withValues(alpha: 0.02)
                           : Colors.black.withValues(alpha: 0.01),
                       child: ListTile(
                         dense: true,
@@ -570,10 +570,10 @@ class _PatientRegistrationRecordDetailPageState
                           ),
                         ),
                         subtitle: Text(
-                          "$dept Â· $formattedDate",
+                          "$dept Ã‚Â· $formattedDate",
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isDark
-                                ? Colors.white54
+                                ? AppColors.surface54
                                 : AppColors.textSecondary(context),
                           ),
                         ),
@@ -616,11 +616,11 @@ class _PatientRegistrationRecordDetailPageState
                 gradient: LinearGradient(
                   colors: isDark
                       ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-                      : [const Color(0xFFF1F5F9), Colors.white],
+                      : [const Color(0xFFF1F5F9), AppColors.surface],
                 ),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
-                  color: isDark ? Colors.white10 : Colors.grey[200]!,
+                  color: isDark ? AppColors.surface10 : Colors.grey[200]!,
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -658,7 +658,7 @@ class _PatientRegistrationRecordDetailPageState
                           "Registered: $formattedDate",
                           style: AppTextStyles.bodySmall.copyWith(
                             color: isDark
-                                ? Colors.white54
+                                ? AppColors.surface54
                                 : AppColors.textSecondary(context),
                           ),
                         ),
@@ -722,7 +722,7 @@ class _PatientRegistrationRecordDetailPageState
                       children: [
                         Text("Fee Amount", style: AppTextStyles.bodyMedium),
                         Text(
-                          "â‚¹200.00",
+                          "Ã¢â€šÂ¹200.00",
                           style: AppTextStyles.titleLarge.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
@@ -767,7 +767,7 @@ class _PatientRegistrationRecordDetailPageState
                         child: Container(
                           padding: EdgeInsets.all(8.r),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             borderRadius: BorderRadius.circular(8.r),
                             border: Border.all(
                               color: AppColors.primary.withValues(alpha: 0.3),
@@ -830,14 +830,14 @@ class _PatientRegistrationRecordDetailPageState
                                 child: const CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white,
+                                    AppColors.surface,
                                   ),
                                 ),
                               )
                             : Text(
                                 "Confirm Payment",
                                 style: AppTextStyles.buttonMedium.copyWith(
-                                  color: Colors.white,
+                                  color: AppColors.surface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -862,7 +862,7 @@ class _PatientRegistrationRecordDetailPageState
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.bold,
                         color: isDark
-                            ? Colors.white70
+                            ? AppColors.surface70
                             : AppColors.textPrimary(context),
                       ),
                     ),
@@ -913,11 +913,11 @@ class _PatientRegistrationRecordDetailPageState
                                 _simulateDownload(patientName, uhid),
                             icon: const Icon(
                               Icons.download,
-                              color: Colors.white,
+                              color: AppColors.surface,
                             ),
                             label: const Text(
                               "Download Card",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: AppColors.surface),
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,

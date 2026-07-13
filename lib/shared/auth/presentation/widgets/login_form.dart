@@ -7,6 +7,8 @@ import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
+import 'package:medi_connect/core/theme/app_strings.dart';
+import 'package:medi_connect/core/widgets/buttons/common_button.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 
 class LoginForm extends StatefulWidget {
@@ -36,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         // â”€â”€ Title â”€â”€
         Text(
-          'Login to your account',
+          AppStrings.welcomeBack,
           style: AppTextStyles.headingSmall.copyWith(
             fontSize: 20.sp,
             fontWeight: FontWeight.w700,
@@ -48,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
         // â”€â”€ Email / Mobile Field â”€â”€
         _buildTextField(
           controller: widget.email,
-          hint: 'Email or Mobile Number',
+          hint: AppStrings.emailAddress,
           prefixIcon: Icons.mail_outline_rounded,
           validator: (val) =>
               ValidationUtils.validateRequired(val, 'This field is required'),
@@ -58,7 +60,7 @@ class _LoginFormState extends State<LoginForm> {
         // â”€â”€ Password Field â”€â”€
         _buildTextField(
           controller: widget.password,
-          hint: 'Password',
+          hint: AppStrings.password,
           prefixIcon: Icons.lock_outline_rounded,
           isPassword: true,
           validator: ValidationUtils.validatePassword,
@@ -76,7 +78,7 @@ class _LoginFormState extends State<LoginForm> {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(
-              'Forgot Password?',
+              AppStrings.forgotPasswordQuestion,
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
@@ -184,57 +186,12 @@ class _LoginFormState extends State<LoginForm> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         final isLoading = state is AuthLoading;
-        return GestureDetector(
-          onTap: isLoading ? null : widget.onLoginPressed,
-          child: Container(
-            width: double.infinity,
-            height: 52.h,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [AppColors.primary, Color(0xFF3B5BFD)],
-              ),
-              borderRadius: BorderRadius.circular(14.r),
-              border: Border.all(color: AppColors.secondary, width: 2.r),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF4F6EFF).withValues(alpha: 0.35),
-                  blurRadius: 14.r,
-                  offset: const Offset(-3, 5),
-                ),
-                BoxShadow(
-                  color: const Color(0xFF3B5BFD).withValues(alpha: 0.35),
-                  blurRadius: 14.r,
-                  offset: const Offset(3, 5),
-                ),
-              ],
-            ),
-            alignment: Alignment.center,
-            child: isLoading
-                ? SizedBox(
-                    width: 22.r,
-                    height: 22.r,
-                    child: const CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2.5,
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Login',
-                        style: AppTextStyles.buttonLarge.copyWith(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.3,
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      const AnimatedButtonIcon(),
-                    ],
-                  ),
-          ),
+        return CommonButton(
+          text: AppStrings.login,
+          isLoading: isLoading,
+          onPressed: widget.onLoginPressed,
+          isGradient: true,
+          icon: const AnimatedButtonIcon(),
         );
       },
     );
@@ -253,9 +210,9 @@ class _LoginFormState extends State<LoginForm> {
               fontSize: 13.sp,
             ),
             children: [
-              const TextSpan(text: "Don't have an account?  "),
+              const TextSpan(text: AppStrings.dontHaveAccount),
               TextSpan(
-                text: 'Sign Up',
+                text: AppStrings.signup,
                 style: TextStyle(
                   color: AppColors.textPrimary(context),
                   fontWeight: FontWeight.w700,

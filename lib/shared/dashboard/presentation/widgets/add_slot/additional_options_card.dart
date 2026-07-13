@@ -23,8 +23,8 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
       context: context,
       builder: (ctx) {
         final isDark = Theme.of(ctx).brightness == Brightness.dark;
-        final dialogBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-        final textColor = isDark ? Colors.white : Colors.black;
+        final dialogBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+        final textColor = isDark ? AppColors.surface : Colors.black;
 
         return AlertDialog(
           backgroundColor: dialogBg,
@@ -39,11 +39,11 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
             decoration: InputDecoration(
               hintText: "Enter slot description / admin notes...",
               hintStyle: TextStyle(
-                color: isDark ? Colors.white38 : Colors.black38,
+                color: isDark ? AppColors.surface38 : Colors.black38,
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: isDark ? Colors.white24 : Colors.black12,
+                  color: isDark ? AppColors.surface24 : Colors.black12,
                 ),
               ),
               focusedBorder: const OutlineInputBorder(

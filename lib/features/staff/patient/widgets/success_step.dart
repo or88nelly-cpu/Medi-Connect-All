@@ -60,7 +60,7 @@ class SuccessStep extends StatelessWidget {
             ),
             child: Icon(
               Icons.check_circle_outline_rounded,
-              color: Colors.white,
+              color: AppColors.surface,
               size: 34.r,
             ),
           ),
@@ -125,7 +125,7 @@ class SuccessStep extends StatelessWidget {
                   icon: Icons.receipt_long_outlined,
                   iconColor: AppColors.primary,
                   title: "Registration Fee",
-                  value: "â‚¹50",
+                  value: "Ã¢â€šÂ¹50",
                   subValue: "Paid",
                 ),
               ),
@@ -202,12 +202,12 @@ class SuccessStep extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.home_outlined, color: Colors.white, size: 18.r),
+                Icon(Icons.home_outlined, color: AppColors.surface, size: 18.r),
                 SizedBox(width: 8.w),
                 Text(
                   "Go to Home",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.surface,
                     fontWeight: FontWeight.bold,
                     fontSize: 12.sp,
                   ),

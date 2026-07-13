@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,11 +20,11 @@ class EmrdAIAssistantPanel extends StatelessWidget {
     required bool isDark,
   }) {
     final Color pillBg = isDark
-        ? Colors.white.withValues(alpha: 0.03)
-        : Colors.white;
+        ? AppColors.surface.withValues(alpha: 0.03)
+        : AppColors.surface;
     final Color iconBg = color.withValues(alpha: 0.12);
-    final Color textColor = isDark ? Colors.white : const Color(0xFF1E293B);
-    final Color subColor = isDark ? Colors.white38 : const Color(0xFF64748B);
+    final Color textColor = isDark ? AppColors.surface : const Color(0xFF1E293B);
+    final Color subColor = isDark ? AppColors.surface38 : const Color(0xFF64748B);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
@@ -31,7 +32,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
         color: pillBg,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: isDark ? Colors.white10 : Colors.grey[200]!,
+          color: isDark ? AppColors.surface10 : Colors.grey[200]!,
           width: 1,
         ),
       ),
@@ -90,7 +91,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             padding: EdgeInsets.all(1.5.r),
-            child: Icon(Icons.check, color: Colors.white, size: 9.r),
+            child: Icon(Icons.check, color: AppColors.surface, size: 9.r),
           ),
           SizedBox(width: 8.w),
           Expanded(
@@ -100,7 +101,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                 fontSize: 10.5.sp,
                 fontWeight: FontWeight.bold,
                 height: 1.25,
-                color: isDark ? Colors.white70 : const Color(0xFF334155),
+                color: isDark ? AppColors.surface70 : const Color(0xFF334155),
               ),
             ),
           ),
@@ -131,7 +132,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
               : [
                   const Color(0xFFF3F7FF),
                   const Color(0xFFE8F1FF),
-                  Colors.white,
+                  AppColors.surface,
                 ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -158,7 +159,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.auto_awesome,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 14,
                 ),
               ),
@@ -168,7 +169,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 14.5.sp,
-                  color: isDark ? Colors.white : const Color(0xFF1E3A8A),
+                  color: isDark ? AppColors.surface : const Color(0xFF1E3A8A),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -195,7 +196,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
             style: TextStyle(
               fontSize: 11.sp,
               fontWeight: FontWeight.w500,
-              color: isDark ? Colors.white54 : const Color(0xFF2563EB),
+              color: isDark ? AppColors.surface54 : const Color(0xFF2563EB),
             ),
           ),
           SizedBox(height: 14.h),
@@ -268,7 +269,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                               fontSize: 10.sp,
                               fontWeight: FontWeight.bold,
                               color: isDark
-                                  ? Colors.white70
+                                  ? AppColors.surface70
                                   : const Color(0xFF475569),
                             ),
                           ),
@@ -296,7 +297,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w900,
                                         color: isDark
-                                            ? Colors.white
+                                            ? AppColors.surface
                                             : const Color(0xFF1E293B),
                                       ),
                                     ),
@@ -341,7 +342,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                 fontSize: 9.5.sp,
                                 fontWeight: FontWeight.w500,
                                 color: isDark
-                                    ? Colors.white54
+                                    ? AppColors.surface54
                                     : const Color(0xFF64748B),
                                 height: 1.35,
                               ),
@@ -386,7 +387,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                           fontSize: 11.5.sp,
                           fontWeight: FontWeight.w900,
                           color: isDark
-                              ? Colors.white70
+                              ? AppColors.surface70
                               : const Color(0xFF1E293B),
                         ),
                       ),
@@ -441,7 +442,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                   fontSize: 11.sp,
                                   fontWeight: FontWeight.w900,
                                   color: isDark
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : const Color(0xFF1E293B),
                                 ),
                               ),
@@ -449,7 +450,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                 "Ask AI assistant for assistance",
                                 style: TextStyle(
                                   fontSize: 8.5.sp,
-                                  color: isDark ? Colors.white38 : Colors.grey,
+                                  color: isDark ? AppColors.surface38 : Colors.grey,
                                 ),
                               ),
                             ],
@@ -472,7 +473,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF3B82F6),
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.surface,
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.r),
@@ -538,9 +539,9 @@ class EmrdAIAssistantPanel extends StatelessWidget {
       height: 110.h,
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? Colors.white.withValues(alpha: 0.02) : Colors.white,
+        color: isDark ? AppColors.surface.withValues(alpha: 0.02) : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
+        border: Border.all(color: isDark ? AppColors.surface10 : Colors.grey[200]!),
       ),
       child: child,
     );
@@ -570,7 +571,7 @@ class MRDGaugePainter extends CustomPainter {
     final double radius = (size.width - strokeWidth) / 2;
 
     final Paint bgPaint = Paint()
-      ..color = isDark ? Colors.white10 : Colors.grey.withValues(alpha: 0.12)
+      ..color = isDark ? AppColors.surface10 : Colors.grey.withValues(alpha: 0.12)
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 

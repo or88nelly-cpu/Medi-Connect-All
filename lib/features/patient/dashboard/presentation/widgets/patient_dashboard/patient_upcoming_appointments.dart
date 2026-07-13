@@ -52,8 +52,8 @@ class _PatientUpcomingAppointmentsState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
@@ -271,7 +271,7 @@ class _PatientUpcomingAppointmentsState
                       ),
                       SizedBox(width: 4.w),
                       Text(
-                        '$formattedDate â€¢ ${apt.appointmentTime}',
+                        '$formattedDate Ã¢â‚¬Â¢ ${apt.appointmentTime}',
                         style: TextStyle(
                           fontSize: 9.sp,
                           color: textColor,

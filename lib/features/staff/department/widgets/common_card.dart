@@ -62,7 +62,7 @@ class CommonCard extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            // ── Decorative ghost icon (top-right) ──
+            // â”€â”€ Decorative ghost icon (top-right) â”€â”€
             Positioned(
               right: -6,
               top: -6,
@@ -73,7 +73,7 @@ class CommonCard extends StatelessWidget {
               ),
             ),
 
-            // ── Main content ──
+            // â”€â”€ Main content â”€â”€
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -97,12 +97,12 @@ class CommonCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Icon(icon, color: Colors.white, size: 24.r),
+                  child: Icon(icon, color: AppColors.surface, size: 24.r),
                 ),
 
                 SizedBox(height: 12.h),
 
-                // Title — fixed 1 line height
+                // Title â€” fixed 1 line height
                 SizedBox(
                   height: _titleHeight.toDouble(),
                   child: Text(
@@ -119,7 +119,7 @@ class CommonCard extends StatelessWidget {
 
                 SizedBox(height: 4.h),
 
-                // Subtitle — fixed 2-line height
+                // Subtitle â€” fixed 2-line height
                 SizedBox(
                   height: _subtitleHeight.toDouble(),
                   child: Text(
@@ -136,7 +136,7 @@ class CommonCard extends StatelessWidget {
 
                 SizedBox(height: 10.h),
 
-                // Arrow button — always at the bottom-right
+                // Arrow button â€” always at the bottom-right
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Container(

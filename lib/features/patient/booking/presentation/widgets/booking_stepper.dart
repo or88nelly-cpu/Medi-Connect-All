@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -43,7 +44,7 @@ class BookingStepper extends StatelessWidget {
           child: Text(
             step,
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.surface,
               fontSize: 10.sp,
               fontWeight: FontWeight.bold,
             ),

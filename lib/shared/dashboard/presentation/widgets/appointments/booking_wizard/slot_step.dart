@@ -51,7 +51,7 @@ class SlotStep extends StatelessWidget {
         child: Text(
           "Please select a doctor first.",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+            color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
           ),
         ),
       );
@@ -156,9 +156,9 @@ class SlotStep extends StatelessWidget {
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 9.sp,
                           color: isSelected
-                              ? Colors.white
+                              ? AppColors.surface
                               : (isDark
-                                    ? Colors.white70
+                                    ? AppColors.surface70
                                     : AppColors.textSecondary(context)),
                         ),
                       ),
@@ -168,7 +168,7 @@ class SlotStep extends StatelessWidget {
                         style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.bold,
                           color: isSelected
-                              ? Colors.white
+                              ? AppColors.surface
                               : (AppColors.textPrimary(context)),
                         ),
                       ),
@@ -197,7 +197,7 @@ class SlotStep extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                 margin: EdgeInsets.only(bottom: 12.h),
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.white12 : Colors.grey[100],
+                  color: isDark ? AppColors.surface12 : Colors.grey[100],
                   borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(color: AppColors.border(context)),
                 ),
@@ -210,7 +210,7 @@ class SlotStep extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 11.sp,
                         color: isDark
-                            ? Colors.white
+                            ? AppColors.surface
                             : AppColors.textPrimary(context),
                       ),
                     ),
@@ -267,7 +267,7 @@ class SlotStep extends StatelessWidget {
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isDark
-                          ? Colors.white
+                          ? AppColors.surface
                           : AppColors.textPrimary(context),
                     ),
                   ),
@@ -288,7 +288,7 @@ class SlotStep extends StatelessWidget {
                         ),
                         selected: isSelected,
                         disabledColor: isDark
-                            ? Colors.white12
+                            ? AppColors.surface12
                             : Colors.grey[200],
                         selectedColor: AppColors.primary.withValues(alpha: 0.2),
                         checkmarkColor: AppColors.primary,
@@ -311,7 +311,7 @@ class SlotStep extends StatelessWidget {
                               : (isAvailable
                                     ? (AppColors.textPrimary(context))
                                     : (isDark
-                                          ? Colors.white24
+                                          ? AppColors.surface24
                                           : Colors.grey[400])),
                         ),
                       );
@@ -325,7 +325,7 @@ class SlotStep extends StatelessWidget {
                     style: AppTextStyles.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
                       color: isDark
-                          ? Colors.white
+                          ? AppColors.surface
                           : AppColors.textPrimary(context),
                     ),
                   ),
@@ -346,7 +346,7 @@ class SlotStep extends StatelessWidget {
                         ),
                         selected: isSelected,
                         disabledColor: isDark
-                            ? Colors.white12
+                            ? AppColors.surface12
                             : Colors.grey[200],
                         selectedColor: AppColors.primary.withValues(alpha: 0.2),
                         checkmarkColor: AppColors.primary,
@@ -368,10 +368,10 @@ class SlotStep extends StatelessWidget {
                               ? AppColors.primary
                               : (isAvailable
                                     ? (isDark
-                                          ? Colors.white
+                                          ? AppColors.surface
                                           : AppColors.textPrimary(context))
                                     : (isDark
-                                          ? Colors.white24
+                                          ? AppColors.surface24
                                           : Colors.grey[400])),
                         ),
                       );

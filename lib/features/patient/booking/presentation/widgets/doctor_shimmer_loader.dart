@@ -40,7 +40,7 @@ class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader>
     final baseColor = isDark
         ? const Color(0xFF334155)
         : const Color(0xFFE2E8F0);
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
 
     return FadeTransition(
       opacity: _animation,

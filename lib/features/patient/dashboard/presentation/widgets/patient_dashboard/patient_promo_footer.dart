@@ -58,7 +58,7 @@ class PatientPromoFooter extends StatelessWidget {
                     border: Border.all(
                       color: AppColors.isDark(context)
                           ? const Color(0xFF10192C)
-                          : Colors.white,
+                          : AppColors.surface,
                       width: 2,
                     ),
                   ),

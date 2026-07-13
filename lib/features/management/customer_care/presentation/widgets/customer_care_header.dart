@@ -63,7 +63,7 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
           decoration: BoxDecoration(
             color: isDark
-                ? Colors.white.withValues(alpha: 0.03)
+                ? AppColors.surface.withValues(alpha: 0.03)
                 : Colors.black.withValues(alpha: 0.02),
             border: Border.all(color: borderColor, width: 1.2),
             borderRadius: BorderRadius.circular(12.r),
@@ -129,7 +129,7 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
           decoration: BoxDecoration(
             color: isDark
-                ? Colors.white.withValues(alpha: 0.03)
+                ? AppColors.surface.withValues(alpha: 0.03)
                 : Colors.black.withValues(alpha: 0.02),
             border: Border.all(color: borderColor, width: 1.2),
             borderRadius: BorderRadius.circular(12.r),
@@ -190,9 +190,9 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: isDark
-              ? Colors.white.withValues(alpha: 0.05)
-              : Colors.white,
-          foregroundColor: isDark ? Colors.white : AppColors.primary,
+              ? AppColors.surface.withValues(alpha: 0.05)
+              : AppColors.surface,
+          foregroundColor: isDark ? AppColors.surface : AppColors.primary,
           elevation: isDark ? 0 : 2,
           padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 14.h),
           shape: RoundedRectangleBorder(

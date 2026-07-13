@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,9 +91,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // DESKTOP LAYOUT (Branding left, form right, doctor image center-aligned)
-  // ─────────────────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Widget _buildDesktopLayout() {
     final screenH = MediaQuery.sizeOf(context).height;
     return Container(
@@ -216,10 +217,10 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 decoration: BoxDecoration(
                   color: isDark
                       ? Colors.black.withValues(alpha: 0.40)
-                      : Colors.white.withValues(alpha: 0.50),
+                      : AppColors.surface.withValues(alpha: 0.50),
                   borderRadius: BorderRadius.circular(24.r),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.25),
+                    color: AppColors.surface.withValues(alpha: 0.25),
                     width: 1.5.r,
                   ),
                   boxShadow: [

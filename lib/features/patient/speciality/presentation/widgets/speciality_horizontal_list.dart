@@ -22,7 +22,7 @@ class SpecialityHorizontalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDark ? Colors.white : AppColors.terminalLightText;
+    final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +89,7 @@ class SpecialityHorizontalList extends StatelessWidget {
                     width: 90.w,
                     margin: EdgeInsets.only(right: 12.w),
                     decoration: BoxDecoration(
-                      color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                      color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                       borderRadius: BorderRadius.circular(12.r),
                       border: Border.all(color: AppColors.border(context)),
                     ),

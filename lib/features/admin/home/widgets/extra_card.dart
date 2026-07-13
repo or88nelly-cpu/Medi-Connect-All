@@ -91,9 +91,9 @@ class ExtraCard extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.darkCard : Colors.white;
+    final cardBg = isDark ? AppColors.darkCard : AppColors.surface;
     final borderCol = isDark
-        ? Colors.white.withValues(alpha: 0.04)
+        ? AppColors.surface.withValues(alpha: 0.04)
         : Colors.black.withValues(alpha: 0.03);
 
     return Container(
@@ -120,8 +120,8 @@ class ExtraCard extends StatelessWidget {
             child: ShaderMask(
               shaderCallback: (bounds) => LinearGradient(
                 colors: [
-                  Colors.white.withValues(alpha: 0.12),
-                  Colors.white.withValues(alpha: 0.02),
+                  AppColors.surface.withValues(alpha: 0.12),
+                  AppColors.surface.withValues(alpha: 0.02),
                 ],
               ).createShader(bounds),
               child: Icon(icon, size: 180.r, color: gradient.last),
@@ -134,7 +134,7 @@ class ExtraCard extends StatelessWidget {
                 title,
                 style: AppTextStyles.bodyLarge.copyWith(
                   fontSize: 16.sp,
-                  color: isDark ? Colors.white : AppColors.textDarkNavy,
+                  color: isDark ? AppColors.surface : AppColors.textDarkNavy,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -161,7 +161,7 @@ class ExtraCard extends StatelessWidget {
                       ],
                     ),
                     child: Center(
-                      child: Icon(icon, color: Colors.white, size: 44.r),
+                      child: Icon(icon, color: AppColors.surface, size: 44.r),
                     ),
                   ),
                   SizedBox(width: 14.w),
@@ -171,7 +171,7 @@ class ExtraCard extends StatelessWidget {
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontSize: 13.sp,
                         color: isDark
-                            ? Colors.white70
+                            ? AppColors.surface70
                             : AppColors.textDarkNavy.withValues(alpha: 0.8),
                         fontWeight: FontWeight.w500,
                       ),
@@ -190,11 +190,11 @@ class ExtraCard extends StatelessWidget {
                       padding: EdgeInsets.all(10.r),
                       decoration: BoxDecoration(
                         color: isDark
-                            ? Colors.white.withValues(alpha: 0.05)
+                            ? AppColors.surface.withValues(alpha: 0.05)
                             : AppColors.primary.withValues(alpha: 0.06),
                         border: Border.all(
                           color: isDark
-                              ? Colors.white.withValues(alpha: 0.1)
+                              ? AppColors.surface.withValues(alpha: 0.1)
                               : AppColors.primary.withValues(alpha: 0.15),
                           width: 1,
                         ),
@@ -202,7 +202,7 @@ class ExtraCard extends StatelessWidget {
                       ),
                       child: Icon(
                         Icons.arrow_forward_ios_rounded,
-                        color: isDark ? Colors.white : AppColors.primary,
+                        color: isDark ? AppColors.surface : AppColors.primary,
                         size: 14.r,
                       ),
                     ),

@@ -112,7 +112,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final displayName = widget.patient.fullName;
 
-    final sheetBg = isDark ? AppColors.terminalDarkBg : Colors.white;
+    final sheetBg = isDark ? AppColors.terminalDarkBg : AppColors.surface;
     final secondaryText = AppColors.textSecondary(context);
     final primaryText = AppColors.textPrimary(context);
 
@@ -141,7 +141,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                 width: 40.w,
                 height: 4.h,
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.white24 : Colors.grey[300],
+                  color: isDark ? AppColors.surface24 : Colors.grey[300],
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),

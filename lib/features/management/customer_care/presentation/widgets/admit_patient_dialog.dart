@@ -58,7 +58,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Dialog(
-      backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+      backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -89,7 +89,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                       Text(
                         "Assign wards, rooms, and admitting doctors",
                         style: AppTextStyles.bodySmall.copyWith(
-                          color: isDark ? Colors.white60 : Colors.black54,
+                          color: isDark ? AppColors.surface60 : Colors.black54,
                         ),
                       ),
                     ],
@@ -115,7 +115,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                         "Select Patient",
                         style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white70 : Colors.black87,
+                          color: isDark ? AppColors.surface70 : Colors.black87,
                         ),
                       ),
                       SizedBox(height: 6.h),
@@ -160,7 +160,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                       focusNode: focusNode,
                                       style: TextStyle(
                                         color: isDark
-                                            ? Colors.white
+                                            ? AppColors.surface
                                             : Colors.black87,
                                       ),
                                       decoration: InputDecoration(
@@ -168,7 +168,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                             "Type patient name or email...",
                                         hintStyle: TextStyle(
                                           color: isDark
-                                              ? Colors.white38
+                                              ? AppColors.surface38
                                               : Colors.black38,
                                           fontSize: 13.sp,
                                         ),
@@ -185,7 +185,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                           ),
                                           borderSide: BorderSide(
                                             color: isDark
-                                                ? Colors.white24
+                                                ? AppColors.surface24
                                                 : Colors.black12,
                                           ),
                                         ),
@@ -258,7 +258,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                   style: AppTextStyles.bodySmall.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: isDark
-                                        ? Colors.white70
+                                        ? AppColors.surface70
                                         : Colors.black87,
                                   ),
                                 ),
@@ -267,10 +267,10 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                   initialValue: _selectedWard,
                                   dropdownColor: isDark
                                       ? AppColors.terminalDarkCard
-                                      : Colors.white,
+                                      : AppColors.surface,
                                   style: TextStyle(
                                     color: isDark
-                                        ? Colors.white
+                                        ? AppColors.surface
                                         : Colors.black87,
                                   ),
                                   decoration: InputDecoration(
@@ -282,7 +282,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                       borderRadius: BorderRadius.circular(10.r),
                                       borderSide: BorderSide(
                                         color: isDark
-                                            ? Colors.white24
+                                            ? AppColors.surface24
                                             : Colors.black12,
                                       ),
                                     ),
@@ -356,7 +356,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                         "Admitting Doctor",
                         style: AppTextStyles.bodySmall.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white70 : Colors.black87,
+                          color: isDark ? AppColors.surface70 : Colors.black87,
                         ),
                       ),
                       SizedBox(height: 6.h),
@@ -400,15 +400,15 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                             hint: Text(
                               "Choose a doctor",
                               style: TextStyle(
-                                color: isDark ? Colors.white38 : Colors.black38,
+                                color: isDark ? AppColors.surface38 : Colors.black38,
                                 fontSize: 13.sp,
                               ),
                             ),
                             dropdownColor: isDark
                                 ? AppColors.terminalDarkCard
-                                : Colors.white,
+                                : AppColors.surface,
                             style: TextStyle(
-                              color: isDark ? Colors.white : Colors.black87,
+                              color: isDark ? AppColors.surface : Colors.black87,
                             ),
                             decoration: InputDecoration(
                               filled: true,
@@ -419,7 +419,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                 borderRadius: BorderRadius.circular(10.r),
                                 borderSide: BorderSide(
                                   color: isDark
-                                      ? Colors.white24
+                                      ? AppColors.surface24
                                       : Colors.black12,
                                 ),
                               ),
@@ -492,7 +492,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                     child: const Text(
                       "Admit Patient",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -537,7 +537,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
     String? Function(String?)? validator,
     int maxLines = 1,
   }) {
-    final borderColor = isDark ? Colors.white24 : Colors.black12;
+    final borderColor = isDark ? AppColors.surface24 : Colors.black12;
     final fillCol = isDark
         ? AppColors.terminalDarkFieldFill
         : AppColors.terminalLightFieldFill;
@@ -549,14 +549,14 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
           label,
           style: AppTextStyles.bodySmall.copyWith(
             fontWeight: FontWeight.w600,
-            color: isDark ? Colors.white70 : Colors.black87,
+            color: isDark ? AppColors.surface70 : Colors.black87,
           ),
         ),
         SizedBox(height: 6.h),
         TextFormField(
           controller: controller,
           maxLines: maxLines,
-          style: TextStyle(color: isDark ? Colors.white : Colors.black87),
+          style: TextStyle(color: isDark ? AppColors.surface : Colors.black87),
           validator: validator,
           decoration: InputDecoration(
             hintText: hint,
@@ -569,7 +569,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
             prefixIcon: Icon(
               icon,
               size: 20.r,
-              color: isDark ? Colors.white60 : Colors.black54,
+              color: isDark ? AppColors.surface60 : Colors.black54,
             ),
             filled: true,
             fillColor: fillCol,

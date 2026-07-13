@@ -154,7 +154,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                         child: Text(
                           notificationCount.toString(),
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.surface,
                             fontSize: 8.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -218,7 +218,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                             ),
                             child: Icon(
                               Icons.workspace_premium_rounded,
-                              color: Colors.white,
+                              color: AppColors.surface,
                               size: 10.r,
                             ),
                           ),

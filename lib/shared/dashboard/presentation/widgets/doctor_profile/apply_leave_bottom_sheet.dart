@@ -122,7 +122,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
+    final cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
     final borderColor = isDark
         ? AppColors.terminalDarkBorder
         : Colors.grey.shade300;
@@ -622,7 +622,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                     child: Text(
                       "Submit Leave Request",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.surface,
                         fontSize: 13.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -688,7 +688,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
             child: Text(
               session,
               style: TextStyle(
-                color: isSelected ? Colors.white : labelColor,
+                color: isSelected ? AppColors.surface : labelColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 10.sp,
               ),

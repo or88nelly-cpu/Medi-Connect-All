@@ -403,7 +403,7 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                   backgroundColor: AppColors.primary,
                                   child: const Icon(
                                     Icons.add,
-                                    color: Colors.white,
+                                    color: AppColors.surface,
                                   ),
                                 ),
                                 SizedBox(height: 4.h),

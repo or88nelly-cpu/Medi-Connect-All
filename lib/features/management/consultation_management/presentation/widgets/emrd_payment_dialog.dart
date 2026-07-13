@@ -28,7 +28,7 @@ void showEmrdPaymentDialog({
         builder: (stCtx, setDialogState) {
           final isDark = Theme.of(context).brightness == Brightness.dark;
           return AlertDialog(
-            backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+            backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
             title: Text(
               'Payment for ${isMedicine ? "Medicines" : "Lab Tests"}',
               style: AppTextStyles.titleMedium.copyWith(
@@ -42,7 +42,7 @@ void showEmrdPaymentDialog({
                 Text('Invoice: $invoiceNum', style: AppTextStyles.bodySmall),
                 SizedBox(height: 8.h),
                 Text(
-                  'Total Amount: â‚¹${amount.toStringAsFixed(2)}',
+                  'Total Amount: Ã¢â€šÂ¹${amount.toStringAsFixed(2)}',
                   style: AppTextStyles.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.green,
@@ -86,7 +86,7 @@ void showEmrdPaymentDialog({
                       child: Container(
                         padding: EdgeInsets.all(8.r),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.surface,
                           borderRadius: BorderRadius.circular(8.r),
                           border: Border.all(
                             color: AppColors.primary.withValues(alpha: 0.3),
@@ -102,7 +102,7 @@ void showEmrdPaymentDialog({
                     SizedBox(height: 4.h),
                     Center(
                       child: Text(
-                        'Scan to Pay â‚¹${amount.toStringAsFixed(2)}',
+                        'Scan to Pay Ã¢â€šÂ¹${amount.toStringAsFixed(2)}',
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 10.sp,
                         ),
@@ -265,7 +265,7 @@ void showEmrdPaymentDialog({
                       messenger.showSnackBar(
                         SnackBar(
                           content: Text(
-                            'Payment of â‚¹${amount.toStringAsFixed(2)} confirmed for ${record['patient_name']}',
+                            'Payment of Ã¢â€šÂ¹${amount.toStringAsFixed(2)} confirmed for ${record['patient_name']}',
                           ),
                           backgroundColor: AppColors.success,
                         ),
@@ -277,7 +277,7 @@ void showEmrdPaymentDialog({
                   ),
                   child: const Text(
                     'Confirm Pay',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.surface),
                   ),
                 ),
               ] else ...[

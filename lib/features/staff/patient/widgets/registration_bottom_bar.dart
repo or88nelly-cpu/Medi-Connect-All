@@ -10,7 +10,7 @@ import 'package:medi_connect/features/management/customer_care/presentation/bloc
 
 /// Bottom navigation bar for the patient registration/onboarding wizard.
 ///
-/// Calls [onNextPressed] when the primary action button is tapped â€”
+/// Calls [onNextPressed] when the primary action button is tapped Ã¢â‚¬â€
 /// the parent page is responsible for form validation before dispatching
 /// [StepNextRequested] or [SubmitFormEvent] / [SubmitProfileUpdateEvent].
 class RegistrationBottomBar extends StatelessWidget {
@@ -44,13 +44,13 @@ class RegistrationBottomBar extends StatelessWidget {
           ),
           child: Row(
             children: [
-              // Back button â€” shown on steps 2+
+              // Back button Ã¢â‚¬â€ shown on steps 2+
               if (currentStep > 1) ...[
                 Expanded(child: _buildBackButton(context)),
                 SizedBox(width: 12.w),
               ],
 
-              // Skip for Now button â€” shown in patient self-onboarding mode on steps 1 and 2
+              // Skip for Now button Ã¢â‚¬â€ shown in patient self-onboarding mode on steps 1 and 2
               if (state.isPatientMode && currentStep < totalSteps) ...[
                 Expanded(child: _buildSkipButton(context)),
                 SizedBox(width: 12.w),
@@ -140,13 +140,13 @@ class RegistrationBottomBar extends StatelessWidget {
               height: 18.r,
               child: const CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.surface),
               ),
             )
           : Text(
               label,
               style: AppTextStyles.buttonMedium.copyWith(
-                color: Colors.white,
+                color: AppColors.surface,
                 fontWeight: FontWeight.bold,
                 fontSize: 13.sp,
               ),

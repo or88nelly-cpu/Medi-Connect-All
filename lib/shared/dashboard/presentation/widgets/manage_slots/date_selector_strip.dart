@@ -152,7 +152,7 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
                           dayInfo["day"]!,
                           style: TextStyle(
                             color: isSelected
-                                ? Colors.white
+                                ? AppColors.surface
                                 : (isWeekend ? AppColors.error : labelColor),
                             fontSize: 10.sp,
                           ),
@@ -161,7 +161,7 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
                         Text(
                           dayInfo["date"]!,
                           style: TextStyle(
-                            color: isSelected ? Colors.white : textColor,
+                            color: isSelected ? AppColors.surface : textColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 12.sp,
                           ),

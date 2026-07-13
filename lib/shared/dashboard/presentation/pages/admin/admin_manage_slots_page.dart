@@ -250,7 +250,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                  color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                   border: Border(
                     top: BorderSide(
                       color: isDark
@@ -271,7 +271,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
                   child: Text(
                     "Save Changes",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                     ),

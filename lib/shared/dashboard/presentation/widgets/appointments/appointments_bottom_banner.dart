@@ -29,7 +29,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
                 width: 42.r,
                 height: 42.r,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   borderRadius: BorderRadius.circular(8.r),
                   boxShadow: [
                     BoxShadow(
@@ -86,7 +86,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(1.r),
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -103,7 +103,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(2.r),
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -126,7 +126,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
             "Stay Organized,\nDeliver Better Care",
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : AppColors.textPrimary(context),
+              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
               height: 1.2,
             ),
           ),
@@ -135,7 +135,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
             "Quickly book, manage, and track all patient appointments in one place.",
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 10.sp,
-              color: isDark ? Colors.white54 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
             ),
           ),
         ],
@@ -147,7 +147,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
         onPressed: onBookNew,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.surface,
           elevation: 0,
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
           shape: RoundedRectangleBorder(

@@ -27,7 +27,7 @@ class ConsultationListItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? Colors.white.withValues(alpha: 0.02) : Colors.white,
+        color: isDark ? AppColors.surface.withValues(alpha: 0.02) : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.border(context)),
         boxShadow: [
@@ -52,7 +52,7 @@ class ConsultationListItem extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 15.sp,
                     color: isDark
-                        ? Colors.white
+                        ? AppColors.surface
                         : AppColors.textPrimary(context),
                   ),
                 ),
@@ -82,20 +82,20 @@ class ConsultationListItem extends StatelessWidget {
               Icon(
                 Icons.person_outline_rounded,
                 size: 16.r,
-                color: isDark ? Colors.white60 : Colors.black54,
+                color: isDark ? AppColors.surface60 : Colors.black54,
               ),
               SizedBox(width: 6.w),
               Text(
                 appointment.doctorName,
                 style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w500,
-                  color: isDark ? Colors.white70 : Colors.black87,
+                  color: isDark ? AppColors.surface70 : Colors.black87,
                 ),
               ),
               Text(
                 " | ${appointment.specialty}",
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: isDark ? Colors.white38 : Colors.black45,
+                  color: isDark ? AppColors.surface38 : Colors.black45,
                 ),
               ),
             ],
@@ -108,7 +108,7 @@ class ConsultationListItem extends StatelessWidget {
               Icon(
                 Icons.access_time_rounded,
                 size: 16.r,
-                color: isDark ? Colors.white60 : Colors.black54,
+                color: isDark ? AppColors.surface60 : Colors.black54,
               ),
               SizedBox(width: 6.w),
               Text(
@@ -122,13 +122,13 @@ class ConsultationListItem extends StatelessWidget {
               Icon(
                 Icons.calendar_today_outlined,
                 size: 14.r,
-                color: isDark ? Colors.white38 : Colors.black45,
+                color: isDark ? AppColors.surface38 : Colors.black45,
               ),
               SizedBox(width: 4.w),
               Text(
                 "${appointment.appointmentDate.day}/${appointment.appointmentDate.month}/${appointment.appointmentDate.year}",
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: isDark ? Colors.white60 : Colors.black54,
+                  color: isDark ? AppColors.surface60 : Colors.black54,
                 ),
               ),
             ],
@@ -154,7 +154,7 @@ class ConsultationListItem extends StatelessWidget {
                 icon: Icon(Icons.info_outline, size: 16.r),
                 label: const Text("Details"),
                 style: TextButton.styleFrom(
-                  foregroundColor: isDark ? Colors.white70 : Colors.black87,
+                  foregroundColor: isDark ? AppColors.surface70 : Colors.black87,
                 ),
               ),
               const Spacer(),
@@ -182,11 +182,11 @@ class ConsultationListItem extends StatelessWidget {
                   icon: Icon(
                     Icons.check_circle_outline,
                     size: 16.r,
-                    color: Colors.white,
+                    color: AppColors.surface,
                   ),
                   label: const Text(
                     "Complete",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.surface),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF10B981), // success green
@@ -222,7 +222,7 @@ class ConsultationListItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
               color: isDark
-                  ? Colors.white.withValues(alpha: 0.05)
+                  ? AppColors.surface.withValues(alpha: 0.05)
                   : Colors.black.withValues(alpha: 0.04),
               borderRadius: BorderRadius.circular(6.r),
             ),
@@ -231,14 +231,14 @@ class ConsultationListItem extends StatelessWidget {
                 Icon(
                   Icons.monitor_heart_outlined,
                   size: 14.r,
-                  color: isDark ? Colors.white38 : Colors.black45,
+                  color: isDark ? AppColors.surface38 : Colors.black45,
                 ),
                 SizedBox(width: 4.w),
                 Text(
                   "No Vitals Recorded",
                   style: TextStyle(
                     fontSize: 10.sp,
-                    color: isDark ? Colors.white38 : Colors.black45,
+                    color: isDark ? AppColors.surface38 : Colors.black45,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -292,7 +292,7 @@ class ConsultationListItem extends StatelessWidget {
                 style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 11.sp,
-                  color: isDark ? Colors.white70 : Colors.black87,
+                  color: isDark ? AppColors.surface70 : Colors.black87,
                 ),
               );
             }).toList(),

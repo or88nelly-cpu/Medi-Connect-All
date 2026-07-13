@@ -84,7 +84,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBgColor = isDark ? const Color(0xFF1E293B) : AppColors.surface;
     final timerColor = _secondsRemaining > 60
         ? const Color(0xFF4F46E5)
         : Colors.red;
@@ -117,7 +117,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
                 borderRadius: BorderRadius.circular(20.r),
                 border: Border.all(
                   color: isDark
-                      ? Colors.white10
+                      ? AppColors.surface10
                       : Colors.black.withValues(alpha: 0.05),
                 ),
               ),
@@ -169,7 +169,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
                     margin: EdgeInsets.all(8.r),
                     child: CustomPaint(
                       painter: QrCodePainter(
-                        color: isDark ? Colors.white : Colors.black,
+                        color: isDark ? AppColors.surface : Colors.black,
                       ),
                     ),
                   ),
@@ -192,7 +192,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
                   Text(
                     "Registration ID",
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark ? Colors.white54 : Colors.grey[600],
+                      color: isDark ? AppColors.surface54 : Colors.grey[600],
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -204,7 +204,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
                         widget.registrationId,
                         style: AppTextStyles.titleMedium.copyWith(
                           color: isDark
-                              ? Colors.white
+                              ? AppColors.surface
                               : const Color(0xFF1E293B),
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,

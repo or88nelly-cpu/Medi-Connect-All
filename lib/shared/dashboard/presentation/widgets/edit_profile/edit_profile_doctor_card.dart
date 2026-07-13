@@ -72,7 +72,7 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                     ),
                     child: Icon(
                       Icons.camera_alt,
-                      color: Colors.white,
+                      color: AppColors.surface,
                       size: 14.sp,
                     ),
                   ),

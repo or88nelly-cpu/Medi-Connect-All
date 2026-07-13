@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,7 +80,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                               color:
                                   Theme.of(context).brightness ==
                                       Brightness.dark
-                                  ? Colors.white30
+                                  ? AppColors.surface30
                                   : Colors.grey[600],
                               fontSize: 11.sp,
                             ),
@@ -92,7 +93,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                             Icons.refresh,
                             color:
                                 Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white70
+                                ? AppColors.surface70
                                 : Colors.grey[700],
                             size: 20.r,
                           ),
@@ -117,7 +118,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                                 color:
                                     Theme.of(context).brightness ==
                                         Brightness.dark
-                                    ? Colors.white70
+                                    ? AppColors.surface70
                                     : Colors.grey[700],
                                 size: 22.r,
                               ),
@@ -141,7 +142,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                                 child: Text(
                                   "6",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.surface,
                                     fontSize: 8.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -176,7 +177,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                                         color:
                                             Theme.of(context).brightness ==
                                                 Brightness.dark
-                                            ? Colors.white24
+                                            ? AppColors.surface24
                                             : Colors.grey[300]!,
                                         width: 1,
                                       ),
@@ -205,7 +206,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                                         color: const Color(0xFF22C55E),
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                          color: Colors.white,
+                                          color: AppColors.surface,
                                           width: 1.5,
                                         ),
                                       ),
@@ -252,7 +253,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                         ),
                         child: const Icon(
                           Icons.add,
-                          color: Colors.white,
+                          color: AppColors.surface,
                           size: 28,
                         ),
                       ),

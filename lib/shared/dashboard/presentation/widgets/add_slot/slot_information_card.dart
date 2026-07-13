@@ -440,7 +440,7 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
             child: Text(
               session,
               style: TextStyle(
-                color: isSelected ? Colors.white : labelColor,
+                color: isSelected ? AppColors.surface : labelColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 11.sp,
               ),

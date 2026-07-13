@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/admin_nav_item.dart';
@@ -27,7 +28,7 @@ class StaffBottomNavBar extends StatelessWidget {
         border: Border(
           top: BorderSide(
             color: isDark
-                ? Colors.white.withValues(alpha: 0.08)
+                ? AppColors.surface.withValues(alpha: 0.08)
                 : Colors.black.withValues(alpha: 0.06),
             width: 1,
           ),

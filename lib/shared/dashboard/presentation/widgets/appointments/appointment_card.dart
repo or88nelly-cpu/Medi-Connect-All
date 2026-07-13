@@ -157,7 +157,7 @@ class AppointmentCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : Colors.white,
+        color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.border(context)),
       ),
@@ -186,7 +186,7 @@ class AppointmentCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: isDark
-                            ? Colors.white12
+                            ? AppColors.surface12
                             : const Color(0xFFF3F4F6),
                         border: Border.all(
                           color: AppColors.border(context),
@@ -217,7 +217,7 @@ class AppointmentCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13.sp,
                                   color: isDark
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : AppColors.textPrimary(context),
                                 ),
                               ),
@@ -296,7 +296,7 @@ class AppointmentCard extends StatelessWidget {
                                 Icons.person_outline,
                                 size: 12.r,
                                 color: isDark
-                                    ? Colors.white54
+                                    ? AppColors.surface54
                                     : AppColors.textSecondary(context),
                               ),
                               SizedBox(width: 4.w),
@@ -307,7 +307,7 @@ class AppointmentCard extends StatelessWidget {
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
                                     color: isDark
-                                        ? Colors.white70
+                                        ? AppColors.surface70
                                         : AppColors.textSecondary(context),
                                   ),
                                 ),
@@ -321,7 +321,7 @@ class AppointmentCard extends StatelessWidget {
                                 Icons.calendar_today_outlined,
                                 size: 12.r,
                                 color: isDark
-                                    ? Colors.white54
+                                    ? AppColors.surface54
                                     : AppColors.textSecondary(context),
                               ),
                               SizedBox(width: 4.w),
@@ -330,7 +330,7 @@ class AppointmentCard extends StatelessWidget {
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontSize: 11.sp,
                                   color: isDark
-                                      ? Colors.white54
+                                      ? AppColors.surface54
                                       : AppColors.textSecondary(context),
                                 ),
                               ),
@@ -339,7 +339,7 @@ class AppointmentCard extends StatelessWidget {
                                 Icons.access_time_outlined,
                                 size: 12.r,
                                 color: isDark
-                                    ? Colors.white54
+                                    ? AppColors.surface54
                                     : AppColors.textSecondary(context),
                               ),
                               SizedBox(width: 4.w),
@@ -348,7 +348,7 @@ class AppointmentCard extends StatelessWidget {
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontSize: 11.sp,
                                   color: isDark
-                                      ? Colors.white54
+                                      ? AppColors.surface54
                                       : AppColors.textSecondary(context),
                                 ),
                               ),
@@ -389,7 +389,7 @@ class AppointmentCard extends StatelessWidget {
                                   foregroundColor: AppColors.primary,
                                   backgroundColor: isDark
                                       ? AppColors.terminalDarkCard
-                                      : Colors.white,
+                                      : AppColors.surface,
                                   side: const BorderSide(
                                     color: AppColors.primary,
                                   ),
@@ -511,7 +511,7 @@ class AppointmentCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+        backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
         title: Row(
           children: [
             const Icon(Icons.info_outline, color: AppColors.primary),
@@ -582,7 +582,7 @@ class AppointmentCard extends StatelessWidget {
               AppStrings.vitalsInformation,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white70 : AppColors.textPrimary(context),
+                color: isDark ? AppColors.surface70 : AppColors.textPrimary(context),
               ),
             ),
             SizedBox(height: 8.h),
@@ -611,7 +611,7 @@ class AppointmentCard extends StatelessWidget {
             _buildInfoRow(
               AppStrings.temperature,
               appointment.fever != null && appointment.fever!.isNotEmpty
-                  ? "${appointment.fever} Â°F"
+                  ? "${appointment.fever} Ã‚Â°F"
                   : "N/A",
               isDark,
               context,
@@ -630,7 +630,7 @@ class AppointmentCard extends StatelessWidget {
                 style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark
-                      ? Colors.white38
+                      ? AppColors.surface38
                       : AppColors.textSecondary(context),
                 ),
               ),
@@ -708,7 +708,7 @@ class AppointmentCard extends StatelessWidget {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
+          backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
           title: const Text(AppStrings.noSummaryAvailable),
           content: const Text(AppStrings.couldNotRetrieveEmr),
           actions: [
@@ -757,7 +757,7 @@ class AppointmentCard extends StatelessWidget {
           builder: (sheetCtx, scrollCtrl) {
             return Container(
               decoration: BoxDecoration(
-                color: isDark ? AppColors.terminalDarkCard : Colors.white,
+                color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(24),
                 ),
@@ -769,7 +769,7 @@ class AppointmentCard extends StatelessWidget {
                     width: 40.w,
                     height: 4.h,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.white24 : Colors.grey[300],
+                      color: isDark ? AppColors.surface24 : Colors.grey[300],
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -788,7 +788,7 @@ class AppointmentCard extends StatelessWidget {
                                 style: AppTextStyles.titleLarge.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: isDark
-                                      ? Colors.white
+                                      ? AppColors.surface
                                       : AppColors.textPrimary(context),
                                 ),
                               ),
@@ -797,7 +797,7 @@ class AppointmentCard extends StatelessWidget {
                                 "${AppStrings.datePrefix}$formattedDate",
                                 style: AppTextStyles.bodySmall.copyWith(
                                   color: isDark
-                                      ? Colors.white54
+                                      ? AppColors.surface54
                                       : AppColors.textSecondary(context),
                                 ),
                               ),
@@ -867,7 +867,7 @@ class AppointmentCard extends StatelessWidget {
                                 record['medicines'] as String,
                                 style: AppTextStyles.bodySmall.copyWith(
                                   color: isDark
-                                      ? Colors.white70
+                                      ? AppColors.surface70
                                       : AppColors.textPrimary(context),
                                 ),
                               ),
@@ -875,7 +875,7 @@ class AppointmentCard extends StatelessWidget {
                             ],
                             _buildInfoRow(
                               AppStrings.medicineTotal,
-                              "â‚¹${medAmount.toStringAsFixed(2)}",
+                              "Ã¢â€šÂ¹${medAmount.toStringAsFixed(2)}",
                               isDark,
                               context,
                             ),
@@ -905,7 +905,7 @@ class AppointmentCard extends StatelessWidget {
                                 record['lab_tests'] as String,
                                 style: AppTextStyles.bodySmall.copyWith(
                                   color: isDark
-                                      ? Colors.white70
+                                      ? AppColors.surface70
                                       : AppColors.textPrimary(context),
                                 ),
                               ),
@@ -913,7 +913,7 @@ class AppointmentCard extends StatelessWidget {
                             ],
                             _buildInfoRow(
                               AppStrings.labTestsTotal,
-                              "â‚¹${labAmount.toStringAsFixed(2)}",
+                              "Ã¢â€šÂ¹${labAmount.toStringAsFixed(2)}",
                               isDark,
                               context,
                             ),
@@ -944,7 +944,7 @@ class AppointmentCard extends StatelessWidget {
                                 style: AppTextStyles.bodySmall.copyWith(
                                   fontStyle: FontStyle.italic,
                                   color: isDark
-                                      ? Colors.white70
+                                      ? AppColors.surface70
                                       : AppColors.textPrimary(context),
                                 ),
                               ),
@@ -992,7 +992,7 @@ class AppointmentCard extends StatelessWidget {
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark
-                      ? Colors.white70
+                      ? AppColors.surface70
                       : AppColors.textPrimary(context),
                 ),
               ),
@@ -1021,7 +1021,7 @@ class AppointmentCard extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? Colors.white38 : AppColors.textSecondary(context),
+              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
             ),
           ),
           Text(

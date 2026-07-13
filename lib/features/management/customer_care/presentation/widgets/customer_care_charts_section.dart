@@ -202,7 +202,7 @@ class CustomerCareChartsSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
       decoration: BoxDecoration(
         color: isDark
-            ? Colors.white.withValues(alpha: 0.03)
+            ? AppColors.surface.withValues(alpha: 0.03)
             : Colors.black.withValues(alpha: 0.02),
         border: Border.all(color: borderColor, width: 1.2),
         borderRadius: BorderRadius.circular(8.r),
@@ -327,7 +327,7 @@ class CustomerCareChartsSection extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
           decoration: BoxDecoration(
             color: isDark
-                ? Colors.white.withValues(alpha: 0.02)
+                ? AppColors.surface.withValues(alpha: 0.02)
                 : Colors.black.withValues(alpha: 0.015),
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(
@@ -456,7 +456,7 @@ class CustomerCareChartsSection extends StatelessWidget {
                       height: 10.h,
                       decoration: BoxDecoration(
                         color: isDark
-                            ? Colors.white.withValues(alpha: 0.05)
+                            ? AppColors.surface.withValues(alpha: 0.05)
                             : Colors.black.withValues(alpha: 0.04),
                         borderRadius: BorderRadius.circular(5.r),
                       ),
@@ -576,7 +576,7 @@ class _LineChartPainter extends CustomPainter {
       ..color = lineColor
       ..style = PaintingStyle.fill;
     final dotOutlinePaint = Paint()
-      ..color = Colors.white
+      ..color = AppColors.surface
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 

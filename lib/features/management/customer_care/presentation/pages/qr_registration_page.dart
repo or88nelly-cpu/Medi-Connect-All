@@ -46,7 +46,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: isDark ? Colors.white : const Color(0xFF1E293B),
+            color: isDark ? AppColors.surface : const Color(0xFF1E293B),
             size: 20.r,
           ),
           onPressed: () => Navigator.of(context).pop(),
@@ -58,7 +58,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               "Customer Care",
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? AppColors.surface : const Color(0xFF1E293B),
                 fontSize: 16.sp,
               ),
             ),
@@ -89,7 +89,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               style: AppTextStyles.headingMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 26.sp,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? AppColors.surface : const Color(0xFF1E293B),
               ),
             ),
             SizedBox(height: 6.h),
@@ -97,7 +97,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               "Let patients easily register through our official Patient App",
               textAlign: TextAlign.center,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: isDark ? Colors.white54 : Colors.grey[600],
+                color: isDark ? AppColors.surface54 : Colors.grey[600],
                 fontSize: 13.sp,
               ),
             ),
@@ -120,7 +120,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
                   ),
                   SizedBox(width: 6.w),
                   Text(
-                    "Secure  â€¢  Fast  â€¢  Trusted",
+                    "Secure  Ã¢â‚¬Â¢  Fast  Ã¢â‚¬Â¢  Trusted",
                     style: TextStyle(
                       color: const Color(0xFF10B981),
                       fontSize: 11.sp,
@@ -153,11 +153,11 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
               decoration: BoxDecoration(
                 color: isDark
-                    ? Colors.white.withValues(alpha: 0.02)
+                    ? AppColors.surface.withValues(alpha: 0.02)
                     : const Color(0xFFEFF6FF),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
-                  color: isDark ? Colors.white10 : const Color(0xFFDBEAFE),
+                  color: isDark ? AppColors.surface10 : const Color(0xFFDBEAFE),
                 ),
               ),
               child: Row(
@@ -173,7 +173,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
                       "By scanning this QR code, patients will be redirected to the official app store. Your data is safe with us.",
                       style: AppTextStyles.bodyXSmall.copyWith(
                         color: isDark
-                            ? Colors.white54
+                            ? AppColors.surface54
                             : const Color(0xFF1E3A8A),
                         fontSize: 10.sp,
                         height: 1.3,

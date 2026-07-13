@@ -57,7 +57,7 @@ class DoctorCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 24.r,
-                backgroundColor: isDark ? Colors.white12 : Colors.black12,
+                backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
                 child: ClipOval(
                   child: CustomImageView(
                     imagePath: ProfileImageHelper.resolveImagePath(

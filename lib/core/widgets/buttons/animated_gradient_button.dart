@@ -1,3 +1,4 @@
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
@@ -74,12 +75,12 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                 colors: [
                   Color.lerp(
                     widget.startColor,
-                    Colors.white,
+                    AppColors.surface,
                     _controller.value * .08,
                   )!,
                   Color.lerp(
                     widget.endColor,
-                    Colors.white,
+                    AppColors.surface,
                     _controller.value * .04,
                   )!,
                 ],
@@ -104,7 +105,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                   Text(
                     widget.text,
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       fontSize: (widget.height / 50) * 14.sp,
                       fontWeight: FontWeight.w800,
                       letterSpacing: .3,
@@ -118,7 +119,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                     width: (widget.height / 50) * 36.r,
                     height: (widget.height / 50) * 36.r,
                     decoration: const BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.surface,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
