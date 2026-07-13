@@ -15,13 +15,12 @@ class SignupBranding extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        
-          CustomImageView(
-            imagePath: AppAssets.logoIconPng,
-            width: isDesktop ? 62.r : 56.r,
-            height: isDesktop ? 62.r : 56.r,
-          ),
-        
+        CustomImageView(
+          imagePath: AppAssets.logoIconPng,
+          width: isDesktop ? 62.r : 56.r,
+          height: isDesktop ? 62.r : 56.r,
+        ),
+
         SizedBox(width: 12.w),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

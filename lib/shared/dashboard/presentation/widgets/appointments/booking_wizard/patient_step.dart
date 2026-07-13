@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class PatientStep extends StatelessWidget {
@@ -19,7 +18,6 @@ class PatientStep extends StatelessWidget {
     required this.ageController,
   });
 
- 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

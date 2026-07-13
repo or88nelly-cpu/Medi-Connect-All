@@ -1318,10 +1318,7 @@ class AdminPatientDialogs {
           Container(
             width: 6.w,
             height: 6.w,
-            decoration: BoxDecoration(
-              color: dotColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
           SizedBox(width: 4.w),
           Text(

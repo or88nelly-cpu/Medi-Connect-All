@@ -13,8 +13,6 @@ class StaffOperationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         String departmentTitle = 'Customer Care';

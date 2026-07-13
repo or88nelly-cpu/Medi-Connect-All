@@ -95,7 +95,7 @@ class PatientCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           child: Text(
-                            patient.id ,
+                            patient.id,
                             style: TextStyle(
                               color: AppColors.primary,
                               fontSize: 10.sp,

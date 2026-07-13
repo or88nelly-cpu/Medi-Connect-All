@@ -28,12 +28,6 @@ class AppInitializer {
       publishableKey: EnvConfig.apiKey,
     );
 
-    // Initialize Sentry
-    await SentryFlutter.init((options) {
-      options.dsn = EnvConfig.sentryDsn; // Ensure this is added to EnvConfig
-      options.tracesSampleRate = 1.0;
-    });
-
     final sl = GetIt.instance;
 
     // Initialize Core and Feature dependencies.

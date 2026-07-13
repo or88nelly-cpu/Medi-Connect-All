@@ -16,32 +16,30 @@ class StepsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-      Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                "Step $currentStep of $totalSteps",
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                  fontSize: 10.sp,
-                ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              "Step $currentStep of $totalSteps",
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+                fontSize: 10.sp,
               ),
-              SizedBox(width: 8.w),
-              Text(
-                stepTitle,
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary(context),
-                  fontSize: 10.sp,
-                ),
+            ),
+            SizedBox(width: 8.w),
+            Text(
+              stepTitle,
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary(context),
+                fontSize: 10.sp,
               ),
-            ],
-          ),
-        ],
-      
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

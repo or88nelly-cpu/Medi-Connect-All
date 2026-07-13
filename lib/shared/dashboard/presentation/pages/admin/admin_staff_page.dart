@@ -263,18 +263,14 @@ class _AdminStaffPageState extends State<AdminStaffPage> {
                                               // 2. Sort
                                               if (sortBy == 'Name (A-Z)') {
                                                 filtered.sort(
-                                                  (a, b) => (a.fullName )
-                                                      .compareTo(
-                                                        b.fullName,
-                                                      ),
+                                                  (a, b) => (a.fullName)
+                                                      .compareTo(b.fullName),
                                                 );
                                               } else if (sortBy ==
                                                   'Name (Z-A)') {
                                                 filtered.sort(
-                                                  (a, b) => (b.fullName )
-                                                      .compareTo(
-                                                        a.fullName ,
-                                                      ),
+                                                  (a, b) => (b.fullName)
+                                                      .compareTo(a.fullName),
                                                 );
                                               }
 

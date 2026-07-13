@@ -82,8 +82,7 @@ class DoctorStep extends StatelessWidget {
                   itemBuilder: (context, idx) {
                     final doc = list[idx];
                     final isSelected = state.selectedDoctor?.id == doc.id;
-                    final nameStr =
-                        doc.fullName ;
+                    final nameStr = doc.fullName;
                     final avatarUrl =
                         doc.profilePhoto ??
                         "https://i.pravatar.cc/150?u=${doc.id}";

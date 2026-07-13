@@ -7,7 +7,8 @@ class EnvConfig {
   static String _storageUrl =
       'https://ldxsdyvmfayxuaczmtuu.storage.supabase.co/storage/v1/s3';
   static String _storageBucket = 'medi_connect_store';
-  static final String _sentryDsn = '';
+  static final String _sentryDsn =
+      'https://82ef6c388c737bf706ad27b2681400df@o4511729566810112.ingest.de.sentry.io/4511729574215760';
 
   static String get apiKey => _apiKey;
   static String get apiUrl => _apiUrl;
