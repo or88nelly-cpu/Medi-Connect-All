@@ -190,7 +190,9 @@ class AdminDrawer extends StatelessWidget {
         : [AppColors.terminalLightBgGrad1, AppColors.terminalLightBgGrad2];
 
     final textColor = isDark ? AppColors.surface : AppColors.terminalLightText;
-    final subColor = isDark ? AppColors.surface70 : AppColors.terminalLightLabel;
+    final subColor = isDark
+        ? AppColors.surface70
+        : AppColors.terminalLightLabel;
     final iconColor = isDark ? AppColors.surface : AppColors.terminalLightText;
     final borderCol = isDark
         ? AppColors.terminalAccentCyan.withValues(alpha: 0.5)

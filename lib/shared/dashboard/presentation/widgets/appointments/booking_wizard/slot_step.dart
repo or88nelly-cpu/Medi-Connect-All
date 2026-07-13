@@ -51,7 +51,9 @@ class SlotStep extends StatelessWidget {
         child: Text(
           "Please select a doctor first.",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
+            color: isDark
+                ? AppColors.surface54
+                : AppColors.textSecondary(context),
           ),
         ),
       );

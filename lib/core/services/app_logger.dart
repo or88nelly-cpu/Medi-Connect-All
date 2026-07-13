@@ -7,7 +7,9 @@ import 'package:logger/logger.dart';
 
 class AppLogger {
   static final Logger _logger = Logger(
-    filter: kReleaseMode ? ProductionFilter() : DevelopmentFilter(), // Suppress verbose logs in release
+    filter: kReleaseMode
+        ? ProductionFilter()
+        : DevelopmentFilter(), // Suppress verbose logs in release
     printer: PrettyPrinter(
       methodCount: 2,
       errorMethodCount: 8,
@@ -38,8 +40,16 @@ class AppLogger {
   }
 
   /// Log critical system-level failures.
-  static void critical(String message, {dynamic error, StackTrace? stackTrace}) {
-    _logger.f(message, error: error, stackTrace: stackTrace); // 'f' for fatal/critical
+  static void critical(
+    String message, {
+    dynamic error,
+    StackTrace? stackTrace,
+  }) {
+    _logger.f(
+      message,
+      error: error,
+      stackTrace: stackTrace,
+    ); // 'f' for fatal/critical
   }
 
   /// Specialized API request/response logging.

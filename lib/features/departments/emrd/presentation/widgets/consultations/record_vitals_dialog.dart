@@ -90,7 +90,9 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
                         Text(
                           "Patient: ${widget.appointment.patientName}",
                           style: AppTextStyles.bodySmall.copyWith(
-                            color: isDark ? AppColors.surface60 : Colors.black54,
+                            color: isDark
+                                ? AppColors.surface60
+                                : Colors.black54,
                           ),
                         ),
                       ],

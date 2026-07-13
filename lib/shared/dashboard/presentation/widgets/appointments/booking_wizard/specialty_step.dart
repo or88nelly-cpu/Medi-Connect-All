@@ -27,7 +27,9 @@ class SpecialtyStep extends StatelessWidget {
             "Select Clinic Specialty",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+              color: isDark
+                  ? AppColors.surface
+                  : AppColors.textPrimary(context),
             ),
           ),
         ),

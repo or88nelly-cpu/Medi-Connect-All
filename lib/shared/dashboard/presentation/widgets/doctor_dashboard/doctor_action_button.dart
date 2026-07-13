@@ -46,7 +46,9 @@ class DoctorActionButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface
+                    : AppColors.textPrimary(context),
                 fontSize: 9.sp,
                 fontWeight: FontWeight.w600,
               ),

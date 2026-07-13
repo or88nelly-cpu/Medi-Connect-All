@@ -169,7 +169,9 @@ class _PatientSpecialitiesSectionState
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+                      color: isDark
+                          ? AppColors.terminalDarkCard
+                          : AppColors.surface,
                       borderRadius: BorderRadius.circular(16.r),
                       border: Border.all(color: AppColors.border(context)),
                       boxShadow: [

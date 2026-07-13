@@ -125,7 +125,9 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final primaryTextColor = isDark ? AppColors.surface : const Color(0xFF0F2C59);
+    final primaryTextColor = isDark
+        ? AppColors.surface
+        : const Color(0xFF0F2C59);
     final secondaryTextColor = isDark
         ? const Color(0xFF5E98C7)
         : const Color(0xFF3F6D94);
@@ -718,10 +720,16 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                       height: 20.r,
                       child: const CircularProgressIndicator(
                         strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.surface),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.surface,
+                        ),
                       ),
                     )
-                  : Icon(Icons.send_rounded, color: AppColors.surface, size: 18.r),
+                  : Icon(
+                      Icons.send_rounded,
+                      color: AppColors.surface,
+                      size: 18.r,
+                    ),
               label: Text(
                 "Save & Send to MRD",
                 style: AppTextStyles.buttonMedium.copyWith(
@@ -1019,7 +1027,10 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
           ElevatedButton.icon(
             onPressed: () => Navigator.pop(ctx, ImageSource.gallery),
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            icon: const Icon(Icons.photo_library_outlined, color: AppColors.surface),
+            icon: const Icon(
+              Icons.photo_library_outlined,
+              color: AppColors.surface,
+            ),
             label: const Text(
               "Open Gallery",
               style: TextStyle(color: AppColors.surface),

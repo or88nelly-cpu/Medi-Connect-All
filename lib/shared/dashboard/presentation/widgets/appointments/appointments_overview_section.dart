@@ -53,7 +53,9 @@ class AppointmentsOverviewSection extends StatelessWidget {
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 12.sp,
-                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface
+                    : AppColors.textPrimary(context),
               ),
             ),
             Row(
@@ -84,7 +86,9 @@ class AppointmentsOverviewSection extends StatelessWidget {
                       vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
-                      color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+                      color: isDark
+                          ? AppColors.terminalDarkCard
+                          : AppColors.surface,
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(color: AppColors.border(context)),
                     ),
@@ -212,7 +216,9 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 16.sp,
-                  color: isDark ? AppColors.surface : AppColors.terminalLightText,
+                  color: isDark
+                      ? AppColors.surface
+                      : AppColors.terminalLightText,
                 ),
               ),
             ],

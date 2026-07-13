@@ -89,7 +89,9 @@ class PaymentSection extends StatelessWidget {
                 controller: feeCtrl,
                 keyboardType: TextInputType.number,
                 style: AppTextStyles.titleMedium.copyWith(
-                  color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                  color: isDark
+                      ? AppColors.surface
+                      : AppColors.textPrimary(context),
                   fontWeight: FontWeight.bold,
                 ),
                 decoration: InputDecoration(
@@ -127,7 +129,9 @@ class PaymentSection extends StatelessWidget {
           'Payment Method',
           style: AppTextStyles.bodySmall.copyWith(
             fontWeight: FontWeight.bold,
-            color: isDark ? AppColors.surface70 : AppColors.textPrimary(context),
+            color: isDark
+                ? AppColors.surface70
+                : AppColors.textPrimary(context),
           ),
         ),
         SizedBox(height: 8.h),

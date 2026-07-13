@@ -66,7 +66,9 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 15.sp,
-                  color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                  color: isDark
+                      ? AppColors.surface
+                      : AppColors.textPrimary(context),
                 ),
               ),
             ],
@@ -76,7 +78,9 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
             "Visual trend analysis for digitization rate and storage utilization",
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11.sp,
-              color: isDark ? AppColors.surface30 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface30
+                  : AppColors.textSecondary(context),
             ),
           ),
           SizedBox(height: 20.h),
@@ -134,7 +138,9 @@ class EMRDAnalyticsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paintGrid = Paint()
-      ..color = isDark ? AppColors.surface10 : Colors.black.withValues(alpha: 0.05)
+      ..color = isDark
+          ? AppColors.surface10
+          : Colors.black.withValues(alpha: 0.05)
       ..strokeWidth = 1;
 
     final paintLine = Paint()

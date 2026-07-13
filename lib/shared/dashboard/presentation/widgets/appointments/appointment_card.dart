@@ -511,7 +511,9 @@ class AppointmentCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+        backgroundColor: isDark
+            ? AppColors.terminalDarkCard
+            : AppColors.surface,
         title: Row(
           children: [
             const Icon(Icons.info_outline, color: AppColors.primary),
@@ -582,7 +584,9 @@ class AppointmentCard extends StatelessWidget {
               AppStrings.vitalsInformation,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.surface70 : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface70
+                    : AppColors.textPrimary(context),
               ),
             ),
             SizedBox(height: 8.h),
@@ -708,7 +712,9 @@ class AppointmentCard extends StatelessWidget {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+          backgroundColor: isDark
+              ? AppColors.terminalDarkCard
+              : AppColors.surface,
           title: const Text(AppStrings.noSummaryAvailable),
           content: const Text(AppStrings.couldNotRetrieveEmr),
           actions: [
@@ -1021,7 +1027,9 @@ class AppointmentCard extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface38
+                  : AppColors.textSecondary(context),
             ),
           ),
           Text(

@@ -27,7 +27,9 @@ class ConsultationListItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surface.withValues(alpha: 0.02) : AppColors.surface,
+        color: isDark
+            ? AppColors.surface.withValues(alpha: 0.02)
+            : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.border(context)),
         boxShadow: [
@@ -154,7 +156,9 @@ class ConsultationListItem extends StatelessWidget {
                 icon: Icon(Icons.info_outline, size: 16.r),
                 label: const Text("Details"),
                 style: TextButton.styleFrom(
-                  foregroundColor: isDark ? AppColors.surface70 : Colors.black87,
+                  foregroundColor: isDark
+                      ? AppColors.surface70
+                      : Colors.black87,
                 ),
               ),
               const Spacer(),

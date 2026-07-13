@@ -187,7 +187,9 @@ class _PatientActionCardState extends State<PatientActionCard>
                     style: AppTextStyles.headingSmall.copyWith(
                       fontWeight: FontWeight.w900,
                       fontSize: 12.sp,
-                      color: isDark ? AppColors.surface : const Color(0xff1C2333),
+                      color: isDark
+                          ? AppColors.surface
+                          : const Color(0xff1C2333),
                     ),
                   ),
 

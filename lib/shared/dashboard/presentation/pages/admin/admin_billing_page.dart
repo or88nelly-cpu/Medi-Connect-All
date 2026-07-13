@@ -265,7 +265,9 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.r),
           ),
-          backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+          backgroundColor: isDark
+              ? AppColors.terminalDarkCard
+              : AppColors.surface,
           child: Container(
             padding: EdgeInsets.all(24.r),
             width: 320.w,

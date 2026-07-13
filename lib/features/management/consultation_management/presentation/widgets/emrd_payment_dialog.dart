@@ -28,7 +28,9 @@ void showEmrdPaymentDialog({
         builder: (stCtx, setDialogState) {
           final isDark = Theme.of(context).brightness == Brightness.dark;
           return AlertDialog(
-            backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+            backgroundColor: isDark
+                ? AppColors.terminalDarkCard
+                : AppColors.surface,
             title: Text(
               'Payment for ${isMedicine ? "Medicines" : "Lab Tests"}',
               style: AppTextStyles.titleMedium.copyWith(

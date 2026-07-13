@@ -122,7 +122,9 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
     return Card(
       margin: EdgeInsets.only(bottom: 12.h),
       elevation: 0,
-      color: isDark ? AppColors.surface.withValues(alpha: 0.02) : AppColors.surface,
+      color: isDark
+          ? AppColors.surface.withValues(alpha: 0.02)
+          : AppColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
         side: BorderSide(color: AppColors.border(context)),
@@ -175,7 +177,10 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
           ),
           child: const Text(
             "Book",
-            style: TextStyle(color: AppColors.surface, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: AppColors.surface,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

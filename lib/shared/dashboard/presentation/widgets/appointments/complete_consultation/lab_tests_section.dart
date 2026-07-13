@@ -155,7 +155,9 @@ class LabTestsSection extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Special instructions for lab...',
             hintStyle: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface38
+                  : AppColors.textSecondary(context),
             ),
             filled: true,
             fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],

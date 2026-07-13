@@ -63,14 +63,20 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                 message: emrdState.message,
                 onRetry: () => context.read<EmrdBloc>().add(LoadEmrdStats()),
               );
-            } else if (patientState is PatientLoaded && emrdState is EmrdLoaded) {
-              bodyWidget = _buildContent(patientState.patients, emrdState.emrRecords);
+            } else if (patientState is PatientLoaded &&
+                emrdState is EmrdLoaded) {
+              bodyWidget = _buildContent(
+                patientState.patients,
+                emrdState.emrRecords,
+              );
             } else {
               bodyWidget = const SizedBox.shrink();
             }
 
             return CustomScaffold(
-              customAppbar: const CommonAppBar(title: "Patient Registry & Identification"),
+              customAppbar: const CommonAppBar(
+                title: "Patient Registry & Identification",
+              ),
               body: bodyWidget,
             );
           },
@@ -119,7 +125,8 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                       if (filteredPatients.isEmpty)
                         const EmptyStateWidget(
                           title: "No Patients Found",
-                          subtitle: "Registered patients will be recorded and listed here.",
+                          subtitle:
+                              "Registered patients will be recorded and listed here.",
                           icon: Icons.badge_outlined,
                         )
                       else
@@ -136,13 +143,19 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   r['specialty'] == 'Customer Care',
                               orElse: () => {
                                 'patient_id': patient.id,
-                                'patient_name': patient.fullName ?? 'Unnamed Patient',
+                                'patient_name':
+                                    patient.fullName ?? 'Unnamed Patient',
                                 'specialty': 'Customer Care',
                                 'doctor_name': 'Customer Care Department',
-                                'invoice_number': 'REG-${patient.id.split('-').last ?? ""}',
+                                'invoice_number':
+                                    'REG-${patient.id.split('-').last ?? ""}',
                                 'registration_fee': 200,
-                                'registration_payment_status': patient.status == 'Active' ? 'Paid' : 'Pending',
-                                'prescription_notes': 'Initial patient registration from Customer Care. UHID: ${patient.id ?? ""}.',
+                                'registration_payment_status':
+                                    patient.status == 'Active'
+                                    ? 'Paid'
+                                    : 'Pending',
+                                'prescription_notes':
+                                    'Initial patient registration from Customer Care. UHID: ${patient.id ?? ""}.',
                                 'recorded_at': DateTime.now().toIso8601String(),
                               },
                             );

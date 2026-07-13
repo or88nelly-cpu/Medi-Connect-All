@@ -110,7 +110,9 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                   children: [
                     CircleAvatar(
                       radius: 36.r,
-                      backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
+                      backgroundColor: isDark
+                          ? AppColors.surface12
+                          : Colors.black12,
                       child: ClipOval(
                         child: CustomImageView(
                           imagePath: ProfileImageHelper.resolveImagePath(

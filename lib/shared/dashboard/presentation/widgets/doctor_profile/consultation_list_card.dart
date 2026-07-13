@@ -1370,7 +1370,11 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
         ),
         child: Row(
           children: [
-            Icon(icon, size: 12.sp, color: isSelected ? AppColors.surface : color),
+            Icon(
+              icon,
+              size: 12.sp,
+              color: isSelected ? AppColors.surface : color,
+            ),
             SizedBox(width: 4.w),
             Text(
               mode,

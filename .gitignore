@@ -57,3 +57,5 @@ Thumbs.db
 
 # Supabase Local Development
 .supabase/
+
+sentry.properties

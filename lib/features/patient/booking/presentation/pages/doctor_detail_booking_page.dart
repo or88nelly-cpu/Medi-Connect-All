@@ -68,10 +68,7 @@ class DoctorDetailBookingPage extends StatelessWidget {
             SizedBox(height: 24.h),
 
             // 4. Choose Appointment Date
-            BookingDatePicker(
-              cardBg: cardBg,
-              nextSevenDays: _nextSevenDays,
-            ),
+            BookingDatePicker(cardBg: cardBg, nextSevenDays: _nextSevenDays),
             SizedBox(height: 24.h),
 
             // 5. Select Time Slot
@@ -131,47 +128,73 @@ class DoctorDetailBookingPage extends StatelessWidget {
                   children: [
                     Text(
                       'Amount to Pay',
-                      style: TextStyle(fontSize: 10.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Row(
                       children: [
                         Text(
                           'â‚¹${fee.toStringAsFixed(0)}',
-                          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w900, color: const Color(0xFF1E3A8A)),
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w900,
+                            color: const Color(0xFF1E3A8A),
+                          ),
                         ),
                         SizedBox(width: 4.w),
-                        Icon(Icons.keyboard_arrow_up_rounded, color: AppColors.primary, size: 16.r),
+                        Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          color: AppColors.primary,
+                          size: 16.r,
+                        ),
                       ],
                     ),
                   ],
                 ),
                 GestureDetector(
-                  onTap: (state.selectedDate == null || state.selectedSlot == null)
+                  onTap:
+                      (state.selectedDate == null || state.selectedSlot == null)
                       ? () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Please select date and time slot first!')),
+                            const SnackBar(
+                              content: Text(
+                                'Please select date and time slot first!',
+                              ),
+                            ),
                           );
                         }
                       : () {
-                          context.read<SpecialityBookingBloc>().add(ProceedToPayment());
+                          context.read<SpecialityBookingBloc>().add(
+                            ProceedToPayment(),
+                          );
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (ctx) => BlocProvider.value(
                                 value: context.read<SpecialityBookingBloc>(),
-                                child: BookingPaymentConfirmPage(specialityName: specialityName),
+                                child: BookingPaymentConfirmPage(
+                                  specialityName: specialityName,
+                                ),
                               ),
                             ),
                           );
                         },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 14.h,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFF3B5BFD),
                       borderRadius: BorderRadius.circular(16.r),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF3B5BFD).withValues(alpha: 0.25),
+                          color: const Color(
+                            0xFF3B5BFD,
+                          ).withValues(alpha: 0.25),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
@@ -181,10 +204,18 @@ class DoctorDetailBookingPage extends StatelessWidget {
                       children: [
                         Text(
                           'Proceed to Pay',
-                          style: TextStyle(color: AppColors.surface, fontSize: 13.sp, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: AppColors.surface,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         SizedBox(width: 6.w),
-                        Icon(Icons.chevron_right_rounded, color: AppColors.surface, size: 16.r),
+                        Icon(
+                          Icons.chevron_right_rounded,
+                          color: AppColors.surface,
+                          size: 16.r,
+                        ),
                       ],
                     ),
                   ),

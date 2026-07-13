@@ -126,7 +126,9 @@ class AppointmentsBottomBanner extends StatelessWidget {
             "Stay Organized,\nDeliver Better Care",
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+              color: isDark
+                  ? AppColors.surface
+                  : AppColors.textPrimary(context),
               height: 1.2,
             ),
           ),
@@ -135,7 +137,9 @@ class AppointmentsBottomBanner extends StatelessWidget {
             "Quickly book, manage, and track all patient appointments in one place.",
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 10.sp,
-              color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface54
+                  : AppColors.textSecondary(context),
             ),
           ),
         ],

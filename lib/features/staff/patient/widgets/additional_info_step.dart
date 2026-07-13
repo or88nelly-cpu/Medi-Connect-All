@@ -475,7 +475,9 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
                   Text(
                     desc,
                     style: TextStyle(
-                      color: isDark ? AppColors.surface30 : Colors.grey.shade500,
+                      color: isDark
+                          ? AppColors.surface30
+                          : Colors.grey.shade500,
                       fontSize: 8.5.sp,
                     ),
                   ),

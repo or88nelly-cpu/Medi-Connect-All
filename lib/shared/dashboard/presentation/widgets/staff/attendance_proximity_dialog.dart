@@ -84,7 +84,10 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.check_circle_rounded, color: AppColors.surface),
+                const Icon(
+                  Icons.check_circle_rounded,
+                  color: AppColors.surface,
+                ),
                 SizedBox(width: 8.w),
                 const Text("Attendance marked successfully!"),
               ],

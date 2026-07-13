@@ -90,7 +90,10 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
           }
         },
         icon: const Icon(Icons.add, color: AppColors.surface),
-        label: const Text("Add Staff", style: TextStyle(color: AppColors.surface)),
+        label: const Text(
+          "Add Staff",
+          style: TextStyle(color: AppColors.surface),
+        ),
         backgroundColor: AppColors.primary,
       ),
       body: Column(

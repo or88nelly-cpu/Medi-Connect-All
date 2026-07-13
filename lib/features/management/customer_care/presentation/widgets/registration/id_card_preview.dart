@@ -304,7 +304,9 @@ class IdCardPreview extends StatelessWidget {
                     // Photo
                     CircleAvatar(
                       radius: 36.r,
-                      backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
+                      backgroundColor: isDark
+                          ? AppColors.surface12
+                          : Colors.black12,
                       child: ClipOval(
                         child: photoPath.isNotEmpty
                             ? (kIsWeb ||
@@ -453,7 +455,9 @@ class IdCardPreview extends StatelessWidget {
     final cardTextTitleColor = isDark
         ? const Color(0xFF5E98C7)
         : const Color(0xFF3F6D94);
-    final cardTextValueColor = isDark ? AppColors.surface : const Color(0xFF0C192E);
+    final cardTextValueColor = isDark
+        ? AppColors.surface
+        : const Color(0xFF0C192E);
 
     return Container(
       key: const ValueKey('back_side'),

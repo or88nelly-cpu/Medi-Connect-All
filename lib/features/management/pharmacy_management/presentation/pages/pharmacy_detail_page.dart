@@ -513,7 +513,9 @@ class _StockEditDialogState extends State<_StockEditDialog> {
             "Modify stock quantity for ${widget.item.name}.",
             style: TextStyle(
               fontSize: 13.sp,
-              color: isDark ? AppColors.surface70 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface70
+                  : AppColors.textSecondary(context),
             ),
           ),
           SizedBox(height: 20.h),

@@ -473,7 +473,10 @@ class _TopBar extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 6.w),
-                              Text('Ã°Å¸â€˜â€¹', style: TextStyle(fontSize: 22.sp)),
+                              Text(
+                                'Ã°Å¸â€˜â€¹',
+                                style: TextStyle(fontSize: 22.sp),
+                              ),
                             ],
                           ),
                           SizedBox(height: 8.h),

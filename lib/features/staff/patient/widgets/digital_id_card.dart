@@ -373,7 +373,9 @@ class DigitalIdCard extends StatelessWidget {
 
   Widget _buildBackSide(BuildContext context, bool isDark) {
     final cardBg = isDark ? const Color(0xFF0F1E36) : AppColors.primary;
-    final valueColor = isDark ? AppColors.surface : AppColors.textPrimary(context);
+    final valueColor = isDark
+        ? AppColors.surface
+        : AppColors.textPrimary(context);
 
     return Container(
       key: const ValueKey('digital_card_back'),
@@ -534,7 +536,11 @@ class DigitalIdCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 2.h),
       child: Text(
         text,
-        style: TextStyle(color: AppColors.surface, fontSize: 8.5.sp, height: 1.2),
+        style: TextStyle(
+          color: AppColors.surface,
+          fontSize: 8.5.sp,
+          height: 1.2,
+        ),
       ),
     );
   }

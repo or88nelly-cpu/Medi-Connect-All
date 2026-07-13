@@ -205,7 +205,9 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                         Text(
                           "No demo patients available.",
                           style: TextStyle(
-                            color: isDark ? AppColors.surface54 : Colors.black54,
+                            color: isDark
+                                ? AppColors.surface54
+                                : Colors.black54,
                             fontSize: 11.sp,
                           ),
                           textAlign: TextAlign.center,

@@ -75,7 +75,11 @@ class SuccessStepView extends StatelessWidget {
                   color: AppColors.success,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check, color: AppColors.surface, size: 36),
+                child: const Icon(
+                  Icons.check,
+                  color: AppColors.surface,
+                  size: 36,
+                ),
               ),
               // Confetti mockup dots
               Positioned(
@@ -116,7 +120,9 @@ class SuccessStepView extends StatelessWidget {
         Text(
           'The consultation has been completed successfully.',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
+            color: isDark
+                ? AppColors.surface54
+                : AppColors.textSecondary(context),
           ),
           textAlign: TextAlign.center,
         ),
@@ -313,7 +319,9 @@ class SuccessStepView extends StatelessWidget {
               value,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface
+                    : AppColors.textPrimary(context),
               ),
               textAlign: TextAlign.end,
             ),

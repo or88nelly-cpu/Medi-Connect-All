@@ -11,7 +11,7 @@ class ApiErrorHandler {
     if (error is AuthException) {
       return UnauthorizedException(error.message);
     }
-    
+
     if (error is PostgrestException) {
       final code = error.code;
       final message = error.message;

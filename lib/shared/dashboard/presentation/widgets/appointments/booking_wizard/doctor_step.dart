@@ -22,7 +22,9 @@ class DoctorStep extends StatelessWidget {
         child: Text(
           "Please select a specialty section first.",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
+            color: isDark
+                ? AppColors.surface54
+                : AppColors.textSecondary(context),
           ),
         ),
       );
@@ -37,7 +39,9 @@ class DoctorStep extends StatelessWidget {
             "Select Doctor",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+              color: isDark
+                  ? AppColors.surface
+                  : AppColors.textPrimary(context),
             ),
           ),
         ),

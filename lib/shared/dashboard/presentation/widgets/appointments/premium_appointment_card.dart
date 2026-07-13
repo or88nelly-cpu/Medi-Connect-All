@@ -478,7 +478,9 @@ class PremiumAppointmentCard extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+        backgroundColor: isDark
+            ? AppColors.terminalDarkCard
+            : AppColors.surface,
         title: Row(
           children: [
             Icon(Icons.assignment_outlined, color: AppColors.primary),

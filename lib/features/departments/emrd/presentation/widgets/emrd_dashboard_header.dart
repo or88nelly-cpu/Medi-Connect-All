@@ -93,7 +93,9 @@ class EmrdDashboardHeader extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(9.r),
                         decoration: BoxDecoration(
-                          color: isDark ? AppColors.surface10 : AppColors.surface,
+                          color: isDark
+                              ? AppColors.surface10
+                              : AppColors.surface,
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: isDark
@@ -153,7 +155,9 @@ class EmrdDashboardHeader extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(9.r),
                           decoration: BoxDecoration(
-                            color: isDark ? AppColors.surface10 : AppColors.surface,
+                            color: isDark
+                                ? AppColors.surface10
+                                : AppColors.surface,
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: isDark
@@ -207,7 +211,9 @@ class EmrdDashboardHeader extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isDark ? AppColors.surface24 : AppColors.surface,
+                              color: isDark
+                                  ? AppColors.surface24
+                                  : AppColors.surface,
                               width: 1.5,
                             ),
                             boxShadow: [

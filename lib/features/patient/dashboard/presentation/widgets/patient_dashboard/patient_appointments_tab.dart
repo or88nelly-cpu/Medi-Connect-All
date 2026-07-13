@@ -108,7 +108,10 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                       ),
                       ElevatedButton.icon(
                         onPressed: () => _showBookDoctorDialog(context),
-                        icon: const Icon(Icons.search, color: AppColors.surface),
+                        icon: const Icon(
+                          Icons.search,
+                          color: AppColors.surface,
+                        ),
                         label: const Text(
                           'Book Doctor',
                           style: TextStyle(

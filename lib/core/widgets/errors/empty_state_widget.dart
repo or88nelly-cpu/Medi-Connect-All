@@ -32,7 +32,9 @@ class EmptyStateWidget extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(20.r),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                color: isDark
+                    ? const Color(0xFF1E293B)
+                    : const Color(0xFFF1F5F9),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -74,10 +76,13 @@ class EmptyStateWidget extends StatelessWidget {
                 ),
                 child: Text(
                   actionLabel!,
-                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ]
+            ],
           ],
         ),
       ),

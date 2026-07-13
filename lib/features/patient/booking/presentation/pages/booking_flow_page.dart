@@ -567,7 +567,11 @@ class _StepCircle extends StatelessWidget {
           ),
           child: Center(
             child: isDone
-                ? Icon(Icons.check_rounded, color: AppColors.surface, size: 14.r)
+                ? Icon(
+                    Icons.check_rounded,
+                    color: AppColors.surface,
+                    size: 14.r,
+                  )
                 : Text(
                     '${index + 1}',
                     style: TextStyle(
@@ -1263,7 +1267,11 @@ class _PaymentStep extends StatelessWidget {
                   color: color,
                 ),
                 SizedBox(height: 6.h),
-                _SummaryRow(label: 'GST (18%)', value: 'Ã¢â€šÂ¹$tax', color: color),
+                _SummaryRow(
+                  label: 'GST (18%)',
+                  value: 'Ã¢â€šÂ¹$tax',
+                  color: color,
+                ),
                 Divider(color: color.withValues(alpha: 0.2), height: 16.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1483,7 +1491,11 @@ class _ConfirmationStep extends StatelessWidget {
                 ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.check_rounded, color: AppColors.surface, size: 50.r),
+              child: Icon(
+                Icons.check_rounded,
+                color: AppColors.surface,
+                size: 50.r,
+              ),
             ),
           ),
           SizedBox(height: 24.h),
@@ -1598,7 +1610,9 @@ class _ConfirmationStep extends StatelessWidget {
               icon: const Icon(Icons.home_rounded, color: AppColors.surface),
               label: Text(
                 'Go to Home',
-                style: AppTextStyles.buttonLarge.copyWith(color: AppColors.surface),
+                style: AppTextStyles.buttonLarge.copyWith(
+                  color: AppColors.surface,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,

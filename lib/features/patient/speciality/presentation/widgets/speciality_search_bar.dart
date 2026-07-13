@@ -146,7 +146,11 @@ class _SpecialitySearchBarState extends State<SpecialitySearchBar> {
                   ),
                 ],
               ),
-              child: Icon(Icons.tune_rounded, color: AppColors.surface, size: 24.r),
+              child: Icon(
+                Icons.tune_rounded,
+                color: AppColors.surface,
+                size: 24.r,
+              ),
             ),
           ),
         ],

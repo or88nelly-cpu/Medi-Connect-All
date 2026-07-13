@@ -2,7 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:medi_connect/bootstrap/router.dart';
-import 'package:medi_connect/core/navigation/route_guards.dart' show RouteGuards;
+import 'package:medi_connect/core/navigation/route_guards.dart'
+    show RouteGuards;
 import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_signup_page.dart';

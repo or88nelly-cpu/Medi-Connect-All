@@ -400,7 +400,9 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                             hint: Text(
                               "Choose a doctor",
                               style: TextStyle(
-                                color: isDark ? AppColors.surface38 : Colors.black38,
+                                color: isDark
+                                    ? AppColors.surface38
+                                    : Colors.black38,
                                 fontSize: 13.sp,
                               ),
                             ),
@@ -408,7 +410,9 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                 ? AppColors.terminalDarkCard
                                 : AppColors.surface,
                             style: TextStyle(
-                              color: isDark ? AppColors.surface : Colors.black87,
+                              color: isDark
+                                  ? AppColors.surface
+                                  : Colors.black87,
                             ),
                             decoration: InputDecoration(
                               filled: true,

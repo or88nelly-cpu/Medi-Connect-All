@@ -31,7 +31,8 @@ class FullScreenErrorPage extends StatelessWidget {
   factory FullScreenErrorPage.serverError({VoidCallback? onRetry}) {
     return FullScreenErrorPage(
       title: 'Server Unavailable',
-      description: 'We are experiencing technical difficulties. Please try again later.',
+      description:
+          'We are experiencing technical difficulties. Please try again later.',
       icon: Icons.cloud_off_rounded,
       onRetry: onRetry,
     );
@@ -40,7 +41,8 @@ class FullScreenErrorPage extends StatelessWidget {
   factory FullScreenErrorPage.maintenance({VoidCallback? onRetry}) {
     return FullScreenErrorPage(
       title: 'Under Maintenance',
-      description: 'We are currently upgrading our systems to serve you better. We will be back shortly.',
+      description:
+          'We are currently upgrading our systems to serve you better. We will be back shortly.',
       icon: Icons.build_circle_outlined,
       onRetry: onRetry,
       buttonText: 'Refresh',
@@ -64,7 +66,9 @@ class FullScreenErrorPage extends StatelessWidget {
               Icon(
                 icon,
                 size: 80.r,
-                color: isDark ? AppColors.statusCancelledTextDark : AppColors.statusCancelledTextLight,
+                color: isDark
+                    ? AppColors.statusCancelledTextDark
+                    : AppColors.statusCancelledTextLight,
               ),
               SizedBox(height: 32.h),
               Text(
@@ -100,7 +104,10 @@ class FullScreenErrorPage extends StatelessWidget {
                   ),
                   child: Text(
                     buttonText,
-                    style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               SizedBox(height: 24.h),

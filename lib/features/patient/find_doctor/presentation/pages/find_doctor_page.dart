@@ -367,7 +367,11 @@ class _SpecialtyCard extends StatelessWidget {
                       color: AppColors.surface.withValues(alpha: 0.25),
                       borderRadius: BorderRadius.circular(12.r),
                     ),
-                    child: Icon(data.icon, color: AppColors.surface, size: 24.r),
+                    child: Icon(
+                      data.icon,
+                      color: AppColors.surface,
+                      size: 24.r,
+                    ),
                   ),
 
                   // Name + description + count

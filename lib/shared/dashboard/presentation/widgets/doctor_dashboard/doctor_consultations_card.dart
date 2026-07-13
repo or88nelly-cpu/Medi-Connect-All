@@ -95,7 +95,9 @@ class DoctorConsultationsCard extends StatelessWidget {
               if (todayApts.isEmpty) {
                 return Card(
                   elevation: 0,
-                  color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+                  color: isDark
+                      ? AppColors.terminalDarkCard
+                      : AppColors.surface,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14.r),
                     side: BorderSide(color: AppColors.border(context)),
@@ -301,7 +303,9 @@ class DoctorConsultationsCard extends StatelessWidget {
                           SizedBox(width: 8.w),
                           Icon(
                             Icons.chevron_right,
-                            color: isDark ? AppColors.surface30 : Colors.grey[400],
+                            color: isDark
+                                ? AppColors.surface30
+                                : Colors.grey[400],
                             size: 16.r,
                           ),
                         ],

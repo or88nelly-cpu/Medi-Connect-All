@@ -80,7 +80,9 @@ class PendingMrdBanner extends StatelessWidget {
                           Text(
                             count,
                             style: AppTextStyles.headingMedium.copyWith(
-                              color: isDark ? AppColors.surface : Colors.black87,
+                              color: isDark
+                                  ? AppColors.surface
+                                  : Colors.black87,
                               fontWeight: FontWeight.w900,
                               fontSize: 22.sp,
                             ),
@@ -89,7 +91,9 @@ class PendingMrdBanner extends StatelessWidget {
                           Text(
                             "Pending Records",
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: isDark ? AppColors.surface38 : Colors.grey[500],
+                              color: isDark
+                                  ? AppColors.surface38
+                                  : Colors.grey[500],
                               fontSize: 10.sp,
                             ),
                           ),

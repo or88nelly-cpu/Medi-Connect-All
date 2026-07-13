@@ -872,14 +872,18 @@ class ReviewStepView extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface54
+                  : AppColors.textSecondary(context),
             ),
           ),
           Text(
             value,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+              color: isDark
+                  ? AppColors.surface
+                  : AppColors.textPrimary(context),
             ),
           ),
         ],

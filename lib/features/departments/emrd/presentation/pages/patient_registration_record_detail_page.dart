@@ -273,7 +273,9 @@ class _PatientRegistrationRecordDetailPageState
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface38
+                  : AppColors.textSecondary(context),
             ),
           ),
           Flexible(

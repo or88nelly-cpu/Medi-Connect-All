@@ -28,7 +28,9 @@ class EmrdBottomBanner extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(10.r),
             decoration: BoxDecoration(
-              color: isDark ? Colors.blue.withValues(alpha: 0.1) : AppColors.surface,
+              color: isDark
+                  ? Colors.blue.withValues(alpha: 0.1)
+                  : AppColors.surface,
               shape: BoxShape.circle,
               boxShadow: isDark
                   ? null

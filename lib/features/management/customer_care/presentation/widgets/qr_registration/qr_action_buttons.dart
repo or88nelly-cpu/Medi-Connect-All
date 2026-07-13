@@ -145,7 +145,9 @@ class QrActionButtons extends StatelessWidget {
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 12.sp,
-                      color: isDark ? AppColors.surface : const Color(0xFF1E293B),
+                      color: isDark
+                          ? AppColors.surface
+                          : const Color(0xFF1E293B),
                     ),
                   ),
                   SizedBox(height: 2.h),

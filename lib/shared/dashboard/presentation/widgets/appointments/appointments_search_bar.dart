@@ -52,7 +52,9 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
                 );
               },
               style: TextStyle(
-                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface
+                    : AppColors.textPrimary(context),
                 fontSize: 12.sp,
               ),
               decoration: InputDecoration(
@@ -70,7 +72,9 @@ class _AppointmentsSearchBarState extends State<AppointmentsSearchBar> {
                       : AppColors.textSecondary(context),
                 ),
                 filled: true,
-                fillColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+                fillColor: isDark
+                    ? AppColors.terminalDarkCard
+                    : AppColors.surface,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 12.r,
                   vertical: 6.r,

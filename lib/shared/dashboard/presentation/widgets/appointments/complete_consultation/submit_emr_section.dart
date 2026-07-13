@@ -170,7 +170,9 @@ class SubmitEmrSection extends StatelessWidget {
               style: AppTextStyles.bodySmall.copyWith(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface
+                    : AppColors.textPrimary(context),
               ),
             ),
           ),

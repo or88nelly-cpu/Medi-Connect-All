@@ -115,7 +115,9 @@ class AppointmentsStatusFilter extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10.sp,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface
+                    : AppColors.textPrimary(context),
               ),
             ),
             SizedBox(width: 8.w),

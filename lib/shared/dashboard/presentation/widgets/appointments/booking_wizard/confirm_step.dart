@@ -23,7 +23,9 @@ class ConfirmStep extends StatelessWidget {
         child: Text(
           "Incomplete wizard configuration",
           style: AppTextStyles.bodyMedium.copyWith(
-            color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
+            color: isDark
+                ? AppColors.surface54
+                : AppColors.textSecondary(context),
           ),
         ),
       );
@@ -168,7 +170,9 @@ class ConfirmStep extends StatelessWidget {
             label,
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11.sp,
-              color: isDark ? AppColors.surface54 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface54
+                  : AppColors.textSecondary(context),
             ),
           ),
           Text(
@@ -176,7 +180,9 @@ class ConfirmStep extends StatelessWidget {
             style: AppTextStyles.bodySmall.copyWith(
               fontSize: 11.sp,
               fontWeight: FontWeight.bold,
-              color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+              color: isDark
+                  ? AppColors.surface
+                  : AppColors.textPrimary(context),
             ),
           ),
         ],

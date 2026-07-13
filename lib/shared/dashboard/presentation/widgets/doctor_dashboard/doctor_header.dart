@@ -114,7 +114,9 @@ class DoctorHeader extends StatelessWidget {
                           IconButton(
                             icon: Icon(
                               Icons.search_rounded,
-                              color: isDark ? AppColors.surface70 : Colors.black87,
+                              color: isDark
+                                  ? AppColors.surface70
+                                  : Colors.black87,
                               size: 20.r,
                             ),
                             onPressed: onSearchTap,
@@ -162,7 +164,9 @@ class DoctorHeader extends StatelessWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: isDark ? AppColors.surface24 : AppColors.surface,
+                                color: isDark
+                                    ? AppColors.surface24
+                                    : AppColors.surface,
                                 width: 1.5,
                               ),
                               boxShadow: [

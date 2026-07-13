@@ -7,10 +7,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 class GoogleAdBanner extends StatefulWidget {
   final AdSize adSize;
 
-  const GoogleAdBanner({
-    super.key,
-    this.adSize = AdSize.banner,
-  });
+  const GoogleAdBanner({super.key, this.adSize = AdSize.banner});
 
   @override
   State<GoogleAdBanner> createState() => _GoogleAdBannerState();

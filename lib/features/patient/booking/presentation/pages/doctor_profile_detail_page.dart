@@ -108,7 +108,9 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                               width: 72.r,
                               height: 72.r,
                               decoration: BoxDecoration(
-                                color: AppColors.surface.withValues(alpha: 0.25),
+                                color: AppColors.surface.withValues(
+                                  alpha: 0.25,
+                                ),
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: AppColors.surface54,

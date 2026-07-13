@@ -259,7 +259,9 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 13.sp,
-                      color: isDark ? AppColors.surface : const Color(0xFF1E293B),
+                      color: isDark
+                          ? AppColors.surface
+                          : const Color(0xFF1E293B),
                     ),
                   ),
                   SizedBox(height: 4.h),

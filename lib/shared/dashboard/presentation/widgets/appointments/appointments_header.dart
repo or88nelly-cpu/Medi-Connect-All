@@ -23,7 +23,9 @@ class AppointmentsHeader extends StatelessWidget {
               AppStrings.appointments,
               style: AppTextStyles.headingMedium.copyWith(
                 fontSize: 16.sp,
-                color: isDark ? AppColors.surface : AppColors.textPrimary(context),
+                color: isDark
+                    ? AppColors.surface
+                    : AppColors.textPrimary(context),
               ),
             ),
 

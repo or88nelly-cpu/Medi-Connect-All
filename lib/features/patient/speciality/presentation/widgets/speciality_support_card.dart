@@ -112,7 +112,9 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                         style: AppTextStyles.bodySmall.copyWith(
                           fontSize: 11.sp,
                           height: 1.5,
-                          color: isDark ? AppColors.surface70 : Colors.grey.shade700,
+                          color: isDark
+                              ? AppColors.surface70
+                              : Colors.grey.shade700,
                         ),
                       ),
 

@@ -269,7 +269,9 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+        backgroundColor: isDark
+            ? AppColors.terminalDarkCard
+            : AppColors.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),

@@ -230,7 +230,9 @@ class EmrPrescriptionCard extends StatelessWidget {
       return Text(
         "No medicines prescribed.",
         style: TextStyle(
-          color: isDark ? AppColors.surface30 : AppColors.textSecondary(context),
+          color: isDark
+              ? AppColors.surface30
+              : AppColors.textSecondary(context),
           fontSize: 12.sp,
         ),
       );

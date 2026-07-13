@@ -339,14 +339,18 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                     style: AppTextStyles.headingLarge.copyWith(
                       fontWeight: FontWeight.w900,
                       fontSize: 24.sp,
-                      color: isDark ? AppColors.surface : const Color(0xFF0F172A),
+                      color: isDark
+                          ? AppColors.surface
+                          : const Color(0xFF0F172A),
                     ),
                   ),
                   SizedBox(height: 6.h),
                   Text(
                     'Explore our wide range of medical specialities\nand find the best care for you.',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark ? AppColors.surface60 : const Color(0xFF475569),
+                      color: isDark
+                          ? AppColors.surface60
+                          : const Color(0xFF475569),
                       fontSize: 11.sp,
                       height: 1.3,
                     ),
@@ -531,7 +535,9 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                 Text(
                   "Our care team is here to help you find the right specialist for your needs.",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? AppColors.surface70 : const Color(0xFF4B5563),
+                    color: isDark
+                        ? AppColors.surface70
+                        : const Color(0xFF4B5563),
                     fontSize: 10.5.sp,
                   ),
                 ),

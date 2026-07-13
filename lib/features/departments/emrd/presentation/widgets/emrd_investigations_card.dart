@@ -142,7 +142,9 @@ class EmrdInvestigationsCard extends StatelessWidget {
             "No lab tests scheduled.",
             style: AppTextStyles.bodySmall.copyWith(
               fontStyle: FontStyle.italic,
-              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface38
+                  : AppColors.textSecondary(context),
             ),
           ),
       ],

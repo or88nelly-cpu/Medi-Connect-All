@@ -23,8 +23,12 @@ class EmrdAIAssistantPanel extends StatelessWidget {
         ? AppColors.surface.withValues(alpha: 0.03)
         : AppColors.surface;
     final Color iconBg = color.withValues(alpha: 0.12);
-    final Color textColor = isDark ? AppColors.surface : const Color(0xFF1E293B);
-    final Color subColor = isDark ? AppColors.surface38 : const Color(0xFF64748B);
+    final Color textColor = isDark
+        ? AppColors.surface
+        : const Color(0xFF1E293B);
+    final Color subColor = isDark
+        ? AppColors.surface38
+        : const Color(0xFF64748B);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
@@ -450,7 +454,9 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                 "Ask AI assistant for assistance",
                                 style: TextStyle(
                                   fontSize: 8.5.sp,
-                                  color: isDark ? AppColors.surface38 : Colors.grey,
+                                  color: isDark
+                                      ? AppColors.surface38
+                                      : Colors.grey,
                                 ),
                               ),
                             ],
@@ -539,9 +545,13 @@ class EmrdAIAssistantPanel extends StatelessWidget {
       height: 110.h,
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surface.withValues(alpha: 0.02) : AppColors.surface,
+        color: isDark
+            ? AppColors.surface.withValues(alpha: 0.02)
+            : AppColors.surface,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: isDark ? AppColors.surface10 : Colors.grey[200]!),
+        border: Border.all(
+          color: isDark ? AppColors.surface10 : Colors.grey[200]!,
+        ),
       ),
       child: child,
     );
@@ -571,7 +581,9 @@ class MRDGaugePainter extends CustomPainter {
     final double radius = (size.width - strokeWidth) / 2;
 
     final Paint bgPaint = Paint()
-      ..color = isDark ? AppColors.surface10 : Colors.grey.withValues(alpha: 0.12)
+      ..color = isDark
+          ? AppColors.surface10
+          : Colors.grey.withValues(alpha: 0.12)
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 

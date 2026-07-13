@@ -150,7 +150,10 @@ class ConsultationDetailPage extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.download_rounded, color: AppColors.surface),
+                icon: const Icon(
+                  Icons.download_rounded,
+                  color: AppColors.surface,
+                ),
                 label: Text(
                   'Download Prescription',
                   style: AppTextStyles.buttonMedium.copyWith(
@@ -226,7 +229,11 @@ class _DoctorHeader extends StatelessWidget {
               color: AppColors.surface.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.person_rounded, color: AppColors.surface, size: 28.r),
+            child: Icon(
+              Icons.person_rounded,
+              color: AppColors.surface,
+              size: 28.r,
+            ),
           ),
           SizedBox(width: 14.w),
           Expanded(

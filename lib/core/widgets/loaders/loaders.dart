@@ -83,9 +83,17 @@ class ShimmerLoader extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(width: 150.w, height: 16.h, color: AppColors.surface),
+                    Container(
+                      width: 150.w,
+                      height: 16.h,
+                      color: AppColors.surface,
+                    ),
                     SizedBox(height: 8.h),
-                    Container(width: 100.w, height: 12.h, color: AppColors.surface),
+                    Container(
+                      width: 100.w,
+                      height: 12.h,
+                      color: AppColors.surface,
+                    ),
                     SizedBox(height: 8.h),
                     Container(
                       width: double.infinity,

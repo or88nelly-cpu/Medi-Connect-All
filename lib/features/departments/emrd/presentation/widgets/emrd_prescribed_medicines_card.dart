@@ -174,7 +174,9 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
             "No medicines prescribed.",
             style: AppTextStyles.bodySmall.copyWith(
               fontStyle: FontStyle.italic,
-              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface38
+                  : AppColors.textSecondary(context),
             ),
           ),
         SizedBox(height: 12.h),

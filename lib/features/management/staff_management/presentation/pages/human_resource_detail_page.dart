@@ -927,7 +927,9 @@ class _StaffGridCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 26.r,
-                  backgroundColor: isDark ? AppColors.surface12 : Colors.black12,
+                  backgroundColor: isDark
+                      ? AppColors.surface12
+                      : Colors.black12,
                   child: ClipOval(
                     child: CustomImageView(
                       imagePath: ProfileImageHelper.resolveImagePath(

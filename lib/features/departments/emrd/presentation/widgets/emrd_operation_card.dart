@@ -26,7 +26,9 @@ class EmrdOperationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color cardBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+    final Color cardBg = isDark
+        ? AppColors.terminalDarkCard
+        : AppColors.surface;
     final Color borderCol = isDark
         ? AppColors.surface10
         : accentColor.withValues(alpha: 0.12);

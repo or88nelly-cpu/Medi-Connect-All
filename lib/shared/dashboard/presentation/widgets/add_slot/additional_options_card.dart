@@ -23,7 +23,9 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
       context: context,
       builder: (ctx) {
         final isDark = Theme.of(ctx).brightness == Brightness.dark;
-        final dialogBg = isDark ? AppColors.terminalDarkCard : AppColors.surface;
+        final dialogBg = isDark
+            ? AppColors.terminalDarkCard
+            : AppColors.surface;
         final textColor = isDark ? AppColors.surface : Colors.black;
 
         return AlertDialog(

@@ -28,7 +28,9 @@ class CustomErrorWidget extends StatelessWidget {
             Icon(
               icon,
               size: 48.r,
-              color: isDark ? AppColors.statusCancelledTextDark : AppColors.statusCancelledTextLight,
+              color: isDark
+                  ? AppColors.statusCancelledTextDark
+                  : AppColors.statusCancelledTextLight,
             ),
             SizedBox(height: 16.h),
             Text(
@@ -54,7 +56,7 @@ class CustomErrorWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            ]
+            ],
           ],
         ),
       ),

@@ -196,7 +196,9 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 decoration: BoxDecoration(
-                  color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+                  color: isDark
+                      ? AppColors.terminalDarkCard
+                      : AppColors.surface,
                   border: Border(
                     top: BorderSide(
                       color: isDark
@@ -248,7 +250,9 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
                         child: Text(
                           "Cancel",
                           style: TextStyle(
-                            color: isDark ? AppColors.surface70 : Colors.black87,
+                            color: isDark
+                                ? AppColors.surface70
+                                : Colors.black87,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
                           ),

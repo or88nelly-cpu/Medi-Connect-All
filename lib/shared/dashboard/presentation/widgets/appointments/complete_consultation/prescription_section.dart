@@ -453,7 +453,9 @@ class PrescriptionSection extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Prescription notes / doctor remarks...',
             hintStyle: AppTextStyles.bodySmall.copyWith(
-              color: isDark ? AppColors.surface38 : AppColors.textSecondary(context),
+              color: isDark
+                  ? AppColors.surface38
+                  : AppColors.textSecondary(context),
             ),
             filled: true,
             fillColor: isDark ? AppColors.terminalDarkBg : Colors.grey[50],

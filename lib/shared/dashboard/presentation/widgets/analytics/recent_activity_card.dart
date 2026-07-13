@@ -139,7 +139,9 @@ class RecentActivityCard extends StatelessWidget {
                     AppStrings.recentActivity,
                     style: AppTextStyles.bodyLarge.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? AppColors.surface : AppColors.textDarkNavy,
+                      color: isDark
+                          ? AppColors.surface
+                          : AppColors.textDarkNavy,
                       fontSize: 16.sp,
                     ),
                   ),
@@ -250,7 +252,9 @@ class RecentActivityCard extends StatelessWidget {
                       left.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
+                        color: isDark
+                            ? AppColors.surface70
+                            : AppColors.textDarkNavy,
                         fontSize: 13.sp,
                       ),
                     ),
@@ -308,7 +312,9 @@ class RecentActivityCard extends StatelessWidget {
                       right.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
+                        color: isDark
+                            ? AppColors.surface70
+                            : AppColors.textDarkNavy,
                         fontSize: 13.sp,
                       ),
                     ),
@@ -389,7 +395,9 @@ class RecentActivityCard extends StatelessWidget {
                       item.message,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: isDark ? AppColors.surface70 : AppColors.textDarkNavy,
+                        color: isDark
+                            ? AppColors.surface70
+                            : AppColors.textDarkNavy,
                         fontSize: 13.sp,
                       ),
                     ),

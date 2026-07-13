@@ -18,6 +18,7 @@ import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_doctors
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_doctors/doctors_search_bar.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_doctors/doctors_filter_sort_row.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_doctors/doctor_card.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_doctors/admin_doctor_dialogs.dart';
 
 class AdminDoctorsPage extends StatefulWidget {
   const AdminDoctorsPage({super.key});
@@ -52,76 +53,6 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
     _statusFilterNotifier.dispose();
     _currentPageNotifier.dispose();
     super.dispose();
-  }
-
-  void _showSelectDepartmentAndCreate(BuildContext context) {
-    final state = context.read<DepartmentBloc>().state;
-    List<String> list = [];
-    if (state is DepartmentsLoaded) {
-      list.addAll(
-        state.sections.map((e) => e.name).where((name) => name.isNotEmpty),
-      );
-      list.addAll(
-        state.departments.map((e) => e.name).where((name) => name.isNotEmpty),
-      );
-      list = list.toSet().toList();
-    }
-
-    if (list.isEmpty) {
-      list = [
-        'General Medicine',
-        'Cardiology',
-        'Neurology',
-        'Pediatrics',
-        'Emergency',
-        'OPD',
-      ];
-    }
-
-    String selectedDept = list.first;
-
-    showDialog(
-      context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text("Select Department"),
-          content: DropdownButton<String>(
-            value: selectedDept,
-            isExpanded: true,
-            items: list.map((d) {
-              return DropdownMenuItem(value: d, child: Text(d));
-            }).toList(),
-            onChanged: (val) {
-              if (val != null) setDialogState(() => selectedDept = val);
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-                context
-                    .push(
-                      '/admin/doctor-staff/create',
-                      extra: {'role': 'doctor', 'department': selectedDept},
-                    )
-                    .then((value) {
-                      if (value == true && context.mounted) {
-                        context.read<DoctorStaffBloc>().add(
-                          const LoadDoctorStaff('All'),
-                        );
-                      }
-                    });
-              },
-              child: const Text("Next"),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   @override
@@ -385,7 +316,9 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                 FloatingActionButton(
                                   heroTag: 'add_doctor_fab',
                                   onPressed: () =>
-                                      _showSelectDepartmentAndCreate(context),
+                                      AdminDoctorDialogs.showSelectDepartmentAndCreate(
+                                        context,
+                                      ),
                                   backgroundColor: AppColors.primary,
                                   child: const Icon(
                                     Icons.add,

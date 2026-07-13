@@ -89,7 +89,9 @@ class SpecialityHorizontalList extends StatelessWidget {
                     width: 90.w,
                     margin: EdgeInsets.only(right: 12.w),
                     decoration: BoxDecoration(
-                      color: isDark ? AppColors.terminalDarkCard : AppColors.surface,
+                      color: isDark
+                          ? AppColors.terminalDarkCard
+                          : AppColors.surface,
                       borderRadius: BorderRadius.circular(12.r),
                       border: Border.all(color: AppColors.border(context)),
                     ),

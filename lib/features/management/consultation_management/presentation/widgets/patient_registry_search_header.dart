@@ -22,7 +22,9 @@ class PatientRegistrySearchHeader extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final borderColor = AppColors.border(context);
     final textColor = AppColors.textPrimary(context);
-    final fieldFillColor = isDark ? AppColors.terminalDarkFieldFill : AppColors.terminalLightFieldFill;
+    final fieldFillColor = isDark
+        ? AppColors.terminalDarkFieldFill
+        : AppColors.terminalLightFieldFill;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,9 +72,14 @@ class PatientRegistrySearchHeader extends StatelessWidget {
                       fillColor: fieldFillColor,
                       hintText: "Search patient by ${filter.toLowerCase()}...",
                       hintStyle: TextStyle(
-                        color: isDark ? AppColors.terminalDarkFieldHint : AppColors.terminalLightFieldHint,
+                        color: isDark
+                            ? AppColors.terminalDarkFieldHint
+                            : AppColors.terminalLightFieldHint,
                       ),
-                      prefixIcon: Icon(Icons.search, color: AppColors.textSecondary(context)),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: AppColors.textSecondary(context),
+                      ),
                       contentPadding: EdgeInsets.all(12.r),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.r),
@@ -97,8 +104,13 @@ class PatientRegistrySearchHeader extends StatelessWidget {
               builder: (context, filter, _) {
                 return DropdownButton<String>(
                   value: filter,
-                  dropdownColor: isDark ? AppColors.terminalDarkCard : AppColors.surface,
-                  style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+                  dropdownColor: isDark
+                      ? AppColors.terminalDarkCard
+                      : AppColors.surface,
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                   underline: const SizedBox(),
                   items: ['Name', 'UHID', 'Phone'].map((String val) {
                     return DropdownMenuItem<String>(

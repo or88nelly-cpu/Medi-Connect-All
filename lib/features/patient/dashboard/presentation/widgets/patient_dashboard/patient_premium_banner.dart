@@ -88,7 +88,9 @@ class PatientPremiumBanner extends StatelessWidget {
                             Text(
                               'Unlock exclusive benefits and healthcare insights.',
                               style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.surface.withValues(alpha: 0.85),
+                                color: AppColors.surface.withValues(
+                                  alpha: 0.85,
+                                ),
                                 fontSize: 10.5.sp,
                               ),
                             ),

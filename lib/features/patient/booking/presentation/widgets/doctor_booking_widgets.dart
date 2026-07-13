@@ -92,22 +92,37 @@ class BookingDoctorInfoCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 4.w),
-                    Icon(Icons.verified_rounded, color: const Color(0xFF3B5BFD), size: 14.r),
+                    Icon(
+                      Icons.verified_rounded,
+                      color: const Color(0xFF3B5BFD),
+                      size: 14.r,
+                    ),
                   ],
                 ),
                 SizedBox(height: 3.h),
                 Text(
                   doc?.qualification ?? 'Consultant Cardiologist',
-                  style: TextStyle(color: Colors.grey, fontSize: 11.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(height: 10.h),
                 Wrap(
                   spacing: 6.w,
                   runSpacing: 4.h,
                   children: [
-                    _buildBadge(Icons.business_center_outlined, '$exp+ Years Experience'),
+                    _buildBadge(
+                      Icons.business_center_outlined,
+                      '$exp+ Years Experience',
+                    ),
                     _buildBadge(Icons.school_outlined, 'MBBS, MD, DM'),
-                    _buildBadge(Icons.star_rounded, '4.9 (128 reviews)', iconColor: const Color(0xFFFFB000)),
+                    _buildBadge(
+                      Icons.star_rounded,
+                      '4.9 (128 reviews)',
+                      iconColor: const Color(0xFFFFB000),
+                    ),
                   ],
                 ),
               ],
@@ -122,11 +137,19 @@ class BookingDoctorInfoCard extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Icon(Icons.favorite_rounded, color: const Color(0xFFFF296D), size: 24.r),
+                Icon(
+                  Icons.favorite_rounded,
+                  color: const Color(0xFFFF296D),
+                  size: 24.r,
+                ),
                 SizedBox(height: 4.h),
                 Text(
                   specialityName,
-                  style: TextStyle(color: const Color(0xFFFF296D), fontSize: 9.sp, fontWeight: FontWeight.w900),
+                  style: TextStyle(
+                    color: const Color(0xFFFF296D),
+                    fontSize: 9.sp,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ],
             ),
@@ -139,13 +162,23 @@ class BookingDoctorInfoCard extends StatelessWidget {
   Widget _buildBadge(IconData icon, String label, {Color? iconColor}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
-      decoration: BoxDecoration(color: const Color(0xFFF1F5F9), borderRadius: BorderRadius.circular(8.r)),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF1F5F9),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 10.r, color: iconColor ?? Colors.grey.shade600),
           SizedBox(width: 3.w),
-          Text(label, style: TextStyle(color: Colors.grey.shade700, fontSize: 7.5.sp, fontWeight: FontWeight.bold)),
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey.shade700,
+              fontSize: 7.5.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
@@ -159,7 +192,11 @@ class BookingReasonInput extends StatelessWidget {
   final Color cardBg;
   final Color textColor;
 
-  const BookingReasonInput({super.key, required this.cardBg, required this.textColor});
+  const BookingReasonInput({
+    super.key,
+    required this.cardBg,
+    required this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +205,11 @@ class BookingReasonInput extends StatelessWidget {
       children: [
         Text(
           'Reason for Visit',
-          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w900, color: const Color(0xFF0F172A)),
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w900,
+            color: const Color(0xFF0F172A),
+          ),
         ),
         SizedBox(height: 10.h),
         Container(
@@ -183,12 +224,15 @@ class BookingReasonInput extends StatelessWidget {
             children: [
               TextField(
                 onChanged: (val) {
-                  context.read<SpecialityBookingBloc>().add(UpdateReason(reason: val));
+                  context.read<SpecialityBookingBloc>().add(
+                    UpdateReason(reason: val),
+                  );
                 },
                 maxLines: 3,
                 style: TextStyle(color: textColor, fontSize: 11.sp),
                 decoration: InputDecoration(
-                  hintText: "Tell us the reason for your visit (Optional)\nE.g. Chest pain, regular checkup...",
+                  hintText:
+                      "Tell us the reason for your visit (Optional)\nE.g. Chest pain, regular checkup...",
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 10.sp),
                   border: InputBorder.none,
                 ),
@@ -198,7 +242,11 @@ class BookingReasonInput extends StatelessWidget {
                   final len = state.reason?.length ?? 0;
                   return Text(
                     '$len/200',
-                    style: TextStyle(color: Colors.grey, fontSize: 8.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 8.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   );
                 },
               ),
@@ -217,7 +265,11 @@ class BookingPatientSelector extends StatelessWidget {
   final Color cardBg;
   final Color textColor;
 
-  const BookingPatientSelector({super.key, required this.cardBg, required this.textColor});
+  const BookingPatientSelector({
+    super.key,
+    required this.cardBg,
+    required this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +278,11 @@ class BookingPatientSelector extends StatelessWidget {
       children: [
         Text(
           'Select Patient',
-          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w900, color: const Color(0xFF0F172A)),
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w900,
+            color: const Color(0xFF0F172A),
+          ),
         ),
         SizedBox(height: 10.h),
         BlocBuilder<AuthBloc, AuthState>(
@@ -257,7 +313,9 @@ class BookingPatientSelector extends StatelessWidget {
                       height: 40.r,
                       fit: BoxFit.cover,
                       errorWidget: Image.asset(
-                        gender == 'Male' ? AppAssets.maleAvatarPng : AppAssets.femaleAvatarPng,
+                        gender == 'Male'
+                            ? AppAssets.maleAvatarPng
+                            : AppAssets.femaleAvatarPng,
                         width: 40.r,
                         height: 40.r,
                         fit: BoxFit.cover,
@@ -271,17 +329,29 @@ class BookingPatientSelector extends StatelessWidget {
                       children: [
                         Text(
                           patientName,
-                          style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w900, color: textColor),
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w900,
+                            color: textColor,
+                          ),
                         ),
                         SizedBox(height: 2.h),
                         Text(
                           '$gender Ã¢â‚¬Â¢ 31 Years Ã¢â‚¬Â¢ AB+',
-                          style: TextStyle(fontSize: 9.sp, color: Colors.grey, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 9.sp,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Icon(Icons.check_circle_rounded, color: const Color(0xFF3B5BFD), size: 20.r),
+                  Icon(
+                    Icons.check_circle_rounded,
+                    color: const Color(0xFF3B5BFD),
+                    size: 20.r,
+                  ),
                 ],
               ),
             );
@@ -293,7 +363,10 @@ class BookingPatientSelector extends StatelessWidget {
           height: 44.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: Colors.grey.shade400, style: BorderStyle.none),
+            border: Border.all(
+              color: Colors.grey.shade400,
+              style: BorderStyle.none,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -302,7 +375,11 @@ class BookingPatientSelector extends StatelessWidget {
               SizedBox(width: 4.w),
               Text(
                 'Add Another Patient',
-                style: TextStyle(color: AppColors.primary, fontSize: 11.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -333,8 +410,16 @@ class BookingStatsRow extends StatelessWidget {
         children: [
           _buildStatBox(Icons.people_outline_rounded, '32+', 'Patients/Day'),
           _buildStatBox(Icons.calendar_today_outlined, '1200+', 'Appointments'),
-          _buildStatBox(Icons.thumb_up_alt_outlined, '98%', 'Patient Satisfaction'),
-          _buildStatBox(Icons.chat_bubble_outline_rounded, 'Eng, Hin, Mal', 'Languages'),
+          _buildStatBox(
+            Icons.thumb_up_alt_outlined,
+            '98%',
+            'Patient Satisfaction',
+          ),
+          _buildStatBox(
+            Icons.chat_bubble_outline_rounded,
+            'Eng, Hin, Mal',
+            'Languages',
+          ),
         ],
       ),
     );
@@ -345,8 +430,22 @@ class BookingStatsRow extends StatelessWidget {
       children: [
         Icon(icon, color: AppColors.primary, size: 18.r),
         SizedBox(height: 4.h),
-        Text(val, style: TextStyle(color: const Color(0xFF1E3A8A), fontSize: 11.sp, fontWeight: FontWeight.w900)),
-        Text(title, style: TextStyle(color: Colors.grey, fontSize: 7.sp, fontWeight: FontWeight.bold)),
+        Text(
+          val,
+          style: TextStyle(
+            color: const Color(0xFF1E3A8A),
+            fontSize: 11.sp,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        Text(
+          title,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 7.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }
