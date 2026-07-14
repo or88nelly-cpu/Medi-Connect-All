@@ -9,6 +9,7 @@ import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_drawer.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/speciality_grid_item.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/sheets/speciality_detail_sheet.dart';
 import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/core/functions/app_responsive.dart';
 
@@ -119,9 +120,10 @@ class _AdminSpecialitiesPageState extends State<AdminSpecialitiesPage> {
       ),
       itemCount: specialities.length,
       itemBuilder: (context, index) {
+        final sp = specialities[index];
         return SpecialityGridItem(
-          speciality: specialities[index],
-          isDark: isDark,
+          speciality: sp,
+          onTap: () => SpecialityDetailSheet.show(context, sp),
         );
       },
     );

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/widgets/loaders/shimmer_card.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/features/management/staff_management/domain/entities/department_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/department_grid_item.dart';
+import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/sheets/department_detail_sheet.dart';
 
 class AdminDepartmentsGrid extends StatefulWidget {
   final bool isExpanded;
@@ -22,7 +22,26 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
   @override
   void initState() {
     super.initState();
-    context.read<DepartmentBloc>().add(const LoadDepartments());
+    // Only load if not already loaded
+    final state = context.read<DepartmentBloc>().state;
+    if (state is! DepartmentsLoaded) {
+      context.read<DepartmentBloc>().add(const LoadDepartments());
+    }
+  }
+
+  Widget _buildShimmerGrid() {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 6,
+        crossAxisSpacing: 12.w,
+        mainAxisSpacing: 12.h,
+        childAspectRatio: 1.35,
+      ),
+      itemCount: 6,
+      itemBuilder: (_, __) => const ShimmerGridCard(),
+    );
   }
 
   @override
@@ -32,94 +51,130 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
     return Container(
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surface : Colors.white,
+        color: isDark ? const Color(0xFF13132B) : Colors.white,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.border(context)),
+        border: Border.all(
+          color: isDark ? Colors.white10 : const Color(0xFFE8ECF4),
+        ),
+        boxShadow: isDark ? null : [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  Icon(Icons.business, color: AppColors.adminPrimary, size: 24.sp),
-                  SizedBox(width: 8.w),
+                  Container(
+                    padding: EdgeInsets.all(6.r),
+                    decoration: BoxDecoration(
+                      color: AppColors.adminPrimary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Icon(Icons.business_outlined,
+                        color: AppColors.adminPrimary, size: 18.sp),
+                  ),
+                  SizedBox(width: 10.w),
                   Text(
-                    AppStrings.departments,
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontWeight: FontWeight.bold,
+                    'Departments',
+                    style: AppTextStyles.titleSmall.copyWith(
+                      fontWeight: FontWeight.w700,
                       color: AppColors.dashboardTextPrimary(context),
                     ),
                   ),
                 ],
               ),
-              TextButton(
-                onPressed: () {
-                  context.pushNamed(RouteNames.adminDepartments);
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "View All",
-                      style: AppTextStyles.labelMedium.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 4.w),
-                    Icon(
-                      Icons.arrow_forward,
-                      size: 16.sp,
-                      color: AppColors.primary,
-                    ),
-                  ],
+              TextButton.icon(
+                onPressed: () => context.push(RouteNames.adminDepartments),
+                icon: Icon(Icons.arrow_forward_ios_rounded,
+                    size: 12.sp, color: AppColors.primary),
+                label: Text(
+                  'View All',
+                  style: AppTextStyles.labelMedium.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
           ),
           SizedBox(height: 16.h),
+
+          // Content
           BlocBuilder<DepartmentBloc, DepartmentState>(
             builder: (context, state) {
               if (state is DepartmentLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is DepartmentError) {
-                return Center(child: Text(state.failure.message));
-              } else if (state is DepartmentsLoaded) {
-                final departments = state.departments.take(6).toList(); // Show max 6 on dashboard
-                
-                if (departments.isEmpty) {
-                  return const Center(child: Text("No Departments Found"));
-                }
-                
-                Widget grid = GridView.builder(
-                  shrinkWrap: !widget.isExpanded,
-                  physics: widget.isExpanded ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 16.w,
-                    mainAxisSpacing: 16.h,
-                    childAspectRatio: 1.6, // Adjusted for 3 columns
-                  ),
-                  itemCount: departments.length,
-                  itemBuilder: (context, index) {
-                    final department = departments[index];
-                    return DepartmentGridItem(
-                      department: department,
-                      isDark: isDark,
-                    );
-                  },
-                );
-                
-                if (widget.isExpanded) {
-                  return Expanded(child: grid);
-                } else {
-                  return grid;
-                }
+                return _buildShimmerGrid();
               }
-              return const SizedBox.shrink();
+
+              if (state is DepartmentError) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.r),
+                    child: Text(
+                      state.failure.message,
+                      style: AppTextStyles.labelMedium.copyWith(
+                        color: Colors.red.shade400,
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              List<dynamic> departments = [];
+              if (state is DepartmentsLoaded) {
+                departments = state.departments.take(6).toList();
+              } else if (state is DepartmentActionSuccess) {
+                departments = state.updatedDepartments.take(6).toList();
+              }
+
+              if (departments.isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(24.r),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.business_outlined,
+                            size: 40.sp, color: Colors.grey.shade400),
+                        SizedBox(height: 8.h),
+                        Text(
+                          'No Departments Found',
+                          style: AppTextStyles.labelMedium
+                              .copyWith(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+
+              return GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 6,
+                  crossAxisSpacing: 12.w,
+                  mainAxisSpacing: 12.h,
+                  childAspectRatio: 1.35,
+                ),
+                itemCount: departments.length,
+                itemBuilder: (context, index) {
+                  final dept = departments[index];
+                  return DepartmentGridItem(
+                    department: dept,
+                    onTap: () => DepartmentDetailSheet.show(context, dept),
+                  );
+                },
+              );
             },
           ),
         ],

@@ -5,7 +5,7 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 
 class AdminTopBanner extends StatelessWidget {
   final VoidCallback? onMenuPressed;
@@ -78,9 +78,14 @@ class AdminTopBanner extends StatelessWidget {
                 String? profilePhoto;
                 
                 if (state is Authenticated) {
-                  name = "${state.user.firstName} ${state.user.lastName}".trim();
-                  if (state.user.profilePhoto != null && state.user.profilePhoto!.isNotEmpty) {
-                    profilePhoto = state.user.profilePhoto;
+                  final user = state.user;
+                  final first = user.firstName.trim();
+                  final last = user.lastName.trim();
+                  if (first.isNotEmpty || last.isNotEmpty) {
+                    name = [first, last].where((s) => s.isNotEmpty).join(' ');
+                  }
+                  if (user.profilePhoto != null && user.profilePhoto!.trim().isNotEmpty) {
+                    profilePhoto = user.profilePhoto!.trim();
                   }
                 }
 
@@ -168,14 +173,27 @@ class AdminTopBanner extends StatelessWidget {
                     CircleAvatar(
                       radius: 24.r,
                       backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        radius: 22.r,
-                        backgroundColor: AppColors.primary,
-                        backgroundImage: profilePhoto != null ? CachedNetworkImageProvider(profilePhoto) : null,
-                        child: profilePhoto == null 
-                            ? Icon(Icons.person, color: Colors.white, size: 24.sp)
-                            : null,
-                      ),
+                      child: profilePhoto != null
+                          ? ClipOval(
+                              child: CustomImageView(
+                                imagePath: profilePhoto,
+                                width: 44.r,
+                                height: 44.r,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : CircleAvatar(
+                              radius: 22.r,
+                              backgroundColor: AppColors.primary,
+                              child: Text(
+                                name.isNotEmpty ? name[0].toUpperCase() : 'A',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.sp,
+                                ),
+                              ),
+                            ),
                     ),
                   ],
                 );

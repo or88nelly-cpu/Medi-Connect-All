@@ -122,7 +122,7 @@ class _AdminDepartmentsPageState extends State<AdminDepartmentsPage> {
       itemBuilder: (context, index) {
         return DepartmentGridItem(
           department: departments[index],
-          isDark: isDark,
+          onTap: () {},
         );
       },
     );

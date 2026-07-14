@@ -25,34 +25,23 @@ class DashboardHomeAdmin extends StatelessWidget {
         ),
         SizedBox(height: 16.h),
         
-        if (isDesktop)
-          Expanded(
-            flex: 4,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Expanded(child: AdminDepartmentsGrid(isExpanded: true)),
-                SizedBox(width: 16.w),
-                const Expanded(child: AdminSpecialitiesGrid(isExpanded: true)),
-              ],
-            ),
-          )
-        else
-          const Column(
-            children: [
-              AdminDepartmentsGrid(),
-              SizedBox(height: 16),
-              AdminSpecialitiesGrid(),
-            ],
-          ),
+        if (isDesktop) ...[
+          const AdminDepartmentsGrid(),
+          SizedBox(height: 16.h),
+          const AdminSpecialitiesGrid(),
+        ] else ...[
+          const AdminDepartmentsGrid(),
+          SizedBox(height: 16.h),
+          const AdminSpecialitiesGrid(),
+        ],
 
         SizedBox(height: 16.h),
         const AdminManagementCards(),
         SizedBox(height: 16.h),
 
         if (isDesktop)
-          Expanded(
-            flex: 3,
+          SizedBox(
+            height: 250.h,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -75,16 +64,9 @@ class DashboardHomeAdmin extends StatelessWidget {
       ],
     );
 
-    if (isDesktop) {
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-        child: bodyContent,
-      );
-    } else {
-      return SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-        child: bodyContent,
-      );
-    }
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+      child: bodyContent,
+    );
   }
 }
