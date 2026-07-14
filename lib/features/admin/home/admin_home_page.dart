@@ -8,12 +8,7 @@ import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_drawer.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/features/admin/home/widgets/dashboard_header.dart';
-import 'package:medi_connect/features/admin/home/widgets/extra_card.dart';
-import 'package:medi_connect/features/admin/home/widgets/admin_home_mobile.dart';
-
-import 'package:medi_connect/features/admin/home/widgets/department_list_home.dart'
-    show DepartmentListHome;
+import 'package:medi_connect/shared/dashboard/presentation/pages/admin/dashboard_home_admin.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -42,29 +37,16 @@ class _AdminHomePageState extends State<AdminHomePage> {
       builder: (context, state) {
         final user = state is Authenticated ? state.user : null;
         if (AppResponsive.isMobile(context)) {
-          return AdminHomeMobile(user: user);
+          return CustomScaffold(
+            drawer: AdminDrawer(),
+            appBarNeeded: true,
+            body: const DashboardHomeAdmin(),
+          );
         }
         return CustomScaffold(
           drawer: AdminDrawer(),
           appBarNeeded: false,
-          body: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-              horizontal: 66.w,
-              vertical: 30.h,
-            ).copyWith(left: 66.w - 58.r),
-
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-
-              children: [
-                DashboardHeader(user: user),
-                SizedBox(height: 12.r),
-                DepartmentListHome(),
-                SizedBox(height: 12.r),
-                ExtraCard(),
-              ],
-            ),
-          ),
+          body: const DashboardHomeAdmin(),
         );
       },
     );

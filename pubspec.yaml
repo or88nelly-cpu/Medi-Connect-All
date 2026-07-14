@@ -54,6 +54,7 @@ dependencies:
   flutter_glass_morphism: ^1.0.2
   google_mobile_ads: ^9.0.0
   uuid: ^4.5.3
+  timeago: ^3.7.1
 
 dev_dependencies:
   sentry_dart_plugin: ^3.4.0

@@ -5,6 +5,11 @@ import 'package:medi_connect/bootstrap/router.dart';
 import 'package:medi_connect/core/navigation/route_guards.dart'
     show RouteGuards;
 import 'package:medi_connect/core/navigation/route_names.dart';
+import 'package:medi_connect/features/admin/management/presentation/pages/admin_departments_page.dart';
+import 'package:medi_connect/features/admin/management/presentation/pages/admin_department_form_page.dart';
+import 'package:medi_connect/features/admin/management/presentation/pages/admin_specialities_page.dart';
+import 'package:medi_connect/features/admin/management/presentation/pages/admin_speciality_form_page.dart';
+import 'package:medi_connect/features/admin/settings/presentation/pages/admin_settings_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_signup_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/splash_page.dart';
@@ -150,6 +155,36 @@ class AppRouterConfig {
         GoRoute(
           path: '/admin/master-data',
           builder: (context, state) => const AdminMasterDataPage(),
+        ),
+        GoRoute(
+          path: RouteNames.adminDepartments,
+          builder: (context, state) => const AdminDepartmentsPage(),
+        ),
+        GoRoute(
+          path: RouteNames.adminDepartmentNew,
+          builder: (context, state) => const AdminDepartmentFormPage(),
+        ),
+        GoRoute(
+          path: RouteNames.adminDepartmentEdit,
+          builder: (context, state) {
+            final id = state.pathParameters['id'];
+            return AdminDepartmentFormPage(departmentId: id);
+          },
+        ),
+        GoRoute(
+          path: RouteNames.adminSpecialities,
+          builder: (context, state) => const AdminSpecialitiesPage(),
+        ),
+        GoRoute(
+          path: RouteNames.adminSpecialityNew,
+          builder: (context, state) => const AdminSpecialityFormPage(),
+        ),
+        GoRoute(
+          path: RouteNames.adminSpecialityEdit,
+          builder: (context, state) {
+            final id = state.pathParameters['id'];
+            return AdminSpecialityFormPage(specialityId: id);
+          },
         ),
 
         GoRoute(

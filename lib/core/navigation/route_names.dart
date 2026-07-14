@@ -21,6 +21,13 @@ class RouteNames {
       '/emrd/patient-registration-detail';
   static const adminSettings = '/admin/settings';
   static const staffSettings = '/staff/settings';
+  static const adminAuditLogs = '/admin/audit-logs';
+  static const adminDepartments = '/admin/departments';
+  static const adminDepartmentNew = '/admin/department/new';
+  static const adminDepartmentEdit = '/admin/department/edit';
+  static const adminSpecialities = '/admin/specialities';
+  static const adminSpecialityNew = '/admin/speciality/new';
+  static const adminSpecialityEdit = '/admin/speciality/edit';
 
   // Inner feature screens
   static const appointments = 'appointments';

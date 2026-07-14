@@ -30,6 +30,11 @@ import 'package:medi_connect/shared/dashboard/domain/repositories/analytics_repo
 import 'package:medi_connect/shared/dashboard/domain/use_cases/admin_analytics_usecases.dart';
 import 'package:medi_connect/shared/dashboard/domain/use_cases/get_analytics_usecase.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_analytics_bloc.dart';
+import 'package:medi_connect/shared/dashboard/data/data_source/dashboard_remote_data_source.dart';
+import 'package:medi_connect/shared/dashboard/data/repository/dashboard_repository_impl.dart';
+import 'package:medi_connect/shared/dashboard/domain/repositories/dashboard_repository.dart';
+import 'package:medi_connect/shared/dashboard/domain/use_cases/get_dashboard_widgets_usecase.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_bloc.dart';
 import 'package:medi_connect/features/management/staff_management/data/datasource/department_remote_datasource.dart';
 import 'package:medi_connect/features/management/staff_management/data/datasource/doctor_staff_remote_datasource.dart';
 import 'package:medi_connect/features/management/staff_management/data/repositories/department_repository_impl.dart';
@@ -75,6 +80,7 @@ import 'package:medi_connect/features/patient/speciality/presentation/bloc/speci
 import 'package:medi_connect/shared/auth/domain/repositories/user_details_repository.dart';
 import 'package:medi_connect/shared/auth/data/repositories/user_details_repository_impl.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Configures and registers dependencies for the authentication feature package.
 void configureAuthDependencies(GetIt sl) {
@@ -159,6 +165,28 @@ void configureAnalyticsDependencies(GetIt sl) {
   );
   sl.registerLazySingleton<GetDashboardStatsUseCase>(
     () => GetDashboardStatsUseCase(sl<AnalyticsRepository>()),
+  );
+
+  // Dashboard Widgets DI
+  if (!sl.isRegistered<DashboardRemoteDataSource>()) {
+    sl.registerLazySingleton<DashboardRemoteDataSource>(
+      () => DashboardRemoteDataSourceImpl(sl<SupabaseClient>()),
+    );
+  }
+  if (!sl.isRegistered<DashboardRepository>()) {
+    sl.registerLazySingleton<DashboardRepository>(
+      () => DashboardRepositoryImpl(sl<DashboardRemoteDataSource>()),
+    );
+  }
+  if (!sl.isRegistered<GetDashboardWidgetsUseCase>()) {
+    sl.registerLazySingleton<GetDashboardWidgetsUseCase>(
+      () => GetDashboardWidgetsUseCase(sl<DashboardRepository>()),
+    );
+  }
+  sl.registerFactory<DashboardWidgetsBloc>(
+    () => DashboardWidgetsBloc(
+      getDashboardWidgetsUseCase: sl<GetDashboardWidgetsUseCase>(),
+    ),
   );
 }
 

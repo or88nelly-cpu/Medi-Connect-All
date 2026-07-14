@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
 import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_analytics_bloc.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_bloc.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/core/constants/departments_config.dart';
@@ -28,6 +29,9 @@ class AppProviders {
       BlocProvider<AuthBloc>(create: (_) => sl<AuthBloc>()),
       BlocProvider<DashboardAnalyticsBloc>(
         create: (_) => sl<DashboardAnalyticsBloc>(),
+      ),
+      BlocProvider<DashboardWidgetsBloc>(
+        create: (_) => sl<DashboardWidgetsBloc>(),
       ),
       BlocProvider<DepartmentBloc>(create: (_) => sl<DepartmentBloc>()),
       BlocProvider<DoctorStaffBloc>(create: (_) => sl<DoctorStaffBloc>()),

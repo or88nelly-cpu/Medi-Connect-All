@@ -155,7 +155,6 @@ class AdminAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(75.h);
   Widget _loader() {
     return Shimmer.fromColors(
