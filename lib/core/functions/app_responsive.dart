@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class AppResponsive {
@@ -37,7 +38,10 @@ class AppResponsive {
   }
 
   static Size getDesignSize(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    // Avoid using MediaQuery.of(context) here because getDesignSize is called
+    // before MaterialApp is initialized, which causes an assertion error.
+    final view = View.maybeOf(context) ?? PlatformDispatcher.instance.views.first;
+    final width = view.physicalSize.width / view.devicePixelRatio;
 
     if (width >= 1200) {
       return const Size(1536, 1024);
