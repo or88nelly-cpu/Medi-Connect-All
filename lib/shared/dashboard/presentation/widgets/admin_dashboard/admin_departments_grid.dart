@@ -11,7 +11,8 @@ import 'package:medi_connect/features/management/staff_management/domain/entitie
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/department_grid_item.dart';
 
 class AdminDepartmentsGrid extends StatefulWidget {
-  const AdminDepartmentsGrid({super.key});
+  final bool isExpanded;
+  const AdminDepartmentsGrid({super.key, this.isExpanded = false});
 
   @override
   State<AdminDepartmentsGrid> createState() => _AdminDepartmentsGridState();
@@ -43,26 +44,26 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.local_hospital, color: AppColors.primary, size: 24.sp),
+                  Icon(Icons.business, color: AppColors.adminPrimary, size: 24.sp),
                   SizedBox(width: 8.w),
                   Text(
                     AppStrings.departments,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black87,
+                      color: AppColors.dashboardTextPrimary(context),
                     ),
                   ),
                 ],
               ),
               TextButton(
                 onPressed: () {
-                  context.pushNamed('/admin/departments'); // TODO: update routing later
+                  context.pushNamed(RouteNames.adminDepartments);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      AppStrings.dashboard, // Temporarily using available string for View All
+                      "View All",
                       style: AppTextStyles.labelMedium.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -93,14 +94,14 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
                   return const Center(child: Text("No Departments Found"));
                 }
                 
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                Widget grid = GridView.builder(
+                  shrinkWrap: !widget.isExpanded,
+                  physics: widget.isExpanded ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 16.w,
                     mainAxisSpacing: 16.h,
-                    childAspectRatio: 2.5,
+                    childAspectRatio: 1.6, // Adjusted for 3 columns
                   ),
                   itemCount: departments.length,
                   itemBuilder: (context, index) {
@@ -111,6 +112,12 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
                     );
                   },
                 );
+                
+                if (widget.isExpanded) {
+                  return Expanded(child: grid);
+                } else {
+                  return grid;
+                }
               }
               return const SizedBox.shrink();
             },

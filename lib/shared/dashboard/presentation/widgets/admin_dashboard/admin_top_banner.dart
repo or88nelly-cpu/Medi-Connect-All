@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class AdminTopBanner extends StatelessWidget {
   final VoidCallback? onMenuPressed;
@@ -21,10 +24,10 @@ class AdminTopBanner extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
-            AppColors.primary,
-            AppColors.primary.withValues(alpha: 0.8),
+            Color(0xFF312E81), // Deep indigo/blue matching design
+            Color(0xFF4338CA),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -69,91 +72,114 @@ class AdminTopBanner extends StatelessWidget {
           ),
           SizedBox(width: 12.w),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Good Afternoon,",
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: Colors.white70,
-                  ),
-                ),
-                Text(
-                  adminName,
-                  style: AppTextStyles.titleLarge.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "Welcome back to Hospital Management System",
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Date & Time
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Row(
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
+            child: BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                String name = adminName;
+                String? profilePhoto;
+                
+                if (state is Authenticated) {
+                  name = "${state.user.firstName} ${state.user.lastName}".trim();
+                  if (state.user.profilePhoto != null && state.user.profilePhoto!.isNotEmpty) {
+                    profilePhoto = state.user.profilePhoto;
+                  }
+                }
+
+                return Row(
                   children: [
-                    Text(
-                      DateFormat('MMM').format(now).toUpperCase(),
-                      style: AppTextStyles.labelSmall.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Good Afternoon,",
+                            style: AppTextStyles.labelMedium.copyWith(
+                              color: Colors.white70,
+                            ),
+                          ),
+                          Text(
+                            name.isEmpty ? adminName : name,
+                            style: AppTextStyles.titleLarge.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "Welcome back to Hospital Management System",
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      DateFormat('dd').format(now),
-                      style: AppTextStyles.titleMedium.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    // Date & Time
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Row(
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                DateFormat('MMM').format(now).toUpperCase(),
+                                style: AppTextStyles.labelSmall.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                DateFormat('dd').format(now),
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 12.w),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                DateFormat('dd MMMM yyyy').format(now),
+                                style: AppTextStyles.labelMedium.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                DateFormat('EEEE').format(now),
+                                style: AppTextStyles.labelSmall.copyWith(
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    // Avatar
+                    CircleAvatar(
+                      radius: 24.r,
+                      backgroundColor: Colors.white,
+                      child: CircleAvatar(
+                        radius: 22.r,
+                        backgroundColor: AppColors.primary,
+                        backgroundImage: profilePhoto != null ? CachedNetworkImageProvider(profilePhoto) : null,
+                        child: profilePhoto == null 
+                            ? Icon(Icons.person, color: Colors.white, size: 24.sp)
+                            : null,
                       ),
                     ),
                   ],
-                ),
-                SizedBox(width: 12.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      DateFormat('dd MMMM yyyy').format(now),
-                      style: AppTextStyles.labelMedium.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      DateFormat('EEEE').format(now),
-                      style: AppTextStyles.labelSmall.copyWith(
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: 16.w),
-          // Avatar
-          CircleAvatar(
-            radius: 24.r,
-            backgroundColor: Colors.white,
-            child: CircleAvatar(
-              radius: 22.r,
-              backgroundColor: AppColors.primary,
-              child: Icon(Icons.person, color: Colors.white, size: 24.sp),
+                );
+              },
             ),
           ),
         ],

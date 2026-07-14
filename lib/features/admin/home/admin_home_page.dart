@@ -9,6 +9,8 @@ import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_drawer.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/dashboard_home_admin.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_bloc.dart';
+import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_event.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -23,6 +25,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<DepartmentBloc>(context).add(const LoadDepartments());
+      BlocProvider.of<DashboardWidgetsBloc>(context).add(const LoadDashboardWidgets());
     });
   }
 

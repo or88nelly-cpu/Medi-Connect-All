@@ -2,22 +2,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_state.dart';
-import 'package:medi_connect/core/utils/icon_utils.dart';
-import 'package:medi_connect/core/utils/color_utils.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/quick_action_item.dart';
 
+import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/models/quick_action_data.dart';
+
 class AdminQuickActionsGrid extends StatefulWidget {
-  const AdminQuickActionsGrid({super.key});
+  final bool isExpanded;
+  const AdminQuickActionsGrid({super.key, this.isExpanded = false});
 
   @override
   State<AdminQuickActionsGrid> createState() => _AdminQuickActionsGridState();
 }
 
 class _AdminQuickActionsGridState extends State<AdminQuickActionsGrid> {
+  final List<QuickActionData> quickActions = const [
+    QuickActionData(
+      title: "Register\nPatient",
+      icon: Icons.person_add,
+      color: Color(0xFF7928CA), // Purple
+      route: RouteNames.patientRegistration,
+    ),
+    QuickActionData(
+      title: "Add\nDoctor",
+      icon: Icons.medical_services,
+      color: Color(0xFF0F6FFF), // Blue
+      route: '/admin/doctor-staff/create', // TODO: Pass correct params if needed, or route to staff page
+    ),
+    QuickActionData(
+      title: "Add\nEmployee",
+      icon: Icons.group_add,
+      color: Color(0xFF22C55E), // Green
+      route: '/admin/staff',
+    ),
+    QuickActionData(
+      title: "New\nAppointment",
+      icon: Icons.event_available,
+      color: Color(0xFFFF8A26), // Orange
+      route: RouteNames.patientSearch,
+    ),
+    QuickActionData(
+      title: "Admit\nPatient",
+      icon: Icons.bed,
+      color: Color(0xFFEC4899), // Pink
+      route: RouteNames.patientSearch,
+    ),
+    QuickActionData(
+      title: "Generate\nBill",
+      icon: Icons.receipt_long,
+      color: Color(0xFF14B8A6), // Teal
+      route: '/admin/dashboard', // Fallback
+    ),
+    QuickActionData(
+      title: "Add\nMedicine",
+      icon: Icons.medication,
+      color: Color(0xFF8B5CF6), // Purple/Indigo
+      route: '/admin/pharmacy',
+    ),
+    QuickActionData(
+      title: "Reports",
+      icon: Icons.assignment,
+      color: Color(0xFFEAB308), // Yellow
+      route: '/admin/reports', // Fallback
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -39,61 +90,88 @@ class _AdminQuickActionsGridState extends State<AdminQuickActionsGrid> {
         children: [
           Row(
             children: [
-              Icon(Icons.bolt, color: AppColors.primary, size: 24.sp),
+              Icon(Icons.bolt, color: AppColors.adminPrimary, size: 24.sp),
               SizedBox(width: 8.w),
               Text(
                 "Quick Actions", // Fallback string
                 style: AppTextStyles.titleMedium.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : Colors.black87,
+                  color: AppColors.dashboardTextPrimary(context),
                 ),
               ),
             ],
           ),
           SizedBox(height: 16.h),
-          BlocBuilder<DashboardWidgetsBloc, DashboardWidgetsState>(
-            builder: (context, state) {
-              if (state is DashboardWidgetsLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is DashboardWidgetsError) {
-                return Center(child: Text(state.failure.message));
-              } else if (state is DashboardWidgetsLoaded) {
-                final actions = state.quickActions;
+          Builder(
+            builder: (context) {
+              Widget grid = GridView.builder(
+                shrinkWrap: !widget.isExpanded,
+                physics: widget.isExpanded ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 8,
+                  crossAxisSpacing: 12.w,
+                  mainAxisSpacing: 16.h,
+                  childAspectRatio: 0.9, // Changed from 0.75 to 0.9 to make them shorter and prevent clipping
+                ),
+                itemCount: quickActions.length,
+                itemBuilder: (context, index) {
+                  final action = quickActions[index];
 
-                if (actions.isEmpty) {
-                  return const Center(child: Text("No Quick Actions Available"));
-                }
-
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16.w,
-                    mainAxisSpacing: 16.h,
-                    childAspectRatio: 2.5,
+                  return QuickActionItem(
+                    title: action.title,
+                    iconData: action.icon,
+                    color: action.color,
+                    isDark: isDark,
+                    onTap: () {
+                      if (action.route.isNotEmpty) {
+                        // For Add Doctor we need to pass extra params if we use pushNamed
+                        if (action.route == '/admin/doctor-staff/create') {
+                          context.pushNamed(
+                            '/admin/doctor-staff/create',
+                            extra: {'role': 'doctor', 'department': 'General'},
+                          );
+                        } else {
+                          try {
+                            context.push(action.route);
+                          } catch (e) {
+                            // Fallback if route fails
+                          }
+                        }
+                      }
+                    },
+                  );
+                },
+              );
+              
+              Widget content = Column(
+                children: [
+                  if (widget.isExpanded) Expanded(child: grid) else grid,
+                  SizedBox(height: 16.h),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.keyboard_arrow_down, size: 16.sp, color: AppColors.textSecondary(context)),
+                          SizedBox(width: 4.w),
+                          Text("More Actions", style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondary(context))),
+                          SizedBox(width: 4.w),
+                          Icon(Icons.arrow_forward, size: 16.sp, color: AppColors.textSecondary(context)),
+                        ],
+                      ),
+                    ),
                   ),
-                  itemCount: actions.length,
-                  itemBuilder: (context, index) {
-                    final action = actions[index];
-                    final color = ColorUtils.fromHex(action.colorCode);
-                    final icon = IconUtils.fromString(action.icon);
+                ],
+              );
 
-                    return QuickActionItem(
-                      title: action.title,
-                      iconData: icon,
-                      color: color,
-                      isDark: isDark,
-                      onTap: () {
-                        context.pushNamed(action.route);
-                      },
-                    );
-                  },
-                );
+              if (widget.isExpanded) {
+                return Expanded(child: content);
+              } else {
+                return content;
               }
-              return const SizedBox.shrink();
-            },
-          ),
+            }
+          )
         ],
       ),
     );

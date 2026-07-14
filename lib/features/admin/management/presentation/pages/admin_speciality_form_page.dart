@@ -20,7 +20,14 @@ class _AdminSpecialityFormPageState extends State<AdminSpecialityFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _specialityCodeController = TextEditingController();
+  final _imageUrlController = TextEditingController();
+  final _iconController = TextEditingController();
+  final _consultationDurationController = TextEditingController(text: '15');
+  final _defaultConsultationFeeController = TextEditingController();
+  
   bool _isActive = true;
+  bool _isSurgical = false;
 
   @override
   void initState() {
@@ -36,6 +43,11 @@ class _AdminSpecialityFormPageState extends State<AdminSpecialityFormPage> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _specialityCodeController.dispose();
+    _imageUrlController.dispose();
+    _iconController.dispose();
+    _consultationDurationController.dispose();
+    _defaultConsultationFeeController.dispose();
     super.dispose();
   }
 
@@ -61,7 +73,7 @@ class _AdminSpecialityFormPageState extends State<AdminSpecialityFormPage> {
                 SizedBox(width: 8.w),
                 Text(
                   isEditing ? "Edit Speciality" : "Add Speciality",
-                  style: AppTextStyles.headlineMedium.copyWith(
+                  style: AppTextStyles.headingMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark ? Colors.white : Colors.black87,
                   ),
@@ -102,6 +114,76 @@ class _AdminSpecialityFormPageState extends State<AdminSpecialityFormPage> {
                         border: OutlineInputBorder(),
                       ),
                     ),
+                    Text("Speciality Code", style: AppTextStyles.labelLarge),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      controller: _specialityCodeController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter speciality code",
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) => value == null || value.isEmpty ? "Code is required" : null,
+                    ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Duration (mins)", style: AppTextStyles.labelLarge),
+                              SizedBox(height: 8.h),
+                              TextFormField(
+                                controller: _consultationDurationController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  hintText: "15",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 16.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Default Fee", style: AppTextStyles.labelLarge),
+                              SizedBox(height: 8.h),
+                              TextFormField(
+                                controller: _defaultConsultationFeeController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  hintText: "Enter fee",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Text("Image URL", style: AppTextStyles.labelLarge),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      controller: _imageUrlController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter image URL",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    Text("Icon Name/String", style: AppTextStyles.labelLarge),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      controller: _iconController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter icon code",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
                     SizedBox(height: 20.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,6 +192,18 @@ class _AdminSpecialityFormPageState extends State<AdminSpecialityFormPage> {
                         Switch(
                           value: _isActive,
                           onChanged: (value) => setState(() => _isActive = value),
+                          activeColor: AppColors.primary,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Is Surgical", style: AppTextStyles.labelLarge),
+                        Switch(
+                          value: _isSurgical,
+                          onChanged: (value) => setState(() => _isSurgical = value),
                           activeColor: AppColors.primary,
                         ),
                       ],

@@ -11,7 +11,8 @@ import 'package:medi_connect/features/patient/speciality/domain/entities/special
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/speciality_grid_item.dart';
 
 class AdminSpecialitiesGrid extends StatefulWidget {
-  const AdminSpecialitiesGrid({super.key});
+  final bool isExpanded;
+  const AdminSpecialitiesGrid({super.key, this.isExpanded = false});
 
   @override
   State<AdminSpecialitiesGrid> createState() => _AdminSpecialitiesGridState();
@@ -43,26 +44,26 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.medical_services, color: AppColors.primary, size: 24.sp),
+                  Icon(Icons.hub, color: AppColors.adminPrimary, size: 24.sp),
                   SizedBox(width: 8.w),
                   Text(
                     'Specialities', // Hardcoded until AppStrings is updated
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black87,
+                      color: AppColors.dashboardTextPrimary(context),
                     ),
                   ),
                 ],
               ),
               TextButton(
                 onPressed: () {
-                  context.pushNamed('/admin/specialities');
+                  context.pushNamed(RouteNames.adminSpecialities);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      AppStrings.dashboard, // Temporarily using dashboard string
+                      "View All",
                       style: AppTextStyles.labelMedium.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -93,24 +94,30 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
                   return const Center(child: Text("No Specialities Found"));
                 }
                 
-                return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                Widget grid = GridView.builder(
+                  shrinkWrap: !widget.isExpanded,
+                  physics: widget.isExpanded ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 16.w,
                     mainAxisSpacing: 16.h,
-                    childAspectRatio: 2.5,
+                    childAspectRatio: 1.6, // Adjusted for 3 columns
                   ),
                   itemCount: specialities.length,
                   itemBuilder: (context, index) {
-                    final spec = specialities[index];
+                    final speciality = specialities[index];
                     return SpecialityGridItem(
-                      speciality: spec,
+                      speciality: speciality,
                       isDark: isDark,
                     );
                   },
                 );
+                
+                if (widget.isExpanded) {
+                  return Expanded(child: grid);
+                } else {
+                  return grid;
+                }
               }
               return const SizedBox.shrink();
             },

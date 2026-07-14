@@ -12,7 +12,8 @@ import 'package:intl/intl.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/recent_activity_item.dart';
 
 class AdminRecentActivity extends StatefulWidget {
-  const AdminRecentActivity({super.key});
+  final bool isExpanded;
+  const AdminRecentActivity({super.key, this.isExpanded = false});
 
   @override
   State<AdminRecentActivity> createState() => _AdminRecentActivityState();
@@ -44,13 +45,13 @@ class _AdminRecentActivityState extends State<AdminRecentActivity> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.history, color: AppColors.primary, size: 24.sp),
+                  Icon(Icons.history, color: AppColors.adminPrimary, size: 24.sp),
                   SizedBox(width: 8.w),
                   Text(
                     AppStrings.recentActivity,
                     style: AppTextStyles.titleMedium.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black87,
+                      color: AppColors.dashboardTextPrimary(context),
                     ),
                   ),
                 ],
@@ -94,9 +95,9 @@ class _AdminRecentActivityState extends State<AdminRecentActivity> {
                   return const Center(child: Text("No Recent Activity"));
                 }
 
-                return ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                Widget list = ListView.separated(
+                  shrinkWrap: !widget.isExpanded,
+                  physics: widget.isExpanded ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
                   itemCount: logs.length,
                   separatorBuilder: (context, index) => Divider(
                     height: 24.h,
@@ -107,6 +108,12 @@ class _AdminRecentActivityState extends State<AdminRecentActivity> {
                     return RecentActivityItem(log: log, isDark: isDark);
                   },
                 );
+
+                if (widget.isExpanded) {
+                  return Expanded(child: list);
+                } else {
+                  return list;
+                }
               }
               return const SizedBox.shrink();
             },

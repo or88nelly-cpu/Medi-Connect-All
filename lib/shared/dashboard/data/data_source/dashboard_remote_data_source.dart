@@ -19,8 +19,7 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
       final response = await supabaseClient
           .from(AppTableNames.dashboardWidgets)
           .select()
-          .eq('is_active', true)
-          .order('order_index', ascending: true);
+          .eq('is_active', true);
 
       return (response as List)
           .map((item) => DashboardWidgetModel.fromJson(item))

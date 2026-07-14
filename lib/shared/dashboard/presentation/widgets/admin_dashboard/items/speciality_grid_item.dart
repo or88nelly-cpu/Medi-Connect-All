@@ -21,7 +21,7 @@ class SpecialityGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(RouteNames.specialities);
+        context.pushNamed(RouteNames.adminSpecialityEdit, pathParameters: {'id': speciality.id});
       },
       borderRadius: BorderRadius.circular(16.r),
       child: Container(
@@ -79,16 +79,40 @@ class SpecialityGridItem extends StatelessWidget {
   }
 
   Widget _buildFallbackIcon() {
+    IconData iconData = Icons.medical_services;
+    Color iconColor = AppColors.primary;
+    
+    final nameLower = speciality.name.toLowerCase();
+    if (nameLower.contains("cardiology")) {
+      iconData = Icons.favorite;
+      iconColor = const Color(0xFFEF4444); // Red
+    } else if (nameLower.contains("neurology")) {
+      iconData = Icons.psychology;
+      iconColor = const Color(0xFFA855F7); // Purple
+    } else if (nameLower.contains("orthopedics")) {
+      iconData = Icons.accessible;
+      iconColor = const Color(0xFF3B82F6); // Blue
+    } else if (nameLower.contains("pediatrics")) {
+      iconData = Icons.child_care;
+      iconColor = const Color(0xFFEC4899); // Pink
+    } else if (nameLower.contains("ent")) {
+      iconData = Icons.hearing;
+      iconColor = const Color(0xFF14B8A6); // Teal
+    } else if (nameLower.contains("dermatology")) {
+      iconData = Icons.face;
+      iconColor = const Color(0xFFEAB308); // Yellow
+    }
+
     return Container(
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
+        color: iconColor.withValues(alpha: 0.1),
         shape: BoxShape.circle,
       ),
       child: Icon(
-        Icons.medical_services,
-        color: AppColors.primary,
-        size: 32.sp,
+        iconData,
+        color: iconColor,
+        size: 36.sp, // Matching DepartmentGridItem
       ),
     );
   }

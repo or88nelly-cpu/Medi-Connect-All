@@ -15,61 +15,76 @@ class DashboardHomeAdmin extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDesktop = AppResponsive.isDesktop(context);
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AdminTopBanner(
-            onMenuPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+    final bodyContent = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AdminTopBanner(
+          onMenuPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+        SizedBox(height: 16.h),
+        
+        if (isDesktop)
+          Expanded(
+            flex: 4,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Expanded(child: AdminDepartmentsGrid(isExpanded: true)),
+                SizedBox(width: 16.w),
+                const Expanded(child: AdminSpecialitiesGrid(isExpanded: true)),
+              ],
+            ),
+          )
+        else
+          const Column(
+            children: [
+              AdminDepartmentsGrid(),
+              SizedBox(height: 16),
+              AdminSpecialitiesGrid(),
+            ],
           ),
-          SizedBox(height: 20.h),
+
+        SizedBox(height: 16.h),
+        const AdminManagementCards(),
+        SizedBox(height: 16.h),
+
+        if (isDesktop)
+          Expanded(
+            flex: 3,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Expanded(flex: 2, child: AdminQuickActionsGrid(isExpanded: true)),
+                SizedBox(width: 16.w),
+                const Expanded(flex: 3, child: AdminRecentActivity(isExpanded: true)),
+              ],
+            ),
+          )
+        else
+          const Column(
+            children: [
+              AdminQuickActionsGrid(),
+              SizedBox(height: 16),
+              AdminRecentActivity(),
+            ],
+          ),
           
-          if (isDesktop)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(child: AdminDepartmentsGrid()),
-                SizedBox(width: 20.w),
-                const Expanded(child: AdminSpecialitiesGrid()),
-              ],
-            )
-          else
-            const Column(
-              children: [
-                AdminDepartmentsGrid(),
-                SizedBox(height: 20),
-                AdminSpecialitiesGrid(),
-              ],
-            ),
-
-          SizedBox(height: 20.h),
-          const AdminManagementCards(),
-          SizedBox(height: 20.h),
-
-          if (isDesktop)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(flex: 2, child: AdminQuickActionsGrid()),
-                SizedBox(width: 20.w),
-                const Expanded(flex: 3, child: AdminRecentActivity()),
-              ],
-            )
-          else
-            const Column(
-              children: [
-                AdminQuickActionsGrid(),
-                SizedBox(height: 20),
-                AdminRecentActivity(),
-              ],
-            ),
-            
-          SizedBox(height: 40.h),
-        ],
-      ),
+        if (!isDesktop) SizedBox(height: 40.h),
+      ],
     );
+
+    if (isDesktop) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        child: bodyContent,
+      );
+    } else {
+      return SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+        child: bodyContent,
+      );
+    }
   }
 }

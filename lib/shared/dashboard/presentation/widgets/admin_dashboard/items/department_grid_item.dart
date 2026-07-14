@@ -21,7 +21,7 @@ class DepartmentGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(RouteNames.departmentDetail);
+        context.pushNamed(RouteNames.adminDepartmentEdit, pathParameters: {'id': department.id});
       },
       borderRadius: BorderRadius.circular(16.r),
       child: Container(
@@ -80,22 +80,39 @@ class DepartmentGridItem extends StatelessWidget {
 
   Widget _buildFallbackIcon() {
     IconData iconData = Icons.local_hospital;
-    if (department.name.toLowerCase().contains("cardiology")) iconData = Icons.favorite;
-    if (department.name.toLowerCase().contains("neurology")) iconData = Icons.psychology;
-    if (department.name.toLowerCase().contains("pediatrics")) iconData = Icons.child_care;
-    if (department.name.toLowerCase().contains("orthopedics")) iconData = Icons.accessible;
-    if (department.name.toLowerCase().contains("emergency")) iconData = Icons.emergency;
+    Color iconColor = AppColors.primary;
+    
+    final nameLower = department.name.toLowerCase();
+    if (nameLower.contains("emergency")) {
+      iconData = Icons.emergency;
+      iconColor = const Color(0xFFEF4444); // Red
+    } else if (nameLower.contains("laboratory")) {
+      iconData = Icons.science;
+      iconColor = const Color(0xFF3B82F6); // Blue
+    } else if (nameLower.contains("pharmacy")) {
+      iconData = Icons.medication;
+      iconColor = const Color(0xFF22C55E); // Green
+    } else if (nameLower.contains("radiology")) {
+      iconData = Icons.coronavirus; // Closest to skeleton/xray
+      iconColor = const Color(0xFFA855F7); // Purple
+    } else if (nameLower.contains("icu")) {
+      iconData = Icons.monitor_heart;
+      iconColor = const Color(0xFF06B6D4); // Cyan
+    } else if (nameLower.contains("nursing")) {
+      iconData = Icons.person; // Closest to nurse
+      iconColor = const Color(0xFFF97316); // Orange
+    }
 
     return Container(
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
-        shape: BoxShape.circle,
+        color: iconColor.withValues(alpha: 0.1),
+        shape: BoxShape.circle, // Or BoxShape.rectangle with border radius if we wanted it squarish
       ),
       child: Icon(
         iconData,
-        color: AppColors.primary,
-        size: 32.sp,
+        color: iconColor,
+        size: 36.sp, // Larger icon size to match design
       ),
     );
   }

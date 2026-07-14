@@ -20,7 +20,9 @@ class _AdminDepartmentFormPageState extends State<AdminDepartmentFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _imageUrlController = TextEditingController();
   bool _isActive = true;
+  bool _consultation = false;
 
   @override
   void initState() {
@@ -37,6 +39,7 @@ class _AdminDepartmentFormPageState extends State<AdminDepartmentFormPage> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _imageUrlController.dispose();
     super.dispose();
   }
 
@@ -62,7 +65,7 @@ class _AdminDepartmentFormPageState extends State<AdminDepartmentFormPage> {
                 SizedBox(width: 8.w),
                 Text(
                   isEditing ? "Edit Department" : "Add Department",
-                  style: AppTextStyles.headlineMedium.copyWith(
+                  style: AppTextStyles.headingMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark ? Colors.white : Colors.black87,
                   ),
@@ -104,6 +107,16 @@ class _AdminDepartmentFormPageState extends State<AdminDepartmentFormPage> {
                       ),
                     ),
                     SizedBox(height: 20.h),
+                    Text("Image URL", style: AppTextStyles.labelLarge),
+                    SizedBox(height: 8.h),
+                    TextFormField(
+                      controller: _imageUrlController,
+                      decoration: const InputDecoration(
+                        hintText: "Enter department image URL",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -111,6 +124,18 @@ class _AdminDepartmentFormPageState extends State<AdminDepartmentFormPage> {
                         Switch(
                           value: _isActive,
                           onChanged: (value) => setState(() => _isActive = value),
+                          activeColor: AppColors.primary,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Supports Consultation", style: AppTextStyles.labelLarge),
+                        Switch(
+                          value: _consultation,
+                          onChanged: (value) => setState(() => _consultation = value),
                           activeColor: AppColors.primary,
                         ),
                       ],

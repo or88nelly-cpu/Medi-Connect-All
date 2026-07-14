@@ -45,7 +45,7 @@ class _AdminDepartmentsPageState extends State<AdminDepartmentsPage> {
               children: [
                 Text(
                   "Departments",
-                  style: AppTextStyles.headlineMedium.copyWith(
+                  style: AppTextStyles.headingMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark ? Colors.white : Colors.black87,
                   ),
@@ -144,8 +144,8 @@ class _AdminDepartmentsPageState extends State<AdminDepartmentsPage> {
               DataColumn(label: Text('ID')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Description')),
-              DataColumn(label: Text('Total Doctors')),
-              DataColumn(label: Text('Status')),
+              DataColumn(label: Text('Consultation')),
+              DataColumn(label: Text('Created At')),
             ],
             rows: departments.map((dept) {
               return DataRow(
@@ -158,24 +158,24 @@ class _AdminDepartmentsPageState extends State<AdminDepartmentsPage> {
                   DataCell(Text(dept.id.substring(0, 6))), // Short ID
                   DataCell(Text(dept.name)),
                   DataCell(Text(dept.description ?? 'N/A')),
-                  DataCell(Text('0')), // Mock totalDoctors
                   DataCell(
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                       decoration: BoxDecoration(
-                        color: Colors.green.withValues(alpha: 0.1), // Mock isActive
+                        color: dept.consultation ? Colors.green.withValues(alpha: 0.1) : Colors.red.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: Text(
-                        'Active',
+                        dept.consultation ? 'Yes' : 'No',
                         style: TextStyle(
-                          color: Colors.green,
+                          color: dept.consultation ? Colors.green : Colors.red,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
+                  DataCell(Text(dept.createdAt.toString().split(' ')[0])), // Date only
                 ],
               );
             }).toList(),

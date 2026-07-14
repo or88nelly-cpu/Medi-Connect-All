@@ -45,7 +45,7 @@ class _AdminSpecialitiesPageState extends State<AdminSpecialitiesPage> {
               children: [
                 Text(
                   "Specialities",
-                  style: AppTextStyles.headlineMedium.copyWith(
+                  style: AppTextStyles.headingMedium.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark ? Colors.white : Colors.black87,
                   ),
@@ -141,8 +141,10 @@ class _AdminSpecialitiesPageState extends State<AdminSpecialitiesPage> {
             showCheckboxColumn: false,
             columns: const [
               DataColumn(label: Text('ID')),
+              DataColumn(label: Text('Code')),
               DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Description')),
+              DataColumn(label: Text('Fee')),
+              DataColumn(label: Text('Surgical')),
               DataColumn(label: Text('Status')),
             ],
             rows: specialities.map((spec) {
@@ -152,8 +154,10 @@ class _AdminSpecialitiesPageState extends State<AdminSpecialitiesPage> {
                 },
                 cells: [
                   DataCell(Text(spec.id.substring(0, 6))),
+                  DataCell(Text(spec.specialityCode)),
                   DataCell(Text(spec.name)),
-                  DataCell(Text(spec.description ?? 'N/A')),
+                  DataCell(Text(spec.defaultConsultationFee?.toString() ?? 'N/A')),
+                  DataCell(Text(spec.isSurgical ? 'Yes' : 'No')),
                   DataCell(
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),

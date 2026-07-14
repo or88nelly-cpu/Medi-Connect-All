@@ -5,6 +5,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 
 class ManagementCardItem extends StatelessWidget {
   final String title;
+  final String subtitle;
   final IconData iconData;
   final Color color;
   final bool isDark;
@@ -13,6 +14,7 @@ class ManagementCardItem extends StatelessWidget {
   const ManagementCardItem({
     super.key,
     required this.title,
+    required this.subtitle,
     required this.iconData,
     required this.color,
     required this.isDark,
@@ -73,7 +75,7 @@ class ManagementCardItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Manage ${title.toLowerCase()}",
+                    subtitle,
                     style: AppTextStyles.labelSmall.copyWith(
                       color: isDark ? Colors.white54 : Colors.black54,
                     ),
