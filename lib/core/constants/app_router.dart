@@ -10,9 +10,7 @@ import 'package:medi_connect/features/admin/management/presentation/pages/admin_
 import 'package:medi_connect/features/admin/management/presentation/pages/admin_specialities_page.dart';
 import 'package:medi_connect/features/admin/management/presentation/pages/speciality_detail_page.dart';
 import 'package:medi_connect/features/admin/management/presentation/pages/admin_speciality_form_page.dart';
-import 'package:medi_connect/features/patient/speciality/data/models/speciality_model.dart';
 import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_settings_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_signup_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/splash_page.dart';
