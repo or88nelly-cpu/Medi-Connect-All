@@ -8,7 +8,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/loaders/shimmer_card.dart';
 import 'package:medi_connect/features/management/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/department_grid_item.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/sheets/department_detail_sheet.dart';
+import 'package:medi_connect/features/management/staff_management/data/models/department_model.dart';
 
 class AdminDepartmentsGrid extends StatefulWidget {
   final bool isExpanded;
@@ -56,13 +56,15 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
         border: Border.all(
           color: isDark ? Colors.white10 : const Color(0xFFE8ECF4),
         ),
-        boxShadow: isDark ? null : [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,8 +81,11 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
                       color: AppColors.adminPrimary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    child: Icon(Icons.business_outlined,
-                        color: AppColors.adminPrimary, size: 18.sp),
+                    child: Icon(
+                      Icons.business_outlined,
+                      color: AppColors.adminPrimary,
+                      size: 18.sp,
+                    ),
                   ),
                   SizedBox(width: 10.w),
                   Text(
@@ -94,8 +99,11 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
               ),
               TextButton.icon(
                 onPressed: () => context.push(RouteNames.adminDepartments),
-                icon: Icon(Icons.arrow_forward_ios_rounded,
-                    size: 12.sp, color: AppColors.primary),
+                icon: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 12.sp,
+                  color: AppColors.primary,
+                ),
                 label: Text(
                   'View All',
                   style: AppTextStyles.labelMedium.copyWith(
@@ -143,13 +151,17 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.business_outlined,
-                            size: 40.sp, color: Colors.grey.shade400),
+                        Icon(
+                          Icons.business_outlined,
+                          size: 40.sp,
+                          color: Colors.grey.shade400,
+                        ),
                         SizedBox(height: 8.h),
                         Text(
                           'No Departments Found',
-                          style: AppTextStyles.labelMedium
-                              .copyWith(color: Colors.grey),
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: Colors.grey,
+                          ),
                         ),
                       ],
                     ),
@@ -171,7 +183,10 @@ class _AdminDepartmentsGridState extends State<AdminDepartmentsGrid> {
                   final dept = departments[index];
                   return DepartmentGridItem(
                     department: dept,
-                    onTap: () => DepartmentDetailSheet.show(context, dept),
+                    onTap: () => context.push(
+                      '/departmentDetail',
+                      extra: DepartmentModel.fromEntity(dept),
+                    ),
                   );
                 },
               );

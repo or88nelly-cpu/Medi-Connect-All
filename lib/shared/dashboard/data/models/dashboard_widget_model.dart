@@ -53,14 +53,14 @@ class DashboardWidgetModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        subtitle,
-        icon,
-        colorCode,
-        route,
-        widgetType,
-        isActive,
-        orderIndex,
-      ];
+    id,
+    title,
+    subtitle,
+    icon,
+    colorCode,
+    route,
+    widgetType,
+    isActive,
+    orderIndex,
+  ];
 }

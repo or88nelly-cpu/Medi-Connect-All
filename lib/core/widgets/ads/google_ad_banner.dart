@@ -21,8 +21,8 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
   final String _adUnitId = kIsWeb
       ? ''
       : (Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111'
-          : 'ca-app-pub-3940256099942544/2934735716');
+            ? 'ca-app-pub-3940256099942544/6300978111'
+            : 'ca-app-pub-3940256099942544/2934735716');
 
   @override
   void initState() {

@@ -76,7 +76,7 @@ class AdminTopBanner extends StatelessWidget {
               builder: (context, state) {
                 String name = adminName;
                 String? profilePhoto;
-                
+
                 if (state is Authenticated) {
                   final user = state.user;
                   final first = user.firstName.trim();
@@ -84,7 +84,8 @@ class AdminTopBanner extends StatelessWidget {
                   if (first.isNotEmpty || last.isNotEmpty) {
                     name = [first, last].where((s) => s.isNotEmpty).join(' ');
                   }
-                  if (user.profilePhoto != null && user.profilePhoto!.trim().isNotEmpty) {
+                  if (user.profilePhoto != null &&
+                      user.profilePhoto!.trim().isNotEmpty) {
                     profilePhoto = user.profilePhoto!.trim();
                   }
                 }
@@ -119,7 +120,10 @@ class AdminTopBanner extends StatelessWidget {
                     ),
                     // Date & Time
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(12.r),

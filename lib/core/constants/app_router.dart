@@ -8,7 +8,10 @@ import 'package:medi_connect/core/navigation/route_names.dart';
 import 'package:medi_connect/features/admin/management/presentation/pages/admin_departments_page.dart';
 import 'package:medi_connect/features/admin/management/presentation/pages/admin_department_form_page.dart';
 import 'package:medi_connect/features/admin/management/presentation/pages/admin_specialities_page.dart';
+import 'package:medi_connect/features/admin/management/presentation/pages/speciality_detail_page.dart';
 import 'package:medi_connect/features/admin/management/presentation/pages/admin_speciality_form_page.dart';
+import 'package:medi_connect/features/patient/speciality/data/models/speciality_model.dart';
+import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_settings_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_login_page.dart';
 import 'package:medi_connect/shared/auth/presentation/pages/admin_signup_page.dart';
@@ -202,6 +205,11 @@ class AppRouterConfig {
           path: "/departmentDetail",
           builder: (context, state) =>
               DepartmentDetail(department: state.extra as DepartmentModel),
+        ),
+        GoRoute(
+          path: "/specialityDetail",
+          builder: (context, state) =>
+              SpecialityDetailPage(speciality: state.extra as SpecialityEntity),
         ),
         GoRoute(
           path: '/admin/doctor-staff/detail',

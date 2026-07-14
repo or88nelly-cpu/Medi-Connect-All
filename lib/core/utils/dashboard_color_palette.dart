@@ -8,16 +8,16 @@ class DashboardColorPalette {
   DashboardColorPalette._();
 
   static const List<Color> palette = [
-    AppColors.error,       // Red
-    AppColors.info,        // Blue
-    AppColors.success,     // Green
-    AppColors.purple,      // Purple
-    AppColors.teal,        // Teal
-    AppColors.orange,      // Orange
-    AppColors.warning,     // Amber/Yellow
-    AppColors.pink,        // Pink
+    AppColors.error, // Red
+    AppColors.info, // Blue
+    AppColors.success, // Green
+    AppColors.purple, // Purple
+    AppColors.teal, // Teal
+    AppColors.orange, // Orange
+    AppColors.warning, // Amber/Yellow
+    AppColors.pink, // Pink
     AppColors.adminPrimary, // Indigo/Violet
-    AppColors.blue,        // Bright blue
+    AppColors.blue, // Bright blue
   ];
 
   /// Returns a deterministic [Color] from the palette for a given [name].

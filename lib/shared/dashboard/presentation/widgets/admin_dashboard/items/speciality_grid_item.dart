@@ -39,13 +39,17 @@ class SpecialityGridItem extends StatelessWidget {
             border: Border.all(
               color: DashboardColorPalette.borderForName(speciality.name),
             ),
-            boxShadow: isDark ? null : [
-              BoxShadow(
-                color: DashboardColorPalette.shadowForName(speciality.name),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            boxShadow: isDark
+                ? null
+                : [
+                    BoxShadow(
+                      color: DashboardColorPalette.shadowForName(
+                        speciality.name,
+                      ),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -107,8 +111,8 @@ class _SpecialityIconCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 48.r,
-      height: 48.r,
+      width: 60.r,
+      height: 60.r,
       decoration: BoxDecoration(
         color: iconColor.withValues(alpha: isDark ? 0.15 : 0.10),
         shape: BoxShape.circle,
@@ -117,12 +121,12 @@ class _SpecialityIconCircle extends StatelessWidget {
         child: imagePath != null && imagePath!.isNotEmpty
             ? CustomImageView(
                 imagePath: imagePath!,
-                width: 28.r,
-                height: 28.r,
+                width: 34.r,
+                height: 34.r,
                 fit: BoxFit.contain,
                 color: iconColor,
               )
-            : Icon(fallbackIcon, color: iconColor, size: 26.sp),
+            : Icon(fallbackIcon, color: iconColor, size: 32.sp),
       ),
     );
   }

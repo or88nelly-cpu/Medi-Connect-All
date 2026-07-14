@@ -45,7 +45,11 @@ class _AdminRecentActivityState extends State<AdminRecentActivity> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.history, color: AppColors.adminPrimary, size: 24.sp),
+                  Icon(
+                    Icons.history,
+                    color: AppColors.adminPrimary,
+                    size: 24.sp,
+                  ),
                   SizedBox(width: 8.w),
                   Text(
                     AppStrings.recentActivity,
@@ -64,7 +68,8 @@ class _AdminRecentActivityState extends State<AdminRecentActivity> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      AppStrings.dashboard, // Temporarily using dashboard string for "View All"
+                      AppStrings
+                          .dashboard, // Temporarily using dashboard string for "View All"
                       style: AppTextStyles.labelMedium.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -97,12 +102,12 @@ class _AdminRecentActivityState extends State<AdminRecentActivity> {
 
                 Widget list = ListView.separated(
                   shrinkWrap: !widget.isExpanded,
-                  physics: widget.isExpanded ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+                  physics: widget.isExpanded
+                      ? const BouncingScrollPhysics()
+                      : const NeverScrollableScrollPhysics(),
                   itemCount: logs.length,
-                  separatorBuilder: (context, index) => Divider(
-                    height: 24.h,
-                    color: AppColors.border(context),
-                  ),
+                  separatorBuilder: (context, index) =>
+                      Divider(height: 24.h, color: AppColors.border(context)),
                   itemBuilder: (context, index) {
                     final log = logs[index];
                     return RecentActivityItem(log: log, isDark: isDark);

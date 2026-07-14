@@ -25,7 +25,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<DepartmentBloc>(context).add(const LoadDepartments());
-      BlocProvider.of<DashboardWidgetsBloc>(context).add(const LoadDashboardWidgets());
+      BlocProvider.of<DashboardWidgetsBloc>(
+        context,
+      ).add(const LoadDashboardWidgets());
     });
   }
 

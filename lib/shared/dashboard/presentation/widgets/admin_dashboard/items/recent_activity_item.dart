@@ -42,11 +42,7 @@ class RecentActivityItem extends StatelessWidget {
             color: color.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
-          child: Icon(
-            iconData,
-            color: color,
-            size: 20.sp,
-          ),
+          child: Icon(iconData, color: color, size: 20.sp),
         ),
         SizedBox(width: 16.w),
         Expanded(

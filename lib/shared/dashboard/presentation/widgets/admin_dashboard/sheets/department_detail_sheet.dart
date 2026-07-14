@@ -11,10 +11,7 @@ class DepartmentDetailSheet extends StatefulWidget {
 
   const DepartmentDetailSheet({super.key, required this.department});
 
-  static Future<void> show(
-    BuildContext context,
-    DepartmentEntity department,
-  ) {
+  static Future<void> show(BuildContext context, DepartmentEntity department) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -75,9 +72,16 @@ class _DepartmentDetailSheetState extends State<DepartmentDetailSheet> {
 
     // Derive card color
     const palette = [
-      Color(0xFFEF4444), Color(0xFF3B82F6), Color(0xFF22C55E),
-      Color(0xFFA855F7), Color(0xFF06B6D4), Color(0xFFF97316),
-      Color(0xFFEAB308), Color(0xFFEC4899), Color(0xFF8B5CF6), Color(0xFF14B8A6),
+      Color(0xFFEF4444),
+      Color(0xFF3B82F6),
+      Color(0xFF22C55E),
+      Color(0xFFA855F7),
+      Color(0xFF06B6D4),
+      Color(0xFFF97316),
+      Color(0xFFEAB308),
+      Color(0xFFEC4899),
+      Color(0xFF8B5CF6),
+      Color(0xFF14B8A6),
     ];
     int hash = 0;
     for (int i = 0; i < widget.department.name.length; i++) {
@@ -132,7 +136,8 @@ class _DepartmentDetailSheetState extends State<DepartmentDetailSheet> {
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: widget.department.imageUrl != null &&
+                    child:
+                        widget.department.imageUrl != null &&
                             widget.department.imageUrl!.isNotEmpty
                         ? CustomImageView(
                             imagePath: widget.department.imageUrl!,
@@ -141,7 +146,11 @@ class _DepartmentDetailSheetState extends State<DepartmentDetailSheet> {
                             color: iconColor,
                             fit: BoxFit.contain,
                           )
-                        : Icon(Icons.local_hospital, color: iconColor, size: 30.sp),
+                        : Icon(
+                            Icons.local_hospital,
+                            color: iconColor,
+                            size: 30.sp,
+                          ),
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -162,8 +171,9 @@ class _DepartmentDetailSheetState extends State<DepartmentDetailSheet> {
                         Text(
                           widget.department.description!,
                           style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.dashboardTextPrimary(context)
-                                .withValues(alpha: 0.6),
+                            color: AppColors.dashboardTextPrimary(
+                              context,
+                            ).withValues(alpha: 0.6),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -171,7 +181,10 @@ class _DepartmentDetailSheetState extends State<DepartmentDetailSheet> {
                       ],
                       SizedBox(height: 8.h),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 3.h,
+                        ),
                         decoration: BoxDecoration(
                           color: widget.department.consultation
                               ? Colors.blue.withValues(alpha: 0.12)
@@ -214,7 +227,10 @@ class _DepartmentDetailSheetState extends State<DepartmentDetailSheet> {
                 const Spacer(),
                 if (!_loading)
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 2.h,
+                    ),
                     decoration: BoxDecoration(
                       color: iconColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20.r),
@@ -235,119 +251,130 @@ class _DepartmentDetailSheetState extends State<DepartmentDetailSheet> {
           // Staff List
           Expanded(
             child: _loading
-                ? Center(
-                    child: CircularProgressIndicator(color: iconColor),
-                  )
+                ? Center(child: CircularProgressIndicator(color: iconColor))
                 : _error != null
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.cloud_off_outlined,
-                                size: 40.sp, color: Colors.grey),
-                            SizedBox(height: 8.h),
-                            Text(_error!,
-                                style: AppTextStyles.labelMedium
-                                    .copyWith(color: Colors.grey)),
-                          ],
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.cloud_off_outlined,
+                          size: 40.sp,
+                          color: Colors.grey,
                         ),
-                      )
-                    : _staff.isEmpty
-                        ? Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.person_off_outlined,
-                                    size: 48.sp, color: Colors.grey),
-                                SizedBox(height: 8.h),
-                                Text('No staff assigned yet',
-                                    style: AppTextStyles.labelMedium
-                                        .copyWith(color: Colors.grey)),
-                              ],
-                            ),
-                          )
-                        : ListView.separated(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            itemCount: _staff.length,
-                            separatorBuilder: (_, __) => Divider(
-                              height: 1,
-                              color: isDark ? Colors.white10 : Colors.black12,
-                            ),
-                            itemBuilder: (context, index) {
-                              final emp = _staff[index];
-                              final user = emp['users'] as Map<String, dynamic>?;
-                              final firstName =
-                                  (user?['first_name'] as String? ?? '').trim();
-                              final lastName =
-                                  (user?['last_name'] as String? ?? '').trim();
-                              final name = [firstName, lastName]
-                                  .where((s) => s.isNotEmpty)
-                                  .join(' ');
-                              final photo = user?['profile_photo'] as String?;
-                              final role = user?['role'] as String? ?? 'Staff';
-                              final status =
-                                  emp['status'] as String? ?? 'active';
-
-                              return ListTile(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 6.h, horizontal: 0),
-                                leading: CircleAvatar(
-                                  radius: 22.r,
-                                  backgroundColor:
-                                      iconColor.withValues(alpha: 0.1),
-                                  backgroundImage:
-                                      photo != null && photo.isNotEmpty
-                                          ? NetworkImage(photo)
-                                          : null,
-                                  child: photo == null || photo.isEmpty
-                                      ? Text(
-                                          name.isNotEmpty
-                                              ? name[0].toUpperCase()
-                                              : '?',
-                                          style: TextStyle(
-                                            color: iconColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16.sp,
-                                          ),
-                                        )
-                                      : null,
-                                ),
-                                title: Text(
-                                  name.isNotEmpty ? name : 'Unknown',
-                                  style: AppTextStyles.labelMedium.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.dashboardTextPrimary(context),
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  role,
-                                  style: AppTextStyles.labelSmall.copyWith(
-                                    color: AppColors.dashboardTextPrimary(context)
-                                        .withValues(alpha: 0.5),
-                                  ),
-                                ),
-                                trailing: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 8.w, vertical: 3.h),
-                                  decoration: BoxDecoration(
-                                    color: status == 'active'
-                                        ? Colors.green.withValues(alpha: 0.12)
-                                        : Colors.red.withValues(alpha: 0.12),
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                  child: Text(
-                                    status.capitalize(),
-                                    style: AppTextStyles.labelSmall.copyWith(
-                                      color: status == 'active'
-                                          ? Colors.green
-                                          : Colors.red,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                        SizedBox(height: 8.h),
+                        Text(
+                          _error!,
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: Colors.grey,
                           ),
+                        ),
+                      ],
+                    ),
+                  )
+                : _staff.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.person_off_outlined,
+                          size: 48.sp,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          'No staff assigned yet',
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.separated(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    itemCount: _staff.length,
+                    separatorBuilder: (_, __) => Divider(
+                      height: 1,
+                      color: isDark ? Colors.white10 : Colors.black12,
+                    ),
+                    itemBuilder: (context, index) {
+                      final emp = _staff[index];
+                      final user = emp['users'] as Map<String, dynamic>?;
+                      final firstName = (user?['first_name'] as String? ?? '')
+                          .trim();
+                      final lastName = (user?['last_name'] as String? ?? '')
+                          .trim();
+                      final name = [
+                        firstName,
+                        lastName,
+                      ].where((s) => s.isNotEmpty).join(' ');
+                      final photo = user?['profile_photo'] as String?;
+                      final role = user?['role'] as String? ?? 'Staff';
+                      final status = emp['status'] as String? ?? 'active';
+
+                      return ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 6.h,
+                          horizontal: 0,
+                        ),
+                        leading: CircleAvatar(
+                          radius: 22.r,
+                          backgroundColor: iconColor.withValues(alpha: 0.1),
+                          backgroundImage: photo != null && photo.isNotEmpty
+                              ? NetworkImage(photo)
+                              : null,
+                          child: photo == null || photo.isEmpty
+                              ? Text(
+                                  name.isNotEmpty ? name[0].toUpperCase() : '?',
+                                  style: TextStyle(
+                                    color: iconColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sp,
+                                  ),
+                                )
+                              : null,
+                        ),
+                        title: Text(
+                          name.isNotEmpty ? name : 'Unknown',
+                          style: AppTextStyles.labelMedium.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.dashboardTextPrimary(context),
+                          ),
+                        ),
+                        subtitle: Text(
+                          role,
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: AppColors.dashboardTextPrimary(
+                              context,
+                            ).withValues(alpha: 0.5),
+                          ),
+                        ),
+                        trailing: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 3.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: status == 'active'
+                                ? Colors.green.withValues(alpha: 0.12)
+                                : Colors.red.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Text(
+                            status.capitalize(),
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: status == 'active'
+                                  ? Colors.green
+                                  : Colors.red,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
           ),
         ],
       ),

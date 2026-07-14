@@ -11,7 +11,8 @@ class DashboardRepositoryImpl implements DashboardRepository {
   DashboardRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, List<DashboardWidgetModel>>> getDashboardWidgets() async {
+  Future<Either<Failure, List<DashboardWidgetModel>>>
+  getDashboardWidgets() async {
     try {
       final widgets = await remoteDataSource.getDashboardWidgets();
       return right(widgets);

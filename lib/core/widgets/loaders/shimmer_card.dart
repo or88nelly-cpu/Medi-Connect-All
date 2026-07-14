@@ -20,8 +20,12 @@ class ShimmerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = isDark ? const Color(0xFF2A2A2A) : const Color(0xFFE5E7EB);
-    final highlightColor = isDark ? const Color(0xFF3A3A3A) : const Color(0xFFF3F4F6);
+    final baseColor = isDark
+        ? const Color(0xFF2A2A2A)
+        : const Color(0xFFE5E7EB);
+    final highlightColor = isDark
+        ? const Color(0xFF3A3A3A)
+        : const Color(0xFFF3F4F6);
 
     return Shimmer.fromColors(
       baseColor: baseColor,
@@ -46,8 +50,12 @@ class ShimmerGridCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = isDark ? const Color(0xFF2A2A2A) : const Color(0xFFE5E7EB);
-    final highlightColor = isDark ? const Color(0xFF3A3A3A) : const Color(0xFFF3F4F6);
+    final baseColor = isDark
+        ? const Color(0xFF2A2A2A)
+        : const Color(0xFFE5E7EB);
+    final highlightColor = isDark
+        ? const Color(0xFF3A3A3A)
+        : const Color(0xFFF3F4F6);
 
     return Shimmer.fromColors(
       baseColor: baseColor,
@@ -101,8 +109,12 @@ class ShimmerManagementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = isDark ? const Color(0xFF2A2A2A) : const Color(0xFFE5E7EB);
-    final highlightColor = isDark ? const Color(0xFF3A3A3A) : const Color(0xFFF3F4F6);
+    final baseColor = isDark
+        ? const Color(0xFF2A2A2A)
+        : const Color(0xFFE5E7EB);
+    final highlightColor = isDark
+        ? const Color(0xFF3A3A3A)
+        : const Color(0xFFF3F4F6);
 
     return Shimmer.fromColors(
       baseColor: baseColor,

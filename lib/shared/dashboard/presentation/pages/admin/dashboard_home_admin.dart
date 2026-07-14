@@ -24,7 +24,7 @@ class DashboardHomeAdmin extends StatelessWidget {
           },
         ),
         SizedBox(height: 16.h),
-        
+
         if (isDesktop) ...[
           const AdminDepartmentsGrid(),
           SizedBox(height: 16.h),
@@ -45,9 +45,15 @@ class DashboardHomeAdmin extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Expanded(flex: 2, child: AdminQuickActionsGrid(isExpanded: true)),
+                const Expanded(
+                  flex: 2,
+                  child: AdminQuickActionsGrid(isExpanded: true),
+                ),
                 SizedBox(width: 16.w),
-                const Expanded(flex: 3, child: AdminRecentActivity(isExpanded: true)),
+                const Expanded(
+                  flex: 3,
+                  child: AdminRecentActivity(isExpanded: true),
+                ),
               ],
             ),
           )
@@ -59,7 +65,7 @@ class DashboardHomeAdmin extends StatelessWidget {
               AdminRecentActivity(),
             ],
           ),
-          
+
         if (!isDesktop) SizedBox(height: 40.h),
       ],
     );

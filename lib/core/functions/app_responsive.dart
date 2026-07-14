@@ -40,7 +40,8 @@ class AppResponsive {
   static Size getDesignSize(BuildContext context) {
     // Avoid using MediaQuery.of(context) here because getDesignSize is called
     // before MaterialApp is initialized, which causes an assertion error.
-    final view = View.maybeOf(context) ?? PlatformDispatcher.instance.views.first;
+    final view =
+        View.maybeOf(context) ?? PlatformDispatcher.instance.views.first;
     final width = view.physicalSize.width / view.devicePixelRatio;
 
     if (width >= 1200) {

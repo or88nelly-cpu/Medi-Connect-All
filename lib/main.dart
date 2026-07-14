@@ -10,6 +10,7 @@ import 'package:medi_connect/core/theme/theme_cubit.dart';
 
 import 'package:medi_connect/bootstrap/app_initializer.dart';
 import 'package:medi_connect/bootstrap/dependency_injection.dart';
+import 'package:medi_connect/core/widgets/error/custom_error_widget.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
@@ -27,6 +28,9 @@ void main() async {
     },
     appRunner: () async {
       await AppInitializer.init();
+      ErrorWidget.builder = (FlutterErrorDetails details) {
+        return CustomErrorWidget(errorDetails: details);
+      };
       runApp(SentryWidget(child: const MyApp()));
     },
   );

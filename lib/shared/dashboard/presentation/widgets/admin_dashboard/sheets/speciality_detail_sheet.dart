@@ -11,10 +11,7 @@ class SpecialityDetailSheet extends StatefulWidget {
 
   const SpecialityDetailSheet({super.key, required this.speciality});
 
-  static Future<void> show(
-    BuildContext context,
-    SpecialityEntity speciality,
-  ) {
+  static Future<void> show(BuildContext context, SpecialityEntity speciality) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -73,9 +70,16 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
     final screenH = MediaQuery.of(context).size.height;
 
     const palette = [
-      Color(0xFFEF4444), Color(0xFFA855F7), Color(0xFF3B82F6),
-      Color(0xFFEC4899), Color(0xFF14B8A6), Color(0xFFEAB308),
-      Color(0xFF22C55E), Color(0xFF06B6D4), Color(0xFFF97316), Color(0xFF8B5CF6),
+      Color(0xFFEF4444),
+      Color(0xFFA855F7),
+      Color(0xFF3B82F6),
+      Color(0xFFEC4899),
+      Color(0xFF14B8A6),
+      Color(0xFFEAB308),
+      Color(0xFF22C55E),
+      Color(0xFF06B6D4),
+      Color(0xFFF97316),
+      Color(0xFF8B5CF6),
     ];
     int hash = 0;
     for (int i = 0; i < widget.speciality.name.length; i++) {
@@ -130,7 +134,8 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: widget.speciality.imageUrl != null &&
+                    child:
+                        widget.speciality.imageUrl != null &&
                             widget.speciality.imageUrl!.isNotEmpty
                         ? CustomImageView(
                             imagePath: widget.speciality.imageUrl!,
@@ -139,7 +144,11 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
                             color: iconColor,
                             fit: BoxFit.contain,
                           )
-                        : Icon(Icons.medical_services, color: iconColor, size: 30.sp),
+                        : Icon(
+                            Icons.medical_services,
+                            color: iconColor,
+                            size: 30.sp,
+                          ),
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -160,8 +169,9 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
                         Text(
                           widget.speciality.description!,
                           style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.dashboardTextPrimary(context)
-                                .withValues(alpha: 0.6),
+                            color: AppColors.dashboardTextPrimary(
+                              context,
+                            ).withValues(alpha: 0.6),
                           ),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
@@ -172,17 +182,16 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
                         spacing: 6.w,
                         children: [
                           if (widget.speciality.isSurgical)
-                            _Chip(
-                              label: 'Surgical',
-                              color: Colors.red,
-                            ),
+                            _Chip(label: 'Surgical', color: Colors.red),
                           _Chip(
-                            label: '${widget.speciality.consultationDuration} min',
+                            label:
+                                '${widget.speciality.consultationDuration} min',
                             color: iconColor,
                           ),
                           if (widget.speciality.defaultConsultationFee != null)
                             _Chip(
-                              label: '₹${widget.speciality.defaultConsultationFee!.toStringAsFixed(0)}',
+                              label:
+                                  '₹${widget.speciality.defaultConsultationFee!.toStringAsFixed(0)}',
                               color: Colors.green,
                             ),
                         ],
@@ -199,7 +208,11 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Row(
               children: [
-                Icon(Icons.person_search_outlined, size: 18.sp, color: iconColor),
+                Icon(
+                  Icons.person_search_outlined,
+                  size: 18.sp,
+                  color: iconColor,
+                ),
                 SizedBox(width: 8.w),
                 Text(
                   'Available Doctors',
@@ -211,7 +224,10 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
                 const Spacer(),
                 if (!_loading)
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.w,
+                      vertical: 2.h,
+                    ),
                     decoration: BoxDecoration(
                       color: iconColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20.r),
@@ -234,103 +250,133 @@ class _SpecialityDetailSheetState extends State<SpecialityDetailSheet> {
             child: _loading
                 ? Center(child: CircularProgressIndicator(color: iconColor))
                 : _error != null
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.cloud_off_outlined, size: 40.sp, color: Colors.grey),
-                            SizedBox(height: 8.h),
-                            Text(_error!, style: AppTextStyles.labelMedium.copyWith(color: Colors.grey)),
-                          ],
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.cloud_off_outlined,
+                          size: 40.sp,
+                          color: Colors.grey,
                         ),
-                      )
-                    : _doctors.isEmpty
-                        ? Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.person_off_outlined, size: 48.sp, color: Colors.grey),
-                                SizedBox(height: 8.h),
-                                Text('No doctors assigned yet',
-                                    style: AppTextStyles.labelMedium.copyWith(color: Colors.grey)),
-                              ],
-                            ),
-                          )
-                        : ListView.separated(
-                            padding: EdgeInsets.symmetric(horizontal: 20.w),
-                            itemCount: _doctors.length,
-                            separatorBuilder: (_, __) => Divider(
-                              height: 1,
-                              color: isDark ? Colors.white10 : Colors.black12,
-                            ),
-                            itemBuilder: (context, index) {
-                              final doc = _doctors[index];
-                              final emp = doc['employees'] as Map<String, dynamic>?;
-                              final user = emp?['users'] as Map<String, dynamic>?;
-                              final firstName = (user?['first_name'] as String? ?? '').trim();
-                              final lastName = (user?['last_name'] as String? ?? '').trim();
-                              final name = [firstName, lastName].where((s) => s.isNotEmpty).join(' ');
-                              final photo = user?['profile_photo'] as String?;
-                              final qualification = doc['qualification'] as String?;
-                              final expYears = doc['experience_years'] as int? ?? 0;
-                              final fee = (doc['consultation_fee'] as num?)?.toDouble() ?? 0;
-                              final isAvailable = doc['is_available'] as bool? ?? false;
-
-                              return ListTile(
-                                contentPadding: EdgeInsets.symmetric(vertical: 6.h),
-                                leading: CircleAvatar(
-                                  radius: 22.r,
-                                  backgroundColor: iconColor.withValues(alpha: 0.1),
-                                  backgroundImage: photo != null && photo.isNotEmpty
-                                      ? NetworkImage(photo)
-                                      : null,
-                                  child: photo == null || photo.isEmpty
-                                      ? Text(
-                                          name.isNotEmpty ? name[0].toUpperCase() : 'D',
-                                          style: TextStyle(
-                                            color: iconColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16.sp,
-                                          ),
-                                        )
-                                      : null,
-                                ),
-                                title: Text(
-                                  name.isNotEmpty ? 'Dr. $name' : 'Unknown',
-                                  style: AppTextStyles.labelMedium.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.dashboardTextPrimary(context),
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  [
-                                    if (qualification != null && qualification.isNotEmpty) qualification,
-                                    if (expYears > 0) '$expYears yrs exp',
-                                    'Fee: ₹${fee.toStringAsFixed(0)}',
-                                  ].join(' • '),
-                                  style: AppTextStyles.labelSmall.copyWith(
-                                    color: AppColors.dashboardTextPrimary(context).withValues(alpha: 0.5),
-                                  ),
-                                ),
-                                trailing: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-                                  decoration: BoxDecoration(
-                                    color: isAvailable
-                                        ? Colors.green.withValues(alpha: 0.12)
-                                        : Colors.orange.withValues(alpha: 0.12),
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                  child: Text(
-                                    isAvailable ? 'Available' : 'Busy',
-                                    style: AppTextStyles.labelSmall.copyWith(
-                                      color: isAvailable ? Colors.green : Colors.orange,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                        SizedBox(height: 8.h),
+                        Text(
+                          _error!,
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: Colors.grey,
                           ),
+                        ),
+                      ],
+                    ),
+                  )
+                : _doctors.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.person_off_outlined,
+                          size: 48.sp,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          'No doctors assigned yet',
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.separated(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    itemCount: _doctors.length,
+                    separatorBuilder: (_, __) => Divider(
+                      height: 1,
+                      color: isDark ? Colors.white10 : Colors.black12,
+                    ),
+                    itemBuilder: (context, index) {
+                      final doc = _doctors[index];
+                      final emp = doc['employees'] as Map<String, dynamic>?;
+                      final user = emp?['users'] as Map<String, dynamic>?;
+                      final firstName = (user?['first_name'] as String? ?? '')
+                          .trim();
+                      final lastName = (user?['last_name'] as String? ?? '')
+                          .trim();
+                      final name = [
+                        firstName,
+                        lastName,
+                      ].where((s) => s.isNotEmpty).join(' ');
+                      final photo = user?['profile_photo'] as String?;
+                      final qualification = doc['qualification'] as String?;
+                      final expYears = doc['experience_years'] as int? ?? 0;
+                      final fee =
+                          (doc['consultation_fee'] as num?)?.toDouble() ?? 0;
+                      final isAvailable = doc['is_available'] as bool? ?? false;
+
+                      return ListTile(
+                        contentPadding: EdgeInsets.symmetric(vertical: 6.h),
+                        leading: CircleAvatar(
+                          radius: 22.r,
+                          backgroundColor: iconColor.withValues(alpha: 0.1),
+                          backgroundImage: photo != null && photo.isNotEmpty
+                              ? NetworkImage(photo)
+                              : null,
+                          child: photo == null || photo.isEmpty
+                              ? Text(
+                                  name.isNotEmpty ? name[0].toUpperCase() : 'D',
+                                  style: TextStyle(
+                                    color: iconColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sp,
+                                  ),
+                                )
+                              : null,
+                        ),
+                        title: Text(
+                          name.isNotEmpty ? 'Dr. $name' : 'Unknown',
+                          style: AppTextStyles.labelMedium.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.dashboardTextPrimary(context),
+                          ),
+                        ),
+                        subtitle: Text(
+                          [
+                            if (qualification != null &&
+                                qualification.isNotEmpty)
+                              qualification,
+                            if (expYears > 0) '$expYears yrs exp',
+                            'Fee: ₹${fee.toStringAsFixed(0)}',
+                          ].join(' • '),
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: AppColors.dashboardTextPrimary(
+                              context,
+                            ).withValues(alpha: 0.5),
+                          ),
+                        ),
+                        trailing: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 3.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: isAvailable
+                                ? Colors.green.withValues(alpha: 0.12)
+                                : Colors.orange.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Text(
+                            isAvailable ? 'Available' : 'Busy',
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: isAvailable ? Colors.green : Colors.orange,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
           ),
         ],
       ),

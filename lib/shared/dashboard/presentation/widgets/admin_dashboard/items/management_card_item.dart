@@ -38,21 +38,25 @@ class ManagementCardItem extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.card(context),
             borderRadius: BorderRadius.circular(14.r),
-            border: Border.all(
-              color: accentColor.withValues(alpha: 0.15),
-            ),
-            boxShadow: isDark ? null : [
-              BoxShadow(
-                color: accentColor.withValues(alpha: 0.07),
-                blurRadius: 10,
-                offset: const Offset(0, 3),
-              ),
-            ],
+            border: Border.all(color: accentColor.withValues(alpha: 0.15)),
+            boxShadow: isDark
+                ? null
+                : [
+                    BoxShadow(
+                      color: accentColor.withValues(alpha: 0.07),
+                      blurRadius: 10,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _ManagementIconCircle(iconData: iconData, accentColor: accentColor, isDark: isDark),
+              _ManagementIconCircle(
+                iconData: iconData,
+                accentColor: accentColor,
+                isDark: isDark,
+              ),
               SizedBox(width: 12.w),
               Expanded(
                 child: _ManagementCardText(

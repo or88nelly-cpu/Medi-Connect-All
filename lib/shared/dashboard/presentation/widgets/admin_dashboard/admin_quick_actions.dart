@@ -29,7 +29,8 @@ class _AdminQuickActionsGridState extends State<AdminQuickActionsGrid> {
       title: "Add\nDoctor",
       icon: Icons.medical_services,
       color: Color(0xFF0F6FFF), // Blue
-      route: '/admin/doctor-staff/create', // TODO: Pass correct params if needed, or route to staff page
+      route:
+          '/admin/doctor-staff/create', // TODO: Pass correct params if needed, or route to staff page
     ),
     QuickActionData(
       title: "Add\nEmployee",
@@ -106,12 +107,15 @@ class _AdminQuickActionsGridState extends State<AdminQuickActionsGrid> {
             builder: (context) {
               Widget grid = GridView.builder(
                 shrinkWrap: !widget.isExpanded,
-                physics: widget.isExpanded ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
+                physics: widget.isExpanded
+                    ? const BouncingScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 8,
                   crossAxisSpacing: 12.w,
                   mainAxisSpacing: 16.h,
-                  childAspectRatio: 0.9, // Changed from 0.75 to 0.9 to make them shorter and prevent clipping
+                  childAspectRatio:
+                      0.9, // Changed from 0.75 to 0.9 to make them shorter and prevent clipping
                 ),
                 itemCount: quickActions.length,
                 itemBuilder: (context, index) {
@@ -142,7 +146,7 @@ class _AdminQuickActionsGridState extends State<AdminQuickActionsGrid> {
                   );
                 },
               );
-              
+
               Widget content = Column(
                 children: [
                   if (widget.isExpanded) Expanded(child: grid) else grid,
@@ -153,11 +157,24 @@ class _AdminQuickActionsGridState extends State<AdminQuickActionsGrid> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.keyboard_arrow_down, size: 16.sp, color: AppColors.textSecondary(context)),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 16.sp,
+                            color: AppColors.textSecondary(context),
+                          ),
                           SizedBox(width: 4.w),
-                          Text("More Actions", style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondary(context))),
+                          Text(
+                            "More Actions",
+                            style: AppTextStyles.labelMedium.copyWith(
+                              color: AppColors.textSecondary(context),
+                            ),
+                          ),
                           SizedBox(width: 4.w),
-                          Icon(Icons.arrow_forward, size: 16.sp, color: AppColors.textSecondary(context)),
+                          Icon(
+                            Icons.arrow_forward,
+                            size: 16.sp,
+                            color: AppColors.textSecondary(context),
+                          ),
                         ],
                       ),
                     ),
@@ -170,8 +187,8 @@ class _AdminQuickActionsGridState extends State<AdminQuickActionsGrid> {
               } else {
                 return content;
               }
-            }
-          )
+            },
+          ),
         ],
       ),
     );

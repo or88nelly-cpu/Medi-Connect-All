@@ -23,13 +23,15 @@ class AdminManagementCards extends StatelessWidget {
         color: AppColors.card(context),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.border(context)),
-        boxShadow: isDark ? null : [
-          BoxShadow(
-            color: AppColors.shadow(context),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: AppColors.shadow(context),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

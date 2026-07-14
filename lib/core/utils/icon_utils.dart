@@ -30,7 +30,7 @@ class IconUtils {
         return Icons.science;
       case 'inventory':
         return Icons.inventory;
-      
+
       // Fallback
       default:
         return Icons.widgets;

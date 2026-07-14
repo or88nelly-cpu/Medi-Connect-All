@@ -3,10 +3,12 @@ import 'package:medi_connect/shared/dashboard/domain/use_cases/get_dashboard_wid
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_event.dart';
 import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_widgets_state.dart';
 
-class DashboardWidgetsBloc extends Bloc<DashboardWidgetsEvent, DashboardWidgetsState> {
+class DashboardWidgetsBloc
+    extends Bloc<DashboardWidgetsEvent, DashboardWidgetsState> {
   final GetDashboardWidgetsUseCase getDashboardWidgetsUseCase;
 
-  DashboardWidgetsBloc({required this.getDashboardWidgetsUseCase}) : super(DashboardWidgetsInitial()) {
+  DashboardWidgetsBloc({required this.getDashboardWidgetsUseCase})
+    : super(DashboardWidgetsInitial()) {
     on<LoadDashboardWidgets>(_onLoadDashboardWidgets);
   }
 
@@ -18,21 +20,20 @@ class DashboardWidgetsBloc extends Bloc<DashboardWidgetsEvent, DashboardWidgetsS
 
     final result = await getDashboardWidgetsUseCase();
 
-    result.fold(
-      (failure) => emit(DashboardWidgetsError(failure)),
-      (widgets) {
-        final managementCards = widgets
-            .where((w) => w.widgetType == 'MANAGEMENT_CARD')
-            .toList();
-        final quickActions = widgets
-            .where((w) => w.widgetType == 'QUICK_ACTION')
-            .toList();
+    result.fold((failure) => emit(DashboardWidgetsError(failure)), (widgets) {
+      final managementCards = widgets
+          .where((w) => w.widgetType == 'MANAGEMENT_CARD')
+          .toList();
+      final quickActions = widgets
+          .where((w) => w.widgetType == 'QUICK_ACTION')
+          .toList();
 
-        emit(DashboardWidgetsLoaded(
+      emit(
+        DashboardWidgetsLoaded(
           managementCards: managementCards,
           quickActions: quickActions,
-        ));
-      },
-    );
+        ),
+      );
+    });
   }
 }

@@ -8,7 +8,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/loaders/shimmer_card.dart';
 import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/items/speciality_grid_item.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_dashboard/sheets/speciality_detail_sheet.dart';
+import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
 
 class AdminSpecialitiesGrid extends StatefulWidget {
   final bool isExpanded;
@@ -55,13 +55,15 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
         border: Border.all(
           color: isDark ? Colors.white10 : const Color(0xFFE8ECF4),
         ),
-        boxShadow: isDark ? null : [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,8 +80,11 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
                       color: const Color(0xFF8B5CF6).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
-                    child: Icon(Icons.medical_services_outlined,
-                        color: const Color(0xFF8B5CF6), size: 18.sp),
+                    child: Icon(
+                      Icons.medical_services_outlined,
+                      color: const Color(0xFF8B5CF6),
+                      size: 18.sp,
+                    ),
                   ),
                   SizedBox(width: 10.w),
                   Text(
@@ -93,8 +98,11 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
               ),
               TextButton.icon(
                 onPressed: () => context.push(RouteNames.adminSpecialities),
-                icon: Icon(Icons.arrow_forward_ios_rounded,
-                    size: 12.sp, color: AppColors.primary),
+                icon: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 12.sp,
+                  color: AppColors.primary,
+                ),
                 label: Text(
                   'View All',
                   style: AppTextStyles.labelMedium.copyWith(
@@ -120,8 +128,9 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
                     padding: EdgeInsets.all(16.r),
                     child: Text(
                       state.failure.message,
-                      style: AppTextStyles.labelMedium
-                          .copyWith(color: Colors.red.shade400),
+                      style: AppTextStyles.labelMedium.copyWith(
+                        color: Colors.red.shade400,
+                      ),
                     ),
                   ),
                 );
@@ -141,13 +150,17 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.medical_services_outlined,
-                            size: 40.sp, color: Colors.grey.shade400),
+                        Icon(
+                          Icons.medical_services_outlined,
+                          size: 40.sp,
+                          color: Colors.grey.shade400,
+                        ),
                         SizedBox(height: 8.h),
                         Text(
                           'No Specialities Found',
-                          style: AppTextStyles.labelMedium
-                              .copyWith(color: Colors.grey),
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: Colors.grey,
+                          ),
                         ),
                       ],
                     ),
@@ -169,7 +182,7 @@ class _AdminSpecialitiesGridState extends State<AdminSpecialitiesGrid> {
                   final sp = specialities[index];
                   return SpecialityGridItem(
                     speciality: sp,
-                    onTap: () => SpecialityDetailSheet.show(context, sp),
+                    onTap: () => context.push('/specialityDetail', extra: sp),
                   );
                 },
               );
