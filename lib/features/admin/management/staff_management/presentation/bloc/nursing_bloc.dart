@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/usecases/get_nursing_stats_usecase.dart';
 
@@ -38,6 +39,7 @@ class NursingError extends NursingState {
 }
 
 // BLOC
+@injectable
 class NursingBloc extends Bloc<NursingEvent, NursingState> {
   final GetNursingStatsUseCase _useCase;
 

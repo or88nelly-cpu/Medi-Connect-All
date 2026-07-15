@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/features/admin/management/report_management/domain/usecases/get_management_information_system_stats_usecase.dart';
 
@@ -43,6 +44,7 @@ class ManagementInformationSystemError
 }
 
 // BLOC
+@injectable
 class ManagementInformationSystemBloc
     extends
         Bloc<

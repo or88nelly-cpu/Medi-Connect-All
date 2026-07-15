@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class DyalisisRemoteDataSource {
   Future<Map<String, dynamic>> getDyalisisStats();
 }
 
+@LazySingleton(as: DyalisisRemoteDataSource)
 class DyalisisRemoteDataSourceImpl implements DyalisisRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getDyalisisStats() async {

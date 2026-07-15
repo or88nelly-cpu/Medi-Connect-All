@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/staff_management/data/datasource/department_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/entities/department_entity.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/repositories/department_repository.dart';
 
+@LazySingleton(as: DepartmentRepository)
 class DepartmentRepositoryImpl implements DepartmentRepository {
   final DepartmentRemoteDataSource _dataSource;
 

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/functions/profile_image_helper.dart';
+import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/widgets/role_drawers.dart';
 import 'package:medi_connect/features/staff/operations/staff_operations_page.dart';
 
 class StaffDashboardPage extends StatefulWidget {

@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/room_management/data/datasource/operation_theatre_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/room_management/domain/repositories/operation_theatre_repository.dart';
 
+@LazySingleton(as: OperationTheatreRepository)
 class OperationTheatreRepositoryImpl implements OperationTheatreRepository {
   final OperationTheatreRemoteDataSource _remoteDataSource;
   OperationTheatreRepositoryImpl(this._remoteDataSource);

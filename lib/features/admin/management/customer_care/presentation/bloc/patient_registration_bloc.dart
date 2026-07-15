@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/features/admin/management/patient_management/domain/repositories/patient_repository.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_event.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_state.dart';
+import 'package:medi_connect/features/admin/management/patient_management/domain/repositories/patient_repository.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 
+@injectable
 class PatientRegistrationBloc
     extends Bloc<PatientRegistrationEvent, PatientRegistrationState> {
   static const int _totalSteps = 3;

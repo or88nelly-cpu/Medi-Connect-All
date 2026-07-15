@@ -1,8 +1,10 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:medi_connect/core/models/failure.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
+import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/report_management/domain/repositories/management_information_system_repository.dart';
 
+@lazySingleton
 class GetManagementInformationSystemStatsUseCase
     extends UseCase<Map<String, dynamic>, NoParams> {
   final ManagementInformationSystemRepository _repository;

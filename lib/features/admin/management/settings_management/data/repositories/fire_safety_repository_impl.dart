@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/settings_management/data/datasource/fire_safety_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/settings_management/domain/repositories/fire_safety_repository.dart';
 
+@LazySingleton(as: FireSafetyRepository)
 class FireSafetyRepositoryImpl implements FireSafetyRepository {
   final FireSafetyRemoteDataSource _remoteDataSource;
   FireSafetyRepositoryImpl(this._remoteDataSource);

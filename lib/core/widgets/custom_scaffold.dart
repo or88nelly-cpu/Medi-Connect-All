@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
-
 import 'package:medi_connect/core/widgets/scaffold/background_wrapper.dart';
 
 class CustomScaffold extends StatelessWidget {

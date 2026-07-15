@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
+import 'package:medi_connect/core/network/supabase_service.dart';
 
 abstract class EmrdRemoteDataSource {
   Future<Map<String, dynamic>> getEmrdStats();
   Future<List<Map<String, dynamic>>> getEmrRecords();
 }
 
+@LazySingleton(as: EmrdRemoteDataSource)
 class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getEmrdStats() async {

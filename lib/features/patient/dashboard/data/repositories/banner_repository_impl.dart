@@ -1,12 +1,14 @@
 import 'dart:developer' as developer;
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
+import 'package:medi_connect/core/constants/app_table_names.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/core/constants/app_table_names.dart';
 import 'package:medi_connect/features/patient/dashboard/data/models/banner_model.dart';
 import 'package:medi_connect/features/patient/dashboard/domain/entities/banner_entity.dart';
 import 'package:medi_connect/features/patient/dashboard/domain/repositories/banner_repository.dart';
 
+@LazySingleton(as: BannerRepository)
 class BannerRepositoryImpl implements BannerRepository {
   final SupabaseService _supabase;
 

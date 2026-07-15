@@ -1,20 +1,20 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:medi_connect/core/functions/date_utils.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/functions/profile_image_helper.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
-import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_patients/patient_card.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/qr_scanner_overlay.dart';
-import 'package:medi_connect/core/functions/date_utils.dart';
-import 'package:intl/intl.dart';
-import 'dart:convert';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
+import 'package:medi_connect/features/common/dashboard/domain/entities/appointment_entity.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/widgets/admin_patients/patient_card.dart';
 
 class PatientSearchPage extends StatefulWidget {
   const PatientSearchPage({super.key});

@@ -1,7 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
-
 import 'package:medi_connect/core/network/supabase_service.dart';
 
+@lazySingleton
 class UniqueIdService {
   final SupabaseService _supabase;
 

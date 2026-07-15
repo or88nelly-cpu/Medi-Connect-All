@@ -1,10 +1,12 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/admin/management/patient_management/data/datasource/patient_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/patient_management/domain/repositories/patient_repository.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 
+@LazySingleton(as: PatientRepository)
 class PatientRepositoryImpl implements PatientRepository {
   final PatientRemoteDataSource _remoteDataSource;
   PatientRepositoryImpl(this._remoteDataSource);

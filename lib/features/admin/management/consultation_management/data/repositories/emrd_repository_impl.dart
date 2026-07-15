@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/data/datasource/emrd_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/domain/repositories/emrd_repository.dart';
 
+@LazySingleton(as: EmrdRepository)
 class EmrdRepositoryImpl implements EmrdRepository {
   final EmrdRemoteDataSource _remoteDataSource;
   EmrdRepositoryImpl(this._remoteDataSource);

@@ -1,9 +1,11 @@
+import 'package:injectable/injectable.dart';
+import 'package:medi_connect/features/authentication/data/models/doctor_model.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/patient/booking/data/datasources/booking_remote_datasource.dart';
-import 'package:medi_connect/features/patient/booking/domain/repositories/booking_repository.dart';
 import 'package:medi_connect/features/patient/booking/domain/entities/doctor_booking_info.dart';
-import 'package:medi_connect/shared/auth/data/models/doctor_model.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/patient/booking/domain/repositories/booking_repository.dart';
 
+@LazySingleton(as: BookingRepository)
 class BookingRepositoryImpl implements BookingRepository {
   final BookingRemoteDataSource _remoteDataSource;
 

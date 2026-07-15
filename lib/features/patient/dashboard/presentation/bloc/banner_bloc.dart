@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/features/patient/dashboard/domain/entities/banner_entity.dart';
 import 'package:medi_connect/features/patient/dashboard/domain/repositories/banner_repository.dart';
 
@@ -40,6 +41,7 @@ class BannerError extends BannerState {
 }
 
 // BLOC
+@injectable
 class BannerBloc extends Bloc<BannerEvent, BannerState> {
   final BannerRepository _repository;
 

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/entities/department_entity.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/use_cases/add_department_usecase.dart';
@@ -10,6 +11,7 @@ import 'package:medi_connect/features/admin/management/staff_management/domain/u
 part 'department_event.dart';
 part 'department_state.dart';
 
+@injectable
 class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
   final GetDepartmentsUseCase _getDepartments;
   final AddDepartmentUseCase _addDepartment;

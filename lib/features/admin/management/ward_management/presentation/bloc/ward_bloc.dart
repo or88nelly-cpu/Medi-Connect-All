@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/features/admin/management/ward_management/domain/usecases/get_ward_stats_usecase.dart';
 
@@ -38,6 +39,7 @@ class WardError extends WardState {
 }
 
 // BLOC
+@injectable
 class WardBloc extends Bloc<WardEvent, WardState> {
   final GetWardStatsUseCase _useCase;
 

@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/core/functions/profile_image_helper.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/doctor_biography_card.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/doctor_fee_schedule_card.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/doctor_license_card.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/employee_personal_card.dart';
+import 'package:medi_connect/features/authentication/presentation/bloc/user_details_bloc.dart';
 
 // Components
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/employee_personal_card.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/doctor_license_card.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/doctor_fee_schedule_card.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/doctor_biography_card.dart';
+
+
+
+
 
 class DoctorDetailScreen extends StatefulWidget {
   final String userId;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/domain/entities/department_entity.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/admin/home/widgets/admin_department_card.dart';
 import 'package:medi_connect/features/admin/home/widgets/department_list_shimmer.dart';
+import 'package:medi_connect/features/admin/management/staff_management/domain/entities/department_entity.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
 
 class DepartmentListHome extends StatelessWidget {
   const DepartmentListHome({super.key});

@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/data/datasource/dyalisis_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/domain/repositories/dyalisis_repository.dart';
 
+@LazySingleton(as: DyalisisRepository)
 class DyalisisRepositoryImpl implements DyalisisRepository {
   final DyalisisRemoteDataSource _remoteDataSource;
   DyalisisRepositoryImpl(this._remoteDataSource);

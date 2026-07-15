@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class PhysioTherapyRemoteDataSource {
   Future<Map<String, dynamic>> getPhysioTherapyStats();
 }
 
+@LazySingleton(as: PhysioTherapyRemoteDataSource)
 class PhysioTherapyRemoteDataSourceImpl
     implements PhysioTherapyRemoteDataSource {
   @override

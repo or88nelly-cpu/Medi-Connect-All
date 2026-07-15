@@ -1,7 +1,6 @@
 import 'dart:developer';
-
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:injectable/injectable.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 @lazySingleton
 class SupabaseService {

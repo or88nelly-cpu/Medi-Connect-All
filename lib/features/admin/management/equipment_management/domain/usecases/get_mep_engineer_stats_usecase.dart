@@ -1,8 +1,10 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:medi_connect/core/models/failure.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
+import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/equipment_management/domain/repositories/mep_engineer_repository.dart';
 
+@lazySingleton
 class GetMepEngineerStatsUseCase
     extends UseCase<Map<String, dynamic>, NoParams> {
   final MepEngineerRepository _repository;

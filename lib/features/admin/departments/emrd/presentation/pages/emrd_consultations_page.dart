@@ -5,11 +5,11 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
-import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/consultations/complete_consultation_sheet.dart';
 import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/consultations/consultation_list_item.dart';
 import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/consultations/record_vitals_dialog.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/consultations/complete_consultation_sheet.dart';
+import 'package:medi_connect/features/common/dashboard/domain/entities/appointment_entity.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 
 class EmrdConsultationsPage extends StatefulWidget {
   final int initialTab;

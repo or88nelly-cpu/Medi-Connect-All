@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/widgets/buttons/common_button.dart';
 import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
-import 'package:medi_connect/core/widgets/buttons/common_button.dart';
 
 class SpecialityFormDialog extends StatefulWidget {
   final SpecialityEntity? existingSpeciality;

@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 import 'package:medi_connect/features/patient/booking/domain/entities/doctor_booking_info.dart';
 import 'package:medi_connect/features/patient/booking/domain/usecases/booking_usecases.dart';
 import 'package:medi_connect/features/patient/booking/presentation/bloc/speciality_booking_state.dart';
 import 'package:medi_connect/features/patient/booking/presentation/bloc/speciality_booking_status.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
 
 // ── Events ──────────────────────────────────────────────────────────
 abstract class SpecialityBookingEvent extends Equatable {
@@ -82,22 +83,33 @@ class ConfirmPayment extends SpecialityBookingEvent {
 class ResetBooking extends SpecialityBookingEvent {}
 
 // ── Bloc ────────────────────────────────────────────────────────────
+@injectable
 class SpecialityBookingBloc
     extends Bloc<SpecialityBookingEvent, SpecialityBookingState> {
   final LoadDoctorsBySpecialtyUseCase _loadDoctorsUseCase;
   final GetSlotsUseCase _getSlotsUseCase;
   final BookAppointmentUseCase _bookAppointmentUseCase;
 
+  @factoryMethod
+  static SpecialityBookingBloc create(
+    LoadDoctorsBySpecialtyUseCase loadDoctorsUseCase,
+    GetSlotsUseCase getSlotsUseCase,
+    BookAppointmentUseCase bookAppointmentUseCase,
+  ) {
+    return SpecialityBookingBloc(
+      loadDoctorsUseCase: loadDoctorsUseCase,
+      getSlotsUseCase: getSlotsUseCase,
+      bookAppointmentUseCase: bookAppointmentUseCase,
+    );
+  }
+
   SpecialityBookingBloc({
     LoadDoctorsBySpecialtyUseCase? loadDoctorsUseCase,
     GetSlotsUseCase? getSlotsUseCase,
     BookAppointmentUseCase? bookAppointmentUseCase,
-  }) : _loadDoctorsUseCase =
-           loadDoctorsUseCase ??
-           GetIt.instance<LoadDoctorsBySpecialtyUseCase>(),
+  }) : _loadDoctorsUseCase = loadDoctorsUseCase ?? GetIt.instance<LoadDoctorsBySpecialtyUseCase>(),
        _getSlotsUseCase = getSlotsUseCase ?? GetIt.instance<GetSlotsUseCase>(),
-       _bookAppointmentUseCase =
-           bookAppointmentUseCase ?? GetIt.instance<BookAppointmentUseCase>(),
+       _bookAppointmentUseCase = bookAppointmentUseCase ?? GetIt.instance<BookAppointmentUseCase>(),
        super(const SpecialityBookingState()) {
     on<LoadDoctors>(_onLoadDoctors);
     on<SelectDoctor>(_onSelectDoctor);

@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/pharmacy_management/data/datasource/pharmacy_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/pharmacy_management/domain/repositories/pharmacy_repository.dart';
 
+@LazySingleton(as: PharmacyRepository)
 class PharmacyRepositoryImpl implements PharmacyRepository {
   final PharmacyRemoteDataSource _remoteDataSource;
   PharmacyRepositoryImpl(this._remoteDataSource);

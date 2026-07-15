@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class ManagementInformationSystemRemoteDataSource {
   Future<Map<String, dynamic>> getManagementInformationSystemStats();
 }
 
+@LazySingleton(as: ManagementInformationSystemRemoteDataSource)
 class ManagementInformationSystemRemoteDataSourceImpl
     implements ManagementInformationSystemRemoteDataSource {
   @override

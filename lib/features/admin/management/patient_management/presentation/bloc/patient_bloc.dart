@@ -1,7 +1,8 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/features/admin/management/patient_management/domain/repositories/patient_repository.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 
 // EVENTS
 abstract class PatientEvent extends Equatable {
@@ -72,6 +73,7 @@ class PatientError extends PatientState {
 }
 
 // BLOC
+@injectable
 class PatientBloc extends Bloc<PatientEvent, PatientState> {
   final PatientRepository _repository;
 

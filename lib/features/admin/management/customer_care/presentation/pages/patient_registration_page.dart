@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/functions/app_responsive.dart';
-import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_connect/core/functions/app_responsive.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/patient_management/domain/repositories/patient_repository.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
-
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_bloc.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_event.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_state.dart';
@@ -23,6 +20,8 @@ import 'package:medi_connect/features/admin/management/customer_care/presentatio
 import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/registration/lifestyle_info_section.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/registration/personal_info_section.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/registration/uhid_display_card.dart';
+import 'package:medi_connect/features/admin/management/patient_management/domain/repositories/patient_repository.dart';
+import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 
 class PatientRegistrationPage extends StatefulWidget {
   const PatientRegistrationPage({super.key});

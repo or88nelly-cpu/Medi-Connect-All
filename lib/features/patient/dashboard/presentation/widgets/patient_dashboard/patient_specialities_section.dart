@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
-import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
-import 'package:medi_connect/features/patient/booking/presentation/pages/speciality_doctors_page.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/features/patient/booking/presentation/pages/speciality_doctors_page.dart';
+import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
+import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
 
 class PatientSpecialitiesSection extends StatefulWidget {
   const PatientSpecialitiesSection({super.key});

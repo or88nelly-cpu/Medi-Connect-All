@@ -1,8 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
-import 'package:medi_connect/features/patient/booking/domain/repositories/booking_repository.dart';
 import 'package:medi_connect/features/patient/booking/domain/entities/doctor_booking_info.dart';
+import 'package:medi_connect/features/patient/booking/domain/repositories/booking_repository.dart';
 import 'package:uuid/uuid.dart';
 
+@lazySingleton
 class LoadDoctorsBySpecialtyUseCase {
   final BookingRepository _repository;
 
@@ -26,6 +28,7 @@ class BookingSlotsResponse {
   });
 }
 
+@lazySingleton
 class GetSlotsUseCase {
   final BookingRepository _repository;
 
@@ -168,6 +171,7 @@ class GetSlotsUseCase {
   }
 }
 
+@lazySingleton
 class BookAppointmentUseCase {
   final BookingRepository _repository;
 

@@ -1,10 +1,11 @@
 import 'dart:developer';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medi_connect/features/patient/booking/domain/usecases/get_doctor_image_usecase.dart';
 import 'doctor_image_event.dart';
 import 'doctor_image_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:medi_connect/features/patient/booking/domain/usecases/get_doctor_image_usecase.dart';
 
+@injectable
 class DoctorImageBloc extends Bloc<DoctorImageEvent, DoctorImageState> {
   final GetDoctorImageUseCase _getDoctorImage;
 

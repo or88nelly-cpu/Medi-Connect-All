@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/equipment_management/data/datasource/mep_engineer_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/equipment_management/domain/repositories/mep_engineer_repository.dart';
 
+@LazySingleton(as: MepEngineerRepository)
 class MepEngineerRepositoryImpl implements MepEngineerRepository {
   final MepEngineerRemoteDataSource _remoteDataSource;
   MepEngineerRepositoryImpl(this._remoteDataSource);

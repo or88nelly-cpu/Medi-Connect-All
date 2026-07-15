@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:medi_connect/core/models/failure.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
+import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/repositories/department_repository.dart';
 
 class DeleteDepartmentParams extends Equatable {
@@ -13,6 +14,7 @@ class DeleteDepartmentParams extends Equatable {
   List<Object?> get props => [id];
 }
 
+@lazySingleton
 class DeleteDepartmentUseCase extends UseCase<Unit, DeleteDepartmentParams> {
   final DepartmentRepository _repository;
 

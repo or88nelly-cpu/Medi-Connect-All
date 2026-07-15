@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/data/datasource/physio_therapy_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/domain/repositories/physio_therapy_repository.dart';
 
+@LazySingleton(as: PhysioTherapyRepository)
 class PhysioTherapyRepositoryImpl implements PhysioTherapyRepository {
   final PhysioTherapyRemoteDataSource _remoteDataSource;
   PhysioTherapyRepositoryImpl(this._remoteDataSource);

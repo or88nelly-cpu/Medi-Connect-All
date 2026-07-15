@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/shared/auth/domain/entities/employee_entity.dart';
-import 'package:medi_connect/shared/auth/domain/entities/user_entity.dart';
+import 'package:medi_connect/features/authentication/domain/entities/employee_entity.dart';
+import 'package:medi_connect/features/authentication/domain/entities/user_entity.dart';
 
 class EmployeePersonalCard extends StatelessWidget {
   final UserEntity user;

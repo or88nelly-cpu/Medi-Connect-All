@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/core/constants/app_strings.dart';
-import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/buttons/common_button.dart';
-import 'package:medi_connect/shared/dashboard/domain/entities/appointment_entity.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:medi_connect/features/common/dashboard/domain/entities/appointment_entity.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/patient/booking/presentation/widgets/appointment_detail_row.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/doctor_image_widget.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/payment_method_selection_sheet.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/qr_code_payment_dialog.dart';
-import 'package:medi_connect/features/patient/booking/presentation/widgets/appointment_detail_row.dart';
-import 'package:intl/intl.dart';
 
 class PatientAppointmentDetailPage extends StatelessWidget {
   final AppointmentEntity appointment;

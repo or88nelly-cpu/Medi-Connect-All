@@ -1,6 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 
 abstract class PatientRemoteDataSource {
   Future<List<UserModel>> getPatients();
@@ -10,6 +11,7 @@ abstract class PatientRemoteDataSource {
   Future<void> sendToMRD(Map<String, dynamic> record);
 }
 
+@LazySingleton(as: PatientRemoteDataSource)
 class PatientRemoteDataSourceImpl implements PatientRemoteDataSource {
   final SupabaseService _supabase;
   PatientRemoteDataSourceImpl(this._supabase);

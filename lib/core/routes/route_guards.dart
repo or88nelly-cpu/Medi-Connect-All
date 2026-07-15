@@ -1,16 +1,30 @@
-/// Router redirection and guard logic.
-/// Handles protected routes and role-based access control using the Supabase session.
 library;
 
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:medi_connect/core/constants/app_enum.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/boot_strap/services/app_logger.dart';
+import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
-import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 
+/// Router redirection and guard logic.
+/// Handles protected routes and role-based access control using the Supabase session.
+
+
+
+
+
+
+
+
+
+
+
+
+@lazySingleton
 class RouteGuards {
   final SupabaseService _supabaseService;
   final SecureStorageService _secureStorageService;

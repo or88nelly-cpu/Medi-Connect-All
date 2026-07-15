@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DoctorImageUrlAndGender {
@@ -12,6 +12,7 @@ abstract class DoctorImageRemoteDataSource {
   Future<DoctorImageUrlAndGender> getDoctorImageUrl(String doctorId);
 }
 
+@LazySingleton(as: DoctorImageRemoteDataSource)
 class DoctorImageRemoteDataSourceImpl implements DoctorImageRemoteDataSource {
   final SupabaseClient _supabase;
 

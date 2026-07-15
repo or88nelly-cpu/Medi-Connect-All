@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/core/constants/app_enum.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 
 class PatientBookingBottomSheet extends StatefulWidget {
   const PatientBookingBottomSheet({super.key});

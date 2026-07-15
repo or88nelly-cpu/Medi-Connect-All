@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 
 class BackgroundWrapper extends StatelessWidget {
   final Widget child;

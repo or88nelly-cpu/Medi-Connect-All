@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/staff_management/data/datasource/human_resource_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/repositories/human_resource_repository.dart';
 
+@LazySingleton(as: HumanResourceRepository)
 class HumanResourceRepositoryImpl implements HumanResourceRepository {
   final HumanResourceRemoteDataSource _remoteDataSource;
   HumanResourceRepositoryImpl(this._remoteDataSource);

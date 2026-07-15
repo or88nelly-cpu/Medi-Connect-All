@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_general_info_card.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_prescribed_medicines_card.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_investigations_card.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_consultation_notes_card.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_billing_payment_card.dart';
 import 'package:medi_connect/features/admin/departments/emrd/presentation/helpers/emrd_pdf_helper.dart';
+import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_billing_payment_card.dart';
+import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_consultation_notes_card.dart';
+import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_general_info_card.dart';
+import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_investigations_card.dart';
+import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_prescribed_medicines_card.dart';
 
 void showEmrdRecordDetailsSheet(
   BuildContext context,

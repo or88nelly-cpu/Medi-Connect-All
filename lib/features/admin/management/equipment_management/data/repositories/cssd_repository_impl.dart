@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/equipment_management/data/datasource/cssd_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/equipment_management/domain/repositories/cssd_repository.dart';
 
+@LazySingleton(as: CssdRepository)
 class CssdRepositoryImpl implements CssdRepository {
   final CssdRemoteDataSource _remoteDataSource;
   CssdRepositoryImpl(this._remoteDataSource);

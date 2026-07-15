@@ -1,25 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medi_connect/core/theme/theme_cubit.dart';
 import 'package:medi_connect/core/constants/departments_config.dart';
+import 'package:medi_connect/core/theme/theme_cubit.dart';
 import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_attendance_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_billing_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_emergencies_bloc.dart'
+import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/authentication/presentation/bloc/user_details_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_attendance_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_billing_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_emergencies_bloc.dart'
     show AdminEmergenciesBloc;
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_labs_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_pharmacy_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_recent_activity_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/admin_settings_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/admin/dashboard_analytics_bloc.dart';
-import 'package:medi_connect/shared/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_labs_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_pharmacy_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_recent_activity_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_settings_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/dashboard_analytics_bloc.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
 import 'package:medi_connect/features/patient/dashboard/presentation/bloc/banner_bloc.dart';
 import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/user_details_bloc.dart';
 
 class AppProviders {
   static List<BlocProvider> getProviders() {

@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
-import 'package:medi_connect/features/admin/management/consultation_management/domain/usecases/get_emrd_stats_usecase.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/domain/usecases/get_emr_records_usecase.dart';
+import 'package:medi_connect/features/admin/management/consultation_management/domain/usecases/get_emrd_stats_usecase.dart';
 
 enum EmrdView { dashboard, medicalRecordManagement, patientRegistry }
 
@@ -69,6 +70,7 @@ class EmrdError extends EmrdState {
   List<Object?> get props => [message];
 }
 
+@injectable
 class EmrdBloc extends Bloc<EmrdEvent, EmrdState> {
   final GetEmrdStatsUseCase _getStats;
   final GetEmrRecordsUseCase _getRecords;

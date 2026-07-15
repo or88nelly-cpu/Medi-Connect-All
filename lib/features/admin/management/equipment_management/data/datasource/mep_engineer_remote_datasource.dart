@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class MepEngineerRemoteDataSource {
   Future<Map<String, dynamic>> getMepEngineerStats();
 }
 
+@LazySingleton(as: MepEngineerRemoteDataSource)
 class MepEngineerRemoteDataSourceImpl implements MepEngineerRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getMepEngineerStats() async {

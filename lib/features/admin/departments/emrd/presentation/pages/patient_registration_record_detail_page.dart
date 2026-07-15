@@ -4,16 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
-import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
-import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
+import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/consultation_management/presentation/bloc/emrd_bloc.dart';
-import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
-import 'package:medi_connect/features/admin/management/consultation_management/presentation/widgets/emrd_list_item_card.dart';
+import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_record_details_sheet.dart';
+import 'package:medi_connect/features/admin/management/consultation_management/presentation/bloc/emrd_bloc.dart';
+import 'package:medi_connect/features/admin/management/consultation_management/presentation/widgets/emrd_list_item_card.dart';
+import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/registration/id_card_preview.dart';
 
 class PatientRegistrationRecordDetailPage extends StatefulWidget {
   final Map<String, dynamic> record;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/data/models/department_model.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
+import 'package:medi_connect/features/admin/management/staff_management/data/models/department_model.dart';
 
 String? getDepartmentImageAsset(String name) {
   final lower = name.toLowerCase().trim();

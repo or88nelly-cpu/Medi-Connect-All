@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/repositories/doctor_staff_repository.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_state.dart';
 
+@injectable
 class DoctorStaffBloc extends Bloc<DoctorStaffEvent, DoctorStaffState> {
   final DoctorStaffRepository _repository;
 

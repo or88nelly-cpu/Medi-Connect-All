@@ -1,8 +1,10 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:medi_connect/core/models/failure.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
+import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/room_management/domain/repositories/operation_theatre_repository.dart';
 
+@lazySingleton
 class GetOperationTheatreStatsUseCase
     extends UseCase<Map<String, dynamic>, NoParams> {
   final OperationTheatreRepository _repository;

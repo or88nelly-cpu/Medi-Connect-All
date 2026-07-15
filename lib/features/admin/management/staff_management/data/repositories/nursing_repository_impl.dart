@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/staff_management/data/datasource/nursing_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/staff_management/domain/repositories/nursing_repository.dart';
 
+@LazySingleton(as: NursingRepository)
 class NursingRepositoryImpl implements NursingRepository {
   final NursingRemoteDataSource _remoteDataSource;
   NursingRepositoryImpl(this._remoteDataSource);

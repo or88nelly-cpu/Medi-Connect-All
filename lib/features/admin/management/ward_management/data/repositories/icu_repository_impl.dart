@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/ward_management/data/datasource/icu_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/ward_management/domain/repositories/icu_repository.dart';
 
+@LazySingleton(as: IcuRepository)
 class IcuRepositoryImpl implements IcuRepository {
   final IcuRemoteDataSource _remoteDataSource;
   IcuRepositoryImpl(this._remoteDataSource);

@@ -1,8 +1,12 @@
-/// Failure definitions representing errors in the Domain layer.
-/// Used with the Either pattern for predictable, functional error handling.
 library;
 
 import 'package:equatable/equatable.dart';
+
+/// Failure definitions representing errors in the Domain layer.
+/// Used with the Either pattern for predictable, functional error handling.
+
+
+
 
 abstract class Failure extends Equatable {
   final String message;

@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/features/admin/management/customer_care/domain/usecases/get_marketing_stats_usecase.dart';
 
@@ -38,6 +39,7 @@ class MarketingError extends MarketingState {
 }
 
 // BLOC
+@injectable
 class MarketingBloc extends Bloc<MarketingEvent, MarketingState> {
   final GetMarketingStatsUseCase _useCase;
 

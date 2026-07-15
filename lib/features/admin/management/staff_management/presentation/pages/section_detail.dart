@@ -5,25 +5,35 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/dialogs/dialogs.dart';
-import 'package:medi_connect/shared/auth/data/models/user_model.dart';
 import 'package:medi_connect/features/admin/management/staff_management/data/models/department_model.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_detail_header.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_doctor_grid_card.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_filter_sort_row.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_overview_stats.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_quick_access.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_search_bar.dart';
+import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_staff_grid_card.dart';
+import 'package:medi_connect/features/authentication/data/models/user_model.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/widgets/admin_doctors/doctor_card.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/widgets/admin_staff/staff_card.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/widgets/common/directory_pagination.dart';
 
 // Section Detail sub-widgets
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_detail_header.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_quick_access.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_overview_stats.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_doctor_grid_card.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_staff_grid_card.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_search_bar.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/widgets/section_detail/section_filter_sort_row.dart';
+
+
+
+
+
+
+
 
 // Shared and standard widgets
-import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_doctors/doctor_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/admin_staff/staff_card.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/common/directory_pagination.dart';
+
+
+
 
 class SectionDetail extends StatefulWidget {
   const SectionDetail({super.key, required this.section});

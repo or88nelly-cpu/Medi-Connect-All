@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class CasualityRemoteDataSource {
   Future<Map<String, dynamic>> getCasualityStats();
 }
 
+@LazySingleton(as: CasualityRemoteDataSource)
 class CasualityRemoteDataSourceImpl implements CasualityRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getCasualityStats() async {

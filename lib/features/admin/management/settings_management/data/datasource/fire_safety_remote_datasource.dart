@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class FireSafetyRemoteDataSource {
   Future<Map<String, dynamic>> getFireSafetyStats();
 }
 
+@LazySingleton(as: FireSafetyRemoteDataSource)
 class FireSafetyRemoteDataSourceImpl implements FireSafetyRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getFireSafetyStats() async {

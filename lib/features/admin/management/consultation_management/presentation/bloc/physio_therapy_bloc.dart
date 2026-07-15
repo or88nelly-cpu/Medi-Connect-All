@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/domain/usecases/get_physio_therapy_stats_usecase.dart';
 
@@ -38,6 +39,7 @@ class PhysioTherapyError extends PhysioTherapyState {
 }
 
 // BLOC
+@injectable
 class PhysioTherapyBloc extends Bloc<PhysioTherapyEvent, PhysioTherapyState> {
   final GetPhysioTherapyStatsUseCase _useCase;
 

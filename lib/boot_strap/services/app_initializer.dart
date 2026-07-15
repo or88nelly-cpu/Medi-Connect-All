@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medi_connect/core/constants/app_config.dart';
-import 'package:medi_connect/core/constants/core_config.dart';
 import 'package:medi_connect/core/constants/env_config.dart';
+import 'package:medi_connect/core/dependency_injection/injection.dart';
+import 'package:medi_connect/core/services/ad_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppInitializer {
@@ -15,22 +15,13 @@ class AppInitializer {
     // Initialize Supabase.
     await Supabase.initialize(
       url: EnvConfig.apiUrl,
-      //   anonKey: EnvConfig.apiKey,
       publishableKey: EnvConfig.apiKey,
     );
 
-    final sl = GetIt.instance;
+    // Initialize automatic dependency injection via Injectable
+    await configureDependencies();
 
-    // Initialize Core and Feature dependencies.
-    await configureCoreDependencies(
-      sl,
-      supabaseClient: Supabase.instance.client,
-    );
-    configureAuthDependencies(sl);
-    configureAnalyticsDependencies(sl);
-    configureDepartmentDependencies(sl);
-    configurePatientDependencies(sl);
-    configureAdminOperationsDependencies(sl);
-    configureAdditionalFeatures(sl);
+    // Initialize AdService (Google Mobile Ads)
+    await GetIt.instance<AdService>().initialize();
   }
 }

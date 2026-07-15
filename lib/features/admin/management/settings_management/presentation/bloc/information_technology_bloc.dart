@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/features/admin/management/settings_management/domain/usecases/get_information_technology_stats_usecase.dart';
 
@@ -38,6 +39,7 @@ class InformationTechnologyError extends InformationTechnologyState {
 }
 
 // BLOC
+@injectable
 class InformationTechnologyBloc
     extends Bloc<InformationTechnologyEvent, InformationTechnologyState> {
   final GetInformationTechnologyStatsUseCase _useCase;

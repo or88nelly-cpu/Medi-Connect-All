@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
+import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 
 class PaymentAppointmentSummaryCard extends StatelessWidget {
   final dynamic docInfo;

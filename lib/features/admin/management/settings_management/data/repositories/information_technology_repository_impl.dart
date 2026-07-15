@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/settings_management/data/datasource/information_technology_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/settings_management/domain/repositories/information_technology_repository.dart';
 
+@LazySingleton(as: InformationTechnologyRepository)
 class InformationTechnologyRepositoryImpl
     implements InformationTechnologyRepository {
   final InformationTechnologyRemoteDataSource _remoteDataSource;

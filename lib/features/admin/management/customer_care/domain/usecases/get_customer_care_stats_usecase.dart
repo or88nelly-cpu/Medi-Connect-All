@@ -1,8 +1,10 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:medi_connect/core/models/failure.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
+import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/customer_care/domain/repositories/customer_care_repository.dart';
 
+@lazySingleton
 class GetCustomerCareStatsUseCase
     extends UseCase<Map<String, dynamic>, NoParams> {
   final CustomerCareRepository _repository;

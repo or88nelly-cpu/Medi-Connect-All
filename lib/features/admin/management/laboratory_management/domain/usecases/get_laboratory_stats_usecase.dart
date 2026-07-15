@@ -1,8 +1,10 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:medi_connect/core/models/failure.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
+import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/laboratory_management/domain/repositories/laboratory_repository.dart';
 
+@lazySingleton
 class GetLaboratoryStatsUseCase
     extends UseCase<Map<String, dynamic>, NoParams> {
   final LaboratoryRepository _repository;

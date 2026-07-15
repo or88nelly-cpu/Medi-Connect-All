@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class CssdRemoteDataSource {
   Future<Map<String, dynamic>> getCssdStats();
 }
 
+@LazySingleton(as: CssdRemoteDataSource)
 class CssdRemoteDataSourceImpl implements CssdRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getCssdStats() async {

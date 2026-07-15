@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 
 abstract class BookingRemoteDataSource {
@@ -13,6 +14,7 @@ abstract class BookingRemoteDataSource {
   Future<void> saveAppointment(Map<String, dynamic> data);
 }
 
+@LazySingleton(as: BookingRemoteDataSource)
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   final SupabaseService _supabase;
 

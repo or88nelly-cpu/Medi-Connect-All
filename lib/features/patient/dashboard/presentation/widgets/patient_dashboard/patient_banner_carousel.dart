@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/features/patient/dashboard/presentation/bloc/banner_bloc.dart';
 import 'package:medi_connect/features/patient/dashboard/domain/entities/banner_entity.dart';
+import 'package:medi_connect/features/patient/dashboard/presentation/bloc/banner_bloc.dart';
 
 class PatientBannerCarousel extends StatefulWidget {
   const PatientBannerCarousel({super.key});

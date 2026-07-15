@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/ward_management/data/datasource/ward_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/ward_management/domain/repositories/ward_repository.dart';
 
+@LazySingleton(as: WardRepository)
 class WardRepositoryImpl implements WardRepository {
   final WardRemoteDataSource _remoteDataSource;
   WardRepositoryImpl(this._remoteDataSource);

@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/report_management/data/datasource/management_information_system_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/report_management/domain/repositories/management_information_system_repository.dart';
 
+@LazySingleton(as: ManagementInformationSystemRepository)
 class ManagementInformationSystemRepositoryImpl
     implements ManagementInformationSystemRepository {
   final ManagementInformationSystemRemoteDataSource _remoteDataSource;

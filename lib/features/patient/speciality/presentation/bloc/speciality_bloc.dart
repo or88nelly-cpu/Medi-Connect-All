@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/features/patient/speciality/domain/repositories/speciality_repository.dart';
@@ -74,6 +75,7 @@ class SpecialityError extends SpecialityState {
 }
 
 // BLOC
+@injectable
 class SpecialityBloc extends Bloc<SpecialityEvent, SpecialityState> {
   final SpecialityRepository _repository;
 

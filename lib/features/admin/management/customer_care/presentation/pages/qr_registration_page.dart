@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/qr_registration/qr_action_buttons.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/qr_registration/qr_code_display.dart';
 import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/qr_registration/registration_steps_timeline.dart';
-import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/qr_registration/qr_action_buttons.dart';
 
 class QrRegistrationPage extends StatefulWidget {
   const QrRegistrationPage({super.key});

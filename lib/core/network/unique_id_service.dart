@@ -1,5 +1,4 @@
 import 'package:medi_connect/core/models/exceptions.dart';
-
 import 'package:medi_connect/core/network/supabase_service.dart';
 
 class UniqueIdService {

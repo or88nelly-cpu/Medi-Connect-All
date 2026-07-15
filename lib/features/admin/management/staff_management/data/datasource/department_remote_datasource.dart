@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
 import 'package:medi_connect/features/admin/management/staff_management/data/models/department_model.dart';
 
@@ -22,6 +23,7 @@ abstract class DepartmentRemoteDataSource {
   Future<void> deleteDepartment(String id);
 }
 
+@LazySingleton(as: DepartmentRemoteDataSource)
 class DepartmentRemoteDataSourceImpl implements DepartmentRemoteDataSource {
   final SupabaseService _supabase;
 

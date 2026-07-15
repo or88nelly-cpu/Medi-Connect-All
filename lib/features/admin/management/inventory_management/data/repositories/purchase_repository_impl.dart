@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/inventory_management/data/datasource/purchase_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/inventory_management/domain/repositories/purchase_repository.dart';
 
+@LazySingleton(as: PurchaseRepository)
 class PurchaseRepositoryImpl implements PurchaseRepository {
   final PurchaseRemoteDataSource _remoteDataSource;
   PurchaseRepositoryImpl(this._remoteDataSource);

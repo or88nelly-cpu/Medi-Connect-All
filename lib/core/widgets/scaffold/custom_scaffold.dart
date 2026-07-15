@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medi_connect/core/widgets/scaffold/background_wrapper.dart';
-import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
-import 'package:medi_connect/shared/auth/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/core/widgets/ads/google_ad_banner.dart';
+import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
+import 'package:medi_connect/core/widgets/scaffold/background_wrapper.dart';
+import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 
 class CustomScaffold extends StatelessWidget {
   final PreferredSizeWidget? customAppbar;

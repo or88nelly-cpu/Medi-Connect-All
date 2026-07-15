@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_appointments_page.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_patients_page.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_recent_activity_page.dart';
-import 'package:medi_connect/shared/dashboard/presentation/pages/admin/admin_billing_page.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/pages/admin/admin_appointments_page.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/pages/admin/admin_billing_page.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/pages/admin/admin_patients_page.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/pages/admin/admin_recent_activity_page.dart';
 
 class SectionQuickAccess extends StatelessWidget {
   const SectionQuickAccess({super.key});

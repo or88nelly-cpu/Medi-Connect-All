@@ -1,7 +1,10 @@
+import 'package:injectable/injectable.dart';
+
 abstract class HumanResourceRemoteDataSource {
   Future<Map<String, dynamic>> getHumanResourceStats();
 }
 
+@LazySingleton(as: HumanResourceRemoteDataSource)
 class HumanResourceRemoteDataSourceImpl
     implements HumanResourceRemoteDataSource {
   @override

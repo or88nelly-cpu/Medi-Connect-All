@@ -1,10 +1,16 @@
-/// Base interface for all business logic Use Cases in the Domain layer.
-/// Forces consistent input (Params) and output (Either Failure or Success Type).
 library;
 
-import 'package:fpdart/fpdart.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:medi_connect/core/models/failure.dart';
+
+/// Base interface for all business logic Use Cases in the Domain layer.
+/// Forces consistent input (Params) and output (Either Failure or Success Type).
+
+
+
+
+
 
 abstract class UseCase<Type, Params> {
   const UseCase();

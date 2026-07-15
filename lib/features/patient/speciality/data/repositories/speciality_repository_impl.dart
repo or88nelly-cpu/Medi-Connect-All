@@ -1,12 +1,14 @@
 import 'dart:developer' as developer;
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
+import 'package:medi_connect/core/constants/app_table_names.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
-import 'package:medi_connect/core/constants/app_table_names.dart';
 import 'package:medi_connect/features/patient/speciality/data/models/speciality_model.dart';
 import 'package:medi_connect/features/patient/speciality/domain/entities/speciality_entity.dart';
 import 'package:medi_connect/features/patient/speciality/domain/repositories/speciality_repository.dart';
 
+@LazySingleton(as: SpecialityRepository)
 class SpecialityRepositoryImpl implements SpecialityRepository {
   final SupabaseService _supabase;
 

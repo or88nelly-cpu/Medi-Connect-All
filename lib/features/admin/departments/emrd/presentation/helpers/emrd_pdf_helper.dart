@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:medi_connect/core/theme/app_colors.dart';
 
 class EmrdPdfHelper {
   static Future<void> downloadFile({

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 
+@lazySingleton
 class ThemeCubit extends Cubit<ThemeMode> {
   final SecureStorageService _storageService;
   static const String _themeKey = 'app_theme_mode';

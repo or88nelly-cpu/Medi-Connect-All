@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
-import 'package:medi_connect/shared/dashboard/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
-import 'package:medi_connect/features/patient/booking/presentation/widgets/success_header.dart';
+import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:medi_connect/features/common/dashboard/presentation/widgets/navigation/patient_bottom_nav_bar.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/success_action_buttons.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/success_appointment_summary_card.dart';
-import 'package:medi_connect/features/patient/booking/presentation/widgets/success_stay_updated_card.dart';
+import 'package:medi_connect/features/patient/booking/presentation/widgets/success_header.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/success_helper_cards.dart';
-import 'package:intl/intl.dart';
+import 'package:medi_connect/features/patient/booking/presentation/widgets/success_stay_updated_card.dart';
 
 class BookingSuccessPage extends StatelessWidget {
   final String doctorName;

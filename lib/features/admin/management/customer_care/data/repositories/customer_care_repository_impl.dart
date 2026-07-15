@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/customer_care/data/datasource/customer_care_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/customer_care/domain/repositories/customer_care_repository.dart';
 
+@LazySingleton(as: CustomerCareRepository)
 class CustomerCareRepositoryImpl implements CustomerCareRepository {
   final CustomerCareRemoteDataSource _remoteDataSource;
   CustomerCareRepositoryImpl(this._remoteDataSource);

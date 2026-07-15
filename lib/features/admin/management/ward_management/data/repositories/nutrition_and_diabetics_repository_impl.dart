@@ -1,9 +1,11 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
 import 'package:medi_connect/features/admin/management/ward_management/data/datasource/nutrition_and_diabetics_remote_datasource.dart';
 import 'package:medi_connect/features/admin/management/ward_management/domain/repositories/nutrition_and_diabetics_repository.dart';
 
+@LazySingleton(as: NutritionAndDiabeticsRepository)
 class NutritionAndDiabeticsRepositoryImpl
     implements NutritionAndDiabeticsRepository {
   final NutritionAndDiabeticsRemoteDataSource _remoteDataSource;

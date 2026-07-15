@@ -5,10 +5,10 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/appbar/common_app_bar.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
+import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_record_details_sheet.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/presentation/bloc/emrd_bloc.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/presentation/widgets/emrd_bottom_banner.dart';
 import 'package:medi_connect/features/admin/management/consultation_management/presentation/widgets/emrd_list_item_card.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/widgets/emrd_record_details_sheet.dart';
 
 class MedicalRecordManagementPage extends StatelessWidget {
   const MedicalRecordManagementPage({super.key});

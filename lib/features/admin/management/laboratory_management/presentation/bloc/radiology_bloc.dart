@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:medi_connect/core/functions/usecase.dart';
 import 'package:medi_connect/features/admin/management/laboratory_management/domain/usecases/get_radiology_stats_usecase.dart';
 
@@ -38,6 +39,7 @@ class RadiologyError extends RadiologyState {
 }
 
 // BLOC
+@injectable
 class RadiologyBloc extends Bloc<RadiologyEvent, RadiologyState> {
   final GetRadiologyStatsUseCase _useCase;
 
