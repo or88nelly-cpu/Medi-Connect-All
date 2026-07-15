@@ -8,6 +8,7 @@ abstract class OpProceduresRemoteDataSource {
 
 @LazySingleton(as: OpProceduresRemoteDataSource)
 class OpProceduresRemoteDataSourceImpl implements OpProceduresRemoteDataSource {
+  // ignore: unused_field
   final SupabaseService _supabaseService;
 
   OpProceduresRemoteDataSourceImpl(this._supabaseService);

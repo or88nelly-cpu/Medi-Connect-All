@@ -8,6 +8,7 @@ abstract class IpInfoRemoteDataSource {
 
 @LazySingleton(as: IpInfoRemoteDataSource)
 class IpInfoRemoteDataSourceImpl implements IpInfoRemoteDataSource {
+  // ignore: unused_field
   final SupabaseService _supabaseService;
 
   IpInfoRemoteDataSourceImpl(this._supabaseService);

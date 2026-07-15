@@ -8,15 +8,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/analytics
 import 'package:medi_connect/features/common/dashboard/domain/repositories/analytics_repository.dart';
 
 /// Executes fetching analytics data.
-
-
-
-// 
-
-
-
-
-
 @lazySingleton
 class GetAnalyticsUseCase extends UseCase<List<AnalyticsEntity>, NoParams> {
   final AnalyticsRepository _repository;
