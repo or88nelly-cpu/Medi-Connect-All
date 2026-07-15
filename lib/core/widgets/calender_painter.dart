@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 
 class CalendarPainter extends CustomPainter {
   @override
@@ -12,7 +13,7 @@ class CalendarPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [Color(0xFFE879F9), Color(0xFF7C3AED), Color(0xFF3B82F6)],
+        colors: [Color(0xFFE879F9), Color(0xFF7C3AED), AppColors.info],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     // Shadow

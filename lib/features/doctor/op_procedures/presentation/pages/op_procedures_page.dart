@@ -31,12 +31,27 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
 
   String _formatDate(DateTime date) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     const weekdays = [
-      'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-      'Friday', 'Saturday', 'Sunday'
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
     ];
     return "${months[date.month - 1]} ${date.day.toString().padLeft(2, '0')}, ${date.year}\n${weekdays[date.weekday - 1]}";
   }
@@ -51,31 +66,51 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
     final doctor = authState is Authenticated ? authState.user : null;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+      backgroundColor: isDark
+          ? const Color(0xFF0F172A)
+          : const Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: textCol, size: 20.r),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: textCol,
+            size: 20.r,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           "OP Procedures",
-          style: AppTextStyles.titleLarge.copyWith(color: textCol, fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleLarge.copyWith(
+            color: textCol,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: BlocBuilder<OpProceduresBloc, OpProceduresState>(
         builder: (context, state) {
           if (state is OpProceduresLoading) {
-            return Center(child: CircularProgressIndicator(color: AppColors.primary));
+            return Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            );
           }
           if (state is OpProceduresError) {
-            return Center(child: Text(state.message, style: const TextStyle(color: Colors.red)));
+            return Center(
+              child: Text(
+                state.message,
+                style: const TextStyle(color: AppColors.red),
+              ),
+            );
           }
           if (state is OpProceduresLoaded) {
             final filteredList = state.procedures.where((p) {
-              return p.patientName.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-                  p.patientId.toLowerCase().contains(_searchQuery.toLowerCase());
+              return p.patientName.toLowerCase().contains(
+                    _searchQuery.toLowerCase(),
+                  ) ||
+                  p.patientId.toLowerCase().contains(
+                    _searchQuery.toLowerCase(),
+                  );
             }).toList();
 
             return SingleChildScrollView(
@@ -93,7 +128,13 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   SizedBox(height: 24.h),
 
                   // 3. Today's Procedure Summary Title
-                  Text("Today's Procedure Summary", style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, color: textCol)),
+                  Text(
+                    "Today's Procedure Summary",
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: textCol,
+                    ),
+                  ),
                   SizedBox(height: 12.h),
 
                   // 4. Summaries Grid
@@ -101,7 +142,13 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   SizedBox(height: 24.h),
 
                   // 5. Quick Actions Title
-                  Text("Quick Action", style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, color: textCol)),
+                  Text(
+                    "Quick Action",
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: textCol,
+                    ),
+                  ),
                   SizedBox(height: 12.h),
 
                   // 6. Quick Actions Grid
@@ -116,8 +163,17 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Today's OP Patients (${filteredList.length})", style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, color: textCol)),
-                      Icon(Icons.more_horiz, color: isDark ? Colors.white54 : Colors.grey),
+                      Text(
+                        "Today's OP Patients (${filteredList.length})",
+                        style: AppTextStyles.titleMedium.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: textCol,
+                        ),
+                      ),
+                      Icon(
+                        Icons.more_horiz,
+                        color: isDark ? Colors.white54 : Colors.grey,
+                      ),
                     ],
                   ),
                   SizedBox(height: 12.h),
@@ -126,13 +182,19 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                       ? Container(
                           height: 100.h,
                           alignment: Alignment.center,
-                          child: Text("No patients found matching search criteria.", style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey)),
+                          child: Text(
+                            "No patients found matching search criteria.",
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              color: Colors.grey,
+                            ),
+                          ),
                         )
                       : ListView.separated(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: filteredList.length,
-                          separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 12.h),
                           itemBuilder: (context, idx) {
                             final item = filteredList[idx];
                             return _buildPatientCard(item, cardBg, isDark);
@@ -174,7 +236,10 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
+            icon: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white,
+            ),
             onPressed: () {},
           ),
         ],
@@ -195,7 +260,11 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
         children: [
           CircleAvatar(
             radius: 30.r,
-            backgroundImage: ProfileImageHelper.getAvatarImage(doctor.profilePhoto, 'doctor', doctor.gender),
+            backgroundImage: ProfileImageHelper.getAvatarImage(
+              doctor.profilePhoto,
+              'doctor',
+              doctor.gender,
+            ),
           ),
           SizedBox(width: 14.w),
           Expanded(
@@ -204,7 +273,10 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
               children: [
                 Text(
                   doctor.fullName,
-                  style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, color: titleCol),
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: titleCol,
+                  ),
                 ),
                 Text(
                   "MBBS, MD - General Medicine",
@@ -212,7 +284,10 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                 ),
                 Text(
                   "General Medicine  •  Reg. No: KMC-65432",
-                  style: AppTextStyles.bodySmall.copyWith(color: Colors.grey, fontSize: 10.sp),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: Colors.grey,
+                    fontSize: 10.sp,
+                  ),
                 ),
               ],
             ),
@@ -225,9 +300,23 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
             ),
             child: Row(
               children: [
-                Container(width: 6.r, height: 6.r, decoration: const BoxDecoration(color: Colors.green, shape: BoxShape.circle)),
+                Container(
+                  width: 6.r,
+                  height: 6.r,
+                  decoration: const BoxDecoration(
+                    color: AppColors.green,
+                    shape: BoxShape.circle,
+                  ),
+                ),
                 SizedBox(width: 4.w),
-                Text("Available", style: TextStyle(color: Colors.blue[800], fontSize: 9.sp, fontWeight: FontWeight.bold)),
+                Text(
+                  "Available",
+                  style: TextStyle(
+                    color: Colors.blue[800],
+                    fontSize: 9.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ),
@@ -238,12 +327,42 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
 
   Widget _buildSummaryGrid(bool isDark) {
     final list = [
-      {'title': 'Total Procedures', 'count': '24', 'color': AppColors.primary, 'icon': Icons.assignment_outlined},
-      {'title': 'Completed', 'count': '10', 'color': AppColors.success, 'icon': Icons.check_circle_outline},
-      {'title': 'Scheduled', 'count': '6', 'color': AppColors.warning, 'icon': Icons.calendar_today_outlined},
-      {'title': 'In Progress', 'count': '4', 'color': AppColors.purple, 'icon': Icons.hourglass_empty_outlined},
-      {'title': 'Cancelled', 'count': '2', 'color': AppColors.error, 'icon': Icons.cancel_outlined},
-      {'title': 'Follow-up', 'count': '5', 'color': AppColors.info, 'icon': Icons.sync_outlined},
+      {
+        'title': 'Total Procedures',
+        'count': '24',
+        'color': AppColors.primary,
+        'icon': Icons.assignment_outlined,
+      },
+      {
+        'title': 'Completed',
+        'count': '10',
+        'color': AppColors.success,
+        'icon': Icons.check_circle_outline,
+      },
+      {
+        'title': 'Scheduled',
+        'count': '6',
+        'color': AppColors.warning,
+        'icon': Icons.calendar_today_outlined,
+      },
+      {
+        'title': 'In Progress',
+        'count': '4',
+        'color': AppColors.purple,
+        'icon': Icons.hourglass_empty_outlined,
+      },
+      {
+        'title': 'Cancelled',
+        'count': '2',
+        'color': AppColors.error,
+        'icon': Icons.cancel_outlined,
+      },
+      {
+        'title': 'Follow-up',
+        'count': '5',
+        'color': AppColors.info,
+        'icon': Icons.sync_outlined,
+      },
     ];
 
     return GridView.builder(
@@ -264,7 +383,9 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E293B) : Colors.white,
             borderRadius: BorderRadius.circular(16.r),
-            border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
+            border: Border.all(
+              color: isDark ? Colors.white10 : Colors.grey[200]!,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -273,13 +394,20 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
               Icon(item['icon'] as IconData, color: color, size: 20.r),
               Text(
                 item['count'] as String,
-                style: AppTextStyles.headingMedium.copyWith(color: isDark ? Colors.white : AppColors.textDarkNavy, fontSize: 18.sp, fontWeight: FontWeight.bold),
+                style: AppTextStyles.headingMedium.copyWith(
+                  color: isDark ? Colors.white : AppColors.textDarkNavy,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               Text(
                 item['title'] as String,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.bodySmall.copyWith(color: Colors.grey, fontSize: 8.5.sp),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: Colors.grey,
+                  fontSize: 8.5.sp,
+                ),
               ),
             ],
           ),
@@ -290,14 +418,46 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
 
   Widget _buildQuickActions(bool isDark) {
     final actions = [
-      {'title': 'Upload Consent', 'color': const Color(0xFF0EA5E9), 'icon': Icons.file_upload_outlined},
-      {'title': 'Add Notes', 'color': const Color(0xFF8B5CF6), 'icon': Icons.note_add_outlined},
-      {'title': 'Prescribe Med', 'color': const Color(0xFF10B981), 'icon': Icons.medication_outlined},
-      {'title': 'Schedule Visit', 'color': const Color(0xFFF59E0B), 'icon': Icons.calendar_month_outlined},
-      {'title': 'Print Report', 'color': const Color(0xFF3B82F6), 'icon': Icons.print_outlined},
-      {'title': 'Generate Bill', 'color': const Color(0xFFEC4899), 'icon': Icons.receipt_long_outlined},
-      {'title': 'Download Forms', 'color': const Color(0xFF6366F1), 'icon': Icons.file_download_outlined},
-      {'title': 'Create Form', 'color': const Color(0xFF06B6D4), 'icon': Icons.add_to_photos_outlined},
+      {
+        'title': 'Upload Consent',
+        'color': const Color(0xFF0EA5E9),
+        'icon': Icons.file_upload_outlined,
+      },
+      {
+        'title': 'Add Notes',
+        'color': const Color(0xFF8B5CF6),
+        'icon': Icons.note_add_outlined,
+      },
+      {
+        'title': 'Prescribe Med',
+        'color': const Color(0xFF10B981),
+        'icon': Icons.medication_outlined,
+      },
+      {
+        'title': 'Schedule Visit',
+        'color': AppColors.warning,
+        'icon': Icons.calendar_month_outlined,
+      },
+      {
+        'title': 'Print Report',
+        'color': AppColors.info,
+        'icon': Icons.print_outlined,
+      },
+      {
+        'title': 'Generate Bill',
+        'color': const Color(0xFFEC4899),
+        'icon': Icons.receipt_long_outlined,
+      },
+      {
+        'title': 'Download Forms',
+        'color': const Color(0xFF6366F1),
+        'icon': Icons.file_download_outlined,
+      },
+      {
+        'title': 'Create Form',
+        'color': const Color(0xFF06B6D4),
+        'icon': Icons.add_to_photos_outlined,
+      },
     ];
 
     return GridView.builder(
@@ -317,7 +477,9 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1E293B) : Colors.white,
             borderRadius: BorderRadius.circular(16.r),
-            border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
+            border: Border.all(
+              color: isDark ? Colors.white10 : Colors.grey[200]!,
+            ),
           ),
           child: Material(
             color: Colors.transparent,
@@ -361,7 +523,9 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
             decoration: BoxDecoration(
               color: cardBg,
               borderRadius: BorderRadius.circular(10.r),
-              border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
+              border: Border.all(
+                color: isDark ? Colors.white10 : Colors.grey[200]!,
+              ),
             ),
             child: Row(
               children: [
@@ -370,7 +534,10 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                 Expanded(
                   child: TextField(
                     onChanged: (val) => setState(() => _searchQuery = val),
-                    style: TextStyle(color: isDark ? Colors.white : AppColors.textDarkNavy, fontSize: 11.sp),
+                    style: TextStyle(
+                      color: isDark ? Colors.white : AppColors.textDarkNavy,
+                      fontSize: 11.sp,
+                    ),
                     decoration: const InputDecoration(
                       hintText: "Search patient name or ID...",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -390,9 +557,15 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
           decoration: BoxDecoration(
             color: cardBg,
             borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
+            border: Border.all(
+              color: isDark ? Colors.white10 : Colors.grey[200]!,
+            ),
           ),
-          child: Icon(Icons.tune, color: isDark ? Colors.white70 : AppColors.textDarkNavy, size: 18.r),
+          child: Icon(
+            Icons.tune,
+            color: isDark ? Colors.white70 : AppColors.textDarkNavy,
+            size: 18.r,
+          ),
         ),
       ],
     );
@@ -406,9 +579,9 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
     if (item.status.toLowerCase() == 'in progress') {
       statusColor = const Color(0xFF8B5CF6);
     } else if (item.status.toLowerCase() == 'scheduled') {
-      statusColor = const Color(0xFFF59E0B);
+      statusColor = AppColors.warning;
     } else if (item.status.toLowerCase() == 'cancelled') {
-      statusColor = const Color(0xFFEF4444);
+      statusColor = AppColors.error;
     }
 
     return Container(
@@ -430,7 +603,14 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   color: Colors.grey.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(6.r),
                 ),
-                child: Text("Token ${item.tokenNumber}", style: TextStyle(color: textCol, fontWeight: FontWeight.bold, fontSize: 10.sp)),
+                child: Text(
+                  "Token ${item.tokenNumber}",
+                  style: TextStyle(
+                    color: textCol,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10.sp,
+                  ),
+                ),
               ),
               const Spacer(),
               Container(
@@ -445,7 +625,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   item.priority,
                   style: TextStyle(
                     color: item.priority.toLowerCase() == 'high'
-                        ? const Color(0xFFEF4444)
+                        ? AppColors.error
                         : const Color(0xFFD97706),
                     fontWeight: FontWeight.bold,
                     fontSize: 8.sp,
@@ -460,7 +640,11 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
             children: [
               CircleAvatar(
                 radius: 20.r,
-                backgroundImage: ProfileImageHelper.getAvatarImage(item.profilePhoto, 'patient', item.gender),
+                backgroundImage: ProfileImageHelper.getAvatarImage(
+                  item.profilePhoto,
+                  'patient',
+                  item.gender,
+                ),
               ),
               SizedBox(width: 10.w),
               Expanded(
@@ -469,7 +653,11 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   children: [
                     Text(
                       item.patientName,
-                      style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold, color: textCol, fontSize: 13.sp),
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: textCol,
+                        fontSize: 13.sp,
+                      ),
                     ),
                     Text(
                       "PID: ${item.patientId}  •  ${item.age} Yrs  •  ${item.gender}",
@@ -480,7 +668,10 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
               ),
             ],
           ),
-          Divider(height: 20.h, color: isDark ? Colors.white10 : Colors.grey[200]),
+          Divider(
+            height: 20.h,
+            color: isDark ? Colors.white10 : Colors.grey[200],
+          ),
           // Row 2: Diagnosis & Procedure
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -488,22 +679,45 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Procedure & Diagnosis", style: TextStyle(color: secondaryTextCol, fontSize: 8.5.sp)),
+                  Text(
+                    "Procedure & Diagnosis",
+                    style: TextStyle(color: secondaryTextCol, fontSize: 8.5.sp),
+                  ),
                   SizedBox(height: 2.h),
-                  Text("${item.procedure} (${item.diagnosis})", style: TextStyle(color: textCol, fontWeight: FontWeight.bold, fontSize: 11.sp)),
+                  Text(
+                    "${item.procedure} (${item.diagnosis})",
+                    style: TextStyle(
+                      color: textCol,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("Appointment Time", style: TextStyle(color: secondaryTextCol, fontSize: 8.5.sp)),
+                  Text(
+                    "Appointment Time",
+                    style: TextStyle(color: secondaryTextCol, fontSize: 8.5.sp),
+                  ),
                   SizedBox(height: 2.h),
-                  Text("${item.time} | ${item.date}", style: TextStyle(color: textCol, fontWeight: FontWeight.bold, fontSize: 10.sp)),
+                  Text(
+                    "${item.time} | ${item.date}",
+                    style: TextStyle(
+                      color: textCol,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10.sp,
+                    ),
+                  ),
                 ],
               ),
             ],
           ),
-          Divider(height: 20.h, color: isDark ? Colors.white10 : Colors.grey[200]),
+          Divider(
+            height: 20.h,
+            color: isDark ? Colors.white10 : Colors.grey[200],
+          ),
           // Row 3: Status & Action Button
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -513,10 +727,20 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   Container(
                     width: 8.r,
                     height: 8.r,
-                    decoration: BoxDecoration(color: statusColor, shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                      color: statusColor,
+                      shape: BoxShape.circle,
+                    ),
                   ),
                   SizedBox(width: 6.w),
-                  Text(item.status, style: TextStyle(color: statusColor, fontWeight: FontWeight.bold, fontSize: 11.sp)),
+                  Text(
+                    item.status,
+                    style: TextStyle(
+                      color: statusColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.sp,
+                    ),
+                  ),
                 ],
               ),
               Row(
@@ -524,7 +748,9 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   Text(
                     "₹${item.paymentAmount} (${item.paymentStatus})",
                     style: TextStyle(
-                      color: item.paymentStatus.toLowerCase() == 'paid' ? Colors.green : Colors.orange,
+                      color: item.paymentStatus.toLowerCase() == 'paid'
+                          ? AppColors.green
+                          : AppColors.orange,
                       fontWeight: FontWeight.w600,
                       fontSize: 10.sp,
                     ),
@@ -534,14 +760,27 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-                      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                        vertical: 6.h,
+                      ),
                       minimumSize: Size.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     child: Text(
-                      item.status.toLowerCase() == 'completed' ? "View" : (item.status.toLowerCase() == 'in progress' ? "Resume" : "Start"),
-                      style: TextStyle(color: Colors.white, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                      item.status.toLowerCase() == 'completed'
+                          ? "View"
+                          : (item.status.toLowerCase() == 'in progress'
+                                ? "Resume"
+                                : "Start"),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

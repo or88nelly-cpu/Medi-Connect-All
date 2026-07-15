@@ -4,9 +4,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/attendanc
 
 /// Data model for staff attendance records with JSON serialization.
 
-
-
-
 class AttendanceModel extends AttendanceEntity {
   const AttendanceModel({
     required super.id,

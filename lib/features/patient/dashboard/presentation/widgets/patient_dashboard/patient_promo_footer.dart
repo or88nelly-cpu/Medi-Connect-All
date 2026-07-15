@@ -53,7 +53,7 @@ class PatientPromoFooter extends StatelessWidget {
                   width: 22.r,
                   height: 22.r,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF22C55E).withValues(alpha: 0.15),
+                    color: AppColors.success.withValues(alpha: 0.15),
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: AppColors.isDark(context)
@@ -64,7 +64,7 @@ class PatientPromoFooter extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.check_circle_rounded,
-                    color: const Color(0xFF22C55E),
+                    color: AppColors.success,
                     size: 14.r,
                   ),
                 ),

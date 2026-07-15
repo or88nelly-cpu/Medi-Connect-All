@@ -279,16 +279,16 @@ class _PatientAllAppointmentsPageState
                                   ); // Green Confirmed
                                   if (displayStatus.toLowerCase() ==
                                       'pending') {
-                                    statusColor = const Color(0xFFF59E0B);
+                                    statusColor = AppColors.warning;
                                   } else if (displayStatus ==
                                       'Pending Updation') {
                                     statusColor = const Color(0xFFD97706);
                                   } else if (displayStatus.toLowerCase() ==
                                       'cancelled') {
-                                    statusColor = const Color(0xFFEF4444);
+                                    statusColor = AppColors.error;
                                   } else if (displayStatus.toLowerCase() ==
                                       'completed') {
-                                    statusColor = const Color(0xFF3B82F6);
+                                    statusColor = AppColors.info;
                                   }
 
                                   return GestureDetector(

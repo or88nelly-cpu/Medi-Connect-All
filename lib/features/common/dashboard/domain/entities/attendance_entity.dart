@@ -4,9 +4,6 @@ import 'package:equatable/equatable.dart';
 
 /// Domain entity for a staff attendance record.
 
-
-
-
 class AttendanceEntity extends Equatable {
   final String id;
   final String staffId;

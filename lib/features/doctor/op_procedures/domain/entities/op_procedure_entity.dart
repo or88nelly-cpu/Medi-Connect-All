@@ -35,19 +35,19 @@ class OpProcedureEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        tokenNumber,
-        patientName,
-        patientId,
-        age,
-        gender,
-        procedure,
-        diagnosis,
-        time,
-        date,
-        status,
-        paymentAmount,
-        paymentStatus,
-        priority,
-        profilePhoto,
-      ];
+    tokenNumber,
+    patientName,
+    patientId,
+    age,
+    gender,
+    procedure,
+    diagnosis,
+    time,
+    date,
+    status,
+    paymentAmount,
+    paymentStatus,
+    priority,
+    profilePhoto,
+  ];
 }

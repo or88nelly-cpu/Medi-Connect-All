@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 
 class ScheduleHeaderBanner extends StatelessWidget {
   final int totalCount;
@@ -104,11 +105,19 @@ class ScheduleHeaderBanner extends StatelessWidget {
                   children: [
                     Text(
                       "JUL",
-                      style: TextStyle(color: Colors.white, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       "5",
-                      style: TextStyle(color: Colors.white, fontSize: 24.sp, fontWeight: FontWeight.w900),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ],
                 ),
@@ -118,11 +127,29 @@ class ScheduleHeaderBanner extends StatelessWidget {
           SizedBox(height: 16.h),
           Row(
             children: [
-              Expanded(child: _buildSubStatCard("Completed", completedCount, const Color(0xFF10B981))),
+              Expanded(
+                child: _buildSubStatCard(
+                  "Completed",
+                  completedCount,
+                  const Color(0xFF10B981),
+                ),
+              ),
               SizedBox(width: 8.w),
-              Expanded(child: _buildSubStatCard("Pending", pendingCount, const Color(0xFFF59E0B))),
+              Expanded(
+                child: _buildSubStatCard(
+                  "Pending",
+                  pendingCount,
+                  AppColors.warning,
+                ),
+              ),
               SizedBox(width: 8.w),
-              Expanded(child: _buildSubStatCard("Cancelled", cancelledCount, const Color(0xFFEF4444))),
+              Expanded(
+                child: _buildSubStatCard(
+                  "Cancelled",
+                  cancelledCount,
+                  AppColors.error,
+                ),
+              ),
             ],
           ),
           SizedBox(height: 14.h),
@@ -133,7 +160,11 @@ class ScheduleHeaderBanner extends StatelessWidget {
               children: [
                 Text(
                   "View Calendar",
-                  style: TextStyle(color: Colors.white, fontSize: 12.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(width: 4.w),
                 const Icon(Icons.arrow_forward, color: Colors.white, size: 14),
@@ -169,14 +200,22 @@ class ScheduleHeaderBanner extends StatelessWidget {
               SizedBox(width: 6.w),
               Text(
                 "$val",
-                style: TextStyle(color: Colors.black87, fontSize: 16.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
           SizedBox(height: 4.h),
           Text(
             label,
-            style: TextStyle(color: Colors.grey[500], fontSize: 10.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.grey[500],
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),

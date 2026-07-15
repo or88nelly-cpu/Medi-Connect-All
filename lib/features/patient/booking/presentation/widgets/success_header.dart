@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/booking_stepper.dart';
 
 class SuccessHeader extends StatelessWidget {
@@ -35,7 +36,7 @@ class SuccessHeader extends StatelessWidget {
             ),
             Icon(
               Icons.check_circle_rounded,
-              color: const Color(0xFF22C55E),
+              color: AppColors.success,
               size: 64.r,
             ),
           ],
@@ -59,7 +60,7 @@ class SuccessHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w900,
-            color: const Color(0xFF22C55E),
+            color: AppColors.success,
           ),
         ),
         SizedBox(height: 6.h),

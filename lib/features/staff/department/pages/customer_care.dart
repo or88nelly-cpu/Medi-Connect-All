@@ -5,9 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/departments/emrd/presentation/pages/medical_record_management_page.dart';
-import 'package:medi_connect/features/admin/management/consultation_management/presentation/bloc/emrd_bloc.dart';
-import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/admit_patient_dialog.dart';
+import 'package:medi_connect/features/admin/consultation_management/presentation/bloc/emrd_bloc.dart';
+import 'package:medi_connect/features/admin/consultation_management/presentation/pages/medical_record_management_page.dart';
+import 'package:medi_connect/features/admin/customer_care/presentation/widgets/admit_patient_dialog.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/appointments/create_appointment_wizard_dialog.dart';
 import 'package:medi_connect/features/staff/department/widgets/common_card.dart';
 

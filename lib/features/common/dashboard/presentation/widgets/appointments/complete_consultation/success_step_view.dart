@@ -81,7 +81,7 @@ class SuccessStepView extends StatelessWidget {
               Positioned(
                 top: 4.h,
                 left: 10.w,
-                child: _buildDot(6, Colors.blue, 0.8),
+                child: _buildDot(6, AppColors.blue, 0.8),
               ),
               Positioned(
                 bottom: 8.h,
@@ -91,12 +91,12 @@ class SuccessStepView extends StatelessWidget {
               Positioned(
                 top: 18.h,
                 right: 8.w,
-                child: _buildDot(5, Colors.purple, 0.7),
+                child: _buildDot(5, AppColors.purple, 0.7),
               ),
               Positioned(
                 bottom: 4.h,
                 left: 18.w,
-                child: _buildDot(7, Colors.green, 0.8),
+                child: _buildDot(7, AppColors.green, 0.8),
               ),
             ],
           ),
@@ -254,7 +254,7 @@ class SuccessStepView extends StatelessWidget {
                 onPressed: onBackToAppointments,
                 height: 48.h,
                 borderRadius: 10.r,
-                gradientColors: const [AppColors.primary, Colors.blueAccent],
+                gradientColors: const [AppColors.primary, AppColors.blue],
                 textStyle: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

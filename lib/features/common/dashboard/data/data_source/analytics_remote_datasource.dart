@@ -9,13 +9,6 @@ import 'package:medi_connect/features/common/dashboard/data/models/analytics_mod
 
 /// Remote data source for analytics.
 
-
-
-
-
-
-
-
 abstract class AnalyticsRemoteDataSource {
   Future<List<AnalyticsModel>> getAnalyticsList();
   Future<Map<String, dynamic>> getDashboardStats();

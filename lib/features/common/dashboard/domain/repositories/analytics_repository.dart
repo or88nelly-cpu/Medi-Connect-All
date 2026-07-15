@@ -6,12 +6,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/analytics
 
 /// Analytics repository interface contract.
 
-
-
-
-
-
-
 abstract class AnalyticsRepository {
   Future<Either<Failure, List<AnalyticsEntity>>> getAnalyticsList();
   Future<Either<Failure, Map<String, dynamic>>> getDashboardStats();

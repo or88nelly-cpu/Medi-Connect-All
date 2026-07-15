@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/authentication/domain/entities/user_entity.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
@@ -18,9 +18,6 @@ import 'schedule_date_picker_row.dart';
 import 'schedule_header_banner.dart';
 
 // Extracted Modular Sub-widgets
-
-
-
 
 class DoctorScheduleTab extends StatefulWidget {
   const DoctorScheduleTab({super.key});
@@ -48,8 +45,14 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
 
   bool _matchPatient(UserModel p, AppointmentEntity apt) {
     if (p.id == apt.patientId) return true;
-    final cleanPName = p.fullName.replaceAll(RegExp(r'\s+'), ' ').toLowerCase().trim();
-    final cleanAptName = apt.patientName.replaceAll(RegExp(r'\s+'), ' ').toLowerCase().trim();
+    final cleanPName = p.fullName
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .toLowerCase()
+        .trim();
+    final cleanAptName = apt.patientName
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .toLowerCase()
+        .trim();
     return cleanPName == cleanAptName;
   }
 
@@ -67,7 +70,10 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     }
   }
 
-  void _showConsultationCompleteSheet(BuildContext context, AppointmentEntity apt) {
+  void _showConsultationCompleteSheet(
+    BuildContext context,
+    AppointmentEntity apt,
+  ) {
     UserModel? patientUser;
     try {
       final patientState = context.read<PatientBloc>().state;
@@ -104,10 +110,8 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PatientVisitDetailPage(
-          appointment: apt,
-          patient: patientEntity,
-        ),
+        builder: (context) =>
+            PatientVisitDetailPage(appointment: apt, patient: patientEntity),
       ),
     );
   }
@@ -132,20 +136,35 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
 
           // Compute Counts for Yesterday's Schedule banner overview
           final yesterday = DateTime.now().subtract(const Duration(days: 1));
-          final yesterdayApts = allApts.where((a) => _isSameDay(a.appointmentDate, yesterday)).toList();
+          final yesterdayApts = allApts
+              .where((a) => _isSameDay(a.appointmentDate, yesterday))
+              .toList();
           final yesterdayTotal = yesterdayApts.length;
-          final yesterdayCompleted = yesterdayApts.where((a) => a.status.toLowerCase() == 'completed').length;
-          final yesterdayPending = yesterdayApts.where((a) => a.status.toLowerCase() == 'pending').length;
-          final yesterdayCancelled = yesterdayApts.where((a) => a.status.toLowerCase() == 'cancelled').length;
+          final yesterdayCompleted = yesterdayApts
+              .where((a) => a.status.toLowerCase() == 'completed')
+              .length;
+          final yesterdayPending = yesterdayApts
+              .where((a) => a.status.toLowerCase() == 'pending')
+              .length;
+          final yesterdayCancelled = yesterdayApts
+              .where((a) => a.status.toLowerCase() == 'cancelled')
+              .length;
 
           // Filter for selected date
-          final dateApts = allApts.where((a) => _isSameDay(a.appointmentDate, _selectedDate)).toList();
+          final dateApts = allApts
+              .where((a) => _isSameDay(a.appointmentDate, _selectedDate))
+              .toList();
 
           // Search + Status Filters
           final filteredApts = dateApts.where((a) {
-            final matchesQuery = a.patientName.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            final matchesQuery =
+                a.patientName.toLowerCase().contains(
+                  _searchQuery.toLowerCase(),
+                ) ||
                 a.specialty.toLowerCase().contains(_searchQuery.toLowerCase());
-            final matchesStatus = _selectedStatus == "All" || a.status.toLowerCase() == _selectedStatus.toLowerCase();
+            final matchesStatus =
+                _selectedStatus == "All" ||
+                a.status.toLowerCase() == _selectedStatus.toLowerCase();
             return matchesQuery && matchesStatus;
           }).toList();
 
@@ -159,7 +178,9 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                 Container(
                   padding: EdgeInsets.all(4.r),
                   decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F5F9),
+                    color: isDark
+                        ? const Color(0xFF1E293B)
+                        : const Color(0xFFF1F5F9),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Row(
@@ -171,11 +192,19 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             decoration: BoxDecoration(
                               color: _activeSubTab == 0
-                                  ? (isDark ? const Color(0xFF0F6FFF) : Colors.white)
+                                  ? (isDark
+                                        ? const Color(0xFF0F6FFF)
+                                        : Colors.white)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(10.r),
                               boxShadow: _activeSubTab == 0
-                                  ? [BoxShadow(color: Colors.black12, blurRadius: 4, offset: const Offset(0, 2))]
+                                  ? [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ]
                                   : [],
                             ),
                             alignment: Alignment.center,
@@ -183,8 +212,12 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                               "Appointments",
                               style: TextStyle(
                                 color: _activeSubTab == 0
-                                    ? (isDark ? Colors.white : const Color(0xFF0F6FFF))
-                                    : (isDark ? Colors.white60 : Colors.grey[600]),
+                                    ? (isDark
+                                          ? Colors.white
+                                          : const Color(0xFF0F6FFF))
+                                    : (isDark
+                                          ? Colors.white60
+                                          : Colors.grey[600]),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.sp,
                               ),
@@ -199,11 +232,19 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             decoration: BoxDecoration(
                               color: _activeSubTab == 1
-                                  ? (isDark ? const Color(0xFF0F6FFF) : Colors.white)
+                                  ? (isDark
+                                        ? const Color(0xFF0F6FFF)
+                                        : Colors.white)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(10.r),
                               boxShadow: _activeSubTab == 1
-                                  ? [BoxShadow(color: Colors.black12, blurRadius: 4, offset: const Offset(0, 2))]
+                                  ? [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ]
                                   : [],
                             ),
                             alignment: Alignment.center,
@@ -211,8 +252,12 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                               "Slot Management",
                               style: TextStyle(
                                 color: _activeSubTab == 1
-                                    ? (isDark ? Colors.white : const Color(0xFF0F6FFF))
-                                    : (isDark ? Colors.white60 : Colors.grey[600]),
+                                    ? (isDark
+                                          ? Colors.white
+                                          : const Color(0xFF0F6FFF))
+                                    : (isDark
+                                          ? Colors.white60
+                                          : Colors.grey[600]),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.sp,
                               ),
@@ -236,7 +281,9 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                     totalCount: yesterdayTotal > 0 ? yesterdayTotal : 5,
                     completedCount: yesterdayCompleted,
                     pendingCount: yesterdayPending > 0 ? yesterdayPending : 1,
-                    cancelledCount: yesterdayCancelled > 0 ? yesterdayCancelled : 1,
+                    cancelledCount: yesterdayCancelled > 0
+                        ? yesterdayCancelled
+                        : 1,
                     onViewCalendarTap: () => _selectDate(context),
                     isDark: isDark,
                   ),
@@ -251,18 +298,30 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                           decoration: BoxDecoration(
                             color: cardBg,
                             borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: AppColors.border(context)),
+                            border: Border.all(
+                              color: AppColors.border(context),
+                            ),
                           ),
                           child: TextField(
                             controller: _searchController,
-                            onChanged: (val) => setState(() => _searchQuery = val),
+                            onChanged: (val) =>
+                                setState(() => _searchQuery = val),
                             style: TextStyle(color: textCol, fontSize: 12.sp),
                             decoration: InputDecoration(
                               hintText: "Search patient, or specialty...",
-                              hintStyle: TextStyle(color: Colors.grey, fontSize: 12.sp),
-                              prefixIcon: Icon(Icons.search, color: Colors.grey, size: 16.r),
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12.sp,
+                              ),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                                size: 16.r,
+                              ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                              ),
                             ),
                           ),
                         ),
@@ -276,7 +335,11 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(color: AppColors.border(context)),
                         ),
-                        child: Icon(Icons.filter_list, color: textCol, size: 20.r),
+                        child: Icon(
+                          Icons.filter_list,
+                          color: textCol,
+                          size: 20.r,
+                        ),
                       ),
                     ],
                   ),
@@ -297,9 +360,18 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                   ScheduleDatePickerRow(
                     selectedDate: _selectedDate,
                     onSelectCalendar: () => _selectDate(context),
-                    onTodayTap: () => setState(() => _selectedDate = DateTime.now()),
-                    onPrevDay: () => setState(() => _selectedDate = _selectedDate.subtract(const Duration(days: 1))),
-                    onNextDay: () => setState(() => _selectedDate = _selectedDate.add(const Duration(days: 1))),
+                    onTodayTap: () =>
+                        setState(() => _selectedDate = DateTime.now()),
+                    onPrevDay: () => setState(
+                      () => _selectedDate = _selectedDate.subtract(
+                        const Duration(days: 1),
+                      ),
+                    ),
+                    onNextDay: () => setState(
+                      () => _selectedDate = _selectedDate.add(
+                        const Duration(days: 1),
+                      ),
+                    ),
                     isDark: isDark,
                   ),
                   SizedBox(height: 20.h),
@@ -312,11 +384,17 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.calendar_today_outlined, color: Colors.grey.withValues(alpha: 0.5), size: 40.r),
+                              Icon(
+                                Icons.calendar_today_outlined,
+                                color: Colors.grey.withValues(alpha: 0.5),
+                                size: 40.r,
+                              ),
                               SizedBox(height: 12.h),
                               Text(
                                 "No appointments found",
-                                style: AppTextStyles.titleMedium.copyWith(color: Colors.grey),
+                                style: AppTextStyles.titleMedium.copyWith(
+                                  color: Colors.grey,
+                                ),
                               ),
                             ],
                           ),
@@ -334,11 +412,15 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                               isDark: isDark,
                               patientPhoto: apt.patientPhoto,
                               patientGender: apt.patientGender,
-                              onTap: () => _showConsultationCompleteSheet(context, apt),
+                              onTap: () =>
+                                  _showConsultationCompleteSheet(context, apt),
                               onCancel: () {
-                                context.read<DoctorAppointmentsBloc>().add(CancelDoctorAppointment(apt.id));
+                                context.read<DoctorAppointmentsBloc>().add(
+                                  CancelDoctorAppointment(apt.id),
+                                );
                               },
-                              onComplete: () => _showConsultationCompleteSheet(context, apt),
+                              onComplete: () =>
+                                  _showConsultationCompleteSheet(context, apt),
                             );
                           },
                         ),

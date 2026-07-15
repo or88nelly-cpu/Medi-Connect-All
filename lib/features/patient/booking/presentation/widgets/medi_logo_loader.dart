@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 
 class MediLogoLoader extends StatefulWidget {
   final double? size;
@@ -55,7 +56,7 @@ class _MediLogoLoaderState extends State<MediLogoLoader>
           Text(
             'Loading MediConnect...',
             style: TextStyle(
-              color: const Color(0xFF0A3BB0),
+              color: AppColors.primary,
               fontSize: 12.sp,
               fontWeight: FontWeight.w900,
               letterSpacing: 1.2,

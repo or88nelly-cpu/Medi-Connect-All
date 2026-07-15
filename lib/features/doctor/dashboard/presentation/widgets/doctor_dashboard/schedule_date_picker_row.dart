@@ -25,7 +25,9 @@ class ScheduleDatePickerRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
-    final calendarIconBg = isDark ? const Color(0xFF312E81) : const Color(0xFFEEF2FF);
+    final calendarIconBg = isDark
+        ? const Color(0xFF312E81)
+        : const Color(0xFFEEF2FF);
     final arrowBg = isDark ? const Color(0xFF1E293B) : const Color(0xFFF3F4F6);
 
     return Row(
@@ -39,7 +41,11 @@ class ScheduleDatePickerRow extends StatelessWidget {
               color: calendarIconBg,
               borderRadius: BorderRadius.circular(10.r),
             ),
-            child: const Icon(Icons.calendar_month, color: Color(0xFF8B5CF6), size: 20),
+            child: const Icon(
+              Icons.calendar_month,
+              color: Color(0xFF8B5CF6),
+              size: 20,
+            ),
           ),
         ),
         SizedBox(width: 12.w),
@@ -58,10 +64,7 @@ class ScheduleDatePickerRow extends StatelessWidget {
               ),
               Text(
                 DateFormat('EEEE').format(selectedDate),
-                style: TextStyle(
-                  color: Colors.grey[500],
-                  fontSize: 10.sp,
-                ),
+                style: TextStyle(color: Colors.grey[500], fontSize: 10.sp),
               ),
             ],
           ),
@@ -78,7 +81,11 @@ class ScheduleDatePickerRow extends StatelessWidget {
             ),
             child: Text(
               "Today",
-              style: TextStyle(color: const Color(0xFF0F6FFF), fontSize: 11.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: const Color(0xFF0F6FFF),
+                fontSize: 11.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

@@ -5,9 +5,6 @@ import 'package:equatable/equatable.dart';
 /// Failure definitions representing errors in the Domain layer.
 /// Used with the Either pattern for predictable, functional error handling.
 
-
-
-
 abstract class Failure extends Equatable {
   final String message;
   final String? code;
@@ -41,4 +38,14 @@ class AuthFailure extends Failure {
 /// Represents input/field validation errors.
 class ValidationFailure extends Failure {
   const ValidationFailure(super.message);
+}
+
+/// Represents generic/REST API failure.
+class ApiFailure extends Failure {
+  const ApiFailure(super.message, {super.code});
+}
+
+/// Represents fallback generic failure.
+class UnknownFailure extends Failure {
+  const UnknownFailure([super.message = "An unknown error occurred."]);
 }

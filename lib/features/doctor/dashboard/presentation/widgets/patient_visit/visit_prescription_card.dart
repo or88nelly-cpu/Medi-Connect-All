@@ -59,11 +59,11 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
               padding: EdgeInsets.all(6.r),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF3B82F6).withValues(alpha: 0.15),
+                color: AppColors.info.withValues(alpha: 0.15),
               ),
               child: Icon(
                 Icons.receipt_long,
-                color: const Color(0xFF3B82F6),
+                color: AppColors.info,
                 size: 18.r,
               ),
             ),
@@ -344,7 +344,7 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
                             IconButton(
                               icon: const Icon(
                                 Icons.delete_outline,
-                                color: Colors.red,
+                                color: AppColors.red,
                                 size: 18,
                               ),
                               onPressed: () => widget.onRemoveMedicine(index),

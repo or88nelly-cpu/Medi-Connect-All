@@ -6,11 +6,7 @@ class MrdStatsGrid extends StatelessWidget {
   final Map<String, int> counts;
   final bool isDark;
 
-  const MrdStatsGrid({
-    super.key,
-    required this.counts,
-    required this.isDark,
-  });
+  const MrdStatsGrid({super.key, required this.counts, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +18,36 @@ class MrdStatsGrid extends StatelessWidget {
       mainAxisSpacing: 8.h,
       childAspectRatio: 1.15,
       children: [
-        _buildStatCard('Pending Discharge', counts['discharge'] ?? 0, AppColors.red),
-        _buildStatCard('Pending Operative', counts['operative'] ?? 0, AppColors.orange),
-        _buildStatCard('Digital Signatures', counts['signatures'] ?? 0, AppColors.purple),
-        _buildStatCard('Overdue MRD Files', counts['overdue'] ?? 0, AppColors.error),
-        _buildStatCard('Returned Correction', counts['returned'] ?? 0, AppColors.info),
-        _buildStatCard('Total Pending Records', counts['total'] ?? 0, AppColors.success),
+        _buildStatCard(
+          'Pending Discharge',
+          counts['discharge'] ?? 0,
+          AppColors.red,
+        ),
+        _buildStatCard(
+          'Pending Operative',
+          counts['operative'] ?? 0,
+          AppColors.orange,
+        ),
+        _buildStatCard(
+          'Digital Signatures',
+          counts['signatures'] ?? 0,
+          AppColors.purple,
+        ),
+        _buildStatCard(
+          'Overdue MRD Files',
+          counts['overdue'] ?? 0,
+          AppColors.error,
+        ),
+        _buildStatCard(
+          'Returned Correction',
+          counts['returned'] ?? 0,
+          AppColors.info,
+        ),
+        _buildStatCard(
+          'Total Pending Records',
+          counts['total'] ?? 0,
+          AppColors.success,
+        ),
       ],
     );
   }

@@ -10,14 +10,6 @@ import 'package:shimmer/shimmer.dart';
 /// Custom loader and feedback widgets.
 /// Implements: AppLoader, ShimmerLoader, EmptyStateWidget.
 
-
-
-
-
-
-
-
-
 /// Central standard activity progress spinner.
 class AppLoader extends StatelessWidget {
   final String? message;

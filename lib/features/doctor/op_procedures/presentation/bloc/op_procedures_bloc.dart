@@ -8,7 +8,8 @@ import 'package:medi_connect/features/doctor/op_procedures/domain/usecases/get_o
 class OpProceduresBloc extends Bloc<OpProceduresEvent, OpProceduresState> {
   final GetOpProceduresUseCase getOpProcedures;
 
-  OpProceduresBloc({required this.getOpProcedures}) : super(OpProceduresInitial()) {
+  OpProceduresBloc({required this.getOpProcedures})
+    : super(OpProceduresInitial()) {
     on<LoadOpProcedures>(_onLoadOpProcedures);
   }
 

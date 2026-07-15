@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/features/admin/management/customer_care/presentation/widgets/registration/id_card_preview.dart'
+import 'package:medi_connect/features/admin/customer_care/presentation/widgets/registration/id_card_preview.dart'
     show QrCodePainter;
 
 class DigitalIdCard extends StatelessWidget {
@@ -465,7 +465,7 @@ class DigitalIdCard extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.phone_in_talk_rounded,
-                    color: isDark ? Colors.white : Colors.redAccent,
+                    color: isDark ? Colors.white : AppColors.red,
                     size: 14.r,
                   ),
                 ),

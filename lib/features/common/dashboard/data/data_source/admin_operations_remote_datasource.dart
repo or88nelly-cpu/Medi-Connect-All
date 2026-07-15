@@ -3,10 +3,10 @@ library;
 import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/features/common/dashboard/data/models/activity_log_model.dart';
 import 'package:medi_connect/features/common/dashboard/data/models/appointment_model.dart';
 import 'package:medi_connect/features/common/dashboard/data/models/attendance_model.dart';
@@ -18,22 +18,6 @@ import 'package:medi_connect/features/common/dashboard/data/models/pharmacy_item
 /// Remote data source for all admin operations modules.
 /// Handles Supabase CRUD for pharmacy, labs, attendance, emergencies,
 /// activity logs, invoices, and admin settings.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // ─── Abstract Interface ─────────────────────────────────────────────────────
 

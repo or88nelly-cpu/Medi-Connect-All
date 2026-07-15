@@ -7,11 +7,6 @@ import 'package:medi_connect/core/models/failure.dart';
 /// Base interface for all business logic Use Cases in the Domain layer.
 /// Forces consistent input (Params) and output (Either Failure or Success Type).
 
-
-
-
-
-
 abstract class UseCase<Type, Params> {
   const UseCase();
 

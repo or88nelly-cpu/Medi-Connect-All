@@ -197,9 +197,7 @@ class _PatientUpcomingAppointmentsState
       'EEEE, d MMMM yyyy',
     ).format(apt.appointmentDate);
     final isPending = apt.status.toLowerCase() == 'pending';
-    final statusColor = isPending
-        ? const Color(0xFFF59E0B)
-        : const Color(0xFF10B981);
+    final statusColor = isPending ? AppColors.warning : const Color(0xFF10B981);
 
     return GestureDetector(
       onTap: () {

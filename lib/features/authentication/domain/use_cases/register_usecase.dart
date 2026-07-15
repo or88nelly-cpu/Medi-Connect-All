@@ -10,14 +10,6 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 
 /// Executes registration flow in the authentication feature.
 
-
-
-
-
-
-
-
-
 class RegisterParams {
   final String email;
   final String password;

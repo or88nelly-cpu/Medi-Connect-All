@@ -188,11 +188,12 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                   count: stats.opProceduresCount
                                       .toString()
                                       .padLeft(2, '0'),
-                                      onTap: () {
+                                  onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => OpProceduresPage(),
+                                        builder: (context) =>
+                                            OpProceduresPage(),
                                       ),
                                     );
                                   },
@@ -219,7 +220,6 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                                   themeColor: AppColors.orange,
                                 ),
                                 DoctorOverviewCard(
-                                  
                                   icon: Icons.medical_services_rounded,
                                   title: AppStrings.surgeriesTitle,
                                   count: stats.surgeryCount.toString().padLeft(

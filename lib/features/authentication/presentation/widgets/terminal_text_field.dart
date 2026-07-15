@@ -96,11 +96,11 @@ class TerminalTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(6.r),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.redAccent, width: 1.0),
+              borderSide: const BorderSide(color: AppColors.red, width: 1.0),
               borderRadius: BorderRadius.circular(6.r),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.redAccent, width: 1.2),
+              borderSide: const BorderSide(color: AppColors.red, width: 1.2),
               borderRadius: BorderRadius.circular(6.r),
             ),
             suffixIcon: isPassword

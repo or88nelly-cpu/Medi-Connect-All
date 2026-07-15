@@ -33,7 +33,10 @@ class MrdPatientTable extends StatelessWidget {
           children: [
             Icon(Icons.folder_off_outlined, size: 40.r, color: Colors.grey),
             SizedBox(height: 8.h),
-            Text("No pending medical records found matching filters.", style: TextStyle(color: Colors.grey, fontSize: 11.sp)),
+            Text(
+              "No pending medical records found matching filters.",
+              style: TextStyle(color: Colors.grey, fontSize: 11.sp),
+            ),
           ],
         ),
       );
@@ -77,7 +80,9 @@ class MrdPatientTable extends StatelessWidget {
     }
 
     // Status configurations
-    final String displayStatus = item.record.status.toLowerCase() == 'pending' && item.priority.toLowerCase() == 'high'
+    final String displayStatus =
+        item.record.status.toLowerCase() == 'pending' &&
+            item.priority.toLowerCase() == 'high'
         ? 'Overdue'
         : 'Pending';
 
@@ -116,7 +121,11 @@ class MrdPatientTable extends StatelessWidget {
                   children: [
                     Text(
                       item.patientName,
-                      style: TextStyle(color: textCol, fontSize: 11.5.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: textCol,
+                        fontSize: 11.5.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -126,7 +135,11 @@ class MrdPatientTable extends StatelessWidget {
                     ),
                     Text(
                       item.ipdLocation,
-                      style: TextStyle(color: secondaryTextCol, fontSize: 9.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: secondaryTextCol,
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -135,7 +148,11 @@ class MrdPatientTable extends StatelessWidget {
                 flex: 2,
                 child: Text(
                   mrdNo,
-                  style: TextStyle(color: const Color(0xFF0F6FFF), fontSize: 11.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: const Color(0xFF0F6FFF),
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Expanded(
@@ -145,11 +162,18 @@ class MrdPatientTable extends StatelessWidget {
                   children: [
                     Text(
                       item.record.recordType,
-                      style: TextStyle(color: textCol, fontSize: 10.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: textCol,
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       item.ipdLocation,
-                      style: TextStyle(color: secondaryTextCol, fontSize: 8.5.sp),
+                      style: TextStyle(
+                        color: secondaryTextCol,
+                        fontSize: 8.5.sp,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -174,7 +198,11 @@ class MrdPatientTable extends StatelessWidget {
                     SizedBox(width: 2.w),
                     Text(
                       item.priority,
-                      style: TextStyle(color: priorityText, fontSize: 9.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: priorityText,
+                        fontSize: 9.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -184,7 +212,11 @@ class MrdPatientTable extends StatelessWidget {
                 children: [
                   Text(
                     item.pendingSince,
-                    style: TextStyle(color: textCol, fontSize: 9.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: textCol,
+                      fontSize: 9.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   Text(
                     "27 Jun, 2026",
@@ -200,7 +232,11 @@ class MrdPatientTable extends StatelessWidget {
                 ),
                 child: Text(
                   displayStatus,
-                  style: TextStyle(color: statusText, fontSize: 9.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: statusText,
+                    fontSize: 9.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Row(
@@ -219,7 +255,10 @@ class MrdPatientTable extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       foregroundColor: const Color(0xFF0F6FFF),
                       side: const BorderSide(color: Color(0xFF0F6FFF)),
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 4.h,
+                      ),
                       minimumSize: const Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(

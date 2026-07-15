@@ -6,8 +6,8 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/features/admin/home/widgets/admin_department_card.dart';
 import 'package:medi_connect/features/admin/home/widgets/department_list_shimmer.dart';
-import 'package:medi_connect/features/admin/management/staff_management/domain/entities/department_entity.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/domain/entities/department_entity.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/department_bloc.dart';
 
 class DepartmentListHome extends StatelessWidget {
   const DepartmentListHome({super.key});
@@ -72,7 +72,7 @@ class DepartmentListHome extends StatelessWidget {
                             size: 24.r,
                             color: isDark
                                 ? Colors.white
-                                : const Color(0xFF0F2C59),
+                                : AppColors.textDarkNavy,
                           ),
                           SizedBox(width: 12.w),
                           Text(
@@ -81,7 +81,7 @@ class DepartmentListHome extends StatelessWidget {
                               fontSize: 18.sp,
                               color: isDark
                                   ? Colors.white
-                                  : const Color(0xFF0F2C59),
+                                  : AppColors.textDarkNavy,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

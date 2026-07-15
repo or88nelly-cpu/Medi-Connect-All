@@ -8,13 +8,6 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 
 /// Resets the user's password in the authentication feature.
 
-
-
-
-
-
-
-
 @lazySingleton
 class ResetPasswordUseCase extends UseCase<void, String> {
   final AuthRepository _repository;

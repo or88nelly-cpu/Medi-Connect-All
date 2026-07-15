@@ -33,7 +33,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.blue.withValues(alpha: 0.1),
+                      color: AppColors.blue.withValues(alpha: 0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -45,7 +45,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
                     Container(
                       height: 10.h,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF3B82F6), // Blue top bar
+                        color: AppColors.info, // Blue top bar
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(8.r),
                         ),
@@ -91,7 +91,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.check_circle,
-                  color: Colors.green,
+                  color: AppColors.green,
                   size: 16.r,
                 ),
               ),
@@ -108,7 +108,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.notifications,
-                  color: Colors.blue,
+                  color: AppColors.blue,
                   size: 14.r,
                 ),
               ),

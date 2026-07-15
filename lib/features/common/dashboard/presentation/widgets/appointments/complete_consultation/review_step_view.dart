@@ -6,7 +6,7 @@ import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/common/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/appointments/complete_consultation/complete_consultation_cubit.dart';
@@ -121,7 +121,7 @@ class ReviewStepView extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 26.r,
-                backgroundColor: Colors.blue.withValues(alpha: 0.1),
+                backgroundColor: AppColors.blue.withValues(alpha: 0.1),
                 child: ClipOval(
                   child: CustomImageView(
                     imagePath: patientImg,
@@ -189,7 +189,7 @@ class ReviewStepView extends StatelessWidget {
                             vertical: 2.h,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.blue.withValues(alpha: 0.1),
+                            color: AppColors.blue.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4.r),
                           ),
                           child: Text(
@@ -218,7 +218,7 @@ class ReviewStepView extends StatelessWidget {
                         Icon(
                           Icons.phone_outlined,
                           size: 12.r,
-                          color: Colors.blue,
+                          color: AppColors.blue,
                         ),
                         SizedBox(width: 4.w),
                         Text(
@@ -234,7 +234,7 @@ class ReviewStepView extends StatelessWidget {
                         Icon(
                           Icons.water_drop_outlined,
                           size: 12.r,
-                          color: Colors.red,
+                          color: AppColors.red,
                         ),
                         SizedBox(width: 4.w),
                         Text(
@@ -326,9 +326,9 @@ class ReviewStepView extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.phone_outlined, color: Colors.blue),
+                icon: const Icon(Icons.phone_outlined, color: AppColors.blue),
                 style: IconButton.styleFrom(
-                  backgroundColor: Colors.blue.withValues(alpha: 0.1),
+                  backgroundColor: AppColors.blue.withValues(alpha: 0.1),
                 ),
               ),
             ],
@@ -375,7 +375,7 @@ class ReviewStepView extends StatelessWidget {
                       vertical: 2.h,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.teal.withValues(alpha: 0.1),
+                      color: AppColors.teal.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
@@ -551,7 +551,7 @@ class ReviewStepView extends StatelessWidget {
                       vertical: 2.h,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.orange.withValues(alpha: 0.1),
+                      color: AppColors.orange.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
@@ -609,7 +609,7 @@ class ReviewStepView extends StatelessWidget {
                                 vertical: 2.h,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.orange.withValues(alpha: 0.15),
+                                color: AppColors.orange.withValues(alpha: 0.15),
                                 borderRadius: BorderRadius.circular(4.r),
                               ),
                               child: Text(
@@ -677,7 +677,7 @@ class ReviewStepView extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.format_quote,
-                    color: Colors.blue.withValues(alpha: 0.3),
+                    color: AppColors.blue.withValues(alpha: 0.3),
                     size: 24.r,
                   ),
                   SizedBox(width: 6.w),
@@ -792,10 +792,10 @@ class ReviewStepView extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(12.r),
                 decoration: BoxDecoration(
-                  color: Colors.purple.withValues(alpha: 0.04),
+                  color: AppColors.purple.withValues(alpha: 0.04),
                   borderRadius: BorderRadius.circular(8.r),
                   border: Border.all(
-                    color: Colors.purple.withValues(alpha: 0.1),
+                    color: AppColors.purple.withValues(alpha: 0.1),
                   ),
                 ),
                 child: Row(

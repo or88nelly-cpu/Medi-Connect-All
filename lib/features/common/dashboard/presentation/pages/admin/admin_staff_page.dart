@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_state.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/admin_staff/staff_card.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/admin_staff/staff_filter_sort_row.dart';
@@ -18,11 +18,6 @@ import 'package:medi_connect/features/common/dashboard/presentation/widgets/admi
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/common/directory_pagination.dart';
 
 // Extracted sub-widgets
-
-
-
-
-
 
 class AdminStaffPage extends StatefulWidget {
   const AdminStaffPage({super.key});

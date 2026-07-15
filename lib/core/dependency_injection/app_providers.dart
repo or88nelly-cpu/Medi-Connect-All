@@ -2,9 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/constants/departments_config.dart';
 import 'package:medi_connect/core/theme/theme_cubit.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/user_details_bloc.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
@@ -20,8 +20,8 @@ import 'package:medi_connect/features/common/dashboard/presentation/bloc/doctor/
 import 'package:medi_connect/features/doctor/dashboard/presentation/bloc/doctor_dashboard_bloc.dart';
 import 'package:medi_connect/features/doctor/dashboard/presentation/bloc/pending_mrd/pending_mrd_bloc.dart';
 import 'package:medi_connect/features/doctor/ip_info/presentation/bloc/ip_info_bloc.dart';
+import 'package:medi_connect/features/doctor/op_info/presentation/bloc/op_info_bloc.dart';
 import 'package:medi_connect/features/doctor/op_procedures/presentation/bloc/op_procedures_bloc.dart';
-import 'package:medi_connect/features/doctor/opinfo/presentation/bloc/op_info_bloc.dart';
 import 'package:medi_connect/features/patient/dashboard/presentation/bloc/banner_bloc.dart';
 import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
 
@@ -64,7 +64,7 @@ class AppProviders {
       BlocProvider<OpInfoBloc>(create: (_) => sl<OpInfoBloc>()),
       BlocProvider<IpInfoBloc>(create: (_) => sl<IpInfoBloc>()),
       BlocProvider<OpProceduresBloc>(create: (_) => sl<OpProceduresBloc>()),
-     // BlocProvider<IpP>(create: (_) => sl<IpInfoBloc>()),
+      // BlocProvider<IpP>(create: (_) => sl<IpInfoBloc>()),
       BlocProvider<DoctorDashboardBloc>(
         create: (_) => sl<DoctorDashboardBloc>(),
       ),

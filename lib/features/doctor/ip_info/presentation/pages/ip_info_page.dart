@@ -28,12 +28,27 @@ class _IpInfoPageState extends State<IpInfoPage> {
 
   String _formatDate(DateTime date) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     const weekdays = [
-      'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-      'Friday', 'Saturday', 'Sunday'
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
     ];
     return "${months[date.month - 1]} ${date.day.toString().padLeft(2, '0')}, ${date.year}\n${weekdays[date.weekday - 1]}";
   }
@@ -45,29 +60,40 @@ class _IpInfoPageState extends State<IpInfoPage> {
     final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
 
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+      backgroundColor: isDark
+          ? const Color(0xFF0F172A)
+          : const Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: textCol, size: 20.r),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: textCol,
+            size: 20.r,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           "IP Info",
-          style: AppTextStyles.titleLarge.copyWith(color: textCol, fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleLarge.copyWith(
+            color: textCol,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: BlocBuilder<IpInfoBloc, IpInfoState>(
         builder: (context, state) {
           if (state is IpInfoLoading) {
-            return Center(child: CircularProgressIndicator(color: AppColors.primary));
+            return Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            );
           }
           if (state is IpInfoError) {
             return Center(
               child: Text(
                 state.message,
-                style: const TextStyle(color: Colors.red),
+                style: const TextStyle(color: AppColors.red),
               ),
             );
           }
@@ -162,7 +188,10 @@ class _IpInfoPageState extends State<IpInfoPage> {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
+            icon: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white,
+            ),
             onPressed: () {
               setState(() {
                 _selectedDate = _selectedDate.add(const Duration(days: 1));
@@ -181,9 +210,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(
-          color: isDark ? Colors.white10 : Colors.grey[200]!,
-        ),
+        border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
       ),
       child: Stack(
         children: [
@@ -225,23 +252,27 @@ class _IpInfoPageState extends State<IpInfoPage> {
     );
   }
 
-  Widget _buildOccupancyCard(IpOccupancyEntity item, Color cardBg, bool isDark) {
+  Widget _buildOccupancyCard(
+    IpOccupancyEntity item,
+    Color cardBg,
+    bool isDark,
+  ) {
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
     final secondaryTextCol = isDark ? Colors.white60 : Colors.grey[500];
 
     Color cardThemeColor = const Color(0xFF10B981); // ICU
     IconData icon = Icons.monitor_heart_outlined;
     if (item.name.toLowerCase() == 'ward') {
-      cardThemeColor = const Color(0xFF3B82F6);
+      cardThemeColor = AppColors.info;
       icon = Icons.single_bed_outlined;
     } else if (item.name.toLowerCase() == 'room') {
-      cardThemeColor = const Color(0xFFF59E0B);
+      cardThemeColor = AppColors.warning;
       icon = Icons.door_front_door_outlined;
     } else if (item.name.toLowerCase().contains('surgery')) {
       cardThemeColor = const Color(0xFF8B5CF6);
       icon = Icons.calendar_month_outlined;
     } else if (item.name.toLowerCase() == 'block') {
-      cardThemeColor = const Color(0xFFEF4444);
+      cardThemeColor = AppColors.error;
       icon = Icons.apartment_outlined;
     } else if (item.name.toLowerCase() == 'hdu') {
       cardThemeColor = const Color(0xFF06B6D4);
@@ -255,9 +286,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(
-          color: isDark ? Colors.white10 : Colors.grey[200]!,
-        ),
+        border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -273,7 +302,11 @@ class _IpInfoPageState extends State<IpInfoPage> {
                 ),
                 child: Icon(icon, color: cardThemeColor, size: 22.r),
               ),
-              Icon(Icons.arrow_forward_ios_rounded, color: secondaryTextCol, size: 12.r),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: secondaryTextCol,
+                size: 12.r,
+              ),
             ],
           ),
           SizedBox(height: 10.h),
@@ -326,9 +359,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(
-          color: isDark ? Colors.white10 : Colors.grey[200]!,
-        ),
+        border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
       ),
       child: Row(
         children: [
@@ -372,7 +403,11 @@ class _IpInfoPageState extends State<IpInfoPage> {
             ),
             child: Text(
               "+ Create",
-              style: TextStyle(color: Colors.white, fontSize: 11.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 11.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

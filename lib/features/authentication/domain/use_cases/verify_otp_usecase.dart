@@ -9,14 +9,6 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 
 /// Executes OTP verification flow in the authentication feature.
 
-
-
-
-
-
-
-
-
 class VerifyOtpParams {
   final String email;
   final String token;

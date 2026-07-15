@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:flutter/foundation.dart';
 import 'dart:math' hide log;
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,37 +13,53 @@ class AdService {
   bool get isInitialized => _isInitialized;
 
   // Google Standard Test Ad Unit IDs
-  static const String _androidBannerId = 'ca-app-pub-3940256099942544/6300978111';
+  static const String _androidBannerId =
+      'ca-app-pub-3940256099942544/6300978111';
   static const String _iosBannerId = 'ca-app-pub-3940256099942544/2934735716';
 
-  static const String _androidInterstitialId = 'ca-app-pub-3940256099942544/1033173712';
-  static const String _iosInterstitialId = 'ca-app-pub-3940256099942544/4411468910';
+  static const String _androidInterstitialId =
+      'ca-app-pub-3940256099942544/1033173712';
+  static const String _iosInterstitialId =
+      'ca-app-pub-3940256099942544/4411468910';
 
-  static const String _androidRewardedId = 'ca-app-pub-3940256099942544/5224354917';
+  static const String _androidRewardedId =
+      'ca-app-pub-3940256099942544/5224354917';
   static const String _iosRewardedId = 'ca-app-pub-3940256099942544/1712485313';
 
   /// Returns target banner ad unit ID based on device platform.
   String get bannerAdUnitId {
     if (kDebugMode) {
-      return defaultTargetPlatform == TargetPlatform.android ? _androidBannerId : _iosBannerId;
+      return defaultTargetPlatform == TargetPlatform.android
+          ? _androidBannerId
+          : _iosBannerId;
     }
-    return defaultTargetPlatform == TargetPlatform.android ? _androidBannerId : _iosBannerId;
+    return defaultTargetPlatform == TargetPlatform.android
+        ? _androidBannerId
+        : _iosBannerId;
   }
 
   /// Returns target interstitial ad unit ID based on device platform.
   String get interstitialAdUnitId {
     if (kDebugMode) {
-      return defaultTargetPlatform == TargetPlatform.android ? _androidInterstitialId : _iosInterstitialId;
+      return defaultTargetPlatform == TargetPlatform.android
+          ? _androidInterstitialId
+          : _iosInterstitialId;
     }
-    return defaultTargetPlatform == TargetPlatform.android ? _androidInterstitialId : _iosInterstitialId;
+    return defaultTargetPlatform == TargetPlatform.android
+        ? _androidInterstitialId
+        : _iosInterstitialId;
   }
 
   /// Returns target rewarded ad unit ID based on device platform.
   String get rewardedAdUnitId {
     if (kDebugMode) {
-      return defaultTargetPlatform == TargetPlatform.android ? _androidRewardedId : _iosRewardedId;
+      return defaultTargetPlatform == TargetPlatform.android
+          ? _androidRewardedId
+          : _iosRewardedId;
     }
-    return defaultTargetPlatform == TargetPlatform.android ? _androidRewardedId : _iosRewardedId;
+    return defaultTargetPlatform == TargetPlatform.android
+        ? _androidRewardedId
+        : _iosRewardedId;
   }
 
   /// Initializes the Google Mobile Ads SDK.

@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_state.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/patient/booking/presentation/pages/booking_flow_page.dart';
@@ -262,7 +262,7 @@ class _DoctorCard extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.star_rounded,
-                          color: const Color(0xFFFFB547),
+                          color: AppColors.accent,
                           size: 14.r,
                         ),
                         SizedBox(width: 3.w),
@@ -328,7 +328,7 @@ class _DoctorCard extends StatelessWidget {
                 width: 8.r,
                 height: 8.r,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF22C55E),
+                  color: AppColors.success,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -336,7 +336,7 @@ class _DoctorCard extends StatelessWidget {
               Text(
                 'Available Today',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: const Color(0xFF22C55E),
+                  color: AppColors.success,
                   fontWeight: FontWeight.w600,
                 ),
               ),

@@ -71,10 +71,7 @@ class MrdDateSwitcher extends StatelessWidget {
               ),
               Text(
                 DateFormat('EEEE').format(selectedDate),
-                style: TextStyle(
-                  color: Colors.white60,
-                  fontSize: 11.sp,
-                ),
+                style: TextStyle(color: Colors.white60, fontSize: 11.sp),
               ),
             ],
           ),
@@ -92,11 +89,19 @@ class MrdDateSwitcher extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.calendar_month, color: Colors.white, size: 16),
+                    const Icon(
+                      Icons.calendar_month,
+                      color: Colors.white,
+                      size: 16,
+                    ),
                     SizedBox(width: 6.w),
                     Text(
                       DateFormat('MMM dd, yyyy').format(selectedDate),
-                      style: TextStyle(color: Colors.white, fontSize: 11.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),

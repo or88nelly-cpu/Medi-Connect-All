@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/features/authentication/domain/entities/user_entity.dart';
 import 'package:medi_connect/features/common/dashboard/data/models/appointment_model.dart';
@@ -217,8 +218,8 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
 
         if (isBooked) {
           cardBg = isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF);
-          borderCol = const Color(0xFF3B82F6);
-          textCol = const Color(0xFF3B82F6);
+          borderCol = AppColors.info;
+          textCol = AppColors.info;
           statusIndicator = Text(
             match.patientName,
             style: TextStyle(

@@ -15,10 +15,6 @@ import 'package:medi_connect/features/patient/profile/presentation/widgets/patie
 
 // Child components
 
-
-
-
-
 class PatientDetailScreen extends StatefulWidget {
   final String userId;
 

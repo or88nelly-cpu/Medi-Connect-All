@@ -36,7 +36,8 @@ class ScheduleAppointmentItem extends StatelessWidget {
     final timePeriod = timeParts.length > 1 ? timeParts[1] : "";
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
 
-    final isBlocked = appointment.status == 'Blocked' || appointment.type == 'Blocked';
+    final isBlocked =
+        appointment.status == 'Blocked' || appointment.type == 'Blocked';
 
     return IntrinsicHeight(
       child: Row(
@@ -74,7 +75,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
           // 2. Timeline vertical indicator
           ScheduleTimelineIndicator(
             color: isBlocked
-                ? const Color(0xFFEF4444)
+                ? AppColors.error
                 : _getStatusColor(appointment.status),
             index: index,
             totalCount: totalCount,
@@ -118,7 +119,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: const Color(0xFFFCA5A5)),
             ),
-            child: Icon(Icons.block, color: const Color(0xFFEF4444), size: 24.r),
+            child: Icon(Icons.block, color: AppColors.error, size: 24.r),
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -129,7 +130,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
                 Text(
                   "DOCTOR UNAVAILABLE",
                   style: TextStyle(
-                    color: const Color(0xFFEF4444),
+                    color: AppColors.error,
                     fontSize: 8.5.sp,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 0.5,
@@ -163,7 +164,11 @@ class ScheduleAppointmentItem extends StatelessWidget {
             ),
             child: Text(
               "Blocked",
-              style: TextStyle(color: const Color(0xFFB91C1C), fontSize: 9.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: const Color(0xFFB91C1C),
+                fontSize: 9.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
@@ -203,7 +208,9 @@ class ScheduleAppointmentItem extends StatelessWidget {
               offset: const Offset(0, 4),
             ),
           ],
-          border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
+          border: Border.all(
+            color: isDark ? Colors.white10 : Colors.grey[200]!,
+          ),
         ),
         child: Row(
           children: [
@@ -235,21 +242,35 @@ class ScheduleAppointmentItem extends StatelessWidget {
                   SizedBox(height: 2.h),
                   Row(
                     children: [
-                      Icon(Icons.dashboard_customize_outlined, size: 10.r, color: const Color(0xFF8B5CF6)),
+                      Icon(
+                        Icons.dashboard_customize_outlined,
+                        size: 10.r,
+                        color: const Color(0xFF8B5CF6),
+                      ),
                       SizedBox(width: 4.w),
                       Text(
                         appointment.specialty,
-                        style: TextStyle(color: secondaryTextCol, fontSize: 9.sp),
+                        style: TextStyle(
+                          color: secondaryTextCol,
+                          fontSize: 9.sp,
+                        ),
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      Icon(Icons.person_outline, size: 10.r, color: Colors.grey),
+                      Icon(
+                        Icons.person_outline,
+                        size: 10.r,
+                        color: Colors.grey,
+                      ),
                       SizedBox(width: 4.w),
                       Text(
                         appointment.doctorName,
-                        style: TextStyle(color: secondaryTextCol, fontSize: 9.sp),
+                        style: TextStyle(
+                          color: secondaryTextCol,
+                          fontSize: 9.sp,
+                        ),
                       ),
                     ],
                   ),
@@ -258,27 +279,41 @@ class ScheduleAppointmentItem extends StatelessWidget {
                     children: [
                       // OPD Token Badge
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 6.w,
+                          vertical: 3.h,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFEFF6FF),
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           "OPD - $token",
-                          style: TextStyle(color: const Color(0xFF1D4ED8), fontSize: 8.5.sp, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: const Color(0xFF1D4ED8),
+                            fontSize: 8.5.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       SizedBox(width: 6.w),
                       // Status Badge
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 6.w,
+                          vertical: 3.h,
+                        ),
                         decoration: BoxDecoration(
                           color: statusBadgeBg,
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           appointment.status,
-                          style: TextStyle(color: statusBadgeText, fontSize: 8.5.sp, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: statusBadgeText,
+                            fontSize: 8.5.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
@@ -298,7 +333,10 @@ class ScheduleAppointmentItem extends StatelessWidget {
                     if (val == 'complete') onComplete();
                   },
                   itemBuilder: (context) => [
-                    const PopupMenuItem(value: 'complete', child: Text("Complete")),
+                    const PopupMenuItem(
+                      value: 'complete',
+                      child: Text("Complete"),
+                    ),
                     const PopupMenuItem(value: 'cancel', child: Text("Cancel")),
                   ],
                 ),
@@ -311,7 +349,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
                       size: 11.r,
                       color: appointment.status.toLowerCase() == 'completed'
                           ? const Color(0xFF10B981)
-                          : const Color(0xFFF59E0B),
+                          : AppColors.warning,
                     ),
                     SizedBox(width: 2.w),
                     Text(
@@ -337,11 +375,11 @@ class ScheduleAppointmentItem extends StatelessWidget {
       case 'completed':
         return const Color(0xFF10B981);
       case 'pending':
-        return const Color(0xFFF59E0B);
+        return AppColors.warning;
       case 'cancelled':
-        return const Color(0xFFEF4444);
+        return AppColors.error;
       case 'confirmed':
-        return const Color(0xFF3B82F6);
+        return AppColors.info;
       default:
         return const Color(0xFF8B5CF6);
     }

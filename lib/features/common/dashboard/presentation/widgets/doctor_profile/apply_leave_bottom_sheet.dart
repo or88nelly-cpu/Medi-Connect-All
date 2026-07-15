@@ -229,7 +229,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                             Icon(
                               Icons.calendar_month_outlined,
                               size: 14.sp,
-                              color: Colors.green,
+                              color: AppColors.green,
                             ),
                             SizedBox(width: 8.w),
                             Text(
@@ -262,7 +262,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                                 Icon(
                                   Icons.calendar_month_outlined,
                                   size: 14.sp,
-                                  color: Colors.green,
+                                  color: AppColors.green,
                                 ),
                                 SizedBox(width: 8.w),
                                 Text(type),
@@ -581,7 +581,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
                             size: 20.sp,
                             color: _uploadedFileName == null
                                 ? AppColors.primary
-                                : Colors.green,
+                                : AppColors.green,
                           ),
                           SizedBox(height: 6.h),
                           Text(

@@ -146,7 +146,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                                     children: [
                                       Icon(
                                         Icons.star_rounded,
-                                        color: const Color(0xFFFFB547),
+                                        color: AppColors.accent,
                                         size: 16.r,
                                       ),
                                       SizedBox(width: 3.w),
@@ -349,14 +349,14 @@ class _StatsRow extends StatelessWidget {
           value: '4.8',
           label: 'Rating',
           icon: Icons.star_rounded,
-          color: const Color(0xFFFFB547),
+          color: AppColors.accent,
         ),
         SizedBox(width: 10.w),
         _StatChip(
           value: '₹500',
           label: 'Fee',
           icon: Icons.currency_rupee_rounded,
-          color: const Color(0xFF22C55E),
+          color: AppColors.success,
         ),
       ],
     );

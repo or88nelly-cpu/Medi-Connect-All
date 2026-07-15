@@ -105,12 +105,12 @@ class _PatientChatTabState extends State<PatientChatTab> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, color: Colors.red, size: 40.r),
+            Icon(Icons.error_outline, color: AppColors.red, size: 40.r),
             SizedBox(height: 8.h),
             Text(
               "Failed to load chats",
               style: AppTextStyles.bodyMedium.copyWith(
-                color: Colors.red,
+                color: AppColors.red,
                 fontWeight: FontWeight.bold,
               ),
             ),

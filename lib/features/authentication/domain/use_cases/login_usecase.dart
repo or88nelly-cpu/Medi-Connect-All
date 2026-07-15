@@ -9,13 +9,6 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 
 /// Executes login flow in the authentication feature.
 
-
-
-
-
-
-
-
 class LoginParams {
   final String email;
   final String password;

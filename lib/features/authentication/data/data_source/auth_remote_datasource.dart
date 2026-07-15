@@ -13,17 +13,6 @@ import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 /// Remote data source interface and implementation for authentication.
 /// Integrates with Supabase API for authentication operations.
 
-
-
-
-
-
-
-
-
-
-
-
 abstract class AuthRemoteDataSource {
   Future<UserModel> loginWithEmailAndPassword({
     required String email,
@@ -48,8 +37,6 @@ abstract class AuthRemoteDataSource {
 
   Future<UserModel?> getCurrentUser();
 }
-
-
 
 @LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {

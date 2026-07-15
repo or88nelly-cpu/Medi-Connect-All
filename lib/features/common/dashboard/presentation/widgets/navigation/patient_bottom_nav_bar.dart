@@ -161,7 +161,7 @@ class PatientBottomNavBar extends StatelessWidget {
             boxShadow: selected
                 ? [
                     BoxShadow(
-                      color: Colors.amber.withAlpha(85),
+                      color: AppColors.accent.withAlpha(85),
                       blurRadius: 18,
                       spreadRadius: 2,
                     ),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/patient/booking/presentation/pages/booking_flow_page.dart';
 import 'package:medi_connect/features/patient/dashboard/presentation/widgets/patient_dashboard/patient_service_item.dart';

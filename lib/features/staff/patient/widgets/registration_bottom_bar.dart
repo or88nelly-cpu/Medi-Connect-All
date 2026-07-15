@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_bloc.dart';
-import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_event.dart';
-import 'package:medi_connect/features/admin/management/customer_care/presentation/bloc/patient_registration_state.dart';
+import 'package:medi_connect/features/admin/customer_care/presentation/bloc/patient_registration_bloc.dart';
+import 'package:medi_connect/features/admin/customer_care/presentation/bloc/patient_registration_event.dart';
+import 'package:medi_connect/features/admin/customer_care/presentation/bloc/patient_registration_state.dart';
 
 /// Bottom navigation bar for the patient registration/onboarding wizard.
 ///

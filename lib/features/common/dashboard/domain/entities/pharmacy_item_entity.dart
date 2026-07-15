@@ -4,9 +4,6 @@ import 'package:equatable/equatable.dart';
 
 /// Domain entity for a pharmacy inventory item.
 
-
-
-
 class PharmacyItemEntity extends Equatable {
   final String id;
   final String name;

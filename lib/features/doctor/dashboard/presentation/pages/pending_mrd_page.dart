@@ -18,14 +18,6 @@ import 'package:medi_connect/features/doctor/dashboard/presentation/widgets/pend
 
 // Extracted Sub-widgets
 
-
-
-
-
-
-
-
-
 class PendingMrdPage extends StatefulWidget {
   const PendingMrdPage({super.key});
 

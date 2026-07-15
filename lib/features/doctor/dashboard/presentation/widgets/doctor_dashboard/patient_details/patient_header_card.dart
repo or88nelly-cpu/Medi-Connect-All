@@ -119,7 +119,7 @@ class PatientHeaderCard extends StatelessWidget {
                       child: Text(
                         "${AppStrings.bloodPrefix}$bloodGroup",
                         style: TextStyle(
-                          color: const Color(0xFFEF4444),
+                          color: AppColors.error,
                           fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
                         ),

@@ -107,7 +107,7 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                 children: [
                   Icon(
                     Icons.picture_as_pdf_outlined,
-                    color: Colors.red,
+                    color: AppColors.red,
                     size: 20.sp,
                   ),
                   SizedBox(width: 12.w),

@@ -59,23 +59,23 @@ class AppointmentsStatusFilter extends StatelessWidget {
     switch (status) {
       case 'All':
         icon = Icons.grid_view_outlined;
-        statusColor = Colors.blue;
+        statusColor = AppColors.blue;
         break;
       case 'Confirmed':
         icon = Icons.check_circle_outlined;
-        statusColor = Colors.green;
+        statusColor = AppColors.green;
         break;
       case 'Pending':
         icon = Icons.schedule_outlined;
-        statusColor = Colors.orange;
+        statusColor = AppColors.orange;
         break;
       case 'Completed':
         icon = Icons.check_circle_outlined;
-        statusColor = Colors.purple;
+        statusColor = AppColors.purple;
         break;
       case 'Cancelled':
         icon = Icons.cancel_outlined;
-        statusColor = Colors.red;
+        statusColor = AppColors.red;
         break;
       default:
         icon = Icons.help_outline;

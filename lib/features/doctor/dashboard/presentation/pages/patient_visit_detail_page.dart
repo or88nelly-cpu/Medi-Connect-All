@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/features/authentication/domain/entities/user_entity.dart';
@@ -18,12 +18,6 @@ import 'package:medi_connect/features/doctor/dashboard/presentation/widgets/pati
 import 'package:medi_connect/features/doctor/dashboard/presentation/widgets/patient_visit/visit_vitals_grid.dart';
 
 // Extracted Sub-widgets
-
-
-
-
-
-
 
 class PatientVisitDetailPage extends StatefulWidget {
   final AppointmentEntity appointment;
@@ -422,7 +416,9 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
         title: Text('Add $title Point'),
         content: TextField(
           controller: ctrl,
-          decoration: const InputDecoration(hintText: 'Enter clinical point...'),
+          decoration: const InputDecoration(
+            hintText: 'Enter clinical point...',
+          ),
           autofocus: true,
         ),
         actions: [
@@ -450,7 +446,9 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     final medName = _medicineSearchCtrl.text.trim();
     if (medName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select or search a medicine name')),
+        const SnackBar(
+          content: Text('Please select or search a medicine name'),
+        ),
       );
       return;
     }
@@ -471,12 +469,15 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     setState(() => _isSaving = true);
     try {
       final supabase = GetIt.I<SupabaseService>().client;
-      await supabase.from('appointments').update({
-        'bp': _bpCtrl.text,
-        'weight': _weightCtrl.text,
-        'height': _heightCtrl.text,
-        'fever': _tempCtrl.text,
-      }).eq('id', widget.appointment.id);
+      await supabase
+          .from('appointments')
+          .update({
+            'bp': _bpCtrl.text,
+            'weight': _weightCtrl.text,
+            'height': _heightCtrl.text,
+            'fever': _tempCtrl.text,
+          })
+          .eq('id', widget.appointment.id);
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -507,13 +508,16 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
       final apt = widget.appointment;
 
       // 1. Update appointment status and vitals
-      await supabase.from('appointments').update({
-        'status': 'Completed',
-        'bp': _bpCtrl.text,
-        'weight': _weightCtrl.text,
-        'height': _heightCtrl.text,
-        'fever': _tempCtrl.text,
-      }).eq('id', apt.id);
+      await supabase
+          .from('appointments')
+          .update({
+            'status': 'Completed',
+            'bp': _bpCtrl.text,
+            'weight': _weightCtrl.text,
+            'height': _heightCtrl.text,
+            'fever': _tempCtrl.text,
+          })
+          .eq('id', apt.id);
 
       // 2. Build clinical notes summary for EMR
       final notesBuffer = StringBuffer();
@@ -534,11 +538,16 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
       }
 
       final medicinesStr = _medicines
-          .map((m) => '${m['type']} ${m['name']} (${m['dosage']}, ${m['frequency']}, ${m['days']})')
+          .map(
+            (m) =>
+                '${m['type']} ${m['name']} (${m['dosage']}, ${m['frequency']}, ${m['days']})',
+          )
           .join('\n');
 
       final recordedAtStr = DateTime.now().toIso8601String();
-      final suffix = DateTime.now().millisecondsSinceEpoch.toString().substring(8);
+      final suffix = DateTime.now().millisecondsSinceEpoch.toString().substring(
+        8,
+      );
       final invoiceNum = 'INV-$suffix';
 
       final emrRecordData = {
@@ -641,7 +650,10 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
           ),
           bottomNavigationBar: isToday
               ? Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 12.h,
+                  ),
                   decoration: BoxDecoration(
                     color: cardBg,
                     border: Border(
@@ -671,7 +683,10 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: _isSaving ? null : _saveAndClose,
-                          icon: const Icon(Icons.check_circle_outline, size: 18),
+                          icon: const Icon(
+                            Icons.check_circle_outline,
+                            size: 18,
+                          ),
                           label: const Text(
                             'Save & Close Visit',
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -692,12 +707,13 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                 )
               : null,
           body: _isLoadingData
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.h,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -737,11 +753,14 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                       VisitListSection(
                         points: _historyPoints,
                         title: 'History',
-                        description: 'Past illness, surgeries, medications, etc.',
+                        description:
+                            'Past illness, surgeries, medications, etc.',
                         icon: Icons.history,
                         iconColor: const Color(0xFF8B5CF6),
-                        onAddPressed: () => _addPointDialog(_historyPoints, 'History'),
-                        onRemovePressed: (idx) => setState(() => _historyPoints.removeAt(idx)),
+                        onAddPressed: () =>
+                            _addPointDialog(_historyPoints, 'History'),
+                        onRemovePressed: (idx) =>
+                            setState(() => _historyPoints.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 16.h),
@@ -753,8 +772,10 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         description: 'Clinical notes and examination findings',
                         icon: Icons.assignment_outlined,
                         iconColor: const Color(0xFF10B981),
-                        onAddPressed: () => _addPointDialog(_doctorsNotes, "Doctor's Notes"),
-                        onRemovePressed: (idx) => setState(() => _doctorsNotes.removeAt(idx)),
+                        onAddPressed: () =>
+                            _addPointDialog(_doctorsNotes, "Doctor's Notes"),
+                        onRemovePressed: (idx) =>
+                            setState(() => _doctorsNotes.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 16.h),
@@ -765,9 +786,13 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         title: 'Chief Complaints',
                         description: 'Patient reported symptoms and concerns',
                         icon: Icons.chat_bubble_outline,
-                        iconColor: const Color(0xFFF59E0B),
-                        onAddPressed: () => _addPointDialog(_chiefComplaints, 'Chief Complaints'),
-                        onRemovePressed: (idx) => setState(() => _chiefComplaints.removeAt(idx)),
+                        iconColor: AppColors.warning,
+                        onAddPressed: () => _addPointDialog(
+                          _chiefComplaints,
+                          'Chief Complaints',
+                        ),
+                        onRemovePressed: (idx) =>
+                            setState(() => _chiefComplaints.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 16.h),
@@ -780,12 +805,16 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         selectedDosage: _selectedDosage,
                         selectedFreq: _selectedFreq,
                         selectedDuration: _selectedDuration,
-                        onTypeChanged: (v) => setState(() => _selectedMedType = v),
-                        onDosageChanged: (v) => setState(() => _selectedDosage = v),
+                        onTypeChanged: (v) =>
+                            setState(() => _selectedMedType = v),
+                        onDosageChanged: (v) =>
+                            setState(() => _selectedDosage = v),
                         onFreqChanged: (v) => setState(() => _selectedFreq = v),
-                        onDurationChanged: (v) => setState(() => _selectedDuration = v),
+                        onDurationChanged: (v) =>
+                            setState(() => _selectedDuration = v),
                         onAddMedicine: _addMedicine,
-                        onRemoveMedicine: (idx) => setState(() => _medicines.removeAt(idx)),
+                        onRemoveMedicine: (idx) =>
+                            setState(() => _medicines.removeAt(idx)),
                         isEditable: isToday,
                       ),
                       SizedBox(height: 20.h),

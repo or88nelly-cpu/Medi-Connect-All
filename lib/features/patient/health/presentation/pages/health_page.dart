@@ -66,9 +66,9 @@ class _HealthPageState extends State<HealthPage> {
 
   Color get _bmiColor {
     if (_bmi < 18.5) return const Color(0xFF1A8CFF);
-    if (_bmi < 25) return const Color(0xFF22C55E);
+    if (_bmi < 25) return AppColors.success;
     if (_bmi < 30) return const Color(0xFFFF8C42);
-    return const Color(0xFFEF4444);
+    return AppColors.error;
   }
 
   double get _bmiProgress {
@@ -83,7 +83,7 @@ class _HealthPageState extends State<HealthPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Health data saved successfully (local mock)!'),
-          backgroundColor: const Color(0xFF22C55E),
+          backgroundColor: AppColors.success,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r),
@@ -181,7 +181,7 @@ class _HealthPageState extends State<HealthPage> {
                     label: 'Heart Rate',
                     unit: 'bpm',
                     icon: Icons.favorite_rounded,
-                    iconColor: const Color(0xFFEF4444),
+                    iconColor: AppColors.error,
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -352,9 +352,9 @@ class _BmiCard extends StatelessWidget {
                     gradient: const LinearGradient(
                       colors: [
                         Color(0xFF1A8CFF),
-                        Color(0xFF22C55E),
+                        AppColors.success,
                         Color(0xFFFF8C42),
-                        Color(0xFFEF4444),
+                        AppColors.error,
                       ],
                     ),
                   ),
@@ -397,10 +397,7 @@ class _BmiCard extends StatelessWidget {
               ),
               Text(
                 'Normal',
-                style: TextStyle(
-                  fontSize: 9.sp,
-                  color: const Color(0xFF22C55E),
-                ),
+                style: TextStyle(fontSize: 9.sp, color: AppColors.success),
               ),
               Text(
                 'Overweight',
@@ -411,10 +408,7 @@ class _BmiCard extends StatelessWidget {
               ),
               Text(
                 'Obese',
-                style: TextStyle(
-                  fontSize: 9.sp,
-                  color: const Color(0xFFEF4444),
-                ),
+                style: TextStyle(fontSize: 9.sp, color: AppColors.error),
               ),
             ],
           ),
@@ -519,11 +513,7 @@ class _BloodPressureField extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.favorite_rounded,
-                color: const Color(0xFFEF4444),
-                size: 16.r,
-              ),
+              Icon(Icons.favorite_rounded, color: AppColors.error, size: 16.r),
               SizedBox(width: 6.w),
               Text(
                 'Blood Pressure',
@@ -636,7 +626,7 @@ class _HealthTipsCard extends StatelessWidget {
       (
         'Exercise for 30 minutes a day',
         Icons.directions_run_rounded,
-        Color(0xFF22C55E),
+        AppColors.success,
       ),
       (
         'Get 7–8 hours of sleep every night',
@@ -646,7 +636,7 @@ class _HealthTipsCard extends StatelessWidget {
       (
         'Eat a balanced diet rich in fruits & vegetables',
         Icons.eco_rounded,
-        Color(0xFF22C55E),
+        AppColors.success,
       ),
     ];
 

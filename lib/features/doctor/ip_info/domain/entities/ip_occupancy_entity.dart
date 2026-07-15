@@ -17,10 +17,10 @@ class IpOccupancyEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        name,
-        occupiedBeds,
-        totalBeds,
-        occupiedPercentage,
-        sparkline,
-      ];
+    name,
+    occupiedBeds,
+    totalBeds,
+    occupiedPercentage,
+    sparkline,
+  ];
 }

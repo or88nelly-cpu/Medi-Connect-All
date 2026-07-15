@@ -48,3 +48,22 @@ class ValidationException implements Exception {
   @override
   String toString() => "ValidationException(message: $message)";
 }
+
+class ApiException implements Exception {
+  final String message;
+  final String? code;
+
+  const ApiException(this.message, {this.code});
+
+  @override
+  String toString() => "ApiException(message: $message, code: $code)";
+}
+
+class UnknownException implements Exception {
+  final String message;
+
+  const UnknownException([this.message = "An unknown exception occurred."]);
+
+  @override
+  String toString() => "UnknownException(message: $message)";
+}

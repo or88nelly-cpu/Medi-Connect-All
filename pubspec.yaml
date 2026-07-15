@@ -53,6 +53,7 @@ dependencies:
   flutter_glass_morphism: ^1.0.2
   sentry_flutter: ^8.14.2
   google_mobile_ads: ^5.1.0
+  dio: ^5.5.0
 
 dev_dependencies:
   flutter_test:

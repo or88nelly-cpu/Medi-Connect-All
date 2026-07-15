@@ -25,8 +25,8 @@ class SpecialityDoctorsPage extends StatelessWidget {
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
     final gradientColors = speciality.isSurgical
-        ? [const Color(0xFFEF4444), const Color(0xFFB91C1C)]
-        : [const Color(0xFF3B82F6), const Color(0xFF1D4ED8)];
+        ? [AppColors.error, const Color(0xFFB91C1C)]
+        : [AppColors.info, const Color(0xFF1D4ED8)];
 
     final services = _getServices(speciality.name);
 
@@ -407,7 +407,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                             width: 11.r,
                             height: 11.r,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF22C55E),
+                              color: AppColors.success,
                               shape: BoxShape.circle,
                               border: Border.all(color: Colors.white, width: 2),
                             ),
@@ -553,7 +553,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                       ? const Color(0xFF3B5BFD)
                       : (colorIdx == 2
                             ? const Color(0xFF10B981)
-                            : const Color(0xFFF59E0B)));
+                            : AppColors.warning));
 
             return Container(
               padding: EdgeInsets.all(8.r),

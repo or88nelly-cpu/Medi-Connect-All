@@ -35,7 +35,9 @@ class PendingMrdBloc extends Bloc<PendingMrdEvent, PendingMrdState> {
 
         String priority = 'Medium';
         if (rec.createdAt != null) {
-          final hoursPending = DateTime.now().difference(rec.createdAt!).inHours;
+          final hoursPending = DateTime.now()
+              .difference(rec.createdAt!)
+              .inHours;
           if (hoursPending >= 48) {
             priority = 'High';
           } else if (hoursPending >= 24) {

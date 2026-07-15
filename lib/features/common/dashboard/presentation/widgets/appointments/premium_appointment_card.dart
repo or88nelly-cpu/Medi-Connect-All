@@ -11,7 +11,7 @@ import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/common/dashboard/domain/entities/appointment_entity.dart';
@@ -339,7 +339,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                           Icon(
                             Icons.thermostat_outlined,
                             size: 16.r,
-                            color: Colors.orange,
+                            color: AppColors.orange,
                           ),
                           SizedBox(width: 8.w),
                           Text(
@@ -729,7 +729,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ),
                     prefixIcon: Icon(
                       Icons.favorite,
-                      color: Colors.red,
+                      color: AppColors.red,
                       size: 18.sp,
                     ),
                   ),
@@ -748,7 +748,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ),
                     prefixIcon: Icon(
                       Icons.scale,
-                      color: Colors.orange,
+                      color: AppColors.orange,
                       size: 18.sp,
                     ),
                   ),
@@ -767,7 +767,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ),
                     prefixIcon: Icon(
                       Icons.height,
-                      color: Colors.blue,
+                      color: AppColors.blue,
                       size: 18.sp,
                     ),
                   ),
@@ -788,7 +788,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ),
                     prefixIcon: Icon(
                       Icons.thermostat,
-                      color: Colors.teal,
+                      color: AppColors.teal,
                       size: 18.sp,
                     ),
                   ),
@@ -807,7 +807,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                     ),
                     prefixIcon: Icon(
                       Icons.child_care,
-                      color: Colors.purple,
+                      color: AppColors.purple,
                       size: 18.sp,
                     ),
                   ),

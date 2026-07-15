@@ -365,28 +365,28 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                       "BP",
                       item["bp"]?.toString() ?? "--",
                       Icons.favorite_border,
-                      Colors.red,
+                      AppColors.red,
                       isDark,
                     ),
                     _buildVitalBadge(
                       "Weight",
                       item["weight"] != null ? "${item["weight"]} kg" : "--",
                       Icons.scale_outlined,
-                      Colors.orange,
+                      AppColors.orange,
                       isDark,
                     ),
                     _buildVitalBadge(
                       "Height",
                       item["height"] != null ? "${item["height"]} cm" : "--",
                       Icons.height,
-                      Colors.blue,
+                      AppColors.blue,
                       isDark,
                     ),
                     _buildVitalBadge(
                       "Fever",
                       item["fever"] != null ? "${item["fever"]} °F" : "--",
                       Icons.thermostat_outlined,
-                      Colors.teal,
+                      AppColors.teal,
                       isDark,
                     ),
                     _buildVitalBadge(
@@ -395,7 +395,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                           ? "${item["head_circumference"]} cm"
                           : "--",
                       Icons.child_care,
-                      Colors.purple,
+                      AppColors.purple,
                       isDark,
                     ),
                   ],
@@ -660,7 +660,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     ),
                     prefixIcon: Icon(
                       Icons.favorite,
-                      color: Colors.red,
+                      color: AppColors.red,
                       size: 18.sp,
                     ),
                   ),
@@ -679,7 +679,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     ),
                     prefixIcon: Icon(
                       Icons.scale,
-                      color: Colors.orange,
+                      color: AppColors.orange,
                       size: 18.sp,
                     ),
                   ),
@@ -698,7 +698,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     ),
                     prefixIcon: Icon(
                       Icons.height,
-                      color: Colors.blue,
+                      color: AppColors.blue,
                       size: 18.sp,
                     ),
                   ),
@@ -717,7 +717,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     ),
                     prefixIcon: Icon(
                       Icons.thermostat,
-                      color: Colors.teal,
+                      color: AppColors.teal,
                       size: 18.sp,
                     ),
                   ),
@@ -736,7 +736,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     ),
                     prefixIcon: Icon(
                       Icons.child_care,
-                      color: Colors.purple,
+                      color: AppColors.purple,
                       size: 18.sp,
                     ),
                   ),

@@ -9,13 +9,6 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 
 /// Fetches the currently logged-in user profile, if available.
 
-
-
-
-
-
-
-
 @lazySingleton
 class GetCurrentUserUseCase extends UseCase<UserEntity?, NoParams> {
   final AuthRepository _repository;

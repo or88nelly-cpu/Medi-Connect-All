@@ -5,151 +5,150 @@ import 'package:medi_connect/features/doctor/dashboard/data/models/doctor_dashbo
 import 'package:medi_connect/features/doctor/dashboard/data/models/mrd_record_model.dart';
 
 @LazySingleton(as: DoctorDashboardRemoteDataSource)
-class DoctorDashboardRemoteDataSourceImpl implements DoctorDashboardRemoteDataSource {
+class DoctorDashboardRemoteDataSourceImpl
+    implements DoctorDashboardRemoteDataSource {
   final SupabaseService _supabaseService;
 
   DoctorDashboardRemoteDataSourceImpl(this._supabaseService);
 
   @override
-Future<List<MrdRecordModel>> getPendingMrdRecords({
-  required String doctorId,
-}) async {
-  final resolvedDoctorId =
-      await _supabaseService.resolveDoctorId(doctorId);
+  Future<List<MrdRecordModel>> getPendingMrdRecords({
+    required String doctorId,
+  }) async {
+    final resolvedDoctorId = await _supabaseService.resolveDoctorId(doctorId);
 
-  final supabase = _supabaseService.client;
+    final supabase = _supabaseService.client;
 
-  // Get pending MRD records
-  final response = await supabase
-      .from('mrd_records')
-      .select()
-      .eq('doctor_id', resolvedDoctorId)
-      .eq('status', 'pending');
+    // Get pending MRD records
+    final response = await supabase
+        .from('mrd_records')
+        .select()
+        .eq('doctor_id', resolvedDoctorId)
+        .eq('status', 'pending');
 
-  final records = (response as List<dynamic>)
-      .map((e) => MrdRecordModel.fromJson(e))
-      .toList();
+    final records = (response as List<dynamic>)
+        .map((e) => MrdRecordModel.fromJson(e))
+        .toList();
 
-  if (records.isEmpty) {
-    return [];
-  }
+    if (records.isEmpty) {
+      return [];
+    }
 
-  // patientIds are patients.id
-  final patientIds = records.map((e) => e.patientId).toSet().toList();
+    // patientIds are patients.id
+    final patientIds = records.map((e) => e.patientId).toSet().toList();
 
-  /// Get patients
-  final patientsResponse = await supabase
-      .from('patients')
-      .select('id,user_id,age,gender,date_of_birth')
-      .inFilter('id', patientIds);
+    /// Get patients
+    final patientsResponse = await supabase
+        .from('patients')
+        .select('id,user_id,age,gender,date_of_birth')
+        .inFilter('id', patientIds);
 
-  final Map<String, Map<String, dynamic>> patientMap = {};
+    final Map<String, Map<String, dynamic>> patientMap = {};
 
-  for (final item in (patientsResponse as List)) {
-    final map = Map<String, dynamic>.from(item);
-    patientMap[map['id'] as String] = map;
-  }
-
-  /// Collect user ids
-  final userIds = patientMap.values
-      .map((e) => e['user_id'] as String)
-      .toSet()
-      .toList();
-
-  final Map<String, Map<String, dynamic>> usersMap = {};
-
-  if (userIds.isNotEmpty) {
-    final usersResponse = await supabase
-        .from('users')
-        .select(
-            'id,first_name,middle_name,last_name,profile_photo')
-        .inFilter('id', userIds);
-
-    for (final item in (usersResponse as List)) {
+    for (final item in (patientsResponse as List)) {
       final map = Map<String, dynamic>.from(item);
-      usersMap[map['id'] as String] = map;
-    }
-  }
-
-  final List<MrdRecordModel> joinedRecords = [];
-
-  for (final rec in records) {
-    final patient = patientMap[rec.patientId];
-
-    final user = patient != null
-        ? usersMap[patient['user_id'] as String]
-        : null;
-
-    String patientName = 'Unknown Patient';
-    String patientAge = '';
-    String patientGender = '';
-    String? patientPhoto;
-
-    if (user != null) {
-      final first = user['first_name']?.toString() ?? '';
-      final middle = user['middle_name']?.toString() ?? '';
-      final last = user['last_name']?.toString() ?? '';
-
-      patientName = [
-        first,
-        middle,
-        last,
-      ].where((e) => e.isNotEmpty).join(' ');
-
-      patientPhoto = user['profile_photo']?.toString();
+      patientMap[map['id'] as String] = map;
     }
 
-    if (patient != null) {
-      patientGender = patient['gender']?.toString() ?? '';
+    /// Collect user ids
+    final userIds = patientMap.values
+        .map((e) => e['user_id'] as String)
+        .toSet()
+        .toList();
 
-      if (patient['age'] != null) {
-        patientAge = patient['age'].toString();
-      } else if (patient['date_of_birth'] != null) {
-        final dob = DateTime.parse(patient['date_of_birth']);
-        final now = DateTime.now();
+    final Map<String, Map<String, dynamic>> usersMap = {};
 
-        int age = now.year - dob.year;
+    if (userIds.isNotEmpty) {
+      final usersResponse = await supabase
+          .from('users')
+          .select('id,first_name,middle_name,last_name,profile_photo')
+          .inFilter('id', userIds);
 
-        if (now.month < dob.month ||
-            (now.month == dob.month && now.day < dob.day)) {
-          age--;
-        }
-
-        patientAge = age.toString();
+      for (final item in (usersResponse as List)) {
+        final map = Map<String, dynamic>.from(item);
+        usersMap[map['id'] as String] = map;
       }
     }
 
-    joinedRecords.add(
-      MrdRecordModel(
-        id: rec.id,
-        patientId: rec.patientId,
-        doctorId: rec.doctorId,
-        employeeId: rec.employeeId,
-        recordType: rec.recordType,
-        title: rec.title,
-        description: rec.description,
-        fileUrl: rec.fileUrl,
-        fileName: rec.fileName,
-        fileSize: rec.fileSize,
-        mimeType: rec.mimeType,
-        isPaid: rec.isPaid,
-        paymentAmount: rec.paymentAmount,
-        paymentStatus: rec.paymentStatus,
-        status: rec.status,
-        recordDate: rec.recordDate,
-        createdAt: rec.createdAt,
-        updatedAt: rec.updatedAt,
-        appointmentId: rec.appointmentId,
-        patientName: patientName,
-        patientAge: patientAge,
-        patientGender: patientGender,
-        patientPhoto: patientPhoto,
-      ),
-    );
-  }
+    final List<MrdRecordModel> joinedRecords = [];
 
-  return joinedRecords;
-}
+    for (final rec in records) {
+      final patient = patientMap[rec.patientId];
+
+      final user = patient != null
+          ? usersMap[patient['user_id'] as String]
+          : null;
+
+      String patientName = 'Unknown Patient';
+      String patientAge = '';
+      String patientGender = '';
+      String? patientPhoto;
+
+      if (user != null) {
+        final first = user['first_name']?.toString() ?? '';
+        final middle = user['middle_name']?.toString() ?? '';
+        final last = user['last_name']?.toString() ?? '';
+
+        patientName = [
+          first,
+          middle,
+          last,
+        ].where((e) => e.isNotEmpty).join(' ');
+
+        patientPhoto = user['profile_photo']?.toString();
+      }
+
+      if (patient != null) {
+        patientGender = patient['gender']?.toString() ?? '';
+
+        if (patient['age'] != null) {
+          patientAge = patient['age'].toString();
+        } else if (patient['date_of_birth'] != null) {
+          final dob = DateTime.parse(patient['date_of_birth']);
+          final now = DateTime.now();
+
+          int age = now.year - dob.year;
+
+          if (now.month < dob.month ||
+              (now.month == dob.month && now.day < dob.day)) {
+            age--;
+          }
+
+          patientAge = age.toString();
+        }
+      }
+
+      joinedRecords.add(
+        MrdRecordModel(
+          id: rec.id,
+          patientId: rec.patientId,
+          doctorId: rec.doctorId,
+          employeeId: rec.employeeId,
+          recordType: rec.recordType,
+          title: rec.title,
+          description: rec.description,
+          fileUrl: rec.fileUrl,
+          fileName: rec.fileName,
+          fileSize: rec.fileSize,
+          mimeType: rec.mimeType,
+          isPaid: rec.isPaid,
+          paymentAmount: rec.paymentAmount,
+          paymentStatus: rec.paymentStatus,
+          status: rec.status,
+          recordDate: rec.recordDate,
+          createdAt: rec.createdAt,
+          updatedAt: rec.updatedAt,
+          appointmentId: rec.appointmentId,
+          patientName: patientName,
+          patientAge: patientAge,
+          patientGender: patientGender,
+          patientPhoto: patientPhoto,
+        ),
+      );
+    }
+
+    return joinedRecords;
+  }
 
   @override
   Future<DoctorDashboardStatsModel> getDashboardStats({

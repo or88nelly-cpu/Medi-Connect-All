@@ -142,7 +142,7 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
                         return Icon(
                           Icons.star,
                           color: index < 4
-                              ? Colors.amber
+                              ? AppColors.accent
                               : Colors.grey.shade400,
                           size: 14.sp,
                         );

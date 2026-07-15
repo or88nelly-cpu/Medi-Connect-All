@@ -133,7 +133,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 title: "Appointments",
                 value: total.toString(),
                 icon: Icons.calendar_today_outlined,
-                color: Colors.blue,
+                color: AppColors.blue,
                 isDark: isDark,
               ),
               _buildOverviewCard(
@@ -141,7 +141,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 title: "Confirmed",
                 value: confirmed.toString(),
                 icon: Icons.check_circle_outline,
-                color: Colors.green,
+                color: AppColors.green,
                 isDark: isDark,
               ),
               _buildOverviewCard(
@@ -149,7 +149,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 title: "Pending",
                 value: pending.toString(),
                 icon: Icons.access_time,
-                color: Colors.orange,
+                color: AppColors.orange,
                 isDark: isDark,
               ),
               _buildOverviewCard(
@@ -157,7 +157,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 title: "Completed",
                 value: completed.toString(),
                 icon: Icons.check_circle,
-                color: Colors.purple,
+                color: AppColors.purple,
                 isDark: isDark,
               ),
             ],

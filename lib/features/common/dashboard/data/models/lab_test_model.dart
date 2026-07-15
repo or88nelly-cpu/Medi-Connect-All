@@ -4,9 +4,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/lab_test_
 
 /// Data model for lab test records with JSON serialization.
 
-
-
-
 class LabTestModel extends LabTestEntity {
   const LabTestModel({
     required super.id,

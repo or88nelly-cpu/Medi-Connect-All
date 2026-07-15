@@ -5,11 +5,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/activity_
 
 /// Data model for activity log entries with JSON serialization.
 
-
-
-
-
-
 class ActivityLogModel extends ActivityLogEntity {
   const ActivityLogModel({
     required super.id,

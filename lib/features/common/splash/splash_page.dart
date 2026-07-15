@@ -18,22 +18,7 @@ import 'package:medi_connect/features/authentication/presentation/widgets/heartb
 /// Displays a premium heartbeat pulse, concentric cardiac pulse waves, rotating sync animation,
 /// and floating interactive medical crosses. Verifies auth state and routes.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Separate premium splash widgets
-
-
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

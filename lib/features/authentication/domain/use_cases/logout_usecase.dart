@@ -8,12 +8,6 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 
 /// Signs out the user session from the application.
 
-
-
-
-
-
-
 @lazySingleton
 class LogoutUseCase extends UseCase<void, NoParams> {
   final AuthRepository _repository;

@@ -8,13 +8,6 @@ import 'package:medi_connect/features/authentication/domain/entities/user_entity
 /// Authentication repository interface contract.
 /// Must be implemented in the Data layer.
 
-
-
-
-
-
-
-
 abstract class AuthRepository {
   /// Sign in user using email and password.
   Future<Either<Failure, UserEntity>> loginWithEmailAndPassword({

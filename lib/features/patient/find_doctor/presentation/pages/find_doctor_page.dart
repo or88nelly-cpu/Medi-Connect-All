@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/patient/find_doctor/presentation/pages/specialty_doctors_page.dart';
 
@@ -88,7 +88,7 @@ class _FindDoctorPageState extends State<FindDoctorPage> {
     _SpecialtyData(
       name: 'General Medicine',
       icon: Icons.medical_services_rounded,
-      gradient: const [Color(0xFF22C55E), Color(0xFF15803D)],
+      gradient: const [AppColors.success, Color(0xFF15803D)],
       docCount: '20',
       description: 'Primary Healthcare',
     ),

@@ -4,9 +4,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/invoice_e
 
 /// Data model for billing invoices with JSON serialization.
 
-
-
-
 class InvoiceModel extends InvoiceEntity {
   const InvoiceModel({
     required super.id,

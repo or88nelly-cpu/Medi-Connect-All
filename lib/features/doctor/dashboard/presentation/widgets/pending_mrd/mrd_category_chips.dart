@@ -65,7 +65,9 @@ class MrdCategoryChips extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.r),
                 side: BorderSide(
-                  color: isSelected ? const Color(0xFF0F6FFF) : Colors.grey[300]!,
+                  color: isSelected
+                      ? const Color(0xFF0F6FFF)
+                      : Colors.grey[300]!,
                   width: 0.8,
                 ),
               ),

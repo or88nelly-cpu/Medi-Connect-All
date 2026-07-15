@@ -4,9 +4,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/analytics
 
 /// Analytics data model.
 
-
-
-
 class AnalyticsModel extends AnalyticsEntity {
   const AnalyticsModel({required super.id, required super.name});
 

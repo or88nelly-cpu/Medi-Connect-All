@@ -162,12 +162,12 @@ class DoctorStatsRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.star, color: Colors.amber, size: 16.sp),
+            Icon(Icons.star, color: AppColors.accent, size: 16.sp),
             SizedBox(width: 4.w),
             Text(
               rating,
               style: TextStyle(
-                color: Colors.amber,
+                color: AppColors.accent,
                 fontWeight: FontWeight.bold,
                 fontSize: 15.sp,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/features/patient/speciality/presentation/bloc/speciality_bloc.dart';
 import 'package:medi_connect/features/patient/speciality/presentation/widgets/speciality_horizontal_list.dart';
 
@@ -42,7 +43,7 @@ class _SpecialityListHomeState extends State<SpecialityListHome> {
                 Text(
                   "Failed to load specialties $error",
                   style: const TextStyle(
-                    color: Colors.red,
+                    color: AppColors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

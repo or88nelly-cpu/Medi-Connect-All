@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/routes/route_names.dart';
+import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
 import 'package:medi_connect/core/widgets/scaffold/custom_scaffold.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/bloc/common/dashboard_tab_cubit.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/bloc/doctor/doctor_appointments_bloc.dart';
@@ -22,11 +23,6 @@ import 'package:medi_connect/features/doctor/dashboard/presentation/widgets/doct
 import 'package:medi_connect/features/doctor/dashboard/presentation/widgets/doctor_dashboard/doctor_schedule_tab.dart';
 
 // Extracted Doctor widgets
-
-
-
-
-
 
 class DoctorDashboardPage extends StatefulWidget {
   const DoctorDashboardPage({super.key});
@@ -207,7 +203,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                                       width: 10.r,
                                       height: 10.r,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFF22C55E),
+                                        color: AppColors.success,
                                         shape: BoxShape.circle,
                                         border: Border.all(
                                           color: Colors.white,

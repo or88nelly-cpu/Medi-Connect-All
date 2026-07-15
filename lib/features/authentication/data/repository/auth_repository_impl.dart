@@ -3,31 +3,16 @@ library;
 import 'dart:developer';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
-import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/models/exceptions.dart';
 import 'package:medi_connect/core/models/failure.dart';
+import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/features/authentication/data/data_source/auth_remote_datasource.dart';
 import 'package:medi_connect/features/authentication/domain/entities/user_entity.dart';
 import 'package:medi_connect/features/authentication/domain/repositories/auth_repository.dart';
 
 /// Repository implementation of the AuthRepository contract.
 /// Translates remote exceptions to clean functional Failures.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {

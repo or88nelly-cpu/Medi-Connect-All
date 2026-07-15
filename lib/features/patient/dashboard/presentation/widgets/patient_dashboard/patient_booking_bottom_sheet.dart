@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_state.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 
 class PatientBookingBottomSheet extends StatefulWidget {
@@ -49,7 +49,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
                 "Find & Choose Doctor",
                 style: AppTextStyles.titleLarge.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? Colors.white : const Color(0xFF0F2C59),
+                  color: isDark ? Colors.white : AppColors.textDarkNavy,
                 ),
               ),
               IconButton(

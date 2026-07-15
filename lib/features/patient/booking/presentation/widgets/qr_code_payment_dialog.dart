@@ -63,12 +63,12 @@ class QRCodePaymentDialog extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.security, color: Colors.green, size: 14.r),
+              Icon(Icons.security, color: AppColors.green, size: 14.r),
               SizedBox(width: 4.w),
               Text(
                 AppStrings.secureUpiGateway,
                 style: TextStyle(
-                  color: Colors.green,
+                  color: AppColors.green,
                   fontSize: 10.sp,
                   fontWeight: FontWeight.bold,
                 ),

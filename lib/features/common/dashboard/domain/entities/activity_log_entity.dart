@@ -4,9 +4,6 @@ import 'package:equatable/equatable.dart';
 
 /// Domain entity for an activity log entry.
 
-
-
-
 class ActivityLogEntity extends Equatable {
   final String id;
   final String message;

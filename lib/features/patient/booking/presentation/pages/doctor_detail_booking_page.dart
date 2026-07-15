@@ -356,7 +356,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                   width: 14.r,
                   height: 14.r,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF22C55E),
+                    color: AppColors.success,
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.white, width: 2),
                   ),
@@ -762,7 +762,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                                   ? Colors.grey.shade400
                                   : (isSelected
                                         ? Colors.white70
-                                        : const Color(0xFF22C55E)),
+                                        : AppColors.success),
                             ),
                           ),
                         ],

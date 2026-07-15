@@ -8,12 +8,6 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 /// Custom reusable button widgets complying with design systems.
 /// Implements: PrimaryButton, SecondaryButton, OutlinedButton, IconButton, LoadingButton.
 
-
-
-
-
-
-
 /// Primary filled button.
 class PrimaryButton extends StatelessWidget {
   final String text;

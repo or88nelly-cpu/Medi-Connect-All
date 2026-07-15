@@ -10,7 +10,7 @@ import 'package:medi_connect/features/admin/home/widgets/dashboard_header.dart';
 import 'package:medi_connect/features/admin/home/widgets/department_list_home.dart'
     show DepartmentListHome;
 import 'package:medi_connect/features/admin/home/widgets/extra_card.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/department_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/department_bloc.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/admin_drawer.dart';
 

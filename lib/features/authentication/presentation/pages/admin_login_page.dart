@@ -18,12 +18,6 @@ import 'package:medi_connect/features/authentication/presentation/widgets/login_
 
 // Separate design widgets
 
-
-
-
-
-
-
 class AdminLoginPage extends StatefulWidget {
   final bool showBackButton;
 

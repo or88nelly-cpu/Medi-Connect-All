@@ -79,13 +79,13 @@ class PatientAppointmentDetailPage extends StatelessWidget {
     // Status Pill Colors
     Color statusColor = const Color(0xFF10B981); // Green Confirmed
     if (displayStatus.toLowerCase() == 'pending') {
-      statusColor = const Color(0xFFF59E0B); // Orange Pending
+      statusColor = AppColors.warning; // Orange Pending
     } else if (displayStatus == 'Pending Updation') {
       statusColor = const Color(0xFFD97706); // Amber/Orange Pending Updation
     } else if (displayStatus.toLowerCase() == 'cancelled') {
-      statusColor = const Color(0xFFEF4444); // Red Cancelled
+      statusColor = AppColors.error; // Red Cancelled
     } else if (displayStatus.toLowerCase() == 'completed') {
-      statusColor = const Color(0xFF3B82F6); // Blue Completed
+      statusColor = AppColors.info; // Blue Completed
     }
 
     final dateStr = DateFormat(
@@ -363,7 +363,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
               CommonButton(
                 text: 'Cancel Appointment',
                 isOutline: true,
-                color: Colors.red,
+                color: AppColors.red,
                 onPressed: () {
                   context.read<AdminAppointmentsBloc>().add(
                     CancelAppointment(appointment.id),

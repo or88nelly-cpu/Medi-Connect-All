@@ -47,10 +47,20 @@ class MrdSearchFilters extends StatelessWidget {
                   onChanged: onSearchChanged,
                   decoration: InputDecoration(
                     hintText: "Search patient name or MRD No...",
-                    hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.grey, fontSize: 11.sp),
-                    prefixIcon: Icon(Icons.search, color: Colors.grey, size: 16.r),
+                    hintStyle: TextStyle(
+                      color: isDark ? Colors.white38 : Colors.grey,
+                      fontSize: 11.sp,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.grey,
+                      size: 16.r,
+                    ),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 8.h,
+                    ),
                   ),
                 ),
               ),
@@ -64,7 +74,11 @@ class MrdSearchFilters extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(color: borderCol),
               ),
-              child: Icon(Icons.tune, color: isDark ? Colors.white70 : Colors.grey[700], size: 18.r),
+              child: Icon(
+                Icons.tune,
+                color: isDark ? Colors.white70 : Colors.grey[700],
+                size: 18.r,
+              ),
             ),
           ],
         ),
@@ -121,14 +135,15 @@ class MrdSearchFilters extends StatelessWidget {
         child: DropdownButton<String>(
           value: value,
           isExpanded: true,
-          style: TextStyle(color: isDark ? Colors.white : AppColors.textDarkNavy, fontSize: 10.sp, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: isDark ? Colors.white : AppColors.textDarkNavy,
+            fontSize: 10.sp,
+            fontWeight: FontWeight.bold,
+          ),
           dropdownColor: isDark ? const Color(0xFF1E293B) : Colors.white,
           icon: const Icon(Icons.arrow_drop_down, size: 18),
           items: items.map((String item) {
-            return DropdownMenuItem<String>(
-              value: item,
-              child: Text(item),
-            );
+            return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),
           onChanged: onChanged,
         ),

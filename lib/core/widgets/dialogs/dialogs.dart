@@ -10,14 +10,6 @@ import 'package:medi_connect/core/widgets/buttons/buttons.dart';
 /// Custom reusable feedback dialog widgets.
 /// Implements: SuccessDialog, ErrorDialog, ConfirmationDialog.
 
-
-
-
-
-
-
-
-
 /// Reusable base Dialog widget that styles the background card.
 class BaseDialog extends StatelessWidget {
   final Widget child;

@@ -147,7 +147,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Container(
                         padding: EdgeInsets.all(4.r),
                         decoration: const BoxDecoration(
-                          color: Colors.red,
+                          color: AppColors.red,
                           shape: BoxShape.circle,
                         ),
                         child: Text(

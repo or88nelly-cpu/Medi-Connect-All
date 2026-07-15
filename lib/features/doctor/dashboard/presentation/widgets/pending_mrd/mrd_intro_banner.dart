@@ -43,7 +43,11 @@ class MrdIntroBanner extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
-          Icon(Icons.assignment_rounded, color: const Color(0xFF8B5CF6), size: 64.r),
+          Icon(
+            Icons.assignment_rounded,
+            color: const Color(0xFF8B5CF6),
+            size: 64.r,
+          ),
         ],
       ),
     );

@@ -117,10 +117,10 @@ class PaymentMethodSelectionSheet extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
-                  color: Colors.green.withValues(alpha: 0.3),
+                  color: AppColors.green.withValues(alpha: 0.3),
                   width: 1.5,
                 ),
-                color: Colors.green.withValues(alpha: 0.05),
+                color: AppColors.green.withValues(alpha: 0.05),
               ),
               child: Row(
                 children: [
@@ -128,11 +128,11 @@ class PaymentMethodSelectionSheet extends StatelessWidget {
                     padding: EdgeInsets.all(10.r),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.green.withValues(alpha: 0.1),
+                      color: AppColors.green.withValues(alpha: 0.1),
                     ),
                     child: Icon(
                       Icons.payments_rounded,
-                      color: Colors.green,
+                      color: AppColors.green,
                       size: 24.r,
                     ),
                   ),

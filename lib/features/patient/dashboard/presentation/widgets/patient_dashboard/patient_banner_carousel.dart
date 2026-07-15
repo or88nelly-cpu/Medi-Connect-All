@@ -74,7 +74,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
                 Text(
                   "Failed to load banners",
                   style: TextStyle(
-                    color: Colors.red,
+                    color: AppColors.red,
                     fontSize: 13.sp,
                     fontWeight: FontWeight.bold,
                   ),

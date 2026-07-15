@@ -17,22 +17,7 @@ import 'package:medi_connect/features/authentication/onboarding/widgets/security
 /// Onboarding screen displaying features walkthrough slides.
 /// Leads the user into the Login or Registration flows.
 
-
-
-
-
-
-
-
-
-
-
 // Import separate modular widgets
-
-
-
-
-
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});

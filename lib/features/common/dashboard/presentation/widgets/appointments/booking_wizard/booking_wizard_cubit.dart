@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:medi_connect/features/admin/management/staff_management/domain/entities/department_entity.dart';
+import 'package:medi_connect/features/admin/staff_management/domain/entities/department_entity.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

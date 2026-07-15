@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_state.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_state.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
@@ -76,7 +76,7 @@ const _kSpecialties = <_SpecialtyEntry>[
   _SpecialtyEntry(
     name: 'General Medicine',
     icon: Icons.medical_services_rounded,
-    gradient: [Color(0xFF22C55E), Color(0xFF15803D)],
+    gradient: [AppColors.success, Color(0xFF15803D)],
     description: 'Primary Healthcare',
   ),
   _SpecialtyEntry(
@@ -875,7 +875,7 @@ class _DoctorStep extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.star_rounded,
-                                      color: const Color(0xFFFFB547),
+                                      color: AppColors.accent,
                                       size: 12.r,
                                     ),
                                     SizedBox(width: 2.w),
@@ -984,7 +984,9 @@ class _SlotStep extends StatelessWidget {
           .neq('status', 'Cancelled');
 
       final list = response as List<dynamic>? ?? [];
-      return list.map((item) => item['appointment_time']?.toString() ?? '').toSet();
+      return list
+          .map((item) => item['appointment_time']?.toString() ?? '')
+          .toSet();
     } catch (_) {
       return {};
     }
@@ -1039,7 +1041,10 @@ class _SlotStep extends StatelessWidget {
                         decoration: BoxDecoration(
                           gradient: isSelected
                               ? const LinearGradient(
-                                  colors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
+                                  colors: [
+                                    Color(0xFF4F7CFF),
+                                    Color(0xFF5B42F3),
+                                  ],
                                 )
                               : null,
                           color: isSelected ? null : AppColors.card(context),
@@ -1514,7 +1519,7 @@ class _ConfirmationStep extends StatelessWidget {
               height: 100.r,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF22C55E), Color(0xFF15803D)],
+                  colors: [AppColors.success, Color(0xFF15803D)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -1614,14 +1619,14 @@ class _ConfirmationStep extends StatelessWidget {
                   label: 'Date & Time',
                   value:
                       '${_monthName(date.month)} ${date.day}, ${date.year}  ·  $slot',
-                  color: const Color(0xFF22C55E),
+                  color: AppColors.success,
                 ),
                 SizedBox(height: 10.h),
                 _ConfirmRow(
                   icon: Icons.account_balance_wallet_rounded,
                   label: 'Payment',
                   value: paymentMethod,
-                  color: const Color(0xFFFFB547),
+                  color: AppColors.accent,
                 ),
               ],
             ),

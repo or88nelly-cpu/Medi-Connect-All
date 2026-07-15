@@ -17,7 +17,11 @@ class MrdFooter extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.info_outline, color: isDark ? Colors.white60 : Colors.grey[700], size: 16.r),
+          Icon(
+            Icons.info_outline,
+            color: isDark ? Colors.white60 : Colors.grey[700],
+            size: 16.r,
+          ),
           SizedBox(width: 8.w),
           Expanded(
             child: Text(
@@ -49,7 +53,13 @@ class MrdFooter extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Text("View Dashboard", style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold)),
+                Text(
+                  "View Dashboard",
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 SizedBox(width: 4.w),
                 const Icon(Icons.arrow_forward_ios, size: 8),
               ],

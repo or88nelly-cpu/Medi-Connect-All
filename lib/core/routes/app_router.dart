@@ -8,12 +8,6 @@ import 'package:medi_connect/core/routes/route_guards.dart';
 /// Configuration and builder for GoRouter.
 /// Integrates custom guards and observers to enable secure role-based navigation.
 
-
-
-
-
-
-
 class AppRouter {
   /// Builds a customized GoRouter instance with role guards and navigation logging.
   static GoRouter build({

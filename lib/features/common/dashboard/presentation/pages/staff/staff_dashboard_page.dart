@@ -305,8 +305,8 @@ class _TopBar extends StatelessWidget {
             child: Icon(
               Icons.add,
               color: isDark
-                  ? Colors.blueAccent.withValues(alpha: 0.2)
-                  : Colors.blue.withValues(alpha: 0.15),
+                  ? AppColors.blue.withValues(alpha: 0.2)
+                  : AppColors.blue.withValues(alpha: 0.15),
               size: 18.r,
             ),
           ),
@@ -316,8 +316,8 @@ class _TopBar extends StatelessWidget {
             child: Icon(
               Icons.add,
               color: isDark
-                  ? Colors.purpleAccent.withValues(alpha: 0.15)
-                  : Colors.purple.withValues(alpha: 0.1),
+                  ? AppColors.purple.withValues(alpha: 0.15)
+                  : AppColors.purple.withValues(alpha: 0.1),
               size: 12.r,
             ),
           ),
@@ -583,7 +583,7 @@ class _DateCard extends StatelessWidget {
           BoxShadow(
             color: isDark
                 ? Colors.black.withValues(alpha: 0.4)
-                : Colors.blue.withValues(alpha: 0.08),
+                : AppColors.blue.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),

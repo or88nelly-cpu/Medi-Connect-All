@@ -10,7 +10,7 @@ import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/common/dashboard/domain/entities/appointment_entity.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
@@ -21,11 +21,6 @@ import 'package:medi_connect/features/common/dashboard/presentation/widgets/admi
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/common/directory_pagination.dart';
 
 // Extracted sub-widgets
-
-
-
-
-
 
 class AdminPatientsPage extends StatefulWidget {
   const AdminPatientsPage({super.key});
@@ -770,7 +765,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                 "BP",
                                 recent.bp ?? "--",
                                 Icons.favorite_border,
-                                Colors.red,
+                                AppColors.red,
                                 isDark,
                               ),
                               _buildVitalBadge(
@@ -779,7 +774,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                     ? "${recent.weight} kg"
                                     : "--",
                                 Icons.scale_outlined,
-                                Colors.orange,
+                                AppColors.orange,
                                 isDark,
                               ),
                               _buildVitalBadge(
@@ -788,7 +783,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                     ? "${recent.height} cm"
                                     : "--",
                                 Icons.height,
-                                Colors.blue,
+                                AppColors.blue,
                                 isDark,
                               ),
                               _buildVitalBadge(
@@ -797,7 +792,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                     ? "${recent.fever} °F"
                                     : "--",
                                 Icons.thermostat_outlined,
-                                Colors.teal,
+                                AppColors.teal,
                                 isDark,
                               ),
                               _buildVitalBadge(
@@ -806,7 +801,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                     ? "${recent.headCircumference} cm"
                                     : "--",
                                 Icons.child_care,
-                                Colors.purple,
+                                AppColors.purple,
                                 isDark,
                               ),
                             ],
@@ -1076,7 +1071,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     ),
                     prefixIcon: Icon(
                       Icons.favorite,
-                      color: Colors.red,
+                      color: AppColors.red,
                       size: 18.sp,
                     ),
                   ),
@@ -1095,7 +1090,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     ),
                     prefixIcon: Icon(
                       Icons.scale,
-                      color: Colors.orange,
+                      color: AppColors.orange,
                       size: 18.sp,
                     ),
                   ),
@@ -1114,7 +1109,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     ),
                     prefixIcon: Icon(
                       Icons.height,
-                      color: Colors.blue,
+                      color: AppColors.blue,
                       size: 18.sp,
                     ),
                   ),
@@ -1133,7 +1128,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     ),
                     prefixIcon: Icon(
                       Icons.thermostat,
-                      color: Colors.teal,
+                      color: AppColors.teal,
                       size: 18.sp,
                     ),
                   ),
@@ -1152,7 +1147,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     ),
                     prefixIcon: Icon(
                       Icons.child_care,
-                      color: Colors.purple,
+                      color: AppColors.purple,
                       size: 18.sp,
                     ),
                   ),

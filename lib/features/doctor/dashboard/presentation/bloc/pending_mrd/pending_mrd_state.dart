@@ -16,7 +16,8 @@ class PendingMrdLoaded extends PendingMrdState {
   final List<MrdRecordDisplayModel> allRecords;
   final List<MrdRecordDisplayModel> filteredRecords;
   final DateTime selectedDate;
-  final String selectedCategory; // 'All Pending', 'Discharge Summary', 'Operative Notes', 'Signatures', 'Overdue', 'Returned'
+  final String
+  selectedCategory; // 'All Pending', 'Discharge Summary', 'Operative Notes', 'Signatures', 'Overdue', 'Returned'
   final String searchQuery;
   final String selectedArea;
   final String selectedPriority;
@@ -61,16 +62,16 @@ class PendingMrdLoaded extends PendingMrdState {
 
   @override
   List<Object?> get props => [
-        allRecords,
-        filteredRecords,
-        selectedDate,
-        selectedCategory,
-        searchQuery,
-        selectedArea,
-        selectedPriority,
-        selectedStatus,
-        counts,
-      ];
+    allRecords,
+    filteredRecords,
+    selectedDate,
+    selectedCategory,
+    searchQuery,
+    selectedArea,
+    selectedPriority,
+    selectedStatus,
+    counts,
+  ];
 }
 
 class PendingMrdError extends PendingMrdState {

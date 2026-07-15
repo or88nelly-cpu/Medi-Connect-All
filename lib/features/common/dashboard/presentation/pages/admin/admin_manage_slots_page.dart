@@ -12,13 +12,6 @@ import 'package:medi_connect/features/common/dashboard/presentation/widgets/mana
 
 // Sub-widgets
 
-
-
-
-
-
-
-
 class AdminManageSlotsPage extends StatefulWidget {
   final UserModel user;
   const AdminManageSlotsPage({super.key, required this.user});

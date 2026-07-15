@@ -79,7 +79,7 @@ class VitalsGridSection extends StatelessWidget {
               label: AppStrings.bloodPressure,
               value: bp,
               icon: Icons.favorite,
-              iconColor: const Color(0xFFEF4444),
+              iconColor: AppColors.error,
               isDark: isDark,
               borderCol: borderCol,
             ),
@@ -112,7 +112,7 @@ class VitalsGridSection extends StatelessWidget {
                   ? temp
                   : "$temp°F",
               icon: Icons.thermostat,
-              iconColor: const Color(0xFFF59E0B),
+              iconColor: AppColors.warning,
               isDark: isDark,
               borderCol: borderCol,
             ),

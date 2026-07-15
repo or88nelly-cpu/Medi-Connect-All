@@ -107,9 +107,12 @@ class SpecialityBookingBloc
     LoadDoctorsBySpecialtyUseCase? loadDoctorsUseCase,
     GetSlotsUseCase? getSlotsUseCase,
     BookAppointmentUseCase? bookAppointmentUseCase,
-  }) : _loadDoctorsUseCase = loadDoctorsUseCase ?? GetIt.instance<LoadDoctorsBySpecialtyUseCase>(),
+  }) : _loadDoctorsUseCase =
+           loadDoctorsUseCase ??
+           GetIt.instance<LoadDoctorsBySpecialtyUseCase>(),
        _getSlotsUseCase = getSlotsUseCase ?? GetIt.instance<GetSlotsUseCase>(),
-       _bookAppointmentUseCase = bookAppointmentUseCase ?? GetIt.instance<BookAppointmentUseCase>(),
+       _bookAppointmentUseCase =
+           bookAppointmentUseCase ?? GetIt.instance<BookAppointmentUseCase>(),
        super(const SpecialityBookingState()) {
     on<LoadDoctors>(_onLoadDoctors);
     on<SelectDoctor>(_onSelectDoctor);

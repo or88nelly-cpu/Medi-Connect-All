@@ -152,7 +152,7 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
                     _buildSummaryItem(
                       isPayLater ? 'Amount Due' : 'Amount Paid',
                       '₹${amount.toStringAsFixed(0)}',
-                      const Color(0xFF22C55E),
+                      AppColors.success,
                     ),
                   ],
                 ),

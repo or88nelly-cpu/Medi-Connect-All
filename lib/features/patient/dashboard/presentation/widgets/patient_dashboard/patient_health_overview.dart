@@ -252,7 +252,7 @@ class PatientHealthOverview extends StatelessWidget {
                 style: AppTextStyles.bodySmall.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 9.sp,
-                  color: const Color(0xFF22C55E),
+                  color: AppColors.success,
                 ),
               ),
               SizedBox(height: 2.h),

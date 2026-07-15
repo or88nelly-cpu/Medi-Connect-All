@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/features/admin/management/staff_management/presentation/bloc/doctor_staff_event.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
+import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/doctor_profile/appointments_summary_card.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/doctor_profile/consultation_list_card.dart';
@@ -24,21 +24,6 @@ import 'package:medi_connect/features/common/dashboard/presentation/widgets/doct
 import 'package:medi_connect/features/common/dashboard/presentation/widgets/doctor_profile/slot_management_card.dart';
 
 // Sub-widgets
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class DoctorProfileAdminView extends StatefulWidget {
   final UserModel user;

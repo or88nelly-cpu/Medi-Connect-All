@@ -4,9 +4,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/emergency
 
 /// Data model for emergency alerts with JSON serialization.
 
-
-
-
 class EmergencyModel extends EmergencyEntity {
   const EmergencyModel({
     required super.id,

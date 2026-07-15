@@ -4,9 +4,6 @@ import 'package:medi_connect/features/common/dashboard/domain/entities/pharmacy_
 
 /// Data model for pharmacy inventory items with JSON serialization.
 
-
-
-
 class PharmacyItemModel extends PharmacyItemEntity {
   const PharmacyItemModel({
     required super.id,

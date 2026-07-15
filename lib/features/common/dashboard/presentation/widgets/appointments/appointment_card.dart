@@ -4,16 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:medi_connect/boot_strap/services/secure_storage_service.dart';
 import 'package:medi_connect/core/constants/app_assets.dart';
 import 'package:medi_connect/core/constants/app_strings.dart';
 import 'package:medi_connect/core/functions/date_utils.dart';
 import 'package:medi_connect/core/functions/profile_image_helper.dart';
 import 'package:medi_connect/core/network/supabase_service.dart';
+import 'package:medi_connect/core/services/secure_storage_service.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/core/widgets/image/custom_image_view.dart';
-import 'package:medi_connect/features/admin/management/patient_management/presentation/bloc/patient_bloc.dart';
+import 'package:medi_connect/features/admin/patient_management/presentation/bloc/patient_bloc.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/common/dashboard/domain/entities/appointment_entity.dart';
 

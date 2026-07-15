@@ -14,7 +14,8 @@ class IpOccupancyModel extends IpOccupancyEntity {
       name: json['name'] as String? ?? '',
       occupiedBeds: (json['occupied_beds'] as num? ?? 0).toInt(),
       totalBeds: (json['total_beds'] as num? ?? 0).toInt(),
-      occupiedPercentage: (json['occupied_percentage'] as num? ?? 0.0).toDouble(),
+      occupiedPercentage: (json['occupied_percentage'] as num? ?? 0.0)
+          .toDouble(),
       sparkline: (json['sparkline'] as List<dynamic>? ?? [0.0, 0.0, 0.0])
           .map((e) => (e as num).toDouble())
           .toList(),

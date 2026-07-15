@@ -10,14 +10,6 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 /// Custom reusable input text fields complying with design systems.
 /// Implements: AppTextField, PasswordField, SearchField, PhoneField, OtpField.
 
-
-
-
-
-
-
-
-
 /// Standard custom text input field.
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
