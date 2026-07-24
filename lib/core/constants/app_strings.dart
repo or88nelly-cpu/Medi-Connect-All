@@ -553,5 +553,41 @@ class AppStrings {
   static const vsLast17Days = "vs last 17 days";
   static const minsSuffix = "mins";
 
+  // Admin Control Center & Department Details
+  static const hospitalControlCenter = "Hospital Control Center";
+  static const controlCenterSubtitle =
+      "Monitor and manage your hospital operations from one place";
+  static const searchModulesPlaceholder = "Search modules...";
+  static const welcomeBackAdmin = "Welcome back, Admin 👋";
+  static const goPremium = "Go Premium";
+  static const goPremiumDesc = "Unlock advanced features and analytics.";
+  static const upgradeNow = "Upgrade Now";
+  static const departmentDetailsTitle = "Department Details";
+  static const departmentDetailsSubtitle =
+      "Overview and real-time management of all hospital departments";
+  static const gridView = "Grid View";
+  static const tableView = "Table View";
+  static const departmentName = "Department Name";
+  static const departmentCode = "Department Code";
+  static const headOfDepartment = "Head of Department";
+  static const totalStaff = "Total Staff";
+  static const totalDoctors = "Total Doctors";
+  static const status = "Status";
+  static const actions = "Actions";
+
+  static const superAdmin = "Super Admin";
+  static const mediConnectBrand = "MediConnect";
+  static const hospitalPlatform = "Hospital Platform";
+  static const departmentSearchPlaceholder =
+      "Search department name or head...";
+  static const deptPrefix = "DEPT-";
+  static const unassignedDoctor = "Dr. Unassigned";
+  static const notificationCountDefault = "7";
+  static const staffSuffix = "Staff";
+  static const doctorsSuffix = "Doctors";
+  static const noMatchingModules = "No matching modules found.";
+  static const noDepartmentsFound =
+      "No departments found matching your criteria.";
+
   AppStrings._();
 }

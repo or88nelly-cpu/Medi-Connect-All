@@ -8,7 +8,11 @@ class SpecialtyStep extends StatelessWidget {
   final SpecialtyEntry? selected;
   final ValueChanged<SpecialtyEntry> onSelect;
 
-  const SpecialtyStep({super.key, required this.selected, required this.onSelect});
+  const SpecialtyStep({
+    super.key,
+    required this.selected,
+    required this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +66,9 @@ class SpecialtyStep extends StatelessWidget {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
-                        borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusL,
+                        ),
                         border: Border.all(
                           color: isSelected
                               ? sp.gradient.first
@@ -93,7 +99,9 @@ class SpecialtyStep extends StatelessWidget {
                                 color: isSelected
                                     ? Colors.white.withValues(alpha: 0.25)
                                     : sp.gradient.first.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.radiusM,
+                                ),
                               ),
                               child: Icon(
                                 sp.icon,

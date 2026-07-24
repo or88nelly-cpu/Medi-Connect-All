@@ -31,7 +31,6 @@ class BookingPaymentMethodsSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: AppDimensions.spaceS + 2), // 10
-
         // Row of options
         ValueListenableBuilder<int>(
           valueListenable: selectedPaymentNotifier,
@@ -105,7 +104,9 @@ class BookingPaymentMethodsSection extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             color: cardBg,
-            borderRadius: BorderRadius.circular(AppDimensions.radiusL - 2), // 14
+            borderRadius: BorderRadius.circular(
+              AppDimensions.radiusL - 2,
+            ), // 14
             border: Border.all(
               color: isSelected
                   ? const Color(0xFF3B5BFD)

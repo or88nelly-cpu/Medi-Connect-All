@@ -27,8 +27,18 @@ class ConfirmationStep extends StatelessWidget {
 
   String _monthName(int m) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[(m - 1).clamp(0, 11)];
   }
@@ -60,7 +70,11 @@ class ConfirmationStep extends StatelessWidget {
                 ),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.check_rounded, color: Colors.white, size: 50),
+              child: const Icon(
+                Icons.check_rounded,
+                color: Colors.white,
+                size: 50,
+              ),
             ),
           ),
           SizedBox(height: AppDimensions.spaceXXL),
@@ -90,7 +104,9 @@ class ConfirmationStep extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: AppColors.primary.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(AppDimensions.radiusM - 2), // 10
+              borderRadius: BorderRadius.circular(
+                AppDimensions.radiusM - 2,
+              ), // 10
               border: Border.all(
                 color: AppColors.primary.withValues(alpha: 0.3),
               ),
@@ -137,7 +153,10 @@ class ConfirmationStep extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Divider(color: AppColors.border(context), height: AppDimensions.spaceL),
+                Divider(
+                  color: AppColors.border(context),
+                  height: AppDimensions.spaceL,
+                ),
                 ConfirmRow(
                   icon: Icons.person_rounded,
                   label: 'Doctor',
@@ -185,7 +204,9 @@ class ConfirmationStep extends StatelessWidget {
                 padding: EdgeInsets.all(AppDimensions.paddingL),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppDimensions.radiusL - 2), // 14
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.radiusL - 2,
+                  ), // 14
                 ),
               ),
             ),

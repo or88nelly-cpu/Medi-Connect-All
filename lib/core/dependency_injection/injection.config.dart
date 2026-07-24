@@ -107,6 +107,16 @@ import '../../features/admin/equipment_management/presentation/bloc/cssd_bloc.da
     as _i1005;
 import '../../features/admin/equipment_management/presentation/bloc/mep_engineer_bloc.dart'
     as _i328;
+import '../../features/admin/home/data/datasources/admin_home_remote_data_source.dart'
+    as _i13;
+import '../../features/admin/home/data/repositories/admin_home_repository_impl.dart'
+    as _i227;
+import '../../features/admin/home/domain/repositories/admin_home_repository.dart'
+    as _i468;
+import '../../features/admin/home/domain/usecases/get_admin_dashboard_modules_usecase.dart'
+    as _i355;
+import '../../features/admin/home/presentation/bloc/admin_home_bloc.dart'
+    as _i315;
 import '../../features/admin/inventory_management/data/datasource/general_store_remote_datasource.dart'
     as _i407;
 import '../../features/admin/inventory_management/data/datasource/purchase_remote_datasource.dart'
@@ -116,7 +126,7 @@ import '../../features/admin/inventory_management/data/repositories/general_stor
 import '../../features/admin/inventory_management/data/repositories/purchase_repository_impl.dart'
     as _i34;
 import '../../features/admin/inventory_management/domain/repositories/general_store_repository.dart'
-    as _i13;
+    as _i14;
 import '../../features/admin/inventory_management/domain/repositories/purchase_repository.dart'
     as _i231;
 import '../../features/admin/inventory_management/domain/usecases/get_general_store_stats_usecase.dart'
@@ -290,7 +300,7 @@ import '../../features/admin/ward_management/presentation/bloc/nutrition_and_dia
 import '../../features/admin/ward_management/presentation/bloc/ward_bloc.dart'
     as _i1004;
 import '../../features/authentication/data/data_source/auth_remote_datasource.dart'
-    as _i227;
+    as _i228;
 import '../../features/authentication/data/repositories/user_details_repository_impl.dart'
     as _i1033;
 import '../../features/authentication/data/repository/auth_repository_impl.dart'
@@ -338,7 +348,7 @@ import '../../features/common/dashboard/domain/use_cases/get_analytics_usecase.d
 import '../../features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart'
     as _i891;
 import '../../features/common/dashboard/presentation/bloc/admin/admin_attendance_bloc.dart'
-    as _i14;
+    as _i15;
 import '../../features/common/dashboard/presentation/bloc/admin/admin_billing_bloc.dart'
     as _i240;
 import '../../features/common/dashboard/presentation/bloc/admin/admin_emergencies_bloc.dart'
@@ -490,11 +500,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i525.PurchaseRemoteDataSource>(
       () => _i525.PurchaseRemoteDataSourceImpl(),
     );
+    gh.lazySingleton<_i13.AdminHomeRemoteDataSource>(
+      () => _i13.AdminHomeRemoteDataSourceImpl(),
+    );
     gh.lazySingleton<_i502.DyalisisRemoteDataSource>(
       () => _i502.DyalisisRemoteDataSourceImpl(),
     );
     gh.lazySingleton<_i924.InformationTechnologyRemoteDataSource>(
       () => _i924.InformationTechnologyRemoteDataSourceImpl(),
+    );
+    gh.lazySingleton<_i468.AdminHomeRepository>(
+      () => _i227.AdminHomeRepositoryImpl(
+        remoteDataSource: gh<_i13.AdminHomeRemoteDataSource>(),
+      ),
     );
     gh.lazySingleton<_i391.WardRemoteDataSource>(
       () => _i391.WardRemoteDataSourceImpl(),
@@ -590,6 +608,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i576.DepartmentRemoteDataSource>(
       () => _i576.DepartmentRemoteDataSourceImpl(gh<_i658.SupabaseService>()),
     );
+    gh.lazySingleton<_i355.GetAdminDashboardModulesUseCase>(
+      () => _i355.GetAdminDashboardModulesUseCase(
+        gh<_i468.AdminHomeRepository>(),
+      ),
+    );
     gh.lazySingleton<_i356.PatientRemoteDataSource>(
       () => _i356.PatientRemoteDataSourceImpl(gh<_i658.SupabaseService>()),
     );
@@ -615,8 +638,8 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i922.MarketingRepositoryImpl(gh<_i442.MarketingRemoteDataSource>()),
     );
-    gh.lazySingleton<_i227.AuthRemoteDataSource>(
-      () => _i227.AuthRemoteDataSourceImpl(gh<_i658.SupabaseService>()),
+    gh.lazySingleton<_i228.AuthRemoteDataSource>(
+      () => _i228.AuthRemoteDataSourceImpl(gh<_i658.SupabaseService>()),
     );
     gh.lazySingleton<_i775.UniqueIdService>(
       () => _i775.UniqueIdService(gh<_i658.SupabaseService>()),
@@ -700,7 +723,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i772.NutritionAndDiabeticsRepository>(),
       ),
     );
-    gh.lazySingleton<_i13.GeneralStoreRepository>(
+    gh.lazySingleton<_i14.GeneralStoreRepository>(
       () => _i1055.GeneralStoreRepositoryImpl(
         gh<_i407.GeneralStoreRemoteDataSource>(),
       ),
@@ -718,6 +741,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i413.EmrdRepository>(
       () => _i2.EmrdRepositoryImpl(gh<_i28.EmrdRemoteDataSource>()),
+    );
+    gh.factory<_i315.AdminHomeBloc>(
+      () => _i315.AdminHomeBloc(
+        getAdminDashboardModulesUseCase:
+            gh<_i355.GetAdminDashboardModulesUseCase>(),
+      ),
     );
     gh.lazySingleton<_i319.GetInformationTechnologyStatsUseCase>(
       () => _i319.GetInformationTechnologyStatsUseCase(
@@ -915,7 +944,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i742.AuthRepository>(
       () => _i233.AuthRepositoryImpl(
-        gh<_i227.AuthRemoteDataSource>(),
+        gh<_i228.AuthRemoteDataSource>(),
         gh<_i535.SecureStorageService>(),
       ),
     );
@@ -954,7 +983,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1056.GetGeneralStoreStatsUseCase>(
       () =>
-          _i1056.GetGeneralStoreStatsUseCase(gh<_i13.GeneralStoreRepository>()),
+          _i1056.GetGeneralStoreStatsUseCase(gh<_i14.GeneralStoreRepository>()),
     );
     gh.factory<_i708.BiomedicalEngineeringBloc>(
       () => _i708.BiomedicalEngineeringBloc(
@@ -1058,8 +1087,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i20.AdminOperationsRepository>(),
       ),
     );
-    gh.factory<_i14.AdminAttendanceBloc>(
-      () => _i14.AdminAttendanceBloc(
+    gh.factory<_i15.AdminAttendanceBloc>(
+      () => _i15.AdminAttendanceBloc(
         getAttendance: gh<_i629.GetStaffAttendanceUseCase>(),
         updateStatus: gh<_i629.UpdateAttendanceStatusUseCase>(),
       ),

@@ -89,7 +89,6 @@ class BookingSummarySection extends StatelessWidget {
               ),
             ),
             SizedBox(width: AppDimensions.spaceWXL - 6), // 14
-
             // Safe & Secure Booking Banner
             Expanded(
               flex: 4,

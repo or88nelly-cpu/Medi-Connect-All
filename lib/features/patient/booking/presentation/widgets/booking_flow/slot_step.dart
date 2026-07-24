@@ -99,7 +99,8 @@ class SlotStep extends StatelessWidget {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: _days.length,
-                  separatorBuilder: (context, _) => SizedBox(width: AppDimensions.spaceWS),
+                  separatorBuilder: (context, _) =>
+                      SizedBox(width: AppDimensions.spaceWS),
                   itemBuilder: (context, i) {
                     final d = _days[i];
                     final isSelected = _isSameDay(d, selectedDate);
@@ -118,7 +119,9 @@ class SlotStep extends StatelessWidget {
                                 )
                               : null,
                           color: isSelected ? null : AppColors.card(context),
-                          borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+                          borderRadius: BorderRadius.circular(
+                            AppDimensions.radiusM,
+                          ),
                           border: Border.all(
                             color: isSelected
                                 ? AppColors.primary
@@ -242,7 +245,9 @@ class SlotGroup extends StatelessWidget {
                       : isSelected
                       ? null
                       : AppColors.card(context),
-                  borderRadius: BorderRadius.circular(AppDimensions.radiusM - 2), // 10
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.radiusM - 2,
+                  ), // 10
                   border: Border.all(
                     color: isSelected
                         ? AppColors.primary
@@ -257,7 +262,9 @@ class SlotGroup extends StatelessWidget {
                         ? FontWeight.bold
                         : FontWeight.normal,
                     color: isBooked
-                        ? AppColors.textSecondary(context).withValues(alpha: 0.5)
+                        ? AppColors.textSecondary(
+                            context,
+                          ).withValues(alpha: 0.5)
                         : isSelected
                         ? Colors.white
                         : AppColors.textPrimary(context),

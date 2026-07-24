@@ -60,7 +60,9 @@ class BookingTimeSlotGrid extends StatelessWidget {
         state.availableSlots.isEmpty
             ? Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingL),
+                  padding: EdgeInsets.symmetric(
+                    vertical: AppDimensions.paddingL,
+                  ),
                   child: Text(
                     'No available slots on this date. Please select another date.',
                     style: TextStyle(
@@ -97,7 +99,9 @@ class BookingTimeSlotGrid extends StatelessWidget {
                         color: isBooked
                             ? const Color(0xFFF1F5F9)
                             : (isSelected ? const Color(0xFF3B5BFD) : cardBg),
-                        borderRadius: BorderRadius.circular(AppDimensions.radiusM - 2), // 10
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusM - 2,
+                        ), // 10
                         border: Border.all(
                           color: isBooked
                               ? Colors.transparent

@@ -71,7 +71,6 @@ class DoctorDetailInfoCard extends StatelessWidget {
             ],
           ),
           SizedBox(width: AppDimensions.spaceWXL - 6), // 14
-
           // Detail column
           Expanded(
             child: Column(
@@ -105,7 +104,6 @@ class DoctorDetailInfoCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AppDimensions.spaceS + 2), // 10
-
                 // Badges row
                 Wrap(
                   spacing: 6,

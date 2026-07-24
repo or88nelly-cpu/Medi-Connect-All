@@ -208,11 +208,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                 SizedBox(height: 24.h),
 
                 // Choose Appointment Date
-                BookingDatePicker(
-                  state: state,
-                  isDark: isDark,
-                  cardBg: cardBg,
-                ),
+                BookingDatePicker(state: state, isDark: isDark, cardBg: cardBg),
                 SizedBox(height: 24.h),
 
                 // Select Time Slot

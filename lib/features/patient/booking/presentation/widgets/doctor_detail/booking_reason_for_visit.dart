@@ -48,11 +48,17 @@ class BookingReasonForVisit extends StatelessWidget {
               TextField(
                 controller: controller,
                 maxLines: 3,
-                style: TextStyle(color: textColor, fontSize: AppTextStyles.s12 - 1), // 11
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: AppTextStyles.s12 - 1,
+                ), // 11
                 decoration: InputDecoration(
                   hintText:
                       "Tell us the reason for your visit (Optional)\nE.g. Chest pain, regular checkup, shortness of breath...",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: AppTextStyles.s10),
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: AppTextStyles.s10,
+                  ),
                   border: InputBorder.none,
                 ),
               ),

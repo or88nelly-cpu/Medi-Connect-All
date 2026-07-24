@@ -7,6 +7,7 @@ import 'package:medi_connect/features/admin/consultation_management/presentation
 import 'package:medi_connect/features/admin/customer_care/presentation/pages/patient_registration_page.dart';
 import 'package:medi_connect/features/admin/customer_care/presentation/pages/patient_search_page.dart';
 import 'package:medi_connect/features/admin/customer_care/presentation/pages/qr_registration_page.dart';
+import 'package:medi_connect/features/admin/department_details/presentation/pages/department_details_page.dart';
 import 'package:medi_connect/features/admin/home/admin_home_page.dart';
 import 'package:medi_connect/features/admin/staff_management/data/models/department_model.dart';
 import 'package:medi_connect/features/admin/staff_management/presentation/pages/department_detail.dart';
@@ -78,6 +79,10 @@ class AppRouterConfig {
         GoRoute(
           path: "/departments",
           builder: (context, state) => const DepartmentListPage(),
+        ),
+        GoRoute(
+          path: RouteNames.departmentDetails,
+          builder: (context, state) => const DepartmentDetailsPage(),
         ),
         GoRoute(
           path: "/sections",

@@ -84,7 +84,8 @@ class DoctorStep extends StatelessWidget {
                   vertical: AppDimensions.paddingXS,
                 ),
                 itemCount: docs.length,
-                separatorBuilder: (context, _) => SizedBox(height: AppDimensions.spaceS),
+                separatorBuilder: (context, _) =>
+                    SizedBox(height: AppDimensions.spaceS),
                 itemBuilder: (context, i) {
                   final doc = docs[i];
                   final isSelected = selected?.id == doc.id;
@@ -98,7 +99,9 @@ class DoctorStep extends StatelessWidget {
                         color: isSelected
                             ? color.withValues(alpha: 0.07)
                             : AppColors.card(context),
-                        borderRadius: BorderRadius.circular(AppDimensions.radiusM + 2),
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusM + 2,
+                        ),
                         border: Border.all(
                           color: isSelected ? color : AppColors.border(context),
                           width: isSelected ? 1.5 : 1,

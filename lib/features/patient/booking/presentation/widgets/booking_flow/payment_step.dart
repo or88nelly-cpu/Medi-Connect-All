@@ -27,8 +27,18 @@ class PaymentStep extends StatelessWidget {
 
   String _monthName(int m) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[(m - 1).clamp(0, 11)];
   }
@@ -71,7 +81,10 @@ class PaymentStep extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Divider(color: color.withValues(alpha: 0.2), height: AppDimensions.spaceL),
+                Divider(
+                  color: color.withValues(alpha: 0.2),
+                  height: AppDimensions.spaceL,
+                ),
                 SummaryRow(
                   label: 'Doctor',
                   value: doctor?.fullName ?? 'Dr. Specialist',
@@ -90,7 +103,10 @@ class PaymentStep extends StatelessWidget {
                       '${_monthName(date.month)} ${date.day}, ${date.year} · $slot',
                   color: color,
                 ),
-                Divider(color: color.withValues(alpha: 0.2), height: AppDimensions.spaceXL),
+                Divider(
+                  color: color.withValues(alpha: 0.2),
+                  height: AppDimensions.spaceXL,
+                ),
                 SummaryRow(
                   label: 'Consultation Fee',
                   value: '₹$fee',
@@ -98,7 +114,10 @@ class PaymentStep extends StatelessWidget {
                 ),
                 SizedBox(height: AppDimensions.spaceXS + 2),
                 SummaryRow(label: 'GST (18%)', value: '₹$tax', color: color),
-                Divider(color: color.withValues(alpha: 0.2), height: AppDimensions.spaceL),
+                Divider(
+                  color: color.withValues(alpha: 0.2),
+                  height: AppDimensions.spaceL,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -150,7 +169,9 @@ class PaymentStep extends StatelessWidget {
                   color: isSelected
                       ? mColor.withValues(alpha: 0.07)
                       : AppColors.card(context),
-                  borderRadius: BorderRadius.circular(AppDimensions.radiusL - 2), // 14
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.radiusL - 2,
+                  ), // 14
                   border: Border.all(
                     color: isSelected ? mColor : AppColors.border(context),
                     width: isSelected ? 1.5 : 1,
@@ -163,7 +184,9 @@ class PaymentStep extends StatelessWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         color: mColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(AppDimensions.radiusM - 2), // 10
+                        borderRadius: BorderRadius.circular(
+                          AppDimensions.radiusM - 2,
+                        ), // 10
                       ),
                       child: Icon(icon, color: mColor, size: 20),
                     ),

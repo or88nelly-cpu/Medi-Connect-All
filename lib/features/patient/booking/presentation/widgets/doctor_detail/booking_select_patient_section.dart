@@ -33,7 +33,6 @@ class BookingSelectPatientSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: AppDimensions.spaceS + 2), // 10
-
         // Patient Card
         BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
@@ -109,7 +108,6 @@ class BookingSelectPatientSection extends StatelessWidget {
         ),
 
         SizedBox(height: AppDimensions.spaceS + 2), // 10
-
         // Dashed Add Another
         Container(
           width: double.infinity,
