@@ -1,224 +1,141 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_colors.dart';
-import 'package:medi_connect/core/theme/app_dimensions.dart';
-import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/features/admin/home/domain/entities/admin_dashboard_module_entity.dart';
-import 'package:medi_connect/features/admin/home/presentation/widgets/admin_module_icon_mapper.dart';
+import 'package:medi_connect/features/admin/home/presentation/widgets/admin_module_card_badge.dart';
+import 'package:medi_connect/features/admin/home/presentation/widgets/admin_module_card_body.dart';
+import 'package:medi_connect/features/admin/home/presentation/widgets/admin_module_card_footer.dart';
 
-/// Interactive Control Center Module Card matching the specification design.
+/// Module card: proportional gradient badge (top 55%) + info section (bottom 45%).
+/// Staggered entrance animation + hover lift.
 class AdminModuleCard extends StatefulWidget {
   final AdminDashboardModuleEntity module;
   final VoidCallback onTap;
+  final Duration entranceDelay;
 
-  const AdminModuleCard({super.key, required this.module, required this.onTap});
+  const AdminModuleCard({
+    super.key,
+    required this.module,
+    required this.onTap,
+    this.entranceDelay = Duration.zero,
+  });
 
   @override
   State<AdminModuleCard> createState() => _AdminModuleCardState();
 }
 
-class _AdminModuleCardState extends State<AdminModuleCard> {
-  bool _isHovered = false;
+class _AdminModuleCardState extends State<AdminModuleCard>
+    with SingleTickerProviderStateMixin {
+  bool _hovered = false;
+  late final AnimationController _ctrl;
+  late final Animation<double> _fade;
+  late final Animation<Offset> _slide;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 380),
+    );
+    _fade = CurvedAnimation(parent: _ctrl, curve: Curves.easeOut);
+    _slide = Tween(
+      begin: const Offset(0, 0.12),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
+    Future.delayed(widget.entranceDelay, () {
+      if (mounted) _ctrl.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = Color(widget.module.colorHex);
-    final accentColor = Color(widget.module.accentColorHex);
+    final base = Color(widget.module.colorHex);
 
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeOutCubic,
-          transform: _isHovered
-              ? Matrix4.translationValues(0.0, -4.0, 0.0)
-              : Matrix4.identity(),
-          padding: EdgeInsets.all(AppDimensions.paddingL),
-          decoration: _cardDecoration(isDark, baseColor),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _ModuleIconBadge(
-                baseColor: baseColor,
-                accentColor: accentColor,
-                isDark: isDark,
-                iconKey: widget.module.iconKey,
+    return FadeTransition(
+      opacity: _fade,
+      child: SlideTransition(
+        position: _slide,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _hovered = true),
+          onExit: (_) => setState(() => _hovered = false),
+          child: GestureDetector(
+            onTap: widget.onTap,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              curve: Curves.easeOutCubic,
+              transform: _hovered
+                  ? Matrix4.translationValues(0, -5, 0)
+                  : Matrix4.identity(),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.darkCard : Colors.white,
+                borderRadius: BorderRadius.circular(18.r),
+                border: Border.all(
+                  color: _hovered
+                      ? base.withValues(alpha: 0.3)
+                      : Colors.black.withValues(alpha: isDark ? 0.0 : 0.06),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: _hovered
+                        ? base.withValues(alpha: 0.22)
+                        : Colors.black.withValues(alpha: isDark ? 0.3 : 0.07),
+                    blurRadius: _hovered ? 24 : 10,
+                    offset: Offset(0, _hovered ? 10 : 3),
+                  ),
+                ],
               ),
-              SizedBox(height: AppDimensions.spaceS),
-              _ModuleLabels(module: widget.module, isDark: isDark),
-              SizedBox(height: AppDimensions.spaceM),
-              _ModuleFooter(
-                module: widget.module,
-                baseColor: baseColor,
-                isDark: isDark,
+              // ── Layout: badge 55% / info 45% ──────────────────────────
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(18.r),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Icon badge — proportional top section
+                    Expanded(
+                      flex: 55,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 0),
+                        child: AdminModuleCardBadge(module: widget.module),
+                      ),
+                    ),
+                    // Info section — title, description, footer
+                    Expanded(
+                      flex: 45,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(12.w, 8.h, 12.w, 12.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AdminModuleCardBody(
+                              module: widget.module,
+                              isDark: isDark,
+                            ),
+                            AdminModuleCardFooter(
+                              countText: widget.module.countText,
+                              baseColor: base,
+                              isDark: isDark,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
         ),
       ),
-    );
-  }
-
-  BoxDecoration _cardDecoration(bool isDark, Color baseColor) {
-    return BoxDecoration(
-      color: isDark ? AppColors.darkCard : Colors.white,
-      borderRadius: BorderRadius.circular(24.r),
-      border: Border.all(
-        color: _isHovered
-            ? baseColor.withValues(alpha: 0.5)
-            : (isDark
-                  ? Colors.white.withValues(alpha: 0.06)
-                  : Colors.black.withValues(alpha: 0.04)),
-        width: _isHovered ? 1.5 : 1.0,
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: _isHovered
-              ? baseColor.withValues(alpha: 0.15)
-              : (isDark
-                    ? Colors.black.withValues(alpha: 0.25)
-                    : Colors.black.withValues(alpha: 0.03)),
-          blurRadius: _isHovered ? 24 : 12,
-          offset: Offset(0, _isHovered ? 10 : 4),
-        ),
-      ],
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Sub-widgets
-// ---------------------------------------------------------------------------
-
-class _ModuleIconBadge extends StatelessWidget {
-  final Color baseColor;
-  final Color accentColor;
-  final bool isDark;
-  final String iconKey;
-
-  const _ModuleIconBadge({
-    required this.baseColor,
-    required this.accentColor,
-    required this.isDark,
-    required this.iconKey,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 56.r,
-      height: 56.r,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            baseColor.withValues(alpha: isDark ? 0.25 : 0.12),
-            accentColor.withValues(alpha: isDark ? 0.4 : 0.22),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(18.r),
-        boxShadow: [
-          BoxShadow(
-            color: baseColor.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Center(
-        child: Icon(
-          AdminModuleIconMapper.fromKey(iconKey),
-          size: 28.r,
-          color: baseColor,
-        ),
-      ),
-    );
-  }
-}
-
-class _ModuleLabels extends StatelessWidget {
-  final AdminDashboardModuleEntity module;
-  final bool isDark;
-
-  const _ModuleLabels({required this.module, required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          module.title,
-          style: AppTextStyles.bodyLarge.copyWith(
-            fontWeight: FontWeight.w900,
-            fontSize: 16.sp,
-            color: isDark ? Colors.white : AppColors.textDarkNavy,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        SizedBox(height: 4.h),
-        Text(
-          module.description,
-          style: AppTextStyles.bodySmall.copyWith(
-            fontSize: 11.sp,
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.6)
-                : Colors.grey.shade600,
-            height: 1.3,
-          ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
-    );
-  }
-}
-
-class _ModuleFooter extends StatelessWidget {
-  final AdminDashboardModuleEntity module;
-  final Color baseColor;
-  final bool isDark;
-
-  const _ModuleFooter({
-    required this.module,
-    required this.baseColor,
-    required this.isDark,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          module.countText,
-          style: AppTextStyles.bodyMedium.copyWith(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.bold,
-            color: baseColor,
-          ),
-        ),
-        Container(
-          width: 32.r,
-          height: 32.r,
-          decoration: BoxDecoration(
-            color: baseColor.withValues(alpha: isDark ? 0.2 : 0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            Icons.arrow_forward_rounded,
-            size: 16.r,
-            color: baseColor,
-          ),
-        ),
-      ],
     );
   }
 }

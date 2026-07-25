@@ -9,8 +9,7 @@ import 'package:medi_connect/features/admin/home/presentation/bloc/admin_home_bl
 import 'package:medi_connect/features/admin/home/presentation/bloc/admin_home_state.dart';
 import 'package:medi_connect/features/admin/home/presentation/widgets/admin_module_card.dart';
 
-/// Responsive grid of Admin Control Center module cards.
-/// Consumes [AdminHomeBloc] to render loading, error, or loaded states.
+/// Responsive staggered grid of [AdminModuleCard] widgets.
 class AdminModulesGrid extends StatelessWidget {
   const AdminModulesGrid({super.key});
 
@@ -18,82 +17,69 @@ class AdminModulesGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AdminHomeBloc, AdminHomeState>(
       builder: (context, state) {
-        if (state is AdminHomeLoading) {
-          return const _LoadingIndicator();
-        }
-        if (state is AdminHomeError) {
+        if (state is AdminHomeLoading) return const _Loader();
+        if (state is AdminHomeError)
           return ErrorStateWidget(message: state.message);
-        }
-        if (state is AdminHomeLoaded) {
-          return _ModuleGridContent(state: state);
-        }
+        if (state is AdminHomeLoaded) return _Grid(state: state);
         return const SizedBox.shrink();
       },
     );
   }
 }
 
-// ---------------------------------------------------------------------------
-// Private sub-widgets
-// ---------------------------------------------------------------------------
-
-class _LoadingIndicator extends StatelessWidget {
-  const _LoadingIndicator();
+class _Loader extends StatelessWidget {
+  const _Loader();
 
   @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(40.0),
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => const Center(
+    child: Padding(
+      padding: EdgeInsets.all(40),
+      child: CircularProgressIndicator(),
+    ),
+  );
 }
 
-class _ModuleGridContent extends StatelessWidget {
+class _Grid extends StatelessWidget {
   final AdminHomeLoaded state;
-
-  const _ModuleGridContent({required this.state});
+  const _Grid({required this.state});
 
   @override
   Widget build(BuildContext context) {
     final modules = state.filteredModules;
-
-    if (modules.isEmpty) {
+    if (modules.isEmpty)
       return const NoDataWidget(message: AppStrings.noMatchingModules);
-    }
 
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (context, box) {
+        final cols = _cols(box.maxWidth);
         return GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: modules.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: _crossAxisCount(constraints.maxWidth),
-            crossAxisSpacing: 16.w,
-            mainAxisSpacing: 16.h,
-            childAspectRatio: 1.1,
+            crossAxisCount: cols,
+            crossAxisSpacing: 14.w,
+            mainAxisSpacing: 14.h,
+            childAspectRatio: 0.75, // portrait — matches badge 55% / info 45%
           ),
-          itemBuilder: (context, index) {
-            final module = modules[index];
-            return AdminModuleCard(
-              module: module,
-              onTap: () {
-                if (module.routeName != null) context.push(module.routeName!);
-              },
-            );
-          },
+          itemBuilder: (context, i) => AdminModuleCard(
+            key: ValueKey(modules[i].id),
+            module: modules[i],
+            entranceDelay: Duration(milliseconds: i * 45),
+            onTap: () {
+              if (modules[i].routeName != null)
+                context.push(modules[i].routeName!);
+            },
+          ),
         );
       },
     );
   }
 
-  int _crossAxisCount(double width) {
-    if (width > 1200) return 4;
-    if (width > 850) return 3;
-    if (width > 600) return 2;
+  int _cols(double w) {
+    if (w > 1100) return 4;
+    if (w > 750) return 3;
+    if (w > 500) return 2;
     return 1;
   }
 }

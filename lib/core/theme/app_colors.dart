@@ -25,33 +25,58 @@ class AppColors {
   static const textDarkNavy = Color(0xFF0F2C59);
 
   // Control Center Module Card Colors
-  static const controlCenterBlue = Color(0xFF3B5BFD);
-  static const controlCenterBlueAccent = Color(0xFF2563EB);
-  static const controlCenterPurple = Color(0xFF9333EA);
+  // Blue
+  static const controlCenterBlue = Color(0xFF4F8EF7);
+  static const controlCenterBlueAccent = Color(0xFF2F6BFF);
+
+  // Purple
+  static const controlCenterPurple = Color(0xFF8B5CF6);
   static const controlCenterPurpleAccent = Color(0xFFA855F7);
-  static const controlCenterEmerald = Color(0xFF059669);
-  static const controlCenterEmeraldAccent = Color(0xFF10B981);
-  static const controlCenterOrange = Color(0xFFEA580C);
-  static const controlCenterOrangeAccent = Color(0xFFF97316);
-  static const controlCenterPink = Color(0xFFDB2777);
-  static const controlCenterPinkAccent = Color(0xFFEC4899);
-  static const controlCenterCyan = Color(0xFF0891B2);
-  static const controlCenterCyanAccent = Color(0xFF06B6D4);
-  static const controlCenterViolet = Color(0xFF7C3AED);
-  static const controlCenterVioletAccent = Color(0xFF8B5CF6);
-  static const controlCenterAmber = Color(0xFFD97706);
-  static const controlCenterAmberAccent = Color(0xFFF59E0B);
-  static const controlCenterGreen = Color(0xFF16A34A);
-  static const controlCenterGreenAccent = Color(0xFF22C55E);
-  static const controlCenterRose = Color(0xFFE11D48);
-  static const controlCenterRoseAccent = Color(0xFFF43F5E);
-  static const controlCenterSky = Color(0xFF0284C7);
-  static const controlCenterSkyAccent = Color(0xFF0EA5E9);
-  static const controlCenterIndigo = Color(0xFF4F46E5);
-  static const controlCenterIndigoAccent = Color(0xFF6366F1);
-  static const sidebarDarkNavy = Color(0xFF0C1E40);
-  static const badgeRed = Color(0xFFFF296D);
-  static const tableHeaderDark = Color(0xFF0F1E36);
+
+  // Emerald
+  static const controlCenterEmerald = Color(0xFF34C759);
+  static const controlCenterEmeraldAccent = Color(0xFF16A34A);
+
+  // Orange
+  static const controlCenterOrange = Color(0xFFFFA726);
+  static const controlCenterOrangeAccent = Color(0xFFFF8F00);
+
+  // Pink
+  static const controlCenterPink = Color(0xFFFF5CA8);
+  static const controlCenterPinkAccent = Color(0xFFE91E63);
+
+  // Cyan
+  static const controlCenterCyan = Color(0xFF38BDF8);
+  static const controlCenterCyanAccent = Color(0xFF0EA5E9);
+
+  // Violet
+  static const controlCenterViolet = Color(0xFF7C6CFF);
+  static const controlCenterVioletAccent = Color(0xFF6D28D9);
+
+  // Amber
+  static const controlCenterAmber = Color(0xFFFBC02D);
+  static const controlCenterAmberAccent = Color(0xFFF9A825);
+
+  // Green
+  static const controlCenterGreen = Color(0xFF66BB6A);
+  static const controlCenterGreenAccent = Color(0xFF2E7D32);
+
+  // Rose
+  static const controlCenterRose = Color(0xFFFF6B81);
+  static const controlCenterRoseAccent = Color(0xFFFF4D6D);
+
+  // Sky
+  static const controlCenterSky = Color(0xFF4FC3F7);
+  static const controlCenterSkyAccent = Color(0xFF2196F3);
+
+  // Indigo
+  static const controlCenterIndigo = Color(0xFF5C6BC0);
+  static const controlCenterIndigoAccent = Color(0xFF3F51B5);
+
+  // Dashboard Colors
+  static const sidebarDarkNavy = Color(0xFF183B72);
+  static const badgeRed = Color(0xFFFF4D6D);
+  static const tableHeaderDark = Color(0xFF1B2A52);
 
   // Role gradient palettes
   static const patientGradient = [Color(0xFF0F6FFF), Color(0xFF5A9CFF)];
@@ -264,6 +289,23 @@ class AppColors {
   ];
 
   static const List<Color> redGradient = [Color(0xFFFF5B5B), Color(0xFFEF4444)];
+
+  /// Ordered palette for department cards — resolved by name hash index.
+  /// All entries reference existing AppColors tokens, zero raw Color() literals.
+  static const List<List<Color>> deptGradientPalette = [
+    [controlCenterBlue, controlCenterBlueAccent],
+    [controlCenterPink, controlCenterPinkAccent],
+    [controlCenterPurple, controlCenterPurpleAccent],
+    [controlCenterCyan, controlCenterCyanAccent],
+    [controlCenterEmerald, controlCenterEmeraldAccent],
+    [controlCenterOrange, controlCenterOrangeAccent],
+    [controlCenterViolet, controlCenterVioletAccent],
+    [controlCenterRose, controlCenterRoseAccent],
+    [controlCenterAmber, controlCenterAmberAccent],
+    [controlCenterGreen, controlCenterGreenAccent],
+    [controlCenterSky, controlCenterSkyAccent],
+    [controlCenterIndigo, controlCenterIndigoAccent],
+  ];
 
   // =====================================================
   // THEME HELPERS
