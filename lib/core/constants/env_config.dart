@@ -7,17 +7,23 @@ class EnvConfig {
   static String _storageUrl =
       'https://ldxsdyvmfayxuaczmtuu.storage.supabase.co/storage/v1/s3';
   static String _storageBucket = 'medi_connect_store';
+  // Single Doctor mode configuration
+  static bool _isSingleDoctor = false;
+  static String _singleDoctorId = '';
+
   static final String _sentryDsn =
       'https://82ef6c388c737bf706ad27b2681400df@o4511729566810112.ingest.de.sentry.io/4511729574215760';
   static String get apiKey => _apiKey;
   static String get apiUrl => _apiUrl;
   static String get storageUrl => _storageUrl;
   static String get storageBucket => _storageBucket;
+  static bool get isSingleDoctor => _isSingleDoctor;
+  static String get singleDoctorId => _singleDoctorId;
 
   /// Loads configuration values. Checks secure storage first, otherwise parses .env and caches them.
   static Future<void> initialize() async {
     const secureStorage = FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      aOptions: AndroidOptions(enforceBiometrics: true),
       iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
       mOptions: MacOsOptions(usesDataProtectionKeychain: false),
     );
@@ -33,6 +39,10 @@ class EnvConfig {
         _storageBucket =
             await secureStorage.read(key: 'SUPABASE_STORAGE_BUCKET') ??
             _storageBucket;
+        // Load single doctor mode config
+        final modeStr = await secureStorage.read(key: 'SINGLE_DOCTOR_MODE');
+        _isSingleDoctor = (modeStr?.toLowerCase() == 'true');
+        _singleDoctorId = await secureStorage.read(key: 'SINGLE_DOCTOR_ID') ?? '';
       } else {
         // Fallback: Parse .env and save to Secure Storage
         await _loadFromEnvFile();
@@ -41,6 +51,19 @@ class EnvConfig {
         await secureStorage.write(
           key: 'SUPABASE_STORAGE_URL',
           value: _storageUrl,
+        );
+        await secureStorage.write(
+          key: 'SUPABASE_STORAGE_BUCKET',
+          value: _storageBucket,
+        );
+        // Save single doctor mode defaults
+        await secureStorage.write(
+          key: 'SINGLE_DOCTOR_MODE',
+          value: _isSingleDoctor.toString(),
+        );
+        await secureStorage.write(
+          key: 'SINGLE_DOCTOR_ID',
+          value: _singleDoctorId,
         );
         await secureStorage.write(
           key: 'SUPABASE_STORAGE_BUCKET',
