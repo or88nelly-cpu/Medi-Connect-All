@@ -77,11 +77,11 @@ class PatientAppointmentDetailPage extends StatelessWidget {
     }
 
     // Status Pill Colors
-    Color statusColor = const Color(0xFF10B981); // Green Confirmed
+    Color statusColor = Color(0xFF10B981); // Green Confirmed
     if (displayStatus.toLowerCase() == 'pending') {
       statusColor = AppColors.warning; // Orange Pending
     } else if (displayStatus == 'Pending Updation') {
-      statusColor = const Color(0xFFD97706); // Amber/Orange Pending Updation
+      statusColor = Color(0xFFD97706); // Amber/Orange Pending Updation
     } else if (displayStatus.toLowerCase() == 'cancelled') {
       statusColor = AppColors.error; // Red Cancelled
     } else if (displayStatus.toLowerCase() == 'completed') {
@@ -93,7 +93,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
     ).format(appointment.appointmentDate);
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Appointment Details"),
+      customAppbar: CommonAppBar(title: "Appointment Details"),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.r),
         child: Column(
@@ -369,9 +369,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
                     CancelAppointment(appointment.id),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Appointment has been cancelled.'),
-                    ),
+                    SnackBar(content: Text('Appointment has been cancelled.')),
                   );
                   Navigator.pop(context);
                 },
@@ -414,7 +412,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
               ConfirmAppointmentPayment(appointment.id),
             );
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
+              SnackBar(
                 content: Text(
                   'UPI payment verified and completed successfully!',
                 ),
@@ -432,9 +430,7 @@ class PatientAppointmentDetailPage extends StatelessWidget {
       ConfirmAppointmentPayment(appointment.id),
     );
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Payment registered as Pay at Counter (COD).'),
-      ),
+      SnackBar(content: Text('Payment registered as Pay at Counter (COD).')),
     );
     Navigator.pop(context);
   }

@@ -26,7 +26,7 @@ class AddDepartmentUseCase
     extends UseCase<DepartmentEntity, AddDepartmentParams> {
   final DepartmentRepository _repository;
 
-  const AddDepartmentUseCase(this._repository);
+  AddDepartmentUseCase(this._repository);
 
   @override
   Future<Either<Failure, DepartmentEntity>> call(AddDepartmentParams params) =>

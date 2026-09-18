@@ -59,7 +59,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
               ? FloatingActionButton.extended(
                   onPressed: () => SpecialityFormDialog.show(context),
                   backgroundColor: AppColors.primary,
-                  icon: const Icon(Icons.add, color: Colors.white),
+                  icon: Icon(Icons.add, color: Colors.white),
                   label: Text(
                     "Add Speciality",
                     style: AppTextStyles.bodyMedium.copyWith(
@@ -93,7 +93,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.02),
                               blurRadius: 10.r,
-                              offset: const Offset(0, 4),
+                              offset: Offset(0, 4),
                             ),
                           ],
                         ),
@@ -175,7 +175,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   },
                   builder: (context, state) {
                     if (state is SpecialityLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(child: CircularProgressIndicator());
                     }
 
                     final list = state is SpecialitiesLoaded
@@ -227,7 +227,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                             children: [
                               GridView.builder(
                                 shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
+                                physics: NeverScrollableScrollPhysics(),
                                 itemCount: filtered.length,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
@@ -279,8 +279,8 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF131A2D), const Color(0xFF1F2B48)]
-              : [const Color(0xFFE8F0FE), const Color(0xFFD2E3FC)],
+              ? [Color(0xFF131A2D), Color(0xFF1F2B48)]
+              : [Color(0xFFE8F0FE), Color(0xFFD2E3FC)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -295,7 +295,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
               opacity: isDark ? 0.08 : 0.15,
               child: Icon(
                 Icons.health_and_safety_rounded,
-                color: const Color(0xFF1A73E8),
+                color: Color(0xFF1A73E8),
                 size: 180.r,
               ),
             ),
@@ -314,7 +314,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                     onTap: () => Navigator.pop(context),
                     child: Container(
                       padding: EdgeInsets.all(8.r),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
                         boxShadow: [
@@ -332,21 +332,21 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                       ),
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   // Headings
                   Text(
                     'All Specialities',
                     style: AppTextStyles.headingLarge.copyWith(
                       fontWeight: FontWeight.w900,
                       fontSize: 24.sp,
-                      color: isDark ? Colors.white : const Color(0xFF0F172A),
+                      color: isDark ? Colors.white : Color(0xFF0F172A),
                     ),
                   ),
                   SizedBox(height: 6.h),
                   Text(
                     'Explore our wide range of medical specialities\nand find the best care for you.',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: isDark ? Colors.white60 : const Color(0xFF475569),
+                      color: isDark ? Colors.white60 : Color(0xFF475569),
                       fontSize: 11.sp,
                       height: 1.3,
                     ),
@@ -378,7 +378,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10.r,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -483,8 +483,8 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-              : [const Color(0xFFE8F0FE), const Color(0xFFCFE2FE)],
+              ? [Color(0xFF1E293B), Color(0xFF0F172A)]
+              : [Color(0xFFE8F0FE), Color(0xFFCFE2FE)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -524,14 +524,14 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                   style: AppTextStyles.titleMedium.copyWith(
                     fontWeight: FontWeight.w900,
                     fontSize: 14.sp,
-                    color: isDark ? Colors.white : const Color(0xFF1E3A8A),
+                    color: isDark ? Colors.white : Color(0xFF1E3A8A),
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   "Our care team is here to help you find the right specialist for your needs.",
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white70 : const Color(0xFF4B5563),
+                    color: isDark ? Colors.white70 : Color(0xFF4B5563),
                     fontSize: 10.5.sp,
                   ),
                 ),
@@ -544,7 +544,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
           GestureDetector(
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Text('Support ticketing system coming soon!'),
                 ),
               );
@@ -552,13 +552,13 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
               decoration: BoxDecoration(
-                color: const Color(0xFF1D4ED8),
+                color: Color(0xFF1D4ED8),
                 borderRadius: BorderRadius.circular(12.r),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF1D4ED8).withValues(alpha: 0.25),
+                    color: Color(0xFF1D4ED8).withValues(alpha: 0.25),
                     blurRadius: 8,
-                    offset: const Offset(0, 3),
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
@@ -591,7 +591,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text("Delete Speciality"),
+        title: Text("Delete Speciality"),
         content: Text(
           "Are you sure you want to delete ${spec.name}? This action cannot be undone.",
         ),
@@ -610,7 +610,7 @@ class _SpecialityListPageState extends State<SpecialityListPage> {
                 DeleteSpecialityEvent(spec.id),
               );
             },
-            child: const Text(
+            child: Text(
               "Delete",
               style: TextStyle(
                 color: AppColors.error,

@@ -27,8 +27,8 @@ class EmrPrescriptionCard extends StatelessWidget {
     final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
     final borderCol = AppColors.border(context);
     final cardBg = isDark
-        ? const Color(0xFF0F172A)
-        : const Color(0xFFF7FAFD); // Light blue tint matching mockup
+        ? Color(0xFF0F172A)
+        : Color(0xFFF7FAFD); // Light blue tint matching mockup
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,7 @@ class EmrPrescriptionCard extends StatelessWidget {
               BoxShadow(
                 color: Colors.black.withValues(alpha: isDark ? 0.1 : 0.02),
                 blurRadius: 8,
-                offset: const Offset(0, 3),
+                offset: Offset(0, 3),
               ),
             ],
           ),
@@ -90,7 +90,7 @@ class EmrPrescriptionCard extends StatelessWidget {
               ? Container(
                   height: 100.h,
                   alignment: Alignment.center,
-                  child: const CircularProgressIndicator(),
+                  child: CircularProgressIndicator(),
                 )
               : emrRecord == null
               ? Center(
@@ -152,7 +152,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                       ],
                     ),
 
-                    const Divider(height: 24, thickness: 0.8),
+                    Divider(height: 24, thickness: 0.8),
 
                     // Action buttons
                     Row(
@@ -175,7 +175,7 @@ class EmrPrescriptionCard extends StatelessWidget {
                               ),
                             ),
                             style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: AppColors.primary),
+                              side: BorderSide(color: AppColors.primary),
                               padding: EdgeInsets.symmetric(vertical: 12.h),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.r),

@@ -29,23 +29,23 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
   late AnimationController _pulseController;
 
   // Hospital Geolocation
-  static const double hospitalLat = 12.9716;
-  static const double hospitalLng = 77.5946;
+  static double hospitalLat = 12.9716;
+  static double hospitalLng = 77.5946;
 
   // Mocked Staff Locations
   // Inside: 45 meters away
-  static const double insideLat = 12.9719;
-  static const double insideLng = 77.5941;
+  static double insideLat = 12.9719;
+  static double insideLng = 77.5941;
   // Outside: 5.2 km away
-  static const double outsideLat = 13.0210;
-  static const double outsideLng = 77.5620;
+  static double outsideLat = 13.0210;
+  static double outsideLng = 77.5620;
 
   @override
   void initState() {
     super.initState();
     _pulseController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: 2),
     )..repeat();
   }
 
@@ -84,9 +84,9 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.check_circle_rounded, color: Colors.white),
+                Icon(Icons.check_circle_rounded, color: Colors.white),
                 SizedBox(width: 8.w),
-                const Text("Attendance marked successfully!"),
+                Text("Attendance marked successfully!"),
               ],
             ),
             backgroundColor: AppColors.success,
@@ -360,12 +360,12 @@ class _AttendanceProximityDialogState extends State<AttendanceProximityDialog>
                       ? SizedBox(
                           width: 16.r,
                           height: 16.r,
-                          child: const CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             color: Colors.white,
                             strokeWidth: 2,
                           ),
                         )
-                      : const Text(
+                      : Text(
                           "Check In",
                           style: TextStyle(
                             color: Colors.white,

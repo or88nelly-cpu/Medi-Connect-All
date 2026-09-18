@@ -8,13 +8,13 @@ class VisitFastActionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
     final borderCol = AppColors.border(context);
 
     return GridView.count(
       crossAxisCount: 3,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       crossAxisSpacing: 8.w,
       mainAxisSpacing: 8.h,
       childAspectRatio: 2.2,
@@ -32,7 +32,7 @@ class VisitFastActionGrid extends StatelessWidget {
           context,
           'Investigation Reports',
           Icons.insert_chart_outlined,
-          const Color(0xFF10B981),
+          Color(0xFF10B981),
           isDark,
           cardBg,
           borderCol,
@@ -41,7 +41,7 @@ class VisitFastActionGrid extends StatelessWidget {
           context,
           'Cross Consultations',
           Icons.group_outlined,
-          const Color(0xFF8B5CF6),
+          Color(0xFF8B5CF6),
           isDark,
           cardBg,
           borderCol,
@@ -59,7 +59,7 @@ class VisitFastActionGrid extends StatelessWidget {
           context,
           'Procedures Order',
           Icons.playlist_add_check_circle_outlined,
-          const Color(0xFFEC4899),
+          Color(0xFFEC4899),
           isDark,
           cardBg,
           borderCol,
@@ -68,7 +68,7 @@ class VisitFastActionGrid extends StatelessWidget {
           context,
           'IP Registration',
           Icons.airline_seat_flat_angled_outlined,
-          const Color(0xFF14B8A6),
+          Color(0xFF14B8A6),
           isDark,
           cardBg,
           borderCol,
@@ -77,7 +77,7 @@ class VisitFastActionGrid extends StatelessWidget {
           context,
           'Book Next Visit',
           Icons.event_note_outlined,
-          const Color(0xFF6366F1),
+          Color(0xFF6366F1),
           isDark,
           cardBg,
           borderCol,
@@ -95,7 +95,7 @@ class VisitFastActionGrid extends StatelessWidget {
           context,
           'Physio',
           Icons.directions_run_outlined,
-          const Color(0xFF8B5CF6),
+          Color(0xFF8B5CF6),
           isDark,
           cardBg,
           borderCol,

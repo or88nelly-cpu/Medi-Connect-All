@@ -41,12 +41,12 @@ class ConsultationDetailPage extends StatelessWidget {
         actions: [
           IconButton(
             tooltip: 'Download Prescription',
-            icon: const Icon(Icons.download_outlined),
+            icon: Icon(Icons.download_outlined),
             color: AppColors.primary,
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: const Text('Downloading prescription PDF…'),
+                  content: Text('Downloading prescription PDF…'),
                   behavior: SnackBarBehavior.floating,
                   backgroundColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
@@ -71,7 +71,7 @@ class ConsultationDetailPage extends StatelessWidget {
             _SectionCard(
               title: 'Diagnosis & Symptoms',
               icon: Icons.medical_information_outlined,
-              iconColor: const Color(0xFF4F7CFF),
+              iconColor: Color(0xFF4F7CFF),
               children: [
                 _InfoRow(
                   label: 'Diagnosis',
@@ -90,7 +90,7 @@ class ConsultationDetailPage extends StatelessWidget {
             _SectionCard(
               title: 'Medicines Prescribed',
               icon: Icons.medication_rounded,
-              iconColor: const Color(0xFF8B5CF6),
+              iconColor: Color(0xFF8B5CF6),
               children: [
                 if (medicines.isEmpty)
                   Text(
@@ -121,7 +121,7 @@ class ConsultationDetailPage extends StatelessWidget {
               _SectionCard(
                 title: "Doctor's Notes",
                 icon: Icons.note_alt_outlined,
-                iconColor: const Color(0xFF00C2A8),
+                iconColor: Color(0xFF00C2A8),
                 children: [
                   Text(
                     consultation['notes'] ?? '',
@@ -141,7 +141,7 @@ class ConsultationDetailPage extends StatelessWidget {
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: const Text('Downloading prescription PDF…'),
+                      content: Text('Downloading prescription PDF…'),
                       behavior: SnackBarBehavior.floating,
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
@@ -150,7 +150,7 @@ class ConsultationDetailPage extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.download_rounded, color: Colors.white),
+                icon: Icon(Icons.download_rounded, color: Colors.white),
                 label: Text(
                   'Download Prescription',
                   style: AppTextStyles.buttonMedium.copyWith(
@@ -210,7 +210,7 @@ class _DoctorHeader extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -316,7 +316,7 @@ class _SectionCard extends StatelessWidget {
           BoxShadow(
             color: iconColor.withValues(alpha: 0.06),
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -400,7 +400,7 @@ class _MedicineRow extends StatelessWidget {
           height: 8.r,
           margin: EdgeInsets.only(top: 5.h),
           decoration: BoxDecoration(
-            color: const Color(0xFF8B5CF6),
+            color: Color(0xFF8B5CF6),
             shape: BoxShape.circle,
           ),
         ),

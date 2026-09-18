@@ -36,7 +36,7 @@ class OpInfoPage extends StatelessWidget {
         }
         return bloc;
       },
-      child: const _OpInfoBody(),
+      child: _OpInfoBody(),
     );
   }
 }
@@ -63,13 +63,13 @@ class _OpInfoBody extends StatelessWidget {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, authState) {
             if (authState is! Authenticated) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             }
 
             return BlocBuilder<OpInfoBloc, OpInfoState>(
               builder: (context, state) {
                 if (state is OpInfoLoading || state is OpInfoInitial) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 }
                 if (state is OpInfoError) {
                   return Center(
@@ -86,11 +86,11 @@ class _OpInfoBody extends StatelessWidget {
                     ),
                   );
                 }
-                if (state is! OpInfoLoaded) return const SizedBox.shrink();
+                if (state is! OpInfoLoaded) return SizedBox.shrink();
 
                 final bloc = context.read<OpInfoBloc>();
                 return SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -101,8 +101,8 @@ class _OpInfoBody extends StatelessWidget {
                       ),
                       OpInfoDateCard(
                         selectedDate: state.selectedDate,
-                        onPrevious: () => bloc.add(const OpInfoPreviousDay()),
-                        onNext: () => bloc.add(const OpInfoNextDay()),
+                        onPrevious: () => bloc.add(OpInfoPreviousDay()),
+                        onNext: () => bloc.add(OpInfoNextDay()),
                       ),
                       OpInfoSummaryCard(
                         total: state.summary.total,

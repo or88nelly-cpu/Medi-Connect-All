@@ -13,13 +13,9 @@ class UhidDisplayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark
-        ? const Color(0xFF16253B)
-        : const Color(0xFFD3E0EE);
-    final labelColor = isDark
-        ? const Color(0xFF5E98C7)
-        : const Color(0xFF3F6D94);
+    final cardBg = isDark ? Color(0xFF09121F) : Colors.white;
+    final borderColor = isDark ? Color(0xFF16253B) : Color(0xFFD3E0EE);
+    final labelColor = isDark ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
     final valueColor = isDark ? Colors.white : AppColors.textDarkNavy;
 
     return Container(
@@ -32,7 +28,7 @@ class UhidDisplayCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
             blurRadius: 10.r,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),

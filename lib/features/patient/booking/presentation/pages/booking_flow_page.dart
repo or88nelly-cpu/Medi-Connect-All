@@ -6,11 +6,9 @@ import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
 import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_event.dart';
-import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_state.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:medi_connect/features/common/dashboard/presentation/bloc/admin/admin_appointments_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/booking_flow/specialty_step.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/booking_flow/doctor_step.dart';
 import 'package:medi_connect/features/patient/booking/presentation/widgets/booking_flow/slot_step.dart';
@@ -27,7 +25,7 @@ class SpecialtyEntry {
   final List<Color> gradient;
   final String description;
 
-  const SpecialtyEntry({
+  SpecialtyEntry({
     required this.name,
     required this.icon,
     required this.gradient,
@@ -35,7 +33,7 @@ class SpecialtyEntry {
   });
 }
 
-const kSpecialties = <SpecialtyEntry>[
+final kSpecialties = <SpecialtyEntry>[
   SpecialtyEntry(
     name: 'Cardiology',
     icon: Icons.favorite_rounded,
@@ -209,7 +207,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
   bool _isProcessing = false;
   String _bookingId = '';
 
-  static const _stepLabels = [
+  static final _stepLabels = [
     'Specialty',
     'Doctor',
     'Slot',
@@ -242,7 +240,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
 
     // Load doctor list
     try {
-      context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+      context.read<DoctorStaffBloc>().add(LoadDoctorStaff('All'));
     } catch (_) {}
   }
 
@@ -265,7 +263,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
     if (_step == 3) {
       // Process payment (mock)
       setState(() => _isProcessing = true);
-      await Future.delayed(const Duration(milliseconds: 1500));
+      await Future.delayed(Duration(milliseconds: 1500));
       // Save appointment to metadata
       await _saveAppointment();
       setState(() {
@@ -332,7 +330,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
   }
 
   String _shortDate(DateTime d) {
-    const months = [
+    final months = [
       'Jan',
       'Feb',
       'Mar',
@@ -357,7 +355,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: _step == 4
-            ? const SizedBox()
+            ? SizedBox()
             : IconButton(
                 icon: Icon(
                   Icons.arrow_back_rounded,
@@ -435,7 +433,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
           onGoHome: () => Navigator.of(context).pop(),
         );
       default:
-        return const SizedBox();
+        return SizedBox();
     }
   }
 
@@ -468,7 +466,7 @@ class _BookingFlowPageState extends State<BookingFlowPage> {
                       SizedBox(
                         width: 18.r,
                         height: 18.r,
-                        child: const CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           strokeWidth: 2,
                           color: Colors.white,
                         ),
@@ -559,15 +557,13 @@ class _StepCircle extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 300),
           width: 28.r,
           height: 28.r,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: (isDone || isActive)
-                ? const LinearGradient(
-                    colors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
-                  )
+                ? LinearGradient(colors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)])
                 : null,
             color: (isDone || isActive) ? null : AppColors.border(context),
           ),

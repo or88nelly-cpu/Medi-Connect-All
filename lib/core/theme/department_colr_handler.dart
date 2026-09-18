@@ -5,7 +5,7 @@ class AppDepartmentStyle {
   final Color lightCardBg;
   final Color darkCardBg;
 
-  const AppDepartmentStyle({
+  AppDepartmentStyle({
     required this.gradient,
     required this.lightCardBg,
     required this.darkCardBg,

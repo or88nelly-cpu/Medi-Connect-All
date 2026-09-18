@@ -127,7 +127,7 @@ class MrdSearchFilters extends StatelessWidget {
       height: 32.h,
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+        color: isDark ? Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: borderCol),
       ),
@@ -140,8 +140,8 @@ class MrdSearchFilters extends StatelessWidget {
             fontSize: 10.sp,
             fontWeight: FontWeight.bold,
           ),
-          dropdownColor: isDark ? const Color(0xFF1E293B) : Colors.white,
-          icon: const Icon(Icons.arrow_drop_down, size: 18),
+          dropdownColor: isDark ? Color(0xFF1E293B) : Colors.white,
+          icon: Icon(Icons.arrow_drop_down, size: 18),
           items: items.map((String item) {
             return DropdownMenuItem<String>(value: item, child: Text(item));
           }).toList(),

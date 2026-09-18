@@ -19,7 +19,7 @@ class VisitDatePickerRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
     final primaryTextColor = isDark ? Colors.white : AppColors.textDarkNavy;
     final borderCol = AppColors.border(context);
 
@@ -35,8 +35,8 @@ class VisitDatePickerRow extends StatelessWidget {
         children: [
           TextButton.icon(
             onPressed: onPreviousPressed,
-            icon: const Icon(Icons.chevron_left, size: 18),
-            label: const Text('Previous'),
+            icon: Icon(Icons.chevron_left, size: 18),
+            label: Text('Previous'),
             style: TextButton.styleFrom(foregroundColor: AppColors.primary),
           ),
           Row(
@@ -49,17 +49,13 @@ class VisitDatePickerRow extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 6.w),
-              const Icon(
-                Icons.calendar_month,
-                size: 18,
-                color: AppColors.primary,
-              ),
+              Icon(Icons.calendar_month, size: 18, color: AppColors.primary),
             ],
           ),
           TextButton.icon(
             onPressed: onNextPressed,
-            icon: const Text('Next'),
-            label: const Icon(Icons.chevron_right, size: 18),
+            icon: Text('Next'),
+            label: Icon(Icons.chevron_right, size: 18),
             style: TextButton.styleFrom(foregroundColor: AppColors.primary),
           ),
         ],

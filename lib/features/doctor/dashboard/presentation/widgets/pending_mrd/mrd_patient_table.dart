@@ -50,9 +50,9 @@ class MrdPatientTable extends StatelessWidget {
       ),
       child: ListView.separated(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         itemCount: records.length,
-        separatorBuilder: (context, index) => const Divider(height: 1),
+        separatorBuilder: (context, index) => Divider(height: 1),
         itemBuilder: (context, index) {
           final item = records[index];
           return _buildTableRowItem(context, item);
@@ -66,16 +66,16 @@ class MrdPatientTable extends StatelessWidget {
     final secondaryTextCol = isDark ? Colors.white38 : Colors.grey[500];
 
     // Priority configurations
-    Color priorityBg = const Color(0xFFFEF2F2);
-    Color priorityText = const Color(0xFFB91C1C);
+    Color priorityBg = Color(0xFFFEF2F2);
+    Color priorityText = Color(0xFFB91C1C);
     IconData priorityIcon = Icons.arrow_upward;
     if (item.priority.toLowerCase() == 'medium') {
-      priorityBg = const Color(0xFFFFF7ED);
-      priorityText = const Color(0xFFC2410C);
+      priorityBg = Color(0xFFFFF7ED);
+      priorityText = Color(0xFFC2410C);
       priorityIcon = Icons.remove;
     } else if (item.priority.toLowerCase() == 'low') {
-      priorityBg = const Color(0xFFF0FDF4);
-      priorityText = const Color(0xFF15803D);
+      priorityBg = Color(0xFFF0FDF4);
+      priorityText = Color(0xFF15803D);
       priorityIcon = Icons.arrow_downward;
     }
 
@@ -86,14 +86,14 @@ class MrdPatientTable extends StatelessWidget {
         ? 'Overdue'
         : 'Pending';
 
-    Color statusBg = const Color(0xFFFFF7ED);
-    Color statusText = const Color(0xFFC2410C);
+    Color statusBg = Color(0xFFFFF7ED);
+    Color statusText = Color(0xFFC2410C);
     if (displayStatus.toLowerCase() == 'overdue') {
-      statusBg = const Color(0xFFFEF2F2);
-      statusText = const Color(0xFFB91C1C);
+      statusBg = Color(0xFFFEF2F2);
+      statusText = Color(0xFFB91C1C);
     } else if (displayStatus.toLowerCase() == 'returned') {
-      statusBg = const Color(0xFFEFF6FF);
-      statusText = const Color(0xFF1D4ED8);
+      statusBg = Color(0xFFEFF6FF);
+      statusText = Color(0xFF1D4ED8);
     }
 
     final mrdNo = 'MRD${126578 + item.record.id}';
@@ -149,7 +149,7 @@ class MrdPatientTable extends StatelessWidget {
                 child: Text(
                   mrdNo,
                   style: TextStyle(
-                    color: const Color(0xFF0F6FFF),
+                    color: Color(0xFF0F6FFF),
                     fontSize: 11.sp,
                     fontWeight: FontWeight.bold,
                   ),
@@ -250,16 +250,16 @@ class MrdPatientTable extends StatelessWidget {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.visibility, size: 12),
-                    label: const Text("View"),
+                    icon: Icon(Icons.visibility, size: 12),
+                    label: Text("View"),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: const Color(0xFF0F6FFF),
-                      side: const BorderSide(color: Color(0xFF0F6FFF)),
+                      foregroundColor: Color(0xFF0F6FFF),
+                      side: BorderSide(color: Color(0xFF0F6FFF)),
                       padding: EdgeInsets.symmetric(
                         horizontal: 8.w,
                         vertical: 4.h,
                       ),
-                      minimumSize: const Size(0, 0),
+                      minimumSize: Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6.r),
@@ -267,10 +267,10 @@ class MrdPatientTable extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.more_vert, size: 16),
+                    icon: Icon(Icons.more_vert, size: 16),
                     onPressed: () {},
                     padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
+                    constraints: BoxConstraints(),
                   ),
                 ],
               ),

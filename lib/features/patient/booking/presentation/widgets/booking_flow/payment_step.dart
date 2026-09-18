@@ -162,7 +162,7 @@ class PaymentStep extends StatelessWidget {
             return GestureDetector(
               onTap: () => onMethodChanged(id),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
+                duration: Duration(milliseconds: 200),
                 margin: EdgeInsets.only(bottom: AppDimensions.spaceS),
                 padding: EdgeInsets.all(AppDimensions.paddingL - 2), // 14
                 decoration: BoxDecoration(
@@ -203,7 +203,7 @@ class PaymentStep extends StatelessWidget {
                       ),
                     ),
                     AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 200),
                       width: 22,
                       height: 22,
                       decoration: BoxDecoration(
@@ -216,7 +216,7 @@ class PaymentStep extends StatelessWidget {
                         ),
                       ),
                       child: isSelected
-                          ? const Icon(
+                          ? Icon(
                               Icons.check_rounded,
                               color: Colors.white,
                               size: 12,

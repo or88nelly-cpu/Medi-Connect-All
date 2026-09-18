@@ -148,7 +148,7 @@ class DoctorInfoCard extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Expanding Doctor Details...")),
+                  SnackBar(content: Text("Expanding Doctor Details...")),
                 );
               },
               child: Text(
@@ -190,7 +190,7 @@ class DoctorInfoCard extends StatelessWidget {
           label,
           style: TextStyle(color: labelColor, fontSize: 12.sp),
         ),
-        const Spacer(),
+        Spacer(),
         Expanded(
           child: Text(
             value,

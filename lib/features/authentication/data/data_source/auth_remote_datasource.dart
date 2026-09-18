@@ -58,7 +58,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final authUser = response.user;
 
       if (authUser == null) {
-        throw const AuthException("User is empty after sign in.");
+        throw AuthException("User is empty after sign in.");
       }
 
       // Fetch user profile from users table
@@ -124,7 +124,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         },
       );
       if (response.user == null) {
-        throw const AuthException("User is empty after sign up.");
+        throw AuthException("User is empty after sign up.");
       }
 
       final authUser = response.user!;
@@ -158,9 +158,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             .select();
 
         if (updateResponse.isEmpty) {
-          throw const ServerException(
-            "Failed to update and link user profile.",
-          );
+          throw ServerException("Failed to update and link user profile.");
         }
         finalProfile = updateResponse.first;
       } else {
@@ -179,7 +177,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             }).select();
 
         if (insertResponse.isEmpty) {
-          throw const ServerException("Failed to create user profile.");
+          throw ServerException("Failed to create user profile.");
         }
         finalProfile = insertResponse.first;
       }
@@ -211,7 +209,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         type: supabase.OtpType.signup,
       );
       if (response.user == null) {
-        throw const AuthException("OTP verification failed.");
+        throw AuthException("OTP verification failed.");
       }
 
       // Fetch profile from users table

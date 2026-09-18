@@ -18,7 +18,7 @@ class AppToast {
 
     overlayState.insert(overlayEntry);
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 3), () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();
       }
@@ -67,7 +67,7 @@ class _ToastWidget extends StatelessWidget {
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.15),
                 blurRadius: 10,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),

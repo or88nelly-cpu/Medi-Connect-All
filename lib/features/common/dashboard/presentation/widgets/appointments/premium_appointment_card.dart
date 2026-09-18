@@ -51,7 +51,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             ? AppColors.statusConfirmedBgDark
             : AppColors.statusConfirmedBgLight;
       case 'Pending MRD':
-        return isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF);
+        return isDark ? Color(0xFF3B0764) : Color(0xFFF3E8FF);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingBgDark
@@ -75,7 +75,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             ? AppColors.statusConfirmedTextDark
             : AppColors.statusConfirmedTextLight;
       case 'Pending MRD':
-        return isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
+        return isDark ? Color(0xFFC084FC) : Color(0xFF7E22CE);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingTextDark
@@ -181,7 +181,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.02),
                   blurRadius: 10,
-                  offset: const Offset(0, 4),
+                  offset: Offset(0, 4),
                 ),
               ],
       ),
@@ -194,7 +194,7 @@ class PremiumAppointmentCard extends StatelessWidget {
             height: 46.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isDark ? Colors.white12 : const Color(0xFFF3F4F6),
+              color: isDark ? Colors.white12 : Color(0xFFF3F4F6),
               border: Border.all(color: AppColors.border(context), width: 1),
             ),
             child: ClipOval(
@@ -423,7 +423,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                       vertical: 3.h,
                     ),
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.white12 : const Color(0xFFEFF6FF),
+                      color: isDark ? Colors.white12 : Color(0xFFEFF6FF),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: Text(
@@ -549,7 +549,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                   valueColor: AppColors.accent,
                   valueFontWeight: FontWeight.bold,
                 ),
-              const Divider(height: 20),
+              Divider(height: 20),
               Text(
                 AppStrings.vitalsInformation,
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -617,7 +617,7 @@ class PremiumAppointmentCard extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text(AppStrings.close),
+            child: Text(AppStrings.close),
           ),
         ],
       ),
@@ -775,9 +775,7 @@ class PremiumAppointmentCard extends StatelessWidget {
                 SizedBox(height: 12.h),
                 TextField(
                   controller: feverController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                   style: TextStyle(color: textColor),
                   decoration: InputDecoration(
                     labelText: "Fever / Temp (°F)",
@@ -829,10 +827,10 @@ class PremiumAppointmentCard extends StatelessWidget {
                     TextButton.icon(
                       onPressed: () {
                         setDialogState(() {
-                          customVitalsList.add(const MapEntry("", ""));
+                          customVitalsList.add(MapEntry("", ""));
                         });
                       },
-                      icon: const Icon(Icons.add, size: 14),
+                      icon: Icon(Icons.add, size: 14),
                       label: Text(
                         "Add More",
                         style: TextStyle(
@@ -932,7 +930,7 @@ class PremiumAppointmentCard extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -985,10 +983,10 @@ class PremiumAppointmentCard extends StatelessWidget {
 
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Vitals successfully saved.")),
+                  SnackBar(content: Text("Vitals successfully saved.")),
                 );
               },
-              child: const Text("Save"),
+              child: Text("Save"),
             ),
           ],
         ),

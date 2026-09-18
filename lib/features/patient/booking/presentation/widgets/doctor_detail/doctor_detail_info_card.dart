@@ -87,7 +87,7 @@ class DoctorDetailInfoCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: AppDimensions.spaceWXS),
-                    const Icon(
+                    Icon(
                       Icons.verified_rounded,
                       color: Color(0xFF3B5BFD),
                       size: 14,
@@ -97,7 +97,7 @@ class DoctorDetailInfoCard extends StatelessWidget {
                 SizedBox(height: 3),
                 Text(
                   doc?.qualification ?? 'Consultant Cardiologist',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.grey,
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class DoctorDetailInfoCard extends StatelessWidget {
                     _buildBadge(
                       Icons.star_rounded,
                       '4.9 (128 reviews)',
-                      iconColor: const Color(0xFFFFB000),
+                      iconColor: Color(0xFFFFB000),
                     ),
                   ],
                 ),
@@ -133,12 +133,12 @@ class DoctorDetailInfoCard extends StatelessWidget {
               vertical: AppDimensions.paddingM, // 12
             ),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFECEF),
+              color: Color(0xFFFFECEF),
               borderRadius: BorderRadius.circular(AppDimensions.radiusL),
             ),
             child: Column(
               children: [
-                const Icon(
+                Icon(
                   Icons.favorite_rounded,
                   color: Color(0xFFFF296D),
                   size: 24,
@@ -146,7 +146,7 @@ class DoctorDetailInfoCard extends StatelessWidget {
                 SizedBox(height: AppDimensions.spaceXS),
                 Text(
                   specialityName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFFFF296D),
                     fontSize: 9,
                     fontWeight: FontWeight.w900,
@@ -162,16 +162,16 @@ class DoctorDetailInfoCard extends StatelessWidget {
 
   Widget _buildBadge(IconData icon, String label, {Color? iconColor}) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F5F9),
+        color: Color(0xFFF1F5F9),
         borderRadius: BorderRadius.circular(AppDimensions.radiusS),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 10, color: iconColor ?? Colors.grey.shade600),
-          const SizedBox(width: 3),
+          SizedBox(width: 3),
           Text(
             label,
             style: TextStyle(
@@ -196,7 +196,7 @@ class DoctorDetailStatsRow extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppDimensions.paddingM),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC),
+        color: isDark ? Color(0xFF1E293B) : Color(0xFFF8FAFC),
         borderRadius: BorderRadius.circular(AppDimensions.radiusL),
       ),
       child: Row(
@@ -226,7 +226,7 @@ class DoctorDetailStatsRow extends StatelessWidget {
         SizedBox(height: AppDimensions.spaceXS),
         Text(
           val,
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFF1E3A8A),
             fontSize: 11,
             fontWeight: FontWeight.w900,
@@ -234,7 +234,7 @@ class DoctorDetailStatsRow extends StatelessWidget {
         ),
         Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.grey,
             fontSize: 7,
             fontWeight: FontWeight.bold,

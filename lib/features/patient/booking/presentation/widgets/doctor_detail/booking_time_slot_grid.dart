@@ -31,7 +31,7 @@ class BookingTimeSlotGrid extends StatelessWidget {
               style: TextStyle(
                 fontSize: AppTextStyles.s14,
                 fontWeight: FontWeight.w900,
-                color: const Color(0xFF0F172A),
+                color: Color(0xFF0F172A),
               ),
             ),
             Row(
@@ -75,7 +75,7 @@ class BookingTimeSlotGrid extends StatelessWidget {
               )
             : GridView.builder(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: state.availableSlots.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
@@ -97,8 +97,8 @@ class BookingTimeSlotGrid extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: isBooked
-                            ? const Color(0xFFF1F5F9)
-                            : (isSelected ? const Color(0xFF3B5BFD) : cardBg),
+                            ? Color(0xFFF1F5F9)
+                            : (isSelected ? Color(0xFF3B5BFD) : cardBg),
                         borderRadius: BorderRadius.circular(
                           AppDimensions.radiusM - 2,
                         ), // 10
@@ -106,7 +106,7 @@ class BookingTimeSlotGrid extends StatelessWidget {
                           color: isBooked
                               ? Colors.transparent
                               : (isSelected
-                                    ? const Color(0xFF3B5BFD)
+                                    ? Color(0xFF3B5BFD)
                                     : AppColors.border(context)),
                         ),
                       ),
@@ -122,7 +122,7 @@ class BookingTimeSlotGrid extends StatelessWidget {
                                   ? Colors.grey.shade400
                                   : (isSelected
                                         ? Colors.white
-                                        : const Color(0xFF0F172A)),
+                                        : Color(0xFF0F172A)),
                             ),
                           ),
                           SizedBox(height: AppDimensions.spaceXS),

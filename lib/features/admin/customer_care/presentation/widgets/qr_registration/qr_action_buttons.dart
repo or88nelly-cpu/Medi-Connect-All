@@ -52,7 +52,7 @@ class QrActionButtons extends StatelessWidget {
         icon: Icons.sms_outlined,
         title: "SMS",
         subtitle: "Send SMS Link",
-        color: const Color(0xFFEAB308),
+        color: Color(0xFFEAB308),
         onTap: () => _handleShare(context, "SMS"),
         isDark: isDark,
       ),
@@ -71,7 +71,7 @@ class QrActionButtons extends StatelessWidget {
       return GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         crossAxisSpacing: 12.w,
         mainAxisSpacing: 12.h,
         childAspectRatio: 2.3,
@@ -102,7 +102,7 @@ class QrActionButtons extends StatelessWidget {
     required VoidCallback onTap,
     required bool isDark,
   }) {
-    final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBgColor = isDark ? Color(0xFF1E293B) : Colors.white;
     final borderCol = isDark
         ? Colors.white10
         : Colors.black.withValues(alpha: 0.05);
@@ -120,7 +120,7 @@ class QrActionButtons extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.02),
               blurRadius: 10,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),
@@ -145,7 +145,7 @@ class QrActionButtons extends StatelessWidget {
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 12.sp,
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? Colors.white : Color(0xFF1E293B),
                     ),
                   ),
                   SizedBox(height: 2.h),

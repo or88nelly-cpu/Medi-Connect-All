@@ -21,7 +21,7 @@ class GetDoctorDashboardStatsUseCase
     extends UseCase<DoctorDashboardStats, DoctorDashboardParams> {
   final DoctorDashboardRepository _repository;
 
-  const GetDoctorDashboardStatsUseCase(this._repository);
+  GetDoctorDashboardStatsUseCase(this._repository);
 
   @override
   Future<Either<Failure, DoctorDashboardStats>> call(

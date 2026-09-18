@@ -337,19 +337,19 @@ class AppColors {
   ];
 
   static Color dashboardCardBg(BuildContext context) =>
-      isDark(context) ? const Color(0xFF09121F) : Colors.white;
+      isDark(context) ? Color(0xFF09121F) : Colors.white;
 
   static Color dashboardCardBorder(BuildContext context) =>
-      isDark(context) ? const Color(0xFF16253B) : const Color(0xFFD3E0EE);
+      isDark(context) ? Color(0xFF16253B) : Color(0xFFD3E0EE);
 
   static Color dashboardTextPrimary(BuildContext context) =>
-      isDark(context) ? Colors.white : const Color(0xFF0F2C59);
+      isDark(context) ? Colors.white : Color(0xFF0F2C59);
 
   static Color dashboardTextSecondary(BuildContext context) =>
-      isDark(context) ? const Color(0xFF5E98C7) : const Color(0xFF3F6D94);
+      isDark(context) ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
 
   static Color dashboardHighlight(BuildContext context) =>
-      isDark(context) ? const Color(0xFF0A1E3F) : const Color(0xFFE2EAF4);
+      isDark(context) ? Color(0xFF0A1E3F) : Color(0xFFE2EAF4);
 
   static bool isDark(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark;

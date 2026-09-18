@@ -86,21 +86,21 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
     setState(() {
       _uploadedFileName = "supporting_doc_leave.pdf";
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Document uploaded successfully!")),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("Document uploaded successfully!")));
   }
 
   void _submit() {
     if (_selectedLeaveType == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please select a leave type.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Please select a leave type.")));
       return;
     }
     if (_reasonController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter a reason for leave.")),
+        SnackBar(content: Text("Please enter a reason for leave.")),
       );
       return;
     }
@@ -115,7 +115,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
 
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Leave request submitted successfully!")),
+      SnackBar(content: Text("Leave request submitted successfully!")),
     );
   }
 
@@ -151,7 +151,7 @@ class _ApplyLeaveBottomSheetState extends State<ApplyLeaveBottomSheet> {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 10.r,
-            offset: const Offset(0, -2),
+            offset: Offset(0, -2),
           ),
         ],
       ),

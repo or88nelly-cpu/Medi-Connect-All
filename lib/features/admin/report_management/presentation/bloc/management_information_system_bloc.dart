@@ -63,7 +63,7 @@ class ManagementInformationSystemBloc
     Emitter<ManagementInformationSystemState> emit,
   ) async {
     emit(ManagementInformationSystemLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(ManagementInformationSystemError(failure.message)),
       (stats) => emit(ManagementInformationSystemLoaded(stats)),

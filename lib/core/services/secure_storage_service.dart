@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SecureStorageService {
-  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+  final FlutterSecureStorage _storage = FlutterSecureStorage(
     aOptions: AndroidOptions(enforceBiometrics: true),
     iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
     mOptions: MacOsOptions(usesDataProtectionKeychain: false),

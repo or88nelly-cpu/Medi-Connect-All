@@ -51,7 +51,7 @@ class GetSlotsUseCase {
       final defaultSchedules = <Map<String, dynamic>>[];
       for (int day = 1; day <= 7; day++) {
         defaultSchedules.add({
-          'id': const Uuid().v4(),
+          'id': Uuid().v4(),
           'doctor_id': doctorId,
           'day_of_week': day,
           'start_time': '09:00',
@@ -59,7 +59,7 @@ class GetSlotsUseCase {
           'is_available': true,
         });
         defaultSchedules.add({
-          'id': const Uuid().v4(),
+          'id': Uuid().v4(),
           'doctor_id': doctorId,
           'day_of_week': day,
           'start_time': '14:00',

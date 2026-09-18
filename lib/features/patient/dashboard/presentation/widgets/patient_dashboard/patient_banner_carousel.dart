@@ -27,12 +27,12 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
 
   void _startAutoPlay(int count) {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
       if (!mounted || count == 0) return;
       final nextPage = (_currentPage + 1) % count;
       _pageController.animateToPage(
         nextPage,
-        duration: const Duration(milliseconds: 600),
+        duration: Duration(milliseconds: 600),
         curve: Curves.easeInOutCubic,
       );
     });
@@ -53,7 +53,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
           return Container(
             height: 200.h,
             alignment: Alignment.center,
-            child: const CircularProgressIndicator(),
+            child: CircularProgressIndicator(),
           );
         }
 
@@ -100,7 +100,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
         if (state is BannerLoaded) {
           final banners = state.banners;
           if (banners.isEmpty) {
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           }
 
           // Start timer on load or state update
@@ -135,7 +135,7 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
           );
         }
 
-        return const SizedBox.shrink();
+        return SizedBox.shrink();
       },
     );
   }
@@ -182,13 +182,13 @@ class _PatientBannerCarouselState extends State<PatientBannerCarousel> {
   }
 
   Widget _buildIndicators(int count) {
-    if (count <= 1) return const SizedBox.shrink();
+    if (count <= 1) return SizedBox.shrink();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(count, (index) {
         final isActive = index == _currentPage;
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 300),
           margin: EdgeInsets.symmetric(horizontal: 4.w),
           height: 6.r,
           width: isActive ? 16.r : 6.r,

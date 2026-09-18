@@ -65,7 +65,7 @@ class ManageSlotsDoctorCard extends StatelessWidget {
                   width: 10.r,
                   height: 10.r,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0F9F58),
+                    color: Color(0xFF0F9F58),
                     shape: BoxShape.circle,
                     border: Border.all(color: cardBg, width: 1.5.r),
                   ),

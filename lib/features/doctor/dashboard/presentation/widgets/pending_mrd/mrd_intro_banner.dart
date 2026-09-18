@@ -13,7 +13,7 @@ class MrdIntroBanner extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+        color: isDark ? Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
       ),
@@ -43,11 +43,7 @@ class MrdIntroBanner extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
-          Icon(
-            Icons.assignment_rounded,
-            color: const Color(0xFF8B5CF6),
-            size: 64.r,
-          ),
+          Icon(Icons.assignment_rounded, color: Color(0xFF8B5CF6), size: 64.r),
         ],
       ),
     );

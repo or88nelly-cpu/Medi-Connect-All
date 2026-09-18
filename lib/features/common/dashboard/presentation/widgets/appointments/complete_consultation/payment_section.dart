@@ -25,7 +25,7 @@ class PaymentSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ConsultationSectionHeader(
+        ConsultationSectionHeader(
           icon: Icons.receipt_long_outlined,
           title: 'C. Payment & Invoice',
           subtitle: 'Confirm payment details',
@@ -139,7 +139,7 @@ class PaymentSection extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => cubit.setPaymentMethod('Cash'),
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
+                  duration: Duration(milliseconds: 200),
                   padding: EdgeInsets.all(14.r),
                   decoration: BoxDecoration(
                     color: state.paymentMethod == 'Cash'
@@ -188,7 +188,7 @@ class PaymentSection extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => cubit.setPaymentMethod('Online'),
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
+                  duration: Duration(milliseconds: 200),
                   padding: EdgeInsets.all(14.r),
                   decoration: BoxDecoration(
                     color: state.paymentMethod == 'Online'
@@ -253,7 +253,7 @@ class PaymentSection extends StatelessWidget {
                   BoxShadow(
                     color: AppColors.primary.withValues(alpha: 0.08),
                     blurRadius: 12,
-                    offset: const Offset(0, 4),
+                    offset: Offset(0, 4),
                   ),
                 ],
               ),
@@ -289,7 +289,7 @@ class PaymentSection extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: onConfirmPayment,
-              icon: const Icon(Icons.check_circle, color: Colors.white),
+              icon: Icon(Icons.check_circle, color: Colors.white),
               label: Text(
                 'Pay & Confirm  ₹${feeCtrl.text.isEmpty ? '0.00' : feeCtrl.text}',
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -319,11 +319,7 @@ class PaymentSection extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.check_circle,
-                  color: AppColors.success,
-                  size: 20,
-                ),
+                Icon(Icons.check_circle, color: AppColors.success, size: 20),
                 SizedBox(width: 8.w),
                 Text(
                   'Payment Confirmed!',

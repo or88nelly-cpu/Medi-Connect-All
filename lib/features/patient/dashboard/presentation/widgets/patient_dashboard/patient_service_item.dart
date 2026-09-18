@@ -32,7 +32,7 @@ class PatientServiceItem extends StatelessWidget {
             BoxShadow(
               color: gradientColors.first.withValues(alpha: 0.08),
               blurRadius: 10,
-              offset: const Offset(0, 3),
+              offset: Offset(0, 3),
             ),
           ],
         ),

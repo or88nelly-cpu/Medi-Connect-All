@@ -92,7 +92,7 @@ class PatientPremiumTab extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text('Subscription purchase flow coming soon!'),
                     ),
                   );
@@ -101,7 +101,7 @@ class PatientPremiumTab extends StatelessWidget {
                   width: double.infinity,
                   height: 54.h,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       colors: [Color(0xFFF7C325), Color(0xFFE29E0D)],
                     ),
                     borderRadius: BorderRadius.circular(16.r),
@@ -109,7 +109,7 @@ class PatientPremiumTab extends StatelessWidget {
                       BoxShadow(
                         color: AppColors.secondary.withValues(alpha: 0.3),
                         blurRadius: 16.r,
-                        offset: const Offset(0, 6),
+                        offset: Offset(0, 6),
                       ),
                     ],
                   ),

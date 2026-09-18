@@ -35,7 +35,7 @@ class OpInfoSummaryCard extends StatelessWidget {
           BoxShadow(
             color: AppColors.lightShadow,
             blurRadius: 10.r,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),

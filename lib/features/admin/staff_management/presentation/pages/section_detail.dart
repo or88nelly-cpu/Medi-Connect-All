@@ -119,7 +119,7 @@ class _SectionDetailState extends State<SectionDetail>
       listener: (context, state) {
         if (state is DoctorStaffActionSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Action completed successfully.")),
+            SnackBar(content: Text("Action completed successfully.")),
           );
           context.read<DoctorStaffBloc>().add(
             LoadDoctorStaff(widget.section.name),
@@ -171,7 +171,7 @@ class _SectionDetailState extends State<SectionDetail>
                         fontWeight: FontWeight.bold,
                         fontSize: 14.sp,
                       ),
-                      tabs: const [
+                      tabs: [
                         Tab(text: "Doctors"),
                         Tab(text: "Staff"),
                       ],
@@ -212,7 +212,7 @@ class _SectionDetailState extends State<SectionDetail>
                           BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
                             builder: (context, state) {
                               if (state is DoctorStaffLoading) {
-                                return const Center(
+                                return Center(
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(vertical: 24),
                                     child: CircularProgressIndicator(),
@@ -338,13 +338,13 @@ class _SectionDetailState extends State<SectionDetail>
                                                         }
                                                       }
                                                     },
-                                                    icon: const Icon(
+                                                    icon: Icon(
                                                       Icons.add,
                                                       size: 14,
                                                     ),
                                                     label: Text(
                                                       "Add $entityName",
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -414,7 +414,7 @@ class _SectionDetailState extends State<SectionDetail>
                                                                 shrinkWrap:
                                                                     true,
                                                                 physics:
-                                                                    const NeverScrollableScrollPhysics(),
+                                                                    NeverScrollableScrollPhysics(),
                                                                 itemCount:
                                                                     paginatedList
                                                                         .length,
@@ -495,7 +495,7 @@ class _SectionDetailState extends State<SectionDetail>
                                                                 shrinkWrap:
                                                                     true,
                                                                 physics:
-                                                                    const NeverScrollableScrollPhysics(),
+                                                                    NeverScrollableScrollPhysics(),
                                                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                                                   crossAxisCount:
                                                                       2,
@@ -618,7 +618,7 @@ class _SectionDetailState extends State<SectionDetail>
                   SizedBox(height: 24.h),
 
                   // 5. Department Quick Access
-                  const SectionQuickAccess(),
+                  SectionQuickAccess(),
                   SizedBox(height: 24.h),
 
                   // 6. Today's Overview Statistics

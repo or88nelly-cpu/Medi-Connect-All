@@ -58,7 +58,7 @@ class _PatientUpcomingAppointmentsState
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         }
 
         final user = UserModel.fromEntity(authState.user);
@@ -109,8 +109,7 @@ class _PatientUpcomingAppointmentsState
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (ctx) =>
-                                const PatientAllAppointmentsPage(),
+                            builder: (ctx) => PatientAllAppointmentsPage(),
                           ),
                         );
                       },
@@ -197,7 +196,7 @@ class _PatientUpcomingAppointmentsState
       'EEEE, d MMMM yyyy',
     ).format(apt.appointmentDate);
     final isPending = apt.status.toLowerCase() == 'pending';
-    final statusColor = isPending ? AppColors.warning : const Color(0xFF10B981);
+    final statusColor = isPending ? AppColors.warning : Color(0xFF10B981);
 
     return GestureDetector(
       onTap: () {
@@ -219,7 +218,7 @@ class _PatientUpcomingAppointmentsState
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 10.r,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),
@@ -246,7 +245,7 @@ class _PatientUpcomingAppointmentsState
                       SizedBox(width: 4.w),
                       Icon(
                         Icons.verified_rounded,
-                        color: const Color(0xFF3B5BFD),
+                        color: Color(0xFF3B5BFD),
                         size: 12.r,
                       ),
                     ],

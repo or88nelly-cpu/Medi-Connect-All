@@ -35,7 +35,7 @@ class SpecialtyStep extends StatelessWidget {
           child: BlocBuilder<DepartmentBloc, DepartmentState>(
             builder: (context, deptState) {
               if (deptState is DepartmentLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               }
               if (deptState is DepartmentError) {
                 return Center(
@@ -105,7 +105,7 @@ class SpecialtyStep extends StatelessWidget {
                                       alpha: 0.1,
                                     ),
                                     blurRadius: 8,
-                                    offset: const Offset(0, 2),
+                                    offset: Offset(0, 2),
                                   ),
                                 ]
                               : null,
@@ -183,7 +183,7 @@ class SpecialtyStep extends StatelessWidget {
                   },
                 );
               }
-              return const SizedBox();
+              return SizedBox();
             },
           ),
         ),

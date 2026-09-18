@@ -53,10 +53,10 @@ class _PatientDashboardPageState extends State<PatientDashboardPage> {
 
   Widget getBody(int index) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 500),
       child: IndexedStack(
         index: index,
-        children: const [
+        children: [
           PatientHomeTab(),
           PatientRecordsTab(),
           PatientProfileTab(),

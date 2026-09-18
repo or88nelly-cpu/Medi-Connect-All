@@ -60,7 +60,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
           final randomSuffix = (Random().nextInt(9000) + 1000).toString();
           final bookingId = 'MCB$formattedDate$randomSuffix';
 
-          final paymentMethodsList = const [
+          final paymentMethodsList = [
             'UPI',
             'Credit/Debit Card',
             'Net Banking',
@@ -98,7 +98,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
       },
       builder: (context, state) {
         if (state.status == SpecialityBookingStatus.loading) {
-          return const Scaffold(body: Center(child: MediLogoLoader()));
+          return Scaffold(body: Center(child: MediLogoLoader()));
         }
 
         final docInfo = state.selectedDoctor;
@@ -106,7 +106,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
         final slot = state.selectedSlot;
 
         if (docInfo == null || date == null || slot == null) {
-          return const Scaffold(
+          return Scaffold(
             body: Center(child: Text("Missing booking details.")),
           );
         }
@@ -115,7 +115,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
         final selectedDateStr = DateFormat('EEEE, d MMMM yyyy').format(date);
 
         return CustomScaffold(
-          customAppbar: const CommonAppBar(title: "Confirm & Pay"),
+          customAppbar: CommonAppBar(title: "Confirm & Pay"),
           bottomNavigationBar: PaymentCheckoutBar(
             fee: fee,
             selectedPaymentNotifier: _selectedPaymentNotifier,
@@ -125,7 +125,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
               final authState = context.read<AuthBloc>().state;
               if (authState is Authenticated) {
                 final userModel = UserModel.fromEntity(authState.user);
-                final paymentMethodsList = const [
+                final paymentMethodsList = [
                   'UPI',
                   'Credit/Debit Card',
                   'Net Banking',
@@ -152,7 +152,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const BookingStepper(currentStep: 3),
+                BookingStepper(currentStep: 3),
                 SizedBox(height: 20.h),
 
                 Text(
@@ -160,7 +160,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
                   style: TextStyle(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.w900,
-                    color: const Color(0xFF0F172A),
+                    color: Color(0xFF0F172A),
                   ),
                 ),
                 Text(
@@ -197,7 +197,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w900,
-                              color: const Color(0xFF0F172A),
+                              color: Color(0xFF0F172A),
                             ),
                           ),
                           SizedBox(height: 12.h),
@@ -209,7 +209,7 @@ class _BookingPaymentConfirmPageState extends State<BookingPaymentConfirmPage> {
                       ),
                     ),
                     SizedBox(width: 16.w),
-                    const Expanded(flex: 4, child: PaymentSecurityInfo()),
+                    Expanded(flex: 4, child: PaymentSecurityInfo()),
                   ],
                 ),
               ],

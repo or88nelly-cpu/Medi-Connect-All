@@ -47,13 +47,13 @@ class EmrdOperationCard extends StatelessWidget {
             BoxShadow(
               color: accentColor.withValues(alpha: 0.06),
               blurRadius: 16,
-              offset: const Offset(0, 6),
+              offset: Offset(0, 6),
             ),
           if (isDark)
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.2),
               blurRadius: 10,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
         ],
       ),
@@ -107,11 +107,11 @@ class EmrdOperationCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(
+                                      color: Color(
                                         0xFFEF4444,
                                       ).withValues(alpha: 0.3),
                                       blurRadius: 4,
-                                      offset: const Offset(0, 2),
+                                      offset: Offset(0, 2),
                                     ),
                                   ],
                                 ),
@@ -129,7 +129,7 @@ class EmrdOperationCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Spacer(),
+                  Spacer(),
                   // Title of the card
                   Text(
                     title,

@@ -133,7 +133,7 @@ class SlotStep extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => cubit.selectDate(date),
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
+                  duration: Duration(milliseconds: 150),
                   margin: EdgeInsets.symmetric(horizontal: 2.w),
                   padding: EdgeInsets.symmetric(vertical: 6.h),
                   decoration: BoxDecoration(
@@ -183,7 +183,7 @@ class SlotStep extends StatelessWidget {
 
         // Queue Token list config for selected doctor
         state.isLoadingCounts
-            ? const Padding(
+            ? Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: Center(
                   child: SizedBox(

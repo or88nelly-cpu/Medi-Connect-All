@@ -47,7 +47,7 @@ class StepIndicator extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
+                    duration: Duration(milliseconds: 200),
                     width: 36.r,
                     height: 36.r,
                     decoration: BoxDecoration(
@@ -57,7 +57,7 @@ class StepIndicator extends StatelessWidget {
                     ),
                     child: Center(
                       child: isCompleted
-                          ? const Icon(
+                          ? Icon(
                               Icons.check,
                               color: AppColors.success,
                               size: 18,

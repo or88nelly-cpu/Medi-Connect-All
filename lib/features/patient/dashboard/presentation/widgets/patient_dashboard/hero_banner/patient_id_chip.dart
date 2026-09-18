@@ -25,7 +25,7 @@ class PatientIdChip extends StatelessWidget {
           BoxShadow(
             color: AppColors.primary.withValues(alpha: 0.07),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),

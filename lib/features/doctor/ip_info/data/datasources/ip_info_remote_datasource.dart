@@ -16,7 +16,7 @@ class IpInfoRemoteDataSourceImpl implements IpInfoRemoteDataSource {
   @override
   Future<List<IpOccupancyModel>> getIpOccupancy() async {
     // Return mockup matching exact specs from user upload
-    return const [
+    return [
       IpOccupancyModel(
         name: 'ICU',
         occupiedBeds: 12,

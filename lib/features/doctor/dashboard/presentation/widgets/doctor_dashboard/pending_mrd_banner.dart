@@ -23,17 +23,17 @@ class PendingMrdBanner extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF881337), const Color(0xFF4C0519)]
-              : [const Color(0xFFFFF1F2), const Color(0xFFFFE4E6)],
+              ? [Color(0xFF881337), Color(0xFF4C0519)]
+              : [Color(0xFFFFF1F2), Color(0xFFFFE4E6)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFE11D48).withValues(alpha: 0.05),
+            color: Color(0xFFE11D48).withValues(alpha: 0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -48,7 +48,7 @@ class PendingMrdBanner extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(12.r),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE11D48),
+                    color: Color(0xFFE11D48),
                     borderRadius: BorderRadius.circular(14.r),
                   ),
                   child: Icon(
@@ -67,7 +67,7 @@ class PendingMrdBanner extends StatelessWidget {
                       Text(
                         AppStrings.pendingMrdTitle,
                         style: AppTextStyles.bodyMedium.copyWith(
-                          color: const Color(0xFFE11D48),
+                          color: Color(0xFFE11D48),
                           fontWeight: FontWeight.bold,
                           fontSize: 12.sp,
                         ),
@@ -104,7 +104,7 @@ class PendingMrdBanner extends StatelessWidget {
                             Text(
                               AppStrings.viewDetails,
                               style: TextStyle(
-                                color: const Color(0xFFE11D48),
+                                color: Color(0xFFE11D48),
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -112,7 +112,7 @@ class PendingMrdBanner extends StatelessWidget {
                             SizedBox(width: 2.w),
                             Icon(
                               Icons.arrow_forward_ios_rounded,
-                              color: const Color(0xFFE11D48),
+                              color: Color(0xFFE11D48),
                               size: 8.r,
                             ),
                           ],
@@ -141,7 +141,7 @@ class PendingMrdBanner extends StatelessWidget {
                     right: 4.w,
                     child: Transform.rotate(
                       angle: 0.15,
-                      child: _buildMockDocPage(isDark, const Color(0xFFFDA4AF)),
+                      child: _buildMockDocPage(isDark, Color(0xFFFDA4AF)),
                     ),
                   ),
                   // Middle document
@@ -150,7 +150,7 @@ class PendingMrdBanner extends StatelessWidget {
                     right: 12.w,
                     child: Transform.rotate(
                       angle: -0.08,
-                      child: _buildMockDocPage(isDark, const Color(0xFFFECDD3)),
+                      child: _buildMockDocPage(isDark, Color(0xFFFECDD3)),
                     ),
                   ),
                   // Front document
@@ -181,7 +181,7 @@ class PendingMrdBanner extends StatelessWidget {
     bool hasStamp = false,
   }) {
     final bgColor = isDark && baseBgColor == Colors.white
-        ? const Color(0xFF334155)
+        ? Color(0xFF334155)
         : baseBgColor;
     final lineColor = isDark ? Colors.white24 : Colors.grey[200]!;
 
@@ -196,7 +196,7 @@ class PendingMrdBanner extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
         border: Border.all(
@@ -215,14 +215,14 @@ class PendingMrdBanner extends StatelessWidget {
           Container(width: 24.w, height: 2.h, color: lineColor),
           SizedBox(height: 3.h),
           Container(width: 20.w, height: 2.h, color: lineColor),
-          const Spacer(),
+          Spacer(),
           if (hasStamp)
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
                 width: 10.r,
                 height: 10.r,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color(0xFFF43F5E),
                   shape: BoxShape.circle,
                 ),

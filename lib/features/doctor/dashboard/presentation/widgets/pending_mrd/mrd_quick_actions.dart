@@ -32,7 +32,7 @@ class MrdQuickActions extends StatelessWidget {
         GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           crossAxisSpacing: 8.w,
           mainAxisSpacing: 8.h,
           childAspectRatio: 2.8,
@@ -42,14 +42,14 @@ class MrdQuickActions extends StatelessWidget {
               "Complete Record",
               "Mark record as complete",
               Icons.check_circle,
-              const Color(0xFF10B981),
+              Color(0xFF10B981),
             ),
             _buildActionCard(
               context,
               "Edit Record",
               "Edit and update patient record",
               Icons.edit_note_outlined,
-              const Color(0xFF8B5CF6),
+              Color(0xFF8B5CF6),
             ),
             _buildActionCard(
               context,
@@ -77,19 +77,19 @@ class MrdQuickActions extends StatelessWidget {
               "Submit to MRD",
               "Submit record to MRD dept",
               Icons.send_outlined,
-              const Color(0xFF14B8A6),
+              Color(0xFF14B8A6),
             ),
             _buildActionCard(
               context,
               "View Patient Record",
               "View complete patient record",
               Icons.folder_shared_outlined,
-              const Color(0xFF6366F1),
+              Color(0xFF6366F1),
             ),
             Container(
               padding: EdgeInsets.all(6.r),
               decoration: BoxDecoration(
-                color: isDark ? Colors.white10 : const Color(0xFFEFF6FF),
+                color: isDark ? Colors.white10 : Color(0xFFEFF6FF),
                 borderRadius: BorderRadius.circular(12.r),
                 border: Border.all(color: borderCol),
               ),
@@ -101,7 +101,7 @@ class MrdQuickActions extends StatelessWidget {
                   Text(
                     "All Archives",
                     style: TextStyle(
-                      color: isDark ? Colors.white70 : const Color(0xFF1D4ED8),
+                      color: isDark ? Colors.white70 : Color(0xFF1D4ED8),
                       fontSize: 10.sp,
                       fontWeight: FontWeight.bold,
                     ),

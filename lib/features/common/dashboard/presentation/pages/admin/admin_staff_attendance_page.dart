@@ -99,7 +99,7 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
         actions: [
           TextButton.icon(
             onPressed: () => _selectDate(context),
-            icon: const Icon(
+            icon: Icon(
               Icons.calendar_today,
               size: 16,
               color: AppColors.primary,
@@ -118,7 +118,7 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
       body: BlocBuilder<AdminAttendanceBloc, AdminAttendanceState>(
         builder: (context, state) {
           if (state is AdminAttendanceLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           if (state is AdminAttendanceError) {
@@ -126,14 +126,11 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    state.message,
-                    style: const TextStyle(color: AppColors.error),
-                  ),
+                  Text(state.message, style: TextStyle(color: AppColors.error)),
                   SizedBox(height: 12.h),
                   ElevatedButton(
                     onPressed: _loadAttendance,
-                    child: const Text("Retry"),
+                    child: Text("Retry"),
                   ),
                 ],
               ),
@@ -143,7 +140,7 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
           if (state is AdminAttendanceLoaded) {
             final list = state.logs;
             if (list.isEmpty) {
-              return const Center(child: Text("No attendance records found."));
+              return Center(child: Text("No attendance records found."));
             }
 
             return ListView.builder(
@@ -235,7 +232,7 @@ class _AdminStaffAttendancePageState extends State<AdminStaffAttendancePage> {
             );
           }
 
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );

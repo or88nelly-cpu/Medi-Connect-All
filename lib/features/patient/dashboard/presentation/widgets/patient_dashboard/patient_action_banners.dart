@@ -18,8 +18,8 @@ class PatientActionBanners extends StatelessWidget {
                   "Complete your profile to unlock appointments and hospital services.",
               status: "Pending",
               buttonText: "Complete Now",
-              startColor: const Color(0xffFF3E7F),
-              endColor: const Color(0xffFF7EA8),
+              startColor: Color(0xffFF3E7F),
+              endColor: Color(0xffFF7EA8),
               icon: Icons.assignment_rounded,
 
               onPressed: () {},
@@ -35,8 +35,8 @@ class PatientActionBanners extends StatelessWidget {
               amount: "₹500",
               status: "Due",
               buttonText: "Pay Now",
-              startColor: const Color(0xffFF9800),
-              endColor: const Color(0xffFFC107),
+              startColor: Color(0xffFF9800),
+              endColor: Color(0xffFFC107),
               icon: Icons.account_balance_wallet_rounded,
 
               onPressed: () {},

@@ -29,7 +29,7 @@ class OpInfoDateCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [AppColors.lightHeaderStart, AppColors.lightHeaderEnd],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,

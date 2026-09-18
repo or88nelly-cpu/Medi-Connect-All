@@ -54,8 +54,10 @@ dependencies:
   dio: ^5.11.1
   sentry_flutter: ^9.30.0
   google_mobile_ads: ^9.1.0
+  easy_localization: ^3.0.8
   
 
+  uuid: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -87,6 +89,7 @@ flutter:
 
     - assets/animations/
     - assets/images/department/
+    - assets/translations/
   fonts:
     - family: Inter
       fonts:

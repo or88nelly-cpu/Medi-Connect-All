@@ -81,7 +81,7 @@ class _AdminControlCenterHeaderState extends State<AdminControlCenterHeader> {
                     ),
                   ),
                   ShaderMask(
-                    shaderCallback: (b) => const LinearGradient(
+                    shaderCallback: (b) => LinearGradient(
                       colors: [
                         AppColors.controlCenterBlue,
                         AppColors.controlCenterPurple,
@@ -111,10 +111,7 @@ class _AdminControlCenterHeaderState extends State<AdminControlCenterHeader> {
                 ],
               ),
             ),
-            if (!isMobile) ...[
-              SizedBox(width: 16.w),
-              const AdminHeaderArtwork(),
-            ],
+            if (!isMobile) ...[SizedBox(width: 16.w), AdminHeaderArtwork()],
           ],
         ),
       ],

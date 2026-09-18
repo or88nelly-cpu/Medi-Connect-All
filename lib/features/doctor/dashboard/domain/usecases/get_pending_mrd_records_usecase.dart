@@ -10,7 +10,7 @@ class GetPendingMrdRecordsUseCase
     extends UseCase<List<MrdRecordEntity>, String> {
   final DoctorDashboardRepository _repository;
 
-  const GetPendingMrdRecordsUseCase(this._repository);
+  GetPendingMrdRecordsUseCase(this._repository);
 
   @override
   Future<Either<Failure, List<MrdRecordEntity>>> call(String doctorId) {

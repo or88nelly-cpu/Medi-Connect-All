@@ -58,8 +58,8 @@ class CustomerCareChartsSection extends StatelessWidget {
             painter: _LineChartPainter(
               data: lineData,
               labels: labels,
-              lineColor: const Color(0xFF0F6FFF),
-              fillColor: const Color(0xFF0F6FFF).withValues(alpha: 0.15),
+              lineColor: Color(0xFF0F6FFF),
+              fillColor: Color(0xFF0F6FFF).withValues(alpha: 0.15),
               textColor: AppColors.dashboardTextSecondary(context),
             ),
           ),
@@ -75,7 +75,7 @@ class CustomerCareChartsSection extends StatelessWidget {
             painter: _BarChartPainter(
               data: barData,
               labels: labels,
-              barColor: const Color(0xFF7B61FF),
+              barColor: Color(0xFF7B61FF),
               textColor: AppColors.dashboardTextSecondary(context),
             ),
           ),
@@ -111,7 +111,7 @@ class CustomerCareChartsSection extends StatelessWidget {
       return GridView.count(
         crossAxisCount: 2,
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         crossAxisSpacing: 16.w,
         mainAxisSpacing: 16.h,
         childAspectRatio: 1.3,
@@ -161,7 +161,7 @@ class CustomerCareChartsSection extends StatelessWidget {
                 ? Colors.black.withValues(alpha: 0.15)
                 : Colors.black.withValues(alpha: 0.02),
             blurRadius: 16,
-            offset: const Offset(0, 8),
+            offset: Offset(0, 8),
           ),
         ],
       ),
@@ -263,8 +263,8 @@ class CustomerCareChartsSection extends StatelessWidget {
                       painter: _DonutChartPainter(
                         slices: [
                           _PieSlice(excellent, AppColors.success),
-                          _PieSlice(good, const Color(0xFF0F6FFF)),
-                          _PieSlice(average, const Color(0xFFFF8A26)),
+                          _PieSlice(good, Color(0xFF0F6FFF)),
+                          _PieSlice(average, Color(0xFFFF8A26)),
                           _PieSlice(poor, AppColors.error),
                         ],
                         totalText: "$total",
@@ -296,7 +296,7 @@ class CustomerCareChartsSection extends StatelessWidget {
                       "Good",
                       good.toInt(),
                       goodCount,
-                      const Color(0xFF0F6FFF),
+                      Color(0xFF0F6FFF),
                       textColor,
                     ),
                     SizedBox(height: 6.h),
@@ -304,7 +304,7 @@ class CustomerCareChartsSection extends StatelessWidget {
                       AppStrings.average,
                       average.toInt(),
                       averageCount,
-                      const Color(0xFFFF8A26),
+                      Color(0xFFFF8A26),
                       textColor,
                     ),
                     SizedBox(height: 6.h),
@@ -342,7 +342,7 @@ class CustomerCareChartsSection extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.star_rounded,
-                    color: const Color(0xFFFF8A26),
+                    color: Color(0xFFFF8A26),
                     size: 18.r,
                   ),
                   SizedBox(width: 6.w),
@@ -399,7 +399,7 @@ class CustomerCareChartsSection extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const Spacer(),
+        Spacer(),
         Text(
           "$pct% ($count)",
           style: AppTextStyles.bodyXSmall.copyWith(
@@ -426,7 +426,7 @@ class CustomerCareChartsSection extends StatelessWidget {
 
     return ListView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       itemCount: data.length,
       itemBuilder: (context, index) {
         final key = data.keys.elementAt(index);
@@ -466,7 +466,7 @@ class CustomerCareChartsSection extends StatelessWidget {
                       child: Container(
                         height: 10.h,
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
+                          gradient: LinearGradient(
                             colors: [Color(0xFF0F6FFF), Color(0xFF5A9CFF)],
                           ),
                           borderRadius: BorderRadius.circular(5.r),

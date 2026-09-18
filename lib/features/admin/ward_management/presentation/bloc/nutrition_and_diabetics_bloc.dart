@@ -54,7 +54,7 @@ class NutritionAndDiabeticsBloc
     Emitter<NutritionAndDiabeticsState> emit,
   ) async {
     emit(NutritionAndDiabeticsLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(NutritionAndDiabeticsError(failure.message)),
       (stats) => emit(NutritionAndDiabeticsLoaded(stats)),

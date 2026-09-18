@@ -65,9 +65,9 @@ class _HealthPageState extends State<HealthPage> {
   }
 
   Color get _bmiColor {
-    if (_bmi < 18.5) return const Color(0xFF1A8CFF);
+    if (_bmi < 18.5) return Color(0xFF1A8CFF);
     if (_bmi < 25) return AppColors.success;
-    if (_bmi < 30) return const Color(0xFFFF8C42);
+    if (_bmi < 30) return Color(0xFFFF8C42);
     return AppColors.error;
   }
 
@@ -78,11 +78,11 @@ class _HealthPageState extends State<HealthPage> {
 
   Future<void> _save() async {
     setState(() => _isSaving = true);
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 500));
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Health data saved successfully (local mock)!'),
+          content: Text('Health data saved successfully (local mock)!'),
           backgroundColor: AppColors.success,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -148,7 +148,7 @@ class _HealthPageState extends State<HealthPage> {
                     label: 'Height',
                     unit: 'cm',
                     icon: Icons.height_rounded,
-                    iconColor: const Color(0xFF4F7CFF),
+                    iconColor: Color(0xFF4F7CFF),
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -158,7 +158,7 @@ class _HealthPageState extends State<HealthPage> {
                     label: 'Weight',
                     unit: 'kg',
                     icon: Icons.monitor_weight_outlined,
-                    iconColor: const Color(0xFF8B5CF6),
+                    iconColor: Color(0xFF8B5CF6),
                   ),
                 ),
               ],
@@ -191,7 +191,7 @@ class _HealthPageState extends State<HealthPage> {
                     label: 'Blood Sugar',
                     unit: 'mg/dL',
                     icon: Icons.water_drop_rounded,
-                    iconColor: const Color(0xFFFF8C42),
+                    iconColor: Color(0xFFFF8C42),
                   ),
                 ),
               ],
@@ -211,12 +211,12 @@ class _HealthPageState extends State<HealthPage> {
                     ? SizedBox(
                         width: 16.r,
                         height: 16.r,
-                        child: const CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           strokeWidth: 2,
                           color: Colors.white,
                         ),
                       )
-                    : const Icon(Icons.save_rounded, color: Colors.white),
+                    : Icon(Icons.save_rounded, color: Colors.white),
                 label: Text(
                   _isSaving ? 'Saving…' : 'Save Health Data',
                   style: AppTextStyles.buttonLarge.copyWith(
@@ -349,7 +349,7 @@ class _BmiCard extends StatelessWidget {
                   height: 10.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6.r),
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       colors: [
                         Color(0xFF1A8CFF),
                         AppColors.success,
@@ -390,10 +390,7 @@ class _BmiCard extends StatelessWidget {
             children: [
               Text(
                 'Underweight',
-                style: TextStyle(
-                  fontSize: 9.sp,
-                  color: const Color(0xFF1A8CFF),
-                ),
+                style: TextStyle(fontSize: 9.sp, color: Color(0xFF1A8CFF)),
               ),
               Text(
                 'Normal',
@@ -401,10 +398,7 @@ class _BmiCard extends StatelessWidget {
               ),
               Text(
                 'Overweight',
-                style: TextStyle(
-                  fontSize: 9.sp,
-                  color: const Color(0xFFFF8C42),
-                ),
+                style: TextStyle(fontSize: 9.sp, color: Color(0xFFFF8C42)),
               ),
               Text(
                 'Obese',
@@ -522,7 +516,7 @@ class _BloodPressureField extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               Text(
                 'mmHg',
                 style: AppTextStyles.bodySmall.copyWith(
@@ -554,7 +548,7 @@ class _BloodPressureField extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary(context),
                       ),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
                         border: InputBorder.none,
@@ -594,7 +588,7 @@ class _BloodPressureField extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary(context),
                       ),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
                         border: InputBorder.none,
@@ -617,7 +611,7 @@ class _BloodPressureField extends StatelessWidget {
 class _HealthTipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const tips = [
+    final tips = [
       (
         'Stay hydrated — drink 8 glasses of water daily',
         Icons.water_drop_rounded,
@@ -654,7 +648,7 @@ class _HealthTipsCard extends StatelessWidget {
             children: [
               Icon(
                 Icons.tips_and_updates_rounded,
-                color: const Color(0xFFFF8C42),
+                color: Color(0xFFFF8C42),
                 size: 18.r,
               ),
               SizedBox(width: 8.w),

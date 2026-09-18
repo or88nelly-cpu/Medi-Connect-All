@@ -79,7 +79,7 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
 
   Widget _buildBody(bool isDark) {
     if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator());
     }
 
     if (_errorMessage != null) {
@@ -97,7 +97,7 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
               ),
             ),
             SizedBox(height: 4.h),
-            TextButton(onPressed: _fetchRecords, child: const Text("Retry")),
+            TextButton(onPressed: _fetchRecords, child: Text("Retry")),
           ],
         ),
       );
@@ -167,7 +167,7 @@ class _PatientRecordsTabState extends State<PatientRecordsTab> {
               ),
             ),
             subtitle: Text("Doctor: $doctor \nDate: $dateStr"),
-            trailing: const Icon(Icons.download_outlined),
+            trailing: Icon(Icons.download_outlined),
             isThreeLine: true,
           ),
         );

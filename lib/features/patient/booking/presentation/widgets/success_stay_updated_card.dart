@@ -35,13 +35,13 @@ class SuccessStayUpdatedCard extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(10.r),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Color(0xFFF3E8FF),
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.notifications_active_rounded,
-              color: const Color(0xFF8B5CF6),
+              color: Color(0xFF8B5CF6),
               size: 24.r,
             ),
           ),
@@ -88,7 +88,7 @@ class SuccessStayUpdatedCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F5F9),
+        color: Color(0xFFF1F5F9),
         borderRadius: BorderRadius.circular(6.r),
       ),
       child: Row(
@@ -103,11 +103,7 @@ class SuccessStayUpdatedCard extends StatelessWidget {
             ),
           ),
           SizedBox(width: 3.w),
-          Icon(
-            Icons.check_circle_rounded,
-            color: const Color(0xFF10B981),
-            size: 8.r,
-          ),
+          Icon(Icons.check_circle_rounded, color: Color(0xFF10B981), size: 8.r),
         ],
       ),
     );

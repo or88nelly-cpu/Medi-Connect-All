@@ -38,7 +38,7 @@ class SubmitEmrSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ConsultationSectionHeader(
+        ConsultationSectionHeader(
           icon: Icons.local_hospital_outlined,
           title: 'D. Submit to EMR',
           subtitle: 'Electronic Medical Record',
@@ -99,10 +99,7 @@ class SubmitEmrSection extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: state.paymentConfirmed ? onSubmitEMR : null,
-              icon: const Icon(
-                Icons.cloud_upload_outlined,
-                color: Colors.white,
-              ),
+              icon: Icon(Icons.cloud_upload_outlined, color: Colors.white),
               label: Text(
                 'Submit to EMR',
                 style: AppTextStyles.labelMedium.copyWith(

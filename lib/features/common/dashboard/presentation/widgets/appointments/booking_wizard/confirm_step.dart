@@ -60,7 +60,7 @@ class ConfirmStep extends StatelessWidget {
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(vertical: 8.h),
-                  child: const Text("Regular Consultation"),
+                  child: Text("Regular Consultation"),
                 ),
                 selected: state.selectedType == 'Consultation',
                 onSelected: (val) {
@@ -82,7 +82,7 @@ class ConfirmStep extends StatelessWidget {
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(vertical: 8.h),
-                  child: const Text("Video Consultation"),
+                  child: Text("Video Consultation"),
                 ),
                 selected: state.selectedType == 'Video',
                 onSelected: (val) {

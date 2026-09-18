@@ -60,15 +60,13 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
 
     final authState = context.read<AuthBloc>().state;
     final doctor = authState is Authenticated ? authState.user : null;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? const Color(0xFF0F172A)
-          : const Color(0xFFF8FAFC),
+      backgroundColor: isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -99,7 +97,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
             return Center(
               child: Text(
                 state.message,
-                style: const TextStyle(color: AppColors.red),
+                style: TextStyle(color: AppColors.red),
               ),
             );
           }
@@ -115,7 +113,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
 
             return SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-              physics: const BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -191,7 +189,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                         )
                       : ListView.separated(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: filteredList.length,
                           separatorBuilder: (context, index) =>
                               SizedBox(height: 12.h),
@@ -205,14 +203,14 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
               ),
             );
           }
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );
   }
 
   Widget _buildDateBanner(bool isDark) {
-    final bg = isDark ? const Color(0xFF1E293B) : const Color(0xFF0F6FFF);
+    final bg = isDark ? Color(0xFF1E293B) : Color(0xFF0F6FFF);
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -223,7 +221,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+            icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
             onPressed: () {},
           ),
           Text(
@@ -236,10 +234,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
             ),
           ),
           IconButton(
-            icon: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white,
-            ),
+            icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
             onPressed: () {},
           ),
         ],
@@ -252,7 +247,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+        color: isDark ? Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
       ),
@@ -295,7 +290,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: const Color(0xFFEFF6FF),
+              color: Color(0xFFEFF6FF),
               borderRadius: BorderRadius.circular(6.r),
             ),
             child: Row(
@@ -303,7 +298,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                 Container(
                   width: 6.r,
                   height: 6.r,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.green,
                     shape: BoxShape.circle,
                   ),
@@ -367,7 +362,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
 
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 10.r,
@@ -381,7 +376,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
         return Container(
           padding: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E293B) : Colors.white,
+            color: isDark ? Color(0xFF1E293B) : Colors.white,
             borderRadius: BorderRadius.circular(16.r),
             border: Border.all(
               color: isDark ? Colors.white10 : Colors.grey[200]!,
@@ -420,17 +415,17 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
     final actions = [
       {
         'title': 'Upload Consent',
-        'color': const Color(0xFF0EA5E9),
+        'color': Color(0xFF0EA5E9),
         'icon': Icons.file_upload_outlined,
       },
       {
         'title': 'Add Notes',
-        'color': const Color(0xFF8B5CF6),
+        'color': Color(0xFF8B5CF6),
         'icon': Icons.note_add_outlined,
       },
       {
         'title': 'Prescribe Med',
-        'color': const Color(0xFF10B981),
+        'color': Color(0xFF10B981),
         'icon': Icons.medication_outlined,
       },
       {
@@ -445,24 +440,24 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
       },
       {
         'title': 'Generate Bill',
-        'color': const Color(0xFFEC4899),
+        'color': Color(0xFFEC4899),
         'icon': Icons.receipt_long_outlined,
       },
       {
         'title': 'Download Forms',
-        'color': const Color(0xFF6366F1),
+        'color': Color(0xFF6366F1),
         'icon': Icons.file_download_outlined,
       },
       {
         'title': 'Create Form',
-        'color': const Color(0xFF06B6D4),
+        'color': Color(0xFF06B6D4),
         'icon': Icons.add_to_photos_outlined,
       },
     ];
 
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
         mainAxisSpacing: 10.r,
@@ -475,7 +470,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
         final col = item['color'] as Color;
         return Container(
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E293B) : Colors.white,
+            color: isDark ? Color(0xFF1E293B) : Colors.white,
             borderRadius: BorderRadius.circular(16.r),
             border: Border.all(
               color: isDark ? Colors.white10 : Colors.grey[200]!,
@@ -538,7 +533,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                       color: isDark ? Colors.white : AppColors.textDarkNavy,
                       fontSize: 11.sp,
                     ),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Search patient name or ID...",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
@@ -575,9 +570,9 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
     final secondaryTextCol = isDark ? Colors.white60 : Colors.grey[500];
 
-    Color statusColor = const Color(0xFF10B981);
+    Color statusColor = Color(0xFF10B981);
     if (item.status.toLowerCase() == 'in progress') {
-      statusColor = const Color(0xFF8B5CF6);
+      statusColor = Color(0xFF8B5CF6);
     } else if (item.status.toLowerCase() == 'scheduled') {
       statusColor = AppColors.warning;
     } else if (item.status.toLowerCase() == 'cancelled') {
@@ -612,13 +607,13 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   ),
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
                 decoration: BoxDecoration(
                   color: item.priority.toLowerCase() == 'high'
-                      ? const Color(0xFFFEE2E2)
-                      : const Color(0xFFFEF3C7),
+                      ? Color(0xFFFEE2E2)
+                      : Color(0xFFFEF3C7),
                   borderRadius: BorderRadius.circular(4.r),
                 ),
                 child: Text(
@@ -626,7 +621,7 @@ class _OpProceduresPageState extends State<OpProceduresPage> {
                   style: TextStyle(
                     color: item.priority.toLowerCase() == 'high'
                         ? AppColors.error
-                        : const Color(0xFFD97706),
+                        : Color(0xFFD97706),
                     fontWeight: FontWeight.bold,
                     fontSize: 8.sp,
                   ),

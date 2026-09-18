@@ -152,9 +152,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
         listener: (context, state) {
           if (state is DoctorStaffActionSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Doctor profile updated successfully."),
-              ),
+              SnackBar(content: Text("Doctor profile updated successfully.")),
             );
             Navigator.pop(context, true);
           } else if (state is DoctorStaffError) {
@@ -168,7 +166,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             children: [
-              const EditProfileHeader(),
+              EditProfileHeader(),
               SizedBox(height: 16.h),
               EditProfileDoctorCard(user: widget.user),
               SizedBox(height: 16.h),
@@ -237,7 +235,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
                 aboutController: _aboutController,
               ),
               SizedBox(height: 16.h),
-              const EditDocumentsSection(),
+              EditDocumentsSection(),
               SizedBox(height: 24.h),
               // Save / Cancel action buttons
               Row(
@@ -273,7 +271,7 @@ class _EditDoctorProfileViewState extends State<EditDoctorProfileView> {
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Save Changes",
                         style: TextStyle(
                           color: Colors.white,

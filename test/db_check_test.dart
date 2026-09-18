@@ -11,8 +11,8 @@ void main() {
 
     try {
       final payload = {
-        'id': const Uuid().v4(),
-        'doctor_id': const Uuid().v4(), // random UUID
+        'id': Uuid().v4(),
+        'doctor_id': Uuid().v4(), // random UUID
         'day_of_week': 1,
         'start_time': '09:00',
         'end_time': '13:00',

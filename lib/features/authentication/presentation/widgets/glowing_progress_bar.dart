@@ -66,7 +66,7 @@ class _GlowingProgressBarState extends State<GlowingProgressBar>
                             AppColors.primaryLight,
                             Colors.white,
                           ],
-                          stops: const [0.0, 0.75, 1.0],
+                          stops: [0.0, 0.75, 1.0],
                         ),
                         boxShadow: [
                           BoxShadow(
@@ -75,7 +75,7 @@ class _GlowingProgressBarState extends State<GlowingProgressBar>
                             ),
                             blurRadius: 8.r,
                             spreadRadius: 1.r,
-                            offset: const Offset(0, 0),
+                            offset: Offset(0, 0),
                           ),
                         ],
                       ),

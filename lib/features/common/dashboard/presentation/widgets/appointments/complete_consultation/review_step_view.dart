@@ -161,7 +161,7 @@ class ReviewStepView extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.check,
                                 size: 12,
                                 color: AppColors.success,
@@ -326,7 +326,7 @@ class ReviewStepView extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.phone_outlined, color: AppColors.blue),
+                icon: Icon(Icons.phone_outlined, color: AppColors.blue),
                 style: IconButton.styleFrom(
                   backgroundColor: AppColors.blue.withValues(alpha: 0.1),
                 ),
@@ -389,7 +389,7 @@ class ReviewStepView extends StatelessWidget {
                   ),
                 ],
               ),
-              const Divider(height: 20),
+              Divider(height: 20),
               if (state.medicines
                   .where(
                     (m) => (m['name'] as TextEditingController).text
@@ -565,7 +565,7 @@ class ReviewStepView extends StatelessWidget {
                   ),
                 ],
               ),
-              const Divider(height: 20),
+              Divider(height: 20),
               if (state.selectedTests.isEmpty)
                 Text(
                   'No lab tests scheduled.',
@@ -671,7 +671,7 @@ class ReviewStepView extends StatelessWidget {
                   ),
                 ],
               ),
-              const Divider(height: 20),
+              Divider(height: 20),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -731,7 +731,7 @@ class ReviewStepView extends StatelessWidget {
                   ),
                 ],
               ),
-              const Divider(height: 20),
+              Divider(height: 20),
               _buildBillRow(
                 'Consultation Fee',
                 '₹${consultFee.toStringAsFixed(2)}',
@@ -787,7 +787,7 @@ class ReviewStepView extends StatelessWidget {
                   ),
                 ],
               ),
-              const Divider(height: 24),
+              Divider(height: 24),
               // Authorized Invoice Stamp
               Container(
                 padding: EdgeInsets.all(12.r),

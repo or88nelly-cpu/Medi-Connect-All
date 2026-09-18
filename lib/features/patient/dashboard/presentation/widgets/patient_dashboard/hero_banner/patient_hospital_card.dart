@@ -10,8 +10,8 @@ class PatientHospitalCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final skyGradient = isDark
-        ? const [Color(0xFF16233B), Color(0xFF0C1424)]
-        : const [Color(0xFFDBECFF), Color(0xFFEDF5FF)];
+        ? [Color(0xFF16233B), Color(0xFF0C1424)]
+        : [Color(0xFFDBECFF), Color(0xFFEDF5FF)];
 
     final buildingBg = isDark ? Color(0xFF09121F) : Colors.white;
 

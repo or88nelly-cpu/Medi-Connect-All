@@ -26,7 +26,7 @@ class FakeSecureStorageService extends SecureStorageService {
 class FakeEmrdBloc extends Bloc<EmrdEvent, EmrdState> implements EmrdBloc {
   FakeEmrdBloc() : super(EmrdInitial()) {
     on<LoadEmrdStats>((event, emit) {
-      emit(const EmrdLoaded({}, emrRecords: []));
+      emit(EmrdLoaded({}, emrRecords: []));
     });
   }
 }
@@ -48,7 +48,7 @@ void main() {
 
   Widget buildTestableWidget(Widget child) {
     return ScreenUtilInit(
-      designSize: const Size(1200, 1000),
+      designSize: Size(1200, 1000),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, _) => MaterialApp(
@@ -88,7 +88,7 @@ void main() {
   testWidgets('renders detail sections correctly in Pending status', (
     WidgetTester tester,
   ) async {
-    tester.view.physicalSize = const Size(1200, 1000);
+    tester.view.physicalSize = Size(1200, 1000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
@@ -123,7 +123,7 @@ void main() {
   testWidgets(
     'renders ID Card preview and print/download buttons in Paid status',
     (WidgetTester tester) async {
-      tester.view.physicalSize = const Size(1200, 1000);
+      tester.view.physicalSize = Size(1200, 1000);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);

@@ -412,7 +412,7 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.04),
             blurRadius: 10.r,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
         border: Border.all(color: AppColors.border(context), width: 1.w),
@@ -432,9 +432,7 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
   ) {
     final activeBg = AppColors.primary.withValues(alpha: 0.1);
     final activeBorder = AppColors.primary;
-    final inactiveBg = isDark
-        ? const Color(0xFF0F172A)
-        : const Color(0xFFF8FAFC);
+    final inactiveBg = isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC);
     final inactiveBorder = AppColors.border(context);
 
     return InkWell(
@@ -527,9 +525,7 @@ class _AdditionalInfoStepState extends State<AdditionalInfoStep> {
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: AppColors.primary, size: 16.r),
             filled: true,
-            fillColor: isDark
-                ? const Color(0xFF0F172A)
-                : const Color(0xFFF8FAFC),
+            fillColor: isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC),
             contentPadding: EdgeInsets.symmetric(
               vertical: 12.h,
               horizontal: 16.w,

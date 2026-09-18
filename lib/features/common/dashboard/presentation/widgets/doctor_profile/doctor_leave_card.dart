@@ -96,7 +96,7 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
               InkWell(
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Showing all leaves...")),
+                    SnackBar(content: Text("Showing all leaves...")),
                   );
                 },
                 child: Text(
@@ -116,7 +116,7 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
             final isApproved = leave["status"] == "Approved";
             final isPending = leave["status"] == "Pending";
             final statusColor = isApproved
-                ? const Color(0xFF0F9F58)
+                ? Color(0xFF0F9F58)
                 : AppColors.warning;
 
             final authState = context.watch<AuthBloc>().state;
@@ -179,10 +179,10 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
                         SizedBox(width: 8.w),
                         IconButton(
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
+                          constraints: BoxConstraints(),
                           icon: Icon(
                             Icons.check_circle_outline,
-                            color: const Color(0xFF0F9F58),
+                            color: Color(0xFF0F9F58),
                             size: 20.sp,
                           ),
                           onPressed: () => _approveLeave(leave),
@@ -191,7 +191,7 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
                         SizedBox(width: 6.w),
                         IconButton(
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
+                          constraints: BoxConstraints(),
                           icon: Icon(
                             Icons.cancel_outlined,
                             color: AppColors.error,
@@ -223,7 +223,7 @@ class _DoctorLeaveCardState extends State<DoctorLeaveCard> {
                 ),
               ),
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: AppColors.primary),
+                side: BorderSide(color: AppColors.primary),
                 padding: EdgeInsets.symmetric(vertical: 10.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6.r),

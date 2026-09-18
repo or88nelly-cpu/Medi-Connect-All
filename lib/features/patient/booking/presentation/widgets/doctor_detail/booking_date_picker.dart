@@ -23,7 +23,7 @@ class BookingDatePicker extends StatelessWidget {
       List.generate(7, (i) => DateTime.now().add(Duration(days: i)));
 
   String _weekdayAbbr(int wd) {
-    const d = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final d = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return d[(wd - 1).clamp(0, 6)];
   }
 
@@ -42,7 +42,7 @@ class BookingDatePicker extends StatelessWidget {
               style: TextStyle(
                 fontSize: AppTextStyles.s14,
                 fontWeight: FontWeight.w900,
-                color: const Color(0xFF0F172A),
+                color: Color(0xFF0F172A),
               ),
             ),
             Row(
@@ -62,16 +62,8 @@ class BookingDatePicker extends StatelessWidget {
                   size: 14,
                 ),
                 SizedBox(width: AppDimensions.spaceWS),
-                const Icon(
-                  Icons.chevron_left_rounded,
-                  color: Colors.grey,
-                  size: 18,
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: Colors.grey,
-                  size: 18,
-                ),
+                Icon(Icons.chevron_left_rounded, color: Colors.grey, size: 18),
+                Icon(Icons.chevron_right_rounded, color: Colors.grey, size: 18),
               ],
             ),
           ],
@@ -99,11 +91,11 @@ class BookingDatePicker extends StatelessWidget {
                   width: 52,
                   margin: EdgeInsets.only(right: AppDimensions.marginS),
                   decoration: BoxDecoration(
-                    color: isSelected ? const Color(0xFF3B5BFD) : cardBg,
+                    color: isSelected ? Color(0xFF3B5BFD) : cardBg,
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                     border: Border.all(
                       color: isSelected
-                          ? const Color(0xFF3B5BFD)
+                          ? Color(0xFF3B5BFD)
                           : AppColors.border(context),
                     ),
                   ),
@@ -124,9 +116,7 @@ class BookingDatePicker extends StatelessWidget {
                         style: TextStyle(
                           fontSize: AppTextStyles.s16,
                           fontWeight: FontWeight.w900,
-                          color: isSelected
-                              ? Colors.white
-                              : const Color(0xFF0F172A),
+                          color: isSelected ? Colors.white : Color(0xFF0F172A),
                         ),
                       ),
                     ],

@@ -46,7 +46,7 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
                   color: isDark ? Colors.white24 : Colors.black12,
                 ),
               ),
-              focusedBorder: const OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.primary),
               ),
             ),
@@ -54,7 +54,7 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -64,7 +64,7 @@ class _AdditionalOptionsCardState extends State<AdditionalOptionsCard> {
                 _notifyChanges();
                 Navigator.pop(ctx);
               },
-              child: const Text("Done"),
+              child: Text("Done"),
             ),
           ],
         );

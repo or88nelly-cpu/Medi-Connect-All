@@ -71,11 +71,11 @@ class SuccessStepView extends StatelessWidget {
               Container(
                 width: 56.r,
                 height: 56.r,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.success,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check, color: Colors.white, size: 36),
+                child: Icon(Icons.check, color: Colors.white, size: 36),
               ),
               // Confetti mockup dots
               Positioned(
@@ -191,7 +191,7 @@ class SuccessStepView extends StatelessWidget {
                   color: AppColors.success.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.verified_user_outlined,
                   color: AppColors.success,
                   size: 18,
@@ -232,8 +232,8 @@ class SuccessStepView extends StatelessWidget {
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: onViewInvoice,
-                icon: const Icon(Icons.receipt_long, size: 16),
-                label: const Text(
+                icon: Icon(Icons.receipt_long, size: 16),
+                label: Text(
                   'View Invoice',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -254,7 +254,7 @@ class SuccessStepView extends StatelessWidget {
                 onPressed: onBackToAppointments,
                 height: 48.h,
                 borderRadius: 10.r,
-                gradientColors: const [AppColors.primary, AppColors.blue],
+                gradientColors: [AppColors.primary, AppColors.blue],
                 textStyle: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

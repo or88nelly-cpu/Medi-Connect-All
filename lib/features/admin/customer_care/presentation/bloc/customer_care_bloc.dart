@@ -52,7 +52,7 @@ class CustomerCareBloc extends Bloc<CustomerCareEvent, CustomerCareState> {
     Emitter<CustomerCareState> emit,
   ) async {
     emit(CustomerCareLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(CustomerCareError(failure.message)),
       (stats) => emit(CustomerCareLoaded(stats)),

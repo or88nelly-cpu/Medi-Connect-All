@@ -22,12 +22,12 @@ class AdminHomeBody extends StatelessWidget {
     final UserEntity? user = _resolveUser(context);
 
     return CustomScaffold(
-      drawer: isDesktop ? null : const AdminDrawer(),
+      drawer: isDesktop ? null : AdminDrawer(),
       appBarNeeded: false,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: AppColors.controlCenterBlue,
-        child: const Icon(Icons.add_rounded, color: Colors.white),
+        child: Icon(Icons.add_rounded, color: Colors.white),
       ),
       body: Row(
         children: [
@@ -64,7 +64,7 @@ class _AdminScrollContent extends StatelessWidget {
         children: [
           AdminControlCenterHeader(user: user),
           SizedBox(height: AppDimensions.spaceXL),
-          const AdminModulesGrid(),
+          AdminModulesGrid(),
         ],
       ),
     );

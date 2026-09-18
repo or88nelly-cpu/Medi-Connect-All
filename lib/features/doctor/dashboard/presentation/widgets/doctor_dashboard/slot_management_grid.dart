@@ -132,7 +132,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (_isLoading) {
-      return const Center(
+      return Center(
         child: Padding(
           padding: EdgeInsets.all(32.0),
           child: CircularProgressIndicator(color: Color(0xFF0F6FFF)),
@@ -146,7 +146,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
         _buildSectionHeader(
           "Morning Session",
           Icons.wb_sunny_outlined,
-          const Color(0xFFEAB308),
+          Color(0xFFEAB308),
         ),
         SizedBox(height: 12.h),
         _buildSlotGrid(_morningSlots, isDark),
@@ -154,7 +154,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
         _buildSectionHeader(
           "Afternoon Session",
           Icons.nights_stay_outlined,
-          const Color(0xFF0F6FFF),
+          Color(0xFF0F6FFF),
         ),
         SizedBox(height: 12.h),
         _buildSlotGrid(_afternoonSlots, isDark),
@@ -183,7 +183,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
   Widget _buildSlotGrid(List<String> slots, bool isDark) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: 2.2,
@@ -217,7 +217,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
         Widget statusIndicator;
 
         if (isBooked) {
-          cardBg = isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF);
+          cardBg = isDark ? Color(0xFF1E3A8A) : Color(0xFFEFF6FF);
           borderCol = AppColors.info;
           textCol = AppColors.info;
           statusIndicator = Text(
@@ -232,10 +232,10 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
           );
         } else if (isBlocked) {
           cardBg = isDark
-              ? const Color(0xFF881337).withValues(alpha: 0.1)
-              : const Color(0xFFFFF1F2);
-          borderCol = const Color(0xFFFDA4AF);
-          textCol = const Color(0xFFE11D48);
+              ? Color(0xFF881337).withValues(alpha: 0.1)
+              : Color(0xFFFFF1F2);
+          borderCol = Color(0xFFFDA4AF);
+          textCol = Color(0xFFE11D48);
           statusIndicator = Text(
             "Blocked",
             style: TextStyle(
@@ -245,13 +245,13 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
             ),
           );
         } else {
-          cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+          cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
           borderCol = isDark ? Colors.white10 : Colors.grey[200]!;
           textCol = isDark ? Colors.white70 : Colors.black87;
           statusIndicator = Text(
             "Available",
             style: TextStyle(
-              color: const Color(0xFF10B981),
+              color: Color(0xFF10B981),
               fontSize: 8.sp,
               fontWeight: FontWeight.bold,
             ),
@@ -271,7 +271,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.02),
                   blurRadius: 4,
-                  offset: const Offset(0, 2),
+                  offset: Offset(0, 2),
                 ),
               ],
             ),
@@ -297,7 +297,7 @@ class _SlotManagementGridState extends State<SlotManagementGrid> {
                     else
                       Icon(
                         Icons.check_circle_outline_rounded,
-                        color: const Color(0xFF10B981),
+                        color: Color(0xFF10B981),
                         size: 10.r,
                       ),
                   ],

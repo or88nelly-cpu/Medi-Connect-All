@@ -13,18 +13,18 @@ class AdService {
   bool get isInitialized => _isInitialized;
 
   // Google Standard Test Ad Unit IDs
-  static const String _androidBannerId =
+  static final String _androidBannerId =
       'ca-app-pub-3940256099942544/6300978111';
-  static const String _iosBannerId = 'ca-app-pub-3940256099942544/2934735716';
+  static final String _iosBannerId = 'ca-app-pub-3940256099942544/2934735716';
 
-  static const String _androidInterstitialId =
+  static final String _androidInterstitialId =
       'ca-app-pub-3940256099942544/1033173712';
-  static const String _iosInterstitialId =
+  static final String _iosInterstitialId =
       'ca-app-pub-3940256099942544/4411468910';
 
-  static const String _androidRewardedId =
+  static final String _androidRewardedId =
       'ca-app-pub-3940256099942544/5224354917';
-  static const String _iosRewardedId = 'ca-app-pub-3940256099942544/1712485313';
+  static final String _iosRewardedId = 'ca-app-pub-3940256099942544/1712485313';
 
   /// Returns target banner ad unit ID based on device platform.
   String get bannerAdUnitId {
@@ -83,7 +83,7 @@ class AdService {
     late BannerAd bannerAd;
     bannerAd = BannerAd(
       adUnitId: bannerAdUnitId,
-      request: const AdRequest(),
+      request: AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
@@ -120,7 +120,7 @@ class AdService {
   }) {
     InterstitialAd.load(
       adUnitId: interstitialAdUnitId,
-      request: const AdRequest(),
+      request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
           log('InterstitialAd loaded: ${ad.adUnitId}');
@@ -154,7 +154,7 @@ class AdService {
   }) {
     RewardedAd.load(
       adUnitId: rewardedAdUnitId,
-      request: const AdRequest(),
+      request: AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) {
           log('RewardedAd loaded: ${ad.adUnitId}');

@@ -37,11 +37,11 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Patient File Details"),
+      customAppbar: CommonAppBar(title: "Patient File Details"),
       body: BlocBuilder<UserDetailsBloc, UserDetailsState>(
         builder: (context, state) {
           if (state is UserDetailsLoading || state is UserDetailsInitial) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           if (state is UserDetailsError) {
@@ -153,7 +153,7 @@ class _PatientDetailScreenState extends State<PatientDetailScreen> {
             );
           }
 
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );

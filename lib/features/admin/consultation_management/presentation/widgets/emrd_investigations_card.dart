@@ -37,7 +37,7 @@ class EmrdInvestigationsCard extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 6.h),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.science_outlined,
                     size: 14,
                     color: AppColors.orange,
@@ -79,7 +79,7 @@ class EmrdInvestigationsCard extends StatelessWidget {
               if (labPaid)
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.check_circle,
                       color: AppColors.success,
                       size: 16,
@@ -100,7 +100,7 @@ class EmrdInvestigationsCard extends StatelessWidget {
                         isPrescription: false,
                         customTitle: "Lab Invoice",
                       ),
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.download,
                         size: 16,
                         color: AppColors.orange,

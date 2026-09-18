@@ -94,7 +94,7 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
         'user_id': userId,
         ...data,
       }, onConflict: 'user_id');
-      return const Right(null);
+      return Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -110,7 +110,7 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
         'user_id': userId,
         ...data,
       }, onConflict: 'user_id');
-      return const Right(null);
+      return Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -126,7 +126,7 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
         'user_id': userId,
         ...data,
       }, onConflict: 'user_id');
-      return const Right(null);
+      return Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

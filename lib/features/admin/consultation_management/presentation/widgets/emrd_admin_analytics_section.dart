@@ -50,7 +50,7 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.01),
             blurRadius: 8,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -88,8 +88,8 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
               painter: EMRDAnalyticsPainter(
                 values: [45.0, 58.0, 72.0, 68.0, 85.0, 92.0],
                 labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-                primaryColor: const Color(0xFF6366F1),
-                secondaryColor: const Color(0xFF10B981),
+                primaryColor: Color(0xFF6366F1),
+                secondaryColor: Color(0xFF10B981),
                 isDark: isDark,
               ),
             ),
@@ -99,15 +99,9 @@ class EmrdAdminAnalyticsSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildLegendItem(
-                "Digitization Accuracy (%)",
-                const Color(0xFF6366F1),
-              ),
+              _buildLegendItem("Digitization Accuracy (%)", Color(0xFF6366F1)),
               SizedBox(width: 20.w),
-              _buildLegendItem(
-                "Storage Optimization (%)",
-                const Color(0xFF10B981),
-              ),
+              _buildLegendItem("Storage Optimization (%)", Color(0xFF10B981)),
             ],
           ),
         ],

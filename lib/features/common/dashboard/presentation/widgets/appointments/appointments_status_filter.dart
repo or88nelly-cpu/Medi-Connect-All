@@ -23,7 +23,7 @@ class AppointmentsStatusFilter extends StatelessWidget {
 
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Row(
             children: ['All', 'Confirmed', 'Pending', 'Completed', 'Cancelled']
                 .map((status) {
@@ -100,7 +100,7 @@ class AppointmentsStatusFilter extends StatelessWidget {
                   BoxShadow(
                     color: statusColor.withValues(alpha: 0.08),
                     blurRadius: 6,
-                    offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ]
               : null,

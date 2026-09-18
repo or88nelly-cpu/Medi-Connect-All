@@ -27,7 +27,7 @@ class BookingReasonForVisit extends StatelessWidget {
           style: TextStyle(
             fontSize: AppTextStyles.s14,
             fontWeight: FontWeight.w900,
-            color: const Color(0xFF0F172A),
+            color: Color(0xFF0F172A),
           ),
         ),
         SizedBox(height: AppDimensions.spaceS + 2), // 10

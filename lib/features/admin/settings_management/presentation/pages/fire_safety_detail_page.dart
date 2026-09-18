@@ -22,11 +22,11 @@ class _FireSafetyDetailPageState extends State<FireSafetyDetailPage> {
       create: (context) =>
           GetIt.I<FireSafetyBloc>()..add(LoadFireSafetyStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Fire Safety Department"),
+        customAppbar: CommonAppBar(title: "Fire Safety Department"),
         body: BlocBuilder<FireSafetyBloc, FireSafetyState>(
           builder: (context, state) {
             if (state is FireSafetyLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is FireSafetyError) {
               return Center(
                 child: Text(
@@ -53,7 +53,7 @@ class _FireSafetyDetailPageState extends State<FireSafetyDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -114,7 +114,7 @@ class _FireSafetyDetailPageState extends State<FireSafetyDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

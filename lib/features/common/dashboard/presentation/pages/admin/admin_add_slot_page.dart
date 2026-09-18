@@ -116,12 +116,12 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final bgGradient = isDark
-        ? const LinearGradient(
+        ? LinearGradient(
             colors: [Color(0xFF03070E), Color(0xFF091629), Color(0xFF030914)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
-        : const LinearGradient(
+        : LinearGradient(
             colors: [Color(0xFFF4F7FA), Color(0xFFE2EAF4), Color(0xFFF3F7FD)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -136,7 +136,7 @@ class _AdminAddSlotPageState extends State<AdminAddSlotPage> {
               // Header
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                child: const AddSlotHeader(),
+                child: AddSlotHeader(),
               ),
               // Form Content
               Expanded(

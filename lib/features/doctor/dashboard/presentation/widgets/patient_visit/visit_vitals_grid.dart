@@ -49,11 +49,11 @@ class VisitVitalsGrid extends StatelessWidget {
               padding: EdgeInsets.all(6.r),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF6366F1).withValues(alpha: 0.15),
+                color: Color(0xFF6366F1).withValues(alpha: 0.15),
               ),
               child: Icon(
                 Icons.monitor_heart,
-                color: const Color(0xFF6366F1),
+                color: Color(0xFF6366F1),
                 size: 18.r,
               ),
             ),
@@ -97,7 +97,7 @@ class VisitVitalsGrid extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(12.r),
           decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E293B) : Colors.white,
+            color: isDark ? Color(0xFF1E293B) : Colors.white,
             borderRadius: BorderRadius.circular(16.r),
             border: Border.all(color: borderCol),
           ),
@@ -106,7 +106,7 @@ class VisitVitalsGrid extends StatelessWidget {
               GridView.count(
                 crossAxisCount: 3,
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 crossAxisSpacing: 8.w,
                 mainAxisSpacing: 8.h,
                 childAspectRatio: 1.25,
@@ -124,7 +124,7 @@ class VisitVitalsGrid extends StatelessWidget {
                     'Pulse (bpm)',
                     pulseCtrl,
                     Icons.speed,
-                    const Color(0xFF10B981),
+                    Color(0xFF10B981),
                     isDark,
                   ),
                   _buildInputCard(
@@ -148,7 +148,7 @@ class VisitVitalsGrid extends StatelessWidget {
                     'Resp (/min)',
                     respRateCtrl,
                     Icons.air,
-                    const Color(0xFF06B6D4),
+                    Color(0xFF06B6D4),
                     isDark,
                   ),
                   _buildInputCard(
@@ -156,7 +156,7 @@ class VisitVitalsGrid extends StatelessWidget {
                     'Height (cm)',
                     heightCtrl,
                     Icons.straighten,
-                    const Color(0xFF8B5CF6),
+                    Color(0xFF8B5CF6),
                     isDark,
                     onChanged: (_) => onHeightOrWeightChanged?.call(),
                   ),
@@ -173,12 +173,10 @@ class VisitVitalsGrid extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8.r),
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.white10 : const Color(0xFFFEF3C7),
+                      color: isDark ? Colors.white10 : Color(0xFFFEF3C7),
                       borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(
-                        color: isDark
-                            ? Colors.white12
-                            : const Color(0xFFFDE68A),
+                        color: isDark ? Colors.white12 : Color(0xFFFDE68A),
                       ),
                     ),
                     child: Column(
@@ -190,7 +188,7 @@ class VisitVitalsGrid extends StatelessWidget {
                             Icon(
                               Icons.monitor,
                               size: 14.r,
-                              color: const Color(0xFFD97706),
+                              color: Color(0xFFD97706),
                             ),
                             SizedBox(width: 4.w),
                             Text(
@@ -198,7 +196,7 @@ class VisitVitalsGrid extends StatelessWidget {
                               style: TextStyle(
                                 color: isDark
                                     ? Colors.white60
-                                    : const Color(0xFFD97706),
+                                    : Color(0xFFD97706),
                                 fontSize: 8.sp,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -209,9 +207,7 @@ class VisitVitalsGrid extends StatelessWidget {
                         Text(
                           bmi > 0 ? bmi.toStringAsFixed(1) : 'N/A',
                           style: TextStyle(
-                            color: isDark
-                                ? Colors.white
-                                : const Color(0xFFB45309),
+                            color: isDark ? Colors.white : Color(0xFFB45309),
                             fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -310,7 +306,7 @@ class VisitVitalsGrid extends StatelessWidget {
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
               ),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 isDense: true,
                 contentPadding: EdgeInsets.zero,
                 border: InputBorder.none,

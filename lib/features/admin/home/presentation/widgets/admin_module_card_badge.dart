@@ -27,7 +27,7 @@ class AdminModuleCardBadge extends StatelessWidget {
           BoxShadow(
             color: base.withValues(alpha: 0.4),
             blurRadius: 14,
-            offset: const Offset(0, 6),
+            offset: Offset(0, 6),
           ),
         ],
       ),

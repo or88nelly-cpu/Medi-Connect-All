@@ -61,9 +61,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.chevron_left, size: 16.r),
                   onPressed: () {
-                    onDateChanged(
-                      selectedDate.subtract(const Duration(days: 1)),
-                    );
+                    onDateChanged(selectedDate.subtract(Duration(days: 1)));
                   },
                 ),
                 InkWell(
@@ -113,7 +111,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.chevron_right, size: 16.r),
                   onPressed: () {
-                    onDateChanged(selectedDate.add(const Duration(days: 1)));
+                    onDateChanged(selectedDate.add(Duration(days: 1)));
                   },
                 ),
               ],
@@ -125,7 +123,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
         // Overview Cards Row
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Row(
             children: [
               _buildOverviewCard(
@@ -189,7 +187,7 @@ class AppointmentsOverviewSection extends StatelessWidget {
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.02),
                   blurRadius: 8,
-                  offset: const Offset(0, 4),
+                  offset: Offset(0, 4),
                 ),
               ],
       ),

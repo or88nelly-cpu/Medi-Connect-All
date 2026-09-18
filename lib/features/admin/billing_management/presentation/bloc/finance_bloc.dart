@@ -52,7 +52,7 @@ class FinanceBloc extends Bloc<FinanceEvent, FinanceState> {
     Emitter<FinanceState> emit,
   ) async {
     emit(FinanceLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(FinanceError(failure.message)),
       (stats) => emit(FinanceLoaded(stats)),

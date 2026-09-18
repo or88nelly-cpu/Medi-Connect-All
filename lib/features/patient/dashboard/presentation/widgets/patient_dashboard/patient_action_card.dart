@@ -48,7 +48,7 @@ class _PatientActionCardState extends State<PatientActionCard>
 
     // _floatingController = AnimationController(
     //   vsync: this,
-    //   duration: const Duration(seconds: 3),
+    //   duration: Duration(seconds: 3),
     // )..repeat(reverse: true);
   }
 
@@ -62,7 +62,7 @@ class _PatientActionCardState extends State<PatientActionCard>
       onTapCancel: () => setState(() => _pressed = false),
       child: AnimatedScale(
         scale: _pressed ? .98 : 1,
-        duration: const Duration(milliseconds: 120),
+        duration: Duration(milliseconds: 120),
         child: Container(
           height: 200.h,
           padding: EdgeInsets.all(8.r),
@@ -82,7 +82,7 @@ class _PatientActionCardState extends State<PatientActionCard>
                 color: widget.startColor.withValues(alpha: .12),
                 blurRadius: 30,
                 spreadRadius: 1,
-                offset: const Offset(0, 14),
+                offset: Offset(0, 14),
               ),
             ],
           ),
@@ -141,7 +141,7 @@ class _PatientActionCardState extends State<PatientActionCard>
                         ),
                       ),
 
-                      const Spacer(),
+                      Spacer(),
 
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -186,7 +186,7 @@ class _PatientActionCardState extends State<PatientActionCard>
                     style: AppTextStyles.headingSmall.copyWith(
                       fontWeight: FontWeight.w900,
                       fontSize: 12.sp,
-                      color: isDark ? Colors.white : const Color(0xff1C2333),
+                      color: isDark ? Colors.white : Color(0xff1C2333),
                     ),
                   ),
 
@@ -214,7 +214,7 @@ class _PatientActionCardState extends State<PatientActionCard>
                     ),
 
                   // Illustration / Amount Panel
-                  const Spacer(),
+                  Spacer(),
 
                   AnimatedGradientButton(
                     text: widget.buttonText,

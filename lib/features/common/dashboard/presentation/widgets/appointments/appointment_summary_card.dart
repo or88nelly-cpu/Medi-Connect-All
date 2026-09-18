@@ -32,17 +32,17 @@ class AppointmentSummaryCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24.r),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [Color(0xFF17153A), Color(0xFF312E81), Color(0xFF5B21B6)],
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF6D5DFB).withAlpha(80),
+            color: Color(0xFF6D5DFB).withAlpha(80),
             blurRadius: 30,
             spreadRadius: 2,
-            offset: const Offset(0, 15),
+            offset: Offset(0, 15),
           ),
         ],
       ),
@@ -59,7 +59,7 @@ class AppointmentSummaryCard extends StatelessWidget {
                 height: 220.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFFA855F7).withAlpha(51),
+                  color: Color(0xFFA855F7).withAlpha(51),
                 ),
               ),
             ),
@@ -176,7 +176,7 @@ class AppointmentSummaryCard extends StatelessWidget {
                           Text(
                             "View Calendar",
                             style: AppTextStyles.bodySmall.copyWith(
-                              color: const Color(0xFF312E81),
+                              color: Color(0xFF312E81),
                               fontWeight: FontWeight.bold,
                               fontSize: 11.sp,
                             ),

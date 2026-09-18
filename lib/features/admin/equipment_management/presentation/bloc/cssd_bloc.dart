@@ -52,7 +52,7 @@ class CssdBloc extends Bloc<CssdEvent, CssdState> {
     Emitter<CssdState> emit,
   ) async {
     emit(CssdLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(CssdError(failure.message)),
       (stats) => emit(CssdLoaded(stats)),

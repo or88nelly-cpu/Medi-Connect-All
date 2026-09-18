@@ -52,7 +52,7 @@ class NursingBloc extends Bloc<NursingEvent, NursingState> {
     Emitter<NursingState> emit,
   ) async {
     emit(NursingLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(NursingError(failure.message)),
       (stats) => emit(NursingLoaded(stats)),

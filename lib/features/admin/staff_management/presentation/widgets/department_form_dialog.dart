@@ -210,7 +210,7 @@ class _DepartmentFormContentState extends State<_DepartmentFormContent> {
               ValueListenableBuilder<String>(
                 valueListenable: _imagePreviewNotifier,
                 builder: (context, url, _) {
-                  if (url.isEmpty) return const SizedBox.shrink();
+                  if (url.isEmpty) return SizedBox.shrink();
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(10.r),
                     child: CustomImageView(

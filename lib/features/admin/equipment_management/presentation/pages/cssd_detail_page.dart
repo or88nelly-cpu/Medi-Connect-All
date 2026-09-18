@@ -21,11 +21,11 @@ class _CssdDetailPageState extends State<CssdDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<CssdBloc>()..add(LoadCssdStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "CSSD Department"),
+        customAppbar: CommonAppBar(title: "CSSD Department"),
         body: BlocBuilder<CssdBloc, CssdState>(
           builder: (context, state) {
             if (state is CssdLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is CssdError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _CssdDetailPageState extends State<CssdDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _CssdDetailPageState extends State<CssdDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

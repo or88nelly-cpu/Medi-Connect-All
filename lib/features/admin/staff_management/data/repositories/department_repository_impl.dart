@@ -67,7 +67,7 @@ class DepartmentRepositoryImpl implements DepartmentRepository {
   Future<Either<Failure, Unit>> deleteDepartment(String id) async {
     try {
       await _dataSource.deleteDepartment(id);
-      return const Right(unit);
+      return Right(unit);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

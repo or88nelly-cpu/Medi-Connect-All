@@ -78,9 +78,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       if (isDuplicate) {
         emit(
           DepartmentError(
-            const ValidationFailure(
-              'A department with this name already exists.',
-            ),
+            ValidationFailure('A department with this name already exists.'),
           ),
         );
         emit(DepartmentsLoaded(existing, existingSection)); // restore
@@ -130,9 +128,7 @@ class DepartmentBloc extends Bloc<DepartmentEvent, DepartmentState> {
       if (isDuplicate) {
         emit(
           DepartmentError(
-            const ValidationFailure(
-              'A department with this name already exists.',
-            ),
+            ValidationFailure('A department with this name already exists.'),
           ),
         );
         emit(DepartmentsLoaded(existing, existingSection));

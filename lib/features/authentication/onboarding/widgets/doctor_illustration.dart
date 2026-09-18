@@ -23,20 +23,20 @@ class _OnboardingDoctorIllustrationState
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3000),
+      duration: Duration(milliseconds: 3000),
     )..repeat();
 
     _floatAnim = Tween<double>(begin: -10.0, end: 10.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 1.0, curve: Curves.easeInOutSine),
+        curve: Interval(0.0, 1.0, curve: Curves.easeInOutSine),
       ),
     );
 
     _pulseAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 1.0, curve: Curves.linear),
+        curve: Interval(0.0, 1.0, curve: Curves.linear),
       ),
     );
   }
@@ -93,7 +93,7 @@ class _OnboardingDoctorIllustrationState
                   BoxShadow(
                     color: AppColors.primary.withValues(alpha: 0.15),
                     blurRadius: 24.r,
-                    offset: const Offset(0, 10),
+                    offset: Offset(0, 10),
                   ),
                 ],
               ),

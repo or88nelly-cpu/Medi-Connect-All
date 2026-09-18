@@ -111,7 +111,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, void>> forgotPassword({required String email}) async {
     try {
       await _remoteDataSource.forgotPassword(email: email);
-      return const Right(null);
+      return Right(null);
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message, code: e.code));
     } on ServerException catch (e) {
@@ -127,7 +127,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       await _remoteDataSource.resetPassword(newPassword: newPassword);
-      return const Right(null);
+      return Right(null);
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message, code: e.code));
     } on ServerException catch (e) {
@@ -143,7 +143,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await _remoteDataSource.logout();
       await _secureStorage.delete('profile_completion_status');
       await _secureStorage.delete('user_role');
-      return const Right(null);
+      return Right(null);
     } on AuthException catch (e) {
       return Left(AuthFailure(e.message, code: e.code));
     } on ServerException catch (e) {

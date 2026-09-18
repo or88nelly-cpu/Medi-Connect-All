@@ -52,7 +52,7 @@ class GeneralStoreBloc extends Bloc<GeneralStoreEvent, GeneralStoreState> {
     Emitter<GeneralStoreState> emit,
   ) async {
     emit(GeneralStoreLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(GeneralStoreError(failure.message)),
       (stats) => emit(GeneralStoreLoaded(stats)),

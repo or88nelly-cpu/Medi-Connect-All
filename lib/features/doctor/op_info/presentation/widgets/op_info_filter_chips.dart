@@ -34,7 +34,7 @@ class OpInfoFilterChips extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 0),
-      physics: const BouncingScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       child: Row(
         children: filters.map((item) {
           final (label, count, color) = item;

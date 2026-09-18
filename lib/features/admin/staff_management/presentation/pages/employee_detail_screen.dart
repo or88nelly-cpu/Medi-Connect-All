@@ -35,11 +35,11 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Staff Member Details"),
+      customAppbar: CommonAppBar(title: "Staff Member Details"),
       body: BlocBuilder<UserDetailsBloc, UserDetailsState>(
         builder: (context, state) {
           if (state is UserDetailsLoading || state is UserDetailsInitial) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           if (state is UserDetailsError) {
@@ -147,7 +147,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
             );
           }
 
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );

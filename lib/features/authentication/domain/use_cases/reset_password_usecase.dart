@@ -12,7 +12,7 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 class ResetPasswordUseCase extends UseCase<void, String> {
   final AuthRepository _repository;
 
-  const ResetPasswordUseCase(this._repository);
+  ResetPasswordUseCase(this._repository);
 
   @override
   Future<Either<Failure, void>> call(String params) {

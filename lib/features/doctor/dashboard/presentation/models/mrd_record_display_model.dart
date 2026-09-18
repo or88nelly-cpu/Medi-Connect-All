@@ -10,7 +10,7 @@ class MrdRecordDisplayModel {
   final String pendingSince;
   final String priority;
 
-  const MrdRecordDisplayModel({
+  MrdRecordDisplayModel({
     required this.record,
     required this.patientName,
     required this.patientAge,

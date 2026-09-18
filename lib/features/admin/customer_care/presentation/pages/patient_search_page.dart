@@ -245,7 +245,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                 BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(
                   builder: (context, state) {
                     if (state is AdminAppointmentsLoading) {
-                      return const Center(
+                      return Center(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 20.0),
                           child: CircularProgressIndicator(),
@@ -520,7 +520,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
   ) {
     try {
       final Map<String, dynamic> custom = jsonDecode(jsonStr);
-      if (custom.isEmpty) return const SizedBox();
+      if (custom.isEmpty) return SizedBox();
       return Wrap(
         spacing: 8.w,
         runSpacing: 8.h,
@@ -559,7 +559,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
         }).toList(),
       );
     } catch (_) {
-      return const SizedBox();
+      return SizedBox();
     }
   }
 
@@ -646,7 +646,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                     BoxShadow(
                       color: AppColors.shadow(context),
                       blurRadius: 8,
-                      offset: const Offset(0, 2),
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
@@ -707,7 +707,7 @@ class _PatientSearchPageState extends State<PatientSearchPage> {
                 child: BlocBuilder<PatientBloc, PatientState>(
                   builder: (context, state) {
                     if (state is PatientLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(child: CircularProgressIndicator());
                     } else if (state is PatientError) {
                       return Center(
                         child: Text(

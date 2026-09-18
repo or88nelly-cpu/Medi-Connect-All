@@ -23,12 +23,12 @@ class ScheduleHeaderBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gradient = isDark
-        ? const LinearGradient(
+        ? LinearGradient(
             colors: [Color(0xFF1E1B4B), Color(0xFF311042)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
-        : const LinearGradient(
+        : LinearGradient(
             colors: [Color(0xFF0F6FFF), Color(0xFF8B5CF6)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -42,9 +42,9 @@ class ScheduleHeaderBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F6FFF).withValues(alpha: 0.15),
+            color: Color(0xFF0F6FFF).withValues(alpha: 0.15),
             blurRadius: 12,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -131,7 +131,7 @@ class ScheduleHeaderBanner extends StatelessWidget {
                 child: _buildSubStatCard(
                   "Completed",
                   completedCount,
-                  const Color(0xFF10B981),
+                  Color(0xFF10B981),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -167,7 +167,7 @@ class ScheduleHeaderBanner extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 4.w),
-                const Icon(Icons.arrow_forward, color: Colors.white, size: 14),
+                Icon(Icons.arrow_forward, color: Colors.white, size: 14),
               ],
             ),
           ),

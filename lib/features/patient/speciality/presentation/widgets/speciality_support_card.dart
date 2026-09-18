@@ -24,7 +24,7 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: Duration(seconds: 3),
     )..repeat(reverse: true);
   }
 
@@ -52,7 +52,7 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
         onTapCancel: () => setState(() => _pressed = false),
         child: AnimatedScale(
           scale: _pressed ? .98 : 1,
-          duration: const Duration(milliseconds: 120),
+          duration: Duration(milliseconds: 120),
           child: Container(
             padding: EdgeInsets.all(20.r),
             decoration: BoxDecoration(
@@ -61,14 +61,14 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: isDark
-                    ? const [Color(0xff162033), Color(0xff0F172A)]
-                    : const [Color(0xffEEF6FF), Color(0xffD8ECFF)],
+                    ? [Color(0xff162033), Color(0xff0F172A)]
+                    : [Color(0xffEEF6FF), Color(0xffD8ECFF)],
               ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: .08),
                   blurRadius: 25,
-                  offset: const Offset(0, 10),
+                  offset: Offset(0, 10),
                 ),
               ],
             ),
@@ -99,9 +99,7 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                         style: AppTextStyles.titleLarge.copyWith(
                           fontWeight: FontWeight.w900,
                           fontSize: 18.sp,
-                          color: isDark
-                              ? Colors.white
-                              : const Color(0xff0F172A),
+                          color: isDark ? Colors.white : Color(0xff0F172A),
                         ),
                       ),
 
@@ -135,11 +133,7 @@ class _SpecialitySupportCardState extends State<SpecialitySupportCard>
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(
-                                Icons.call,
-                                color: Colors.white,
-                                size: 18,
-                              ),
+                              Icon(Icons.call, color: Colors.white, size: 18),
                               SizedBox(width: 8.w),
                               Text(
                                 "Contact Support",

@@ -363,7 +363,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
       _loadDataForDate(prevDate);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text("No previous appointments found for this patient."),
         ),
       );
@@ -392,7 +392,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
       _loadDataForDate(nextDate);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text("No future appointments found for this patient."),
         ),
       );
@@ -416,15 +416,13 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
         title: Text('Add $title Point'),
         content: TextField(
           controller: ctrl,
-          decoration: const InputDecoration(
-            hintText: 'Enter clinical point...',
-          ),
+          decoration: InputDecoration(hintText: 'Enter clinical point...'),
           autofocus: true,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -435,7 +433,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
               }
               Navigator.pop(context);
             },
-            child: const Text('Add'),
+            child: Text('Add'),
           ),
         ],
       ),
@@ -446,9 +444,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
     final medName = _medicineSearchCtrl.text.trim();
     if (medName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please select or search a medicine name'),
-        ),
+        SnackBar(content: Text('Please select or search a medicine name')),
       );
       return;
     }
@@ -481,7 +477,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Draft saved successfully!'),
           backgroundColor: AppColors.success,
         ),
@@ -590,7 +586,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
       context.read<DoctorAppointmentsBloc>().add(LoadDoctorAppointments());
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text('Consultation completed and EMR record created!'),
           backgroundColor: AppColors.success,
         ),
@@ -616,8 +612,8 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryTextColor = isDark ? Colors.white : AppColors.textDarkNavy;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final pageBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
+    final pageBg = isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC);
     final borderCol = AppColors.border(context);
 
     final calculatedBmi = _calculateBMI();
@@ -667,13 +663,13 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                           onPressed: _isSaving ? null : _saveDraft,
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.primary,
-                            side: const BorderSide(color: AppColors.primary),
+                            side: BorderSide(color: AppColors.primary),
                             padding: EdgeInsets.symmetric(vertical: 14.h),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Save Draft',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
@@ -683,16 +679,13 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: _isSaving ? null : _saveAndClose,
-                          icon: const Icon(
-                            Icons.check_circle_outline,
-                            size: 18,
-                          ),
-                          label: const Text(
+                          icon: Icon(Icons.check_circle_outline, size: 18),
+                          label: Text(
                             'Save & Close Visit',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0F6FFF),
+                            backgroundColor: Color(0xFF0F6FFF),
                             foregroundColor: Colors.white,
                             padding: EdgeInsets.symmetric(vertical: 14.h),
                             shape: RoundedRectangleBorder(
@@ -707,9 +700,9 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                 )
               : null,
           body: _isLoadingData
-              ? const Center(child: CircularProgressIndicator())
+              ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.w,
                     vertical: 12.h,
@@ -756,7 +749,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         description:
                             'Past illness, surgeries, medications, etc.',
                         icon: Icons.history,
-                        iconColor: const Color(0xFF8B5CF6),
+                        iconColor: Color(0xFF8B5CF6),
                         onAddPressed: () =>
                             _addPointDialog(_historyPoints, 'History'),
                         onRemovePressed: (idx) =>
@@ -771,7 +764,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                         title: "Doctor's Notes",
                         description: 'Clinical notes and examination findings',
                         icon: Icons.assignment_outlined,
-                        iconColor: const Color(0xFF10B981),
+                        iconColor: Color(0xFF10B981),
                         onAddPressed: () =>
                             _addPointDialog(_doctorsNotes, "Doctor's Notes"),
                         onRemovePressed: (idx) =>
@@ -820,7 +813,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
                       SizedBox(height: 20.h),
 
                       // 8. Bottom Fast Action Grid
-                      const VisitFastActionGrid(),
+                      VisitFastActionGrid(),
                       SizedBox(height: 24.h),
                     ],
                   ),
@@ -829,7 +822,7 @@ class _PatientVisitDetailPageState extends State<PatientVisitDetailPage> {
         if (_isSaving)
           Container(
             color: Colors.black45,
-            child: const Center(
+            child: Center(
               child: CircularProgressIndicator(color: AppColors.primary),
             ),
           ),

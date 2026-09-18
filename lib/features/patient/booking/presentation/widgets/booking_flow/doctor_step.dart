@@ -6,7 +6,6 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 import 'package:medi_connect/features/authentication/data/models/user_model.dart';
 import 'package:medi_connect/core/constants/app_enum.dart';
 import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_bloc.dart';
-import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_event.dart';
 import 'package:medi_connect/features/admin/staff_management/presentation/bloc/doctor_staff_state.dart';
 import 'package:medi_connect/features/patient/booking/presentation/pages/booking_flow_page.dart';
 
@@ -75,7 +74,7 @@ class DoctorStep extends StatelessWidget {
                   : kFallbackDoctors;
 
               if (state is DoctorStaffLoading && docs.isEmpty) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               }
 
               return ListView.separated(
@@ -93,7 +92,7 @@ class DoctorStep extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => onSelect(doc),
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 200),
                       padding: EdgeInsets.all(AppDimensions.paddingM + 2),
                       decoration: BoxDecoration(
                         color: isSelected
@@ -120,7 +119,7 @@ class DoctorStep extends StatelessWidget {
                               ),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.person_rounded,
                               color: Colors.white,
                               size: 24,
@@ -175,7 +174,7 @@ class DoctorStep extends StatelessWidget {
                             ),
                           ),
                           AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
+                            duration: Duration(milliseconds: 200),
                             width: 24,
                             height: 24,
                             decoration: BoxDecoration(
@@ -189,7 +188,7 @@ class DoctorStep extends StatelessWidget {
                               ),
                             ),
                             child: isSelected
-                                ? const Icon(
+                                ? Icon(
                                     Icons.check_rounded,
                                     color: Colors.white,
                                     size: 14,

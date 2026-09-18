@@ -13,7 +13,7 @@ class RetryWidget extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -22,7 +22,7 @@ class RetryWidget extends StatelessWidget {
               size: 64,
               color: Theme.of(context).colorScheme.error,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               message,
               textAlign: TextAlign.center,
@@ -30,7 +30,7 @@ class RetryWidget extends StatelessWidget {
                 color: isDark ? Colors.white70 : Colors.black54,
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             CommonButton(
               text: AppStrings.retry,
               onPressed: onRetry,

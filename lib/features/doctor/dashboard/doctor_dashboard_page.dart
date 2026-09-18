@@ -45,7 +45,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (ctx) => const CreateAppointmentWizardBottomSheet(),
+      builder: (ctx) => CreateAppointmentWizardBottomSheet(),
     );
   }
 
@@ -103,7 +103,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                             );
                             context.read<PatientBloc>().add(LoadPatients());
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 content: Text("Refreshing dashboard..."),
                               ),
                             );
@@ -124,7 +124,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                               ),
                               onPressed: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content: Text("No new notifications"),
                                   ),
                                 );
@@ -134,8 +134,8 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                               top: 8.h,
                               right: 8.w,
                               child: Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: const BoxDecoration(
+                                padding: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
                                   color: Color(0xFFE11D48),
                                   shape: BoxShape.circle,
                                 ),
@@ -220,10 +220,10 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                       ],
                     )
                   : null,
-              drawer: const DoctorDrawer(),
+              drawer: DoctorDrawer(),
               body: IndexedStack(
                 index: currentIndex,
-                children: const [
+                children: [
                   DoctorHomeTab(),
                   DoctorScheduleTab(),
                   DoctorPatientsTab(),
@@ -243,7 +243,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                       child: Container(
                         width: 56.r,
                         height: 56.r,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
                             colors: [Color(0xFF0F6FFF), Color(0xFF8B5CF6)],
@@ -251,11 +251,7 @@ class _DoctorDashboardPageState extends State<DoctorDashboardPage> {
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 28,
-                        ),
+                        child: Icon(Icons.add, color: Colors.white, size: 28),
                       ),
                     )
                   : null,

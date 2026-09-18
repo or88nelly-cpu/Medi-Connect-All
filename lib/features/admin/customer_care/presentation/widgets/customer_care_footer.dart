@@ -25,7 +25,7 @@ class CustomerCareFooter extends StatelessWidget {
         value: stats['walk_in_patients']?.toString() ?? "632",
         trend: stats['walk_in_patients_trend']?.toString() ?? "↑ 12.6%",
         icon: Icons.directions_walk_rounded,
-        iconBg: const Color(0xFF0F6FFF),
+        iconBg: Color(0xFF0F6FFF),
         isTrendPositive: true,
       ),
       _FooterItem(
@@ -33,7 +33,7 @@ class CustomerCareFooter extends StatelessWidget {
         value: stats['follow_up_visits']?.toString() ?? "413",
         trend: stats['follow_up_visits_trend']?.toString() ?? "↑ 8.4%",
         icon: Icons.sync_rounded,
-        iconBg: const Color(0xFF00C2A8),
+        iconBg: Color(0xFF00C2A8),
         isTrendPositive: true,
       ),
       _FooterItem(
@@ -42,7 +42,7 @@ class CustomerCareFooter extends StatelessWidget {
             "${stats['avg_waiting_time']?.toString() ?? '18'} ${AppStrings.minsSuffix}",
         trend: stats['avg_waiting_time_trend']?.toString() ?? "↓ 3 mins",
         icon: Icons.access_time_rounded,
-        iconBg: const Color(0xFF7B61FF),
+        iconBg: Color(0xFF7B61FF),
         isTrendPositive:
             true, // wait, down average waiting time is good, so green text
       ),
@@ -51,7 +51,7 @@ class CustomerCareFooter extends StatelessWidget {
         value: stats['enquiries_handled']?.toString() ?? "286",
         trend: stats['enquiries_handled_trend']?.toString() ?? "↑ 9.7%",
         icon: Icons.headset_mic_rounded,
-        iconBg: const Color(0xFFEC4899),
+        iconBg: Color(0xFFEC4899),
         isTrendPositive: true,
       ),
     ];
@@ -60,7 +60,7 @@ class CustomerCareFooter extends StatelessWidget {
       // Mobile & small tablet: 2x2 grid
       return GridView.builder(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: width < 450 ? 1 : 2,
           crossAxisSpacing: 12.w,
@@ -93,7 +93,7 @@ class CustomerCareFooter extends StatelessWidget {
                   ? Colors.black.withValues(alpha: 0.15)
                   : Colors.black.withValues(alpha: 0.02),
               blurRadius: 16,
-              offset: const Offset(0, 8),
+              offset: Offset(0, 8),
             ),
           ],
         ),
@@ -165,7 +165,7 @@ class CustomerCareFooter extends StatelessWidget {
                   ? Colors.black.withValues(alpha: 0.1)
                   : Colors.black.withValues(alpha: 0.01),
               blurRadius: 10,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),

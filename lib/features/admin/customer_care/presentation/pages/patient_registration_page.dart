@@ -125,9 +125,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryTextColor = isDark ? Colors.white : AppColors.textDarkNavy;
-    final secondaryTextColor = isDark
-        ? const Color(0xFF5E98C7)
-        : const Color(0xFF3F6D94);
+    final secondaryTextColor = isDark ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
 
     return BlocProvider.value(
       value: _bloc,
@@ -702,7 +700,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
               onPressed: state.status == PatientRegistrationStatus.loading
                   ? null
                   : () {
-                      _bloc.add(const SubmitFormEvent());
+                      _bloc.add(SubmitFormEvent());
                     },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
@@ -715,7 +713,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                   ? SizedBox(
                       width: 20.r,
                       height: 20.r,
-                      child: const CircularProgressIndicator(
+                      child: CircularProgressIndicator(
                         strokeWidth: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
@@ -771,10 +769,8 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
 
   Widget _buildBackPreviewDirectCard(PatientRegistrationState state) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark
-        ? const Color(0xFF16253B)
-        : const Color(0xFFD3E0EE);
+    final cardBg = isDark ? Color(0xFF09121F) : Colors.white;
+    final borderColor = isDark ? Color(0xFF16253B) : Color(0xFFD3E0EE);
 
     final displayEmergency = state.emergencyName.trim().isEmpty
         ? "Sita Kumar"
@@ -786,10 +782,8 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
         ? "#45, MG Road, Bengaluru, Karnataka - 560001"
         : state.pincodeFetchedAddress.trim();
 
-    final textTitleColor = isDark
-        ? const Color(0xFF5E98C7)
-        : const Color(0xFF3F6D94);
-    final textValueColor = isDark ? Colors.white : const Color(0xFF0C192E);
+    final textTitleColor = isDark ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
+    final textValueColor = isDark ? Colors.white : Color(0xFF0C192E);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -825,8 +819,8 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
               borderRadius: BorderRadius.circular(16.r),
               gradient: LinearGradient(
                 colors: isDark
-                    ? [const Color(0xFF0F1E36), const Color(0xFF070F1C)]
-                    : [const Color(0xFFE2EAF8), const Color(0xFFC7D7F3)],
+                    ? [Color(0xFF0F1E36), Color(0xFF070F1C)]
+                    : [Color(0xFFE2EAF8), Color(0xFFC7D7F3)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -834,7 +828,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                 BoxShadow(
                   color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
                   blurRadius: 10.r,
-                  offset: const Offset(0, 4),
+                  offset: Offset(0, 4),
                 ),
               ],
             ),
@@ -966,9 +960,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
                     child: Text(
                       "In case of emergency, please contact your nearest hospital.",
                       style: AppTextStyles.bodyXSmall.copyWith(
-                        color: isDark
-                            ? const Color(0xFF94A3B8)
-                            : const Color(0xFF4A5568),
+                        color: isDark ? Color(0xFF94A3B8) : Color(0xFF4A5568),
                         fontSize: 8.sp,
                         fontStyle: FontStyle.italic,
                       ),
@@ -990,7 +982,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF09121F)
+            ? Color(0xFF09121F)
             : Colors.white,
         title: Text(
           "Upload / Scan Photo",
@@ -1006,10 +998,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
         actions: [
           TextButton.icon(
             onPressed: () => Navigator.pop(ctx, ImageSource.camera),
-            icon: const Icon(
-              Icons.camera_alt_outlined,
-              color: AppColors.primary,
-            ),
+            icon: Icon(Icons.camera_alt_outlined, color: AppColors.primary),
             label: Text(
               "Use Camera",
               style: TextStyle(color: AppColors.primary),
@@ -1018,11 +1007,8 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
           ElevatedButton.icon(
             onPressed: () => Navigator.pop(ctx, ImageSource.gallery),
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            icon: const Icon(Icons.photo_library_outlined, color: Colors.white),
-            label: const Text(
-              "Open Gallery",
-              style: TextStyle(color: Colors.white),
-            ),
+            icon: Icon(Icons.photo_library_outlined, color: Colors.white),
+            label: Text("Open Gallery", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -1070,11 +1056,11 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF09121F)
+            ? Color(0xFF09121F)
             : Colors.white,
         title: Row(
           children: [
-            const Icon(Icons.check_circle, color: AppColors.success),
+            Icon(Icons.check_circle, color: AppColors.success),
             SizedBox(width: 10.w),
             Text("Registration Saved", style: AppTextStyles.titleMedium),
           ],
@@ -1090,7 +1076,7 @@ class _PatientRegistrationPageState extends State<PatientRegistrationPage> {
               context.pop(); // pop registration page back to Customer Care
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: const Text("OK", style: TextStyle(color: Colors.white)),
+            child: Text("OK", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

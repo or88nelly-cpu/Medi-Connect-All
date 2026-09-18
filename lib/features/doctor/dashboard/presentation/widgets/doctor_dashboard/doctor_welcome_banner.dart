@@ -30,7 +30,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.all(20.r),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               colors: AppColors.doctorGradient,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -38,9 +38,9 @@ class DoctorWelcomeBanner extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00C2A8).withValues(alpha: 0.25),
+                color: Color(0xFF00C2A8).withValues(alpha: 0.25),
                 blurRadius: 10,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),
@@ -71,11 +71,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                     SizedBox(height: 8.h),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.favorite,
-                          color: Colors.white,
-                          size: 14,
-                        ),
+                        Icon(Icons.favorite, color: Colors.white, size: 14),
                         SizedBox(width: 6.w),
                         Text(
                           specialty,
@@ -100,7 +96,7 @@ class DoctorWelcomeBanner extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.08),
                       blurRadius: 8,
-                      offset: const Offset(0, 3),
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),

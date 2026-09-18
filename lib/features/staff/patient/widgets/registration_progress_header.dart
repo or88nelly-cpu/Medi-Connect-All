@@ -26,10 +26,10 @@ class RegistrationProgressHeader extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
+        color: isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
-          color: isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0),
+          color: isDark ? Color(0xFF1E293B) : Color(0xFFE2E8F0),
           width: 1.w,
         ),
       ),
@@ -103,7 +103,7 @@ class RegistrationProgressHeader extends StatelessWidget {
             ? AppColors.primary
             : isActive
             ? AppColors.primary
-            : const Color(0xFFE2E8F0),
+            : Color(0xFFE2E8F0),
         shape: BoxShape.circle,
         border: Border.all(
           color: isActive ? Colors.transparent : Colors.grey.shade300,
@@ -129,7 +129,7 @@ class RegistrationProgressHeader extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 2.h,
-        color: isCompleted ? AppColors.primary : const Color(0xFFE2E8F0),
+        color: isCompleted ? AppColors.primary : Color(0xFFE2E8F0),
       ),
     );
   }
@@ -152,7 +152,7 @@ class RegistrationProgressHeader extends StatelessWidget {
           borderRadius: 16.r,
           errorWidget: _buildFallbackIconIllustration(
             Icons.person_outline,
-            const Color(0xFFE0E7FF),
+            Color(0xFFE0E7FF),
             AppColors.primary,
           ),
         ),
@@ -161,14 +161,14 @@ class RegistrationProgressHeader extends StatelessWidget {
       // Step 2: Clipboard checklist
       return _buildFallbackIconIllustration(
         Icons.assignment_outlined,
-        isDark ? const Color(0xFF1E293B) : const Color(0xFFECFDF5),
+        isDark ? Color(0xFF1E293B) : Color(0xFFECFDF5),
         AppColors.success,
       );
     } else {
       // Step 3: Review / ID Card
       return _buildFallbackIconIllustration(
         Icons.badge_outlined,
-        isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF),
+        isDark ? Color(0xFF1E293B) : Color(0xFFEFF6FF),
         AppColors.info,
       );
     }

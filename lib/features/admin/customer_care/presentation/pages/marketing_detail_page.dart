@@ -21,11 +21,11 @@ class _MarketingDetailPageState extends State<MarketingDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<MarketingBloc>()..add(LoadMarketingStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Marketing Department"),
+        customAppbar: CommonAppBar(title: "Marketing Department"),
         body: BlocBuilder<MarketingBloc, MarketingState>(
           builder: (context, state) {
             if (state is MarketingLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is MarketingError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _MarketingDetailPageState extends State<MarketingDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _MarketingDetailPageState extends State<MarketingDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

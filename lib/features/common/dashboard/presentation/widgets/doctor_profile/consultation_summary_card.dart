@@ -138,7 +138,7 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
             Icons.people_outline,
             "Total Consultations",
             "$totalVal",
-            const Color(0xFF9C27B0),
+            Color(0xFF9C27B0),
             labelColor,
             textColor,
           ),
@@ -147,7 +147,7 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
             Icons.check_circle_outline,
             "Completed",
             "$completedVal",
-            const Color(0xFF0F9F58),
+            Color(0xFF0F9F58),
             labelColor,
             textColor,
           ),
@@ -165,7 +165,7 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
             Icons.phone_outlined,
             "Audio Consultations",
             "$audioVal",
-            const Color(0xFF00C2A8),
+            Color(0xFF00C2A8),
             labelColor,
             textColor,
           ),
@@ -175,7 +175,7 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text("Loading consultation detailed report..."),
                   ),
                 );
@@ -218,7 +218,7 @@ class _ConsultationSummaryCardState extends State<ConsultationSummaryCard> {
           label,
           style: TextStyle(color: labelColor, fontSize: 11.sp),
         ),
-        const Spacer(),
+        Spacer(),
         Text(
           value,
           style: TextStyle(

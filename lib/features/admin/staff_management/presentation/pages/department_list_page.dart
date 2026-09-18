@@ -26,7 +26,7 @@ class DepartmentListPage extends StatelessWidget {
       listener: (context, state) {
         if (state is DepartmentActionSuccess) {
           // Refresh list with updated data after any action.
-          context.read<DepartmentBloc>().add(const LoadDepartments());
+          context.read<DepartmentBloc>().add(LoadDepartments());
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -68,7 +68,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
   @override
   void initState() {
     super.initState();
-    context.read<DepartmentBloc>().add(const LoadDepartments());
+    context.read<DepartmentBloc>().add(LoadDepartments());
   }
 
   @override
@@ -106,7 +106,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
                       : AppColors.terminalLightText,
                 ),
                 onPressed: () =>
-                    context.read<DepartmentBloc>().add(const LoadDepartments()),
+                    context.read<DepartmentBloc>().add(LoadDepartments()),
               );
             },
           ),
@@ -116,7 +116,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
           ? FloatingActionButton.extended(
               onPressed: () => DepartmentFormDialog.show(context),
               backgroundColor: AppColors.primary,
-              icon: const Icon(Icons.add, color: Colors.white),
+              icon: Icon(Icons.add, color: Colors.white),
               label: Text(
                 AppStrings.addDepartment,
                 style: AppTextStyles.bodySmall.copyWith(
@@ -130,7 +130,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
         child: BlocBuilder<DepartmentBloc, DepartmentState>(
           builder: (context, state) {
             if (state is DepartmentLoading || state is DepartmentInitial) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             }
 
             List<DepartmentEntity> departments = [];
@@ -156,7 +156,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
                   else
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: MediaQuery.of(context).size.width > 600
                             ? 4
@@ -222,7 +222,7 @@ class _DepartmentListContentState extends State<_DepartmentListContent> {
             },
             child: Text(
               AppStrings.deleteDepartment,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.error,
                 fontWeight: FontWeight.bold,
               ),

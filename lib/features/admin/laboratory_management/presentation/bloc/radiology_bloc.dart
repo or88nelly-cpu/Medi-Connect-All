@@ -52,7 +52,7 @@ class RadiologyBloc extends Bloc<RadiologyEvent, RadiologyState> {
     Emitter<RadiologyState> emit,
   ) async {
     emit(RadiologyLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(RadiologyError(failure.message)),
       (stats) => emit(RadiologyLoaded(stats)),

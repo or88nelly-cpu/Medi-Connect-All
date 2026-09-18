@@ -27,13 +27,9 @@ class AddressInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark
-        ? const Color(0xFF16253B)
-        : const Color(0xFFD3E0EE);
-    final labelColor = isDark
-        ? const Color(0xFF5E98C7)
-        : const Color(0xFF3F6D94);
+    final cardBg = isDark ? Color(0xFF09121F) : Colors.white;
+    final borderColor = isDark ? Color(0xFF16253B) : Color(0xFFD3E0EE);
+    final labelColor = isDark ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
 
     final addressCardBg = isDark
         ? AppColors.primary.withValues(alpha: 0.08)
@@ -41,9 +37,7 @@ class AddressInfoSection extends StatelessWidget {
     final addressBorderColor = isDark
         ? AppColors.primary.withValues(alpha: 0.3)
         : AppColors.primary.withValues(alpha: 0.15);
-    final addressTextColor = isDark
-        ? const Color(0xFF90B9FF)
-        : const Color(0xFF0D54B7);
+    final addressTextColor = isDark ? Color(0xFF90B9FF) : Color(0xFF0D54B7);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -119,7 +113,7 @@ class AddressInfoSection extends StatelessWidget {
                       ? SizedBox(
                           width: 20.r,
                           height: 20.r,
-                          child: const CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             strokeWidth: 2,
                             valueColor: AlwaysStoppedAnimation<Color>(
                               Colors.white,

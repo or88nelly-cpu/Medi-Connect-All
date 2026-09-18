@@ -111,7 +111,7 @@ class PatientProfileTab extends StatelessWidget {
                               val ? ThemeMode.dark : ThemeMode.light,
                             );
                           },
-                          secondary: const Icon(
+                          secondary: Icon(
                             Icons.dark_mode_outlined,
                             color: AppColors.primary,
                           ),
@@ -126,8 +126,8 @@ class PatientProfileTab extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () => _showLogoutDialog(context),
-                  icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text(
+                  icon: Icon(Icons.logout, color: Colors.white),
+                  label: Text(
                     "Sign Out",
                     style: TextStyle(color: Colors.white),
                   ),

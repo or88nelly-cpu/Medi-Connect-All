@@ -101,7 +101,7 @@ class DepartmentHorizontalList extends StatelessWidget {
                 )
               : GridView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   itemCount: departments.length.clamp(0, 12),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

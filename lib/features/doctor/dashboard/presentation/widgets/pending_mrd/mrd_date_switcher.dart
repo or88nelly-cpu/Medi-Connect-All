@@ -20,12 +20,12 @@ class MrdDateSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bannerBg = isDark
-        ? const LinearGradient(
+        ? LinearGradient(
             colors: [Color(0xFF1E1B4B), Color(0xFF311042)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
-        : const LinearGradient(
+        : LinearGradient(
             colors: [Color(0xFF0F6FFF), Color(0xFF8B5CF6)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -39,9 +39,9 @@ class MrdDateSwitcher extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F6FFF).withValues(alpha: 0.15),
+            color: Color(0xFF0F6FFF).withValues(alpha: 0.15),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -78,7 +78,7 @@ class MrdDateSwitcher extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.chevron_left, color: Colors.white),
+                icon: Icon(Icons.chevron_left, color: Colors.white),
                 onPressed: onPrevPressed,
               ),
               Container(
@@ -89,11 +89,7 @@ class MrdDateSwitcher extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.calendar_month,
-                      color: Colors.white,
-                      size: 16,
-                    ),
+                    Icon(Icons.calendar_month, color: Colors.white, size: 16),
                     SizedBox(width: 6.w),
                     Text(
                       DateFormat('MMM dd, yyyy').format(selectedDate),
@@ -107,7 +103,7 @@ class MrdDateSwitcher extends StatelessWidget {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.chevron_right, color: Colors.white),
+                icon: Icon(Icons.chevron_right, color: Colors.white),
                 onPressed: onNextPressed,
               ),
             ],

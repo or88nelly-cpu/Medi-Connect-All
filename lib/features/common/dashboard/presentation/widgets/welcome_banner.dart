@@ -21,12 +21,8 @@ class WelcomeBanner extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthLoading || state is AuthInitial) {
           final isDark = Theme.of(context).brightness == Brightness.dark;
-          final baseColor = isDark
-              ? const Color(0xFF2C2C2C)
-              : const Color(0xFFE5E7EB);
-          final highlightColor = isDark
-              ? const Color(0xFF3C3C3C)
-              : const Color(0xFFF3F4F6);
+          final baseColor = isDark ? Color(0xFF2C2C2C) : Color(0xFFE5E7EB);
+          final highlightColor = isDark ? Color(0xFF3C3C3C) : Color(0xFFF3F4F6);
 
           return Shimmer.fromColors(
             baseColor: baseColor,
@@ -79,7 +75,7 @@ class WelcomeBanner extends StatelessWidget {
                       Container(
                         width: 64.r,
                         height: 64.r,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle,
                         ),
@@ -128,7 +124,7 @@ class WelcomeBanner extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.all(20.r),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               colors: [AppColors.primary, AppColors.secondary],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -138,7 +134,7 @@ class WelcomeBanner extends StatelessWidget {
               BoxShadow(
                 color: AppColors.primary.withAlpha(38),
                 blurRadius: 10,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),

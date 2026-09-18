@@ -19,7 +19,7 @@ class _SlotTypeCardState extends State<SlotTypeCard> {
     {
       "name": "Regular Slot",
       "subtitle": "Standard consultation",
-      "color": const Color(0xFF0F9F58),
+      "color": Color(0xFF0F9F58),
     },
     {
       "name": "Emergency Slot",
@@ -29,7 +29,7 @@ class _SlotTypeCardState extends State<SlotTypeCard> {
     {
       "name": "Follow-up Slot",
       "subtitle": "Follow-up consultation",
-      "color": const Color(0xFF9C27B0),
+      "color": Color(0xFF9C27B0),
     },
   ];
 
@@ -94,7 +94,7 @@ class _SlotTypeCardState extends State<SlotTypeCard> {
                       }
                     },
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 150),
+                      duration: Duration(milliseconds: 150),
                       margin: EdgeInsets.symmetric(horizontal: 4.w),
                       padding: EdgeInsets.symmetric(
                         horizontal: 10.w,

@@ -29,7 +29,7 @@ class PatientHealthOverview extends StatelessWidget {
             TextButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text('Vitals tracker details coming soon!'),
                   ),
                 );
@@ -67,7 +67,7 @@ class PatientHealthOverview extends StatelessWidget {
                 height: 256.h,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [Color(0xFF86E3CE), Color(0xFF5CA4A9)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -75,9 +75,9 @@ class PatientHealthOverview extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF5CA4A9).withValues(alpha: 0.25),
+                      color: Color(0xFF5CA4A9).withValues(alpha: 0.25),
                       blurRadius: 15.r,
-                      offset: const Offset(0, 6),
+                      offset: Offset(0, 6),
                     ),
                   ],
                 ),
@@ -102,7 +102,7 @@ class PatientHealthOverview extends StatelessWidget {
                         height: 1.3,
                       ),
                     ),
-                    const Spacer(),
+                    Spacer(),
                     Center(
                       child: Container(
                         width: 80.r,
@@ -134,7 +134,7 @@ class PatientHealthOverview extends StatelessWidget {
                   _buildVitalRow(
                     context,
                     icon: Icons.favorite_border_rounded,
-                    iconColor: const Color(0xFFFF296D),
+                    iconColor: Color(0xFFFF296D),
                     title: 'Heart Rate',
                     value: '72 bpm',
                     status: 'Normal',
@@ -144,7 +144,7 @@ class PatientHealthOverview extends StatelessWidget {
                   _buildVitalRow(
                     context,
                     icon: Icons.opacity_rounded,
-                    iconColor: const Color(0xFF1A8CFF),
+                    iconColor: Color(0xFF1A8CFF),
                     title: 'Blood Pressure',
                     value: '120/80 mmHg',
                     status: 'Normal',
@@ -154,7 +154,7 @@ class PatientHealthOverview extends StatelessWidget {
                   _buildVitalRow(
                     context,
                     icon: Icons.water_drop_outlined,
-                    iconColor: const Color(0xFFFF9F1C),
+                    iconColor: Color(0xFFFF9F1C),
                     title: 'Blood Sugar',
                     value: '98 mg/dL',
                     status: 'Normal',
@@ -164,7 +164,7 @@ class PatientHealthOverview extends StatelessWidget {
                   _buildVitalRow(
                     context,
                     icon: Icons.health_and_safety_outlined,
-                    iconColor: const Color(0xFF2EC4B6),
+                    iconColor: Color(0xFF2EC4B6),
                     title: 'Allergies',
                     value: 'No known allergies',
                     status: 'Updated',

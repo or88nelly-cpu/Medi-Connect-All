@@ -13,7 +13,7 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 class GetCurrentUserUseCase extends UseCase<UserEntity?, NoParams> {
   final AuthRepository _repository;
 
-  const GetCurrentUserUseCase(this._repository);
+  GetCurrentUserUseCase(this._repository);
 
   @override
   Future<Either<Failure, UserEntity?>> call(NoParams params) {

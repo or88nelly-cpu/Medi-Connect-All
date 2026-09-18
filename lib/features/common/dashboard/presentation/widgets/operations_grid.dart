@@ -13,11 +13,11 @@ class OperationsGrid extends StatelessWidget {
     return GridView.count(
       crossAxisCount: MediaQuery.of(context).size.width > 600.w ? 4 : 2,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       crossAxisSpacing: 12.w,
       mainAxisSpacing: 12.h,
       childAspectRatio: MediaQuery.of(context).size.width > 600.w ? 1.8 : 1.4,
-      children: const [
+      children: [
         _NavCardMini(
           title: AppStrings.slotConfig,
           subtitle: AppStrings.slotConfigDesc,

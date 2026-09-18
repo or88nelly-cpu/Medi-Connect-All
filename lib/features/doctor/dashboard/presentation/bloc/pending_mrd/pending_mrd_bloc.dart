@@ -294,15 +294,17 @@ class PendingMrdBloc extends Bloc<PendingMrdEvent, PendingMrdState> {
 
       if (priority != 'All Priorities') {
         if (item.priority.toLowerCase() !=
-            priority.replaceAll('Priority', '').trim().toLowerCase())
+            priority.replaceAll('Priority', '').trim().toLowerCase()) {
           return false;
+        }
       }
 
       if (area != 'All Areas') {
         if (!item.ipdLocation.toLowerCase().contains(
           area.toLowerCase().replaceAll('area', '').trim(),
-        ))
+        )) {
           return false;
+        }
       }
 
       return true;

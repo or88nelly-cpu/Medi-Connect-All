@@ -21,7 +21,7 @@ class AdminMasterDataPage extends StatelessWidget {
     ];
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Master Data Management"),
+      customAppbar: CommonAppBar(title: "Master Data Management"),
       body: ListView.builder(
         padding: EdgeInsets.all(20.r),
         itemCount: specializations.length,
@@ -45,10 +45,7 @@ class AdminMasterDataPage extends StatelessWidget {
                   color: AppColors.primary.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: const Icon(
-                  Icons.dataset_outlined,
-                  color: AppColors.primary,
-                ),
+                child: Icon(Icons.dataset_outlined, color: AppColors.primary),
               ),
               title: Text(
                 item['name']!,

@@ -50,7 +50,7 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
               color: textColor,
             ),
           ),
-          const Divider(height: 16),
+          Divider(height: 16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -63,7 +63,7 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
                     Container(
                       width: 44.r,
                       height: 44.r,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.black12,
                         shape: BoxShape.circle,
                       ),
@@ -91,7 +91,7 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
                               ),
                               Icon(
                                 Icons.verified_rounded,
-                                color: const Color(0xFF3B5BFD),
+                                color: Color(0xFF3B5BFD),
                                 size: 10.r,
                               ),
                             ],
@@ -120,13 +120,13 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
                               vertical: 2.h,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFFECEF),
+                              color: Color(0xFFFFECEF),
                               borderRadius: BorderRadius.circular(6.r),
                             ),
                             child: Text(
                               specialityName,
                               style: TextStyle(
-                                color: const Color(0xFFFF296D),
+                                color: Color(0xFFFF296D),
                                 fontSize: 7.sp,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -138,7 +138,7 @@ class SuccessAppointmentSummaryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const VerticalDivider(width: 1),
+              VerticalDivider(width: 1),
 
               // Detail fields block
               Expanded(

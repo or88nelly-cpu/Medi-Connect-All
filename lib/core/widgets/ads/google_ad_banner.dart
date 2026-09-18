@@ -52,10 +52,10 @@ class _GoogleAdBannerState extends State<GoogleAdBanner> {
         alignment: Alignment.center,
         width: _bannerAd!.size.width.toDouble(),
         height: _bannerAd!.size.height.toDouble(),
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        padding: EdgeInsets.symmetric(vertical: 4.0),
         child: AdWidget(ad: _bannerAd!),
       );
     }
-    return const SizedBox.shrink();
+    return SizedBox.shrink();
   }
 }

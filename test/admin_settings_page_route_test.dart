@@ -27,7 +27,7 @@ class FakeAdminSettingsBloc extends Bloc<AdminSettingsEvent, AdminSettingsState>
     implements AdminSettingsBloc {
   FakeAdminSettingsBloc()
     : super(
-        AdminSettingsLoaded(const {
+        AdminSettingsLoaded({
           'push_notifications': true,
           'sms_alerts': false,
           'email_reports': true,
@@ -36,7 +36,7 @@ class FakeAdminSettingsBloc extends Bloc<AdminSettingsEvent, AdminSettingsState>
       ) {
     on<LoadAdminSettings>((event, emit) {
       emit(
-        AdminSettingsLoaded(const {
+        AdminSettingsLoaded({
           'push_notifications': true,
           'sms_alerts': false,
           'email_reports': true,
@@ -82,7 +82,7 @@ void main() {
 
   Widget buildTestableWidget(Widget child) {
     return ScreenUtilInit(
-      designSize: const Size(1200, 1000),
+      designSize: Size(1200, 1000),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, _) => MaterialApp(
@@ -103,13 +103,13 @@ void main() {
   testWidgets(
     'renders AdminSettingsPage in standalone mode with AppBar and Settings content',
     (WidgetTester tester) async {
-      tester.view.physicalSize = const Size(1200, 1000);
+      tester.view.physicalSize = Size(1200, 1000);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
 
       await tester.pumpWidget(
-        buildTestableWidget(const AdminSettingsPage(isStandalone: true)),
+        buildTestableWidget(AdminSettingsPage(isStandalone: true)),
       );
 
       // Initial load
@@ -133,13 +133,13 @@ void main() {
   testWidgets('renders AdminSettingsPage in tab mode without separate AppBar', (
     WidgetTester tester,
   ) async {
-    tester.view.physicalSize = const Size(1200, 1000);
+    tester.view.physicalSize = Size(1200, 1000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await tester.pumpWidget(
-      buildTestableWidget(const AdminSettingsPage(isStandalone: false)),
+      buildTestableWidget(AdminSettingsPage(isStandalone: false)),
     );
 
     await tester.pumpAndSettle();

@@ -28,7 +28,7 @@ class PatientBottomNavBar extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withValues(alpha: isDark ? .30 : .08),
               blurRadius: 25,
-              offset: const Offset(0, 8),
+              offset: Offset(0, 8),
             ),
           ],
         ),
@@ -82,7 +82,7 @@ class PatientBottomNavBar extends StatelessWidget {
       borderRadius: BorderRadius.circular(20.r),
       onTap: () => onTap(index),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 350),
+        duration: Duration(milliseconds: 350),
         curve: Curves.easeOutBack,
         padding: EdgeInsets.symmetric(vertical: 8.h),
         decoration: BoxDecoration(
@@ -95,7 +95,7 @@ class PatientBottomNavBar extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             AnimatedScale(
-              duration: const Duration(milliseconds: 350),
+              duration: Duration(milliseconds: 350),
               curve: Curves.easeOutBack,
               scale: selected ? 1.18 : 1,
               child: Icon(
@@ -108,7 +108,7 @@ class PatientBottomNavBar extends StatelessWidget {
             ),
             SizedBox(height: 4.h),
             AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 250),
+              duration: Duration(milliseconds: 250),
               style: AppTextStyles.bodySmall.copyWith(
                 fontSize: selected ? 10.sp : 9.sp,
                 fontWeight: selected ? FontWeight.bold : FontWeight.normal,
@@ -118,7 +118,7 @@ class PatientBottomNavBar extends StatelessWidget {
             ),
             SizedBox(height: 5.h),
             AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+              duration: Duration(milliseconds: 300),
               curve: Curves.easeOut,
               width: selected ? 20.w : 0,
               height: 4.h,
@@ -140,24 +140,24 @@ class PatientBottomNavBar extends StatelessWidget {
       onTap: () => onTap(3),
       borderRadius: BorderRadius.circular(20.r),
       child: AnimatedScale(
-        duration: const Duration(milliseconds: 350),
+        duration: Duration(milliseconds: 350),
         scale: selected ? 1.08 : 1,
         curve: Curves.easeOutBack,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 350),
+          duration: Duration(milliseconds: 350),
           curve: Curves.easeOut,
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.r),
             gradient: LinearGradient(
               colors: selected
-                  ? const [Color(0xffFFD54F), Color(0xffFFB300)]
+                  ? [Color(0xffFFD54F), Color(0xffFFB300)]
                   : [
-                      const Color(0xffFFD54F).withAlpha(51),
-                      const Color(0xffFFB300).withAlpha(31),
+                      Color(0xffFFD54F).withAlpha(51),
+                      Color(0xffFFB300).withAlpha(31),
                     ],
             ),
-            border: Border.all(color: const Color(0xffF4B400)),
+            border: Border.all(color: Color(0xffF4B400)),
             boxShadow: selected
                 ? [
                     BoxShadow(
@@ -173,13 +173,13 @@ class PatientBottomNavBar extends StatelessWidget {
             children: [
               TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0, end: selected ? 0.15 : 0),
-                duration: const Duration(milliseconds: 400),
+                duration: Duration(milliseconds: 400),
                 builder: (_, value, child) {
                   return Transform.rotate(angle: value, child: child);
                 },
                 child: Icon(
                   Icons.workspace_premium_rounded,
-                  color: selected ? Colors.white : const Color(0xffD89B00),
+                  color: selected ? Colors.white : Color(0xffD89B00),
                   size: 24.r,
                 ),
               ),
@@ -189,7 +189,7 @@ class PatientBottomNavBar extends StatelessWidget {
                 style: AppTextStyles.bodySmall.copyWith(
                   fontSize: 9.sp,
                   fontWeight: FontWeight.bold,
-                  color: selected ? Colors.white : const Color(0xffD89B00),
+                  color: selected ? Colors.white : Color(0xffD89B00),
                 ),
               ),
             ],

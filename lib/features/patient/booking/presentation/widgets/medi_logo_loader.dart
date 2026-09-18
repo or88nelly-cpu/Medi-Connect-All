@@ -22,7 +22,7 @@ class _MediLogoLoaderState extends State<MediLogoLoader>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 1000),
     )..repeat(reverse: true);
 
     _animation = Tween<double>(begin: 0.85, end: 1.15).animate(

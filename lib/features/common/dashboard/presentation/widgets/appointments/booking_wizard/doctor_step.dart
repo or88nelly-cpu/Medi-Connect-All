@@ -45,7 +45,7 @@ class DoctorStep extends StatelessWidget {
           child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
             builder: (context, staffState) {
               if (staffState is DoctorStaffLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               }
               if (staffState is DoctorStaffError) {
                 return Center(
@@ -108,9 +108,7 @@ class DoctorStep extends StatelessWidget {
                         leading: Container(
                           width: 40.r,
                           height: 40.r,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
+                          decoration: BoxDecoration(shape: BoxShape.circle),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.r),
                             child: CustomImageView(
@@ -137,10 +135,7 @@ class DoctorStep extends StatelessWidget {
                           ),
                         ),
                         trailing: isSelected
-                            ? const Icon(
-                                Icons.check_circle,
-                                color: AppColors.primary,
-                              )
+                            ? Icon(Icons.check_circle, color: AppColors.primary)
                             : null,
                         onTap: () {
                           cubit.selectDoctor(doc);
@@ -153,7 +148,7 @@ class DoctorStep extends StatelessWidget {
                   },
                 );
               }
-              return const SizedBox();
+              return SizedBox();
             },
           ),
         ),

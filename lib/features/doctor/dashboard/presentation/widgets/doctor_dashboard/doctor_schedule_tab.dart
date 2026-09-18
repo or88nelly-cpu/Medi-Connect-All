@@ -120,13 +120,13 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
 
     final authState = context.read<AuthBloc>().state;
     final doctor = authState is Authenticated ? authState.user : null;
 
     if (doctor == null) {
-      return const Center(child: Text("Doctor details not found."));
+      return Center(child: Text("Doctor details not found."));
     }
 
     return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
@@ -135,7 +135,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
           final allApts = state.appointments;
 
           // Compute Counts for Yesterday's Schedule banner overview
-          final yesterday = DateTime.now().subtract(const Duration(days: 1));
+          final yesterday = DateTime.now().subtract(Duration(days: 1));
           final yesterdayApts = allApts
               .where((a) => _isSameDay(a.appointmentDate, yesterday))
               .toList();
@@ -169,7 +169,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
           }).toList();
 
           return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,9 +178,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                 Container(
                   padding: EdgeInsets.all(4.r),
                   decoration: BoxDecoration(
-                    color: isDark
-                        ? const Color(0xFF1E293B)
-                        : const Color(0xFFF1F5F9),
+                    color: isDark ? Color(0xFF1E293B) : Color(0xFFF1F5F9),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Row(
@@ -192,9 +190,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             decoration: BoxDecoration(
                               color: _activeSubTab == 0
-                                  ? (isDark
-                                        ? const Color(0xFF0F6FFF)
-                                        : Colors.white)
+                                  ? (isDark ? Color(0xFF0F6FFF) : Colors.white)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(10.r),
                               boxShadow: _activeSubTab == 0
@@ -202,7 +198,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                       BoxShadow(
                                         color: Colors.black12,
                                         blurRadius: 4,
-                                        offset: const Offset(0, 2),
+                                        offset: Offset(0, 2),
                                       ),
                                     ]
                                   : [],
@@ -214,7 +210,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                 color: _activeSubTab == 0
                                     ? (isDark
                                           ? Colors.white
-                                          : const Color(0xFF0F6FFF))
+                                          : Color(0xFF0F6FFF))
                                     : (isDark
                                           ? Colors.white60
                                           : Colors.grey[600]),
@@ -232,9 +228,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                             padding: EdgeInsets.symmetric(vertical: 10.h),
                             decoration: BoxDecoration(
                               color: _activeSubTab == 1
-                                  ? (isDark
-                                        ? const Color(0xFF0F6FFF)
-                                        : Colors.white)
+                                  ? (isDark ? Color(0xFF0F6FFF) : Colors.white)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(10.r),
                               boxShadow: _activeSubTab == 1
@@ -242,7 +236,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                       BoxShadow(
                                         color: Colors.black12,
                                         blurRadius: 4,
-                                        offset: const Offset(0, 2),
+                                        offset: Offset(0, 2),
                                       ),
                                     ]
                                   : [],
@@ -254,7 +248,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                                 color: _activeSubTab == 1
                                     ? (isDark
                                           ? Colors.white
-                                          : const Color(0xFF0F6FFF))
+                                          : Color(0xFF0F6FFF))
                                     : (isDark
                                           ? Colors.white60
                                           : Colors.grey[600]),
@@ -364,13 +358,12 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                         setState(() => _selectedDate = DateTime.now()),
                     onPrevDay: () => setState(
                       () => _selectedDate = _selectedDate.subtract(
-                        const Duration(days: 1),
+                        Duration(days: 1),
                       ),
                     ),
                     onNextDay: () => setState(
-                      () => _selectedDate = _selectedDate.add(
-                        const Duration(days: 1),
-                      ),
+                      () =>
+                          _selectedDate = _selectedDate.add(Duration(days: 1)),
                     ),
                     isDark: isDark,
                   ),
@@ -401,7 +394,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
                         )
                       : ListView.builder(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: filteredApts.length,
                           itemBuilder: (context, idx) {
                             final apt = filteredApts[idx];
@@ -430,7 +423,7 @@ class _DoctorScheduleTabState extends State<DoctorScheduleTab> {
           );
         }
 
-        return const Center(child: CircularProgressIndicator());
+        return Center(child: CircularProgressIndicator());
       },
     );
   }

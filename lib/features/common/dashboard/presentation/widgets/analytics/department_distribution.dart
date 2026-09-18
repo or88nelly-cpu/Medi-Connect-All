@@ -32,7 +32,7 @@ class DepartmentDistribution extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemCount: deptStats.length,
-              physics: const ClampingScrollPhysics(),
+              physics: ClampingScrollPhysics(),
               separatorBuilder: (context, index) => SizedBox(height: 10.h),
               itemBuilder: (context, index) {
                 final item = deptStats[index] as Map<dynamic, dynamic>;

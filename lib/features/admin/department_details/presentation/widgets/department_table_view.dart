@@ -22,7 +22,7 @@ class DepartmentTableView extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (isLoading) {
-      return const Center(
+      return Center(
         child: Padding(
           padding: EdgeInsets.all(40.0),
           child: CircularProgressIndicator(),
@@ -72,7 +72,7 @@ class DepartmentTableView extends StatelessWidget {
         BoxShadow(
           color: Colors.black.withValues(alpha: 0.03),
           blurRadius: 16,
-          offset: const Offset(0, 4),
+          offset: Offset(0, 4),
         ),
       ],
     );

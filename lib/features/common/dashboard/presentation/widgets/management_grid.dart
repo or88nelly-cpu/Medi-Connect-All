@@ -15,11 +15,11 @@ class ManagementGrid extends StatelessWidget {
     return GridView.count(
       crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 1,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       crossAxisSpacing: 12.w,
       mainAxisSpacing: 12.h,
       childAspectRatio: MediaQuery.of(context).size.width > 600 ? 2.5 : 3.5,
-      children: const [
+      children: [
         _NavCard(
           title: AppStrings.doctorsDirectory,
           subtitle: AppStrings.doctorsDirectoryDesc,

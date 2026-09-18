@@ -28,7 +28,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
     super.initState();
     _laserController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: 2),
     )..repeat(reverse: true);
 
     _laserAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -57,7 +57,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
             child: Stack(
               children: [
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.black,
                     backgroundBlendMode: BlendMode.dstOut,
                   ),
@@ -157,10 +157,7 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(
-                          Icons.close_rounded,
-                          color: Colors.white,
-                        ),
+                        icon: Icon(Icons.close_rounded, color: Colors.white),
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
@@ -280,8 +277,8 @@ class _QrScannerOverlayState extends State<QrScannerOverlay>
   }
 
   Widget _buildCorner({required bool isTop, required bool isLeft}) {
-    const double size = 20;
-    const double thickness = 4;
+    double size = 20;
+    double thickness = 4;
     final color = AppColors.success;
 
     return SizedBox(

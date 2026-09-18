@@ -19,7 +19,7 @@ class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: Duration(milliseconds: 1200),
     )..repeat(reverse: true);
 
     _animation = Tween<double>(
@@ -37,16 +37,14 @@ class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = isDark
-        ? const Color(0xFF334155)
-        : const Color(0xFFE2E8F0);
+    final baseColor = isDark ? Color(0xFF334155) : Color(0xFFE2E8F0);
     final cardBg = isDark ? AppColors.terminalDarkCard : Colors.white;
 
     return FadeTransition(
       opacity: _animation,
       child: ListView.builder(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         itemCount: 3,
         itemBuilder: (context, index) {
           return Container(
@@ -104,7 +102,7 @@ class _DoctorShimmerLoaderState extends State<DoctorShimmerLoader>
                               borderRadius: BorderRadius.circular(4.r),
                             ),
                           ),
-                          const Spacer(),
+                          Spacer(),
                           Container(
                             width: 70.w,
                             height: 24.h,

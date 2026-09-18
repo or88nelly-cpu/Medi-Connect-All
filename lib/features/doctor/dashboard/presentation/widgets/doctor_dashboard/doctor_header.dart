@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
+import 'package:medi_connect/core/widgets/language_select.dart';
 import 'package:medi_connect/features/authentication/domain/entities/user_entity.dart';
 
 class DoctorHeader extends StatelessWidget {
@@ -46,8 +47,8 @@ class DoctorHeader extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF0F172A), const Color(0xFF1E293B)]
-              : [const Color(0xFFE0F2FE), const Color(0xFFF8FAFC)],
+              ? [Color(0xFF0F172A), Color(0xFF1E293B)]
+              : [Color(0xFFE0F2FE), Color(0xFFF8FAFC)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -86,6 +87,7 @@ class DoctorHeader extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 4.h),
+                  LanguageSelect(),
                   Row(
                     children: [
                       Text(
@@ -99,7 +101,7 @@ class DoctorHeader extends StatelessWidget {
                       SizedBox(width: 6.w),
                       Icon(
                         Icons.verified_rounded,
-                        color: const Color(0xFF0F6FFF),
+                        color: Color(0xFF0F6FFF),
                         size: 18.r,
                       ),
                     ],

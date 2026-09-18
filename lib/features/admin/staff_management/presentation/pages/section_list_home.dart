@@ -21,7 +21,7 @@ class SectionListHome extends StatelessWidget {
       listener: (context, state) {
         if (state is DepartmentActionSuccess) {
           // Refresh list with updated data after any action.
-          context.read<DepartmentBloc>().add(const LoadDepartments());
+          context.read<DepartmentBloc>().add(LoadDepartments());
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -50,7 +50,7 @@ class SectionListHome extends StatelessWidget {
     return BlocBuilder<DepartmentBloc, DepartmentState>(
       builder: (context, state) {
         if (state is DepartmentLoading || state is DepartmentInitial) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator());
         }
 
         List<DepartmentEntity> departments = [];

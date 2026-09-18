@@ -52,7 +52,7 @@ class MepEngineerBloc extends Bloc<MepEngineerEvent, MepEngineerState> {
     Emitter<MepEngineerState> emit,
   ) async {
     emit(MepEngineerLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(MepEngineerError(failure.message)),
       (stats) => emit(MepEngineerLoaded(stats)),

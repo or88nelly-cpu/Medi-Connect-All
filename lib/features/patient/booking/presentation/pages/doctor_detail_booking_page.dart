@@ -52,9 +52,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
       builder: (context, state) {
         final docInfo = state.selectedDoctor;
         if (docInfo == null) {
-          return const Scaffold(
-            body: Center(child: Text("No doctor selected.")),
-          );
+          return Scaffold(body: Center(child: Text("No doctor selected.")));
         }
 
         final user = docInfo.user;
@@ -99,7 +97,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w900,
-                              color: const Color(0xFF1E3A8A),
+                              color: Color(0xFF1E3A8A),
                             ),
                           ),
                           SizedBox(width: 4.w),
@@ -118,7 +116,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                             state.selectedSlot == null)
                         ? () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 content: Text(
                                   'Please select date and time slot first!',
                                 ),
@@ -147,15 +145,13 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
                         vertical: 14.h,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF3B5BFD),
+                        color: Color(0xFF3B5BFD),
                         borderRadius: BorderRadius.circular(16.r),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(
-                              0xFF3B5BFD,
-                            ).withValues(alpha: 0.25),
+                            color: Color(0xFF3B5BFD).withValues(alpha: 0.25),
                             blurRadius: 10,
-                            offset: const Offset(0, 4),
+                            offset: Offset(0, 4),
                           ),
                         ],
                       ),
@@ -189,7 +185,7 @@ class _DoctorDetailBookingPageState extends State<DoctorDetailBookingPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Stepper Progress Bar
-                const BookingStepper(currentStep: 1),
+                BookingStepper(currentStep: 1),
                 SizedBox(height: 20.h),
 
                 // Doctor Info Card

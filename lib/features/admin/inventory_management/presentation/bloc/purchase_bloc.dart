@@ -52,7 +52,7 @@ class PurchaseBloc extends Bloc<PurchaseEvent, PurchaseState> {
     Emitter<PurchaseState> emit,
   ) async {
     emit(PurchaseLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(PurchaseError(failure.message)),
       (stats) => emit(PurchaseLoaded(stats)),

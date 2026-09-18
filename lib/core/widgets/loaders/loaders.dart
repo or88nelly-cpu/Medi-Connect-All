@@ -47,16 +47,12 @@ class ShimmerLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = isDark
-        ? const Color(0xFF2C2C2C)
-        : const Color(0xFFE5E7EB);
-    final highlightColor = isDark
-        ? const Color(0xFF3C3C3C)
-        : const Color(0xFFF3F4F6);
+    final baseColor = isDark ? Color(0xFF2C2C2C) : Color(0xFFE5E7EB);
+    final highlightColor = isDark ? Color(0xFF3C3C3C) : Color(0xFFF3F4F6);
 
     return ListView.separated(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       itemCount: count,
       separatorBuilder: (context, index) => SizedBox(height: 12.h),
       itemBuilder: (context, index) => Shimmer.fromColors(

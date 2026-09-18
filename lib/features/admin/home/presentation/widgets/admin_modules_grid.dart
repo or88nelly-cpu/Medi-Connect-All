@@ -17,11 +17,12 @@ class AdminModulesGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AdminHomeBloc, AdminHomeState>(
       builder: (context, state) {
-        if (state is AdminHomeLoading) return const _Loader();
-        if (state is AdminHomeError)
+        if (state is AdminHomeLoading) return _Loader();
+        if (state is AdminHomeError) {
           return ErrorStateWidget(message: state.message);
+        }
         if (state is AdminHomeLoaded) return _Grid(state: state);
-        return const SizedBox.shrink();
+        return SizedBox.shrink();
       },
     );
   }
@@ -31,7 +32,7 @@ class _Loader extends StatelessWidget {
   const _Loader();
 
   @override
-  Widget build(BuildContext context) => const Center(
+  Widget build(BuildContext context) => Center(
     child: Padding(
       padding: EdgeInsets.all(40),
       child: CircularProgressIndicator(),
@@ -46,15 +47,16 @@ class _Grid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final modules = state.filteredModules;
-    if (modules.isEmpty)
-      return const NoDataWidget(message: AppStrings.noMatchingModules);
+    if (modules.isEmpty) {
+      return NoDataWidget(message: AppStrings.noMatchingModules);
+    }
 
     return LayoutBuilder(
       builder: (context, box) {
         final cols = _cols(box.maxWidth);
         return GridView.builder(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: modules.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: cols,
@@ -67,8 +69,9 @@ class _Grid extends StatelessWidget {
             module: modules[i],
             entranceDelay: Duration(milliseconds: i * 45),
             onTap: () {
-              if (modules[i].routeName != null)
+              if (modules[i].routeName != null) {
                 context.push(modules[i].routeName!);
+              }
             },
           ),
         );

@@ -9,9 +9,9 @@ class PaymentSecurityInfo extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F6FF),
+        color: Color(0xFFF0F6FF),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: const Color(0xFFBFDBFE)),
+        border: Border.all(color: Color(0xFFBFDBFE)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +21,7 @@ class PaymentSecurityInfo extends StatelessWidget {
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w900,
-              color: const Color(0xFF1E3A8A),
+              color: Color(0xFF1E3A8A),
             ),
           ),
           SizedBox(height: 14.h),
@@ -36,7 +36,7 @@ class PaymentSecurityInfo extends StatelessWidget {
           Center(
             child: Icon(
               Icons.shield_rounded,
-              color: const Color(0xFF3B5BFD).withValues(alpha: 0.15),
+              color: Color(0xFF3B5BFD).withValues(alpha: 0.15),
               size: 100.r,
             ),
           ),
@@ -50,7 +50,7 @@ class PaymentSecurityInfo extends StatelessWidget {
       children: [
         Icon(
           Icons.check_circle_outline_rounded,
-          color: const Color(0xFF10B981),
+          color: Color(0xFF10B981),
           size: 12.r,
         ),
         SizedBox(width: 6.w),

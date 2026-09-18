@@ -69,7 +69,7 @@ class CustomerCareRecentActivity extends StatelessWidget {
                 ? Colors.black.withValues(alpha: 0.15)
                 : Colors.black.withValues(alpha: 0.02),
             blurRadius: 16,
-            offset: const Offset(0, 8),
+            offset: Offset(0, 8),
           ),
         ],
       ),
@@ -101,9 +101,7 @@ class CustomerCareRecentActivity extends StatelessWidget {
                 onTap: () {
                   onViewAll?.call();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Viewing all recent activities'),
-                    ),
+                    SnackBar(content: Text('Viewing all recent activities')),
                   );
                 },
                 child: Row(
@@ -134,7 +132,7 @@ class CustomerCareRecentActivity extends StatelessWidget {
           SizedBox(height: 18.h),
           ListView.builder(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             itemCount: rawActivities.length,
             itemBuilder: (context, index) {
               final activity = rawActivities[index];
@@ -171,19 +169,19 @@ class CustomerCareRecentActivity extends StatelessWidget {
 
     if (type == 'registration' || type == 'qr') {
       icon = Icons.person_add_alt_1_rounded;
-      color = const Color(0xFF0F6FFF);
+      color = Color(0xFF0F6FFF);
     } else if (type == 'appointment') {
       icon = Icons.edit_calendar_rounded;
-      color = const Color(0xFF7B61FF);
+      color = Color(0xFF7B61FF);
     } else if (type == 'feedback') {
       icon = Icons.star_rounded;
-      color = const Color(0xFFFF8A26);
+      color = Color(0xFFFF8A26);
     } else if (type == 'admission') {
       icon = Icons.hotel_rounded;
       color = AppColors.success;
     } else if (type == 'system') {
       icon = Icons.settings_rounded;
-      color = const Color(0xFFEC4899);
+      color = Color(0xFFEC4899);
     }
 
     return IntrinsicHeight(

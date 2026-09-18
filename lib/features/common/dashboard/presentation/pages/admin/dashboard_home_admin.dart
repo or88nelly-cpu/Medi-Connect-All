@@ -20,12 +20,12 @@ class DashboardHomeAdmin extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const AnalyticsSection(),
+          AnalyticsSection(),
           SectionListHome(),
           SizedBox(height: 8.r),
           DepartmentListHome(),
           SizedBox(height: 8.r),
-          const SpecialityListHome(),
+          SpecialityListHome(),
           SizedBox(height: 8.r),
           // Text(
           //   AppStrings.managementConsole,
@@ -34,7 +34,7 @@ class DashboardHomeAdmin extends StatelessWidget {
           //   ),
           // ),
           // SizedBox(height: 16.h),
-          // const ManagementGrid(),
+          // ManagementGrid(),
           // SizedBox(height: 24.h),
           Text(
             AppStrings.systemOperations,
@@ -46,7 +46,7 @@ class DashboardHomeAdmin extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16.h),
-          const OperationsGrid(),
+          OperationsGrid(),
         ],
       ),
     );

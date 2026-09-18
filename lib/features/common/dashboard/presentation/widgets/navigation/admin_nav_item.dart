@@ -34,7 +34,7 @@ class AdminNavItem extends StatelessWidget {
       onTap: () => onTap(index),
       borderRadius: BorderRadius.circular(16.r),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
         decoration: BoxDecoration(
           color: isSelected
@@ -46,7 +46,7 @@ class AdminNavItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
+              duration: Duration(milliseconds: 200),
               child: Icon(
                 isSelected ? solidIcon : outlineIcon,
                 key: ValueKey(isSelected),

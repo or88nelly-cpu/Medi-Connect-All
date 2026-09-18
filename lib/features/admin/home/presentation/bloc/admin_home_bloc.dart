@@ -10,7 +10,7 @@ class AdminHomeBloc extends Bloc<AdminHomeEvent, AdminHomeState> {
   final GetAdminDashboardModulesUseCase getAdminDashboardModulesUseCase;
 
   AdminHomeBloc({required this.getAdminDashboardModulesUseCase})
-    : super(const AdminHomeInitial()) {
+    : super(AdminHomeInitial()) {
     on<LoadAdminDashboardModules>(_onLoadModules);
     on<FilterAdminDashboardModules>(_onFilterModules);
   }
@@ -20,7 +20,7 @@ class AdminHomeBloc extends Bloc<AdminHomeEvent, AdminHomeState> {
     Emitter<AdminHomeState> emit,
   ) async {
     AppLogger.bloc('AdminHomeBloc: Loading dashboard modules...');
-    emit(const AdminHomeLoading());
+    emit(AdminHomeLoading());
 
     final result = await getAdminDashboardModulesUseCase();
 

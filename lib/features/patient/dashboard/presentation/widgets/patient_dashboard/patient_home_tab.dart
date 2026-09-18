@@ -13,7 +13,7 @@ import 'package:medi_connect/features/patient/dashboard/presentation/widgets/pat
 class PatientHomeTab extends StatelessWidget {
   const PatientHomeTab({super.key});
 
-  static const _sections = [
+  static final _sections = [
     PatientActionBanners(),
     PatientBannerCarousel(),
     PatientSpecialitiesSection(),
@@ -29,7 +29,7 @@ class PatientHomeTab extends StatelessWidget {
         context.read<AuthBloc>().add(AuthCheckRequested());
       },
       child: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 16.h),

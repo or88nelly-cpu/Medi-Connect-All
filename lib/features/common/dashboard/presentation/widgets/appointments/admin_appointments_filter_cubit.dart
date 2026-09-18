@@ -6,7 +6,7 @@ class AdminAppointmentsFilterState {
   final String filterStatus;
   final DateTime selectedDate;
 
-  const AdminAppointmentsFilterState({
+  AdminAppointmentsFilterState({
     required this.searchQuery,
     required this.filterStatus,
     required this.selectedDate,

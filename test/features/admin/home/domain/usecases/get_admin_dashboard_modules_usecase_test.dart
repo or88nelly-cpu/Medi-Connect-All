@@ -14,7 +14,7 @@ class MockAdminHomeRepository implements AdminHomeRepository {
     if (shouldReturnError) {
       return Left(ServerFailure('Server Exception'));
     }
-    return const Right([
+    return Right([
       AdminDashboardModuleEntity(
         id: 'departments',
         title: 'Departments',

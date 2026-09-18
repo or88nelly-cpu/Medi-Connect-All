@@ -48,7 +48,7 @@ class PlaceholderFeaturePage extends StatelessWidget {
               // Animated icon container
               TweenAnimationBuilder<double>(
                 tween: Tween(begin: 0.0, end: 1.0),
-                duration: const Duration(milliseconds: 600),
+                duration: Duration(milliseconds: 600),
                 curve: Curves.elasticOut,
                 builder: (context, value, child) =>
                     Transform.scale(scale: value, child: child),
@@ -66,7 +66,7 @@ class PlaceholderFeaturePage extends StatelessWidget {
                       BoxShadow(
                         color: gradientColors.first.withValues(alpha: 0.3),
                         blurRadius: 20,
-                        offset: const Offset(0, 8),
+                        offset: Offset(0, 8),
                       ),
                     ],
                   ),

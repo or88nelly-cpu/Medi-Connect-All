@@ -24,11 +24,11 @@ class _OperationTheatreDetailPageState
       create: (context) =>
           GetIt.I<OperationTheatreBloc>()..add(LoadOperationTheatreStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Operation Theatre Department"),
+        customAppbar: CommonAppBar(title: "Operation Theatre Department"),
         body: BlocBuilder<OperationTheatreBloc, OperationTheatreState>(
           builder: (context, state) {
             if (state is OperationTheatreLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is OperationTheatreError) {
               return Center(
                 child: Text(
@@ -55,7 +55,7 @@ class _OperationTheatreDetailPageState
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -116,7 +116,7 @@ class _OperationTheatreDetailPageState
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

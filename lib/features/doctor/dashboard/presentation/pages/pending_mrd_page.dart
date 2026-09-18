@@ -40,8 +40,8 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final pageBg = isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC);
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final pageBg = isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC);
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
     final primaryTextColor = isDark ? Colors.white : AppColors.textDarkNavy;
     final borderCol = AppColors.border(context);
 
@@ -65,7 +65,7 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
       body: BlocBuilder<PendingMrdBloc, PendingMrdState>(
         builder: (context, state) {
           if (state is PendingMrdLoading) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(color: AppColors.primary),
             );
           }
@@ -88,7 +88,7 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
                         );
                       }
                     },
-                    child: const Text('Retry'),
+                    child: Text('Retry'),
                   ),
                 ],
               ),
@@ -97,7 +97,7 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
 
           if (state is PendingMrdLoaded) {
             return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,12 +105,10 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
                   // 1. Premium Date Switcher Banner
                   MrdDateSwitcher(
                     selectedDate: state.selectedDate,
-                    onPrevPressed: () => context.read<PendingMrdBloc>().add(
-                      const ChangeDateEvent(-1),
-                    ),
-                    onNextPressed: () => context.read<PendingMrdBloc>().add(
-                      const ChangeDateEvent(1),
-                    ),
+                    onPrevPressed: () =>
+                        context.read<PendingMrdBloc>().add(ChangeDateEvent(-1)),
+                    onNextPressed: () =>
+                        context.read<PendingMrdBloc>().add(ChangeDateEvent(1)),
                     isDark: isDark,
                   ),
                   SizedBox(height: 20.h),
@@ -121,9 +119,7 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
 
                   // 3. Stats Summary Grid Section
                   state.counts.isEmpty
-                      ? const CircularProgressIndicator(
-                          color: AppColors.primary,
-                        )
+                      ? CircularProgressIndicator(color: AppColors.primary)
                       : MrdStatsGrid(counts: state.counts, isDark: isDark),
                   SizedBox(height: 20.h),
 
@@ -184,7 +180,7 @@ class _PendingMrdPageState extends State<PendingMrdPage> {
             );
           }
 
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );

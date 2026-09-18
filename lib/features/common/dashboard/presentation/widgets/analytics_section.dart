@@ -25,7 +25,7 @@ class AnalyticsSection extends StatelessWidget {
     return BlocBuilder<DashboardAnalyticsBloc, DashboardAnalyticsState>(
       builder: (context, state) {
         if (state is DashboardAnalyticsLoading) {
-          return const ShimmerLoader(count: 2);
+          return ShimmerLoader(count: 2);
         } else if (state is DashboardAnalyticsError) {
           return Center(
             child: Text(
@@ -144,7 +144,7 @@ class AnalyticsSection extends StatelessWidget {
             ],
           );
         }
-        return const SizedBox.shrink();
+        return SizedBox.shrink();
       },
     );
   }
@@ -152,9 +152,7 @@ class AnalyticsSection extends StatelessWidget {
   void _handleQuickAction(BuildContext context, String action) {
     if (action == 'more') {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Additional action features coming soon."),
-        ),
+        SnackBar(content: Text("Additional action features coming soon.")),
       );
       return;
     }
@@ -171,7 +169,7 @@ class AnalyticsSection extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
+            child: Text("Cancel"),
           ),
           ElevatedButton(
             onPressed: () {
@@ -182,7 +180,7 @@ class AnalyticsSection extends StatelessWidget {
                 ),
               );
             },
-            child: const Text("Confirm"),
+            child: Text("Confirm"),
           ),
         ],
       ),

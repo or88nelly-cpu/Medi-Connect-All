@@ -249,7 +249,7 @@ class AdminDrawer extends StatelessWidget {
                       borderRadius: 30.r,
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   IconButton(
                     icon: Icon(Icons.edit_outlined, color: iconColor),
                     onPressed: () {

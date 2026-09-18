@@ -25,7 +25,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
     return BlocBuilder<AdminBillingBloc, AdminBillingState>(
       builder: (context, state) {
         if (state is AdminBillingLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator());
         }
 
         if (state is AdminBillingError) {
@@ -33,16 +33,13 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  state.message,
-                  style: const TextStyle(color: AppColors.error),
-                ),
+                Text(state.message, style: TextStyle(color: AppColors.error)),
                 SizedBox(height: 12.h),
                 ElevatedButton(
                   onPressed: () => context.read<AdminBillingBloc>().add(
                     LoadBillingDetails(),
                   ),
-                  child: const Text("Retry"),
+                  child: Text("Retry"),
                 ),
               ],
             ),
@@ -90,11 +87,11 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                 ),
                 SizedBox(height: 12.h),
                 if (invoices.isEmpty)
-                  const Text("No recent invoices found.")
+                  Text("No recent invoices found.")
                 else
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: invoices.length,
                     itemBuilder: (context, idx) {
                       final inv = invoices[idx];
@@ -212,7 +209,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
           );
         }
 
-        return const SizedBox.shrink();
+        return SizedBox.shrink();
       },
     );
   }
@@ -372,7 +369,7 @@ class _AdminBillingPageState extends State<AdminBillingPage> {
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Done",
                       style: TextStyle(
                         color: Colors.white,

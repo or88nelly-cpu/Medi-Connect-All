@@ -6,7 +6,7 @@ class ServerException implements Exception {
   final String message;
   final String? code;
 
-  const ServerException(this.message, {this.code});
+  ServerException(this.message, {this.code});
 
   @override
   String toString() => "ServerException(message: $message, code: $code)";
@@ -15,7 +15,7 @@ class ServerException implements Exception {
 class CacheException implements Exception {
   final String message;
 
-  const CacheException(this.message);
+  CacheException(this.message);
 
   @override
   String toString() => "CacheException(message: $message)";
@@ -24,7 +24,7 @@ class CacheException implements Exception {
 class NetworkException implements Exception {
   final String message;
 
-  const NetworkException([this.message = "No Network Connection"]);
+  NetworkException([this.message = "No Network Connection"]);
 
   @override
   String toString() => "NetworkException(message: $message)";
@@ -34,7 +34,7 @@ class AuthException implements Exception {
   final String message;
   final String? code;
 
-  const AuthException(this.message, {this.code});
+  AuthException(this.message, {this.code});
 
   @override
   String toString() => "AuthException(message: $message, code: $code)";
@@ -43,7 +43,7 @@ class AuthException implements Exception {
 class ValidationException implements Exception {
   final String message;
 
-  const ValidationException(this.message);
+  ValidationException(this.message);
 
   @override
   String toString() => "ValidationException(message: $message)";
@@ -53,7 +53,7 @@ class ApiException implements Exception {
   final String message;
   final String? code;
 
-  const ApiException(this.message, {this.code});
+  ApiException(this.message, {this.code});
 
   @override
   String toString() => "ApiException(message: $message, code: $code)";
@@ -62,7 +62,7 @@ class ApiException implements Exception {
 class UnknownException implements Exception {
   final String message;
 
-  const UnknownException([this.message = "An unknown exception occurred."]);
+  UnknownException([this.message = "An unknown exception occurred."]);
 
   @override
   String toString() => "UnknownException(message: $message)";

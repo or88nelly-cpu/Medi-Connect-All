@@ -55,7 +55,7 @@ class DepartmentListHome extends StatelessWidget {
                         ? Colors.black.withValues(alpha: 0.2)
                         : Colors.black.withValues(alpha: 0.02),
                     blurRadius: 20,
-                    offset: const Offset(0, 10),
+                    offset: Offset(0, 10),
                   ),
                 ],
               ),
@@ -100,7 +100,7 @@ class DepartmentListHome extends StatelessWidget {
                   SizedBox(height: 20.r),
                   GridView.builder(
                     shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: isLoading ? 24 : loadedList.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
@@ -116,7 +116,7 @@ class DepartmentListHome extends StatelessWidget {
                     ),
                     itemBuilder: (_, index) {
                       if (isLoading) {
-                        return const DepartmentCardShimmer();
+                        return DepartmentCardShimmer();
                       }
 
                       return AdminDepartmentCard(department: loadedList[index]);

@@ -29,11 +29,11 @@ class EmrdDetailPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetIt.I<EmrdBloc>()..add(LoadEmrdStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "EMRD Operations"),
+        customAppbar: CommonAppBar(title: "EMRD Operations"),
         body: BlocBuilder<EmrdBloc, EmrdState>(
           builder: (context, state) {
             if (state is EmrdLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is EmrdError) {
               return Center(
                 child: Text(
@@ -64,7 +64,7 @@ class EmrdDetailPage extends StatelessWidget {
                   }
 
                   return SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -101,7 +101,7 @@ class EmrdDetailPage extends StatelessWidget {
                               // 3. 4x4 OPERATIONS GRID
                               GridView.count(
                                 shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
+                                physics: NeverScrollableScrollPhysics(),
                                 crossAxisCount: crossAxisCount,
                                 mainAxisSpacing: 14.h,
                                 crossAxisSpacing: 14.w,
@@ -114,7 +114,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ).format(stats['total_patients'] ?? 245680),
                                     subtitle: "Total Patients",
                                     icon: Icons.badge_outlined,
-                                    accentColor: const Color(0xFF0284C7),
+                                    accentColor: Color(0xFF0284C7),
                                     isDark: isDark,
                                     onTap: () {
                                       final emrdBloc = context.read<EmrdBloc>();
@@ -123,8 +123,7 @@ class EmrdDetailPage extends StatelessWidget {
                                           builder: (context) =>
                                               BlocProvider.value(
                                                 value: emrdBloc,
-                                                child:
-                                                    const PatientRegistryPage(),
+                                                child: PatientRegistryPage(),
                                               ),
                                         ),
                                       );
@@ -143,11 +142,12 @@ class EmrdDetailPage extends StatelessWidget {
                                       final emrdBloc = context.read<EmrdBloc>();
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => BlocProvider.value(
-                                            value: emrdBloc,
-                                            child:
-                                                const MedicalRecordManagementPage(),
-                                          ),
+                                          builder: (context) =>
+                                              BlocProvider.value(
+                                                value: emrdBloc,
+                                                child:
+                                                    MedicalRecordManagementPage(),
+                                              ),
                                         ),
                                       );
                                     },
@@ -159,13 +159,13 @@ class EmrdDetailPage extends StatelessWidget {
                                     ),
                                     subtitle: "Pending / Today",
                                     icon: Icons.pending_actions_outlined,
-                                    accentColor: const Color(0xFF6366F1),
+                                    accentColor: Color(0xFF6366F1),
                                     isDark: isDark,
                                     onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const EmrdConsultationsPage(
+                                              EmrdConsultationsPage(
                                                 initialTab: 0,
                                               ),
                                         ),
@@ -180,13 +180,13 @@ class EmrdDetailPage extends StatelessWidget {
                                     ),
                                     subtitle: "Completed Today",
                                     icon: Icons.check_circle_outline,
-                                    accentColor: const Color(0xFF10B981),
+                                    accentColor: Color(0xFF10B981),
                                     isDark: isDark,
                                     onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const EmrdConsultationsPage(
+                                              EmrdConsultationsPage(
                                                 initialTab: 1,
                                               ),
                                         ),
@@ -206,7 +206,7 @@ class EmrdDetailPage extends StatelessWidget {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const EmrdConsultationsPage(
+                                              EmrdConsultationsPage(
                                                 initialTab: 0,
                                               ),
                                         ),
@@ -220,7 +220,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ),
                                     subtitle: "Total Documents",
                                     icon: Icons.description_outlined,
-                                    accentColor: const Color(0xFF8B5CF6),
+                                    accentColor: Color(0xFF8B5CF6),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -240,7 +240,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ).format(stats['coded_records'] ?? 18540),
                                     subtitle: "Coded Records",
                                     icon: Icons.bar_chart_outlined,
-                                    accentColor: const Color(0xFF0D9488),
+                                    accentColor: Color(0xFF0D9488),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -250,7 +250,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ),
                                     subtitle: "Pending Summaries",
                                     icon: Icons.assignment_turned_in_outlined,
-                                    accentColor: const Color(0xFFEC4899),
+                                    accentColor: Color(0xFFEC4899),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -260,7 +260,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ),
                                     subtitle: "Total Registrations",
                                     icon: Icons.child_care_outlined,
-                                    accentColor: const Color(0xFFF97316),
+                                    accentColor: Color(0xFFF97316),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -280,7 +280,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ),
                                     subtitle: "Archived Records",
                                     icon: Icons.archive_outlined,
-                                    accentColor: const Color(0xFF6366F1),
+                                    accentColor: Color(0xFF6366F1),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -290,7 +290,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ).format(stats['generated_reports'] ?? 320),
                                     subtitle: "Generated Reports",
                                     icon: Icons.pie_chart_outline,
-                                    accentColor: const Color(0xFF475569),
+                                    accentColor: Color(0xFF475569),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -299,7 +299,7 @@ class EmrdDetailPage extends StatelessWidget {
                                         "${stats['compliance_score'] ?? 92}%",
                                     subtitle: "Compliance Score",
                                     icon: Icons.verified_user_outlined,
-                                    accentColor: const Color(0xFF10B981),
+                                    accentColor: Color(0xFF10B981),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -309,7 +309,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ).format(stats['active_users'] ?? 486),
                                     subtitle: "Active Users",
                                     icon: Icons.lock_open_outlined,
-                                    accentColor: const Color(0xFFD97706),
+                                    accentColor: Color(0xFFD97706),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -319,7 +319,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ).format(stats['active_alerts'] ?? 58),
                                     subtitle: "Active Alerts",
                                     icon: Icons.notifications_active_outlined,
-                                    accentColor: const Color(0xFFDC2626),
+                                    accentColor: Color(0xFFDC2626),
                                     isDark: isDark,
                                     badgeCount: stats['active_alerts'],
                                   ),
@@ -330,7 +330,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ).format(stats['audit_records'] ?? 125),
                                     subtitle: "Audit Records",
                                     icon: Icons.gavel_outlined,
-                                    accentColor: const Color(0xFF78350F),
+                                    accentColor: Color(0xFF78350F),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -340,7 +340,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ),
                                     subtitle: "Insurance Records",
                                     icon: Icons.health_and_safety_outlined,
-                                    accentColor: const Color(0xFF06B6D4),
+                                    accentColor: Color(0xFF06B6D4),
                                     isDark: isDark,
                                   ),
                                   EmrdOperationCard(
@@ -350,7 +350,7 @@ class EmrdDetailPage extends StatelessWidget {
                                     ).format(stats['active_insights'] ?? 15),
                                     subtitle: "Active Insights",
                                     icon: Icons.psychology_outlined,
-                                    accentColor: const Color(0xFF7C3AED),
+                                    accentColor: Color(0xFF7C3AED),
                                     isDark: isDark,
                                   ),
                                 ],
@@ -381,7 +381,7 @@ class EmrdDetailPage extends StatelessWidget {
                 },
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

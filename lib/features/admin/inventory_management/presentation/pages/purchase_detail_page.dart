@@ -21,11 +21,11 @@ class _PurchaseDetailPageState extends State<PurchaseDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<PurchaseBloc>()..add(LoadPurchaseStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Purchase Department"),
+        customAppbar: CommonAppBar(title: "Purchase Department"),
         body: BlocBuilder<PurchaseBloc, PurchaseState>(
           builder: (context, state) {
             if (state is PurchaseLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is PurchaseError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _PurchaseDetailPageState extends State<PurchaseDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _PurchaseDetailPageState extends State<PurchaseDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

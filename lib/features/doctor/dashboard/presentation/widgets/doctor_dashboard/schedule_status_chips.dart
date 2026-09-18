@@ -13,7 +13,7 @@ class ScheduleStatusChips extends StatelessWidget {
   });
 
   Color _getChipBgColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.1);
+    if (status == 'All') return Color(0xFF0F6FFF).withValues(alpha: 0.1);
     switch (status) {
       case 'Confirmed':
         return isDark
@@ -21,8 +21,8 @@ class ScheduleStatusChips extends StatelessWidget {
             : AppColors.statusConfirmedBgLight;
       case 'Pending MRD':
         return isDark
-            ? const Color(0xFF3B0764).withValues(alpha: 0.3)
-            : const Color(0xFFF3E8FF);
+            ? Color(0xFF3B0764).withValues(alpha: 0.3)
+            : Color(0xFFF3E8FF);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingBgDark.withValues(alpha: 0.3)
@@ -40,7 +40,7 @@ class ScheduleStatusChips extends StatelessWidget {
   }
 
   Color _getChipBorderColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.3);
+    if (status == 'All') return Color(0xFF0F6FFF).withValues(alpha: 0.3);
     switch (status) {
       case 'Confirmed':
         return AppColors.success.withValues(alpha: 0.3);
@@ -57,14 +57,14 @@ class ScheduleStatusChips extends StatelessWidget {
   }
 
   Color _getChipTextColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF);
+    if (status == 'All') return Color(0xFF0F6FFF);
     switch (status) {
       case 'Confirmed':
         return isDark
             ? AppColors.statusConfirmedTextDark
             : AppColors.statusConfirmedTextLight;
       case 'Pending MRD':
-        return isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
+        return isDark ? Color(0xFFC084FC) : Color(0xFF7E22CE);
       case 'Pending':
         return isDark
             ? AppColors.statusPendingTextDark
@@ -87,7 +87,7 @@ class ScheduleStatusChips extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       child: Row(
         children: ['All', 'Confirmed', 'Pending', 'Completed', 'Cancelled'].map(
           (status) {
@@ -106,7 +106,7 @@ class ScheduleStatusChips extends StatelessWidget {
                   ),
                 ),
                 selected: isSelected,
-                selectedColor: const Color(0xFF0F6FFF),
+                selectedColor: Color(0xFF0F6FFF),
                 backgroundColor: _getChipBgColor(status, isDark),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.r),

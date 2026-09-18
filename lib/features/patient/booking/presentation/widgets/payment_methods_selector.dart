@@ -86,9 +86,7 @@ class PaymentMethodsSelector extends StatelessWidget {
           color: cardBg,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            color: isSelected
-                ? const Color(0xFF3B5BFD)
-                : AppColors.border(context),
+            color: isSelected ? Color(0xFF3B5BFD) : AppColors.border(context),
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -96,7 +94,7 @@ class PaymentMethodsSelector extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: isSelected ? const Color(0xFF3B5BFD) : Colors.grey,
+              color: isSelected ? Color(0xFF3B5BFD) : Colors.grey,
               size: 22.r,
             ),
             SizedBox(width: 12.w),
@@ -109,9 +107,7 @@ class PaymentMethodsSelector extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11.5.sp,
                       fontWeight: FontWeight.w900,
-                      color: isSelected
-                          ? const Color(0xFF3B5BFD)
-                          : Colors.black87,
+                      color: isSelected ? Color(0xFF3B5BFD) : Colors.black87,
                     ),
                   ),
                   Text(
@@ -131,9 +127,7 @@ class PaymentMethodsSelector extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected
-                      ? const Color(0xFF3B5BFD)
-                      : Colors.grey.shade400,
+                  color: isSelected ? Color(0xFF3B5BFD) : Colors.grey.shade400,
                   width: isSelected ? 4 : 1.5,
                 ),
               ),

@@ -57,7 +57,7 @@ class DigitalIdCard extends StatelessWidget {
         : address.trim();
 
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
+      duration: Duration(milliseconds: 300),
       child: isFront
           ? _buildFrontSide(
               context,
@@ -83,13 +83,13 @@ class DigitalIdCard extends StatelessWidget {
     String placeVal,
     bool isDark,
   ) {
-    final cardBg = isDark ? const Color(0xFF131B2A) : Colors.white;
+    final cardBg = isDark ? Color(0xFF131B2A) : Colors.white;
     final textThemeColor = isDark
         ? Colors.white
         : AppColors.textPrimary(context);
 
     return Container(
-      key: const ValueKey('digital_card_front'),
+      key: ValueKey('digital_card_front'),
       width: 320.w,
       decoration: BoxDecoration(
         color: cardBg,
@@ -98,11 +98,11 @@ class DigitalIdCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.08),
             blurRadius: 20.r,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
         border: Border.all(
-          color: isDark ? const Color(0xFF1E2D4A) : AppColors.border(context),
+          color: isDark ? Color(0xFF1E2D4A) : AppColors.border(context),
           width: 1.5.w,
         ),
       ),
@@ -121,7 +121,7 @@ class DigitalIdCard extends StatelessWidget {
                     Container(
                       width: 28.r,
                       height: 28.r,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.primary,
                         shape: BoxShape.circle,
                       ),
@@ -148,7 +148,7 @@ class DigitalIdCard extends StatelessWidget {
                           "HOSPITAL",
                           style: TextStyle(
                             color: isDark
-                                ? const Color(0xFF8FA2B6)
+                                ? Color(0xFF8FA2B6)
                                 : AppColors.textSecondary(context),
                             fontWeight: FontWeight.bold,
                             fontSize: 7.sp,
@@ -372,11 +372,11 @@ class DigitalIdCard extends StatelessWidget {
   }
 
   Widget _buildBackSide(BuildContext context, bool isDark) {
-    final cardBg = isDark ? const Color(0xFF0F1E36) : AppColors.primary;
+    final cardBg = isDark ? Color(0xFF0F1E36) : AppColors.primary;
     final valueColor = isDark ? Colors.white : AppColors.textPrimary(context);
 
     return Container(
-      key: const ValueKey('digital_card_back'),
+      key: ValueKey('digital_card_back'),
       width: 320.w,
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -386,11 +386,11 @@ class DigitalIdCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.08),
             blurRadius: 20.r,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
         border: Border.all(
-          color: isDark ? const Color(0xFF1E2D4A) : AppColors.primary,
+          color: isDark ? Color(0xFF1E2D4A) : AppColors.primary,
           width: 1.5.w,
         ),
       ),
@@ -429,7 +429,7 @@ class DigitalIdCard extends StatelessWidget {
           Text(
             "IMPORTANT INSTRUCTIONS",
             style: TextStyle(
-              color: isDark ? const Color(0xFF8FA2B6) : Colors.white70,
+              color: isDark ? Color(0xFF8FA2B6) : Colors.white70,
               fontWeight: FontWeight.w800,
               fontSize: 8.5.sp,
               letterSpacing: 0.8,
@@ -452,7 +452,7 @@ class DigitalIdCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.r),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF1A263B) : AppColors.lightRedCard,
+              color: isDark ? Color(0xFF1A263B) : AppColors.lightRedCard,
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: Row(
@@ -460,7 +460,7 @@ class DigitalIdCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(6.r),
                   decoration: BoxDecoration(
-                    color: isDark ? AppColors.primary : const Color(0xFFFFEAEA),
+                    color: isDark ? AppColors.primary : Color(0xFFFFEAEA),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -478,7 +478,7 @@ class DigitalIdCard extends StatelessWidget {
                         "EMERGENCY CONTACT",
                         style: TextStyle(
                           color: isDark
-                              ? const Color(0xFF5E98C7)
+                              ? Color(0xFF5E98C7)
                               : Colors.red.shade800,
                           fontWeight: FontWeight.bold,
                           fontSize: 7.sp,
@@ -517,7 +517,7 @@ class DigitalIdCard extends StatelessWidget {
             child: Text(
               "This card is system generated and valid for all hospital services.",
               style: TextStyle(
-                color: isDark ? const Color(0xFF8FA2B6) : Colors.white70,
+                color: isDark ? Color(0xFF8FA2B6) : Colors.white70,
                 fontSize: 7.sp,
                 fontStyle: FontStyle.italic,
               ),
@@ -548,9 +548,7 @@ class DigitalIdCard extends StatelessWidget {
     required BuildContext context,
   }) {
     final titleStyle = TextStyle(
-      color: isDark
-          ? const Color(0xFF8FA2B6)
-          : AppColors.textSecondary(context),
+      color: isDark ? Color(0xFF8FA2B6) : AppColors.textSecondary(context),
       fontSize: 8.sp,
     );
     final valueStyle = TextStyle(

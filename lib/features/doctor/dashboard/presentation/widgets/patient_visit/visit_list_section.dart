@@ -28,7 +28,7 @@ class VisitListSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
     final primaryTextColor = isDark ? Colors.white : AppColors.textDarkNavy;
     final secondaryTextColor = isDark ? Colors.white60 : Colors.grey[600];
     final borderCol = AppColors.border(context);
@@ -117,7 +117,7 @@ class VisitListSection extends StatelessWidget {
               else
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: points.length,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -146,14 +146,14 @@ class VisitListSection extends StatelessWidget {
                           ),
                           if (isEditable)
                             IconButton(
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.close,
                                 size: 14,
                                 color: Colors.grey,
                               ),
                               onPressed: () => onRemovePressed(index),
                               padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
+                              constraints: BoxConstraints(),
                             ),
                         ],
                       ),
@@ -164,12 +164,12 @@ class VisitListSection extends StatelessWidget {
                 SizedBox(height: 8.h),
                 TextButton.icon(
                   onPressed: onAddPressed,
-                  icon: const Icon(Icons.add, size: 16),
-                  label: const Text('Add Point'),
+                  icon: Icon(Icons.add, size: 16),
+                  label: Text('Add Point'),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     padding: EdgeInsets.zero,
-                    minimumSize: const Size(0, 0),
+                    minimumSize: Size(0, 0),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),

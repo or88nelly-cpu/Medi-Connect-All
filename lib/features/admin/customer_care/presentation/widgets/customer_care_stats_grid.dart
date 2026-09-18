@@ -32,7 +32,7 @@ class CustomerCareStatsGrid extends StatelessWidget {
             stats['total_registrations_trend']?.toString() ??
             "↑ 18.2% vs last 17 days",
         icon: Icons.people_alt_rounded,
-        color: const Color(0xFF0F6FFF),
+        color: Color(0xFF0F6FFF),
         lineData: [0.3, 0.45, 0.38, 0.6, 0.72, 0.85, 0.95],
       ),
       _StatItem(
@@ -42,7 +42,7 @@ class CustomerCareStatsGrid extends StatelessWidget {
             stats['total_appointments_trend']?.toString() ??
             "↑ 14.7% vs last 17 days",
         icon: Icons.calendar_today_rounded,
-        color: const Color(0xFF7B61FF),
+        color: Color(0xFF7B61FF),
         lineData: [0.2, 0.3, 0.5, 0.45, 0.62, 0.75, 0.88],
       ),
       _StatItem(
@@ -62,14 +62,14 @@ class CustomerCareStatsGrid extends StatelessWidget {
             stats['feedback_score_trend']?.toString() ??
             "↑ 0.4 vs last 17 days",
         icon: Icons.star_rounded,
-        color: const Color(0xFFFF8A26),
+        color: Color(0xFFFF8A26),
         lineData: [0.5, 0.62, 0.58, 0.7, 0.8, 0.75, 0.9],
       ),
     ];
 
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 16.w,
@@ -103,7 +103,7 @@ class CustomerCareStatsGrid extends StatelessWidget {
                 ? Colors.black.withValues(alpha: 0.15)
                 : Colors.black.withValues(alpha: 0.02),
             blurRadius: 16,
-            offset: const Offset(0, 8),
+            offset: Offset(0, 8),
           ),
         ],
       ),

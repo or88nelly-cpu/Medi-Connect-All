@@ -25,8 +25,8 @@ class SpecialityDoctorsPage extends StatelessWidget {
     final textColor = isDark ? Colors.white : AppColors.terminalLightText;
 
     final gradientColors = speciality.isSurgical
-        ? [AppColors.error, const Color(0xFFB91C1C)]
-        : [AppColors.info, const Color(0xFF1D4ED8)];
+        ? [AppColors.error, Color(0xFFB91C1C)]
+        : [AppColors.info, Color(0xFF1D4ED8)];
 
     final services = _getServices(speciality.name);
 
@@ -46,7 +46,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
             body: BlocBuilder<SpecialityBookingBloc, SpecialityBookingState>(
               builder: (context, state) {
                 if (state.status == SpecialityBookingStatus.loading) {
-                  return const Padding(
+                  return Padding(
                     padding: EdgeInsets.all(16.0),
                     child: DoctorShimmerLoader(),
                   );
@@ -118,8 +118,8 @@ class SpecialityDoctorsPage extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF131A2D), const Color(0xFF1F2B48)]
-              : [const Color(0xFFF0F6FF), const Color(0xFFE3EDFD)],
+              ? [Color(0xFF131A2D), Color(0xFF1F2B48)]
+              : [Color(0xFFF0F6FF), Color(0xFFE3EDFD)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -155,7 +155,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                   style: AppTextStyles.headingLarge.copyWith(
                     fontWeight: FontWeight.w900,
                     fontSize: 24.sp,
-                    color: isDark ? Colors.white : const Color(0xFF0F172A),
+                    color: isDark ? Colors.white : Color(0xFF0F172A),
                   ),
                 ),
                 SizedBox(height: 8.h),
@@ -163,7 +163,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                   speciality.description ??
                       'Comprehensive expert diagnostics, advanced surgical care, treatment, and lifestyle preventative management.',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isDark ? Colors.white60 : const Color(0xFF475569),
+                    color: isDark ? Colors.white60 : Color(0xFF475569),
                     fontSize: 11.5.sp,
                     height: 1.3,
                   ),
@@ -180,7 +180,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+        color: isDark ? Color(0xFF1E293B) : Colors.white,
         border: Border(bottom: BorderSide(color: AppColors.border(context))),
       ),
       child: Row(
@@ -214,7 +214,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
         Text(
           val,
           style: TextStyle(
-            color: const Color(0xFF1E3A8A),
+            color: Color(0xFF1E3A8A),
             fontSize: 13.sp,
             fontWeight: FontWeight.w900,
           ),
@@ -238,22 +238,22 @@ class SpecialityDoctorsPage extends StatelessWidget {
         _buildShortcutItem(
           Icons.calendar_month_outlined,
           'Book Appointment',
-          const Color(0xFF3B5BFD),
+          Color(0xFF3B5BFD),
         ),
         _buildShortcutItem(
           Icons.chat_bubble_outline_rounded,
           'Consult Online',
-          const Color(0xFF10B981),
+          Color(0xFF10B981),
         ),
         _buildShortcutItem(
           Icons.info_outline_rounded,
           'About Department',
-          const Color(0xFF8B5CF6),
+          Color(0xFF8B5CF6),
         ),
         _buildShortcutItem(
           Icons.favorite_border_rounded,
           'Health Packages',
-          const Color(0xFFEC4899),
+          Color(0xFFEC4899),
         ),
       ],
     );
@@ -281,7 +281,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
             style: TextStyle(
               fontSize: 8.5.sp,
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF475569),
+              color: Color(0xFF475569),
             ),
           ),
         ),
@@ -374,7 +374,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.02),
                       blurRadius: 10.r,
-                      offset: const Offset(0, 4),
+                      offset: Offset(0, 4),
                     ),
                   ],
                 ),
@@ -438,7 +438,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Spacer(),
+                    Spacer(),
 
                     // Reviews / Exp line
                     Row(
@@ -446,7 +446,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.star_rounded,
-                          color: const Color(0xFFFFB000),
+                          color: Color(0xFFFFB000),
                           size: 10.r,
                         ),
                         SizedBox(width: 2.w),
@@ -485,7 +485,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                         height: 26.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF3B5BFD),
+                          color: Color(0xFF3B5BFD),
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                         alignment: Alignment.center,
@@ -535,7 +535,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
         // Grid view
         GridView.builder(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           itemCount: services.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -548,11 +548,11 @@ class SpecialityDoctorsPage extends StatelessWidget {
             final item = services[index];
             final colorIdx = index % 4;
             final itemColor = colorIdx == 0
-                ? const Color(0xFFFF296D)
+                ? Color(0xFFFF296D)
                 : (colorIdx == 1
-                      ? const Color(0xFF3B5BFD)
+                      ? Color(0xFF3B5BFD)
                       : (colorIdx == 2
-                            ? const Color(0xFF10B981)
+                            ? Color(0xFF10B981)
                             : AppColors.warning));
 
             return Container(
@@ -620,7 +620,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : const Color(0xFFF8FAFC),
+        color: isDark ? AppColors.terminalDarkCard : Color(0xFFF8FAFC),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: AppColors.border(context)),
       ),
@@ -667,7 +667,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w900,
-                    color: const Color(0xFF1E3A8A),
+                    color: Color(0xFF1E3A8A),
                   ),
                 ),
                 SizedBox(height: 8.h),
@@ -684,8 +684,8 @@ class SpecialityDoctorsPage extends StatelessWidget {
                 // Grid of bullets
                 GridView(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 4,
                   ),
@@ -732,7 +732,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.terminalDarkCard : const Color(0xFFEEF2F6),
+        color: isDark ? AppColors.terminalDarkCard : Color(0xFFEEF2F6),
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: AppColors.border(context)),
       ),
@@ -740,7 +740,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(10.r),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
             ),
@@ -760,7 +760,7 @@ class SpecialityDoctorsPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w900,
-                    color: const Color(0xFF1E3A8A),
+                    color: Color(0xFF1E3A8A),
                   ),
                 ),
                 Text(
@@ -773,13 +773,13 @@ class SpecialityDoctorsPage extends StatelessWidget {
           GestureDetector(
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Support line connecting...')),
+                SnackBar(content: Text('Support line connecting...')),
               );
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
               decoration: BoxDecoration(
-                color: const Color(0xFF1D4ED8),
+                color: Color(0xFF1D4ED8),
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Text(

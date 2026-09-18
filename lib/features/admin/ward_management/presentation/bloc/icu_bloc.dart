@@ -49,7 +49,7 @@ class IcuBloc extends Bloc<IcuEvent, IcuState> {
 
   Future<void> _onLoadStats(LoadIcuStats event, Emitter<IcuState> emit) async {
     emit(IcuLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(IcuError(failure.message)),
       (stats) => emit(IcuLoaded(stats)),

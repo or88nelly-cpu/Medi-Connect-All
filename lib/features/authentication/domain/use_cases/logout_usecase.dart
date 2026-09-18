@@ -12,7 +12,7 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 class LogoutUseCase extends UseCase<void, NoParams> {
   final AuthRepository _repository;
 
-  const LogoutUseCase(this._repository);
+  LogoutUseCase(this._repository);
 
   @override
   Future<Either<Failure, void>> call(NoParams params) {

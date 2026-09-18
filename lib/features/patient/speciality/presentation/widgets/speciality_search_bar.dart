@@ -51,7 +51,7 @@ class _SpecialitySearchBarState extends State<SpecialitySearchBar> {
         children: [
           Expanded(
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
+              duration: Duration(milliseconds: 250),
               curve: Curves.easeOut,
               height: 56.h,
               decoration: BoxDecoration(
@@ -69,7 +69,7 @@ class _SpecialitySearchBarState extends State<SpecialitySearchBar> {
                         ? AppColors.primary.withValues(alpha: .12)
                         : Colors.black.withValues(alpha: .05),
                     blurRadius: _focused ? 18 : 12,
-                    offset: const Offset(0, 6),
+                    offset: Offset(0, 6),
                   ),
                 ],
               ),
@@ -130,19 +130,19 @@ class _SpecialitySearchBarState extends State<SpecialitySearchBar> {
             borderRadius: BorderRadius.circular(18.r),
             onTap: widget.onFilterTap,
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 250),
+              duration: Duration(milliseconds: 250),
               width: 56.r,
               height: 56.r,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: [Color(0xff2563EB), Color(0xff1D4ED8)],
                 ),
                 borderRadius: BorderRadius.circular(18.r),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xff2563EB).withValues(alpha: .25),
+                    color: Color(0xff2563EB).withValues(alpha: .25),
                     blurRadius: 15,
-                    offset: const Offset(0, 6),
+                    offset: Offset(0, 6),
                   ),
                 ],
               ),

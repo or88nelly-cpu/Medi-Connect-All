@@ -16,7 +16,7 @@ class _SlotStatusCardState extends State<SlotStatusCard> {
   String _selectedStatus = "Available";
 
   final List<Map<String, dynamic>> _statuses = [
-    {"name": "Available", "color": const Color(0xFF0F9F58)},
+    {"name": "Available", "color": Color(0xFF0F9F58)},
     {"name": "Booked", "color": AppColors.primary},
     {"name": "On Hold", "color": AppColors.warning},
     {"name": "Blocked", "color": AppColors.error},
@@ -80,7 +80,7 @@ class _SlotStatusCardState extends State<SlotStatusCard> {
                     }
                   },
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
+                    duration: Duration(milliseconds: 150),
                     margin: EdgeInsets.symmetric(horizontal: 4.w),
                     padding: EdgeInsets.symmetric(vertical: 10.h),
                     decoration: BoxDecoration(

@@ -8,7 +8,7 @@ class ManageSlotsActions extends StatelessWidget {
   final UserModel user;
   const ManageSlotsActions({super.key, required this.user});
 
-  static const List<Map<String, dynamic>> _actions = [
+  static final List<Map<String, dynamic>> _actions = [
     {
       "label": "Add Slot",
       "icon": Icons.add_circle_outline,

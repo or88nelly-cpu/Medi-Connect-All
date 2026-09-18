@@ -198,21 +198,21 @@ class _SignUpFormState extends State<SignUpForm> {
             width: double.infinity,
             height: 52.h,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 colors: [AppColors.primary, Color(0xFF7B61FF)],
               ),
               borderRadius: BorderRadius.circular(14.r),
               border: Border.all(color: AppColors.secondary, width: 2.r),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF4F6EFF).withValues(alpha: 0.35),
+                  color: Color(0xFF4F6EFF).withValues(alpha: 0.35),
                   blurRadius: 14.r,
-                  offset: const Offset(-3, 5),
+                  offset: Offset(-3, 5),
                 ),
                 BoxShadow(
-                  color: const Color(0xFF7B61FF).withValues(alpha: 0.35),
+                  color: Color(0xFF7B61FF).withValues(alpha: 0.35),
                   blurRadius: 14.r,
-                  offset: const Offset(3, 5),
+                  offset: Offset(3, 5),
                 ),
               ],
             ),
@@ -221,7 +221,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ? SizedBox(
                     width: 22.r,
                     height: 22.r,
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       color: Colors.white,
                       strokeWidth: 2.5,
                     ),
@@ -239,7 +239,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         ),
                       ),
                       SizedBox(width: 8.w),
-                      const AnimatedButtonIcon(),
+                      AnimatedButtonIcon(),
                     ],
                   ),
           ),
@@ -262,7 +262,7 @@ class _SignUpFormState extends State<SignUpForm> {
               fontSize: 13.sp,
             ),
             children: [
-              const TextSpan(text: 'Already have an account?  '),
+              TextSpan(text: 'Already have an account?  '),
               TextSpan(
                 text: 'Login',
                 style: TextStyle(
@@ -295,7 +295,7 @@ class _AnimatedButtonIconState extends State<AnimatedButtonIcon>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 1000),
     )..repeat(reverse: true);
 
     _animation = Tween<double>(
@@ -317,7 +317,7 @@ class _AnimatedButtonIconState extends State<AnimatedButtonIcon>
       builder: (context, child) {
         return Transform.translate(
           offset: Offset(_animation.value, 0),
-          child: const Icon(
+          child: Icon(
             Icons.arrow_forward_rounded,
             color: AppColors.secondary, // Golden color
             size: 20,
@@ -333,5 +333,5 @@ class _RoleData {
   final String label;
   final String subtitle;
   final IconData icon;
-  const _RoleData(this.key, this.label, this.subtitle, this.icon);
+  _RoleData(this.key, this.label, this.subtitle, this.icon);
 }

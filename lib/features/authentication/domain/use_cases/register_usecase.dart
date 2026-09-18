@@ -17,7 +17,7 @@ class RegisterParams {
   final UserRole role;
   final String? phoneNumber;
 
-  const RegisterParams({
+  RegisterParams({
     required this.email,
     required this.password,
     required this.name,
@@ -30,7 +30,7 @@ class RegisterParams {
 class RegisterUseCase extends UseCase<UserEntity, RegisterParams> {
   final AuthRepository _repository;
 
-  const RegisterUseCase(this._repository);
+  RegisterUseCase(this._repository);
 
   @override
   Future<Either<Failure, UserEntity>> call(RegisterParams params) {

@@ -24,7 +24,7 @@ class BackgroundAccentPainter extends CustomPainter {
       ..color = dotColor
       ..style = PaintingStyle.fill;
 
-    const double angle = 210 * math.pi / 180;
+    double angle = 210 * math.pi / 180;
     final dotCenter = Offset(
       center.dx + radius * math.cos(angle),
       center.dy + radius * math.sin(angle),

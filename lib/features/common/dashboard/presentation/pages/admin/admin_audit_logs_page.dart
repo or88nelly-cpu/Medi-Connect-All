@@ -24,11 +24,11 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "System Audit Logs"),
+      customAppbar: CommonAppBar(title: "System Audit Logs"),
       body: BlocBuilder<AdminRecentActivityBloc, AdminRecentActivityState>(
         builder: (context, state) {
           if (state is AdminRecentActivityLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           if (state is AdminRecentActivityError) {
@@ -36,16 +36,13 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    state.message,
-                    style: const TextStyle(color: AppColors.error),
-                  ),
+                  Text(state.message, style: TextStyle(color: AppColors.error)),
                   SizedBox(height: 12.h),
                   ElevatedButton(
                     onPressed: () => context
                         .read<AdminRecentActivityBloc>()
                         .add(LoadRecentActivity()),
-                    child: const Text("Retry"),
+                    child: Text("Retry"),
                   ),
                 ],
               ),
@@ -55,7 +52,7 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
           if (state is AdminRecentActivityLoaded) {
             final logs = state.logs;
             if (logs.isEmpty) {
-              return const Center(child: Text("No audit records found."));
+              return Center(child: Text("No audit records found."));
             }
 
             return ListView.builder(
@@ -81,7 +78,7 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
                         color: AppColors.adminPrimary.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(8.r),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.shield_outlined,
                         color: AppColors.adminPrimary,
                       ),
@@ -113,7 +110,7 @@ class _AdminAuditLogsPageState extends State<AdminAuditLogsPage> {
             );
           }
 
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );

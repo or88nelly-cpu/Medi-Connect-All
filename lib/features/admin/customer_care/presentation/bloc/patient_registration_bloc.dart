@@ -10,12 +10,12 @@ import 'package:medi_connect/features/authentication/data/models/user_model.dart
 @injectable
 class PatientRegistrationBloc
     extends Bloc<PatientRegistrationEvent, PatientRegistrationState> {
-  static const int _totalSteps = 3;
+  static final int _totalSteps = 3;
 
   final PatientRepository _patientRepository;
 
   PatientRegistrationBloc(this._patientRepository)
-    : super(const PatientRegistrationState()) {
+    : super(PatientRegistrationState()) {
     // ── Navigation ────────────────────────────────────────────
     on<StepNextRequested>(_onStepNext);
     on<StepBackRequested>(_onStepBack);
@@ -192,7 +192,7 @@ class PatientRegistrationBloc
     }
 
     emit(state.copyWith(isFetchingAddress: true));
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(Duration(milliseconds: 600));
 
     final addressMap = {
       '560001': ('MG Road', '#45, MG Road, Bengaluru, Karnataka - 560001'),

@@ -68,9 +68,7 @@ class DoctorProfileHeader extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Redirecting to Public Profile..."),
-                  ),
+                  SnackBar(content: Text("Redirecting to Public Profile...")),
                 );
               },
               icon: Icon(
@@ -106,7 +104,7 @@ class DoctorProfileHeader extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("More Options Clicked")),
+                    SnackBar(content: Text("More Options Clicked")),
                   );
                 },
                 icon: Icon(Icons.more_horiz, color: textColor, size: 16.sp),

@@ -27,9 +27,7 @@ class CustomScaffold extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: appBarNeeded == false
-              ? null
-              : customAppbar ?? const CommonAppBar(),
+          appBar: appBarNeeded == false ? null : customAppbar ?? CommonAppBar(),
           drawer: drawer,
           body: body,
           bottomNavigationBar: bottomNavigationBar,

@@ -25,7 +25,7 @@ class _ManagementInformationSystemDetailPageState
           GetIt.I<ManagementInformationSystemBloc>()
             ..add(LoadManagementInformationSystemStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(
+        customAppbar: CommonAppBar(
           title: "Management Information System Department",
         ),
         body:
@@ -35,7 +35,7 @@ class _ManagementInformationSystemDetailPageState
             >(
               builder: (context, state) {
                 if (state is ManagementInformationSystemLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 } else if (state is ManagementInformationSystemError) {
                   return Center(
                     child: Text(
@@ -62,7 +62,7 @@ class _ManagementInformationSystemDetailPageState
                         SizedBox(height: 16.h),
                         GridView.builder(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -127,7 +127,7 @@ class _ManagementInformationSystemDetailPageState
                     ),
                   );
                 }
-                return const SizedBox.shrink();
+                return SizedBox.shrink();
               },
             ),
       ),

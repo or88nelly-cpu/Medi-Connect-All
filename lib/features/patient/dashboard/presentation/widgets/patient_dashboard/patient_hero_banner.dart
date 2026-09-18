@@ -19,12 +19,12 @@ class PatientHeroBanner extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final bgGradient = isDark
-        ? const LinearGradient(
+        ? LinearGradient(
             colors: [Color(0xFF0D1B38), Color(0xFF10192C)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
-        : const LinearGradient(
+        : LinearGradient(
             colors: [Color(0xFFEEF3FF), Color(0xFFF7F5FF)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -62,7 +62,7 @@ class PatientHeroBanner extends StatelessWidget {
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: 0.08),
                 blurRadius: 20,
-                offset: const Offset(0, 6),
+                offset: Offset(0, 6),
               ),
             ],
           ),
@@ -102,7 +102,7 @@ class PatientHeroBanner extends StatelessWidget {
                           SizedBox(height: 8.h),
                           PatientIdChip(patientId: patientId),
                           SizedBox(height: 12.h),
-                          const PatientTagline(),
+                          PatientTagline(),
                           SizedBox(height: 14.h),
                           PatientAvatar(
                             profileImage: profileImage,
@@ -120,9 +120,9 @@ class PatientHeroBanner extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const PatientDateCard(),
+                          PatientDateCard(),
                           SizedBox(height: 8.h),
-                          const PatientHospitalCard(),
+                          PatientHospitalCard(),
                         ],
                       ),
                     ),
@@ -141,7 +141,7 @@ class _WavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF4F2DFF).withValues(alpha: 0.06)
+      ..color = Color(0xFF4F2DFF).withValues(alpha: 0.06)
       ..style = PaintingStyle.fill;
 
     final path = Path();

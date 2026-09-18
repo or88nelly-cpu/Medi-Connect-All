@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,8 @@ import 'package:medi_connect/core/theme/theme_cubit.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   // It is important to run WidgetsFlutterBinding.ensureInitialized()
   // within the same zone as runApp. SentryFlutter.init creates a new zone.
   await SentryFlutter.init(
@@ -27,7 +30,17 @@ void main() async {
     appRunner: () async {
       await AppInitializer.init();
 
-      runApp(SentryWidget(child: const MyApp()));
+      runApp(
+        SentryWidget(
+          child: EasyLocalization(
+            supportedLocales: [Locale('en'), Locale('ml'), Locale('hi')],
+            path: 'assets/translations',
+            fallbackLocale: Locale('en'),
+            startLocale: Locale('en'),
+            child: MyApp(),
+          ),
+        ),
+      );
     },
   );
 }
@@ -58,12 +71,16 @@ class _MyAppState extends State<MyApp> {
         ), // Premium device base reference
         minTextAdapt: true,
         splitScreenMode: true,
+
         builder: (context, child) {
           return BlocBuilder<ThemeCubit, ThemeMode>(
             builder: (context, themeMode) {
               return MaterialApp.router(
                 title: 'Medi-Connect Admin',
+                locale: context.locale,
                 theme: AppTheme.lightTheme,
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
                 darkTheme: AppTheme.darkTheme,
                 themeMode: themeMode,
                 routerConfig: _router,

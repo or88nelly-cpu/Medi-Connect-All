@@ -26,7 +26,7 @@ class _OnboardingSecurityIllustrationState
     // Float animation controller (for center card)
     _floatController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3200),
+      duration: Duration(milliseconds: 3200),
     )..repeat(reverse: true);
 
     _floatAnim = Tween<double>(begin: -10.0, end: 10.0).animate(
@@ -36,7 +36,7 @@ class _OnboardingSecurityIllustrationState
     // Rotation animation controller (for outer orbital rings)
     _rotateController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 12),
+      duration: Duration(seconds: 12),
     )..repeat();
 
     _rotationClockwise = Tween<double>(
@@ -88,7 +88,7 @@ class _OnboardingSecurityIllustrationState
                     child: Container(
                       width: 12.r,
                       height: 12.r,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.primary,
                         shape: BoxShape.circle,
                       ),
@@ -96,7 +96,7 @@ class _OnboardingSecurityIllustrationState
                         child: Container(
                           width: 4.r,
                           height: 4.r,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
                           ),
@@ -132,7 +132,7 @@ class _OnboardingSecurityIllustrationState
                     child: Container(
                       width: 10.r,
                       height: 10.r,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.secondary,
                         shape: BoxShape.circle,
                       ),
@@ -166,7 +166,7 @@ class _OnboardingSecurityIllustrationState
                   BoxShadow(
                     color: AppColors.primary.withValues(alpha: 0.12),
                     blurRadius: 20.r,
-                    offset: const Offset(0, 8),
+                    offset: Offset(0, 8),
                   ),
                 ],
               ),

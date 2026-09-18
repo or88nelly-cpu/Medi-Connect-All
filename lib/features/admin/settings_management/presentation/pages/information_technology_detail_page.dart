@@ -25,14 +25,12 @@ class _InformationTechnologyDetailPageState
           GetIt.I<InformationTechnologyBloc>()
             ..add(LoadInformationTechnologyStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(
-          title: "Information Technology Department",
-        ),
+        customAppbar: CommonAppBar(title: "Information Technology Department"),
         body:
             BlocBuilder<InformationTechnologyBloc, InformationTechnologyState>(
               builder: (context, state) {
                 if (state is InformationTechnologyLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 } else if (state is InformationTechnologyError) {
                   return Center(
                     child: Text(
@@ -59,7 +57,7 @@ class _InformationTechnologyDetailPageState
                         SizedBox(height: 16.h),
                         GridView.builder(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -124,7 +122,7 @@ class _InformationTechnologyDetailPageState
                     ),
                   );
                 }
-                return const SizedBox.shrink();
+                return SizedBox.shrink();
               },
             ),
       ),

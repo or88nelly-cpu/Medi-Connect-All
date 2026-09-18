@@ -29,7 +29,7 @@ class BookingSelectPatientSection extends StatelessWidget {
           style: TextStyle(
             fontSize: AppTextStyles.s14,
             fontWeight: FontWeight.w900,
-            color: const Color(0xFF0F172A),
+            color: Color(0xFF0F172A),
           ),
         ),
         SizedBox(height: AppDimensions.spaceS + 2), // 10
@@ -50,7 +50,7 @@ class BookingSelectPatientSection extends StatelessWidget {
               decoration: BoxDecoration(
                 color: cardBg,
                 borderRadius: BorderRadius.circular(AppDimensions.radiusL),
-                border: Border.all(color: const Color(0xFF3B5BFD)),
+                border: Border.all(color: Color(0xFF3B5BFD)),
               ),
               child: Row(
                 children: [
@@ -96,7 +96,7 @@ class BookingSelectPatientSection extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Icon(
+                  Icon(
                     Icons.check_circle_rounded,
                     color: Color(0xFF3B5BFD),
                     size: 20,

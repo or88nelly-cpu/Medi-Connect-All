@@ -46,12 +46,12 @@ class CompleteConsultationSheet extends StatelessWidget {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.close),
+                icon: Icon(Icons.close),
                 onPressed: () => Navigator.pop(context),
               ),
             ],
           ),
-          const Divider(),
+          Divider(),
           SizedBox(height: 12.h),
 
           Text(
@@ -111,7 +111,7 @@ class CompleteConsultationSheet extends StatelessWidget {
                     ),
                     padding: EdgeInsets.symmetric(vertical: 14.h),
                   ),
-                  child: const Text("Cancel"),
+                  child: Text("Cancel"),
                 ),
               ),
               SizedBox(width: 12.w),
@@ -122,13 +122,13 @@ class CompleteConsultationSheet extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF10B981), // success green
+                    backgroundColor: Color(0xFF10B981), // success green
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     padding: EdgeInsets.symmetric(vertical: 14.h),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Complete",
                     style: TextStyle(
                       color: Colors.white,

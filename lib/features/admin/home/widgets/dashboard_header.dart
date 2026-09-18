@@ -77,7 +77,7 @@ class DashboardHeader extends StatelessWidget {
                             alpha: isDark ? 0.15 : 0.25,
                           ),
                           blurRadius: 24,
-                          offset: const Offset(0, 10),
+                          offset: Offset(0, 10),
                         ),
                       ],
                     ),
@@ -125,7 +125,7 @@ class DashboardHeader extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16.r),
-            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10)],
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
           ),
           child: CustomImageView(imagePath: AppAssets.logoIconPng),
         ),
@@ -147,7 +147,7 @@ class DashboardHeader extends StatelessWidget {
             Text(
               "Multi Speciality Hospital",
               style: AppTextStyles.bodyMedium.copyWith(
-                color: const Color(0xFFE8E8FF),
+                color: Color(0xFFE8E8FF),
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
               ),
@@ -167,7 +167,7 @@ class DashboardHeader extends StatelessWidget {
         Text(
           _greetingMessage(),
           style: AppTextStyles.bodyLarge.copyWith(
-            color: const Color(0xFFF4F4FF).withValues(alpha: 0.85),
+            color: Color(0xFFF4F4FF).withValues(alpha: 0.85),
             fontSize: isSmall ? 13.sp : 15.sp,
             fontWeight: FontWeight.w500,
           ),
@@ -186,7 +186,7 @@ class DashboardHeader extends StatelessWidget {
           Text(
             AppStrings.welcomeHms,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: const Color(0xFFE0DFFF).withValues(alpha: 0.9),
+              color: Color(0xFFE0DFFF).withValues(alpha: 0.9),
               fontSize: 13.sp,
               fontWeight: FontWeight.w500,
             ),
@@ -215,7 +215,7 @@ class DashboardHeader extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 8,
-            offset: const Offset(0, 3),
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -319,7 +319,7 @@ class DashboardHeader extends StatelessWidget {
           child: Container(
             width: 28.r,
             height: 28.r,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
               boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],

@@ -18,7 +18,7 @@ class DoctorPatientsTab extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const Center(child: Text("Please login to see patients"));
+          return Center(child: Text("Please login to see patients"));
         }
         final doctor = authState.user;
         final docDisplayName = doctor.fullName;
@@ -29,7 +29,7 @@ class DoctorPatientsTab extends StatelessWidget {
               builder: (context, patientState) {
                 if (aptState is DoctorAppointmentsLoading ||
                     patientState is PatientLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 }
                 if (aptState is DoctorAppointmentsError ||
                     patientState is PatientError) {
@@ -132,7 +132,7 @@ class DoctorPatientsTab extends StatelessWidget {
                         SizedBox(height: 16.h),
                         Expanded(
                           child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
+                            physics: BouncingScrollPhysics(),
                             itemCount: myPatients.length,
                             itemBuilder: (context, idx) {
                               final p = myPatients[idx];
@@ -167,10 +167,10 @@ class DoctorPatientsTab extends StatelessWidget {
                                 child: ListTile(
                                   contentPadding: EdgeInsets.all(16.r),
                                   leading: CircleAvatar(
-                                    backgroundColor: const Color(
+                                    backgroundColor: Color(
                                       0xFF00C2A8,
                                     ).withValues(alpha: 0.1),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.person,
                                       color: Color(0xFF00C2A8),
                                     ),
@@ -188,7 +188,7 @@ class DoctorPatientsTab extends StatelessWidget {
                                       color: Colors.grey[600],
                                     ),
                                   ),
-                                  trailing: const Icon(Icons.chevron_right),
+                                  trailing: Icon(Icons.chevron_right),
                                   isThreeLine: true,
                                   onTap: () {
                                     showModalBottomSheet(
@@ -211,7 +211,7 @@ class DoctorPatientsTab extends StatelessWidget {
                     ),
                   );
                 }
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               },
             );
           },

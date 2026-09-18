@@ -12,7 +12,7 @@ class DoctorTabBar extends StatelessWidget {
     required this.onTabChanged,
   });
 
-  static const List<Map<String, dynamic>> tabs = [
+  static List<Map<String, dynamic>> tabs = [
     {"label": "Overview", "icon": Icons.info_outline},
     {"label": "Schedule & Slots", "icon": Icons.calendar_today_outlined},
     {"label": "Consultations", "icon": Icons.forum_outlined},

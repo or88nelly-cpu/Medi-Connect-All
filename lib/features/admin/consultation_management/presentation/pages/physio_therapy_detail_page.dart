@@ -23,11 +23,11 @@ class _PhysioTherapyDetailPageState extends State<PhysioTherapyDetailPage> {
       create: (context) =>
           GetIt.I<PhysioTherapyBloc>()..add(LoadPhysioTherapyStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Physio Therapy Department"),
+        customAppbar: CommonAppBar(title: "Physio Therapy Department"),
         body: BlocBuilder<PhysioTherapyBloc, PhysioTherapyState>(
           builder: (context, state) {
             if (state is PhysioTherapyLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is PhysioTherapyError) {
               return Center(
                 child: Text(
@@ -54,7 +54,7 @@ class _PhysioTherapyDetailPageState extends State<PhysioTherapyDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -115,7 +115,7 @@ class _PhysioTherapyDetailPageState extends State<PhysioTherapyDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

@@ -74,7 +74,7 @@ class AnalyticsOverviewSection extends StatelessWidget {
         GridView.count(
           crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           crossAxisSpacing: 12.r,
           mainAxisSpacing: 12.r,
           childAspectRatio: MediaQuery.of(context).size.width > 600 ? 2.5 : 5,

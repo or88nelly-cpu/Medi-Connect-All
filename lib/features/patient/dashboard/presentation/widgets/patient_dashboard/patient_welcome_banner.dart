@@ -37,7 +37,7 @@ class PatientWelcomeBanner extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.all(20.r),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               colors: AppColors.patientGradient,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -47,7 +47,7 @@ class PatientWelcomeBanner extends StatelessWidget {
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: 0.15),
                 blurRadius: 10,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),

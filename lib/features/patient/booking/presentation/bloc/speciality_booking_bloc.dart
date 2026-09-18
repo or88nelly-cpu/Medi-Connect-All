@@ -113,7 +113,7 @@ class SpecialityBookingBloc
        _getSlotsUseCase = getSlotsUseCase ?? GetIt.instance<GetSlotsUseCase>(),
        _bookAppointmentUseCase =
            bookAppointmentUseCase ?? GetIt.instance<BookAppointmentUseCase>(),
-       super(const SpecialityBookingState()) {
+       super(SpecialityBookingState()) {
     on<LoadDoctors>(_onLoadDoctors);
     on<SelectDoctor>(_onSelectDoctor);
     on<SelectDate>(_onSelectDate);
@@ -193,7 +193,7 @@ class SpecialityBookingBloc
         ),
       );
     } catch (_) {
-      emit(state.copyWith(bookedSlots: const [], availableSlots: const []));
+      emit(state.copyWith(bookedSlots: [], availableSlots: []));
     }
   }
 
@@ -269,6 +269,6 @@ class SpecialityBookingBloc
     ResetBooking event,
     Emitter<SpecialityBookingState> emit,
   ) {
-    emit(const SpecialityBookingState());
+    emit(SpecialityBookingState());
   }
 }

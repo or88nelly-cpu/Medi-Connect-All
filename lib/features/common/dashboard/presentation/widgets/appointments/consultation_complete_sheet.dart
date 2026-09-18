@@ -128,7 +128,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
           'Payment of ₹${amount.toStringAsFixed(2)} confirmed for $patientName',
         ),
         backgroundColor: AppColors.success,
-        duration: const Duration(seconds: 3),
+        duration: Duration(seconds: 3),
       ),
     );
   }
@@ -242,7 +242,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
           final name = med['name']!.toLowerCase();
           final match = pharmacyItems.firstWhere(
             (item) => item.name.toLowerCase() == name,
-            orElse: () => const PharmacyItemModel(
+            orElse: () => PharmacyItemModel(
               id: '',
               name: '',
               stock: 0,
@@ -302,7 +302,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
           'EMR record submitted for ${apt.patientName} ${savedToSupabase ? "(Sync'd)" : "(Local)"}',
         ),
         backgroundColor: AppColors.secondary,
-        duration: const Duration(seconds: 3),
+        duration: Duration(seconds: 3),
       ),
     );
   }
@@ -391,7 +391,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
       circleBg = completedColor;
       borderCol = completedColor;
       textCol = completedColor;
-      child = const Icon(Icons.check, color: Colors.white, size: 12);
+      child = Icon(Icons.check, color: Colors.white, size: 12);
     }
 
     return Column(
@@ -443,9 +443,9 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
         height: 300.h,
         decoration: BoxDecoration(
           color: sheetBg,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
-        child: const Center(child: CircularProgressIndicator()),
+        child: Center(child: CircularProgressIndicator()),
       );
     }
 
@@ -472,9 +472,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
               return Container(
                 decoration: BoxDecoration(
                   color: sheetBg,
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(24),
-                  ),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
                 child: Column(
                   children: [
@@ -537,10 +535,10 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                           ),
                           // Render Step Progress Indicator if EMR is not yet submitted successfully
                           if (!emrSubmitted) ...[
-                            const Divider(),
+                            Divider(),
                             _buildStepIndicator(currentStep, isDark),
                           ],
-                          const Divider(),
+                          Divider(),
                         ],
                       ),
                     ),
@@ -625,7 +623,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Cancel',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -650,14 +648,14 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(
+                                      Text(
                                         'Next',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       SizedBox(width: 6.w),
-                                      const Icon(Icons.arrow_forward, size: 16),
+                                      Icon(Icons.arrow_forward, size: 16),
                                     ],
                                   ),
                                 ),
@@ -680,7 +678,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Back',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -705,14 +703,14 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text(
+                                      Text(
                                         'Proceed to Payment',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       SizedBox(width: 6.w),
-                                      const Icon(Icons.arrow_forward, size: 16),
+                                      Icon(Icons.arrow_forward, size: 16),
                                     ],
                                   ),
                                 ),
@@ -735,7 +733,7 @@ class _ConsultationCompleteSheetState extends State<ConsultationCompleteSheet> {
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Back',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,

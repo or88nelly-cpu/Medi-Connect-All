@@ -9,7 +9,7 @@ class QuickActionsRow extends StatelessWidget {
   final UserModel user;
   const QuickActionsRow({super.key, required this.user});
 
-  static const List<Map<String, dynamic>> actions = [
+  static List<Map<String, dynamic>> actions = [
     {
       "label": "Assign Slot\nto Doctor",
       "icon": Icons.calendar_today_outlined,

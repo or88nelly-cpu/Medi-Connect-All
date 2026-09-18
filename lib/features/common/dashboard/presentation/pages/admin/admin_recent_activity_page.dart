@@ -25,11 +25,11 @@ class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Recent Activity"),
+      customAppbar: CommonAppBar(title: "Recent Activity"),
       body: BlocBuilder<AdminRecentActivityBloc, AdminRecentActivityState>(
         builder: (context, state) {
           if (state is AdminRecentActivityLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           if (state is AdminRecentActivityError) {
@@ -37,16 +37,13 @@ class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    state.message,
-                    style: const TextStyle(color: AppColors.error),
-                  ),
+                  Text(state.message, style: TextStyle(color: AppColors.error)),
                   SizedBox(height: 12.h),
                   ElevatedButton(
                     onPressed: () => context
                         .read<AdminRecentActivityBloc>()
                         .add(LoadRecentActivity()),
-                    child: const Text("Retry"),
+                    child: Text("Retry"),
                   ),
                 ],
               ),
@@ -56,7 +53,7 @@ class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
           if (state is AdminRecentActivityLoaded) {
             final logs = state.logs;
             if (logs.isEmpty) {
-              return const Center(child: Text("No recent activities."));
+              return Center(child: Text("No recent activities."));
             }
 
             return ListView.builder(
@@ -138,7 +135,7 @@ class _AdminRecentActivityPageState extends State<AdminRecentActivityPage> {
             );
           }
 
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );

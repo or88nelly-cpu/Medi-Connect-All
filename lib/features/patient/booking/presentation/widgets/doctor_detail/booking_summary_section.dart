@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medi_connect/core/theme/app_colors.dart';
 import 'package:medi_connect/core/theme/app_dimensions.dart';
 import 'package:medi_connect/core/theme/app_text_styles.dart';
 
@@ -35,7 +34,7 @@ class BookingSummarySection extends StatelessWidget {
           style: TextStyle(
             fontSize: AppTextStyles.s14,
             fontWeight: FontWeight.w900,
-            color: const Color(0xFF0F172A),
+            color: Color(0xFF0F172A),
           ),
         ),
         SizedBox(height: AppDimensions.spaceS + 2), // 10
@@ -63,7 +62,7 @@ class BookingSummarySection extends StatelessWidget {
                     '₹${fee.toStringAsFixed(0)}',
                     textColor,
                   ),
-                  const Divider(color: Colors.grey, height: 16),
+                  Divider(color: Colors.grey, height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -80,7 +79,7 @@ class BookingSummarySection extends StatelessWidget {
                         style: TextStyle(
                           fontSize: AppTextStyles.s14,
                           fontWeight: FontWeight.w900,
-                          color: const Color(0xFF3B5BFD),
+                          color: Color(0xFF3B5BFD),
                         ),
                       ),
                     ],
@@ -95,7 +94,7 @@ class BookingSummarySection extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(AppDimensions.paddingS + 2), // 10
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF0F6FF),
+                  color: Color(0xFFF0F6FF),
                   borderRadius: BorderRadius.circular(AppDimensions.radiusL),
                 ),
                 child: Column(
@@ -103,13 +102,13 @@ class BookingSummarySection extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.verified_user_outlined,
                           color: Color(0xFF3B5BFD),
                           size: 14,
                         ),
                         SizedBox(width: AppDimensions.spaceWXS),
-                        const Text(
+                        Text(
                           'Safe & Secure Booking',
                           style: TextStyle(
                             color: Color(0xFF3B5BFD),
@@ -150,7 +149,7 @@ class BookingSummarySection extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.grey,
               fontSize: 10,
               fontWeight: FontWeight.bold,
@@ -172,7 +171,7 @@ class BookingSummarySection extends StatelessWidget {
   Widget _buildSecureBullet(String label) {
     return Row(
       children: [
-        const Icon(
+        Icon(
           Icons.check_circle_outline_rounded,
           color: Color(0xFF10B981),
           size: 8,

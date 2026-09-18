@@ -40,7 +40,7 @@ class SpecialtyStep extends StatelessWidget {
               final cols = constraints.maxWidth > 500 ? 3 : 2;
               return GridView.builder(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: cols,
                   crossAxisSpacing: AppDimensions.spaceWM,
@@ -54,7 +54,7 @@ class SpecialtyStep extends StatelessWidget {
                   return GestureDetector(
                     onTap: () => onSelect(sp),
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 200),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: isSelected
@@ -82,7 +82,7 @@ class SpecialtyStep extends StatelessWidget {
                                     alpha: 0.3,
                                   ),
                                   blurRadius: 12,
-                                  offset: const Offset(0, 4),
+                                  offset: Offset(0, 4),
                                 ),
                               ]
                             : [],

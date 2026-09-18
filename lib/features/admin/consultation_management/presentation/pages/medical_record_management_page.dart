@@ -18,15 +18,13 @@ class MedicalRecordManagementPage extends StatelessWidget {
     return BlocBuilder<EmrdBloc, EmrdState>(
       builder: (context, state) {
         if (state is EmrdLoading) {
-          return const CustomScaffold(
+          return CustomScaffold(
             customAppbar: CommonAppBar(title: "Medical Record Management"),
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (state is EmrdError) {
           return CustomScaffold(
-            customAppbar: const CommonAppBar(
-              title: "Medical Record Management",
-            ),
+            customAppbar: CommonAppBar(title: "Medical Record Management"),
             body: Center(
               child: Text(
                 state.message,
@@ -42,9 +40,7 @@ class MedicalRecordManagementPage extends StatelessWidget {
               .toList();
 
           return CustomScaffold(
-            customAppbar: const CommonAppBar(
-              title: "Medical Record Management",
-            ),
+            customAppbar: CommonAppBar(title: "Medical Record Management"),
             body: SingleChildScrollView(
               padding: EdgeInsets.all(20.r),
               child: Column(
@@ -65,7 +61,7 @@ class MedicalRecordManagementPage extends StatelessWidget {
                           fontSize: 16.sp,
                         ),
                       ),
-                      const Spacer(),
+                      Spacer(),
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 8.w,
@@ -132,7 +128,7 @@ class MedicalRecordManagementPage extends StatelessWidget {
                   else
                     ListView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: filteredRecords.length,
                       itemBuilder: (context, index) {
                         final record = filteredRecords[index];
@@ -147,7 +143,7 @@ class MedicalRecordManagementPage extends StatelessWidget {
                   EmrdBottomBanner(
                     onCreateEMR: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           content: Text(
                             "Please complete a consultation from the Appointments page to generate a new EMR record.",
                           ),
@@ -161,7 +157,7 @@ class MedicalRecordManagementPage extends StatelessWidget {
             ),
           );
         }
-        return const CustomScaffold(
+        return CustomScaffold(
           customAppbar: CommonAppBar(title: "Medical Record Management"),
           body: SizedBox.shrink(),
         );

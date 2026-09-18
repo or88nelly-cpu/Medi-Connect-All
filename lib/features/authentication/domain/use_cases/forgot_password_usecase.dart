@@ -8,7 +8,7 @@ import 'package:medi_connect/features/authentication/domain/repositories/auth_re
 class ForgotPasswordUseCase extends UseCase<void, String> {
   final AuthRepository _repository;
 
-  const ForgotPasswordUseCase(this._repository);
+  ForgotPasswordUseCase(this._repository);
 
   @override
   Future<Either<Failure, void>> call(String params) {

@@ -21,7 +21,7 @@ class _HeartbeatPulseLineState extends State<HeartbeatPulseLine>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: Duration(milliseconds: 2000),
     )..repeat();
   }
 
@@ -60,18 +60,18 @@ class ECGPainter extends CustomPainter {
     // Define the normalized control points of the ECG wave (x: 0..1, y: 0..1)
     // The pulse area is centered between 0.4 and 0.6
     final List<math.Point<double>> basePoints = [
-      const math.Point(0.0, 0.5),
-      const math.Point(0.35, 0.5),
-      const math.Point(0.38, 0.48), // small P wave bump
-      const math.Point(0.40, 0.5),
-      const math.Point(0.42, 0.52), // small Q wave dip
-      const math.Point(0.45, 0.10), // high R wave spike
-      const math.Point(0.48, 0.85), // deep S wave dip
-      const math.Point(0.51, 0.35), // medium T wave bump
-      const math.Point(0.54, 0.5),
-      const math.Point(0.57, 0.48), // small U wave bump
-      const math.Point(0.60, 0.5),
-      const math.Point(1.0, 0.5),
+      math.Point(0.0, 0.5),
+      math.Point(0.35, 0.5),
+      math.Point(0.38, 0.48), // small P wave bump
+      math.Point(0.40, 0.5),
+      math.Point(0.42, 0.52), // small Q wave dip
+      math.Point(0.45, 0.10), // high R wave spike
+      math.Point(0.48, 0.85), // deep S wave dip
+      math.Point(0.51, 0.35), // medium T wave bump
+      math.Point(0.54, 0.5),
+      math.Point(0.57, 0.48), // small U wave bump
+      math.Point(0.60, 0.5),
+      math.Point(1.0, 0.5),
     ];
 
     // Build the path

@@ -41,7 +41,7 @@ class DoctorProfileTab extends StatelessWidget {
         }
 
         return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.all(20.r),
           child: Column(
             children: [
@@ -134,7 +134,7 @@ class DoctorProfileTab extends StatelessWidget {
                               val ? ThemeMode.dark : ThemeMode.light,
                             );
                           },
-                          secondary: const Icon(
+                          secondary: Icon(
                             Icons.dark_mode_outlined,
                             color: AppColors.secondary,
                           ),
@@ -160,8 +160,8 @@ class DoctorProfileTab extends StatelessWidget {
                       }
                     }
                   },
-                  icon: const Icon(Icons.edit, color: Colors.white),
-                  label: const Text(
+                  icon: Icon(Icons.edit, color: Colors.white),
+                  label: Text(
                     "Edit Profile",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -179,8 +179,8 @@ class DoctorProfileTab extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () => _showLogoutDialog(context),
-                  icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text(
+                  icon: Icon(Icons.logout, color: Colors.white),
+                  label: Text(
                     "Sign Out",
                     style: TextStyle(color: Colors.white),
                   ),

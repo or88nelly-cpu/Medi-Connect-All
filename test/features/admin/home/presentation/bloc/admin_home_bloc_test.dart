@@ -17,7 +17,7 @@ class MockAdminHomeRepositoryForBloc implements AdminHomeRepository {
     if (shouldFail) {
       return Left(ServerFailure('Connection Failed'));
     }
-    return const Right([
+    return Right([
       AdminDashboardModuleEntity(
         id: 'departments',
         title: 'Departments',
@@ -56,17 +56,17 @@ void main() {
   });
 
   test('initial state should be AdminHomeInitial', () {
-    expect(bloc.state, const AdminHomeInitial());
+    expect(bloc.state, AdminHomeInitial());
   });
 
   test(
     'should emit [AdminHomeLoading, AdminHomeLoaded] on successful LoadAdminDashboardModules',
     () async {
-      final expectedStates = [const AdminHomeLoading(), isA<AdminHomeLoaded>()];
+      final expectedStates = [AdminHomeLoading(), isA<AdminHomeLoaded>()];
 
       expectLater(bloc.stream, emitsInOrder(expectedStates));
 
-      bloc.add(const LoadAdminDashboardModules());
+      bloc.add(LoadAdminDashboardModules());
     },
   );
 
@@ -76,24 +76,24 @@ void main() {
       repository.shouldFail = true;
 
       final expectedStates = [
-        const AdminHomeLoading(),
-        const AdminHomeError('Connection Failed'),
+        AdminHomeLoading(),
+        AdminHomeError('Connection Failed'),
       ];
 
       expectLater(bloc.stream, emitsInOrder(expectedStates));
 
-      bloc.add(const LoadAdminDashboardModules());
+      bloc.add(LoadAdminDashboardModules());
     },
   );
 
   test(
     'should filter modules when FilterAdminDashboardModules event is dispatched',
     () async {
-      bloc.add(const LoadAdminDashboardModules());
-      await Future.delayed(const Duration(milliseconds: 50));
+      bloc.add(LoadAdminDashboardModules());
+      await Future.delayed(Duration(milliseconds: 50));
 
-      bloc.add(const FilterAdminDashboardModules('Doctors'));
-      await Future.delayed(const Duration(milliseconds: 50));
+      bloc.add(FilterAdminDashboardModules('Doctors'));
+      await Future.delayed(Duration(milliseconds: 50));
 
       final state = bloc.state as AdminHomeLoaded;
       expect(state.filteredModules.length, 1);

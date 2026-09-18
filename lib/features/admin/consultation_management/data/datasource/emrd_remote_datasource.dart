@@ -67,7 +67,7 @@ class EmrdRemoteDataSourceImpl implements EmrdRemoteDataSource {
 
       // 9. Archived Records (records older than 7 days)
       final archiveCutoff = DateTime.now()
-          .subtract(const Duration(days: 7))
+          .subtract(Duration(days: 7))
           .toIso8601String();
       final archivedRes = await supabase
           .from('emr_records')

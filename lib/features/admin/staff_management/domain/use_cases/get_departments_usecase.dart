@@ -9,7 +9,7 @@ import 'package:medi_connect/features/admin/staff_management/domain/repositories
 class GetDepartmentsUseCase extends UseCase<List<DepartmentEntity>, bool> {
   final DepartmentRepository _repository;
 
-  const GetDepartmentsUseCase(this._repository);
+  GetDepartmentsUseCase(this._repository);
 
   @override
   Future<Either<Failure, List<DepartmentEntity>>> call(

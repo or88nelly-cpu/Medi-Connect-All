@@ -9,7 +9,7 @@ class BookingStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC);
+    final bg = isDark ? Color(0xFF1E293B) : Color(0xFFF8FAFC);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
@@ -36,7 +36,7 @@ class BookingStepper extends StatelessWidget {
           width: 18.r,
           height: 18.r,
           decoration: BoxDecoration(
-            color: active ? const Color(0xFF3B5BFD) : Colors.grey.shade400,
+            color: active ? Color(0xFF3B5BFD) : Colors.grey.shade400,
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,
@@ -53,7 +53,7 @@ class BookingStepper extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: active ? const Color(0xFF3B5BFD) : Colors.grey.shade500,
+            color: active ? Color(0xFF3B5BFD) : Colors.grey.shade500,
             fontSize: 9.sp,
             fontWeight: active ? FontWeight.bold : FontWeight.normal,
           ),

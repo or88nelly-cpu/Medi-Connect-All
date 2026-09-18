@@ -45,7 +45,7 @@ class PatientDateCard extends StatelessWidget {
           BoxShadow(
             color: AppColors.primary.withValues(alpha: 0.10),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),

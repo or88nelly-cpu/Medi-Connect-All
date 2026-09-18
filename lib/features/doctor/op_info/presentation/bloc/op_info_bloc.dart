@@ -10,7 +10,7 @@ import 'package:medi_connect/features/doctor/op_info/domain/usecases/get_op_info
 class OpInfoBloc extends Bloc<OpInfoEvent, OpInfoState> {
   final GetOpInfoUseCase _getOpInfo;
 
-  OpInfoBloc({required this._getOpInfo}) : super(const OpInfoInitial()) {
+  OpInfoBloc({required this._getOpInfo}) : super(OpInfoInitial()) {
     on<OpInfoLoadRequested>(_onLoad);
     on<OpInfoDateChanged>(_onDateChanged);
     on<OpInfoSearchChanged>(_onSearchChanged);
@@ -23,7 +23,7 @@ class OpInfoBloc extends Bloc<OpInfoEvent, OpInfoState> {
     OpInfoLoadRequested event,
     Emitter<OpInfoState> emit,
   ) async {
-    emit(const OpInfoLoading());
+    emit(OpInfoLoading());
     final result = await _getOpInfo(
       GetOpInfoParams(doctorId: event.doctorId, date: event.date),
     );
@@ -43,7 +43,7 @@ class OpInfoBloc extends Bloc<OpInfoEvent, OpInfoState> {
   }
 
   Future<void> _reload(Emitter<OpInfoState> emit, OpInfoLoaded current) async {
-    emit(const OpInfoLoading());
+    emit(OpInfoLoading());
     final result = await _getOpInfo(
       GetOpInfoParams(doctorId: current.doctorId, date: current.selectedDate),
     );
@@ -107,7 +107,7 @@ class OpInfoBloc extends Bloc<OpInfoEvent, OpInfoState> {
   ) async {
     if (state is! OpInfoLoaded) return;
     final current = state as OpInfoLoaded;
-    final newDate = current.selectedDate.subtract(const Duration(days: 1));
+    final newDate = current.selectedDate.subtract(Duration(days: 1));
     add(OpInfoDateChanged(newDate));
   }
 
@@ -117,7 +117,7 @@ class OpInfoBloc extends Bloc<OpInfoEvent, OpInfoState> {
   ) async {
     if (state is! OpInfoLoaded) return;
     final current = state as OpInfoLoaded;
-    final newDate = current.selectedDate.add(const Duration(days: 1));
+    final newDate = current.selectedDate.add(Duration(days: 1));
     add(OpInfoDateChanged(newDate));
   }
 

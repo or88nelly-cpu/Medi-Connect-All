@@ -21,7 +21,7 @@ class ExtraCard extends StatelessWidget {
     final List<Widget> children = [
       _buildSpecialityCard(context),
       _buildSettingsCard(context),
-      const RecentActivityCard(activities: []),
+      RecentActivityCard(activities: []),
     ];
 
     if (isDesktop) {
@@ -108,7 +108,7 @@ class ExtraCard extends StatelessWidget {
                 ? Colors.black.withValues(alpha: 0.2)
                 : Colors.black.withValues(alpha: 0.02),
             blurRadius: 20,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
       ),
@@ -156,7 +156,7 @@ class ExtraCard extends StatelessWidget {
                         BoxShadow(
                           color: gradient.last.withValues(alpha: 0.25),
                           blurRadius: 6,
-                          offset: const Offset(0, 3),
+                          offset: Offset(0, 3),
                         ),
                       ],
                     ),

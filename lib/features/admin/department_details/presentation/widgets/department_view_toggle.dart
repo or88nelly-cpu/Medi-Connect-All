@@ -67,7 +67,7 @@ class DepartmentViewToggle extends StatelessWidget {
     return GestureDetector(
       onTap: () => onChanged(mode),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
+        duration: Duration(milliseconds: 180),
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.controlCenterBlue : Colors.transparent,
@@ -77,7 +77,7 @@ class DepartmentViewToggle extends StatelessWidget {
                   BoxShadow(
                     color: AppColors.controlCenterBlue.withValues(alpha: 0.3),
                     blurRadius: 8,
-                    offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ]
               : [],

@@ -52,7 +52,7 @@ class PharmacyBloc extends Bloc<PharmacyEvent, PharmacyState> {
     Emitter<PharmacyState> emit,
   ) async {
     emit(PharmacyLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(PharmacyError(failure.message)),
       (stats) => emit(PharmacyLoaded(stats)),

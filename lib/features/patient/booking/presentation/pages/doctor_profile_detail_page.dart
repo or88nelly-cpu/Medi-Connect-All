@@ -49,10 +49,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                   color: Colors.black26,
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: const Icon(
-                  Icons.arrow_back_rounded,
-                  color: Colors.white,
-                ),
+                child: Icon(Icons.arrow_back_rounded, color: Colors.white),
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -222,7 +219,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                         return GestureDetector(
                           onTap: () => setState(() => _selectedDateIndex = i),
                           child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
+                            duration: Duration(milliseconds: 200),
                             width: 50.w,
                             decoration: BoxDecoration(
                               gradient: isSelected
@@ -292,7 +289,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
                           ),
                         );
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.calendar_today_rounded,
                         color: Colors.white,
                       ),
@@ -323,7 +320,7 @@ class _DoctorProfileDetailPageState extends State<DoctorProfileDetailPage> {
   }
 
   String _weekdayAbbr(int wd) {
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return days[(wd - 1).clamp(0, 6)];
   }
 }

@@ -1,3 +1,4 @@
+
 import 'doctor_date_picker_pill.dart';
 import 'doctor_header.dart';
 import 'doctor_overview_card.dart';
@@ -93,7 +94,7 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                         ),
                         child: Text(
                           AppStrings.retry,
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ],
@@ -105,7 +106,7 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                 final stats = state.stats;
 
                 return SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -119,9 +120,7 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                         },
                         onNotificationsTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Loading notifications..."),
-                            ),
+                            SnackBar(content: Text("Loading notifications...")),
                           );
                         },
                         datePickerPill: DoctorDatePickerPill(
@@ -143,7 +142,7 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                             GridView.count(
                               crossAxisCount: 2,
                               shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
+                              physics: NeverScrollableScrollPhysics(),
                               mainAxisSpacing: 12.r,
                               crossAxisSpacing: 12.r,
                               childAspectRatio: 0.95,
@@ -270,7 +269,7 @@ class _DoctorHomeTabState extends State<DoctorHomeTab> {
                 );
               }
 
-              return const SizedBox.shrink();
+              return SizedBox.shrink();
             },
           );
         },

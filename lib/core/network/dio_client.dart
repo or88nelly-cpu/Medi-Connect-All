@@ -10,8 +10,8 @@ class DioClient {
   DioClient()
     : _dio = Dio(
         BaseOptions(
-          connectTimeout: const Duration(seconds: 15),
-          receiveTimeout: const Duration(seconds: 15),
+          connectTimeout: Duration(seconds: 15),
+          receiveTimeout: Duration(seconds: 15),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -127,7 +127,7 @@ class DioClient {
         e.type == DioExceptionType.sendTimeout ||
         e.type == DioExceptionType.receiveTimeout ||
         e.type == DioExceptionType.connectionError) {
-      return const NetworkException(
+      return NetworkException(
         "Connection timed out. Please check your internet.",
       );
     }

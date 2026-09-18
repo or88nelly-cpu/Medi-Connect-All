@@ -23,20 +23,20 @@ class _OnboardingBookingIllustrationState
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 4000),
+      duration: Duration(milliseconds: 4000),
     )..repeat();
 
     _floatAnim = Tween<double>(begin: -8.0, end: 8.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 1.0, curve: Curves.easeInOutSine),
+        curve: Interval(0.0, 1.0, curve: Curves.easeInOutSine),
       ),
     );
 
     _rotationAnim = Tween<double>(begin: 0.0, end: 2 * math.pi).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 1.0, curve: Curves.linear),
+        curve: Interval(0.0, 1.0, curve: Curves.linear),
       ),
     );
   }
@@ -102,7 +102,7 @@ class _OnboardingBookingIllustrationState
                   BoxShadow(
                     color: AppColors.primary.withValues(alpha: 0.12),
                     blurRadius: 20.r,
-                    offset: const Offset(0, 8),
+                    offset: Offset(0, 8),
                   ),
                 ],
               ),
@@ -121,7 +121,7 @@ class _OnboardingBookingIllustrationState
                           Container(
                             width: 6.r,
                             height: 6.r,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),
@@ -137,7 +137,7 @@ class _OnboardingBookingIllustrationState
                           Container(
                             width: 6.r,
                             height: 6.r,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),
@@ -150,7 +150,7 @@ class _OnboardingBookingIllustrationState
                       child: Padding(
                         padding: EdgeInsets.all(10.r),
                         child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 5,

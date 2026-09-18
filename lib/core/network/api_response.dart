@@ -1,7 +1,7 @@
 import 'package:medi_connect/core/models/failure.dart';
 
 abstract class ApiResponse<T> {
-  const ApiResponse();
+  ApiResponse();
 
   /// Utility to run conditional logic depending on state.
   R fold<R>({
@@ -23,16 +23,16 @@ abstract class ApiResponse<T> {
 /// Represents successful API state carrying the response data.
 class ApiSuccess<T> extends ApiResponse<T> {
   final T data;
-  const ApiSuccess(this.data);
+  ApiSuccess(this.data);
 }
 
 /// Represents failed API state containing failure details.
 class ApiFailure<T> extends ApiResponse<T> {
   final Failure failure;
-  const ApiFailure(this.failure);
+  ApiFailure(this.failure);
 }
 
 /// Represents network request loading/in-progress state.
 class ApiLoading<T> extends ApiResponse<T> {
-  const ApiLoading();
+  ApiLoading();
 }

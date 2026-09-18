@@ -41,7 +41,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
   @override
   void initState() {
     super.initState();
-    context.read<DepartmentBloc>().add(const LoadDepartments());
+    context.read<DepartmentBloc>().add(LoadDepartments());
   }
 
   @override
@@ -84,7 +84,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text("Select Department"),
+          title: Text("Select Department"),
           content: DropdownButton<String>(
             value: selectedDept,
             isExpanded: true,
@@ -98,7 +98,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -111,12 +111,12 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                     .then((value) {
                       if (value == true && context.mounted) {
                         context.read<DoctorStaffBloc>().add(
-                          const LoadDoctorStaff('All'),
+                          LoadDoctorStaff('All'),
                         );
                       }
                     });
               },
-              child: const Text("Next"),
+              child: Text("Next"),
             ),
           ],
         ),
@@ -133,7 +133,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
 
     return BlocProvider(
       create: (context) =>
-          GetIt.I<DoctorStaffBloc>()..add(const LoadDoctorStaff('All')),
+          GetIt.I<DoctorStaffBloc>()..add(LoadDoctorStaff('All')),
       child: Builder(
         builder: (context) {
           return CustomScaffold(
@@ -145,7 +145,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 1. Custom Header
-                    const DoctorsHeader(),
+                    DoctorsHeader(),
                     SizedBox(height: 16.h),
 
                     // 2. Dropdowns/Filters Row
@@ -186,7 +186,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                           BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
                             builder: (context, state) {
                               if (state is DoctorStaffLoading) {
-                                return const Center(
+                                return Center(
                                   child: CircularProgressIndicator(),
                                 );
                               } else if (state is DoctorStaffError) {
@@ -341,7 +341,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                                                         DoctorStaffBloc
                                                                       >()
                                                                       .add(
-                                                                        const LoadDoctorStaff(
+                                                                        LoadDoctorStaff(
                                                                           'All',
                                                                         ),
                                                                       );
@@ -387,10 +387,7 @@ class _AdminDoctorsPageState extends State<AdminDoctorsPage> {
                                   onPressed: () =>
                                       _showSelectDepartmentAndCreate(context),
                                   backgroundColor: AppColors.primary,
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
+                                  child: Icon(Icons.add, color: Colors.white),
                                 ),
                                 SizedBox(height: 4.h),
                                 Text(

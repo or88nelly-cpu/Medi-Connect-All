@@ -198,9 +198,7 @@ class _EditAddressInfoState extends State<EditAddressInfo> {
                   ],
                 ),
               ),
-              const Expanded(
-                child: SizedBox(),
-              ), // spacer to keep row symmetrical
+              Expanded(child: SizedBox()), // spacer to keep row symmetrical
             ],
           ),
         ],

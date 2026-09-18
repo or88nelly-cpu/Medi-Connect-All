@@ -99,29 +99,29 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(labelText: "Full Name"),
+                  decoration: InputDecoration(labelText: "Full Name"),
                 ),
                 TextField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Email Address (Optional)",
                   ),
                 ),
                 TextField(
                   controller: ageController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Age"),
+                  decoration: InputDecoration(labelText: "Age"),
                 ),
                 TextField(
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(labelText: "Phone Number"),
+                  decoration: InputDecoration(labelText: "Phone Number"),
                 ),
                 SizedBox(height: 12.h),
                 Row(
                   children: [
-                    const Text("Gender: "),
+                    Text("Gender: "),
                     SizedBox(width: 8.w),
                     DropdownButton<String>(
                       value: gender,
@@ -136,7 +136,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 ),
                 Row(
                   children: [
-                    const Text("Blood: "),
+                    Text("Blood: "),
                     SizedBox(width: 8.w),
                     DropdownButton<String>(
                       value: blood,
@@ -157,7 +157,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text(AppStrings.cancel),
+              child: Text(AppStrings.cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -195,7 +195,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   Navigator.pop(ctx);
                 }
               },
-              child: const Text(AppStrings.submit),
+              child: Text(AppStrings.submit),
             ),
           ],
         ),
@@ -224,27 +224,27 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(labelText: "Full Name"),
+                  decoration: InputDecoration(labelText: "Full Name"),
                 ),
                 TextField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: "Email Address"),
+                  decoration: InputDecoration(labelText: "Email Address"),
                 ),
                 TextField(
                   controller: ageController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: "Age"),
+                  decoration: InputDecoration(labelText: "Age"),
                 ),
                 TextField(
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(labelText: "Phone Number"),
+                  decoration: InputDecoration(labelText: "Phone Number"),
                 ),
                 SizedBox(height: 12.h),
                 Row(
                   children: [
-                    const Text("Gender: "),
+                    Text("Gender: "),
                     SizedBox(width: 8.w),
                     DropdownButton<String>(
                       value: ['Male', 'Female', 'Other'].contains(gender)
@@ -261,7 +261,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 ),
                 Row(
                   children: [
-                    const Text("Blood: "),
+                    Text("Blood: "),
                     SizedBox(width: 8.w),
                     DropdownButton<String>(
                       value:
@@ -294,7 +294,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text(AppStrings.cancel),
+              child: Text(AppStrings.cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -334,7 +334,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                   Navigator.pop(ctx);
                 }
               },
-              child: const Text(AppStrings.submit),
+              child: Text(AppStrings.submit),
             ),
           ],
         ),
@@ -346,14 +346,14 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Delete Patient"),
+        title: Text("Delete Patient"),
         content: Text(
           "Are you sure you want to delete patient ${patient.fullName}?",
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text(AppStrings.cancel),
+            child: Text(AppStrings.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -361,7 +361,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
               Navigator.pop(ctx);
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text("Delete"),
+            child: Text("Delete"),
           ),
         ],
       ),
@@ -569,7 +569,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(
                   builder: (context, state) {
                     if (state is AdminAppointmentsLoading) {
-                      return const Center(
+                      return Center(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 20.0),
                           child: CircularProgressIndicator(),
@@ -634,19 +634,19 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                 );
 
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content: Text(
                                       "Quick checkup session created.",
                                     ),
                                   ),
                                 );
                               },
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.add,
                                 color: Colors.white,
                                 size: 16,
                               ),
-                              label: const Text(
+                              label: Text(
                                 "Create Quick Visit to Add Vitals",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -838,11 +838,11 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                                   recent,
                                 );
                               },
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.edit_note_outlined,
                                 color: Colors.white,
                               ),
-                              label: const Text(
+                              label: Text(
                                 "Record / Update Vitals",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -950,7 +950,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
   ) {
     try {
       final Map<String, dynamic> custom = jsonDecode(jsonStr);
-      if (custom.isEmpty) return const SizedBox();
+      if (custom.isEmpty) return SizedBox();
       return Wrap(
         spacing: 8.w,
         runSpacing: 8.h,
@@ -989,7 +989,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
         }).toList(),
       );
     } catch (_) {
-      return const SizedBox();
+      return SizedBox();
     }
   }
 
@@ -1172,10 +1172,10 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                     TextButton.icon(
                       onPressed: () {
                         setDialogState(() {
-                          customVitalsList.add(const MapEntry("", ""));
+                          customVitalsList.add(MapEntry("", ""));
                         });
                       },
-                      icon: const Icon(Icons.add, size: 14),
+                      icon: Icon(Icons.add, size: 14),
                       label: Text(
                         "Add More",
                         style: TextStyle(
@@ -1277,7 +1277,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -1320,10 +1320,10 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                 ); // Close bottom sheet to force update/refresh display
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Vitals successfully saved.")),
+                  SnackBar(content: Text("Vitals successfully saved.")),
                 );
               },
-              child: const Text("Save"),
+              child: Text("Save"),
             ),
           ],
         ),
@@ -1353,7 +1353,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
       listener: (context, state) {
         if (state is PatientActionSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Action completed successfully.")),
+            SnackBar(content: Text("Action completed successfully.")),
           );
           context.read<PatientBloc>().add(LoadPatients());
         } else if (state is PatientError) {
@@ -1374,7 +1374,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // 1. Custom Header
-                const PatientHeader(),
+                PatientHeader(),
                 SizedBox(height: 16.h),
 
                 // 2. Dropdowns/Filters Row
@@ -1401,9 +1401,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                       BlocBuilder<PatientBloc, PatientState>(
                         builder: (context, state) {
                           if (state is PatientLoading) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return Center(child: CircularProgressIndicator());
                           } else if (state is PatientError &&
                               state is! PatientLoaded) {
                             return Center(
@@ -1587,7 +1585,7 @@ class _AdminPatientsPageState extends State<AdminPatientsPage> {
                               heroTag: 'add_patient_fab',
                               onPressed: () => _showAddPatientDialog(context),
                               backgroundColor: AppColors.primary,
-                              child: const Icon(Icons.add, color: Colors.white),
+                              child: Icon(Icons.add, color: Colors.white),
                             ),
                             SizedBox(height: 4.h),
                             Text(

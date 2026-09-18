@@ -10,17 +10,13 @@ class LoginFeatureBadges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final badges = [
-      const _BadgeData(Icons.verified_rounded, 'Secure', AppColors.primary),
-      const _BadgeData(
+      _BadgeData(Icons.verified_rounded, 'Secure', AppColors.primary),
+      _BadgeData(
         Icons.people_alt_rounded,
         'Personalized',
         AppColors.adminPrimary,
       ),
-      const _BadgeData(
-        Icons.auto_awesome_rounded,
-        'Seamless',
-        Color(0xFF00B8A9),
-      ),
+      _BadgeData(Icons.auto_awesome_rounded, 'Seamless', Color(0xFF00B8A9)),
     ];
 
     return Row(
@@ -79,5 +75,5 @@ class _BadgeData {
   final IconData icon;
   final String label;
   final Color color;
-  const _BadgeData(this.icon, this.label, this.color);
+  _BadgeData(this.icon, this.label, this.color);
 }

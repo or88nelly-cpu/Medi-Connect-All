@@ -35,7 +35,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
                     BoxShadow(
                       color: AppColors.blue.withValues(alpha: 0.1),
                       blurRadius: 8,
-                      offset: const Offset(0, 4),
+                      offset: Offset(0, 4),
                     ),
                   ],
                 ),
@@ -56,9 +56,9 @@ class AppointmentsBottomBanner extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.all(4.r),
                         child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 crossAxisSpacing: 3,
                                 mainAxisSpacing: 3,
@@ -66,7 +66,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
                           itemCount: 9,
                           itemBuilder: (context, index) {
                             return Container(
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 color: Color(0xFFDBEAFE),
                                 shape: BoxShape.circle,
                               ),
@@ -85,7 +85,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
               right: 2.w,
               child: Container(
                 padding: EdgeInsets.all(1.r),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
                 ),
@@ -102,7 +102,7 @@ class AppointmentsBottomBanner extends StatelessWidget {
               left: 0,
               child: Container(
                 padding: EdgeInsets.all(2.r),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
                 ),
@@ -171,10 +171,10 @@ class AppointmentsBottomBanner extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E2D4A) : const Color(0xFFEFF6FF),
+        color: isDark ? Color(0xFF1E2D4A) : Color(0xFFEFF6FF),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: isDark ? const Color(0xFF2E3E5C) : const Color(0xFFDBEAFE),
+          color: isDark ? Color(0xFF2E3E5C) : Color(0xFFDBEAFE),
           width: 1,
         ),
       ),

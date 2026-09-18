@@ -52,7 +52,7 @@ class WardBloc extends Bloc<WardEvent, WardState> {
     Emitter<WardState> emit,
   ) async {
     emit(WardLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(WardError(failure.message)),
       (stats) => emit(WardLoaded(stats)),

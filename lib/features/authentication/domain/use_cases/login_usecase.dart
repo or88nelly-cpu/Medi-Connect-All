@@ -13,14 +13,14 @@ class LoginParams {
   final String email;
   final String password;
 
-  const LoginParams({required this.email, required this.password});
+  LoginParams({required this.email, required this.password});
 }
 
 @lazySingleton
 class LoginUseCase extends UseCase<UserEntity, LoginParams> {
   final AuthRepository _repository;
 
-  const LoginUseCase(this._repository);
+  LoginUseCase(this._repository);
 
   @override
   Future<Either<Failure, UserEntity>> call(LoginParams params) {

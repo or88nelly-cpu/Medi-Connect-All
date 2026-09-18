@@ -47,7 +47,7 @@ class ConsultationHistorySheet extends StatelessWidget {
         return Container(
           decoration: BoxDecoration(
             color: sheetBg,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
             children: [
@@ -92,14 +92,14 @@ class ConsultationHistorySheet extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close),
+                      icon: Icon(Icons.close),
                       color: secondaryText,
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
                 ),
               ),
-              const Divider(),
+              Divider(),
 
               // Consultation list
               Expanded(
@@ -125,8 +125,8 @@ class ConsultationHistorySheet extends StatelessWidget {
                             'dd MMMM yyyy',
                           ).format(apt.appointmentDate);
                           final bgCard = isDark
-                              ? const Color(0xFF1E293B)
-                              : const Color(0xFFF8FAFC);
+                              ? Color(0xFF1E293B)
+                              : Color(0xFFF8FAFC);
 
                           return Container(
                             margin: EdgeInsets.only(bottom: 12.h),
@@ -147,13 +147,13 @@ class ConsultationHistorySheet extends StatelessWidget {
                                       children: [
                                         Container(
                                           padding: EdgeInsets.all(6.r),
-                                          decoration: const BoxDecoration(
+                                          decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Color(0xFFF3E8FF),
                                           ),
                                           child: Icon(
                                             Icons.favorite_border_rounded,
-                                            color: const Color(0xFF7E22CE),
+                                            color: Color(0xFF7E22CE),
                                             size: 16.r,
                                           ),
                                         ),
@@ -198,7 +198,7 @@ class ConsultationHistorySheet extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const Divider(height: 20),
+                                Divider(height: 20),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

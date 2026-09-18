@@ -11,7 +11,7 @@ class LabTestsSection extends StatelessWidget {
 
   const LabTestsSection({super.key, required this.labNotesCtrl});
 
-  static const List<String> _availableTests = [
+  static final List<String> _availableTests = [
     'CBC (Blood Count)',
     'Blood Sugar (Fasting)',
     'Blood Sugar (PP)',
@@ -38,7 +38,7 @@ class LabTestsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ConsultationSectionHeader(
+        ConsultationSectionHeader(
           icon: Icons.science_outlined,
           title: 'B. Lab Tests / Scanning',
           subtitle: 'Schedule investigations',
@@ -114,7 +114,7 @@ class LabTestsSection extends StatelessWidget {
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(ctx),
-                    child: const Text('Cancel'),
+                    child: Text('Cancel'),
                   ),
                   TextButton(
                     onPressed: () {
@@ -123,7 +123,7 @@ class LabTestsSection extends StatelessWidget {
                       }
                       Navigator.pop(ctx);
                     },
-                    child: const Text('Add'),
+                    child: Text('Add'),
                   ),
                 ],
               ),
@@ -138,7 +138,7 @@ class LabTestsSection extends StatelessWidget {
             ),
           ),
           style: OutlinedButton.styleFrom(
-            side: const BorderSide(color: AppColors.secondary),
+            side: BorderSide(color: AppColors.secondary),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -169,10 +169,7 @@ class LabTestsSection extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(
-                color: AppColors.primary,
-                width: 1.5,
-              ),
+              borderSide: BorderSide(color: AppColors.primary, width: 1.5),
             ),
           ),
         ),

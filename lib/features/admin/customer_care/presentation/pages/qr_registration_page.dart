@@ -46,7 +46,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: isDark ? Colors.white : const Color(0xFF1E293B),
+            color: isDark ? Colors.white : Color(0xFF1E293B),
             size: 20.r,
           ),
           onPressed: () => Navigator.of(context).pop(),
@@ -58,7 +58,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               "Customer Care",
               style: AppTextStyles.titleMedium.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : Color(0xFF1E293B),
                 fontSize: 16.sp,
               ),
             ),
@@ -74,7 +74,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(
           horizontal: isMobile ? 16.w : 40.w,
           vertical: 20.h,
@@ -89,7 +89,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               style: AppTextStyles.headingMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 26.sp,
-                color: isDark ? Colors.white : const Color(0xFF1E293B),
+                color: isDark ? Colors.white : Color(0xFF1E293B),
               ),
             ),
             SizedBox(height: 6.h),
@@ -107,7 +107,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
               decoration: BoxDecoration(
-                color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                color: Color(0xFF10B981).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(30.r),
               ),
               child: Row(
@@ -115,14 +115,14 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
                 children: [
                   Icon(
                     Icons.shield_outlined,
-                    color: const Color(0xFF10B981),
+                    color: Color(0xFF10B981),
                     size: 14.r,
                   ),
                   SizedBox(width: 6.w),
                   Text(
                     "Secure  •  Fast  •  Trusted",
                     style: TextStyle(
-                      color: const Color(0xFF10B981),
+                      color: Color(0xFF10B981),
                       fontSize: 11.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -144,7 +144,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
             SizedBox(height: 32.h),
 
             // Steps Info
-            const RegistrationStepsTimeline(),
+            RegistrationStepsTimeline(),
             SizedBox(height: 32.h),
 
             // Safety Notice footer
@@ -154,10 +154,10 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
               decoration: BoxDecoration(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.02)
-                    : const Color(0xFFEFF6FF),
+                    : Color(0xFFEFF6FF),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
-                  color: isDark ? Colors.white10 : const Color(0xFFDBEAFE),
+                  color: isDark ? Colors.white10 : Color(0xFFDBEAFE),
                 ),
               ),
               child: Row(
@@ -172,9 +172,7 @@ class _QrRegistrationPageState extends State<QrRegistrationPage> {
                     child: Text(
                       "By scanning this QR code, patients will be redirected to the official app store. Your data is safe with us.",
                       style: AppTextStyles.bodyXSmall.copyWith(
-                        color: isDark
-                            ? Colors.white54
-                            : const Color(0xFF1E3A8A),
+                        color: isDark ? Colors.white54 : Color(0xFF1E3A8A),
                         fontSize: 10.sp,
                         height: 1.3,
                       ),

@@ -38,7 +38,7 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
     {
       "name": "Online",
       "icon": Icons.circle,
-      "color": const Color(0xFF0F9F58),
+      "color": Color(0xFF0F9F58),
       "desc": "Available for Appointments",
     },
     {
@@ -153,7 +153,7 @@ class _DoctorAvailabilityCardState extends State<DoctorAvailabilityCard> {
                     }
                   },
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
+                    duration: Duration(milliseconds: 200),
                     margin: EdgeInsets.symmetric(horizontal: 4.w),
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     decoration: BoxDecoration(

@@ -24,7 +24,7 @@ class PatientHeader extends StatelessWidget {
             if (Navigator.of(context).canPop()) ...[
               IconButton(
                 icon: Icon(Icons.arrow_back, color: textColor),
-                constraints: const BoxConstraints(),
+                constraints: BoxConstraints(),
                 padding: EdgeInsets.zero,
                 onPressed: () => Navigator.of(context).pop(),
               ),

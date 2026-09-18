@@ -52,7 +52,7 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
         body: BlocBuilder<CustomerCareBloc, CustomerCareState>(
           builder: (context, state) {
             if (state is CustomerCareLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is CustomerCareError) {
               return Center(
                 child: Text(
@@ -92,12 +92,12 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
                             builder: (ctx) =>
-                                const CreateAppointmentWizardBottomSheet(),
+                                CreateAppointmentWizardBottomSheet(),
                           );
                         } else if (title == AppStrings.admission) {
                           showDialog(
                             context: context,
-                            builder: (_) => const AdmitPatientDialog(),
+                            builder: (_) => AdmitPatientDialog(),
                           );
                         } else if (title == "Consultation") {
                           final emrdBloc = context.read<EmrdBloc>();
@@ -106,7 +106,7 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                             MaterialPageRoute(
                               builder: (context) => BlocProvider.value(
                                 value: emrdBloc,
-                                child: const MedicalRecordManagementPage(),
+                                child: MedicalRecordManagementPage(),
                               ),
                             ),
                           );
@@ -129,7 +129,7 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                                 ),
                               ),
                               SizedBox(width: 16.w),
-                              const Expanded(flex: 1, child: SizedBox.shrink()),
+                              Expanded(flex: 1, child: SizedBox.shrink()),
                             ],
                           );
                         } else {
@@ -145,7 +145,7 @@ class _CustomerCareDetailPageState extends State<CustomerCareDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

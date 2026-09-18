@@ -21,7 +21,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
   @override
   void initState() {
     super.initState();
-    context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+    context.read<DoctorStaffBloc>().add(LoadDoctorStaff('All'));
   }
 
   @override
@@ -53,7 +53,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.close),
+                icon: Icon(Icons.close),
                 onPressed: () => Navigator.pop(context),
               ),
             ],
@@ -66,7 +66,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
             child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
               builder: (context, state) {
                 if (state is DoctorStaffLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 } else if (state is DoctorStaffError ||
                     state is! DoctorStaffLoaded) {
                   return _buildFallbackDoctorsList(context);
@@ -80,7 +80,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
                 }
 
                 return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   itemCount: doctors.length,
                   itemBuilder: (context, idx) {
                     final doc = doctors[idx];
@@ -97,7 +97,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
 
   Widget _buildFallbackDoctorsList(BuildContext context) {
     final List<UserModel> fallbackDocs = [
-      const UserModel(
+      UserModel(
         id: 'doc-1',
         email: 'sarah.j@mediconnect.com',
         firstName: 'Dr. Sarah',
@@ -107,7 +107,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
     ];
 
     return ListView.builder(
-      physics: const BouncingScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       itemCount: fallbackDocs.length,
       itemBuilder: (context, idx) {
         final doc = fallbackDocs[idx];
@@ -173,7 +173,7 @@ class _PatientBookingBottomSheetState extends State<PatientBookingBottomSheet> {
               borderRadius: BorderRadius.circular(8.r),
             ),
           ),
-          child: const Text(
+          child: Text(
             "Book",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),

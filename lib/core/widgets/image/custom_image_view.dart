@@ -30,7 +30,7 @@ class CustomImageView extends StatelessWidget {
     Widget imageWidget;
 
     if (imagePath.isEmpty) {
-      imageWidget = errorWidget ?? const Icon(Icons.error_outline);
+      imageWidget = errorWidget ?? Icon(Icons.error_outline);
     } else if (imagePath.startsWith('http://') ||
         imagePath.startsWith('https://')) {
       if (imagePath.endsWith('.svg')) {
@@ -52,7 +52,7 @@ class CustomImageView extends StatelessWidget {
           color: color,
           placeholder: (context, url) =>
               placeholder ??
-              const Center(
+              Center(
                 child: SizedBox(
                   width: 20,
                   height: 20,
@@ -60,7 +60,7 @@ class CustomImageView extends StatelessWidget {
                 ),
               ),
           errorWidget: (context, url, error) =>
-              errorWidget ?? const Icon(Icons.error_outline),
+              errorWidget ?? Icon(Icons.error_outline),
         );
       }
     } else if (imagePath.endsWith('.svg')) {

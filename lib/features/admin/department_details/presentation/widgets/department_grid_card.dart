@@ -47,7 +47,7 @@ class _DepartmentGridCardState extends State<DepartmentGridCard> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
+          duration: Duration(milliseconds: 160),
           height: widget.height,
           width: widget.width,
           transform: _hovered

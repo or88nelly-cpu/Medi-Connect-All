@@ -132,7 +132,7 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
                     }
                   },
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
+                    duration: Duration(milliseconds: 150),
                     margin: EdgeInsets.symmetric(horizontal: 4.w),
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     decoration: BoxDecoration(
@@ -178,7 +178,7 @@ class _DateSelectorStripState extends State<DateSelectorStrip> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildLegendItem("Available", const Color(0xFF0F9F58)),
+              _buildLegendItem("Available", Color(0xFF0F9F58)),
               SizedBox(width: 14.w),
               _buildLegendItem("Booked", AppColors.primary),
               SizedBox(width: 14.w),

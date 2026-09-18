@@ -54,7 +54,7 @@ class SuccessStep extends StatelessWidget {
           Container(
             width: 60.r,
             height: 60.r,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.success,
               shape: BoxShape.circle,
             ),
@@ -219,7 +219,7 @@ class SuccessStep extends StatelessWidget {
           OutlinedButton(
             onPressed: onSharePressed,
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: AppColors.primary, width: 1.5),
+              side: BorderSide(color: AppColors.primary, width: 1.5),
               minimumSize: Size(double.infinity, 48.h),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.r),
@@ -263,7 +263,7 @@ class SuccessStep extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF131D33) : const Color(0xFFF8FAFD),
+        color: isDark ? Color(0xFF131D33) : Color(0xFFF8FAFD),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.border(context)),
       ),

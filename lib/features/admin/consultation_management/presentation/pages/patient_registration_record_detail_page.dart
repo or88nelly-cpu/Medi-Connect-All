@@ -115,11 +115,11 @@ class _PatientRegistrationRecordDetailPageState
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF09121F)
+            ? Color(0xFF09121F)
             : Colors.white,
         title: Row(
           children: [
-            const Icon(Icons.check_circle, color: AppColors.success, size: 28),
+            Icon(Icons.check_circle, color: AppColors.success, size: 28),
             SizedBox(width: 10.w),
             Text(
               "Payment Confirmed",
@@ -156,7 +156,7 @@ class _PatientRegistrationRecordDetailPageState
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx),
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: const Text("OK", style: TextStyle(color: Colors.white)),
+            child: Text("OK", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -168,7 +168,7 @@ class _PatientRegistrationRecordDetailPageState
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF09121F)
+            ? Color(0xFF09121F)
             : Colors.white,
         title: Row(
           children: [
@@ -184,7 +184,7 @@ class _PatientRegistrationRecordDetailPageState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel"),
+            child: Text("Cancel"),
           ),
         ],
       ),
@@ -196,7 +196,7 @@ class _PatientRegistrationRecordDetailPageState
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF09121F)
+            ? Color(0xFF09121F)
             : Colors.white,
         title: Row(
           children: [
@@ -210,10 +210,7 @@ class _PatientRegistrationRecordDetailPageState
           style: AppTextStyles.bodyMedium,
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("Close"),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Close")),
         ],
       ),
     );
@@ -251,7 +248,7 @@ class _PatientRegistrationRecordDetailPageState
               ),
             ],
           ),
-          const Divider(height: 24),
+          Divider(height: 24),
           ...children,
         ],
       ),
@@ -308,12 +305,12 @@ class _PatientRegistrationRecordDetailPageState
     final isWide = screenWidth > 950;
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Registration Details"),
+      customAppbar: CommonAppBar(title: "Registration Details"),
       body: FutureBuilder<Map<String, dynamic>?>(
         future: _patientDetailsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           final userMap = snapshot.data;
@@ -597,8 +594,8 @@ class _PatientRegistrationRecordDetailPageState
                             ),
                           );
                         },
-                        icon: const Icon(Icons.view_list),
-                        label: const Text("View All Consultations"),
+                        icon: Icon(Icons.view_list),
+                        label: Text("View All Consultations"),
                       ),
                     ),
                   ],
@@ -615,8 +612,8 @@ class _PatientRegistrationRecordDetailPageState
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: isDark
-                      ? [const Color(0xFF1E293B), const Color(0xFF0F172A)]
-                      : [const Color(0xFFF1F5F9), Colors.white],
+                      ? [Color(0xFF1E293B), Color(0xFF0F172A)]
+                      : [Color(0xFFF1F5F9), Colors.white],
                 ),
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
@@ -626,7 +623,7 @@ class _PatientRegistrationRecordDetailPageState
                   BoxShadow(
                     color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
                     blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    offset: Offset(0, 4),
                   ),
                 ],
               ),
@@ -716,7 +713,7 @@ class _PatientRegistrationRecordDetailPageState
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Divider(height: 24),
+                    Divider(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -742,7 +739,7 @@ class _PatientRegistrationRecordDetailPageState
                       children: [
                         Expanded(
                           child: ChoiceChip(
-                            label: const Text('Cash'),
+                            label: Text('Cash'),
                             selected: _payMethod == 'Cash',
                             onSelected: (val) {
                               if (val) setState(() => _payMethod = 'Cash');
@@ -752,7 +749,7 @@ class _PatientRegistrationRecordDetailPageState
                         SizedBox(width: 12.w),
                         Expanded(
                           child: ChoiceChip(
-                            label: const Text('UPI / QR'),
+                            label: Text('UPI / QR'),
                             selected: _payMethod == 'Online',
                             onSelected: (val) {
                               if (val) setState(() => _payMethod = 'Online');
@@ -827,7 +824,7 @@ class _PatientRegistrationRecordDetailPageState
                             ? SizedBox(
                                 width: 20.r,
                                 height: 20.r,
-                                child: const CircularProgressIndicator(
+                                child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                     Colors.white,
@@ -889,17 +886,14 @@ class _PatientRegistrationRecordDetailPageState
                         Expanded(
                           child: OutlinedButton.icon(
                             onPressed: () => _simulatePrint(patientName, uhid),
-                            icon: const Icon(
-                              Icons.print,
-                              color: AppColors.primary,
-                            ),
+                            icon: Icon(Icons.print, color: AppColors.primary),
                             label: Text(
                               "Print Card",
                               style: TextStyle(color: AppColors.primary),
                             ),
                             style: OutlinedButton.styleFrom(
                               padding: EdgeInsets.symmetric(vertical: 12.h),
-                              side: const BorderSide(color: AppColors.primary),
+                              side: BorderSide(color: AppColors.primary),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.r),
                               ),
@@ -911,11 +905,8 @@ class _PatientRegistrationRecordDetailPageState
                           child: ElevatedButton.icon(
                             onPressed: () =>
                                 _simulateDownload(patientName, uhid),
-                            icon: const Icon(
-                              Icons.download,
-                              color: Colors.white,
-                            ),
-                            label: const Text(
+                            icon: Icon(Icons.download, color: Colors.white),
+                            label: Text(
                               "Download Card",
                               style: TextStyle(color: Colors.white),
                             ),

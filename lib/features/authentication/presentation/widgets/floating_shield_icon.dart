@@ -23,7 +23,7 @@ class _FloatingShieldIconState extends State<FloatingShieldIcon>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: Duration(seconds: 3),
     )..repeat(reverse: true);
 
     _yOffset = Tween<double>(begin: -8.0, end: 8.0).animate(

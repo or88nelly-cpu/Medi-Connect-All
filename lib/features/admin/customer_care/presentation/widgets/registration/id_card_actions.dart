@@ -16,13 +16,9 @@ class IdCardActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark
-        ? const Color(0xFF16253B)
-        : const Color(0xFFD3E0EE);
-    final buttonTextColor = isDark
-        ? const Color(0xFF5E98C7)
-        : const Color(0xFF3F6D94);
+    final cardBg = isDark ? Color(0xFF09121F) : Colors.white;
+    final borderColor = isDark ? Color(0xFF16253B) : Color(0xFFD3E0EE);
+    final buttonTextColor = isDark ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -139,21 +135,18 @@ class IdCardActions extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF09121F)
+            ? Color(0xFF09121F)
             : Colors.white,
         title: Row(
           children: [
-            const Icon(Icons.check_circle, color: AppColors.success),
+            Icon(Icons.check_circle, color: AppColors.success),
             SizedBox(width: 8.w),
             Text(title, style: AppTextStyles.titleMedium),
           ],
         ),
         content: Text(message, style: AppTextStyles.bodyMedium),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("OK"),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("OK")),
         ],
       ),
     );

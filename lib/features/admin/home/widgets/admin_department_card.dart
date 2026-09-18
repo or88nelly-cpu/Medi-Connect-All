@@ -50,13 +50,13 @@ class AdminDepartmentCard extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withValues(alpha: isDark ? .10 : .02),
               blurRadius: 8,
-              offset: const Offset(0, 3),
+              offset: Offset(0, 3),
             ),
           ],
         ),
         child: Column(
           children: [
-            const Spacer(),
+            Spacer(),
 
             Container(
               width: iconSize,
@@ -72,7 +72,7 @@ class AdminDepartmentCard extends StatelessWidget {
               ),
             ),
 
-            const Spacer(),
+            Spacer(),
 
             Text(
               department.name,

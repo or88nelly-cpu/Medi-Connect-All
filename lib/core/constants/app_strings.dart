@@ -1,593 +1,566 @@
+import 'package:easy_localization/easy_localization.dart';
+
 /// Centralized string constants for localization and UI text.
 /// Ensures no hardcoded raw strings are used directly in pages/widgets.
 class AppStrings {
   // Common Buttons & Actions
-  static const login = "Login";
-  static const signup = "Sign Up";
-  static const register = "Register";
-  static const verify = "Verify";
-  static const submit = "Submit";
-  static const cancel = "Cancel";
-  static const confirm = "Confirm";
-  static const next = "Next";
-  static const back = "Back";
-  static const skip = "Skip for Now";
-  static const getStarted = "Get Started";
-  static const retry = "Retry";
-  static const logout = "Logout";
-  static const completePayment = "Complete Payment";
-  static const selectPaymentMethod = "Select Payment Method";
-  static const payViaQRCode = "Pay via QR Code";
-  static const scanUpiPrompt = "Scan UPI/Static QR for instant activation";
-  static const payAtCounter = "Pay at Counter (COD)";
-  static const payAtCounterDesc = "Pay in cash at the clinic registration desk";
-  static const upiQrPayment = "UPI QR Code Payment";
-  static const scanToCompletePay = "Scan to complete your payment of ₹500";
-  static const secureUpiGateway = "Secure UPI Payment Gateway";
-  static const confirmPaymentBtn = "Confirm Payment";
+  static String get login => "login".tr();
+  static String get signup => "signup".tr();
+  static String get register => "register".tr();
+  static String get verify => "verify".tr();
+  static String get submit => "submit".tr();
+  static String get cancel => "cancel".tr();
+  static String get confirm => "confirm".tr();
+
+  static String get next => "next".tr();
+  static String get back => "back".tr();
+  static String get skip => "skip".tr();
+  static String get getStarted => "getStarted".tr();
+  static String get retry => "retry".tr();
+  static String get logout => "logout".tr();
+  static String get completePayment => "completePayment".tr();
+  static String get selectPaymentMethod => "selectPaymentMethod".tr();
+  static String get payViaQRCode => "payViaQRCode".tr();
+  static String get scanUpiPrompt => "scanUpiPrompt".tr();
+  static String get payAtCounter => "payAtCounter".tr();
+  static String get payAtCounterDesc => "payAtCounterDesc".tr();
+  static String get upiQrPayment => "upiQrPayment".tr();
+  static String get scanToCompletePay => "scanToCompletePay".tr();
+  static String get secureUpiGateway => "secureUpiGateway".tr();
+  static String get confirmPaymentBtn => "confirmPaymentBtn".tr();
 
   // Onboarding / Profile Completion
-  static const completeYourProfile = "Complete Your Profile";
-  static const patientRegistrationTitle = "Patient Registration";
-  static const stepOf = "Step"; // used as "Step 1 of 3"
-  static const basicInformation = "Basic Information";
-  static const additionalInformation = "Additional Information";
-  static const reviewAndConfirm = "Review & Confirm";
-  static const idCardDownloadStarted = "ID Card download started...";
+  static String get completeYourProfile => "completeYourProfile".tr();
+  static String get patientRegistrationTitle => "patientRegistrationTitle".tr();
+  static String get stepOf => "stepOf".tr(); // used as "Step 1 of 3"
+  static String get basicInformation => "basicInformation".tr();
+  static String get additionalInformation => "additionalInformation".tr();
+  static String get reviewAndConfirm => "reviewAndConfirm".tr();
+  static String get idCardDownloadStarted => "idCardDownloadStarted".tr();
 
   // Navigation / Features
-  static const appointment = "Appointment";
-  static const appointments = "Appointments";
-  static const chat = "Chat";
-  static const consultations = "Consultations";
-  static const medicalRecords = "Medical Records";
-  static const dietPlans = "Diet Plans";
-  static const exercise_plans = "Exercise Plans";
-  static const notifications = "Notifications";
-  static const profile = "Profile";
-  static const payments = "Payments";
-  static const dashboard = "Dashboard";
-  static const availableBeds = "Available Beds";
+  static String get appointment => "appointment".tr();
+  static String get appointments => "appointments".tr();
+  static String get chat => "chat".tr();
+  static String get consultations => "consultations".tr();
+  static String get medicalRecords => "medicalRecords".tr();
+  static String get dietPlans => "dietPlans".tr();
+  static String get exercise_plans => "exercise_plans".tr();
+  static String get notifications => "notifications".tr();
+  static String get profile => "profile".tr();
+  static String get payments => "payments".tr();
+  static String get dashboard => "dashboard".tr();
+  static String get availableBeds => "availableBeds".tr();
 
   // Authentication & Onboarding
-  static const splashTitle = "Medi-Connect";
-  static const splashSubtitle = "Smart Healthcare Management Platform";
-  static const onboardingTitle1 = "Find Trusted Doctors";
-  static const onboardingDesc1 =
-      "Connect with certified medical specialists instantly.";
-  static const onboardingTitle2 = "Book Appointments easily";
-  static const onboardingDesc2 =
-      "Schedule physical or video consultation bookings anytime.";
-  static const onboardingTitle3 = "Secure Medical Records";
-  static const onboardingDesc3 =
-      "Store and access reports, tests, and advice securely.";
+  static String get splashTitle => "splashTitle".tr();
+  static String get splashSubtitle => "splashSubtitle".tr();
+  static String get onboardingTitle1 => "onboardingTitle1".tr();
+  static String get onboardingDesc1 => "onboardingDesc1".tr();
+  static String get onboardingTitle2 => "onboardingTitle2".tr();
+  static String get onboardingDesc2 => "onboardingDesc2".tr();
+  static String get onboardingTitle3 => "onboardingTitle3".tr();
+  static String get onboardingDesc3 => "onboardingDesc3".tr();
 
-  static const welcomeBack = "Welcome Back";
-  static const signInSubtitle = "Sign in to access your healthcare portal";
-  static const emailAddress = "Email Address";
-  static const enterEmail = "Enter your email";
-  static const password = "Password";
-  static const enterPassword = "Enter your password";
-  static const forgotPasswordQuestion = "Forgot Password?";
-  static const dontHaveAccount = "Don't have an account? ";
+  static String get welcomeBack => "welcomeBack".tr();
+  static String get signInSubtitle => "signInSubtitle".tr();
+  static String get emailAddress => "emailAddress".tr();
+  static String get enterEmail => "enterEmail".tr();
+  static String get password => "password".tr();
+  static String get enterPassword => "enterPassword".tr();
+  static String get forgotPasswordQuestion => "forgotPasswordQuestion".tr();
+  static String get dontHaveAccount => "dontHaveAccount".tr();
 
-  static const createAccount = "Create Account";
-  static const registerSubtitle =
-      "Join the platform and manage your healthcare journey.";
-  static const registerAs = "Register As";
-  static const fullName = "Full Name";
-  static const enterFullName = "Enter your full name";
-  static const phoneNumber = "Phone Number";
-  static const enterPhone = "Enter phone number";
-  static const alreadyHaveAccount = "Already have an account? ";
+  static String get createAccount => "createAccount".tr();
+  static String get registerSubtitle => "registerSubtitle".tr();
+  static String get registerAs => "registerAs".tr();
+  static String get fullName => "fullName".tr();
+  static String get enterFullName => "enterFullName".tr();
+  static String get phoneNumber => "phoneNumber".tr();
+  static String get enterPhone => "enterPhone".tr();
+  static String get alreadyHaveAccount => "alreadyHaveAccount".tr();
 
-  static const forgotPasswordTitle = "Forgot Password";
-  static const forgotPasswordDesc =
-      "Enter your email to receive a password reset OTP/link.";
-  static const resetPasswordTitle = "Reset Password";
-  static const resetPasswordDesc = "Create a strong new password for security.";
-  static const otpVerificationTitle = "OTP Verification";
-  static const otpVerificationDesc =
-      "Enter the 6-digit verification code sent to your phone/email.";
-  static const resendCode = "Resend Code";
-  static const confirmSignOut = "Are you sure you want to sign out?";
+  static String get forgotPasswordTitle => "forgotPasswordTitle".tr();
+  static String get forgotPasswordDesc => "forgotPasswordDesc".tr();
+  static String get resetPasswordTitle => "resetPasswordTitle".tr();
+  static String get resetPasswordDesc => "resetPasswordDesc".tr();
+  static String get otpVerificationTitle => "otpVerificationTitle".tr();
+  static String get otpVerificationDesc => "otpVerificationDesc".tr();
+  static String get resendCode => "resendCode".tr();
+  static String get confirmSignOut => "confirmSignOut".tr();
 
   // Validation & Errors
-  static const requiredField = "This field is required";
-  static const invalidEmail = "Enter a valid email address";
-  static const invalidPhone = "Enter a valid phone number";
-  static const passwordTooShort = "Password must be at least 8 characters";
-  static const genericError = "Something went wrong. Please try again.";
-  static const otpInvalid = "Please enter a valid 6-digit OTP code";
-  static const passwordMismatch = "Passwords do not match";
+  static String get requiredField => "requiredField".tr();
+  static String get invalidEmail => "invalidEmail".tr();
+  static String get invalidPhone => "invalidPhone".tr();
+  static String get passwordTooShort => "passwordTooShort".tr();
+  static String get genericError => "genericError".tr();
+  static String get otpInvalid => "otpInvalid".tr();
+  static String get passwordMismatch => "passwordMismatch".tr();
 
   // Dialog & State Texts
-  static const success = "Success";
-  static const error = "Error";
-  static const alert = "Alert";
-  static const failedToLoad = "Failed to load";
-  static const noData = "No data";
-  static const noRecords = "No records found in this category.";
+  static String get success => "success".tr();
+  static String get error => "error".tr();
+  static String get alert => "alert".tr();
+  static String get failedToLoad => "failedToLoad".tr();
+  static String get noData => "noData".tr();
+  static String get noRecords => "noRecords".tr();
 
   // Dashboard & Module Titles
-  static const welcomeUser = "Welcome Back,";
-  static const drUser = "Dr. Healthcare User";
-  static const patientDashboardTitle = "Patient Dashboard";
-  static const doctorDashboardTitle = "Doctor Dashboard";
-  static const staffDashboardTitle = "Staff Dashboard";
-  static const adminDashboardTitle = "Admin Dashboard";
-  static const adminWebDashboardTitle = "Admin Web Dashboard";
-  static const websiteDashboardTitle = "Website Dashboard";
-  static const publicWebsiteTitle =
-      "Welcome to Medi-Connect Public Website Portal";
+  static String get welcomeUser => "welcomeUser".tr();
+  static String get drUser => "drUser".tr();
+  static String get patientDashboardTitle => "patientDashboardTitle".tr();
+  static String get doctorDashboardTitle => "doctorDashboardTitle".tr();
+  static String get staffDashboardTitle => "staffDashboardTitle".tr();
+  static String get adminDashboardTitle => "adminDashboardTitle".tr();
+  static String get adminWebDashboardTitle => "adminWebDashboardTitle".tr();
+  static String get websiteDashboardTitle => "websiteDashboardTitle".tr();
+  static String get publicWebsiteTitle => "publicWebsiteTitle".tr();
 
-  static const appointmentsModule = "Appointments Module";
-  static const chatModule = "Chat Module";
-  static const medicalRecordsModule = "Medical Records Module";
-  static const profileModule = "Profile Module";
-  static const paymentsModule = "Payments Module";
-  static const videoConsultationModule = "Video Consultation Module";
-  static const dietPlansModule = "Diet Plans Module";
-  static const exercisePlansModule = "Exercise Plans Module";
-  static const notificationsModule = "Notifications Module";
-  static const analyticsModule = "Analytics Module";
-  static const postModule = "Post Module";
+  static String get appointmentsModule => "appointmentsModule".tr();
+  static String get chatModule => "chatModule".tr();
+  static String get medicalRecordsModule => "medicalRecordsModule".tr();
+  static String get profileModule => "profileModule".tr();
+  static String get paymentsModule => "paymentsModule".tr();
+  static String get videoConsultationModule => "videoConsultationModule".tr();
+  static String get dietPlansModule => "dietPlansModule".tr();
+  static String get exercisePlansModule => "exercisePlansModule".tr();
+  static String get notificationsModule => "notificationsModule".tr();
+  static String get analyticsModule => "analyticsModule".tr();
+  static String get postModule => "postModule".tr();
 
-  static const appointmentsModuleDesc =
-      "Access your appointments settings and records";
-  static const chatModuleDesc = "Access your chat settings and records";
-  static const medicalRecordsModuleDesc =
-      "Access your medical records settings and records";
-  static const profileModuleDesc = "Access your profile settings and records";
-  static const paymentsModuleDesc = "Access your payments settings and records";
-  static const videoConsultationModuleDesc =
-      "Access your video consultation settings and records";
-  static const dietPlansModuleDesc =
-      "Access your diet plans settings and records";
-  static const exercisePlansModuleDesc =
-      "Access your exercise plans settings and records";
-  static const notificationsModuleDesc =
-      "Access your notifications settings and records";
-  static const analyticsModuleDesc = "Access platform performance analytics";
-  static const postModuleDesc = "Access public posts and healthcare blogs";
+  static String get appointmentsModuleDesc => "appointmentsModuleDesc".tr();
+  static String get chatModuleDesc => "chatModuleDesc".tr();
+  static String get medicalRecordsModuleDesc => "medicalRecordsModuleDesc".tr();
+  static String get profileModuleDesc => "profileModuleDesc".tr();
+  static String get paymentsModuleDesc => "paymentsModuleDesc".tr();
+  static String get videoConsultationModuleDesc =>
+      "videoConsultationModuleDesc".tr();
+  static String get dietPlansModuleDesc => "dietPlansModuleDesc".tr();
+  static String get exercisePlansModuleDesc => "exercisePlansModuleDesc".tr();
+  static String get notificationsModuleDesc => "notificationsModuleDesc".tr();
+  static String get analyticsModuleDesc => "analyticsModuleDesc".tr();
+  static String get postModuleDesc => "postModuleDesc".tr();
 
   // Dedicated Portal & Admin Login/Signup Strings
-  static const adminSignUpTitle = "Admin Sign Up";
-  static const adminSignUpSubtitle = "Create your admin account";
-  static const adminUsername = "Admin Username";
-  static const chooseUsername = "Choose a username";
-  static const createPasswordLabel = "Create password";
-  static const confirmPasswordLabel = "Confirm Password";
-  static const confirmPasswordHint = "Confirm password";
-  static const agreeToTerms =
-      "I agree to the Terms of Service and Privacy Policy";
-  static const termsOfService = "Terms of Service";
-  static const privacyPolicy = "Privacy Policy";
-  static const alreadyHaveAccountSignIn = "Already have an account? Sign in";
-  static const adminLoginTitle = "Admin Login";
-  static const adminLoginSubtitle = "Welcome back! Please sign in to continue";
-  static const username = "Username";
-  static const enterUsername = "Enter your username";
-  static const rememberMe = "Remember me";
-  static const orDivider = "OR";
-  static const loginWithOtp = "Login with OTP";
-  static const dontHaveAccountSignUp = "Don't have an account? Sign up";
-  static const adminPortalTitle = "Admin Portal";
-  static const adminPortalDesc =
-      "Platform configuration, logs, and security compliance";
-  static const accessAdminPortal = "Access Admin Portal";
-  static const patientPortalTitle = "Patient Portal";
-  static const patientPortalDesc =
-      "Manage your personal appointments and records";
-  static const accessPatientPortal = "Access Patient Portal";
-  static const doctorPortalTitle = "Doctor Portal";
-  static const doctorPortalDesc =
-      "Manage your schedule, appointments, and consultations";
-  static const accessDoctorPortal = "Access Doctor Portal";
-  static const staffPortalTitle = "Staff Portal";
-  static const staffPortalDesc =
-      "Manage clinic administration, details, and schedules";
-  static const accessStaffPortal = "Access Staff Portal";
-  static const selectPortalAccess = "Select Portal Access";
-  static const selectPortalAccessSubtitle =
-      "Select a portal access point below";
-  static const backToOnboarding = "Back to Onboarding";
-  static const loginAs = "Login as ";
-  static const enterCredentialsToEnter =
-      "Enter your credentials to enter the panel.";
-  static const enterprisePortalManagement = "Enterprise Portal Management";
+  static String get adminSignUpTitle => "adminSignUpTitle".tr();
+  static String get adminSignUpSubtitle => "adminSignUpSubtitle".tr();
+  static String get adminUsername => "adminUsername".tr();
+  static String get chooseUsername => "chooseUsername".tr();
+  static String get createPasswordLabel => "createPasswordLabel".tr();
+  static String get confirmPasswordLabel => "confirmPasswordLabel".tr();
+  static String get confirmPasswordHint => "confirmPasswordHint".tr();
+  static String get agreeToTerms => "agreeToTerms".tr();
+  static String get termsOfService => "termsOfService".tr();
+  static String get privacyPolicy => "privacyPolicy".tr();
+  static String get alreadyHaveAccountSignIn => "alreadyHaveAccountSignIn".tr();
+  static String get adminLoginTitle => "adminLoginTitle".tr();
+  static String get adminLoginSubtitle => "adminLoginSubtitle".tr();
+  static String get username => "username".tr();
+  static String get enterUsername => "enterUsername".tr();
+  static String get rememberMe => "rememberMe".tr();
+  static String get orDivider => "orDivider".tr();
+  static String get loginWithOtp => "loginWithOtp".tr();
+  static String get dontHaveAccountSignUp => "dontHaveAccountSignUp".tr();
+  static String get adminPortalTitle => "adminPortalTitle".tr();
+  static String get adminPortalDesc => "adminPortalDesc".tr();
+  static String get accessAdminPortal => "accessAdminPortal".tr();
+  static String get patientPortalTitle => "patientPortalTitle".tr();
+  static String get patientPortalDesc => "patientPortalDesc".tr();
+  static String get accessPatientPortal => "accessPatientPortal".tr();
+  static String get doctorPortalTitle => "doctorPortalTitle".tr();
+  static String get doctorPortalDesc => "doctorPortalDesc".tr();
+  static String get accessDoctorPortal => "accessDoctorPortal".tr();
+  static String get staffPortalTitle => "staffPortalTitle".tr();
+  static String get staffPortalDesc => "staffPortalDesc".tr();
+  static String get accessStaffPortal => "accessStaffPortal".tr();
+  static String get selectPortalAccess => "selectPortalAccess".tr();
+  static String get selectPortalAccessSubtitle =>
+      "selectPortalAccessSubtitle".tr();
+  static String get backToOnboarding => "backToOnboarding".tr();
+  static String get loginAs => "loginAs".tr();
+  static String get enterCredentialsToEnter => "enterCredentialsToEnter".tr();
+  static String get enterprisePortalManagement =>
+      "enterprisePortalManagement".tr();
 
   // Brand details
-  static const brandMedi = "Medi";
-  static const brandConnect = "Connect";
-  static const brandSlogan = "C A R E .  C O N N E C T .  B E T T E R .";
+  static String get brandMedi => "brandMedi".tr();
+  static String get brandConnect => "brandConnect".tr();
+  static String get brandSlogan => "brandSlogan".tr();
 
   // Consent
-  static const agreeToTermsPrefix = "I agree to the ";
-  static const agreeToTermsAnd = "and ";
+  static String get agreeToTermsPrefix => "agreeToTermsPrefix".tr();
+  static String get agreeToTermsAnd => "agreeToTermsAnd".tr();
 
   // Role Profile access descriptions
-  static const patientAccessProfileDesc =
-      "Access your Medi-Connect patient profile.";
-  static const doctorAccessProfileDesc =
-      "Access your Medi-Connect doctor profile.";
-  static const staffAccessProfileDesc =
-      "Access your Medi-Connect staff profile.";
+  static String get patientAccessProfileDesc => "patientAccessProfileDesc".tr();
+  static String get doctorAccessProfileDesc => "doctorAccessProfileDesc".tr();
+  static String get staffAccessProfileDesc => "staffAccessProfileDesc".tr();
 
   // Profile Completion Page Strings
-  static const ok = "OK";
-  static const submissionError = "Submission Error";
-  static const patientProfileOnboarding = "Patient Profile Onboarding";
-  static const doctorProfessionalRegistration =
-      "Doctor Professional Registration";
-  static const medicalStaffRegistration = "Medical Staff Registration";
-  static const adminProfileSetup = "Admin Profile Setup";
-  static const patientProfileOnboardingDesc =
-      "Please provide details to complete your healthcare profile.";
-  static const doctorProfessionalRegistrationDesc =
-      "Enter your department, qualification, and specialty to verify.";
-  static const medicalStaffRegistrationDesc =
-      "Please specify your department and work shift details.";
-  static const adminProfileSetupDesc =
-      "Complete your administrative account details.";
-  static const completeProfileSetup = "Complete Profile Setup";
-  static const gender = "Gender";
-  static const male = "Male";
-  static const female = "Female";
-  static const other = "Other";
-  static const medicalDepartment = "Medical Department";
-  static const professionalQualifications =
-      "Professional Qualifications (e.g. MD, MBBS)";
-  static const areaOfSpecialty = "Area of Specialty (e.g. Cardiology)";
-  static const staffDepartment = "Staff Department";
-  static const assignedWorkShift = "Assigned Work Shift";
-  static const day = "Day";
-  static const night = "Night";
-  static const rotational = "Rotational";
+  static String get ok => "ok".tr();
+  static String get submissionError => "submissionError".tr();
+  static String get patientProfileOnboarding => "patientProfileOnboarding".tr();
+  static String get doctorProfessionalRegistration =>
+      "doctorProfessionalRegistration".tr();
+  static String get medicalStaffRegistration => "medicalStaffRegistration".tr();
+  static String get adminProfileSetup => "adminProfileSetup".tr();
+  static String get patientProfileOnboardingDesc =>
+      "patientProfileOnboardingDesc".tr();
+  static String get doctorProfessionalRegistrationDesc =>
+      "doctorProfessionalRegistrationDesc".tr();
+  static String get medicalStaffRegistrationDesc =>
+      "medicalStaffRegistrationDesc".tr();
+  static String get adminProfileSetupDesc => "adminProfileSetupDesc".tr();
+  static String get completeProfileSetup => "completeProfileSetup".tr();
+  static String get gender => "gender".tr();
+  static String get male => "male".tr();
+  static String get female => "female".tr();
+  static String get other => "other".tr();
+  static String get medicalDepartment => "medicalDepartment".tr();
+  static String get professionalQualifications =>
+      "professionalQualifications".tr();
+  static String get areaOfSpecialty => "areaOfSpecialty".tr();
+  static String get staffDepartment => "staffDepartment".tr();
+  static String get assignedWorkShift => "assignedWorkShift".tr();
+  static String get day => "day".tr();
+  static String get night => "night".tr();
+  static String get rotational => "rotational".tr();
 
   // Dashboard Strings
-  static const administrator = "Administrator";
-  static const accessLevelSuperAdmin = "Access Level: Super Admin";
-  static const analyticsOverview = "Analytics Overview";
-  static const doctors = "Doctors";
-  static const staff = "Staff";
-  static const patients = "Patients";
-  static const videoConsults = "Video Consults";
-  static const totalRevenue = "Total Revenue";
-  static const weeklyRevenueTrend = "Weekly Revenue Trend";
-  static const departmentDistribution = "Department Distribution";
-  static const errorFetchingAnalytics = "Error fetching analytics: ";
-  static const docsLabel = " Docs";
-  static const managementConsole = "Management Console";
-  static const doctorsDirectory = "Doctors Directory";
-  static const doctorsDirectoryDesc =
-      "Manage doctors listings, scheduling, and leaves.";
-  static const staffDirectory = "Staff Directory";
-  static const staffDirectoryDesc =
-      "Roster staff, shifts, and check attendance logs.";
-  static const patientsDirectory = "Patients Directory";
-  static const patientsDirectoryDesc =
-      "Access patient profiles and family members.";
-  static const systemOperations = "System Operations";
-  static const slotConfig = "Slot Config";
-  static const slotConfigDesc = "Set global durations & constraints.";
-  static const auditLogs = "Audit Logs";
-  static const auditLogsDesc = "Track operations and records.";
-  static const notificationLogs = "Notification Logs";
-  static const notificationLogsDesc = "Monitor push, SMS, and emails.";
-  static const masterData = "Master Data";
-  static const masterDataDesc = "Departments, roles & positions.";
+  static String get administrator => "administrator".tr();
+  static String get accessLevelSuperAdmin => "accessLevelSuperAdmin".tr();
+  static String get analyticsOverview => "analyticsOverview".tr();
+  static String get doctors => "doctors".tr();
+  static String get staff => "staff".tr();
+  static String get patients => "patients".tr();
+  static String get videoConsults => "videoConsults".tr();
+  static String get totalRevenue => "totalRevenue".tr();
+  static String get weeklyRevenueTrend => "weeklyRevenueTrend".tr();
+  static String get departmentDistribution => "departmentDistribution".tr();
+  static String get errorFetchingAnalytics => "errorFetchingAnalytics".tr();
+  static String get docsLabel => "docsLabel".tr();
+  static String get managementConsole => "managementConsole".tr();
+  static String get doctorsDirectory => "doctorsDirectory".tr();
+  static String get doctorsDirectoryDesc => "doctorsDirectoryDesc".tr();
+  static String get staffDirectory => "staffDirectory".tr();
+  static String get staffDirectoryDesc => "staffDirectoryDesc".tr();
+  static String get patientsDirectory => "patientsDirectory".tr();
+  static String get patientsDirectoryDesc => "patientsDirectoryDesc".tr();
+  static String get systemOperations => "systemOperations".tr();
+  static String get slotConfig => "slotConfig".tr();
+  static String get slotConfigDesc => "slotConfigDesc".tr();
+  static String get auditLogs => "auditLogs".tr();
+  static String get auditLogsDesc => "auditLogsDesc".tr();
+  static String get notificationLogs => "notificationLogs".tr();
+  static String get notificationLogsDesc => "notificationLogsDesc".tr();
+  static String get masterData => "masterData".tr();
+  static String get masterDataDesc => "masterDataDesc".tr();
 
   // Role Selection (Signup)
-  static const selectRole = "Select Role";
-  static const chooseYourRole = "Choose your role to get started";
-  static const roleAdmin = "Admin";
-  static const roleDoctor = "Doctor";
-  static const roleStaff = "Staff";
-  static const rolePatient = "Patient";
+  static String get selectRole => "selectRole".tr();
+  static String get chooseYourRole => "chooseYourRole".tr();
+  static String get roleAdmin => "roleAdmin".tr();
+  static String get roleDoctor => "roleDoctor".tr();
+  static String get roleStaff => "roleStaff".tr();
+  static String get rolePatient => "rolePatient".tr();
 
   // Department Module
-  static const departments = "Departments";
-  static const sections = "Sections";
-  static const departmentsTitle = "Departments";
-  static const addDepartment = "Add Department";
-  static const editDepartment = "Edit Department";
-  static const deleteDepartment = "Delete Department";
-  static const viewAll = "View All";
-  static const viewLess = "View Less";
-  static const noDepartments = "No departments found.";
-  static const departmentNameLabel = "Department Name";
-  static const departmentNameHint = "Enter department name";
-  static const departmentDescLabel = "Description (Optional)";
-  static const departmentDescHint = "Enter a short description";
-  static const departmentImageLabel = "Image URL (Optional)";
-  static const departmentImageHint = "Paste an image URL";
-  static const duplicateDepartment =
-      "A department with this name already exists.";
-  static const confirmDeleteDepartment =
-      "Are you sure you want to delete this department? This action cannot be undone.";
-  static const departmentCreated = "Department created successfully.";
-  static const departmentUpdated = "Department updated successfully.";
-  static const departmentDeleted = "Department deleted successfully.";
+  static String get departments => "departments".tr();
+  static String get sections => "sections".tr();
+  static String get departmentsTitle => "departmentsTitle".tr();
+  static String get addDepartment => "addDepartment".tr();
+  static String get editDepartment => "editDepartment".tr();
+  static String get deleteDepartment => "deleteDepartment".tr();
+  static String get viewAll => "viewAll".tr();
+  static String get viewLess => "viewLess".tr();
+  static String get noDepartments => "noDepartments".tr();
+  static String get departmentNameLabel => "departmentNameLabel".tr();
+  static String get departmentNameHint => "departmentNameHint".tr();
+  static String get departmentDescLabel => "departmentDescLabel".tr();
+  static String get departmentDescHint => "departmentDescHint".tr();
+  static String get departmentImageLabel => "departmentImageLabel".tr();
+  static String get departmentImageHint => "departmentImageHint".tr();
+  static String get duplicateDepartment => "duplicateDepartment".tr();
+  static String get confirmDeleteDepartment => "confirmDeleteDepartment".tr();
+  static String get departmentCreated => "departmentCreated".tr();
+  static String get departmentUpdated => "departmentUpdated".tr();
+  static String get departmentDeleted => "departmentDeleted".tr();
 
   // Patient Dashboard
-  static const upcomingAppointments = "Upcoming Appointments";
-  static const myRecords = "My Records";
-  static const findDoctor = "Find a Doctor";
-  static const healthTips = "Health Tips";
-  static const noUpcomingAppointments = "No upcoming appointments.";
-  static const bookAppointment = "Book Appointment";
-  static const patientQuickActions = "Quick Actions";
+  static String get upcomingAppointments => "upcomingAppointments".tr();
+  static String get myRecords => "myRecords".tr();
+  static String get findDoctor => "findDoctor".tr();
+  static String get healthTips => "healthTips".tr();
+  static String get noUpcomingAppointments => "noUpcomingAppointments".tr();
+  static String get bookAppointment => "bookAppointment".tr();
+  static String get patientQuickActions => "patientQuickActions".tr();
 
   // Doctor Dashboard
-  static const goodMorning = "Good Morning";
-  static const goodAfternoon = "Good Afternoon";
-  static const goodEvening = "Good Evening";
-  static const todaySchedule = "Today's Schedule";
-  static const myPatients = "My Patients";
-  static const activeConsultations = "Active Consultations";
-  static const doctorQuickActions = "Quick Actions";
-  static const noScheduleToday = "No appointments scheduled today.";
-  static const startConsultation = "Start Consultation";
-  static const opInfoTitle = "OP Info";
-  static const opInfoSubtitle = "Overview of today's outpatient procedures";
-  static const opInfoTodaysDate = "TODAY'S DATE";
-  static const opInfoTodaysAppointments = "Today's Appointments";
-  static const opInfoSearchHint = "Search patient name or ID...";
-  static const opInfoTotalProcedures = "Total OP Procedures";
-  static const opInfoPendingProcedures = "Pending Procedures";
-  static const opInfoCompletedProcedures = "Completed Procedures";
-  static const opInfoCancelledProcedures = "Cancelled Procedures";
-  static const opInfoFilterAll = "All";
-  static const opInfoFilterPending = "Pending";
-  static const opInfoFilterCompleted = "Completed";
-  static const opInfoFilterCancelled = "Cancelled";
-  static const outPatients = "Out Patients";
-  static const ipInfoTitle = "IP Info";
-  static const ipInfoSubtitle = "In Patients";
-  static const opProceduresTitle = "OP Procedures";
-  static const opProceduresSubtitle = "Today's Procedures";
-  static const ipProceduresTitle = "IP Procedures";
-  static const ipProceduresSubtitle = "Today's Procedures";
-  static const surgeriesTitle = "Surgeries";
-  static const surgeriesSubtitle = "Today's Surgeries";
-  static const medicalCertificatesTitle = "Medical Certificates";
-  static const medicalCertificatesSubtitle = "Certificates Issued";
-  static const pendingMrdTitle = "Pending MRD";
-  static const pendingMrdSubtitle = "Pending Records";
-  static const slotConfigTitle = "Slot Config";
-  static const slotConfigSubtitle = "Slots Available";
-  static const slotConfigManage = "Set Availability";
+  static String get goodMorning => "goodMorning".tr();
+  static String get goodAfternoon => "goodAfternoon".tr();
+  static String get goodEvening => "goodEvening".tr();
+  static String get todaySchedule => "todaySchedule".tr();
+  static String get myPatients => "myPatients".tr();
+  static String get activeConsultations => "activeConsultations".tr();
+  static String get doctorQuickActions => "doctorQuickActions".tr();
+  static String get noScheduleToday => "noScheduleToday".tr();
+  static String get startConsultation => "startConsultation".tr();
+  static String get opInfoTitle => "opInfoTitle".tr();
+  static String get opInfoSubtitle => "opInfoSubtitle".tr();
+  static String get opInfoTodaysDate => "opInfoTodaysDate".tr();
+  static String get opInfoTodaysAppointments => "opInfoTodaysAppointments".tr();
+  static String get opInfoSearchHint => "opInfoSearchHint".tr();
+  static String get opInfoTotalProcedures => "opInfoTotalProcedures".tr();
+  static String get opInfoPendingProcedures => "opInfoPendingProcedures".tr();
+  static String get opInfoCompletedProcedures =>
+      "opInfoCompletedProcedures".tr();
+  static String get opInfoCancelledProcedures =>
+      "opInfoCancelledProcedures".tr();
+  static String get opInfoFilterAll => "opInfoFilterAll".tr();
+  static String get opInfoFilterPending => "opInfoFilterPending".tr();
+  static String get opInfoFilterCompleted => "opInfoFilterCompleted".tr();
+  static String get opInfoFilterCancelled => "opInfoFilterCancelled".tr();
+  static String get outPatients => "outPatients".tr();
+  static String get ipInfoTitle => "ipInfoTitle".tr();
+  static String get ipInfoSubtitle => "ipInfoSubtitle".tr();
+  static String get opProceduresTitle => "opProceduresTitle".tr();
+  static String get opProceduresSubtitle => "opProceduresSubtitle".tr();
+  static String get ipProceduresTitle => "ipProceduresTitle".tr();
+  static String get ipProceduresSubtitle => "ipProceduresSubtitle".tr();
+  static String get surgeriesTitle => "surgeriesTitle".tr();
+  static String get surgeriesSubtitle => "surgeriesSubtitle".tr();
+  static String get medicalCertificatesTitle => "medicalCertificatesTitle".tr();
+  static String get medicalCertificatesSubtitle =>
+      "medicalCertificatesSubtitle".tr();
+  static String get pendingMrdTitle => "pendingMrdTitle".tr();
+  static String get pendingMrdSubtitle => "pendingMrdSubtitle".tr();
+  static String get slotConfigTitle => "slotConfigTitle".tr();
+  static String get slotConfigSubtitle => "slotConfigSubtitle".tr();
+  static String get slotConfigManage => "slotConfigManage".tr();
 
   // Staff Dashboard
-  static const myTasks = "My Tasks";
-  static const shiftInfo = "Shift Information";
-  static const roster = "Roster";
-  static const currentShift = "Current Shift";
-  static const staffQuickActions = "Quick Actions";
-  static const noTasksAssigned = "No tasks assigned.";
+  static String get myTasks => "myTasks".tr();
+  static String get shiftInfo => "shiftInfo".tr();
+  static String get roster => "roster".tr();
+  static String get currentShift => "currentShift".tr();
+  static String get staffQuickActions => "staffQuickActions".tr();
+  static String get noTasksAssigned => "noTasksAssigned".tr();
 
   // Terminal theme strings
-  static const authRequired = "Authentication Required";
-  static const terminalIdLabel = "@ TERMINAL_ID (EMAIL)";
-  static const terminalIdHint = "user@clinicalops.system";
-  static const accessKeyLabel = "ACCESS_KEY (PASSWORD)";
-  static const passwordHintDots = "•••••••••••••";
-  static const forgotLabel = "FORGOT?";
-  static const persistentSession = "Persistent session";
-  static const initializeAccess = "Initialize Access";
-  static const terminalLocationNode =
-      "Authorized use only. Terminal location:\nNODE_92.168.1.1";
-  static const unregisteredRequestAccess =
-      "UNREGISTERED? REQUEST_ACCESS (SIGN UP)";
-  static const unregistered = "UNREGISTERED? ";
-  static const requestAccessSignUp = "REQUEST_ACCESS (SIGN UP)";
-  static const opsStable = "OPS_STABLE";
-  static const createAccountTitle = "Create Account";
-  static const registerSubtitleTerminal =
-      "Register your credentials to access the secure medical operations dashboard.";
-  static const selectYourRole = "SELECT YOUR ROLE";
-  static const legalNameLabel = "FULL LEGAL NAME";
-  static const legalNameHint = "Johnathan Doe";
-  static const clinicalEmailLabel = "CLINICAL EMAIL ADDRESS";
-  static const clinicalEmailHint = "j.doe@clinic.org";
-  static const securityPasswordLabel = "SECURITY PASSWORD";
-  static const hipaaAcknowledgePrefix = "I acknowledge and agree to the ";
-  static const hipaaComplianceTerms = "HIPAA Compliance Terms";
-  static const andGeneral = " and general ";
-  static const privacyProtocol = "Privacy Protocol";
-  static const forMedicalDataHandling = " for medical data handling.";
-  static const finalizeRegistration = "Finalize Registration";
-  static const clinicalOpsVersion = "Clinical Operations v4.2.1-stable";
-  static const secureEncryptedEnv = "SECURE END-TO-END ENCRYPTED ENVIRONMENT";
-  static const hipaaAgreementError =
-      "Please agree to the HIPAA Compliance Terms & Privacy Protocol to continue.";
+  static String get authRequired => "authRequired".tr();
+  static String get terminalIdLabel => "terminalIdLabel".tr();
+  static String get terminalIdHint => "terminalIdHint".tr();
+  static String get accessKeyLabel => "accessKeyLabel".tr();
+  static String get passwordHintDots => "passwordHintDots".tr();
+  static String get forgotLabel => "forgotLabel".tr();
+  static String get persistentSession => "persistentSession".tr();
+  static String get initializeAccess => "initializeAccess".tr();
+  static String get terminalLocationNode => "terminalLocationNode".tr();
+  static String get unregisteredRequestAccess =>
+      "unregisteredRequestAccess".tr();
+  static String get unregistered => "unregistered".tr();
+  static String get requestAccessSignUp => "requestAccessSignUp".tr();
+  static String get opsStable => "opsStable".tr();
+  static String get createAccountTitle => "createAccountTitle".tr();
+  static String get registerSubtitleTerminal => "registerSubtitleTerminal".tr();
+  static String get selectYourRole => "selectYourRole".tr();
+  static String get legalNameLabel => "legalNameLabel".tr();
+  static String get legalNameHint => "legalNameHint".tr();
+  static String get clinicalEmailLabel => "clinicalEmailLabel".tr();
+  static String get clinicalEmailHint => "clinicalEmailHint".tr();
+  static String get securityPasswordLabel => "securityPasswordLabel".tr();
+  static String get hipaaAcknowledgePrefix => "hipaaAcknowledgePrefix".tr();
+  static String get hipaaComplianceTerms => "hipaaComplianceTerms".tr();
+  static String get andGeneral => "andGeneral".tr();
+  static String get privacyProtocol => "privacyProtocol".tr();
+  static String get forMedicalDataHandling => "forMedicalDataHandling".tr();
+  static String get finalizeRegistration => "finalizeRegistration".tr();
+  static String get clinicalOpsVersion => "clinicalOpsVersion".tr();
+  static String get secureEncryptedEnv => "secureEncryptedEnv".tr();
+  static String get hipaaAgreementError => "hipaaAgreementError".tr();
 
   // New dashboard and operations strings
-  static const realTime = "REAL-TIME";
-  static const runAll = "Run All";
-  static const inStock = "IN STOCK";
-  static const expired = "EXPIRED";
-  static const outOfStock = "OUT OF STOCK";
-  static const totalTests = "TOTAL TESTS";
-  static const pending = "PENDING";
-  static const criticalAlerts = "CRITICAL ALERTS";
-  static const capacityUtilization = "Capacity utilization by department";
-  static const totalThisWeek = "Total this week";
-  static const weeklyConsultationAppointments =
-      "Weekly consultation appointments count trend";
-  static const appointmentSummaryGraph = "Appointment Summary Graph";
-  static const pharmacySummary = "Pharmacy Summary";
-  static const recentActivity = "Recent Activity";
-  static const quickActions = "Quick Actions";
-  static const emergencyAlertCodeRed = "EMERGENCY ALERT: CODE RED";
-  static const emergencyAlertDesc =
-      "Emergency Ward • Room 502 • Triggered 7m ago";
-  static const deptTuning = "DEPT TUNING";
-  static const deptTuningDesc = "Adjust parameters of active clinics.";
-  static const maintenance = "MAINTENANCE";
-  static const maintenanceDesc = "Data backups & server health status.";
+  static String get realTime => "realTime".tr();
+  static String get runAll => "runAll".tr();
+  static String get inStock => "inStock".tr();
+  static String get expired => "expired".tr();
+  static String get outOfStock => "outOfStock".tr();
+  static String get totalTests => "totalTests".tr();
+  static String get pending => "pending".tr();
+  static String get criticalAlerts => "criticalAlerts".tr();
+  static String get capacityUtilization => "capacityUtilization".tr();
+  static String get totalThisWeek => "totalThisWeek".tr();
+  static String get weeklyConsultationAppointments =>
+      "weeklyConsultationAppointments".tr();
+  static String get appointmentSummaryGraph => "appointmentSummaryGraph".tr();
+  static String get pharmacySummary => "pharmacySummary".tr();
+  static String get recentActivity => "recentActivity".tr();
+  static String get quickActions => "quickActions".tr();
+  static String get emergencyAlertCodeRed => "emergencyAlertCodeRed".tr();
+  static String get emergencyAlertDesc => "emergencyAlertDesc".tr();
+  static String get deptTuning => "deptTuning".tr();
+  static String get deptTuningDesc => "deptTuningDesc".tr();
+  static String get maintenance => "maintenance".tr();
+  static String get maintenanceDesc => "maintenanceDesc".tr();
 
-  static const present = "Present";
-  static const absent = "Absent";
-  static const onLeave = "On Leave";
+  static String get present => "present".tr();
+  static String get absent => "absent".tr();
+  static String get onLeave => "onLeave".tr();
 
   // Section Detail Strings
-  static const viewProfile = "View Profile";
-  static const editStaff = "Edit Staff";
-  static const editDoctor = "Edit Doctor";
-  static const supportStaff = "Support Staff";
-  static const shiftPrefix = "Shift: ";
-  static const yrsExpSuffix = "+ Yrs Exp";
-  static const general = "General";
-  static const active = "Active";
-  static const away = "Away";
-  static const inactive = "Inactive";
+  static String get viewProfile => "viewProfile".tr();
+  static String get editStaff => "editStaff".tr();
+  static String get editDoctor => "editDoctor".tr();
+  static String get supportStaff => "supportStaff".tr();
+  static String get shiftPrefix => "shiftPrefix".tr();
+  static String get yrsExpSuffix => "yrsExpSuffix".tr();
+  static String get general => "general".tr();
+  static String get active => "active".tr();
+  static String get away => "away".tr();
+  static String get inactive => "inactive".tr();
 
   // Appointment Details & EMR
-  static const patientIdLabel = "Patient ID";
-  static const patientNameLabel = "Patient Name";
-  static const doctorNameLabel = "Doctor Name";
-  static const specialtyLabel = "Specialty";
-  static const dateLabel = "Date";
-  static const timeLabel = "Time";
-  static const tokenNoLabel = "Token No";
-  static const viewDetails = "View Details";
-  static const markAsCompleted = "Mark as Completed";
-  static const viewSummary = "View Summary";
-  static const appointmentDetails = "Appointment Details";
-  static const ageLabel = "Age";
-  static const close = "Close";
-  static const vitalsInformation = "Vitals Information";
-  static const bloodPressure = "Blood Pressure";
-  static const weightLabel = "Weight";
-  static const heightLabel = "Height";
-  static const temperature = "Temperature";
-  static const headCircumference = "Head Circumference";
-  static const additionalNotesLabel = "Additional Notes:";
-  static const noSummaryAvailable = "No Summary Available";
-  static const couldNotRetrieveEmr =
-      "Could not retrieve the EMR summary for this completed appointment. It might not have been recorded yet.";
-  static const consultationEmrRecord = "Consultation EMR Record";
-  static const datePrefix = "Date: ";
-  static const generalInformation = "General Information";
-  static const invoiceNumber = "Invoice Number";
-  static const prescribedMedicines = "Prescribed Medicines";
-  static const medicineTotal = "Medicine Total";
-  static const medInvoiceNo = "Med Invoice No";
-  static const diagnosticLabTests = "Diagnostic Lab Tests";
-  static const labTestsTotal = "Lab Tests Total";
-  static const labInvoiceNo = "Lab Invoice No";
-  static const doctorsAdviceNotes = "Doctor's Advice & Notes";
-  static const patientIdPrefix = "PATIENT ID: PAT-";
+  static String get patientIdLabel => "patientIdLabel".tr();
+  static String get patientNameLabel => "patientNameLabel".tr();
+  static String get doctorNameLabel => "doctorNameLabel".tr();
+  static String get specialtyLabel => "specialtyLabel".tr();
+  static String get dateLabel => "dateLabel".tr();
+  static String get timeLabel => "timeLabel".tr();
+  static String get tokenNoLabel => "tokenNoLabel".tr();
+  static String get viewDetails => "viewDetails".tr();
+  static String get markAsCompleted => "markAsCompleted".tr();
+  static String get viewSummary => "viewSummary".tr();
+  static String get appointmentDetails => "appointmentDetails".tr();
+  static String get ageLabel => "ageLabel".tr();
+  static String get close => "close".tr();
+  static String get vitalsInformation => "vitalsInformation".tr();
+  static String get bloodPressure => "bloodPressure".tr();
+  static String get weightLabel => "weightLabel".tr();
+  static String get heightLabel => "heightLabel".tr();
+  static String get temperature => "temperature".tr();
+  static String get headCircumference => "headCircumference".tr();
+  static String get additionalNotesLabel => "additionalNotesLabel".tr();
+  static String get noSummaryAvailable => "noSummaryAvailable".tr();
+  static String get couldNotRetrieveEmr => "couldNotRetrieveEmr".tr();
+  static String get consultationEmrRecord => "consultationEmrRecord".tr();
+  static String get datePrefix => "datePrefix".tr();
+  static String get generalInformation => "generalInformation".tr();
+  static String get invoiceNumber => "invoiceNumber".tr();
+  static String get prescribedMedicines => "prescribedMedicines".tr();
+  static String get medicineTotal => "medicineTotal".tr();
+  static String get medInvoiceNo => "medInvoiceNo".tr();
+  static String get diagnosticLabTests => "diagnosticLabTests".tr();
+  static String get labTestsTotal => "labTestsTotal".tr();
+  static String get labInvoiceNo => "labInvoiceNo".tr();
+  static String get doctorsAdviceNotes => "doctorsAdviceNotes".tr();
+  static String get patientIdPrefix => "patientIdPrefix".tr();
 
   // Patient Profile bottom sheet
-  static const patientProfile = "Patient Profile";
-  static const recentVitals = "Recent Vitals";
-  static const recentConsultation = "Recent Consultation";
-  static const emrPrescription = "EMR & Prescription";
-  static const allergiesPrefix = "Allergies: ";
-  static const bloodPrefix = "Blood: ";
-  static const agePrefix = "Age: ";
-  static const genderPrefix = "Gender: ";
-  static const timeSlot = "Time Slot";
-  static const typeLabel = "Type";
-  static const invoicePdf = "Invoice PDF";
-  static const shareRx = "Share Rx";
-  static const consultationHistory = "Consultation History";
+  static String get patientProfile => "patientProfile".tr();
+  static String get recentVitals => "recentVitals".tr();
+  static String get recentConsultation => "recentConsultation".tr();
+  static String get emrPrescription => "emrPrescription".tr();
+  static String get allergiesPrefix => "allergiesPrefix".tr();
+  static String get bloodPrefix => "bloodPrefix".tr();
+  static String get agePrefix => "agePrefix".tr();
+  static String get genderPrefix => "genderPrefix".tr();
+  static String get timeSlot => "timeSlot".tr();
+  static String get typeLabel => "typeLabel".tr();
+  static String get invoicePdf => "invoicePdf".tr();
+  static String get shareRx => "shareRx".tr();
+  static String get consultationHistory => "consultationHistory".tr();
 
   // Admin Dashboard Redesign Strings
-  static const specialityManagement = "Speciality Management";
-  static const specialityManagementDesc =
-      "Manage all hospital specialties in one place";
-  static const settings = "Settings";
-  static const settingsDesc = "Configure system settings and preferences";
-  static const welcomeHms = "Welcome back to Hospital Management System";
+  static String get specialityManagement => "specialityManagement".tr();
+  static String get specialityManagementDesc => "specialityManagementDesc".tr();
+  static String get settings => "settings".tr();
+  static String get settingsDesc => "settingsDesc".tr();
+  static String get welcomeHms => "welcomeHms".tr();
 
-  static const newPatientRegistered = "New patient registered";
-  static const doctorAddedSuccessfully = "Doctor added successfully";
-  static const departmentUpdatedActivity = "Department updated";
-  static const userRoleChanged = "User role changed";
-  static const billingConfigUpdated = "Billing configuration updated";
-  static const systemBackupCompleted = "System backup completed";
+  static String get newPatientRegistered => "newPatientRegistered".tr();
+  static String get doctorAddedSuccessfully => "doctorAddedSuccessfully".tr();
+  static String get departmentUpdatedActivity =>
+      "departmentUpdatedActivity".tr();
+  static String get userRoleChanged => "userRoleChanged".tr();
+  static String get billingConfigUpdated => "billingConfigUpdated".tr();
+  static String get systemBackupCompleted => "systemBackupCompleted".tr();
 
   // Customer Care Redesign
-  static const customerCare = "Customer Care";
-  static const smartCareSubtitle = "Smart care begins with every interaction";
-  static const dateRange = "Date Range";
-  static const speciality = "Speciality";
-  static const allSpecialities = "All Specialities";
-  static const reset = "Reset";
-  static const totalRegistrations = "Total Registrations";
-  static const totalAppointments = "Total Appointments";
-  static const totalAdmissions = "Total Admissions";
-  static const feedbackScore = "Feedback Score";
-  static const walkInPatients = "Walk-in Patients";
-  static const followUpVisits = "Follow-up Visits";
-  static const avgWaitingTime = "Avg. Waiting Time";
-  static const enquiriesHandled = "Enquiries Handled";
-  static const registrationDesc = "Register new patient manually";
-  static const qrRegistration = "QR Registration";
-  static const qrRegistrationDesc = "Scan QR code to register new patient";
-  static const appointmentDesc = "Book, reschedule or manage appointments";
-  static const patientSearch = "Patient Search";
-  static const patientSearchDesc = "Search by UHID, phone or name & book visit";
-  static const admission = "Admission";
-  static const admissionDesc = "New admission & manage stays";
-  static const feedback = "Feedback";
-  static const feedbackDesc = "View patient feedbacks and ratings";
-  static const registrationsTrendDaily = "Registrations Trend (Daily)";
-  static const appointmentsTrendDaily = "Appointments Trend (Daily)";
-  static const feedbackDistribution = "Feedback Distribution";
-  static const visitsBySpeciality = "Visits by Speciality";
-  static const lineChart = "Line Chart";
-  static const barChart = "Bar Chart";
-  static const sort = "Sort";
-  static const excellent = "Excellent";
-  static const average = "Average";
-  static const poor = "Poor";
-  static const totalFeedbacks = "Total Feedbacks";
-  static const averageRating = "Average Rating";
-  static const vsLastPeriod = "vs last period";
-  static const thisPeriod = "This Period";
-  static const vsLast17Days = "vs last 17 days";
-  static const minsSuffix = "mins";
+  static String get customerCare => "customerCare".tr();
+  static String get smartCareSubtitle => "smartCareSubtitle".tr();
+  static String get dateRange => "dateRange".tr();
+  static String get speciality => "speciality".tr();
+  static String get allSpecialities => "allSpecialities".tr();
+  static String get reset => "reset".tr();
+  static String get totalRegistrations => "totalRegistrations".tr();
+  static String get totalAppointments => "totalAppointments".tr();
+  static String get totalAdmissions => "totalAdmissions".tr();
+  static String get feedbackScore => "feedbackScore".tr();
+  static String get walkInPatients => "walkInPatients".tr();
+  static String get followUpVisits => "followUpVisits".tr();
+  static String get avgWaitingTime => "avgWaitingTime".tr();
+  static String get enquiriesHandled => "enquiriesHandled".tr();
+  static String get registrationDesc => "registrationDesc".tr();
+  static String get qrRegistration => "qrRegistration".tr();
+  static String get qrRegistrationDesc => "qrRegistrationDesc".tr();
+  static String get appointmentDesc => "appointmentDesc".tr();
+  static String get patientSearch => "patientSearch".tr();
+  static String get patientSearchDesc => "patientSearchDesc".tr();
+  static String get admission => "admission".tr();
+  static String get admissionDesc => "admissionDesc".tr();
+  static String get feedback => "feedback".tr();
+  static String get feedbackDesc => "feedbackDesc".tr();
+  static String get registrationsTrendDaily => "registrationsTrendDaily".tr();
+  static String get appointmentsTrendDaily => "appointmentsTrendDaily".tr();
+  static String get feedbackDistribution => "feedbackDistribution".tr();
+  static String get visitsBySpeciality => "visitsBySpeciality".tr();
+  static String get lineChart => "lineChart".tr();
+  static String get barChart => "barChart".tr();
+  static String get sort => "sort".tr();
+  static String get excellent => "excellent".tr();
+  static String get average => "average".tr();
+  static String get poor => "poor".tr();
+  static String get totalFeedbacks => "totalFeedbacks".tr();
+  static String get averageRating => "averageRating".tr();
+  static String get vsLastPeriod => "vsLastPeriod".tr();
+  static String get thisPeriod => "thisPeriod".tr();
+  static String get vsLast17Days => "vsLast17Days".tr();
+  static String get minsSuffix => "minsSuffix".tr();
 
   // Admin Control Center & Department Details
-  static const hospitalControlCenter = "Hospital Control Center";
-  static const controlCenterSubtitle =
-      "Monitor and manage your hospital operations from one place";
-  static const searchModulesPlaceholder = "Search modules...";
-  static const welcomeBackAdmin = "Welcome back, Admin 👋";
-  static const goPremium = "Go Premium";
-  static const goPremiumDesc = "Unlock advanced features and analytics.";
-  static const upgradeNow = "Upgrade Now";
-  static const departmentDetailsTitle = "Department Details";
-  static const departmentDetailsSubtitle =
-      "Overview and real-time management of all hospital departments";
-  static const gridView = "Grid View";
-  static const tableView = "Table View";
-  static const departmentName = "Department Name";
-  static const departmentCode = "Department Code";
-  static const headOfDepartment = "Head of Department";
-  static const totalStaff = "Total Staff";
-  static const totalDoctors = "Total Doctors";
-  static const status = "Status";
-  static const actions = "Actions";
+  static String get hospitalControlCenter => "hospitalControlCenter".tr();
+  static String get controlCenterSubtitle => "controlCenterSubtitle".tr();
+  static String get searchModulesPlaceholder => "searchModulesPlaceholder".tr();
+  static String get welcomeBackAdmin => "welcomeBackAdmin".tr();
+  static String get goPremium => "goPremium".tr();
+  static String get goPremiumDesc => "goPremiumDesc".tr();
+  static String get upgradeNow => "upgradeNow".tr();
+  static String get departmentDetailsTitle => "departmentDetailsTitle".tr();
+  static String get departmentDetailsSubtitle =>
+      "departmentDetailsSubtitle".tr();
+  static String get gridView => "gridView".tr();
+  static String get tableView => "tableView".tr();
+  static String get departmentName => "departmentName".tr();
+  static String get departmentCode => "departmentCode".tr();
+  static String get headOfDepartment => "headOfDepartment".tr();
+  static String get totalStaff => "totalStaff".tr();
+  static String get totalDoctors => "totalDoctors".tr();
+  static String get status => "status".tr();
+  static String get actions => "actions".tr();
 
-  static const superAdmin = "Super Admin";
-  static const mediConnectBrand = "MediConnect";
-  static const hospitalPlatform = "Hospital Platform";
-  static const departmentSearchPlaceholder =
-      "Search department name or head...";
-  static const deptPrefix = "DEPT-";
-  static const unassignedDoctor = "Dr. Unassigned";
-  static const notificationCountDefault = "7";
-  static const staffSuffix = "Staff";
-  static const doctorsSuffix = "Doctors";
-  static const noMatchingModules = "No matching modules found.";
-  static const noDepartmentsFound =
-      "No departments found matching your criteria.";
+  static String get superAdmin => "superAdmin".tr();
+  static String get mediConnectBrand => "mediConnectBrand".tr();
+  static String get hospitalPlatform => "hospitalPlatform".tr();
+  static String get departmentSearchPlaceholder =>
+      "departmentSearchPlaceholder".tr();
+  static String get deptPrefix => "deptPrefix".tr();
+  static String get unassignedDoctor => "unassignedDoctor".tr();
+  static String get notificationCountDefault => "notificationCountDefault".tr();
+  static String get staffSuffix => "staffSuffix".tr();
+  static String get doctorsSuffix => "doctorsSuffix".tr();
+  static String get noMatchingModules => "noMatchingModules".tr();
+  static String get noDepartmentsFound => "noDepartmentsFound".tr();
 
   AppStrings._();
 }

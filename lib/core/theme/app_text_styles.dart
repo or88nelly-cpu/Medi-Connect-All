@@ -218,7 +218,7 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle terminalMonospace = TextStyle(fontFamily: 'monospace');
+  static TextStyle terminalMonospace = TextStyle(fontFamily: 'monospace');
 
   static TextStyle get terminalMonospaceLabel => TextStyle(
     fontFamily: 'monospace',

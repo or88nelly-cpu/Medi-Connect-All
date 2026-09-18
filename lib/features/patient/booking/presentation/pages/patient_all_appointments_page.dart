@@ -68,7 +68,7 @@ class _PatientAllAppointmentsPageState
   }
 
   String _formatDateTime(DateTime date, String timeStr) {
-    const months = [
+    final months = [
       'Jan',
       'Feb',
       'Mar',
@@ -94,15 +94,13 @@ class _PatientAllAppointmentsPageState
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
         }
 
         final user = UserModel.fromEntity(authState.user);
 
         return CustomScaffold(
-          customAppbar: const CommonAppBar(title: "My Appointments"),
+          customAppbar: CommonAppBar(title: "My Appointments"),
           body: Padding(
             padding: EdgeInsets.all(16.r),
             child: Column(
@@ -124,7 +122,7 @@ class _PatientAllAppointmentsPageState
                 ValueListenableBuilder<String>(
                   valueListenable: _activeFilterNotifier,
                   builder: (context, activeFilter, _) {
-                    final filters = const [
+                    final filters = [
                       'All',
                       'Upcoming',
                       'Pending',
@@ -145,13 +143,11 @@ class _PatientAllAppointmentsPageState
                                 vertical: 8.h,
                               ),
                               decoration: BoxDecoration(
-                                color: isSelected
-                                    ? const Color(0xFF3B5BFD)
-                                    : cardBg,
+                                color: isSelected ? Color(0xFF3B5BFD) : cardBg,
                                 borderRadius: BorderRadius.circular(20.r),
                                 border: Border.all(
                                   color: isSelected
-                                      ? const Color(0xFF3B5BFD)
+                                      ? Color(0xFF3B5BFD)
                                       : AppColors.border(context),
                                 ),
                               ),
@@ -183,9 +179,7 @@ class _PatientAllAppointmentsPageState
                       >(
                         builder: (context, aptState) {
                           if (aptState is AdminAppointmentsLoading) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return Center(child: CircularProgressIndicator());
                           }
 
                           List<AppointmentEntity> appointments = [];
@@ -274,7 +268,7 @@ class _PatientAllAppointmentsPageState
                                     displayStatus = 'Pending Updation';
                                   }
 
-                                  Color statusColor = const Color(
+                                  Color statusColor = Color(
                                     0xFF10B981,
                                   ); // Green Confirmed
                                   if (displayStatus.toLowerCase() ==
@@ -282,7 +276,7 @@ class _PatientAllAppointmentsPageState
                                     statusColor = AppColors.warning;
                                   } else if (displayStatus ==
                                       'Pending Updation') {
-                                    statusColor = const Color(0xFFD97706);
+                                    statusColor = Color(0xFFD97706);
                                   } else if (displayStatus.toLowerCase() ==
                                       'cancelled') {
                                     statusColor = AppColors.error;

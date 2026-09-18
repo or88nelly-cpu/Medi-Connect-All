@@ -159,7 +159,7 @@ class BasicInfoStep extends StatelessWidget {
                           final DateTime? picked = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now().subtract(
-                              const Duration(days: 365 * 18),
+                              Duration(days: 365 * 18),
                             ),
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now(),
@@ -242,7 +242,7 @@ class BasicInfoStep extends StatelessWidget {
                             ? SizedBox(
                                 width: 14.r,
                                 height: 14.r,
-                                child: const CircularProgressIndicator(
+                                child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                     Colors.white,
@@ -272,14 +272,10 @@ class BasicInfoStep extends StatelessWidget {
                     width: double.infinity,
                     padding: EdgeInsets.all(12.r),
                     decoration: BoxDecoration(
-                      color: isDark
-                          ? const Color(0xFF1E293B)
-                          : const Color(0xFFF1F5F9),
+                      color: isDark ? Color(0xFF1E293B) : Color(0xFFF1F5F9),
                       borderRadius: BorderRadius.circular(8.r),
                       border: Border.all(
-                        color: isDark
-                            ? const Color(0xFF334155)
-                            : const Color(0xFFE2E8F0),
+                        color: isDark ? Color(0xFF334155) : Color(0xFFE2E8F0),
                       ),
                     ),
                     child: Text(
@@ -349,7 +345,7 @@ class BasicInfoStep extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.04),
             blurRadius: 10.r,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
         border: Border.all(color: AppColors.border(context), width: 1.w),
@@ -423,9 +419,7 @@ class BasicInfoStep extends StatelessWidget {
   ) {
     final activeBg = AppColors.primary.withValues(alpha: 0.1);
     final activeBorder = AppColors.primary;
-    final inactiveBg = isDark
-        ? const Color(0xFF0F172A)
-        : const Color(0xFFF8FAFC);
+    final inactiveBg = isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC);
     final inactiveBorder = AppColors.border(context);
 
     return InkWell(

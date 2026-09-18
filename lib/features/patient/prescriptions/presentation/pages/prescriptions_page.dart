@@ -124,7 +124,7 @@ class PrescriptionsPage extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 16.w),
                 padding: EdgeInsets.all(16.r),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -240,9 +240,9 @@ class _ConsultationCard extends StatelessWidget {
           border: Border.all(color: AppColors.border(context)),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF8B5CF6).withValues(alpha: 0.06),
+              color: Color(0xFF8B5CF6).withValues(alpha: 0.06),
               blurRadius: 8,
-              offset: const Offset(0, 2),
+              offset: Offset(0, 2),
             ),
           ],
         ),
@@ -254,7 +254,7 @@ class _ConsultationCard extends StatelessWidget {
               width: 48.r,
               height: 48.r,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -300,7 +300,7 @@ class _ConsultationCard extends StatelessWidget {
                   Text(
                     consultation['specialty'] ?? '',
                     style: AppTextStyles.bodySmall.copyWith(
-                      color: const Color(0xFF8B5CF6),
+                      color: Color(0xFF8B5CF6),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -321,7 +321,7 @@ class _ConsultationCard extends StatelessWidget {
                       _Tag(
                         label:
                             '$medicines medicine${medicines != 1 ? 's' : ''}',
-                        color: const Color(0xFF8B5CF6),
+                        color: Color(0xFF8B5CF6),
                       ),
                       SizedBox(width: 6.w),
                       _Tag(label: 'View & Download', color: AppColors.primary),

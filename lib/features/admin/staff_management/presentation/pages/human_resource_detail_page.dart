@@ -37,9 +37,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
   void initState() {
     super.initState();
     // Fetch from Supabase
-    context.read<DoctorStaffBloc>().add(
-      const LoadDoctorStaff('Human Resource'),
-    );
+    context.read<DoctorStaffBloc>().add(LoadDoctorStaff('Human Resource'));
   }
 
   @override
@@ -59,9 +57,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
     );
     if (res == true) {
       if (mounted) {
-        context.read<DoctorStaffBloc>().add(
-          const LoadDoctorStaff('Human Resource'),
-        );
+        context.read<DoctorStaffBloc>().add(LoadDoctorStaff('Human Resource'));
       }
     }
   }
@@ -106,10 +102,10 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
       listener: (context, state) {
         if (state is DoctorStaffActionSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Action completed successfully.")),
+            SnackBar(content: Text("Action completed successfully.")),
           );
           context.read<DoctorStaffBloc>().add(
-            const LoadDoctorStaff('Human Resource'),
+            LoadDoctorStaff('Human Resource'),
           );
         }
       },
@@ -145,11 +141,11 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                   SizedBox(height: 24.h),
 
                   // 5. HR Functions Grid
-                  const _HRFunctionsGrid(),
+                  _HRFunctionsGrid(),
                   SizedBox(height: 24.h),
 
                   // 6. Today's Overview statistics
-                  const _HROverviewCards(),
+                  _HROverviewCards(),
                   SizedBox(height: 24.h),
 
                   // 7. Quick Actions row
@@ -393,7 +389,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
           activeBorder: activeBorder,
           onTap: () {},
         ),
-        const Spacer(),
+        Spacer(),
 
         // Grid/List View Toggles
         ValueListenableBuilder<bool>(
@@ -497,7 +493,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
     return BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
       builder: (context, state) {
         if (state is DoctorStaffLoading) {
-          return const Center(
+          return Center(
             child: Padding(
               padding: EdgeInsets.all(24),
               child: CircularProgressIndicator(),
@@ -566,8 +562,8 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                             ),
                             TextButton.icon(
                               onPressed: _triggerAddStaff,
-                              icon: const Icon(Icons.add, size: 14),
-                              label: const Text(
+                              icon: Icon(Icons.add, size: 14),
+                              label: Text(
                                 "Add Staff",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
@@ -613,7 +609,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                                         ListView.builder(
                                           shrinkWrap: true,
                                           physics:
-                                              const NeverScrollableScrollPhysics(),
+                                              NeverScrollableScrollPhysics(),
                                           itemCount: paginatedList.length,
                                           itemBuilder: (context, idx) {
                                             final stf = paginatedList[idx];
@@ -631,7 +627,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                                                   context
                                                       .read<DoctorStaffBloc>()
                                                       .add(
-                                                        const LoadDoctorStaff(
+                                                        LoadDoctorStaff(
                                                           'Human Resource',
                                                         ),
                                                       );
@@ -644,7 +640,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                                         GridView.builder(
                                           shrinkWrap: true,
                                           physics:
-                                              const NeverScrollableScrollPhysics(),
+                                              NeverScrollableScrollPhysics(),
                                           gridDelegate:
                                               SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: 2,
@@ -669,7 +665,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
                                                   context
                                                       .read<DoctorStaffBloc>()
                                                       .add(
-                                                        const LoadDoctorStaff(
+                                                        LoadDoctorStaff(
                                                           'Human Resource',
                                                         ),
                                                       );
@@ -708,7 +704,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Filter by Status"),
+        title: Text("Filter by Status"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: ['All', 'Active', 'Away', 'Inactive'].map((status) {
@@ -730,7 +726,7 @@ class _HumanResourceDetailPageState extends State<HumanResourceDetailPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Sort Staff List"),
+        title: Text("Sort Staff List"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: ['None', 'Name (A-Z)', 'Name (Z-A)'].map((sort) {
@@ -818,9 +814,7 @@ class _StaffListCard extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 11.sp,
-                        color: isDark
-                            ? const Color(0xFFB39DDB)
-                            : Colors.deepPurple,
+                        color: isDark ? Color(0xFFB39DDB) : Colors.deepPurple,
                       ),
                     ),
                   ],
@@ -850,7 +844,7 @@ class _StaffListCard extends StatelessWidget {
               ),
               PopupMenuItem(
                 value: 'delete',
-                child: const Text(
+                child: Text(
                   'Delete Staff',
                   style: TextStyle(color: AppColors.error),
                 ),
@@ -911,7 +905,7 @@ class _StaffGridCard extends StatelessWidget {
                 ),
                 PopupMenuItem(
                   value: 'delete',
-                  child: const Text(
+                  child: Text(
                     'Delete Staff',
                     style: TextStyle(color: AppColors.error),
                   ),
@@ -958,7 +952,7 @@ class _StaffGridCard extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 10.sp,
-                    color: isDark ? const Color(0xFFB39DDB) : Colors.deepPurple,
+                    color: isDark ? Color(0xFFB39DDB) : Colors.deepPurple,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -1066,7 +1060,7 @@ class _HRFunctionsGrid extends StatelessWidget {
       {
         'label': 'Payroll Management',
         'icon': Icons.account_balance_wallet_outlined,
-        'color': const Color(0xFF00C2A8),
+        'color': Color(0xFF00C2A8),
       },
       {
         'label': 'Recruitment',
@@ -1081,17 +1075,17 @@ class _HRFunctionsGrid extends StatelessWidget {
       {
         'label': 'Performance Reviews',
         'icon': Icons.stars_outlined,
-        'color': const Color(0xFF3F51B5),
+        'color': Color(0xFF3F51B5),
       },
       {
         'label': 'Documents Center',
         'icon': Icons.folder_open_outlined,
-        'color': const Color(0xFF9C27B0),
+        'color': Color(0xFF9C27B0),
       },
       {
         'label': 'Policies & Handbook',
         'icon': Icons.verified_user_outlined,
-        'color': const Color(0xFF4CAF50),
+        'color': Color(0xFF4CAF50),
       },
       {
         'label': 'Requests & Approvals',
@@ -1114,7 +1108,7 @@ class _HRFunctionsGrid extends StatelessWidget {
         SizedBox(height: 12.h),
         GridView.builder(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
             crossAxisSpacing: 8.w,
@@ -1215,7 +1209,7 @@ class _HROverviewCards extends StatelessWidget {
         'subText': '↑ 3 this month',
         'subColor': AppColors.success,
         'icon': Icons.access_time_outlined,
-        'iconColor': const Color(0xFF00C2A8),
+        'iconColor': Color(0xFF00C2A8),
       },
     ];
 
@@ -1330,7 +1324,7 @@ class _HRQuickActions extends StatelessWidget {
         'color': AppColors.success,
         'onTap': () {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Opening Leave Application form...")),
+            SnackBar(content: Text("Opening Leave Application form...")),
           );
         },
       },
@@ -1340,7 +1334,7 @@ class _HRQuickActions extends StatelessWidget {
         'color': AppColors.primary,
         'onTap': () {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Opening Attendance Punch...")),
+            SnackBar(content: Text("Opening Attendance Punch...")),
           );
         },
       },
@@ -1350,7 +1344,7 @@ class _HRQuickActions extends StatelessWidget {
         'color': AppColors.accent,
         'onTap': () {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Opening Announcement form...")),
+            SnackBar(content: Text("Opening Announcement form...")),
           );
         },
       },

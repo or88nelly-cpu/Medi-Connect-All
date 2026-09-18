@@ -25,14 +25,12 @@ class _BiomedicalEngineeringDetailPageState
           GetIt.I<BiomedicalEngineeringBloc>()
             ..add(LoadBiomedicalEngineeringStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(
-          title: "Biomedical Engineering Department",
-        ),
+        customAppbar: CommonAppBar(title: "Biomedical Engineering Department"),
         body:
             BlocBuilder<BiomedicalEngineeringBloc, BiomedicalEngineeringState>(
               builder: (context, state) {
                 if (state is BiomedicalEngineeringLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 } else if (state is BiomedicalEngineeringError) {
                   return Center(
                     child: Text(
@@ -59,7 +57,7 @@ class _BiomedicalEngineeringDetailPageState
                         SizedBox(height: 16.h),
                         GridView.builder(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -124,7 +122,7 @@ class _BiomedicalEngineeringDetailPageState
                     ),
                   );
                 }
-                return const SizedBox.shrink();
+                return SizedBox.shrink();
               },
             ),
       ),

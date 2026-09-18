@@ -28,137 +28,133 @@ class _AdminSettingsPageState extends State<AdminSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Widget settingsBody =
-        BlocBuilder<AdminSettingsBloc, AdminSettingsState>(
-          builder: (context, state) {
-            if (state is AdminSettingsLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    final Widget
+    settingsBody = BlocBuilder<AdminSettingsBloc, AdminSettingsState>(
+      builder: (context, state) {
+        if (state is AdminSettingsLoading) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-            if (state is AdminSettingsError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      state.message,
-                      style: const TextStyle(color: AppColors.error),
-                    ),
-                    SizedBox(height: 12.h),
-                    ElevatedButton(
-                      onPressed: () => context.read<AdminSettingsBloc>().add(
-                        LoadAdminSettings(),
-                      ),
-                      child: const Text("Retry"),
-                    ),
-                  ],
+        if (state is AdminSettingsError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(state.message, style: TextStyle(color: AppColors.error)),
+                SizedBox(height: 12.h),
+                ElevatedButton(
+                  onPressed: () => context.read<AdminSettingsBloc>().add(
+                    LoadAdminSettings(),
+                  ),
+                  child: Text("Retry"),
                 ),
-              );
-            }
+              ],
+            ),
+          );
+        }
 
-            if (state is AdminSettingsLoaded) {
-              final settings = state.settings;
-              final pushNotifications =
-                  settings['push_notifications'] as bool? ?? false;
-              final smsAlerts = settings['sms_alerts'] as bool? ?? false;
-              final emailReports = settings['email_reports'] as bool? ?? false;
-              final biometricLogin =
-                  settings['biometric_login'] as bool? ?? false;
+        if (state is AdminSettingsLoaded) {
+          final settings = state.settings;
+          final pushNotifications =
+              settings['push_notifications'] as bool? ?? false;
+          final smsAlerts = settings['sms_alerts'] as bool? ?? false;
+          final emailReports = settings['email_reports'] as bool? ?? false;
+          final biometricLogin = settings['biometric_login'] as bool? ?? false;
 
-              return SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (!widget.isStandalone) ...[
-                      Text(
-                        "Settings",
-                        style: AppTextStyles.headingMedium.copyWith(
-                          fontSize: 22.sp,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                    ],
-                    _buildCategoryHeader("General Preferences"),
-                    BlocBuilder<ThemeCubit, ThemeMode>(
-                      builder: (context, themeMode) {
-                        final isDark = themeMode == ThemeMode.dark;
-                        return _buildSwitchTile(
-                          title: "Dark Mode",
-                          subtitle: "Enable dark theme across the application",
-                          value: isDark,
-                          onChanged: (val) {
-                            context.read<ThemeCubit>().setThemeMode(
-                              val ? ThemeMode.dark : ThemeMode.light,
-                            );
-                          },
-                          icon: Icons.dark_mode_outlined,
-                        );
-                      },
+          return SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (!widget.isStandalone) ...[
+                  Text(
+                    "Settings",
+                    style: AppTextStyles.headingMedium.copyWith(
+                      fontSize: 22.sp,
                     ),
-                    _buildSwitchTile(
-                      title: "Push Notifications",
-                      subtitle: "Receive alerts for appointments and events",
-                      value: pushNotifications,
+                  ),
+                  SizedBox(height: 20.h),
+                ],
+                _buildCategoryHeader("General Preferences"),
+                BlocBuilder<ThemeCubit, ThemeMode>(
+                  builder: (context, themeMode) {
+                    final isDark = themeMode == ThemeMode.dark;
+                    return _buildSwitchTile(
+                      title: "Dark Mode",
+                      subtitle: "Enable dark theme across the application",
+                      value: isDark,
                       onChanged: (val) {
-                        context.read<AdminSettingsBloc>().add(
-                          UpdateAdminSetting('push_notifications', val),
+                        context.read<ThemeCubit>().setThemeMode(
+                          val ? ThemeMode.dark : ThemeMode.light,
                         );
                       },
-                      icon: Icons.notifications_active_outlined,
-                    ),
-                    SizedBox(height: 16.h),
-                    _buildCategoryHeader("Security & Login"),
-                    _buildSwitchTile(
-                      title: "Biometric Login",
-                      subtitle: "Use Face ID / Fingerprint to sign in",
-                      value: biometricLogin,
-                      onChanged: (val) {
-                        context.read<AdminSettingsBloc>().add(
-                          UpdateAdminSetting('biometric_login', val),
-                        );
-                      },
-                      icon: Icons.fingerprint_outlined,
-                    ),
-                    SizedBox(height: 16.h),
-                    _buildCategoryHeader("Communication channels"),
-                    _buildSwitchTile(
-                      title: "SMS Alerts",
-                      subtitle: "Send booking updates via SMS",
-                      value: smsAlerts,
-                      onChanged: (val) {
-                        context.read<AdminSettingsBloc>().add(
-                          UpdateAdminSetting('sms_alerts', val),
-                        );
-                      },
-                      icon: Icons.sms_outlined,
-                    ),
-                    _buildSwitchTile(
-                      title: "Email Reports",
-                      subtitle: "Receive daily pharmacy and revenue reports",
-                      value: emailReports,
-                      onChanged: (val) {
-                        context.read<AdminSettingsBloc>().add(
-                          UpdateAdminSetting('email_reports', val),
-                        );
-                      },
-                      icon: Icons.email_outlined,
-                    ),
-                    SizedBox(height: 24.h),
-                    _buildCategoryHeader("Account"),
-                    _buildLogoutTile(context),
-                  ],
+                      icon: Icons.dark_mode_outlined,
+                    );
+                  },
                 ),
-              );
-            }
+                _buildSwitchTile(
+                  title: "Push Notifications",
+                  subtitle: "Receive alerts for appointments and events",
+                  value: pushNotifications,
+                  onChanged: (val) {
+                    context.read<AdminSettingsBloc>().add(
+                      UpdateAdminSetting('push_notifications', val),
+                    );
+                  },
+                  icon: Icons.notifications_active_outlined,
+                ),
+                SizedBox(height: 16.h),
+                _buildCategoryHeader("Security & Login"),
+                _buildSwitchTile(
+                  title: "Biometric Login",
+                  subtitle: "Use Face ID / Fingerprint to sign in",
+                  value: biometricLogin,
+                  onChanged: (val) {
+                    context.read<AdminSettingsBloc>().add(
+                      UpdateAdminSetting('biometric_login', val),
+                    );
+                  },
+                  icon: Icons.fingerprint_outlined,
+                ),
+                SizedBox(height: 16.h),
+                _buildCategoryHeader("Communication channels"),
+                _buildSwitchTile(
+                  title: "SMS Alerts",
+                  subtitle: "Send booking updates via SMS",
+                  value: smsAlerts,
+                  onChanged: (val) {
+                    context.read<AdminSettingsBloc>().add(
+                      UpdateAdminSetting('sms_alerts', val),
+                    );
+                  },
+                  icon: Icons.sms_outlined,
+                ),
+                _buildSwitchTile(
+                  title: "Email Reports",
+                  subtitle: "Receive daily pharmacy and revenue reports",
+                  value: emailReports,
+                  onChanged: (val) {
+                    context.read<AdminSettingsBloc>().add(
+                      UpdateAdminSetting('email_reports', val),
+                    );
+                  },
+                  icon: Icons.email_outlined,
+                ),
+                SizedBox(height: 24.h),
+                _buildCategoryHeader("Account"),
+                _buildLogoutTile(context),
+              ],
+            ),
+          );
+        }
 
-            return const SizedBox.shrink();
-          },
-        );
+        return SizedBox.shrink();
+      },
+    );
 
     if (widget.isStandalone) {
       return CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Settings"),
+        customAppbar: CommonAppBar(title: "Settings"),
         body: settingsBody,
       );
     }

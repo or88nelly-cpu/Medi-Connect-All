@@ -76,7 +76,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator());
         }
 
         final user = UserModel.fromEntity(authState.user);
@@ -103,13 +103,13 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                         style: AppTextStyles.headingMedium.copyWith(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w900,
-                          color: const Color(0xFF1E3A8A),
+                          color: Color(0xFF1E3A8A),
                         ),
                       ),
                       ElevatedButton.icon(
                         onPressed: () => _showBookDoctorDialog(context),
-                        icon: const Icon(Icons.search, color: Colors.white),
-                        label: const Text(
+                        icon: Icon(Icons.search, color: Colors.white),
+                        label: Text(
                           'Book Doctor',
                           style: TextStyle(
                             color: Colors.white,
@@ -140,7 +140,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                   SizedBox(height: 12.h),
                   Expanded(
                     child: aptState is AdminAppointmentsLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? Center(child: CircularProgressIndicator())
                         : realApts.isEmpty
                         ? Center(
                             child: Column(
@@ -198,25 +198,25 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                               }
 
                               // Status Colors
-                              Color statusColor = const Color(
+                              Color statusColor = Color(
                                 0xFF10B981,
                               ); // Green Confirmed
                               if (displayStatus.toLowerCase() == 'pending') {
-                                statusColor = const Color(
+                                statusColor = Color(
                                   0xFFF59E0B,
                                 ); // Orange Pending
                               } else if (displayStatus == 'Pending Updation') {
-                                statusColor = const Color(
+                                statusColor = Color(
                                   0xFFD97706,
                                 ); // Amber/Orange Pending Updation
                               } else if (displayStatus.toLowerCase() ==
                                   'cancelled') {
-                                statusColor = const Color(
+                                statusColor = Color(
                                   0xFFEF4444,
                                 ); // Red Cancelled
                               } else if (displayStatus.toLowerCase() ==
                                   'completed') {
-                                statusColor = const Color(
+                                statusColor = Color(
                                   0xFF3B82F6,
                                 ); // Blue Completed
                               }
@@ -248,7 +248,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                           alpha: 0.02,
                                         ),
                                         blurRadius: 10.r,
-                                        offset: const Offset(0, 4),
+                                        offset: Offset(0, 4),
                                       ),
                                     ],
                                   ),
@@ -290,9 +290,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                                                 'Cancelled: Payment lapsed before consultation',
                                                 style: TextStyle(
                                                   fontSize: 7.5.sp,
-                                                  color: const Color(
-                                                    0xFFEF4444,
-                                                  ),
+                                                  color: Color(0xFFEF4444),
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -360,7 +358,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
   }
 
   void _showBookDoctorDialog(BuildContext context) {
-    context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+    context.read<DoctorStaffBloc>().add(LoadDoctorStaff('All'));
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -387,7 +385,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                       style: AppTextStyles.titleLarge,
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close),
+                      icon: Icon(Icons.close),
                       onPressed: () => Navigator.pop(ctx),
                     ),
                   ],
@@ -398,7 +396,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
                   child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
                     builder: (context, state) {
                       if (state is DoctorStaffLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(child: CircularProgressIndicator());
                       }
                       if (state is DoctorStaffError ||
                           state is! DoctorStaffLoaded) {
@@ -426,21 +424,21 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
 
   Widget _buildFallbackDoctorsList(BuildContext ctx) {
     final fallbackDocs = [
-      const UserModel(
+      UserModel(
         id: 'doc-1',
         email: 'sarah.j@mediconnect.com',
         firstName: 'Dr. Sarah',
         lastName: 'Johnson',
         role: UserRole.doctor,
       ),
-      const UserModel(
+      UserModel(
         id: 'doc-2',
         email: 'michael.c@mediconnect.com',
         firstName: 'Dr. Michael',
         lastName: 'Chen',
         role: UserRole.doctor,
       ),
-      const UserModel(
+      UserModel(
         id: 'doc-3',
         email: 'james.w@mediconnect.com',
         firstName: 'Dr. James',
@@ -496,7 +494,7 @@ class _PatientAppointmentsTabState extends State<PatientAppointmentsTab> {
               borderRadius: BorderRadius.circular(6.r),
             ),
           ),
-          child: const Text('Book', style: TextStyle(color: Colors.white)),
+          child: Text('Book', style: TextStyle(color: Colors.white)),
         ),
       ),
     );

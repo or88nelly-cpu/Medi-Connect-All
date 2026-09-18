@@ -62,7 +62,7 @@ class OpInfoHeader extends StatelessWidget {
                           : AppColors.lightTextPrimary,
                     ),
                   ),
-                  const TextSpan(text: ' 👋'),
+                  TextSpan(text: ' 👋'),
                 ],
               ),
             ),
@@ -94,7 +94,7 @@ class OpInfoHeader extends StatelessWidget {
                 right: 10.w,
                 child: Container(
                   padding: EdgeInsets.all(3.r),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.error,
                     shape: BoxShape.circle,
                   ),

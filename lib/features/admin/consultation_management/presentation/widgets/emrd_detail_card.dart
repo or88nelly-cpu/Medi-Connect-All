@@ -46,7 +46,7 @@ class EmrdDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(height: 24),
+          Divider(height: 24),
           ...children,
         ],
       ),
@@ -112,12 +112,12 @@ class EmrdInvoiceSignature extends StatelessWidget {
       margin: EdgeInsets.only(top: 16.h),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B3B22) : const Color(0xFFF0FDF4),
+        color: isDark ? Color(0xFF1B3B22) : Color(0xFFF0FDF4),
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
           color: isDark
-              ? const Color(0xFF2E7D32).withValues(alpha: 0.5)
-              : const Color(0xFFBBF7D0),
+              ? Color(0xFF2E7D32).withValues(alpha: 0.5)
+              : Color(0xFFBBF7D0),
           width: 1.5,
         ),
       ),
@@ -132,7 +132,7 @@ class EmrdInvoiceSignature extends StatelessWidget {
                   color: AppColors.green.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.verified_user,
                   color: AppColors.green,
                   size: 18,
@@ -154,7 +154,7 @@ class EmrdInvoiceSignature extends StatelessWidget {
             children: [
               Text(
                 doctorName,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Cursive',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

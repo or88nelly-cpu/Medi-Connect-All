@@ -15,7 +15,7 @@ class OpProceduresRemoteDataSourceImpl implements OpProceduresRemoteDataSource {
 
   @override
   Future<List<OpProcedureModel>> getOpProcedures() async {
-    return const [
+    return [
       OpProcedureModel(
         tokenNumber: '101',
         patientName: 'Arjun Nambiar',

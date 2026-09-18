@@ -25,7 +25,7 @@ class DynamicCalendar3D extends StatelessWidget {
             height: size,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFFA855F7).withValues(alpha: .25),
+              color: Color(0xFFA855F7).withValues(alpha: .25),
             ),
           ),
 
@@ -66,15 +66,15 @@ class DynamicCalendar3D extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: size * .12),
                         child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: 25,
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                              SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 5,
                               ),
                           itemBuilder: (_, _) {
                             return Container(
-                              margin: const EdgeInsets.all(1),
+                              margin: EdgeInsets.all(1),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2),
                                 color: Colors.white.withValues(alpha: .12),

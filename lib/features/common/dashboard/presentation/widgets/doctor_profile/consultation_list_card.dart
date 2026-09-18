@@ -20,7 +20,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
   String _selectedDate = "20 May 2025";
   String _selectedMode = "All"; // All, Video, Audio
 
-  static const List<Map<String, dynamic>> _defaultConsultations = [
+  static final List<Map<String, dynamic>> _defaultConsultations = [
     {
       "time": "09:00 AM",
       "name": "Ramesh Kumar",
@@ -427,11 +427,11 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     onPressed: () {
                       _showVitalsEntryDialog(context, item);
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.add_moderator_outlined,
                       color: Colors.white,
                     ),
-                    label: const Text(
+                    label: Text(
                       "Record / Update Vitals",
                       style: TextStyle(
                         color: Colors.white,
@@ -534,7 +534,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
   ) {
     try {
       final Map<String, dynamic> custom = jsonDecode(jsonStr);
-      if (custom.isEmpty) return const SizedBox();
+      if (custom.isEmpty) return SizedBox();
       return Wrap(
         spacing: 8.w,
         runSpacing: 8.h,
@@ -573,7 +573,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
         }).toList(),
       );
     } catch (_) {
-      return const SizedBox();
+      return SizedBox();
     }
   }
 
@@ -760,10 +760,10 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     TextButton.icon(
                       onPressed: () {
                         setDialogState(() {
-                          customVitalsList.add(const MapEntry("", ""));
+                          customVitalsList.add(MapEntry("", ""));
                         });
                       },
-                      icon: const Icon(Icons.add, size: 14),
+                      icon: Icon(Icons.add, size: 14),
                       label: Text(
                         "Add More",
                         style: TextStyle(
@@ -865,7 +865,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -914,10 +914,10 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                 ); // Close details sheet to trigger refresh
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Vitals successfully saved.")),
+                  SnackBar(content: Text("Vitals successfully saved.")),
                 );
               },
-              child: const Text("Save"),
+              child: Text("Save"),
             ),
           ],
         ),
@@ -928,7 +928,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
   Color _getStatusColor(String status) {
     switch (status) {
       case "Completed":
-        return const Color(0xFF0F9F58);
+        return Color(0xFF0F9F58);
       case "Booked":
         return AppColors.primary;
       case "Pending":
@@ -1077,7 +1077,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                   _buildModeToggleButton(
                     "Audio",
                     Icons.phone_outlined,
-                    const Color(0xFF9C27B0),
+                    Color(0xFF9C27B0),
                   ),
                 ],
               ),
@@ -1159,7 +1159,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                     )
                   : ListView.separated(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: filteredConsultations.length,
                       separatorBuilder: (context, idx) =>
                           Divider(color: borderColor, height: 1),
@@ -1247,7 +1247,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                                       size: 14.sp,
                                       color: isVideo
                                           ? AppColors.primary
-                                          : const Color(0xFF9C27B0),
+                                          : Color(0xFF9C27B0),
                                     ),
                                   ),
                                 ),
@@ -1321,7 +1321,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
                   InkWell(
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           content: Text(
                             "Opening consultation report details...",
                           ),
@@ -1356,7 +1356,7 @@ class _ConsultationListCardState extends State<ConsultationListCard> {
         });
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
+        duration: Duration(milliseconds: 150),
         height: 28.h,
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(

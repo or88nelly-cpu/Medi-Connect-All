@@ -58,7 +58,7 @@ class AnalyticsRemoteDataSourceImpl implements AnalyticsRemoteDataSource {
       final totalPatients = (patientsRes as List).length;
 
       final sevenDaysAgoStr = DateTime.now()
-          .subtract(const Duration(days: 7))
+          .subtract(Duration(days: 7))
           .toIso8601String()
           .split('T')
           .first;

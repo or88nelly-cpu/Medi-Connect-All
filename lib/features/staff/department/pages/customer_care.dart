@@ -27,7 +27,7 @@ class _CustomerCareState extends State<CustomerCare> {
     super.dispose();
   }
 
-  static const List<_CardData> _cards = [
+  static final List<_CardData> _cards = [
     _CardData(
       title: 'Registration',
       subTitle: 'Register new patient\nmanually',
@@ -82,12 +82,12 @@ class _CustomerCareState extends State<CustomerCare> {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (ctx) => const CreateAppointmentWizardBottomSheet(),
+        builder: (ctx) => CreateAppointmentWizardBottomSheet(),
       );
     } else if (index == 3) {
       context.push(RouteNames.patientSearch);
     } else if (index == 4) {
-      showDialog(context: context, builder: (_) => const AdmitPatientDialog());
+      showDialog(context: context, builder: (_) => AdmitPatientDialog());
     } else if (index == 6) {
       final emrdBloc = context.read<EmrdBloc>();
       emrdBloc.add(LoadEmrdStats());
@@ -95,7 +95,7 @@ class _CustomerCareState extends State<CustomerCare> {
         MaterialPageRoute(
           builder: (context) => BlocProvider.value(
             value: emrdBloc,
-            child: const MedicalRecordManagementPage(),
+            child: MedicalRecordManagementPage(),
           ),
         ),
       );
@@ -146,7 +146,7 @@ class _CustomerCareState extends State<CustomerCare> {
                             ),
                           )
                         else
-                          const Expanded(child: SizedBox()),
+                          Expanded(child: SizedBox()),
                       ],
                     ),
                   ),
@@ -169,7 +169,7 @@ class _CardData {
   final IconData icon;
   final Color color;
 
-  const _CardData({
+  _CardData({
     required this.title,
     required this.subTitle,
     required this.icon,
@@ -198,7 +198,7 @@ class _SearchBar extends StatelessWidget {
           BoxShadow(
             color: AppColors.shadow(context),
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),

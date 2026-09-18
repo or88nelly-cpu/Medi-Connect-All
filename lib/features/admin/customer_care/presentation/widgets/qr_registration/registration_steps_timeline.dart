@@ -6,7 +6,7 @@ import 'package:medi_connect/core/theme/app_text_styles.dart';
 class RegistrationStepsTimeline extends StatelessWidget {
   const RegistrationStepsTimeline({super.key});
 
-  static const List<Map<String, String>> _steps = [
+  static final List<Map<String, String>> _steps = [
     {
       "step": "1",
       "title": "Scan QR Code",
@@ -70,7 +70,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
             "How it works for patients",
             style: AppTextStyles.titleMedium.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : const Color(0xFF1E293B),
+              color: isDark ? Colors.white : Color(0xFF1E293B),
             ),
           ),
           SizedBox(height: 20.h),
@@ -116,9 +116,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                   width: 50.r,
                   height: 50.r,
                   decoration: BoxDecoration(
-                    color: isDark
-                        ? const Color(0xFF1E293B)
-                        : const Color(0xFFEEF2F6),
+                    color: isDark ? Color(0xFF1E293B) : Color(0xFFEEF2F6),
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: isDark
@@ -137,7 +135,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                   right: 0,
                   child: Container(
                     padding: EdgeInsets.all(4.r),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
@@ -172,7 +170,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 12.sp,
-                  color: isDark ? Colors.white : const Color(0xFF1E293B),
+                  color: isDark ? Colors.white : Color(0xFF1E293B),
                 ),
               ),
               SizedBox(height: 4.h),
@@ -209,9 +207,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     width: 44.r,
                     height: 44.r,
                     decoration: BoxDecoration(
-                      color: isDark
-                          ? const Color(0xFF1E293B)
-                          : const Color(0xFFEEF2F6),
+                      color: isDark ? Color(0xFF1E293B) : Color(0xFFEEF2F6),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -225,7 +221,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     right: 0,
                     child: Container(
                       padding: EdgeInsets.all(4.r),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.primary,
                         shape: BoxShape.circle,
                       ),
@@ -259,7 +255,7 @@ class RegistrationStepsTimeline extends StatelessWidget {
                     style: AppTextStyles.bodyMedium.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 13.sp,
-                      color: isDark ? Colors.white : const Color(0xFF1E293B),
+                      color: isDark ? Colors.white : Color(0xFF1E293B),
                     ),
                   ),
                   SizedBox(height: 4.h),

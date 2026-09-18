@@ -41,7 +41,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
     super.initState();
     // Load patients and doctors if not already loaded
     context.read<PatientBloc>().add(LoadPatients());
-    context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+    context.read<DoctorStaffBloc>().add(LoadDoctorStaff('All'));
   }
 
   @override
@@ -95,18 +95,18 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                     ],
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close),
+                    icon: Icon(Icons.close),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
               ),
-              const Divider(),
+              Divider(),
               SizedBox(height: 12.h),
 
               // Form Body
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -122,9 +122,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                       BlocBuilder<PatientBloc, PatientState>(
                         builder: (context, state) {
                           if (state is PatientLoading) {
-                            return const Center(
-                              child: LinearProgressIndicator(),
-                            );
+                            return Center(child: LinearProgressIndicator());
                           } else if (state is PatientLoaded) {
                             final patients = state.patients
                                 .where((p) => p.role == 'patient')
@@ -172,9 +170,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                                               : Colors.black38,
                                           fontSize: 13.sp,
                                         ),
-                                        prefixIcon: const Icon(
-                                          Icons.person_search,
-                                        ),
+                                        prefixIcon: Icon(Icons.person_search),
                                         filled: true,
                                         fillColor: isDark
                                             ? AppColors.terminalDarkFieldFill
@@ -370,7 +366,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                           }
 
                           if (doctors.isEmpty) {
-                            doctors = const [
+                            doctors = [
                               UserModel(
                                 id: 'doc-1',
                                 email: 'sarah.j@mediconnect.com',
@@ -474,7 +470,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("Cancel"),
+                    child: Text("Cancel"),
                   ),
                   SizedBox(width: 12.w),
                   ElevatedButton(
@@ -489,7 +485,7 @@ class _AdmitPatientDialogState extends State<AdmitPatientDialog> {
                         vertical: 12.h,
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Admit Patient",
                       style: TextStyle(
                         color: Colors.white,

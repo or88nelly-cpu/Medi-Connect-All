@@ -40,7 +40,7 @@ class UpcomingAppointmentsCard extends StatelessWidget {
               BoxShadow(
                 color: AppColors.primary.withValues(alpha: 0.04),
                 blurRadius: 8,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),

@@ -18,7 +18,7 @@ class SuccessHeader extends StatelessWidget {
     return Column(
       children: [
         // Stepper progress tracker
-        const BookingStepper(currentStep: 4),
+        BookingStepper(currentStep: 4),
         SizedBox(height: 24.h),
 
         // Success Icon Circle
@@ -29,9 +29,9 @@ class SuccessHeader extends StatelessWidget {
               width: 90.r,
               height: 90.r,
               decoration: BoxDecoration(
-                color: const Color(0xFFE8F5E9),
+                color: Color(0xFFE8F5E9),
                 shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFFC8E6C9), width: 3),
+                border: Border.all(color: Color(0xFFC8E6C9), width: 3),
               ),
             ),
             Icon(
@@ -49,7 +49,7 @@ class SuccessHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 22.sp,
             fontWeight: FontWeight.w900,
-            color: const Color(0xFF1E3A8A),
+            color: Color(0xFF1E3A8A),
           ),
         ),
         SizedBox(height: 4.h),
@@ -83,7 +83,7 @@ class SuccessHeader extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
           decoration: BoxDecoration(
-            color: const Color(0xFFE0F2FE),
+            color: Color(0xFFE0F2FE),
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Row(
@@ -91,7 +91,7 @@ class SuccessHeader extends StatelessWidget {
             children: [
               Icon(
                 Icons.verified_user_rounded,
-                color: const Color(0xFF3B5BFD),
+                color: Color(0xFF3B5BFD),
                 size: 14.r,
               ),
               SizedBox(width: 6.w),
@@ -100,7 +100,7 @@ class SuccessHeader extends StatelessWidget {
                     ? 'Secure Booking • Booking confirmed and secure.'
                     : '100% Secure Payment • Your transaction was successful and secure.',
                 style: TextStyle(
-                  color: const Color(0xFF3B5BFD),
+                  color: Color(0xFF3B5BFD),
                   fontSize: 8.sp,
                   fontWeight: FontWeight.bold,
                 ),

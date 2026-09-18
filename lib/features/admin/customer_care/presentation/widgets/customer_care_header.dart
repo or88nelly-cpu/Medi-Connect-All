@@ -183,9 +183,7 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
           });
           widget.onReset?.call();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Dashboard filters reset successfully'),
-            ),
+            SnackBar(content: Text('Dashboard filters reset successfully')),
           );
         },
         style: ElevatedButton.styleFrom(
@@ -222,7 +220,7 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
                 ? Colors.black.withValues(alpha: 0.3)
                 : Colors.black.withValues(alpha: 0.03),
             blurRadius: 20,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
       ),
@@ -277,8 +275,8 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
             shape: BoxShape.circle,
             gradient: LinearGradient(
               colors: isDark
-                  ? [const Color(0xFF0F1A35), const Color(0xFF070F22)]
-                  : [const Color(0xFFE0E7FF), const Color(0xFFC7D2FE)],
+                  ? [Color(0xFF0F1A35), Color(0xFF070F22)]
+                  : [Color(0xFFE0E7FF), Color(0xFFC7D2FE)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -294,7 +292,7 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
                     ? AppColors.primaryLight.withValues(alpha: 0.15)
                     : AppColors.primary.withValues(alpha: 0.1),
                 blurRadius: 10,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),
@@ -333,7 +331,7 @@ class _CustomerCareHeaderState extends State<CustomerCareHeader> {
   }
 
   String _getMonthName(int month) {
-    const months = [
+    final months = [
       "Jan",
       "Feb",
       "Mar",

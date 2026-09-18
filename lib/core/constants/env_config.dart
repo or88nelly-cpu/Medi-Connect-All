@@ -42,7 +42,8 @@ class EnvConfig {
         // Load single doctor mode config
         final modeStr = await secureStorage.read(key: 'SINGLE_DOCTOR_MODE');
         _isSingleDoctor = (modeStr?.toLowerCase() == 'true');
-        _singleDoctorId = await secureStorage.read(key: 'SINGLE_DOCTOR_ID') ?? '';
+        _singleDoctorId =
+            await secureStorage.read(key: 'SINGLE_DOCTOR_ID') ?? '';
       } else {
         // Fallback: Parse .env and save to Secure Storage
         await _loadFromEnvFile();

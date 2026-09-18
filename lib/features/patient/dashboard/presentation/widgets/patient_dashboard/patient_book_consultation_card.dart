@@ -11,7 +11,7 @@ class PatientBookConsultationCard extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => const PatientBookingBottomSheet(),
+      builder: (_) => PatientBookingBottomSheet(),
     );
   }
 
@@ -22,16 +22,16 @@ class PatientBookConsultationCard extends StatelessWidget {
       padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [Color(0xFF3B5BFF), Color(0xFF6C63FF)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF3B5BFF).withValues(alpha: 0.25),
+            color: Color(0xFF3B5BFF).withValues(alpha: 0.25),
             blurRadius: 15,
-            offset: const Offset(0, 6),
+            offset: Offset(0, 6),
           ),
         ],
       ),
@@ -46,7 +46,7 @@ class PatientBookConsultationCard extends StatelessWidget {
                   color: Colors.white.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.medical_services_outlined,
                   color: Colors.white,
                   size: 24,
@@ -94,7 +94,7 @@ class PatientBookConsultationCard extends StatelessWidget {
                 onPressed: () => _openBookingSheet(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: const Color(0xFF3B5BFF),
+                  foregroundColor: Color(0xFF3B5BFF),
                   elevation: 0,
                   padding: EdgeInsets.symmetric(
                     horizontal: 16.w,

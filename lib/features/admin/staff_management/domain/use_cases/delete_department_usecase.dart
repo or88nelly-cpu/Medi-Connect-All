@@ -18,7 +18,7 @@ class DeleteDepartmentParams extends Equatable {
 class DeleteDepartmentUseCase extends UseCase<Unit, DeleteDepartmentParams> {
   final DepartmentRepository _repository;
 
-  const DeleteDepartmentUseCase(this._repository);
+  DeleteDepartmentUseCase(this._repository);
 
   @override
   Future<Either<Failure, Unit>> call(DeleteDepartmentParams params) =>

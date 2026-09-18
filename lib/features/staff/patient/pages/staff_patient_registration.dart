@@ -63,8 +63,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
 
   late PatientRegistrationBloc _bloc;
 
-  static const int _totalSteps = 3;
-  static const List<String> _stepTitles = [
+  static final int _totalSteps = 3;
+  static final List<String> _stepTitles = [
     AppStrings.basicInformation,
     AppStrings.additionalInformation,
     AppStrings.reviewAndConfirm,
@@ -184,8 +184,8 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
     _allergiesCtrl.text = '';
     _otherDetailsCtrl.text = '';
 
-    const String emergencyName = '';
-    const String emergencyPhone = '';
+    String emergencyName = '';
+    String emergencyPhone = '';
 
     // Dispatch initialization event to BLoC.
     _bloc.add(
@@ -260,7 +260,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
         _bloc.add(SubmitProfileUpdateEvent(authState.user.id));
       }
     } else {
-      _bloc.add(const SubmitFormEvent());
+      _bloc.add(SubmitFormEvent());
     }
   }
 
@@ -276,7 +276,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
     }
 
     if (currentStep < _totalSteps) {
-      _bloc.add(const StepNextRequested());
+      _bloc.add(StepNextRequested());
     } else {
       _onSubmit(isPatientMode);
     }
@@ -306,7 +306,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
             canPop: currentStep == 1 || currentStep == 4,
             onPopInvokedWithResult: (didPop, _) {
               if (!didPop && currentStep > 1 && currentStep <= _totalSteps) {
-                _bloc.add(const StepBackRequested());
+                _bloc.add(StepBackRequested());
               }
             },
             child: CustomScaffold(
@@ -445,7 +445,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: currentStep == 4
-          ? const SizedBox.shrink()
+          ? SizedBox.shrink()
           : IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
@@ -454,7 +454,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
               ),
               onPressed: () {
                 if (currentStep > 1) {
-                  _bloc.add(const StepBackRequested());
+                  _bloc.add(StepBackRequested());
                 } else {
                   context.pop();
                 }
@@ -606,7 +606,7 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
               emergencyName: state.emergencyName,
               emergencyRelationship: state.emergencyRelationship,
               emergencyPhone: state.emergencyPhone,
-              onEditPressed: () => _bloc.add(const StepJumpRequested(1)),
+              onEditPressed: () => _bloc.add(StepJumpRequested(1)),
             );
 
           case 4:
@@ -629,12 +629,12 @@ class _StaffPatientRegistrationState extends State<StaffPatientRegistration> {
                     : RouteNames.staffDashboard,
               ),
               onSharePressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text(AppStrings.idCardDownloadStarted)),
+                SnackBar(content: Text(AppStrings.idCardDownloadStarted)),
               ),
             );
 
           default:
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
         }
       },
     );

@@ -10,7 +10,7 @@ class ErrorStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
@@ -24,7 +24,7 @@ class ErrorStateWidget extends StatelessWidget {
             Icons.error_outline_rounded,
             color: Theme.of(context).colorScheme.error,
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Text(
               message,

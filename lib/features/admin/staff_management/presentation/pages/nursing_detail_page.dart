@@ -21,11 +21,11 @@ class _NursingDetailPageState extends State<NursingDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<NursingBloc>()..add(LoadNursingStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Nursing Department"),
+        customAppbar: CommonAppBar(title: "Nursing Department"),
         body: BlocBuilder<NursingBloc, NursingState>(
           builder: (context, state) {
             if (state is NursingLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is NursingError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _NursingDetailPageState extends State<NursingDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _NursingDetailPageState extends State<NursingDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

@@ -44,14 +44,10 @@ class PersonalInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark
-        ? const Color(0xFF16253B)
-        : const Color(0xFFD3E0EE);
-    final labelColor = isDark
-        ? const Color(0xFF5E98C7)
-        : const Color(0xFF3F6D94);
-    final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
+    final cardBg = isDark ? Color(0xFF09121F) : Colors.white;
+    final borderColor = isDark ? Color(0xFF16253B) : Color(0xFFD3E0EE);
+    final labelColor = isDark ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
+    final inputTextColor = isDark ? Colors.white : Color(0xFF0C192E);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -335,7 +331,7 @@ class PersonalInfoSection extends StatelessWidget {
     Color borderColor,
     Color labelColor,
   ) {
-    final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
+    final fillBg = isDark ? Color(0xFF050C16) : Color(0xFFEDF2F7);
     return InkWell(
       onTap: onPhotoPick,
       borderRadius: BorderRadius.circular(8.r),
@@ -410,7 +406,7 @@ class PersonalInfoSection extends StatelessWidget {
     Color borderColor,
     Color inputTextColor,
   ) {
-    final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
+    final fillBg = isDark ? Color(0xFF050C16) : Color(0xFFEDF2F7);
     return Row(
       children: [
         // Flag dropdown container
@@ -493,7 +489,7 @@ class PersonalInfoSection extends StatelessWidget {
     required Color borderColor,
     required Color inputTextColor,
   }) {
-    final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
+    final fillBg = isDark ? Color(0xFF050C16) : Color(0xFFEDF2F7);
     return Container(
       height: 52.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -524,14 +520,14 @@ class PersonalInfoSection extends StatelessWidget {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now().subtract(const Duration(days: 365 * 30)),
+      initialDate: DateTime.now().subtract(Duration(days: 365 * 30)),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: Theme.of(context).brightness == Brightness.dark
               ? ThemeData.dark().copyWith(
-                  colorScheme: const ColorScheme.dark(
+                  colorScheme: ColorScheme.dark(
                     primary: AppColors.primary,
                     onPrimary: Colors.white,
                     surface: Color(0xFF09121F),
@@ -539,7 +535,7 @@ class PersonalInfoSection extends StatelessWidget {
                   ),
                 )
               : ThemeData.light().copyWith(
-                  colorScheme: const ColorScheme.light(
+                  colorScheme: ColorScheme.light(
                     primary: AppColors.primary,
                     onPrimary: Colors.white,
                     surface: Colors.white,

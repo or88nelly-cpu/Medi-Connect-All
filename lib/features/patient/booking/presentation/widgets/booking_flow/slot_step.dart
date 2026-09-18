@@ -26,7 +26,7 @@ class SlotStep extends StatelessWidget {
       List.generate(7, (i) => DateTime.now().add(Duration(days: i)));
 
   String _weekday(int wd) {
-    const d = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    final d = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return d[(wd - 1).clamp(0, 6)];
   }
 
@@ -107,11 +107,11 @@ class SlotStep extends StatelessWidget {
                     return GestureDetector(
                       onTap: () => onDateChanged(d),
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
+                        duration: Duration(milliseconds: 200),
                         width: 50,
                         decoration: BoxDecoration(
                           gradient: isSelected
-                              ? const LinearGradient(
+                              ? LinearGradient(
                                   colors: [
                                     Color(0xFF4F7CFF),
                                     Color(0xFF5B42F3),
@@ -229,14 +229,14 @@ class SlotGroup extends StatelessWidget {
             return GestureDetector(
               onTap: isBooked ? null : () => onSelect(slot),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
+                duration: Duration(milliseconds: 200),
                 padding: EdgeInsets.symmetric(
                   horizontal: AppDimensions.paddingL - 2, // 14
                   vertical: AppDimensions.paddingS + 1, // 9
                 ),
                 decoration: BoxDecoration(
                   gradient: isSelected
-                      ? const LinearGradient(
+                      ? LinearGradient(
                           colors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
                         )
                       : null,

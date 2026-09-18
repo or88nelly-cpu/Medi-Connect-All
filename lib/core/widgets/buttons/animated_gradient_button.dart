@@ -36,7 +36,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1800),
+      duration: Duration(milliseconds: 1800),
     )..repeat(reverse: true);
   }
 
@@ -63,7 +63,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30.r),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
+            duration: Duration(milliseconds: 180),
             curve: Curves.easeOut,
             height: widget.height.h,
             decoration: BoxDecoration(
@@ -91,7 +91,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                   ),
                   blurRadius: 18,
                   spreadRadius: 1,
-                  offset: const Offset(0, 8),
+                  offset: Offset(0, 8),
                 ),
               ],
             ),
@@ -99,7 +99,7 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               child: Row(
                 children: [
-                  const Spacer(),
+                  Spacer(),
 
                   Text(
                     widget.text,
@@ -111,13 +111,13 @@ class _AnimatedGradientButtonState extends State<AnimatedGradientButton>
                     ),
                   ),
 
-                  const Spacer(),
+                  Spacer(),
 
                   AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
+                    duration: Duration(milliseconds: 250),
                     width: (widget.height / 50) * 36.r,
                     height: (widget.height / 50) * 36.r,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),

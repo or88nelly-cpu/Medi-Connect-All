@@ -22,11 +22,11 @@ class _LaboratoryDetailPageState extends State<LaboratoryDetailPage> {
       create: (context) =>
           GetIt.I<LaboratoryBloc>()..add(LoadLaboratoryStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Laboratory Department"),
+        customAppbar: CommonAppBar(title: "Laboratory Department"),
         body: BlocBuilder<LaboratoryBloc, LaboratoryState>(
           builder: (context, state) {
             if (state is LaboratoryLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is LaboratoryError) {
               return Center(
                 child: Text(
@@ -53,7 +53,7 @@ class _LaboratoryDetailPageState extends State<LaboratoryDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -114,7 +114,7 @@ class _LaboratoryDetailPageState extends State<LaboratoryDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

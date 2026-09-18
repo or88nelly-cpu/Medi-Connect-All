@@ -119,9 +119,9 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SignupBranding(),
+                    SignupBranding(),
                     SizedBox(height: 48.h),
-                    const SignupWelcomeText(),
+                    SignupWelcomeText(),
                   ],
                 ),
               ),
@@ -134,7 +134,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                   children: [
                     _buildFormCard(),
                     SizedBox(height: 24.h),
-                    const SignupSecurityFooter(),
+                    SignupSecurityFooter(),
                   ],
                 ),
               ),
@@ -165,7 +165,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SignupBranding(),
+              SignupBranding(),
               SizedBox(height: 12.h),
 
               Stack(
@@ -174,7 +174,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                     children: [
                       FloatingDoctorImage(height: screenH * 0.25),
                       SizedBox(width: 12.w),
-                      const Expanded(child: SignupWelcomeText()),
+                      Expanded(child: SignupWelcomeText()),
                     ],
                   ),
                   Padding(
@@ -184,7 +184,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                 ],
               ),
               SizedBox(height: 28.h),
-              const SignupSecurityFooter(),
+              SignupSecurityFooter(),
               SizedBox(height: 12.h),
             ],
           ),
@@ -212,7 +212,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                 right: 0,
                 child: Opacity(
                   opacity: isDark ? 0.15 : 0.25,
-                  child: const HeartbeatPulseLine(height: 50),
+                  child: HeartbeatPulseLine(height: 50),
                 ),
               ),
 
@@ -232,7 +232,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.12),
                       blurRadius: 30,
-                      offset: const Offset(0, 8),
+                      offset: Offset(0, 8),
                     ),
                   ],
                 ),
@@ -268,7 +268,7 @@ class _AdminSignUpPageState extends State<AdminSignUpPage> {
       if (!_isAgreedNotifier.value) {
         showDialog(
           context: context,
-          builder: (_) => const ErrorDialog(
+          builder: (_) => ErrorDialog(
             message: 'Please agree to the Terms of Service & Privacy Policy.',
           ),
         );

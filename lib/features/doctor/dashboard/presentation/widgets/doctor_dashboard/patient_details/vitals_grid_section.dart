@@ -69,7 +69,7 @@ class VitalsGridSection extends StatelessWidget {
         GridView.count(
           crossAxisCount: 3,
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           crossAxisSpacing: 10.w,
           mainAxisSpacing: 10.h,
           childAspectRatio: 1.15,
@@ -90,7 +90,7 @@ class VitalsGridSection extends StatelessWidget {
                   ? weight
                   : "$weight kg",
               icon: Icons.monitor_weight_outlined,
-              iconColor: const Color(0xFF0F6FFF),
+              iconColor: Color(0xFF0F6FFF),
               isDark: isDark,
               borderCol: borderCol,
             ),
@@ -101,7 +101,7 @@ class VitalsGridSection extends StatelessWidget {
                   ? height
                   : "$height cm",
               icon: Icons.height,
-              iconColor: const Color(0xFF10B981),
+              iconColor: Color(0xFF10B981),
               isDark: isDark,
               borderCol: borderCol,
             ),
@@ -121,7 +121,7 @@ class VitalsGridSection extends StatelessWidget {
               label: "Head Circ.",
               value: hc.isEmpty || hc == "N/A" ? "N/A" : hc,
               icon: Icons.psychology,
-              iconColor: const Color(0xFF8B5CF6),
+              iconColor: Color(0xFF8B5CF6),
               isDark: isDark,
               borderCol: borderCol,
             ),
@@ -130,7 +130,7 @@ class VitalsGridSection extends StatelessWidget {
               label: "Status",
               value: status,
               icon: Icons.check_circle,
-              iconColor: const Color(0xFF10B981),
+              iconColor: Color(0xFF10B981),
               isDark: isDark,
               borderCol: borderCol,
               isStatus: true,
@@ -155,7 +155,7 @@ class VitalsGridSection extends StatelessWidget {
     final subTextCol = isDark
         ? Colors.white38
         : AppColors.textSecondary(context);
-    final cardBg = isDark ? const Color(0xFF0F172A) : Colors.white;
+    final cardBg = isDark ? Color(0xFF0F172A) : Colors.white;
 
     final displayVal =
         value == "N/A kg" || value == "N/A cm" || value == "N/A°F"
@@ -173,7 +173,7 @@ class VitalsGridSection extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.1 : 0.02),
             blurRadius: 6,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -200,7 +200,7 @@ class VitalsGridSection extends StatelessWidget {
                 height: 6.r,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isNA ? const Color(0xFF94A3B8) : iconColor,
+                  color: isNA ? Color(0xFF94A3B8) : iconColor,
                 ),
               ),
             ],

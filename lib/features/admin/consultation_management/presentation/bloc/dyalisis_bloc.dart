@@ -52,7 +52,7 @@ class DyalisisBloc extends Bloc<DyalisisEvent, DyalisisState> {
     Emitter<DyalisisState> emit,
   ) async {
     emit(DyalisisLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(DyalisisError(failure.message)),
       (stats) => emit(DyalisisLoaded(stats)),

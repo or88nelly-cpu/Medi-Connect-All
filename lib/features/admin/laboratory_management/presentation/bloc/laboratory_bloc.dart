@@ -52,7 +52,7 @@ class LaboratoryBloc extends Bloc<LaboratoryEvent, LaboratoryState> {
     Emitter<LaboratoryState> emit,
   ) async {
     emit(LaboratoryLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(LaboratoryError(failure.message)),
       (stats) => emit(LaboratoryLoaded(stats)),

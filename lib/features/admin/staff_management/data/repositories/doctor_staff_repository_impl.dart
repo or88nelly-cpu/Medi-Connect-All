@@ -57,7 +57,7 @@ class DoctorStaffRepositoryImpl implements DoctorStaffRepository {
   Future<Either<Failure, void>> deleteDoctorStaffMember(String userId) async {
     try {
       await _remoteDataSource.deleteDoctorStaffMember(userId);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {

@@ -55,14 +55,14 @@ class ConfirmationStep extends StatelessWidget {
           // Animated checkmark
           TweenAnimationBuilder<double>(
             tween: Tween(begin: 0.0, end: 1.0),
-            duration: const Duration(milliseconds: 800),
+            duration: Duration(milliseconds: 800),
             curve: Curves.elasticOut,
             builder: (context, value, child) =>
                 Transform.scale(scale: value, child: child),
             child: Container(
               width: 100,
               height: 100,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [AppColors.success, Color(0xFF15803D)],
                   begin: Alignment.topLeft,
@@ -70,11 +70,7 @@ class ConfirmationStep extends StatelessWidget {
                 ),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.check_rounded,
-                color: Colors.white,
-                size: 50,
-              ),
+              child: Icon(Icons.check_rounded, color: Colors.white, size: 50),
             ),
           ),
           SizedBox(height: AppDimensions.spaceXXL),
@@ -194,7 +190,7 @@ class ConfirmationStep extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: onGoHome,
-              icon: const Icon(Icons.home_rounded, color: Colors.white),
+              icon: Icon(Icons.home_rounded, color: Colors.white),
               label: Text(
                 'Go to Home',
                 style: AppTextStyles.buttonLarge.copyWith(color: Colors.white),

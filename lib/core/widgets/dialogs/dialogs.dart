@@ -35,7 +35,7 @@ class SuccessDialog extends StatelessWidget {
 
   const SuccessDialog({
     super.key,
-    this.title = AppStrings.success,
+    this.title = "",
     required this.message,
     this.onConfirm,
   });
@@ -89,7 +89,7 @@ class ErrorDialog extends StatelessWidget {
 
   const ErrorDialog({
     super.key,
-    this.title = AppStrings.error,
+    this.title = "",
     required this.message,
     this.onRetry,
   });

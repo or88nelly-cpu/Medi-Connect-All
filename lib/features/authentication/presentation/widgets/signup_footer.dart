@@ -44,7 +44,7 @@ class SignUpFooter extends StatelessWidget {
                 color: AppColors.textSecondary(context),
               ),
               children: [
-                const TextSpan(text: AppStrings.alreadyHaveAccount),
+                TextSpan(text: AppStrings.alreadyHaveAccount),
                 TextSpan(
                   text: AppStrings.login,
                   style: AppTextStyles.bodyMedium.copyWith(

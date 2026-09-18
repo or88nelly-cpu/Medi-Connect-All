@@ -20,7 +20,7 @@ class DoctorConsultsTab extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const Center(child: Text("Please login to see consultations"));
+          return Center(child: Text("Please login to see consultations"));
         }
         final doctor = authState.user;
         final docDisplayName = doctor.fullName;
@@ -28,7 +28,7 @@ class DoctorConsultsTab extends StatelessWidget {
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, state) {
             if (state is DoctorAppointmentsLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             }
 
             if (state is DoctorAppointmentsLoaded) {
@@ -55,7 +55,7 @@ class DoctorConsultsTab extends StatelessWidget {
                 // Compare dates
                 final today = DateTime.now();
                 final isTodayOrFuture = a.appointmentDate.isAfter(
-                  today.subtract(const Duration(days: 1)),
+                  today.subtract(Duration(days: 1)),
                 );
 
                 return isVideo && isNotDone && isTodayOrFuture;
@@ -141,11 +141,11 @@ class DoctorConsultsTab extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.video_call,
                                     color: Colors.white,
                                   ),
-                                  label: const Text(
+                                  label: Text(
                                     "Launch Consult",
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -178,7 +178,7 @@ class DoctorConsultsTab extends StatelessWidget {
               );
             }
 
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           },
         );
       },
@@ -189,7 +189,7 @@ class DoctorConsultsTab extends StatelessWidget {
     final now = DateTime.now();
     final dateStr = _isSameDay(date, now)
         ? "Today"
-        : _isSameDay(date, now.add(const Duration(days: 1)))
+        : _isSameDay(date, now.add(Duration(days: 1)))
         ? "Tomorrow"
         : DateFormat('dd MMM yyyy').format(date);
     return "$dateStr, $time";

@@ -20,7 +20,7 @@ class DepartmentPageHeader extends StatelessWidget {
           width: 52.r,
           height: 52.r,
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               colors: [
                 AppColors.controlCenterBlue,
                 AppColors.controlCenterPurple,
@@ -33,7 +33,7 @@ class DepartmentPageHeader extends StatelessWidget {
               BoxShadow(
                 color: AppColors.controlCenterBlue.withValues(alpha: 0.35),
                 blurRadius: 12,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),

@@ -57,7 +57,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 // Top Skip Action (hidden on last page for clean UX)
                 AnimatedOpacity(
                   opacity: isLastPage ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 300),
+                  duration: Duration(milliseconds: 300),
                   child: Align(
                     alignment: Alignment.topRight,
                     child: IgnorePointer(
@@ -119,7 +119,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   children: List.generate(
                     _slides.length,
                     (index) => AnimatedContainer(
-                      duration: const Duration(milliseconds: 350),
+                      duration: Duration(milliseconds: 350),
                       margin: EdgeInsets.symmetric(horizontal: 5.w),
                       width: _currentIndex == index ? 26.w : 8.w,
                       height: 8.h,
@@ -155,7 +155,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         context.go(RouteNames.login);
                       } else {
                         _pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: Duration(milliseconds: 400),
                           curve: Curves.easeInOutCubic,
                         );
                       }
@@ -174,12 +174,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget _buildIllustration(int index) {
     switch (index) {
       case 0:
-        return const OnboardingDoctorIllustration();
+        return OnboardingDoctorIllustration();
       case 1:
-        return const OnboardingBookingIllustration();
+        return OnboardingBookingIllustration();
       case 2:
       default:
-        return const OnboardingSecurityIllustration();
+        return OnboardingSecurityIllustration();
     }
   }
 }

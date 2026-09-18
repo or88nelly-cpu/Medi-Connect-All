@@ -22,7 +22,7 @@ class AdminSlotConfigPage extends StatelessWidget {
         : AppColors.terminalLightText;
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Slot Configuration"),
+      customAppbar: CommonAppBar(title: "Slot Configuration"),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20.r),
         child: Column(

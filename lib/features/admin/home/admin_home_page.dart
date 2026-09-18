@@ -16,13 +16,12 @@ class AdminHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AdminHomeBloc>(
-      create: (_) =>
-          getIt<AdminHomeBloc>()..add(const LoadAdminDashboardModules()),
+      create: (_) => getIt<AdminHomeBloc>()..add(LoadAdminDashboardModules()),
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Unauthenticated) context.go(RouteNames.login);
         },
-        child: const AdminHomeBody(),
+        child: AdminHomeBody(),
       ),
     );
   }

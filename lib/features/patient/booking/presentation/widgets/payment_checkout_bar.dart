@@ -54,7 +54,7 @@ class PaymentCheckoutBar extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w900,
-                          color: const Color(0xFF1E3A8A),
+                          color: Color(0xFF1E3A8A),
                         ),
                       ),
                     ],
@@ -63,7 +63,7 @@ class PaymentCheckoutBar extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.verified_user_rounded,
-                        color: const Color(0xFF10B981),
+                        color: Color(0xFF10B981),
                         size: 14.r,
                       ),
                       SizedBox(width: 4.w),
@@ -85,7 +85,7 @@ class PaymentCheckoutBar extends StatelessWidget {
                     width: 170.w,
                     height: 48.h,
                     borderRadius: 16.r,
-                    color: const Color(0xFF3B5BFD),
+                    color: Color(0xFF3B5BFD),
                     onPressed: onCheckoutPressed,
                     icon: Icon(
                       Icons.chevron_right_rounded,

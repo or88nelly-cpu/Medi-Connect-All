@@ -22,8 +22,8 @@ class RecentConsultationCard extends StatelessWidget {
     final titleColor = isDark ? Colors.white : AppColors.textDarkNavy;
     final borderCol = AppColors.border(context);
     final cardBg = isDark
-        ? const Color(0xFF0F172A)
-        : const Color(0xFFFAF9FE); // Lavender hint bg matching mockup
+        ? Color(0xFF0F172A)
+        : Color(0xFFFAF9FE); // Lavender hint bg matching mockup
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +77,7 @@ class RecentConsultationCard extends StatelessWidget {
               BoxShadow(
                 color: Colors.black.withValues(alpha: isDark ? 0.1 : 0.02),
                 blurRadius: 8,
-                offset: const Offset(0, 3),
+                offset: Offset(0, 3),
               ),
             ],
           ),
@@ -108,13 +108,11 @@ class RecentConsultationCard extends StatelessWidget {
                               padding: EdgeInsets.all(8.r),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(
-                                  0xFFF3E8FF,
-                                ), // Lavender circle
+                                color: Color(0xFFF3E8FF), // Lavender circle
                               ),
                               child: Icon(
                                 Icons.favorite_border_rounded,
-                                color: const Color(0xFF7E22CE), // Purple icon
+                                color: Color(0xFF7E22CE), // Purple icon
                                 size: 20.r,
                               ),
                             ),
@@ -156,7 +154,7 @@ class RecentConsultationCard extends StatelessWidget {
                       ],
                     ),
 
-                    const Divider(height: 24, thickness: 0.8),
+                    Divider(height: 24, thickness: 0.8),
 
                     // Row 2: Three columns info row
                     Row(
@@ -219,7 +217,7 @@ class RecentConsultationCard extends StatelessWidget {
           padding: EdgeInsets.all(6.r),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: const Color(0xFFEFF6FF), // light blue bg
+            color: Color(0xFFEFF6FF), // light blue bg
           ),
           child: Icon(
             icon,

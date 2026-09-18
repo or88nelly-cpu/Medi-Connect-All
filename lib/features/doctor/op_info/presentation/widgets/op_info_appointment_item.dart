@@ -23,9 +23,9 @@ class OpInfoAppointmentItem extends StatelessWidget {
 
     if (isBlocked) {
       final bg = isDark
-          ? const Color(0xFF881337).withValues(alpha: 0.1)
-          : const Color(0xFFFFF1F2);
-      final border = isDark ? Colors.white10 : const Color(0xFFFDA4AF);
+          ? Color(0xFF881337).withValues(alpha: 0.1)
+          : Color(0xFFFFF1F2);
+      final border = isDark ? Colors.white10 : Color(0xFFFDA4AF);
       final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
 
       return Container(
@@ -56,7 +56,7 @@ class OpInfoAppointmentItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isDark ? Colors.white10 : Colors.white,
                 shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFFFCA5A5)),
+                border: Border.all(color: Color(0xFFFCA5A5)),
               ),
               child: Icon(Icons.lock, color: AppColors.error, size: 18.r),
             ),
@@ -108,13 +108,13 @@ class OpInfoAppointmentItem extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFCA5A5).withValues(alpha: 0.3),
+                    color: Color(0xFFFCA5A5).withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(6.r),
                   ),
                   child: Text(
                     "Blocked",
                     style: TextStyle(
-                      color: const Color(0xFFB91C1C),
+                      color: Color(0xFFB91C1C),
                       fontSize: 9.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -139,7 +139,7 @@ class OpInfoAppointmentItem extends StatelessWidget {
             BoxShadow(
               color: AppColors.lightShadow,
               blurRadius: 6.r,
-              offset: const Offset(0, 2),
+              offset: Offset(0, 2),
             ),
           ],
         ),

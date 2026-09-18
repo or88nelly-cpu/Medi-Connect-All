@@ -99,7 +99,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: "Full Name"),
+                decoration: InputDecoration(labelText: "Full Name"),
                 validator: (val) => val == null || val.isEmpty
                     ? AppStrings.requiredField
                     : null,
@@ -108,12 +108,12 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
               TextFormField(
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(labelText: "Phone Number"),
+                decoration: InputDecoration(labelText: "Phone Number"),
               ),
               SizedBox(height: 12.h),
               Row(
                 children: [
-                  const Text("Gender: "),
+                  Text("Gender: "),
                   SizedBox(width: 12.w),
                   DropdownButton<String>(
                     value: _gender,
@@ -129,7 +129,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
               SizedBox(height: 12.h),
               Row(
                 children: [
-                  const Text("Status: "),
+                  Text("Status: "),
                   SizedBox(width: 12.w),
                   DropdownButton<String>(
                     value: _availabilityStatus,
@@ -150,9 +150,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
               if (isDoctor) ...[
                 TextFormField(
                   controller: _specializationController,
-                  decoration: const InputDecoration(
-                    labelText: "Specialization",
-                  ),
+                  decoration: InputDecoration(labelText: "Specialization"),
                   validator: (val) => val == null || val.isEmpty
                       ? AppStrings.requiredField
                       : null,
@@ -160,15 +158,13 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _qualificationsController,
-                  decoration: const InputDecoration(
-                    labelText: "Qualifications",
-                  ),
+                  decoration: InputDecoration(labelText: "Qualifications"),
                 ),
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _feeController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: "Consultation Fee (₹)",
                   ),
                 ),
@@ -176,14 +172,12 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                 TextFormField(
                   controller: _expController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: "Experience (Years)",
-                  ),
+                  decoration: InputDecoration(labelText: "Experience (Years)"),
                 ),
               ] else ...[
                 TextFormField(
                   controller: _staffRoleController,
-                  decoration: const InputDecoration(labelText: "Staff Role"),
+                  decoration: InputDecoration(labelText: "Staff Role"),
                   validator: (val) => val == null || val.isEmpty
                       ? AppStrings.requiredField
                       : null,
@@ -191,7 +185,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                 SizedBox(height: 12.h),
                 TextFormField(
                   controller: _designationController,
-                  decoration: const InputDecoration(labelText: "Designation"),
+                  decoration: InputDecoration(labelText: "Designation"),
                 ),
               ],
               SizedBox(height: 24.h),
@@ -225,7 +219,7 @@ class _DoctorStaffEditPageState extends State<DoctorStaffEditPage> {
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "Save Changes",
                   style: TextStyle(color: Colors.white),
                 ),

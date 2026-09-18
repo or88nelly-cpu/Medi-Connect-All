@@ -25,14 +25,12 @@ class _NutritionAndDiabeticsDetailPageState
           GetIt.I<NutritionAndDiabeticsBloc>()
             ..add(LoadNutritionAndDiabeticsStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(
-          title: "Nutrition and Diabetics Department",
-        ),
+        customAppbar: CommonAppBar(title: "Nutrition and Diabetics Department"),
         body:
             BlocBuilder<NutritionAndDiabeticsBloc, NutritionAndDiabeticsState>(
               builder: (context, state) {
                 if (state is NutritionAndDiabeticsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 } else if (state is NutritionAndDiabeticsError) {
                   return Center(
                     child: Text(
@@ -59,7 +57,7 @@ class _NutritionAndDiabeticsDetailPageState
                         SizedBox(height: 16.h),
                         GridView.builder(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -124,7 +122,7 @@ class _NutritionAndDiabeticsDetailPageState
                     ),
                   );
                 }
-                return const SizedBox.shrink();
+                return SizedBox.shrink();
               },
             ),
       ),

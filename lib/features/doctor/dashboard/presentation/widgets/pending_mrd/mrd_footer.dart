@@ -12,7 +12,7 @@ class MrdFooter extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: isDark ? Colors.white10 : const Color(0xFFF3F4F6),
+        color: isDark ? Colors.white10 : Color(0xFFF3F4F6),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
@@ -36,16 +36,14 @@ class MrdFooter extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Redirecting to MRD Dashboard..."),
-                ),
+                SnackBar(content: Text("Redirecting to MRD Dashboard...")),
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF8B5CF6),
+              backgroundColor: Color(0xFF8B5CF6),
               foregroundColor: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-              minimumSize: const Size(0, 0),
+              minimumSize: Size(0, 0),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.r),
@@ -61,7 +59,7 @@ class MrdFooter extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 4.w),
-                const Icon(Icons.arrow_forward_ios, size: 8),
+                Icon(Icons.arrow_forward_ios, size: 8),
               ],
             ),
           ),

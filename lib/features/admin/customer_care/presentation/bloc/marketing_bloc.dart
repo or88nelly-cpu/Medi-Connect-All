@@ -52,7 +52,7 @@ class MarketingBloc extends Bloc<MarketingEvent, MarketingState> {
     Emitter<MarketingState> emit,
   ) async {
     emit(MarketingLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(MarketingError(failure.message)),
       (stats) => emit(MarketingLoaded(stats)),

@@ -21,11 +21,11 @@ class _IcuDetailPageState extends State<IcuDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<IcuBloc>()..add(LoadIcuStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "ICU Department"),
+        customAppbar: CommonAppBar(title: "ICU Department"),
         body: BlocBuilder<IcuBloc, IcuState>(
           builder: (context, state) {
             if (state is IcuLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is IcuError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _IcuDetailPageState extends State<IcuDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _IcuDetailPageState extends State<IcuDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

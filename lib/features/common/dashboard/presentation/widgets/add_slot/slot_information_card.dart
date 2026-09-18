@@ -363,11 +363,9 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
           Container(
             padding: EdgeInsets.all(10.r),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF131130) : const Color(0xFFF3E5F5),
+              color: isDark ? Color(0xFF131130) : Color(0xFFF3E5F5),
               border: Border.all(
-                color: isDark
-                    ? const Color(0xFF3F2D70)
-                    : const Color(0xFFE1BEE7),
+                color: isDark ? Color(0xFF3F2D70) : Color(0xFFE1BEE7),
                 width: 0.5.r,
               ),
               borderRadius: BorderRadius.circular(8.r),
@@ -377,9 +375,7 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
               children: [
                 Icon(
                   Icons.info_outline,
-                  color: isDark
-                      ? const Color(0xFFB39DDB)
-                      : const Color(0xFF7B1FA2),
+                  color: isDark ? Color(0xFFB39DDB) : Color(0xFF7B1FA2),
                   size: 16.sp,
                 ),
                 SizedBox(width: 8.w),
@@ -387,9 +383,7 @@ class _SlotInformationCardState extends State<SlotInformationCard> {
                   child: Text(
                     "Slots will be created from $_startTime to $_endTime with $_slotDuration duration.\nTotal Slots: $totalSlots",
                     style: TextStyle(
-                      color: isDark
-                          ? const Color(0xFFB39DDB)
-                          : const Color(0xFF7B1FA2),
+                      color: isDark ? Color(0xFFB39DDB) : Color(0xFF7B1FA2),
                       fontSize: 10.sp,
                       height: 1.4,
                       fontWeight: FontWeight.w600,

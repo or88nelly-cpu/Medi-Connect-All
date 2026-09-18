@@ -21,11 +21,11 @@ class _FinanceDetailPageState extends State<FinanceDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<FinanceBloc>()..add(LoadFinanceStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Finance Department"),
+        customAppbar: CommonAppBar(title: "Finance Department"),
         body: BlocBuilder<FinanceBloc, FinanceState>(
           builder: (context, state) {
             if (state is FinanceLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is FinanceError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _FinanceDetailPageState extends State<FinanceDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _FinanceDetailPageState extends State<FinanceDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

@@ -97,7 +97,7 @@ class _PatientChatTabState extends State<PatientChatTab> {
 
   Widget _buildBody() {
     if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator());
     }
 
     if (_errorMessage != null) {
@@ -115,10 +115,7 @@ class _PatientChatTabState extends State<PatientChatTab> {
               ),
             ),
             SizedBox(height: 4.h),
-            TextButton(
-              onPressed: _fetchChatThreads,
-              child: const Text("Retry"),
-            ),
+            TextButton(onPressed: _fetchChatThreads, child: Text("Retry")),
           ],
         ),
       );
@@ -163,7 +160,7 @@ class _PatientChatTabState extends State<PatientChatTab> {
             contentPadding: EdgeInsets.all(16.r),
             leading: CircleAvatar(
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              child: const Icon(Icons.person, color: AppColors.primary),
+              child: Icon(Icons.person, color: AppColors.primary),
             ),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

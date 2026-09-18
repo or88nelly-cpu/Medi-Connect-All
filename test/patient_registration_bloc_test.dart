@@ -11,14 +11,13 @@ class FakePatientRepository implements PatientRepository {
   bool registerCalled = false;
   UserModel? registeredPatient;
   Map<String, dynamic>? sentMrdRecord;
-  Either<Failure, void> registerResult = const Right(null);
+  Either<Failure, void> registerResult = Right(null);
 
   bool updateCalled = false;
   UserModel? updatedPatient;
 
   @override
-  Future<Either<Failure, List<UserModel>>> getPatients() async =>
-      const Right([]);
+  Future<Either<Failure, List<UserModel>>> getPatients() async => Right([]);
 
   @override
   Future<Either<Failure, UserModel>> createPatient(UserModel patient) async =>
@@ -33,7 +32,7 @@ class FakePatientRepository implements PatientRepository {
 
   @override
   Future<Either<Failure, void>> deletePatient(String patientId) async =>
-      const Right(null);
+      Right(null);
 
   @override
   Future<Either<Failure, void>> registerPatientAndSendToMRD(
@@ -72,7 +71,7 @@ void main() {
     'UpdateFormFieldsEvent should update state fields accordingly',
     () async {
       bloc.add(
-        const UpdateFormFieldsEvent(
+        UpdateFormFieldsEvent(
           firstName: 'John',
           lastName: 'Doe',
           email: 'john.doe@test.com',
@@ -120,10 +119,10 @@ void main() {
   test(
     'FetchAddressEvent should update place and address based on pincode',
     () async {
-      bloc.add(const FetchAddressEvent('560001'));
+      bloc.add(FetchAddressEvent('560001'));
 
       // Wait for the simulated delay in the BLoC (600ms + buffer)
-      await Future.delayed(const Duration(milliseconds: 700));
+      await Future.delayed(Duration(milliseconds: 700));
 
       expect(bloc.state.place, 'MG Road');
       expect(
@@ -138,9 +137,9 @@ void main() {
     'SubmitFormEvent should validate required fields and fail if invalid',
     () async {
       // Blank submit should trigger failure
-      bloc.add(const SubmitFormEvent());
+      bloc.add(SubmitFormEvent());
 
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(Duration(milliseconds: 100));
       expect(bloc.state.status, PatientRegistrationStatus.failure);
       expect(bloc.state.errorMessage, 'First name is required');
     },
@@ -151,7 +150,7 @@ void main() {
     () async {
       // 1. Fill fields
       bloc.add(
-        const UpdateFormFieldsEvent(
+        UpdateFormFieldsEvent(
           firstName: 'John',
           lastName: 'Doe',
           email: 'john.doe@test.com',
@@ -178,12 +177,12 @@ void main() {
       );
 
       // 2. Fetch Address to populate address info
-      bloc.add(const FetchAddressEvent('560001'));
-      await Future.delayed(const Duration(milliseconds: 700));
+      bloc.add(FetchAddressEvent('560001'));
+      await Future.delayed(Duration(milliseconds: 700));
 
       // 3. Submit
-      bloc.add(const SubmitFormEvent());
-      await Future.delayed(const Duration(milliseconds: 100));
+      bloc.add(SubmitFormEvent());
+      await Future.delayed(Duration(milliseconds: 100));
 
       expect(bloc.state.status, PatientRegistrationStatus.success);
       expect(fakeRepository.registerCalled, true);
@@ -201,9 +200,9 @@ void main() {
   test(
     'SubmitProfileUpdateEvent should validate required fields and fail if invalid',
     () async {
-      bloc.add(const SubmitProfileUpdateEvent('test-user-id'));
+      bloc.add(SubmitProfileUpdateEvent('test-user-id'));
 
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(Duration(milliseconds: 100));
       expect(bloc.state.status, PatientRegistrationStatus.failure);
       expect(bloc.state.errorMessage, 'First name is required');
     },
@@ -214,7 +213,7 @@ void main() {
     () async {
       // 1. Fill fields
       bloc.add(
-        const UpdateFormFieldsEvent(
+        UpdateFormFieldsEvent(
           firstName: 'Sarah',
           lastName: 'Smith',
           email: 'sarah.smith@test.com',
@@ -241,12 +240,12 @@ void main() {
       );
 
       // 2. Fetch Address to populate address info
-      bloc.add(const FetchAddressEvent('560001'));
-      await Future.delayed(const Duration(milliseconds: 700));
+      bloc.add(FetchAddressEvent('560001'));
+      await Future.delayed(Duration(milliseconds: 700));
 
       // 3. Submit Update
-      bloc.add(const SubmitProfileUpdateEvent('test-user-id'));
-      await Future.delayed(const Duration(milliseconds: 100));
+      bloc.add(SubmitProfileUpdateEvent('test-user-id'));
+      await Future.delayed(Duration(milliseconds: 100));
 
       expect(bloc.state.status, PatientRegistrationStatus.success);
       expect(fakeRepository.updateCalled, true);

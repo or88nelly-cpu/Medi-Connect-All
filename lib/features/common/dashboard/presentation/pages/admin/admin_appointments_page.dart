@@ -99,7 +99,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                   if (appointmentsState is AdminAppointmentsLoading) {
                     return SizedBox(
                       height: 500.h,
-                      child: const Center(child: CircularProgressIndicator()),
+                      child: Center(child: CircularProgressIndicator()),
                     );
                   }
 
@@ -134,7 +134,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                   LoadAppointments(),
                                 );
                               },
-                              child: const Text("Retry"),
+                              child: Text("Retry"),
                             ),
                           ],
                         ),
@@ -201,7 +201,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                         );
 
                         return SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
+                          physics: BouncingScrollPhysics(),
                           padding: EdgeInsets.symmetric(
                             horizontal: 20.r,
                             vertical: 16.r,
@@ -244,7 +244,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                       ScaffoldMessenger.of(
                                         context,
                                       ).showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           content: Text(
                                             "Refreshing appointments list...",
                                           ),
@@ -388,7 +388,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                               // Status Filter chips
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                physics: const BouncingScrollPhysics(),
+                                physics: BouncingScrollPhysics(),
                                 child: Row(
                                   children:
                                       [
@@ -417,9 +417,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                               ),
                                             ),
                                             selected: isSelected,
-                                            selectedColor: const Color(
-                                              0xFF0F6FFF,
-                                            ),
+                                            selectedColor: Color(0xFF0F6FFF),
                                             backgroundColor: _getChipBgColor(
                                               status,
                                               isDark,
@@ -503,8 +501,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
                                     )
                                   : ListView.builder(
                                       shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
+                                      physics: NeverScrollableScrollPhysics(),
                                       itemCount: filteredList.length,
                                       itemBuilder: (context, idx) {
                                         final apt = filteredList[idx];
@@ -534,7 +531,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
 
                   return SizedBox(
                     height: 500.h,
-                    child: const Center(child: CircularProgressIndicator()),
+                    child: Center(child: CircularProgressIndicator()),
                   );
                 },
               );
@@ -546,7 +543,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
   }
 
   Color _getChipBgColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.1);
+    if (status == 'All') return Color(0xFF0F6FFF).withValues(alpha: 0.1);
     switch (status) {
       case 'Confirmed':
         return isDark
@@ -569,7 +566,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
   }
 
   Color _getChipBorderColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF).withValues(alpha: 0.3);
+    if (status == 'All') return Color(0xFF0F6FFF).withValues(alpha: 0.3);
     switch (status) {
       case 'Confirmed':
         return AppColors.success.withValues(alpha: 0.3);
@@ -584,7 +581,7 @@ class _AdminAppointmentsPageState extends State<AdminAppointmentsPage> {
   }
 
   Color _getChipTextColor(String status, bool isDark) {
-    if (status == 'All') return const Color(0xFF0F6FFF);
+    if (status == 'All') return Color(0xFF0F6FFF);
     switch (status) {
       case 'Confirmed':
         return isDark

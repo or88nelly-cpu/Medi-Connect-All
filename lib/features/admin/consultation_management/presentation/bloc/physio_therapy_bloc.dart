@@ -52,7 +52,7 @@ class PhysioTherapyBloc extends Bloc<PhysioTherapyEvent, PhysioTherapyState> {
     Emitter<PhysioTherapyState> emit,
   ) async {
     emit(PhysioTherapyLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(PhysioTherapyError(failure.message)),
       (stats) => emit(PhysioTherapyLoaded(stats)),

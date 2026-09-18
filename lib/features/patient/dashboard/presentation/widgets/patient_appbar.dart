@@ -32,7 +32,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 72.h,
       titleSpacing: 16.w,
       title: TweenAnimationBuilder<double>(
-        duration: const Duration(milliseconds: 700),
+        duration: Duration(milliseconds: 700),
         curve: Curves.easeOutCubic,
         tween: Tween(begin: -30, end: 0),
         builder: (_, value, child) {
@@ -63,7 +63,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Text(
                   "MediConnect",
                   style: TextStyle(
-                    color: const Color(0xff0A3BB0),
+                    color: Color(0xff0A3BB0),
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w900,
                   ),
@@ -84,7 +84,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Hero(
                   tag: "patient_search",
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
+                    duration: Duration(milliseconds: 300),
                     height: 42.h,
                     padding: EdgeInsets.symmetric(horizontal: 14.w),
                     decoration: BoxDecoration(
@@ -95,7 +95,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.search_rounded, color: Colors.grey),
+                        Icon(Icons.search_rounded, color: Colors.grey),
                         SizedBox(width: 8.w),
                         Expanded(
                           child: Text(
@@ -118,7 +118,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
             /// Notification
             TweenAnimationBuilder<double>(
               tween: Tween(begin: .8, end: 1),
-              duration: const Duration(milliseconds: 600),
+              duration: Duration(milliseconds: 600),
               curve: Curves.elasticOut,
               builder: (_, scale, child) {
                 return Transform.scale(scale: scale, child: child);
@@ -146,7 +146,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                       top: -2,
                       child: Container(
                         padding: EdgeInsets.all(4.r),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: AppColors.red,
                           shape: BoxShape.circle,
                         ),
@@ -187,7 +187,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                           as ImageProvider;
 
                 return TweenAnimationBuilder<double>(
-                  duration: const Duration(milliseconds: 700),
+                  duration: Duration(milliseconds: 700),
                   tween: Tween(begin: .7, end: 1),
                   curve: Curves.elasticOut,
                   builder: (_, scale, child) {
@@ -211,7 +211,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSizeWidget {
                           bottom: -2,
                           child: Container(
                             padding: EdgeInsets.all(3.r),
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: AppColors.secondary,
                               shape: BoxShape.circle,
                             ),

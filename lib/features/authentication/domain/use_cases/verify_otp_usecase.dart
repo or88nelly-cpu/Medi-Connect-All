@@ -13,14 +13,14 @@ class VerifyOtpParams {
   final String email;
   final String token;
 
-  const VerifyOtpParams({required this.email, required this.token});
+  VerifyOtpParams({required this.email, required this.token});
 }
 
 @lazySingleton
 class VerifyOtpUseCase extends UseCase<UserEntity, VerifyOtpParams> {
   final AuthRepository _repository;
 
-  const VerifyOtpUseCase(this._repository);
+  VerifyOtpUseCase(this._repository);
 
   @override
   Future<Either<Failure, UserEntity>> call(VerifyOtpParams params) {

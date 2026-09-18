@@ -89,7 +89,7 @@ class DepartmentOverviewCard extends StatelessWidget {
           SizedBox(height: 8.h),
           ListView.separated(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             itemCount: items.length,
             separatorBuilder: (context, idx) => SizedBox(height: 12.h),
             itemBuilder: (context, idx) {

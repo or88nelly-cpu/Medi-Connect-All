@@ -12,7 +12,7 @@ class NoInternetWidget extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -21,14 +21,14 @@ class NoInternetWidget extends StatelessWidget {
               size: 80,
               color: isDark ? Colors.white60 : Colors.black38,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Text(
               'No Internet Connection',
               style: Theme.of(
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Text(
               'Please check your network settings and try again.',
               textAlign: TextAlign.center,
@@ -36,7 +36,7 @@ class NoInternetWidget extends StatelessWidget {
                 color: isDark ? Colors.white70 : Colors.black54,
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             CommonButton(
               text: AppStrings.retry,
               onPressed: onRetry,

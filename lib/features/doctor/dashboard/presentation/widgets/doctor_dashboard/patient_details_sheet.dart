@@ -157,7 +157,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0F6FFF),
+                      backgroundColor: Color(0xFF0F6FFF),
                       foregroundColor: Colors.white,
                       minimumSize: Size(double.infinity, 48.h),
                       shape: RoundedRectangleBorder(
@@ -168,9 +168,9 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.play_circle_fill_rounded, size: 20),
+                        Icon(Icons.play_circle_fill_rounded, size: 20),
                         SizedBox(width: 8.w),
-                        const Text(
+                        Text(
                           "Start Consultation / Edit Today's Visit",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -185,9 +185,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
           body: Container(
             decoration: BoxDecoration(
               color: sheetBg,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
-              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.15),
@@ -231,12 +229,12 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isDark
-                                ? const Color(0xFF1E293B)
-                                : const Color(0xFFF1F5F9),
+                                ? Color(0xFF1E293B)
+                                : Color(0xFFF1F5F9),
                             border: Border.all(
                               color: isDark
-                                  ? const Color(0xFF334155)
-                                  : const Color(0xFFE2E8F0),
+                                  ? Color(0xFF334155)
+                                  : Color(0xFFE2E8F0),
                             ),
                           ),
                           child: Icon(
@@ -250,7 +248,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                   ),
                 ),
                 SizedBox(height: 12.h),
-                const Divider(height: 1),
+                Divider(height: 1),
 
                 // Content Body
                 Expanded(
@@ -270,7 +268,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                         recentApt: _recentApt,
                         onViewAll: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                               content: Text(
                                 "Vitals history view is under development",
                               ),
@@ -294,7 +292,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                         isLoading: _isLoadingEMR,
                         onViewAll: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                               content: Text(
                                 "EMR history view is under development",
                               ),
@@ -316,7 +314,7 @@ class _PatientDetailsSheetState extends State<PatientDetailsSheet> {
                         },
                         onShareRxPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                               content: Text(
                                 "Sharing prescription with patient...",
                               ),

@@ -81,8 +81,8 @@ class _StaffDashboardPageState extends State<StaffDashboardPage> {
       },
       child: Scaffold(
         backgroundColor: AppColors.scaffold(context),
-        drawer: const StaffDrawer(),
-        body: const _StaffDashboardBody(),
+        drawer: StaffDrawer(),
+        body: _StaffDashboardBody(),
       ),
     );
   }
@@ -138,19 +138,19 @@ class _StaffDashboardBody extends StatelessWidget {
                               title: 'Operations',
                               subtitle:
                                   'Access all department\noperations and activities',
-                              gradientColors: const [
+                              gradientColors: [
                                 Color(0xFF3B5BFF),
                                 Color(0xFF6A7FFF),
                               ],
-                              bgColorLight: const Color(0xFFF0F3FF),
-                              bgColorDark: const Color(0xFF0D1A38),
-                              accentColor: const Color(0xFF4F2DFF),
+                              bgColorLight: Color(0xFFF0F3FF),
+                              bgColorDark: Color(0xFF0D1A38),
+                              accentColor: Color(0xFF4F2DFF),
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) => BlocProvider.value(
                                       value: context.read<AuthBloc>(),
-                                      child: const StaffOperationsPage(),
+                                      child: StaffOperationsPage(),
                                     ),
                                   ),
                                 );
@@ -163,13 +163,13 @@ class _StaffDashboardBody extends StatelessWidget {
                               icon: Icons.task_alt_rounded,
                               title: 'Tasks',
                               subtitle: 'View and manage your\nassigned tasks',
-                              gradientColors: const [
+                              gradientColors: [
                                 Color(0xFFFF7043),
                                 Color(0xFFFFB74D),
                               ],
-                              bgColorLight: const Color(0xFFFFF4EE),
-                              bgColorDark: const Color(0xFF2E1208),
-                              accentColor: const Color(0xFFFF7043),
+                              bgColorLight: Color(0xFFFFF4EE),
+                              bgColorDark: Color(0xFF2E1208),
+                              accentColor: Color(0xFFFF7043),
                               onTap: () {},
                             ),
                           ),
@@ -184,13 +184,13 @@ class _StaffDashboardBody extends StatelessWidget {
                               title: 'Leave Management',
                               subtitle:
                                   'Apply for leave and\ncheck leave status',
-                              gradientColors: const [
+                              gradientColors: [
                                 Color(0xFF00C07A),
                                 Color(0xFF00E096),
                               ],
-                              bgColorLight: const Color(0xFFEFFFF8),
-                              bgColorDark: const Color(0xFF062616),
-                              accentColor: const Color(0xFF00C07A),
+                              bgColorLight: Color(0xFFEFFFF8),
+                              bgColorDark: Color(0xFF062616),
+                              accentColor: Color(0xFF00C07A),
                               onTap: () {},
                             ),
                           ),
@@ -201,13 +201,13 @@ class _StaffDashboardBody extends StatelessWidget {
                               title: 'Notifications',
                               subtitle:
                                   'View announcements\nand important alerts',
-                              gradientColors: const [
+                              gradientColors: [
                                 Color(0xFF9B59B6),
                                 Color(0xFFBB8FDB),
                               ],
-                              bgColorLight: const Color(0xFFF9F0FF),
-                              bgColorDark: const Color(0xFF1C0A2E),
-                              accentColor: const Color(0xFF9B59B6),
+                              bgColorLight: Color(0xFFF9F0FF),
+                              bgColorDark: Color(0xFF1C0A2E),
+                              accentColor: Color(0xFF9B59B6),
                               notificationCount: 3,
                               onTap: () {},
                             ),
@@ -216,7 +216,7 @@ class _StaffDashboardBody extends StatelessWidget {
                       ),
                       SizedBox(height: 12.h),
                       // Full-width settings card
-                      const _SettingsDashCard(),
+                      _SettingsDashCard(),
                       SizedBox(height: 24.h),
                     ],
                   ),
@@ -290,8 +290,8 @@ class _TopBar extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF060D1F), const Color(0xFF0D1E45)]
-              : [const Color(0xFFEAEEFF), const Color(0xFFF5F7FF)],
+              ? [Color(0xFF060D1F), Color(0xFF0D1E45)]
+              : [Color(0xFFEAEEFF), Color(0xFFF5F7FF)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -380,7 +380,7 @@ class _TopBar extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Spacer(),
+                    Spacer(),
                     // Notification bell with badge
                     Stack(
                       clipBehavior: Clip.none,
@@ -396,7 +396,7 @@ class _TopBar extends StatelessWidget {
                           child: Container(
                             width: 16.r,
                             height: 16.r,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: AppColors.error,
                               shape: BoxShape.circle,
                             ),
@@ -574,10 +574,10 @@ class _DateCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
       margin: EdgeInsets.only(bottom: 16.h),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF0F1E3A) : Colors.white,
+        color: isDark ? Color(0xFF0F1E3A) : Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: isDark ? const Color(0xFF1A3160) : const Color(0xFFDDE5F8),
+          color: isDark ? Color(0xFF1A3160) : Color(0xFFDDE5F8),
         ),
         boxShadow: [
           BoxShadow(
@@ -585,7 +585,7 @@ class _DateCard extends StatelessWidget {
                 ? Colors.black.withValues(alpha: 0.4)
                 : AppColors.blue.withValues(alpha: 0.08),
             blurRadius: 16,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -741,7 +741,7 @@ class _DashCard extends StatelessWidget {
             BoxShadow(
               color: accentColor.withValues(alpha: isDark ? 0.12 : 0.08),
               blurRadius: 12,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),
@@ -771,7 +771,7 @@ class _DashCard extends StatelessWidget {
                     right: -6,
                     child: Container(
                       padding: EdgeInsets.all(4.r),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.error,
                         shape: BoxShape.circle,
                       ),
@@ -851,7 +851,7 @@ class _SettingsDashCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF0D1A38) : const Color(0xFFF0F3FF),
+          color: isDark ? Color(0xFF0D1A38) : Color(0xFFF0F3FF),
           borderRadius: BorderRadius.circular(18.r),
           border: Border.all(
             color: isDark
@@ -862,7 +862,7 @@ class _SettingsDashCard extends StatelessWidget {
             BoxShadow(
               color: AppColors.primary.withValues(alpha: isDark ? 0.1 : 0.06),
               blurRadius: 12,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),
@@ -872,7 +872,7 @@ class _SettingsDashCard extends StatelessWidget {
               width: 52.r,
               height: 52.r,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: [Color(0xFF4F2DFF), Color(0xFF7B61FF)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,

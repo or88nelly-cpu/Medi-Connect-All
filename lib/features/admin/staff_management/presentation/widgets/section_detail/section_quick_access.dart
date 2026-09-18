@@ -26,25 +26,25 @@ class SectionQuickAccess extends StatelessWidget {
         'label': 'Appointments',
         'icon': Icons.calendar_today_outlined,
         'color': AppColors.primary,
-        'page': const AdminAppointmentsPage(),
+        'page': AdminAppointmentsPage(),
       },
       {
         'label': 'Patients',
         'icon': Icons.people_outline,
         'color': AppColors.secondary,
-        'page': const AdminPatientsPage(),
+        'page': AdminPatientsPage(),
       },
       {
         'label': 'Analytics',
         'icon': Icons.trending_up_outlined,
         'color': AppColors.accent,
-        'page': const AdminRecentActivityPage(),
+        'page': AdminRecentActivityPage(),
       },
       {
         'label': 'Reports',
         'icon': Icons.description_outlined,
         'color': AppColors.infoIndigo,
-        'page': const AdminBillingPage(),
+        'page': AdminBillingPage(),
       },
     ];
 

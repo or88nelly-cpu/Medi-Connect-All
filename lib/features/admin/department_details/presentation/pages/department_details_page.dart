@@ -30,7 +30,7 @@ class _DepartmentDetailsPageState extends State<DepartmentDetailsPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<DepartmentBloc>().add(const LoadDepartments());
+      context.read<DepartmentBloc>().add(LoadDepartments());
     });
   }
 
@@ -53,7 +53,7 @@ class _DepartmentDetailsPageState extends State<DepartmentDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const DepartmentPageHeader(),
+            DepartmentPageHeader(),
             SizedBox(height: 20.h),
             DepartmentToolbar(
               searchController: _searchCtrl,
@@ -87,8 +87,8 @@ class _DepartmentContent extends StatelessWidget {
       builder: (context, state) {
         if (state is DepartmentLoading) {
           return viewMode == DepartmentViewMode.grid
-              ? const DepartmentGridView(departments: [], isLoading: true)
-              : const DepartmentTableView(departments: [], isLoading: true);
+              ? DepartmentGridView(departments: [], isLoading: true)
+              : DepartmentTableView(departments: [], isLoading: true);
         }
 
         if (state is DepartmentError) {
@@ -98,20 +98,14 @@ class _DepartmentContent extends StatelessWidget {
         final list = filter(_resolve(state));
 
         if (list.isEmpty) {
-          return const NoDataWidget(message: AppStrings.noDepartmentsFound);
+          return NoDataWidget(message: AppStrings.noDepartmentsFound);
         }
 
         return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
+          duration: Duration(milliseconds: 250),
           child: viewMode == DepartmentViewMode.grid
-              ? DepartmentGridView(
-                  key: const ValueKey('grid'),
-                  departments: list,
-                )
-              : DepartmentTableView(
-                  key: const ValueKey('table'),
-                  departments: list,
-                ),
+              ? DepartmentGridView(key: ValueKey('grid'), departments: list)
+              : DepartmentTableView(key: ValueKey('table'), departments: list),
         );
       },
     );

@@ -20,9 +20,9 @@ class CommonCard extends StatelessWidget {
   });
 
   // Title row: 1 line, fixed height so all cards align
-  static const double _titleHeight = 22;
+  static final double _titleHeight = 22;
   // Subtitle area: max 2 lines, fixed height
-  static const double _subtitleHeight = 58;
+  static final double _subtitleHeight = 58;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class CommonCard extends StatelessWidget {
               color: shadowColor,
               blurRadius: 18,
               spreadRadius: 1,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),
@@ -93,7 +93,7 @@ class CommonCard extends StatelessWidget {
                       BoxShadow(
                         color: color.withValues(alpha: 0.32),
                         blurRadius: 14,
-                        offset: const Offset(0, 4),
+                        offset: Offset(0, 4),
                       ),
                     ],
                   ),

@@ -122,7 +122,7 @@ class _CreateAppointmentWizardBottomSheetState
     if (state.isWaitingList) {
       if (state.currentWaitingCount >= 10) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
               "Error: Waiting list is full (maximum 10 waiting list slots reached).",
             ),
@@ -169,15 +169,15 @@ class _CreateAppointmentWizardBottomSheetState
           ageController: _ageController,
         );
       case 1:
-        return const SpecialtyStep();
+        return SpecialtyStep();
       case 2:
-        return const DoctorStep();
+        return DoctorStep();
       case 3:
-        return const SlotStep();
+        return SlotStep();
       case 4:
-        return const ConfirmStep();
+        return ConfirmStep();
       default:
-        return const SizedBox();
+        return SizedBox();
     }
   }
 
@@ -196,7 +196,7 @@ class _CreateAppointmentWizardBottomSheetState
             listener: (context, patientState) {
               if (patientState is PatientActionSuccess) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text("Patient registered successfully."),
                     backgroundColor: AppColors.success,
                   ),
@@ -298,10 +298,10 @@ class _CreateAppointmentWizardBottomSheetState
                             // Steps Indicator Strip
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              child: const StepIndicator(),
+                              child: StepIndicator(),
                             ),
                             SizedBox(height: 12.h),
-                            const Divider(height: 1),
+                            Divider(height: 1),
 
                             // Active Step Content Container
                             Expanded(
@@ -316,7 +316,7 @@ class _CreateAppointmentWizardBottomSheetState
                               ),
                             ),
 
-                            const Divider(height: 1),
+                            Divider(height: 1),
 
                             // Footer Navigation Buttons
                             Padding(

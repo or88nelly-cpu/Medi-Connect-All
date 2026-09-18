@@ -52,7 +52,7 @@ class CasualityBloc extends Bloc<CasualityEvent, CasualityState> {
     Emitter<CasualityState> emit,
   ) async {
     emit(CasualityLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(CasualityError(failure.message)),
       (stats) => emit(CasualityLoaded(stats)),

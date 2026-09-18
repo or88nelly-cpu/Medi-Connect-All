@@ -40,7 +40,7 @@ class DoctorStatCard extends StatelessWidget {
                 BoxShadow(
                   color: themeColor.withValues(alpha: 0.03),
                   blurRadius: 8,
-                  offset: const Offset(0, 4),
+                  offset: Offset(0, 4),
                 ),
               ],
       ),
@@ -78,7 +78,7 @@ class DoctorStatCard extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const Spacer(),
+          Spacer(),
           // Badge
           // Container(
           //   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),

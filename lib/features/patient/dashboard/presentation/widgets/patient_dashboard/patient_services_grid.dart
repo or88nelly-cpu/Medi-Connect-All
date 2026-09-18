@@ -41,19 +41,19 @@ class PatientServicesGrid extends StatelessWidget {
   }
 
   void _openBooking(BuildContext context) {
-    _pushWithBlocs(context, const BookingFlowPage());
+    _pushWithBlocs(context, BookingFlowPage());
   }
 
   void _openFindDoctor(BuildContext context) {
-    _pushWithBlocs(context, const FindDoctorPage());
+    _pushWithBlocs(context, FindDoctorPage());
   }
 
   void _openHealth(BuildContext context) {
-    _pushWithBlocs(context, const HealthPage());
+    _pushWithBlocs(context, HealthPage());
   }
 
   void _openPrescriptions(BuildContext context) {
-    _pushWithBlocs(context, const PrescriptionsPage());
+    _pushWithBlocs(context, PrescriptionsPage());
   }
 
   void _openPlaceholder(
@@ -100,7 +100,7 @@ class PatientServicesGrid extends StatelessWidget {
             SizedBox(height: 12.h),
             GridView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemCount: services.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
@@ -123,7 +123,7 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.calendar_today_rounded,
         title: 'Book\nAppointment',
         description: 'Book doctor appointments easily',
-        gradientColors: const [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
+        gradientColors: [Color(0xFF4F7CFF), Color(0xFF5B42F3)],
         onTap: () => _openBooking(context),
       ),
 
@@ -132,7 +132,7 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.search_rounded,
         title: 'Find\nDoctors',
         description: 'Search doctors by specialization',
-        gradientColors: const [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
+        gradientColors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
         onTap: () => _openFindDoctor(context),
       ),
 
@@ -141,12 +141,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.assignment_rounded,
         title: 'Health\nRecords',
         description: 'View your medical history & reports',
-        gradientColors: const [Color(0xFF00C2A8), Color(0xFF00897B)],
+        gradientColors: [Color(0xFF00C2A8), Color(0xFF00897B)],
         onTap: () => _openPlaceholder(
           context,
           title: 'Health Records',
           icon: Icons.assignment_rounded,
-          gradient: const [Color(0xFF00C2A8), Color(0xFF00897B)],
+          gradient: [Color(0xFF00C2A8), Color(0xFF00897B)],
           description:
               'Your health records and lab reports will be available here. Visit the Records tab in the bottom navigation for now.',
         ),
@@ -157,7 +157,7 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.medication_rounded,
         title: 'Prescriptions',
         description: 'View & download your prescriptions',
-        gradientColors: const [Color(0xFFFF8C42), Color(0xFFE65100)],
+        gradientColors: [Color(0xFFFF8C42), Color(0xFFE65100)],
         onTap: () => _openPrescriptions(context),
       ),
 
@@ -166,12 +166,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.science_rounded,
         title: 'Lab\nReports',
         description: 'Access your lab test reports',
-        gradientColors: const [Color(0xFFFF4B8B), Color(0xFFD81B60)],
+        gradientColors: [Color(0xFFFF4B8B), Color(0xFFD81B60)],
         onTap: () => _openPlaceholder(
           context,
           title: 'Lab Reports',
           icon: Icons.science_rounded,
-          gradient: const [Color(0xFFFF4B8B), Color(0xFFD81B60)],
+          gradient: [Color(0xFFFF4B8B), Color(0xFFD81B60)],
           description:
               'View and download your lab test results and pathology reports. Coming soon!',
         ),
@@ -182,12 +182,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.credit_card_rounded,
         title: 'Billing &\nPayments',
         description: 'View bills and make payments',
-        gradientColors: const [Color(0xFF00B4D8), Color(0xFF0077B6)],
+        gradientColors: [Color(0xFF00B4D8), Color(0xFF0077B6)],
         onTap: () => _openPlaceholder(
           context,
           title: 'Billing & Payments',
           icon: Icons.credit_card_rounded,
-          gradient: const [Color(0xFF00B4D8), Color(0xFF0077B6)],
+          gradient: [Color(0xFF00B4D8), Color(0xFF0077B6)],
           description:
               'View your billing history, outstanding dues, and make secure payments. Coming soon!',
         ),
@@ -198,12 +198,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.videocam_rounded,
         title: 'Video\nConsultation',
         description: 'Consult doctors from the comfort of home',
-        gradientColors: const [Color(0xFF5B8DEF), Color(0xFF3F51B5)],
+        gradientColors: [Color(0xFF5B8DEF), Color(0xFF3F51B5)],
         onTap: () => _openPlaceholder(
           context,
           title: 'Video Consultation',
           icon: Icons.videocam_rounded,
-          gradient: const [Color(0xFF5B8DEF), Color(0xFF3F51B5)],
+          gradient: [Color(0xFF5B8DEF), Color(0xFF3F51B5)],
           description:
               'Connect with doctors via HD video calls from the comfort of your home. Coming soon!',
         ),
@@ -214,12 +214,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.local_pharmacy_rounded,
         title: 'Medicines',
         description: 'Order medicines and get delivery',
-        gradientColors: const [Color(0xFF9C6FFF), Color(0xFF7B2FBE)],
+        gradientColors: [Color(0xFF9C6FFF), Color(0xFF7B2FBE)],
         onTap: () => _openPlaceholder(
           context,
           title: 'Medicines',
           icon: Icons.local_pharmacy_rounded,
-          gradient: const [Color(0xFF9C6FFF), Color(0xFF7B2FBE)],
+          gradient: [Color(0xFF9C6FFF), Color(0xFF7B2FBE)],
           description:
               'Order prescribed medicines online and get them delivered to your doorstep. Coming soon!',
         ),
@@ -230,7 +230,7 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.monitor_heart_rounded,
         title: 'Health\nTracker',
         description: 'Track your health and vitals',
-        gradientColors: const [Color(0xFFFF8C42), Color(0xFFFF6B35)],
+        gradientColors: [Color(0xFFFF8C42), Color(0xFFFF6B35)],
         onTap: () => _openHealth(context),
       ),
 
@@ -239,12 +239,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.shield_rounded,
         title: 'Insurance',
         description: 'View insurance details and claims',
-        gradientColors: const [Color(0xFF1A8CFF), Color(0xFF0052CC)],
+        gradientColors: [Color(0xFF1A8CFF), Color(0xFF0052CC)],
         onTap: () => _openPlaceholder(
           context,
           title: 'Insurance',
           icon: Icons.shield_rounded,
-          gradient: const [Color(0xFF1A8CFF), Color(0xFF0052CC)],
+          gradient: [Color(0xFF1A8CFF), Color(0xFF0052CC)],
           description:
               'Manage your health insurance policies, claims, and coverage details. Coming soon!',
         ),
@@ -255,12 +255,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.local_offer_rounded,
         title: 'Offers &\nPackages',
         description: 'Explore health offers and packages',
-        gradientColors: const [Color(0xFFFF4B8B), Color(0xFFE91E8C)],
+        gradientColors: [Color(0xFFFF4B8B), Color(0xFFE91E8C)],
         onTap: () => _openPlaceholder(
           context,
           title: 'Offers & Packages',
           icon: Icons.local_offer_rounded,
-          gradient: const [Color(0xFFFF4B8B), Color(0xFFE91E8C)],
+          gradient: [Color(0xFFFF4B8B), Color(0xFFE91E8C)],
           description:
               'Explore exclusive health check-up packages, seasonal offers, and discounts. Coming soon!',
         ),
@@ -271,12 +271,12 @@ class PatientServicesGrid extends StatelessWidget {
         icon: Icons.headset_mic_rounded,
         title: '24/7\nSupport',
         description: 'Our support team is always here to help',
-        gradientColors: const [Color(0xFF00C2FF), Color(0xFF0099E6)],
+        gradientColors: [Color(0xFF00C2FF), Color(0xFF0099E6)],
         onTap: () => _openPlaceholder(
           context,
           title: '24/7 Support',
           icon: Icons.headset_mic_rounded,
-          gradient: const [Color(0xFF00C2FF), Color(0xFF0099E6)],
+          gradient: [Color(0xFF00C2FF), Color(0xFF0099E6)],
           description:
               'Get 24/7 assistance from our dedicated support team for any queries or emergencies.',
         ),

@@ -57,7 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    final result = await _getCurrentUserUseCase(const NoParams());
+    final result = await _getCurrentUserUseCase(NoParams());
     result.fold((failure) => emit(Unauthenticated()), (user) {
       if (user != null) {
         emit(Authenticated(user));
@@ -146,7 +146,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    final result = await _logoutUseCase(const NoParams());
+    final result = await _logoutUseCase(NoParams());
     result.fold(
       (failure) => emit(AuthError(failure)),
       (_) => emit(Unauthenticated()),

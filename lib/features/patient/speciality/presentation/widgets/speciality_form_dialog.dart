@@ -112,9 +112,7 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                 TextFormField(
                   controller: _nameCtrl,
                   style: TextStyle(color: textColor),
-                  decoration: const InputDecoration(
-                    labelText: "Speciality Name *",
-                  ),
+                  decoration: InputDecoration(labelText: "Speciality Name *"),
                   validator: (val) =>
                       val == null || val.isEmpty ? "Name is required" : null,
                 ),
@@ -122,9 +120,7 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                 TextFormField(
                   controller: _codeCtrl,
                   style: TextStyle(color: textColor),
-                  decoration: const InputDecoration(
-                    labelText: "Speciality Code *",
-                  ),
+                  decoration: InputDecoration(labelText: "Speciality Code *"),
                   validator: (val) =>
                       val == null || val.isEmpty ? "Code is required" : null,
                 ),
@@ -133,14 +129,14 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                   controller: _descCtrl,
                   maxLines: 2,
                   style: TextStyle(color: textColor),
-                  decoration: const InputDecoration(labelText: "Description"),
+                  decoration: InputDecoration(labelText: "Description"),
                 ),
                 SizedBox(height: 12.h),
                 DropdownButtonFormField<String>(
                   initialValue: _selectedIcon,
                   dropdownColor: cardBg,
                   style: TextStyle(color: textColor),
-                  decoration: const InputDecoration(labelText: "Icon Category"),
+                  decoration: InputDecoration(labelText: "Icon Category"),
                   items: _iconOptions.map((icon) {
                     return DropdownMenuItem(
                       value: icon,
@@ -163,7 +159,7 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                         controller: _feeCtrl,
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: textColor),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: r"Consultation Fee ($)",
                         ),
                         validator: (val) =>
@@ -178,7 +174,7 @@ class _SpecialityFormDialogState extends State<SpecialityFormDialog> {
                         controller: _durationCtrl,
                         keyboardType: TextInputType.number,
                         style: TextStyle(color: textColor),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: "Duration (mins)",
                         ),
                         validator: (val) =>

@@ -23,14 +23,10 @@ class EmergencyContactSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF09121F) : Colors.white;
-    final borderColor = isDark
-        ? const Color(0xFF16253B)
-        : const Color(0xFFD3E0EE);
-    final labelColor = isDark
-        ? const Color(0xFF5E98C7)
-        : const Color(0xFF3F6D94);
-    final inputTextColor = isDark ? Colors.white : const Color(0xFF0C192E);
+    final cardBg = isDark ? Color(0xFF09121F) : Colors.white;
+    final borderColor = isDark ? Color(0xFF16253B) : Color(0xFFD3E0EE);
+    final labelColor = isDark ? Color(0xFF5E98C7) : Color(0xFF3F6D94);
+    final inputTextColor = isDark ? Colors.white : Color(0xFF0C192E);
 
     return Container(
       padding: EdgeInsets.all(24.r),
@@ -158,7 +154,7 @@ class EmergencyContactSection extends StatelessWidget {
     required Color borderColor,
     required Color inputTextColor,
   }) {
-    final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
+    final fillBg = isDark ? Color(0xFF050C16) : Color(0xFFEDF2F7);
     return Container(
       height: 52.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -192,7 +188,7 @@ class EmergencyContactSection extends StatelessWidget {
     Color borderColor,
     Color inputTextColor,
   ) {
-    final fillBg = isDark ? const Color(0xFF050C16) : const Color(0xFFEDF2F7);
+    final fillBg = isDark ? Color(0xFF050C16) : Color(0xFFEDF2F7);
     return Row(
       children: [
         // Flag dropdown container

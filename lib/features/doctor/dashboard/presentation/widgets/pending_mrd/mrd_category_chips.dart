@@ -27,7 +27,7 @@ class MrdCategoryChips extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       child: Row(
         children: categories.map((cat) {
           final isSelected = selectedCategory == cat;
@@ -56,7 +56,7 @@ class MrdCategoryChips extends StatelessWidget {
                 }
               },
               backgroundColor: Colors.transparent,
-              selectedColor: const Color(0xFF0F6FFF),
+              selectedColor: Color(0xFF0F6FFF),
               labelStyle: TextStyle(
                 color: isSelected ? Colors.white : Colors.grey[600],
                 fontSize: 10.sp,
@@ -65,9 +65,7 @@ class MrdCategoryChips extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.r),
                 side: BorderSide(
-                  color: isSelected
-                      ? const Color(0xFF0F6FFF)
-                      : Colors.grey[300]!,
+                  color: isSelected ? Color(0xFF0F6FFF) : Colors.grey[300]!,
                   width: 0.8,
                 ),
               ),

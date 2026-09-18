@@ -23,8 +23,8 @@ class EmrdAIAssistantPanel extends StatelessWidget {
         ? Colors.white.withValues(alpha: 0.03)
         : Colors.white;
     final Color iconBg = color.withValues(alpha: 0.12);
-    final Color textColor = isDark ? Colors.white : const Color(0xFF1E293B);
-    final Color subColor = isDark ? Colors.white38 : const Color(0xFF64748B);
+    final Color textColor = isDark ? Colors.white : Color(0xFF1E293B);
+    final Color subColor = isDark ? Colors.white38 : Color(0xFF64748B);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
@@ -86,7 +86,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(top: 2.h),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.info,
               shape: BoxShape.circle,
             ),
@@ -101,7 +101,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                 fontSize: 10.5.sp,
                 fontWeight: FontWeight.bold,
                 height: 1.25,
-                color: isDark ? Colors.white70 : const Color(0xFF334155),
+                color: isDark ? Colors.white70 : Color(0xFF334155),
               ),
             ),
           ),
@@ -128,18 +128,14 @@ class EmrdAIAssistantPanel extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF1E1E38), const Color(0xFF13132B)]
-              : [
-                  const Color(0xFFF3F7FF),
-                  const Color(0xFFE8F1FF),
-                  Colors.white,
-                ],
+              ? [Color(0xFF1E1E38), Color(0xFF13132B)]
+              : [Color(0xFFF3F7FF), Color(0xFFE8F1FF), Colors.white],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24.r),
         border: Border.all(
-          color: isDark ? const Color(0xFF312E81) : const Color(0xFFDBEAFE),
+          color: isDark ? Color(0xFF312E81) : Color(0xFFDBEAFE),
           width: 1.5,
         ),
       ),
@@ -152,16 +148,12 @@ class EmrdAIAssistantPanel extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(6.r),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [AppColors.info, Color(0xFF1D4ED8)],
                   ),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: const Icon(
-                  Icons.auto_awesome,
-                  color: Colors.white,
-                  size: 14,
-                ),
+                child: Icon(Icons.auto_awesome, color: Colors.white, size: 14),
               ),
               SizedBox(width: 10.w),
               Text(
@@ -169,7 +161,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 14.5.sp,
-                  color: isDark ? Colors.white : const Color(0xFF1E3A8A),
+                  color: isDark ? Colors.white : Color(0xFF1E3A8A),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -196,7 +188,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
             style: TextStyle(
               fontSize: 11.sp,
               fontWeight: FontWeight.w500,
-              color: isDark ? Colors.white54 : const Color(0xFF2563EB),
+              color: isDark ? Colors.white54 : Color(0xFF2563EB),
             ),
           ),
           SizedBox(height: 14.h),
@@ -204,7 +196,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
           // Horizontal/Grid Mini Stats Cards
           GridView.count(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             crossAxisCount: statsCrossAxisCount,
             mainAxisSpacing: 8.h,
             crossAxisSpacing: 8.w,
@@ -228,21 +220,21 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                 icon: Icons.balance_rounded,
                 value: "5",
                 label: "MLC Cases Pending",
-                color: const Color(0xFF8B5CF6),
+                color: Color(0xFF8B5CF6),
                 isDark: isDark,
               ),
               _buildAIPill(
                 icon: Icons.archive_rounded,
                 value: "320",
                 label: "Records Due for Archive",
-                color: const Color(0xFF06B6D4),
+                color: Color(0xFF06B6D4),
                 isDark: isDark,
               ),
               _buildAIPill(
                 icon: Icons.trending_up_rounded,
                 value: "8%",
                 label: "NABH Score Improvement",
-                color: const Color(0xFF10B981),
+                color: Color(0xFF10B981),
                 isDark: isDark,
               ),
             ],
@@ -270,7 +262,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: isDark
                                   ? Colors.white70
-                                  : const Color(0xFF475569),
+                                  : Color(0xFF475569),
                             ),
                           ),
                           SizedBox(height: 8.h),
@@ -284,7 +276,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                   size: Size(76.r, 76.r),
                                   painter: MRDGaugePainter(
                                     percentage: complianceScore.toDouble(),
-                                    primaryColor: const Color(0xFF10B981),
+                                    primaryColor: Color(0xFF10B981),
                                     isDark: isDark,
                                   ),
                                 ),
@@ -298,7 +290,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                         fontWeight: FontWeight.w900,
                                         color: isDark
                                             ? Colors.white
-                                            : const Color(0xFF1E293B),
+                                            : Color(0xFF1E293B),
                                       ),
                                     ),
                                     Container(
@@ -307,7 +299,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                         vertical: 1.5.h,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: const Color(
+                                        color: Color(
                                           0xFF10B981,
                                         ).withValues(alpha: 0.12),
                                         borderRadius: BorderRadius.circular(
@@ -319,7 +311,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 7.sp,
                                           fontWeight: FontWeight.w900,
-                                          color: const Color(0xFF10B981),
+                                          color: Color(0xFF10B981),
                                         ),
                                       ),
                                     ),
@@ -343,7 +335,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                                 color: isDark
                                     ? Colors.white54
-                                    : const Color(0xFF64748B),
+                                    : Color(0xFF64748B),
                                 height: 1.35,
                               ),
                             ),
@@ -359,7 +351,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(width: 2.w),
-                                const Icon(
+                                Icon(
                                   Icons.arrow_forward_rounded,
                                   color: AppColors.info,
                                   size: 10,
@@ -386,9 +378,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11.5.sp,
                           fontWeight: FontWeight.w900,
-                          color: isDark
-                              ? Colors.white70
-                              : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white70 : Color(0xFF1E293B),
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -423,10 +413,10 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 13.r,
-                            backgroundColor: const Color(
+                            backgroundColor: Color(
                               0xFF3B82F6,
                             ).withValues(alpha: 0.12),
-                            child: const Icon(
+                            child: Icon(
                               Icons.smart_toy_outlined,
                               color: AppColors.info,
                               size: 14,
@@ -443,7 +433,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                   fontWeight: FontWeight.w900,
                                   color: isDark
                                       ? Colors.white
-                                      : const Color(0xFF1E293B),
+                                      : Color(0xFF1E293B),
                                 ),
                               ),
                               Text(
@@ -463,7 +453,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 content: Text(
                                   "AI Assistant: Summarizing completed records for compliance...",
                                 ),
@@ -491,7 +481,7 @@ class EmrdAIAssistantPanel extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 4.w),
-                              const Icon(Icons.arrow_forward_rounded, size: 12),
+                              Icon(Icons.arrow_forward_rounded, size: 12),
                             ],
                           ),
                         ),

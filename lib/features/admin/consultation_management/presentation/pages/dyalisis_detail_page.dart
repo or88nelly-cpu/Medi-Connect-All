@@ -21,11 +21,11 @@ class _DyalisisDetailPageState extends State<DyalisisDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<DyalisisBloc>()..add(LoadDyalisisStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Dyalisis Department"),
+        customAppbar: CommonAppBar(title: "Dyalisis Department"),
         body: BlocBuilder<DyalisisBloc, DyalisisState>(
           builder: (context, state) {
             if (state is DyalisisLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is DyalisisError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _DyalisisDetailPageState extends State<DyalisisDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _DyalisisDetailPageState extends State<DyalisisDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

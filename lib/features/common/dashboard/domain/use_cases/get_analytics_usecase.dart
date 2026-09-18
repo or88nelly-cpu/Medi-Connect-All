@@ -12,7 +12,7 @@ import 'package:medi_connect/features/common/dashboard/domain/repositories/analy
 class GetAnalyticsUseCase extends UseCase<List<AnalyticsEntity>, NoParams> {
   final AnalyticsRepository _repository;
 
-  const GetAnalyticsUseCase(this._repository);
+  GetAnalyticsUseCase(this._repository);
 
   @override
   Future<Either<Failure, List<AnalyticsEntity>>> call(NoParams params) {

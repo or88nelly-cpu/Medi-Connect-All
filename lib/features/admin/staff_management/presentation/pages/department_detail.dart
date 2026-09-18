@@ -88,8 +88,8 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
             }
           }
         },
-        icon: const Icon(Icons.add, color: Colors.white),
-        label: const Text("Add Staff", style: TextStyle(color: Colors.white)),
+        icon: Icon(Icons.add, color: Colors.white),
+        label: Text("Add Staff", style: TextStyle(color: Colors.white)),
         backgroundColor: AppColors.primary,
       ),
       body: Column(
@@ -115,7 +115,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
             Container(
               width: double.infinity,
               height: 120.h,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [AppColors.primary, AppColors.secondary],
                   begin: Alignment.topLeft,
@@ -168,7 +168,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.r),
-                      borderSide: const BorderSide(color: AppColors.primary),
+                      borderSide: BorderSide(color: AppColors.primary),
                     ),
                   ),
                 ),
@@ -181,7 +181,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
               child: BlocBuilder<DoctorStaffBloc, DoctorStaffState>(
                 builder: (context, state) {
                   if (state is DoctorStaffLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   } else if (state is DoctorStaffError) {
                     return Center(
                       child: Text(
@@ -264,7 +264,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.visibility_outlined,
                                     color: AppColors.primary,
                                   ),
@@ -276,7 +276,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.edit_outlined,
                                     color: AppColors.warning,
                                   ),
@@ -303,7 +303,7 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
                       },
                     );
                   }
-                  return const SizedBox.shrink();
+                  return SizedBox.shrink();
                 },
               ),
             ),
@@ -316,53 +316,53 @@ class _DepartmentDetailState extends State<DepartmentDetail> {
   Widget? _getWidgetDetailPage(String name) {
     switch (name.trim()) {
       case 'Biomedical Engineering':
-        return const BiomedicalEngineeringDetailPage();
+        return BiomedicalEngineeringDetailPage();
       case 'Casuality':
-        return const CasualityDetailPage();
+        return CasualityDetailPage();
       case 'CSSD':
-        return const CssdDetailPage();
+        return CssdDetailPage();
       case 'Customer Care':
-        return const CustomerCareDetailPage();
+        return CustomerCareDetailPage();
       case 'Dyalisis':
-        return const DyalisisDetailPage();
+        return DyalisisDetailPage();
       case 'EMRD':
-        return const EmrdDetailPage();
+        return EmrdDetailPage();
       case 'Finance':
-        return const FinanceDetailPage();
+        return FinanceDetailPage();
       case 'Fire Safety':
-        return const FireSafetyDetailPage();
+        return FireSafetyDetailPage();
       case 'General Store':
-        return const GeneralStoreDetailPage();
+        return GeneralStoreDetailPage();
       case 'Human Resource':
-        return const HumanResourceDetailPage();
+        return HumanResourceDetailPage();
       case 'ICU':
-        return const IcuDetailPage();
+        return IcuDetailPage();
       case 'Information Technology':
-        return const InformationTechnologyDetailPage();
+        return InformationTechnologyDetailPage();
       case 'Laboratory':
-        return const LaboratoryDetailPage();
+        return LaboratoryDetailPage();
       case 'Management Information System':
-        return const ManagementInformationSystemDetailPage();
+        return ManagementInformationSystemDetailPage();
       case 'Marketing':
-        return const MarketingDetailPage();
+        return MarketingDetailPage();
       case 'MEP Engineer':
-        return const MepEngineerDetailPage();
+        return MepEngineerDetailPage();
       case 'Nursing':
-        return const NursingDetailPage();
+        return NursingDetailPage();
       case 'Nutrition and Diabetics':
-        return const NutritionAndDiabeticsDetailPage();
+        return NutritionAndDiabeticsDetailPage();
       case 'Operation Theatre':
-        return const OperationTheatreDetailPage();
+        return OperationTheatreDetailPage();
       case 'Pharmacy':
-        return const PharmacyDetailPage();
+        return PharmacyDetailPage();
       case 'Physio Therapy':
-        return const PhysioTherapyDetailPage();
+        return PhysioTherapyDetailPage();
       case 'Purchase':
-        return const PurchaseDetailPage();
+        return PurchaseDetailPage();
       case 'Radiology':
-        return const RadiologyDetailPage();
+        return RadiologyDetailPage();
       case 'Ward':
-        return const WardDetailPage();
+        return WardDetailPage();
       default:
         return null;
     }

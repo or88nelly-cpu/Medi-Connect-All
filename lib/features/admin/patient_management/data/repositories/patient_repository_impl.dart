@@ -51,7 +51,7 @@ class PatientRepositoryImpl implements PatientRepository {
   Future<Either<Failure, void>> deletePatient(String patientId) async {
     try {
       await _remoteDataSource.deletePatient(patientId);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -67,7 +67,7 @@ class PatientRepositoryImpl implements PatientRepository {
     try {
       await _remoteDataSource.createPatient(patient);
       await _remoteDataSource.sendToMRD(mrdRecord);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {

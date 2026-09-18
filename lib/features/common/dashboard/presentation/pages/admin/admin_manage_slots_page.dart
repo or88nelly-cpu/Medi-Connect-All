@@ -163,7 +163,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
     // context.read<DoctorStaffBloc>().add(UpdateDoctorStaffMember(updatedUser));
 
     // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(content: Text("Changes saved successfully!")),
+    //   SnackBar(content: Text("Changes saved successfully!")),
     // );
     Navigator.pop(context);
   }
@@ -173,12 +173,12 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final bgGradient = isDark
-        ? const LinearGradient(
+        ? LinearGradient(
             colors: [Color(0xFF03070E), Color(0xFF091629), Color(0xFF030914)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
-        : const LinearGradient(
+        : LinearGradient(
             colors: [Color(0xFFF4F7FA), Color(0xFFE2EAF4), Color(0xFFF3F7FD)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -193,7 +193,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
               // Header
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                child: const ManageSlotsHeader(),
+                child: ManageSlotsHeader(),
               ),
               // Main content
               Expanded(
@@ -206,7 +206,7 @@ class _AdminManageSlotsPageState extends State<AdminManageSlotsPage> {
                       SizedBox(height: 12.h),
 
                       // Shift times
-                      const WorkingHoursCard(),
+                      WorkingHoursCard(),
                       SizedBox(height: 12.h),
 
                       // Week strip

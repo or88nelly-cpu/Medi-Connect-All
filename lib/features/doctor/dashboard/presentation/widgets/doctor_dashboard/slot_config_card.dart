@@ -29,7 +29,7 @@ class SlotConfigCard extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),

@@ -36,7 +36,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              title: const Text("Request New Lab Test"),
+              title: Text("Request New Lab Test"),
               content: Form(
                 key: formKey,
                 child: Column(
@@ -44,7 +44,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                   children: [
                     TextFormField(
                       controller: patientController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: "Patient Name",
                         hintText: "e.g., Alice Smith",
                       ),
@@ -55,7 +55,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                     SizedBox(height: 12.h),
                     TextFormField(
                       controller: nameController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: "Test Name",
                         hintText: "e.g., CBC & Hemoglobin",
                       ),
@@ -66,7 +66,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                     SizedBox(height: 12.h),
                     DropdownButtonFormField<String>(
                       initialValue: priority,
-                      decoration: const InputDecoration(labelText: "Priority"),
+                      decoration: InputDecoration(labelText: "Priority"),
                       items: ["Normal", "High", "Critical"].map((p) {
                         return DropdownMenuItem(value: p, child: Text(p));
                       }).toList(),
@@ -82,7 +82,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text("Cancel"),
+                  child: Text("Cancel"),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -98,7 +98,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                       Navigator.pop(ctx);
                     }
                   },
-                  child: const Text("Create"),
+                  child: Text("Create"),
                 ),
               ],
             );
@@ -157,10 +157,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
         title: "Laboratory Tests",
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.add_circle_outline,
-              color: AppColors.primary,
-            ),
+            icon: Icon(Icons.add_circle_outline, color: AppColors.primary),
             onPressed: _showAddTestDialog,
           ),
         ],
@@ -203,7 +200,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
             child: BlocBuilder<AdminLabsBloc, AdminLabsState>(
               builder: (context, state) {
                 if (state is AdminLabsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 }
 
                 if (state is AdminLabsError) {
@@ -213,13 +210,13 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                       children: [
                         Text(
                           state.message,
-                          style: const TextStyle(color: AppColors.error),
+                          style: TextStyle(color: AppColors.error),
                         ),
                         SizedBox(height: 12.h),
                         ElevatedButton(
                           onPressed: () =>
                               context.read<AdminLabsBloc>().add(LoadLabTests()),
-                          child: const Text("Retry"),
+                          child: Text("Retry"),
                         ),
                       ],
                     ),
@@ -236,7 +233,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                   }
 
                   if (tests.isEmpty) {
-                    return const Center(child: Text("No lab tests found."));
+                    return Center(child: Text("No lab tests found."));
                   }
 
                   return ListView.builder(
@@ -360,7 +357,7 @@ class _AdminLabsPageState extends State<AdminLabsPage> {
                   );
                 }
 
-                return const SizedBox.shrink();
+                return SizedBox.shrink();
               },
             ),
           ),

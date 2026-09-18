@@ -16,7 +16,7 @@ class MockAdminHomeRemoteDataSource implements AdminHomeRemoteDataSource {
     if (shouldThrowUnexpectedException) {
       throw Exception('Unexpected error');
     }
-    return const [
+    return [
       AdminDashboardModuleModel(
         id: 'doctors',
         title: 'Doctors',

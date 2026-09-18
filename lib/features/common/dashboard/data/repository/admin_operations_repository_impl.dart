@@ -51,7 +51,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   ) async {
     try {
       await _remoteDataSource.updatePharmacyItem(id, data);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -63,7 +63,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   Future<Either<Failure, void>> deletePharmacyItem(String id) async {
     try {
       await _remoteDataSource.deletePharmacyItem(id);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -104,7 +104,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   ) async {
     try {
       await _remoteDataSource.updateLabTestStatus(id, status);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -133,7 +133,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   ) async {
     try {
       await _remoteDataSource.updateAttendanceStatus(id, status);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -171,7 +171,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   Future<Either<Failure, void>> resolveEmergency(String id) async {
     try {
       await _remoteDataSource.resolveEmergency(id);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -219,7 +219,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   Future<Either<Failure, void>> createInvoice(Map<String, dynamic> data) async {
     try {
       await _remoteDataSource.createInvoice(data);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -246,7 +246,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   ) async {
     try {
       await _remoteDataSource.updateAdminSetting(key, value);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -287,7 +287,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   ) async {
     try {
       await _remoteDataSource.updateAppointmentStatus(id, status);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {
@@ -302,7 +302,7 @@ class AdminOperationsRepositoryImpl implements AdminOperationsRepository {
   ) async {
     try {
       await _remoteDataSource.updateAppointmentVitals(id, vitals);
-      return const Right(null);
+      return Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, code: e.code));
     } catch (e) {

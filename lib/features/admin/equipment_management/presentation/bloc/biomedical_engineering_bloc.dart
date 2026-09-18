@@ -54,7 +54,7 @@ class BiomedicalEngineeringBloc
     Emitter<BiomedicalEngineeringState> emit,
   ) async {
     emit(BiomedicalEngineeringLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(BiomedicalEngineeringError(failure.message)),
       (stats) => emit(BiomedicalEngineeringLoaded(stats)),

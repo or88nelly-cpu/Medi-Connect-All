@@ -70,7 +70,7 @@ class EmrdListItemCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 6,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -164,8 +164,8 @@ class EmrdListItemCard extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: isDark
-                                  ? const Color(0xFF1E3A20)
-                                  : const Color(0xFFE8F5E9),
+                                  ? Color(0xFF1E3A20)
+                                  : Color(0xFFE8F5E9),
                               borderRadius: BorderRadius.circular(4.r),
                             ),
                             child: Row(
@@ -196,8 +196,8 @@ class EmrdListItemCard extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: isDark
-                                  ? const Color(0xFF1E2D3E)
-                                  : const Color(0xFFE0F2FE),
+                                  ? Color(0xFF1E2D3E)
+                                  : Color(0xFFE0F2FE),
                               borderRadius: BorderRadius.circular(4.r),
                             ),
                             child: Text(

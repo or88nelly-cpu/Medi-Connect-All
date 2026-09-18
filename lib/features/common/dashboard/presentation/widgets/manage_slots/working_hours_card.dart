@@ -47,9 +47,7 @@ class WorkingHoursCard extends StatelessWidget {
               InkWell(
                 onTap: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Editing working hours timings..."),
-                    ),
+                    SnackBar(content: Text("Editing working hours timings...")),
                   );
                 },
                 child: Row(
@@ -105,7 +103,7 @@ class WorkingHoursCard extends StatelessWidget {
                   icon: Icons.access_time,
                   title: "Slot Duration",
                   time: "10 Minutes",
-                  iconColor: const Color(0xFF9C27B0),
+                  iconColor: Color(0xFF9C27B0),
                   labelColor: labelColor,
                   textColor: textColor,
                 ),

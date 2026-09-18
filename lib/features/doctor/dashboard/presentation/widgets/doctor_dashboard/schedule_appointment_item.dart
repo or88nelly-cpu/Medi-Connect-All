@@ -97,9 +97,9 @@ class ScheduleAppointmentItem extends StatelessWidget {
 
   Widget _buildBlockedSlotCard(BuildContext context) {
     final bg = isDark
-        ? const Color(0xFF881337).withValues(alpha: 0.1)
-        : const Color(0xFFFFF1F2);
-    final border = isDark ? Colors.white10 : const Color(0xFFFDA4AF);
+        ? Color(0xFF881337).withValues(alpha: 0.1)
+        : Color(0xFFFFF1F2);
+    final border = isDark ? Colors.white10 : Color(0xFFFDA4AF);
 
     return Container(
       padding: EdgeInsets.all(12.r),
@@ -117,7 +117,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark ? Colors.white10 : Colors.white,
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFFCA5A5)),
+              border: Border.all(color: Color(0xFFFCA5A5)),
             ),
             child: Icon(Icons.block, color: AppColors.error, size: 24.r),
           ),
@@ -159,13 +159,13 @@ class ScheduleAppointmentItem extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: const Color(0xFFFCA5A5).withValues(alpha: 0.3),
+              color: Color(0xFFFCA5A5).withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(6.r),
             ),
             child: Text(
               "Blocked",
               style: TextStyle(
-                color: const Color(0xFFB91C1C),
+                color: Color(0xFFB91C1C),
                 fontSize: 9.sp,
                 fontWeight: FontWeight.bold,
               ),
@@ -177,19 +177,19 @@ class ScheduleAppointmentItem extends StatelessWidget {
   }
 
   Widget _buildPatientAppointmentCard(BuildContext context) {
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
     final secondaryTextCol = isDark ? Colors.white38 : Colors.grey[500];
 
     // Map status colors/badges
-    Color statusBadgeBg = const Color(0xFFFFF7ED);
-    Color statusBadgeText = const Color(0xFFC2410C);
+    Color statusBadgeBg = Color(0xFFFFF7ED);
+    Color statusBadgeText = Color(0xFFC2410C);
     if (appointment.status.toLowerCase() == 'completed') {
-      statusBadgeBg = const Color(0xFFF0FDF4);
-      statusBadgeText = const Color(0xFF15803D);
+      statusBadgeBg = Color(0xFFF0FDF4);
+      statusBadgeText = Color(0xFF15803D);
     } else if (appointment.status.toLowerCase() == 'confirmed') {
-      statusBadgeBg = const Color(0xFFEFF6FF);
-      statusBadgeText = const Color(0xFF1D4ED8);
+      statusBadgeBg = Color(0xFFEFF6FF);
+      statusBadgeText = Color(0xFF1D4ED8);
     }
 
     final token = appointment.token ?? 'SPA716';
@@ -205,7 +205,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 8,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
           border: Border.all(
@@ -245,7 +245,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
                       Icon(
                         Icons.dashboard_customize_outlined,
                         size: 10.r,
-                        color: const Color(0xFF8B5CF6),
+                        color: Color(0xFF8B5CF6),
                       ),
                       SizedBox(width: 4.w),
                       Text(
@@ -284,13 +284,13 @@ class ScheduleAppointmentItem extends StatelessWidget {
                           vertical: 3.h,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFEFF6FF),
+                          color: Color(0xFFEFF6FF),
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           "OPD - $token",
                           style: TextStyle(
-                            color: const Color(0xFF1D4ED8),
+                            color: Color(0xFF1D4ED8),
                             fontSize: 8.5.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -327,17 +327,14 @@ class ScheduleAppointmentItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PopupMenuButton<String>(
-                  icon: const Icon(Icons.more_vert, size: 16),
+                  icon: Icon(Icons.more_vert, size: 16),
                   onSelected: (val) {
                     if (val == 'cancel') onCancel();
                     if (val == 'complete') onComplete();
                   },
                   itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'complete',
-                      child: Text("Complete"),
-                    ),
-                    const PopupMenuItem(value: 'cancel', child: Text("Cancel")),
+                    PopupMenuItem(value: 'complete', child: Text("Complete")),
+                    PopupMenuItem(value: 'cancel', child: Text("Cancel")),
                   ],
                 ),
                 Row(
@@ -348,7 +345,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
                           : Icons.access_time,
                       size: 11.r,
                       color: appointment.status.toLowerCase() == 'completed'
-                          ? const Color(0xFF10B981)
+                          ? Color(0xFF10B981)
                           : AppColors.warning,
                     ),
                     SizedBox(width: 2.w),
@@ -373,7 +370,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'completed':
-        return const Color(0xFF10B981);
+        return Color(0xFF10B981);
       case 'pending':
         return AppColors.warning;
       case 'cancelled':
@@ -381,7 +378,7 @@ class ScheduleAppointmentItem extends StatelessWidget {
       case 'confirmed':
         return AppColors.info;
       default:
-        return const Color(0xFF8B5CF6);
+        return Color(0xFF8B5CF6);
     }
   }
 }

@@ -135,7 +135,7 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
             Icons.double_arrow,
             "Upcoming",
             "$upcomingVal",
-            const Color(0xFF00C2A8),
+            Color(0xFF00C2A8),
             labelColor,
             textColor,
           ),
@@ -163,7 +163,7 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Loading Appointments Page...")),
+                  SnackBar(content: Text("Loading Appointments Page...")),
                 );
               },
               child: Text(
@@ -204,7 +204,7 @@ class _AppointmentsSummaryCardState extends State<AppointmentsSummaryCard> {
           label,
           style: TextStyle(color: labelColor, fontSize: 11.sp),
         ),
-        const Spacer(),
+        Spacer(),
         Text(
           value,
           style: TextStyle(

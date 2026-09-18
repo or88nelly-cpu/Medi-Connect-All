@@ -88,7 +88,7 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
                           ),
                           Icon(
                             Icons.verified_rounded,
-                            color: const Color(0xFF3B5BFD),
+                            color: Color(0xFF3B5BFD),
                             size: 12.r,
                           ),
                         ],
@@ -117,13 +117,13 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
                           vertical: 2.h,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFECEF),
+                          color: Color(0xFFFFECEF),
                           borderRadius: BorderRadius.circular(6.r),
                         ),
                         child: Text(
                           specialityName,
                           style: TextStyle(
-                            color: const Color(0xFFFF296D),
+                            color: Color(0xFFFF296D),
                             fontSize: 8.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -135,7 +135,7 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const VerticalDivider(width: 1),
+          VerticalDivider(width: 1),
 
           // Date/Time Center block
           Expanded(
@@ -229,7 +229,7 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
               ),
             ),
           ),
-          const VerticalDivider(width: 1),
+          VerticalDivider(width: 1),
 
           // Fees breakdown block
           Expanded(
@@ -244,7 +244,7 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
                 ),
                 _buildFeeItem('Platform Fee', '₹0', textColor),
                 _buildFeeItem('Taxes & Charges', '₹0', textColor),
-                const Divider(height: 12),
+                Divider(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -261,7 +261,7 @@ class PaymentAppointmentSummaryCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w900,
-                        color: const Color(0xFF3B5BFD),
+                        color: Color(0xFF3B5BFD),
                       ),
                     ),
                   ],

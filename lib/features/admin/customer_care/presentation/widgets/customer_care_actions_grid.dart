@@ -71,7 +71,7 @@ class CustomerCareActionsGrid extends StatelessWidget {
 
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 14.w,
@@ -112,7 +112,7 @@ class CustomerCareActionsGrid extends StatelessWidget {
                 alpha: isDark ? 0.3 : 0.25,
               ),
               blurRadius: 15,
-              offset: const Offset(0, 8),
+              offset: Offset(0, 8),
             ),
           ],
         ),
@@ -128,7 +128,7 @@ class CustomerCareActionsGrid extends StatelessWidget {
               ),
               child: Icon(action.icon, color: Colors.white, size: 26.r),
             ),
-            const Spacer(),
+            Spacer(),
             // Title
             Text(
               action.title,
@@ -156,7 +156,7 @@ class CustomerCareActionsGrid extends StatelessWidget {
               children: [
                 Container(
                   padding: EdgeInsets.all(8.r),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),

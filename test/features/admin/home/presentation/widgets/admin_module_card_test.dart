@@ -17,7 +17,7 @@ void main() {
 
   Widget createWidgetUnderTest({required VoidCallback onTap}) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: Size(375, 812),
       builder: (context, child) => MaterialApp(
         home: Scaffold(
           body: AdminModuleCard(module: testModule, onTap: onTap),

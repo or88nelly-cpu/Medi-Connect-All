@@ -15,16 +15,16 @@ class PatientPromoFooter extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: AppColors.isDark(context)
-              ? const [Color(0xFF0D1B38), Color(0xFF10192C)]
-              : const [Color(0xFFEEF3FF), Color(0xFFF5EDFF)],
+              ? [Color(0xFF0D1B38), Color(0xFF10192C)]
+              : [Color(0xFFEEF3FF), Color(0xFFF5EDFF)],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         borderRadius: BorderRadius.circular(18.r),
         border: Border.all(
           color: AppColors.isDark(context)
-              ? const Color(0xFF26324D)
-              : const Color(0xFFDDE5FF),
+              ? Color(0xFF26324D)
+              : Color(0xFFDDE5FF),
         ),
       ),
       child: Row(
@@ -37,12 +37,12 @@ class PatientPromoFooter extends StatelessWidget {
                 width: 52.r,
                 height: 52.r,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1A8CFF).withValues(alpha: 0.12),
+                  color: Color(0xFF1A8CFF).withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Icon(
                   Icons.family_restroom_rounded,
-                  color: const Color(0xFF1A8CFF),
+                  color: Color(0xFF1A8CFF),
                   size: 28.r,
                 ),
               ),
@@ -57,7 +57,7 @@ class PatientPromoFooter extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: AppColors.isDark(context)
-                          ? const Color(0xFF10192C)
+                          ? Color(0xFF10192C)
                           : Colors.white,
                       width: 2,
                     ),
@@ -116,7 +116,7 @@ class PatientPromoFooter extends StatelessWidget {
                 width: 38.r,
                 height: 38.r,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4F2DFF).withValues(alpha: 0.1),
+                  color: Color(0xFF4F2DFF).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Icon(
@@ -130,12 +130,12 @@ class PatientPromoFooter extends StatelessWidget {
                 width: 38.r,
                 height: 38.r,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1A8CFF).withValues(alpha: 0.1),
+                  color: Color(0xFF1A8CFF).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Icon(
                   Icons.shield_rounded,
-                  color: const Color(0xFF1A8CFF),
+                  color: Color(0xFF1A8CFF),
                   size: 20.r,
                 ),
               ),
@@ -149,7 +149,7 @@ class PatientPromoFooter extends StatelessWidget {
 
 class _HeartbeatPainter extends CustomPainter {
   final Color color;
-  const _HeartbeatPainter({required this.color});
+  _HeartbeatPainter({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

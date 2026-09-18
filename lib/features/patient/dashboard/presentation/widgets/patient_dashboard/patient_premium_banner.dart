@@ -11,7 +11,7 @@ class PatientPremiumBanner extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [Color(0xFF3F2B96), Color(0xFFA8C0FF)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -19,9 +19,9 @@ class PatientPremiumBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF3F2B96).withValues(alpha: 0.3),
+            color: Color(0xFF3F2B96).withValues(alpha: 0.3),
             blurRadius: 15.r,
-            offset: const Offset(0, 6),
+            offset: Offset(0, 6),
           ),
         ],
       ),
@@ -63,7 +63,7 @@ class PatientPremiumBanner extends StatelessWidget {
                             width: 1.5,
                           ),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.workspace_premium_outlined,
                           color: AppColors.secondary,
                           size: 26,
@@ -102,7 +102,7 @@ class PatientPremiumBanner extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
+                            SnackBar(
                               content: Text(
                                 'Premium subscription flow coming soon!',
                               ),
@@ -115,7 +115,7 @@ class PatientPremiumBanner extends StatelessWidget {
                             vertical: 8.h,
                           ),
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
+                            gradient: LinearGradient(
                               colors: [Color(0xFFF7C325), Color(0xFFE29E0D)],
                             ),
                             borderRadius: BorderRadius.circular(10.r),
@@ -123,7 +123,7 @@ class PatientPremiumBanner extends StatelessWidget {
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.15),
                                 blurRadius: 8.r,
-                                offset: const Offset(0, 3),
+                                offset: Offset(0, 3),
                               ),
                             ],
                           ),
@@ -152,7 +152,7 @@ class PatientPremiumBanner extends StatelessWidget {
                   ),
 
                   SizedBox(height: 18.h),
-                  const Divider(color: Colors.white24, height: 1),
+                  Divider(color: Colors.white24, height: 1),
                   SizedBox(height: 14.h),
 
                   // Bottom Features Row

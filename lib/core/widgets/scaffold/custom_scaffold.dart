@@ -37,13 +37,13 @@ class CustomScaffold extends StatelessWidget {
               backgroundColor: Colors.transparent,
               appBar: appBarNeeded == false
                   ? null
-                  : customAppbar ?? const CommonAppBar(),
+                  : customAppbar ?? CommonAppBar(),
               drawer: drawer,
               body: showAd
                   ? Column(
                       children: [
-                        Expanded(child: body ?? const SizedBox.shrink()),
-                        const GoogleAdBanner(),
+                        Expanded(child: body ?? SizedBox.shrink()),
+                        GoogleAdBanner(),
                       ],
                     )
                   : body,

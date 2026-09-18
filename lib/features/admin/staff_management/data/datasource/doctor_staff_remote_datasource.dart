@@ -263,7 +263,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
   List<UserModel> _getHRSeedData() {
     return [
-      const UserModel(
+      UserModel(
         id: 'hr-seed-1',
         firstName: 'John',
         lastName: 'Smith',
@@ -272,7 +272,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-2',
         firstName: 'Emily',
         lastName: 'Johnson',
@@ -281,7 +281,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-3',
         firstName: 'Michael',
         lastName: 'Brown',
@@ -290,7 +290,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-4',
         firstName: 'Sophia',
         lastName: 'Williams',
@@ -299,7 +299,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-5',
         firstName: 'David',
         lastName: 'Miller',
@@ -308,7 +308,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-6',
         firstName: 'Olivia',
         lastName: 'Jones',
@@ -317,7 +317,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-7',
         firstName: 'James',
         lastName: 'Davis',
@@ -326,7 +326,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-8',
         firstName: 'Isabella',
         lastName: 'Garcia',
@@ -335,7 +335,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-9',
         firstName: 'Robert',
         lastName: 'Martinez',
@@ -344,7 +344,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-10',
         firstName: 'Mia',
         lastName: 'Rodriguez',
@@ -353,7 +353,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-11',
         firstName: 'William',
         lastName: 'Wilson',
@@ -362,7 +362,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-12',
         firstName: 'Abigail',
         lastName: 'Anderson',
@@ -371,7 +371,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-13',
         firstName: 'Joseph',
         lastName: 'Thomas',
@@ -380,7 +380,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-14',
         firstName: 'Elizabeth',
         lastName: 'Taylor',
@@ -389,7 +389,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-15',
         firstName: 'Charles',
         lastName: 'Moore',
@@ -398,7 +398,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-16',
         firstName: 'Margaret',
         lastName: 'Jackson',
@@ -407,7 +407,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'female',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-17',
         firstName: 'Richard',
         lastName: 'Martin',
@@ -416,7 +416,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'male',
         role: UserRole.staff,
       ),
-      const UserModel(
+      UserModel(
         id: 'hr-seed-18',
         firstName: 'Dorothy',
         lastName: 'Lee',
@@ -430,7 +430,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
 
   List<UserModel> _getDoctorSeedData() {
     return [
-      const UserModel(
+      UserModel(
         id: 'doc-seed-1',
         email: 'sarah.j@mediconnect.com',
         firstName: 'Dr. Sarah',
@@ -439,7 +439,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'Female',
         status: 'Available',
       ),
-      const UserModel(
+      UserModel(
         id: 'doc-seed-2',
         email: 'michael.c@mediconnect.com',
         firstName: 'Dr. Michael',
@@ -448,7 +448,7 @@ class DoctorStaffRemoteDataSourceImpl implements DoctorStaffRemoteDataSource {
         gender: 'Male',
         status: 'Available',
       ),
-      const UserModel(
+      UserModel(
         id: 'doc-seed-3',
         email: 'james.w@mediconnect.com',
         firstName: 'Dr. James',

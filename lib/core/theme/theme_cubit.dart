@@ -6,7 +6,7 @@ import 'package:medi_connect/core/services/secure_storage_service.dart';
 @lazySingleton
 class ThemeCubit extends Cubit<ThemeMode> {
   final SecureStorageService _storageService;
-  static const String _themeKey = 'app_theme_mode';
+  static final String _themeKey = 'app_theme_mode';
 
   ThemeCubit(this._storageService) : super(ThemeMode.system) {
     _loadTheme();

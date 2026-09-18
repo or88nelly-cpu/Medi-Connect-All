@@ -46,7 +46,7 @@ class SlotsSummaryRow extends StatelessWidget {
               icon: Icons.calendar_month_outlined,
               label: "Total Slots",
               value: totalSlots.toString(),
-              iconColor: const Color(0xFF0F9F58),
+              iconColor: Color(0xFF0F9F58),
               labelColor: labelColor,
               textColor: textColor,
             ),

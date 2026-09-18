@@ -42,7 +42,7 @@ class AdminNotificationsPage extends StatelessWidget {
     ];
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "Notification Logs"),
+      customAppbar: CommonAppBar(title: "Notification Logs"),
       body: ListView.builder(
         padding: EdgeInsets.all(20.r),
         itemCount: notificationLogs.length,

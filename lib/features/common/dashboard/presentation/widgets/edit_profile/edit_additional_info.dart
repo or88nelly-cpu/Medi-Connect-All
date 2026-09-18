@@ -144,7 +144,7 @@ class _EditAdditionalInfoState extends State<EditAdditionalInfo> {
                     borderRadius: BorderRadius.circular(6.r),
                   ),
                 ),
-                child: const Icon(Icons.add, color: Colors.white),
+                child: Icon(Icons.add, color: Colors.white),
               ),
             ],
           ),

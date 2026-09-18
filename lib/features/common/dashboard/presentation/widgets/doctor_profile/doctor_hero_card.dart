@@ -75,14 +75,10 @@ class DoctorHeroCard extends StatelessWidget {
                         vertical: 2.h,
                       ),
                       decoration: BoxDecoration(
-                        color: isDark
-                            ? const Color(0xFF07271F)
-                            : const Color(0xFFE8F5E9),
+                        color: isDark ? Color(0xFF07271F) : Color(0xFFE8F5E9),
                         borderRadius: BorderRadius.circular(10.r),
                         border: Border.all(
-                          color: isDark
-                              ? const Color(0xFF0F9F58)
-                              : const Color(0xFF81C784),
+                          color: isDark ? Color(0xFF0F9F58) : Color(0xFF81C784),
                           width: 1,
                         ),
                       ),
@@ -92,7 +88,7 @@ class DoctorHeroCard extends StatelessWidget {
                           Container(
                             width: 6.r,
                             height: 6.r,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: Color(0xFF0F9F58),
                               shape: BoxShape.circle,
                             ),
@@ -101,7 +97,7 @@ class DoctorHeroCard extends StatelessWidget {
                           Text(
                             user.status ?? "",
                             style: TextStyle(
-                              color: const Color(0xFF0F9F58),
+                              color: Color(0xFF0F9F58),
                               fontSize: 9.sp,
                               fontWeight: FontWeight.bold,
                             ),

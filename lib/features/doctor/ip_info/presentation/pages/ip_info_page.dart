@@ -27,7 +27,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
   }
 
   String _formatDate(DateTime date) {
-    const months = [
+    final months = [
       'Jan',
       'Feb',
       'Mar',
@@ -41,7 +41,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
       'Nov',
       'Dec',
     ];
-    const weekdays = [
+    final weekdays = [
       'Monday',
       'Tuesday',
       'Wednesday',
@@ -57,12 +57,10 @@ class _IpInfoPageState extends State<IpInfoPage> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? const Color(0xFF0F172A)
-          : const Color(0xFFF8FAFC),
+      backgroundColor: isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -93,14 +91,14 @@ class _IpInfoPageState extends State<IpInfoPage> {
             return Center(
               child: Text(
                 state.message,
-                style: const TextStyle(color: AppColors.red),
+                style: TextStyle(color: AppColors.red),
               ),
             );
           }
           if (state is IpInfoLoaded) {
             return SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-              physics: const BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -124,7 +122,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
                   // 4. Occupancy Grid
                   GridView.builder(
                     shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 14.r,
@@ -146,14 +144,14 @@ class _IpInfoPageState extends State<IpInfoPage> {
               ),
             );
           }
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );
   }
 
   Widget _buildDateBanner(bool isDark) {
-    final bg = isDark ? const Color(0xFF1E293B) : const Color(0xFF0F6FFF);
+    final bg = isDark ? Color(0xFF1E293B) : Color(0xFF0F6FFF);
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -163,7 +161,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
           BoxShadow(
             color: bg.withValues(alpha: 0.15),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -171,10 +169,10 @@ class _IpInfoPageState extends State<IpInfoPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+            icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
             onPressed: () {
               setState(() {
-                _selectedDate = _selectedDate.subtract(const Duration(days: 1));
+                _selectedDate = _selectedDate.subtract(Duration(days: 1));
               });
             },
           ),
@@ -188,13 +186,10 @@ class _IpInfoPageState extends State<IpInfoPage> {
             ),
           ),
           IconButton(
-            icon: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Colors.white,
-            ),
+            icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
             onPressed: () {
               setState(() {
-                _selectedDate = _selectedDate.add(const Duration(days: 1));
+                _selectedDate = _selectedDate.add(Duration(days: 1));
               });
             },
           ),
@@ -208,7 +203,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
       width: double.infinity,
       height: 140.h,
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
+        color: isDark ? Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
       ),
@@ -260,7 +255,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
     final secondaryTextCol = isDark ? Colors.white60 : Colors.grey[500];
 
-    Color cardThemeColor = const Color(0xFF10B981); // ICU
+    Color cardThemeColor = Color(0xFF10B981); // ICU
     IconData icon = Icons.monitor_heart_outlined;
     if (item.name.toLowerCase() == 'ward') {
       cardThemeColor = AppColors.info;
@@ -269,13 +264,13 @@ class _IpInfoPageState extends State<IpInfoPage> {
       cardThemeColor = AppColors.warning;
       icon = Icons.door_front_door_outlined;
     } else if (item.name.toLowerCase().contains('surgery')) {
-      cardThemeColor = const Color(0xFF8B5CF6);
+      cardThemeColor = Color(0xFF8B5CF6);
       icon = Icons.calendar_month_outlined;
     } else if (item.name.toLowerCase() == 'block') {
       cardThemeColor = AppColors.error;
       icon = Icons.apartment_outlined;
     } else if (item.name.toLowerCase() == 'hdu') {
-      cardThemeColor = const Color(0xFF06B6D4);
+      cardThemeColor = Color(0xFF06B6D4);
       icon = Icons.favorite_border_outlined;
     }
 
@@ -324,7 +319,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
               fontSize: 10.sp,
             ),
           ),
-          const Spacer(),
+          Spacer(),
           // Sparkline visualization
           SizedBox(
             height: 24.h,
@@ -369,7 +364,7 @@ class _IpInfoPageState extends State<IpInfoPage> {
               color: Colors.grey.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.settings, color: Colors.grey),
+            child: Icon(Icons.settings, color: Colors.grey),
           ),
           SizedBox(width: 12.w),
           Expanded(

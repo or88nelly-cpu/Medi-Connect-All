@@ -205,7 +205,7 @@ class CompleteConsultationCubit extends Cubit<CompleteConsultationState> {
         if (_lastPharmacyItems.isNotEmpty) {
           final match = _lastPharmacyItems.firstWhere(
             (item) => item.name.toLowerCase() == name,
-            orElse: () => const PharmacyItemModel(
+            orElse: () => PharmacyItemModel(
               id: '',
               name: '',
               stock: 0,

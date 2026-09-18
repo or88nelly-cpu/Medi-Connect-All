@@ -13,7 +13,7 @@ class MrdStatsGrid extends StatelessWidget {
     return GridView.count(
       crossAxisCount: 3,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       crossAxisSpacing: 8.w,
       mainAxisSpacing: 8.h,
       childAspectRatio: 1.15,
@@ -53,7 +53,7 @@ class MrdStatsGrid extends StatelessWidget {
   }
 
   Widget _buildStatCard(String label, int val, Color indicatorColor) {
-    final bg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final bg = isDark ? Color(0xFF1E293B) : Colors.white;
     final textCol = isDark ? Colors.white : AppColors.textDarkNavy;
 
     return Container(

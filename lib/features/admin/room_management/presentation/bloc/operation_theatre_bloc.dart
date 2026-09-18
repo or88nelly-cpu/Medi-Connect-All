@@ -53,7 +53,7 @@ class OperationTheatreBloc
     Emitter<OperationTheatreState> emit,
   ) async {
     emit(OperationTheatreLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(OperationTheatreError(failure.message)),
       (stats) => emit(OperationTheatreLoaded(stats)),

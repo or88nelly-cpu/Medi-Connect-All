@@ -62,43 +62,43 @@ class AppRouterConfig {
       routes: [
         GoRoute(
           path: RouteNames.splash,
-          builder: (context, state) => const SplashPage(),
+          builder: (context, state) => SplashPage(),
         ),
         GoRoute(
           path: RouteNames.onboarding,
-          builder: (context, state) => const OnboardingPage(),
+          builder: (context, state) => OnboardingPage(),
         ),
         GoRoute(
           path: RouteNames.login,
-          builder: (context, state) => const AdminLoginPage(),
+          builder: (context, state) => AdminLoginPage(),
         ),
         GoRoute(
           path: RouteNames.register,
-          builder: (context, state) => const AdminSignUpPage(),
+          builder: (context, state) => AdminSignUpPage(),
         ),
         GoRoute(
           path: "/departments",
-          builder: (context, state) => const DepartmentListPage(),
+          builder: (context, state) => DepartmentListPage(),
         ),
         GoRoute(
           path: RouteNames.departmentDetails,
-          builder: (context, state) => const DepartmentDetailsPage(),
+          builder: (context, state) => DepartmentDetailsPage(),
         ),
         GoRoute(
           path: "/sections",
-          builder: (context, state) => const SectionListPage(),
+          builder: (context, state) => SectionListPage(),
         ),
         GoRoute(
           path: '/admin/dashboard',
-          builder: (context, state) => const AdminHomePage(),
+          builder: (context, state) => AdminHomePage(),
         ),
         GoRoute(
           path: '/patient/dashboard',
-          builder: (context, state) => const PatientDashboardPage(),
+          builder: (context, state) => PatientDashboardPage(),
         ),
         GoRoute(
           path: '/doctor/dashboard',
-          builder: (context, state) => const DoctorDashboardPage(),
+          builder: (context, state) => DoctorDashboardPage(),
         ),
         GoRoute(
           path: RouteNames.doctorOpInfo,
@@ -107,63 +107,63 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: RouteNames.doctorPendingMrd,
-          builder: (context, state) => const PendingMrdPage(),
+          builder: (context, state) => PendingMrdPage(),
         ),
         GoRoute(
           path: '/staff/dashboard',
-          builder: (context, state) => const StaffDashboardPage(),
+          builder: (context, state) => StaffDashboardPage(),
         ),
         GoRoute(
           path: '/admin/doctors',
-          builder: (context, state) => const AdminDoctorsPage(),
+          builder: (context, state) => AdminDoctorsPage(),
         ),
         GoRoute(
           path: '/admin/staff',
-          builder: (context, state) => const AdminStaffPage(),
+          builder: (context, state) => AdminStaffPage(),
         ),
         GoRoute(
           path: '/admin/pharmacy',
-          builder: (context, state) => const AdminPharmacyPage(),
+          builder: (context, state) => AdminPharmacyPage(),
         ),
         GoRoute(
           path: '/staff/patientRegistration',
-          builder: (context, state) => const StaffPatientRegistration(),
+          builder: (context, state) => StaffPatientRegistration(),
         ),
         GoRoute(
           path: RouteNames.profileCompletion,
-          builder: (context, state) => const StaffPatientRegistration(),
+          builder: (context, state) => StaffPatientRegistration(),
         ),
         GoRoute(
           path: '/admin/labs',
-          builder: (context, state) => const AdminLabsPage(),
+          builder: (context, state) => AdminLabsPage(),
         ),
         GoRoute(
           path: '/admin/staff-attendance',
-          builder: (context, state) => const AdminStaffAttendancePage(),
+          builder: (context, state) => AdminStaffAttendancePage(),
         ),
         GoRoute(
           path: '/admin/recent-activity',
-          builder: (context, state) => const AdminRecentActivityPage(),
+          builder: (context, state) => AdminRecentActivityPage(),
         ),
         GoRoute(
           path: '/admin/emergencies',
-          builder: (context, state) => const AdminEmergenciesPage(),
+          builder: (context, state) => AdminEmergenciesPage(),
         ),
         GoRoute(
           path: '/admin/slot-config',
-          builder: (context, state) => const AdminSlotConfigPage(),
+          builder: (context, state) => AdminSlotConfigPage(),
         ),
         GoRoute(
           path: '/admin/audit-logs',
-          builder: (context, state) => const AdminAuditLogsPage(),
+          builder: (context, state) => AdminAuditLogsPage(),
         ),
         GoRoute(
           path: '/admin/notifications',
-          builder: (context, state) => const AdminNotificationsPage(),
+          builder: (context, state) => AdminNotificationsPage(),
         ),
         GoRoute(
           path: '/admin/master-data',
-          builder: (context, state) => const AdminMasterDataPage(),
+          builder: (context, state) => AdminMasterDataPage(),
         ),
 
         GoRoute(
@@ -208,15 +208,15 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: RouteNames.patientRegistration,
-          builder: (context, state) => const PatientRegistrationPage(),
+          builder: (context, state) => PatientRegistrationPage(),
         ),
         GoRoute(
           path: RouteNames.patientSearch,
-          builder: (context, state) => const PatientSearchPage(),
+          builder: (context, state) => PatientSearchPage(),
         ),
         GoRoute(
           path: RouteNames.qrRegistration,
-          builder: (context, state) => const QrRegistrationPage(),
+          builder: (context, state) => QrRegistrationPage(),
         ),
         GoRoute(
           path: RouteNames.patientRegistrationRecordDetail,
@@ -226,13 +226,11 @@ class AppRouterConfig {
         ),
         GoRoute(
           path: RouteNames.adminSettings,
-          builder: (context, state) =>
-              const AdminSettingsPage(isStandalone: true),
+          builder: (context, state) => AdminSettingsPage(isStandalone: true),
         ),
         GoRoute(
           path: RouteNames.staffSettings,
-          builder: (context, state) =>
-              const AdminSettingsPage(isStandalone: true),
+          builder: (context, state) => AdminSettingsPage(isStandalone: true),
         ),
         GoRoute(
           path: RouteNames.specialities,

@@ -15,10 +15,10 @@ class EmrdBottomBanner extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E2D4A) : const Color(0xFFEFF6FF),
+        color: isDark ? Color(0xFF1E2D4A) : Color(0xFFEFF6FF),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: isDark ? const Color(0xFF2E3E5C) : const Color(0xFFDBEAFE),
+          color: isDark ? Color(0xFF2E3E5C) : Color(0xFFDBEAFE),
           width: 1,
         ),
       ),
@@ -38,7 +38,7 @@ class EmrdBottomBanner extends StatelessWidget {
                       BoxShadow(
                         color: AppColors.blue.withValues(alpha: 0.06),
                         blurRadius: 10,
-                        offset: const Offset(0, 4),
+                        offset: Offset(0, 4),
                       ),
                     ],
             ),

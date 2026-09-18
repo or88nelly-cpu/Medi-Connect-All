@@ -31,39 +31,39 @@ class _SpecialtyDoctorsPageState extends State<SpecialtyDoctorsPage> {
   @override
   void initState() {
     super.initState();
-    context.read<DoctorStaffBloc>().add(const LoadDoctorStaff('All'));
+    context.read<DoctorStaffBloc>().add(LoadDoctorStaff('All'));
   }
 
   static final List<UserModel> _mockDoctors = [
-    const UserModel(
+    UserModel(
       id: 'doc-1',
       email: 'sarah.j@mediconnect.com',
       firstName: 'Dr. Sarah',
       lastName: 'Johnson',
       role: UserRole.doctor,
     ),
-    const UserModel(
+    UserModel(
       id: 'doc-2',
       email: 'michael.c@mediconnect.com',
       firstName: 'Dr. Michael',
       lastName: 'Chen',
       role: UserRole.doctor,
     ),
-    const UserModel(
+    UserModel(
       id: 'doc-3',
       email: 'james.w@mediconnect.com',
       firstName: 'Dr. James',
       lastName: 'Wilson',
       role: UserRole.doctor,
     ),
-    const UserModel(
+    UserModel(
       id: 'doc-4',
       email: 'priya.s@mediconnect.com',
       firstName: 'Dr. Priya',
       lastName: 'Sharma',
       role: UserRole.doctor,
     ),
-    const UserModel(
+    UserModel(
       id: 'doc-5',
       email: 'raj.k@mediconnect.com',
       firstName: 'Dr. Rajesh',
@@ -127,7 +127,7 @@ class _SpecialtyDoctorsPageState extends State<SpecialtyDoctorsPage> {
           if (state is DoctorStaffLoaded && state.doctors.isNotEmpty) {
             doctors = _filterDoctors(state.doctors);
           } else if (state is DoctorStaffLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           } else {
             doctors = _mockDoctors;
           }
@@ -210,7 +210,7 @@ class _DoctorCard extends StatelessWidget {
           BoxShadow(
             color: gradientColors.first.withValues(alpha: 0.07),
             blurRadius: 10,
-            offset: const Offset(0, 3),
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -327,7 +327,7 @@ class _DoctorCard extends StatelessWidget {
               Container(
                 width: 8.r,
                 height: 8.r,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.success,
                   shape: BoxShape.circle,
                 ),

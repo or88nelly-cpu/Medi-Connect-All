@@ -25,13 +25,13 @@ class DoctorDatePickerPill extends StatelessWidget {
         final DateTime? picked = await showDatePicker(
           context: context,
           initialDate: selectedDate,
-          firstDate: DateTime.now().subtract(const Duration(days: 365)),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
+          firstDate: DateTime.now().subtract(Duration(days: 365)),
+          lastDate: DateTime.now().add(Duration(days: 365)),
           builder: (context, child) {
             return Theme(
               data: isDark
                   ? ThemeData.dark().copyWith(
-                      colorScheme: const ColorScheme.dark(
+                      colorScheme: ColorScheme.dark(
                         primary: Color(0xFF0F6FFF),
                         onPrimary: Colors.white,
                         surface: Color(0xFF1E293B),
@@ -39,7 +39,7 @@ class DoctorDatePickerPill extends StatelessWidget {
                       ),
                     )
                   : ThemeData.light().copyWith(
-                      colorScheme: const ColorScheme.light(
+                      colorScheme: ColorScheme.light(
                         primary: Color(0xFF0F6FFF),
                         onPrimary: Colors.white,
                         surface: Colors.white,
@@ -58,13 +58,13 @@ class DoctorDatePickerPill extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF1E293B) : Colors.white,
+          color: isDark ? Color(0xFF1E293B) : Colors.white,
           borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 10,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),
@@ -74,12 +74,12 @@ class DoctorDatePickerPill extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(6.r),
               decoration: BoxDecoration(
-                color: const Color(0xFF0F6FFF).withValues(alpha: 0.1),
+                color: Color(0xFF0F6FFF).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.calendar_today_outlined,
-                color: const Color(0xFF0F6FFF),
+                color: Color(0xFF0F6FFF),
                 size: 16.r,
               ),
             ),

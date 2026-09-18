@@ -7,7 +7,7 @@ import 'package:medi_connect/features/common/dashboard/domain/repositories/analy
 @lazySingleton
 class GetDashboardStatsUseCase extends UseCase<Map<String, dynamic>, NoParams> {
   final AnalyticsRepository _repository;
-  const GetDashboardStatsUseCase(this._repository);
+  GetDashboardStatsUseCase(this._repository);
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> call(NoParams params) async {
@@ -19,7 +19,7 @@ class GetDashboardStatsUseCase extends UseCase<Map<String, dynamic>, NoParams> {
 class GetAuditLogsUseCase
     extends UseCase<List<Map<String, dynamic>>, NoParams> {
   final AnalyticsRepository _repository;
-  const GetAuditLogsUseCase(this._repository);
+  GetAuditLogsUseCase(this._repository);
 
   @override
   Future<Either<Failure, List<Map<String, dynamic>>>> call(

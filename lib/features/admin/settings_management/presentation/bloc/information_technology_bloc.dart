@@ -54,7 +54,7 @@ class InformationTechnologyBloc
     Emitter<InformationTechnologyState> emit,
   ) async {
     emit(InformationTechnologyLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(InformationTechnologyError(failure.message)),
       (stats) => emit(InformationTechnologyLoaded(stats)),

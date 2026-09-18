@@ -52,7 +52,7 @@ class FireSafetyBloc extends Bloc<FireSafetyEvent, FireSafetyState> {
     Emitter<FireSafetyState> emit,
   ) async {
     emit(FireSafetyLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(FireSafetyError(failure.message)),
       (stats) => emit(FireSafetyLoaded(stats)),

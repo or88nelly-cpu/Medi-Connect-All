@@ -87,7 +87,7 @@ class _PatientSpecialitiesSectionState
 
             return GridView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemCount: itemCount,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
@@ -112,7 +112,7 @@ class _PatientSpecialitiesSectionState
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.03),
                             blurRadius: 10.r,
-                            offset: const Offset(0, 4),
+                            offset: Offset(0, 4),
                           ),
                         ],
                       ),
@@ -176,7 +176,7 @@ class _PatientSpecialitiesSectionState
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.03),
                           blurRadius: 10.r,
-                          offset: const Offset(0, 4),
+                          offset: Offset(0, 4),
                         ),
                       ],
                     ),

@@ -117,7 +117,7 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
             Icons.payments_outlined,
             "Consultation Fee",
             "₹${fee.toStringAsFixed(0)}",
-            const Color(0xFF00C2A8),
+            Color(0xFF00C2A8),
             labelColor,
             textColor,
           ),
@@ -126,7 +126,7 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
             Icons.monetization_on_outlined,
             "Today's Revenue",
             "₹${todayRev.toStringAsFixed(0)}",
-            const Color(0xFF0F9F58),
+            Color(0xFF0F9F58),
             labelColor,
             textColor,
           ),
@@ -154,7 +154,7 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text("Loading financial statement details..."),
                   ),
                 );
@@ -197,7 +197,7 @@ class _RevenueSummaryCardState extends State<RevenueSummaryCard> {
           label,
           style: TextStyle(color: labelColor, fontSize: 11.sp),
         ),
-        const Spacer(),
+        Spacer(),
         Text(
           value,
           style: TextStyle(

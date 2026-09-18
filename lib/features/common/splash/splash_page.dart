@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     // 1. Ken Burns background zoom
     _bgController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3500),
+      duration: Duration(milliseconds: 3500),
     );
     _bgScale = Tween<double>(begin: 1.0, end: 1.06).animate(
       CurvedAnimation(parent: _bgController, curve: Curves.easeOutCubic),
@@ -56,34 +56,34 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     // 2. Entrance animations for logo and overlays
     _entranceController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1800),
+      duration: Duration(milliseconds: 1800),
     );
 
     _logoFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _entranceController,
-        curve: const Interval(0.0, 0.45, curve: Curves.easeIn),
+        curve: Interval(0.0, 0.45, curve: Curves.easeIn),
       ),
     );
 
     _logoScale = Tween<double>(begin: 0.85, end: 1.0).animate(
       CurvedAnimation(
         parent: _entranceController,
-        curve: const Interval(0.0, 0.55, curve: Curves.easeOutBack),
+        curve: Interval(0.0, 0.55, curve: Curves.easeOutBack),
       ),
     );
 
     _overlaysFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _entranceController,
-        curve: const Interval(0.35, 0.75, curve: Curves.easeIn),
+        curve: Interval(0.35, 0.75, curve: Curves.easeIn),
       ),
     );
 
     _bottomFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _entranceController,
-        curve: const Interval(0.55, 1.0, curve: Curves.easeIn),
+        curve: Interval(0.55, 1.0, curve: Curves.easeIn),
       ),
     );
 
@@ -115,7 +115,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         // Wait to show the beautiful premium animations before navigating.
-        await Future.delayed(const Duration(milliseconds: 2800));
+        await Future.delayed(Duration(milliseconds: 2800));
         if (state is Authenticated) {
           final role = state.user.role.value.toLowerCase();
           if (mounted) {
@@ -180,7 +180,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         // Heartbeat Pulse Wave
-                        const HeartbeatPulseLine(height: 55),
+                        HeartbeatPulseLine(height: 55),
                         SizedBox(height: 12.h),
 
                         // Platform Tagline Text
@@ -208,7 +208,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                         SizedBox(height: 36.h),
 
                         // Bottom linear glow progress indicator
-                        const GlowingProgressBar(width: 200),
+                        GlowingProgressBar(width: 200),
                         SizedBox(height: 32.h),
                       ],
                     ),
@@ -254,7 +254,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
               // B. Heartbeat Pulse Wave
               FadeTransition(
                 opacity: _bottomFade,
-                child: const HeartbeatPulseLine(height: 60),
+                child: HeartbeatPulseLine(height: 60),
               ),
               SizedBox(height: 24.h),
 
@@ -290,7 +290,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
               // D. Glowing progress bar
               FadeTransition(
                 opacity: _bottomFade,
-                child: const GlowingProgressBar(width: 220),
+                child: GlowingProgressBar(width: 220),
               ),
             ],
           ),

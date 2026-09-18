@@ -54,7 +54,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(title: "EMRD Consultations"),
+      customAppbar: CommonAppBar(title: "EMRD Consultations"),
       body: Column(
         children: [
           // Search & Filter header
@@ -79,7 +79,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                     hintStyle: TextStyle(
                       color: isDark ? Colors.white38 : Colors.black38,
                     ),
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: Icon(Icons.search),
                     filled: true,
                     fillColor: isDark
                         ? AppColors.terminalDarkFieldFill
@@ -107,7 +107,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                   labelStyle: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
-                  tabs: const [
+                  tabs: [
                     Tab(text: "Scheduled"),
                     Tab(text: "Completed"),
                     Tab(text: "All"),
@@ -122,7 +122,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
             child: BlocBuilder<AdminAppointmentsBloc, AdminAppointmentsState>(
               builder: (context, state) {
                 if (state is AdminAppointmentsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 } else if (state is AdminAppointmentsError) {
                   return Center(
                     child: Text(
@@ -150,7 +150,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                     ],
                   );
                 }
-                return const SizedBox.shrink();
+                return SizedBox.shrink();
               },
             ),
           ),
@@ -209,7 +209,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
 
     return ListView.builder(
       padding: EdgeInsets.all(20.r),
-      physics: const BouncingScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       itemCount: filtered.length,
       itemBuilder: (context, index) {
         final appointment = filtered[index];
@@ -233,7 +233,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
             UpdateAppointmentVitals(appointment.id, vitals),
           );
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text("Patient vitals saved successfully."),
               behavior: SnackBarBehavior.floating,
             ),
@@ -255,7 +255,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
             CompleteAppointment(appointment.id),
           );
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text("Consultation completed successfully."),
               behavior: SnackBarBehavior.floating,
             ),
@@ -289,7 +289,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
                 isDark,
               ),
               _buildDetailItem("Type", appointment.type, isDark),
-              const Divider(),
+              Divider(),
               Text(
                 "Recorded Vitals",
                 style: TextStyle(
@@ -333,10 +333,7 @@ class _EmrdConsultationsPageState extends State<EmrdConsultationsPage>
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("Close"),
-          ),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text("Close")),
         ],
       ),
     );

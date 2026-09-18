@@ -54,7 +54,7 @@ class DashboardAnalyticsBloc
     Emitter<DashboardAnalyticsState> emit,
   ) async {
     emit(DashboardAnalyticsLoading());
-    final result = await _getDashboardStatsUseCase(const NoParams());
+    final result = await _getDashboardStatsUseCase(NoParams());
     result.fold(
       (failure) => emit(DashboardAnalyticsError(failure.message)),
       (stats) => emit(DashboardAnalyticsLoaded(stats)),

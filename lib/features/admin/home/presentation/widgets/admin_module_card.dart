@@ -36,11 +36,11 @@ class _AdminModuleCardState extends State<AdminModuleCard>
     super.initState();
     _ctrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 380),
+      duration: Duration(milliseconds: 380),
     );
     _fade = CurvedAnimation(parent: _ctrl, curve: Curves.easeOut);
     _slide = Tween(
-      begin: const Offset(0, 0.12),
+      begin: Offset(0, 0.12),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
     Future.delayed(widget.entranceDelay, () {
@@ -70,7 +70,7 @@ class _AdminModuleCardState extends State<AdminModuleCard>
           child: GestureDetector(
             onTap: widget.onTap,
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
+              duration: Duration(milliseconds: 180),
               curve: Curves.easeOutCubic,
               transform: _hovered
                   ? Matrix4.translationValues(0, -5, 0)

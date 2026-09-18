@@ -21,11 +21,11 @@ class _CasualityDetailPageState extends State<CasualityDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<CasualityBloc>()..add(LoadCasualityStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Casuality Department"),
+        customAppbar: CommonAppBar(title: "Casuality Department"),
         body: BlocBuilder<CasualityBloc, CasualityState>(
           builder: (context, state) {
             if (state is CasualityLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is CasualityError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _CasualityDetailPageState extends State<CasualityDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _CasualityDetailPageState extends State<CasualityDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

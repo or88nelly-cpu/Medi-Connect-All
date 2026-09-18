@@ -15,7 +15,7 @@ class EditProfileDoctorCard extends StatefulWidget {
 class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
   void _simulatePhotoUpload() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Profile photo updated successfully!")),
+      SnackBar(content: Text("Profile photo updated successfully!")),
     );
   }
 
@@ -66,7 +66,7 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                   onTap: _simulatePhotoUpload,
                   child: Container(
                     padding: EdgeInsets.all(6.r),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
@@ -107,17 +107,17 @@ class _EditProfileDoctorCardState extends State<EditProfileDoctorCard> {
                         vertical: 2.h,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F9F58).withValues(alpha: 0.1),
+                        color: Color(0xFF0F9F58).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20.r),
                         border: Border.all(
-                          color: const Color(0xFF0F9F58),
+                          color: Color(0xFF0F9F58),
                           width: 0.5,
                         ),
                       ),
                       child: Text(
                         widget.user.status ?? "Active",
                         style: TextStyle(
-                          color: const Color(0xFF0F9F58),
+                          color: Color(0xFF0F9F58),
                           fontSize: 9.sp,
                           fontWeight: FontWeight.bold,
                         ),

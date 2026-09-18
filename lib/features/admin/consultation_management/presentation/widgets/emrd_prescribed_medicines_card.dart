@@ -91,7 +91,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
                         color: AppColors.teal.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.medication_outlined,
                         color: AppColors.teal,
                         size: 18,
@@ -203,11 +203,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
             if (medPaid)
               Row(
                 children: [
-                  const Icon(
-                    Icons.check_circle,
-                    color: AppColors.success,
-                    size: 16,
-                  ),
+                  Icon(Icons.check_circle, color: AppColors.success, size: 16),
                   SizedBox(width: 4.w),
                   Text(
                     "Paid",
@@ -224,7 +220,7 @@ class EmrdPrescribedMedicinesCard extends StatelessWidget {
                       isPrescription: false,
                       customTitle: "Medicine Invoice",
                     ),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.download,
                       size: 16,
                       color: AppColors.green,

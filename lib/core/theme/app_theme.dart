@@ -20,7 +20,7 @@ class AppTheme {
 
       scaffoldBackgroundColor: AppColors.lightScaffold,
 
-      colorScheme: const ColorScheme.light(
+      colorScheme: ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: AppColors.lightCard,
@@ -33,7 +33,7 @@ class AppTheme {
 
       shadowColor: AppColors.lightShadow,
 
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
         backgroundColor: AppColors.lightCard,
@@ -41,7 +41,7 @@ class AppTheme {
         iconTheme: IconThemeData(color: AppColors.lightTextPrimary),
       ),
 
-      iconTheme: const IconThemeData(color: AppColors.lightTextPrimary),
+      iconTheme: IconThemeData(color: AppColors.lightTextPrimary),
 
       textTheme: TextTheme(
         headlineLarge: AppTextStyles.headingLarge.copyWith(
@@ -100,7 +100,7 @@ class AppTheme {
 
       scaffoldBackgroundColor: AppColors.darkScaffold,
 
-      colorScheme: const ColorScheme.dark(
+      colorScheme: ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         surface: AppColors.darkCard,
@@ -113,7 +113,7 @@ class AppTheme {
 
       shadowColor: AppColors.darkShadow,
 
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: false,
         backgroundColor: AppColors.darkCard,
@@ -121,7 +121,7 @@ class AppTheme {
         iconTheme: IconThemeData(color: AppColors.darkTextPrimary),
       ),
 
-      iconTheme: const IconThemeData(color: AppColors.darkTextPrimary),
+      iconTheme: IconThemeData(color: AppColors.darkTextPrimary),
 
       textTheme: TextTheme(
         headlineLarge: AppTextStyles.headingLarge.copyWith(

@@ -22,11 +22,11 @@ class _GeneralStoreDetailPageState extends State<GeneralStoreDetailPage> {
       create: (context) =>
           GetIt.I<GeneralStoreBloc>()..add(LoadGeneralStoreStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "General Store Department"),
+        customAppbar: CommonAppBar(title: "General Store Department"),
         body: BlocBuilder<GeneralStoreBloc, GeneralStoreState>(
           builder: (context, state) {
             if (state is GeneralStoreLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is GeneralStoreError) {
               return Center(
                 child: Text(
@@ -53,7 +53,7 @@ class _GeneralStoreDetailPageState extends State<GeneralStoreDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -114,7 +114,7 @@ class _GeneralStoreDetailPageState extends State<GeneralStoreDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

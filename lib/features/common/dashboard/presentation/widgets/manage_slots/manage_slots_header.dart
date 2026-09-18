@@ -71,7 +71,7 @@ class ManageSlotsHeader extends StatelessWidget {
               child: IconButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Weekly Calendar Opened")),
+                    SnackBar(content: Text("Weekly Calendar Opened")),
                   );
                 },
                 icon: Icon(
@@ -93,9 +93,9 @@ class ManageSlotsHeader extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Options Opened")),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text("Options Opened")));
                 },
                 icon: Icon(Icons.more_vert, color: textColor, size: 18.sp),
                 style: IconButton.styleFrom(

@@ -59,7 +59,7 @@ void showEmrdPaymentDialog({
                     children: [
                       Expanded(
                         child: ChoiceChip(
-                          label: const Text('Cash'),
+                          label: Text('Cash'),
                           selected: payMethod == 'Cash',
                           onSelected: (val) {
                             if (val) setDialogState(() => payMethod = 'Cash');
@@ -69,7 +69,7 @@ void showEmrdPaymentDialog({
                       SizedBox(width: 8.w),
                       Expanded(
                         child: ChoiceChip(
-                          label: const Text('Online/QR'),
+                          label: Text('Online/QR'),
                           selected: payMethod == 'Online',
                           onSelected: (val) {
                             if (val) {
@@ -113,7 +113,7 @@ void showEmrdPaymentDialog({
                   Center(
                     child: Column(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.check_circle,
                           color: AppColors.success,
                           size: 48,
@@ -135,7 +135,7 @@ void showEmrdPaymentDialog({
               if (!paymentDone) ...[
                 TextButton(
                   onPressed: () => Navigator.pop(dialogCtx),
-                  child: const Text('Cancel'),
+                  child: Text('Cancel'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -147,7 +147,7 @@ void showEmrdPaymentDialog({
                     final messenger = ScaffoldMessenger.of(context);
                     final navigator = Navigator.of(context);
 
-                    await Future.delayed(const Duration(seconds: 1));
+                    await Future.delayed(Duration(seconds: 1));
 
                     // 1. Update Supabase
                     try {
@@ -275,7 +275,7 @@ void showEmrdPaymentDialog({
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                   ),
-                  child: const Text(
+                  child: Text(
                     'Confirm Pay',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -283,7 +283,7 @@ void showEmrdPaymentDialog({
               ] else ...[
                 TextButton(
                   onPressed: () => Navigator.pop(dialogCtx),
-                  child: const Text('Close'),
+                  child: Text('Close'),
                 ),
               ],
             ],

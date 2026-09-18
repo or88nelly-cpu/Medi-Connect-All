@@ -39,7 +39,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_secondsRemaining > 0) {
         setState(() {
           _secondsRemaining--;
@@ -76,7 +76,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
       SnackBar(
         content: Text("Registration ID ${widget.registrationId} copied!"),
         behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 2),
+        duration: Duration(seconds: 2),
       ),
     );
   }
@@ -84,9 +84,9 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBgColor = isDark ? Color(0xFF1E293B) : Colors.white;
     final timerColor = _secondsRemaining > 60
-        ? const Color(0xFF4F46E5)
+        ? Color(0xFF4F46E5)
         : AppColors.red;
 
     return Center(
@@ -100,7 +100,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
             BoxShadow(
               color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
               blurRadius: 20,
-              offset: const Offset(0, 10),
+              offset: Offset(0, 10),
             ),
           ],
         ),
@@ -111,9 +111,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
             Container(
               padding: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
-                color: isDark
-                    ? const Color(0xFF0F172A)
-                    : const Color(0xFFF8FAFC),
+                color: isDark ? Color(0xFF0F172A) : Color(0xFFF8FAFC),
                 borderRadius: BorderRadius.circular(20.r),
                 border: Border.all(
                   color: isDark
@@ -182,9 +180,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               decoration: BoxDecoration(
-                color: isDark
-                    ? const Color(0xFF0F172A)
-                    : const Color(0xFFF1F5F9),
+                color: isDark ? Color(0xFF0F172A) : Color(0xFFF1F5F9),
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Column(
@@ -203,9 +199,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
                       Text(
                         widget.registrationId,
                         style: AppTextStyles.titleMedium.copyWith(
-                          color: isDark
-                              ? Colors.white
-                              : const Color(0xFF1E293B),
+                          color: isDark ? Colors.white : Color(0xFF1E293B),
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,
                           letterSpacing: 0.5,
@@ -285,7 +279,7 @@ class _QrCodeDisplayState extends State<QrCodeDisplay> {
 // Custom Painter for rendering a high-fidelity QR Code simulation
 class QrCodePainter extends CustomPainter {
   final Color color;
-  const QrCodePainter({required this.color});
+  QrCodePainter({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

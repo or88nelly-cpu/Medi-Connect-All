@@ -42,12 +42,12 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
 
     // Premium background gradient matching the user's theme request
     final bgGradient = isDark
-        ? const LinearGradient(
+        ? LinearGradient(
             colors: [Color(0xFF03070E), Color(0xFF091629), Color(0xFF030914)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
-        : const LinearGradient(
+        : LinearGradient(
             colors: [Color(0xFFF4F7FA), Color(0xFFE2EAF4), Color(0xFFF3F7FD)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -69,7 +69,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                       horizontal: 16.w,
                       vertical: 12.h,
                     ),
-                    child: const DoctorProfileHeader(),
+                    child: DoctorProfileHeader(),
                   ),
 
                   // Scrollable Content
@@ -161,7 +161,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                         );
                         if (res == true && context.mounted) {
                           context.read<DoctorStaffBloc>().add(
-                            const LoadDoctorStaff('All'),
+                            LoadDoctorStaff('All'),
                           );
                         }
                       },
@@ -216,9 +216,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 extra: widget.user,
               );
               if (res == true && context.mounted) {
-                context.read<DoctorStaffBloc>().add(
-                  const LoadDoctorStaff('All'),
-                );
+                context.read<DoctorStaffBloc>().add(LoadDoctorStaff('All'));
               }
             },
           ),
@@ -378,7 +376,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
             SizedBox(height: 12.h),
             ListView.separated(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemCount: patients.length,
               separatorBuilder: (context, idx) =>
                   Divider(color: borderColor, height: 1),
@@ -503,8 +501,8 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                 ),
                 TextButton.icon(
                   onPressed: () => _showUploadDocumentDialog(),
-                  icon: const Icon(Icons.upload, size: 14),
-                  label: const Text("Upload Doc"),
+                  icon: Icon(Icons.upload, size: 14),
+                  label: Text("Upload Doc"),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.primary,
                   ),
@@ -514,7 +512,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
             SizedBox(height: 12.h),
             ListView.separated(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemCount: documents.length,
               separatorBuilder: (context, idx) =>
                   Divider(color: borderColor, height: 1),
@@ -566,10 +564,10 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text("Upload Verification Document"),
+          title: Text("Upload Verification Document"),
           content: TextField(
             controller: controller,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: "Document Name",
               hintText: "e.g. Fellowship Certificate",
             ),
@@ -577,7 +575,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             TextButton(
               onPressed: () async {
@@ -591,7 +589,7 @@ class _DoctorProfileAdminViewState extends State<DoctorProfileAdminView> {
                   ),
                 );
               },
-              child: const Text("Upload"),
+              child: Text("Upload"),
             ),
           ],
         );

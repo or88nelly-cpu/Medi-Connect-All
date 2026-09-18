@@ -21,7 +21,7 @@ class _FloatingDoctorImageState extends State<FloatingDoctorImage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: Duration(seconds: 3),
     )..repeat();
   }
 

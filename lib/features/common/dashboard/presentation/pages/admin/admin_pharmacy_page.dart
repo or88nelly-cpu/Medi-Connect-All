@@ -37,7 +37,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text("Add New Medicine"),
+          title: Text("Add New Medicine"),
           content: Form(
             key: formKey,
             child: SingleChildScrollView(
@@ -46,7 +46,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                 children: [
                   TextFormField(
                     controller: nameController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Medicine Name",
                       hintText: "e.g., Paracetamol 500mg",
                     ),
@@ -57,7 +57,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   SizedBox(height: 12.h),
                   TextFormField(
                     controller: categoryController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Category",
                       hintText: "e.g., Analgesic, Antibiotic",
                     ),
@@ -68,7 +68,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   SizedBox(height: 12.h),
                   TextFormField(
                     controller: dosageController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Dosage (e.g. 500mg)",
                       hintText: "e.g., 500mg",
                     ),
@@ -76,7 +76,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   SizedBox(height: 12.h),
                   TextFormField(
                     controller: imageUrlController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Image URL",
                       hintText: "e.g., https://unsplash.com/...",
                     ),
@@ -85,7 +85,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   TextFormField(
                     controller: stockController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Initial Stock",
                       hintText: "e.g., 100",
                     ),
@@ -103,9 +103,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   TextFormField(
                     controller: buyPriceController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Buy Price (₹)",
-                    ),
+                    decoration: InputDecoration(labelText: "Buy Price (₹)"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Required field";
@@ -120,9 +118,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   TextFormField(
                     controller: sellPriceController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Sell Price (₹)",
-                    ),
+                    decoration: InputDecoration(labelText: "Sell Price (₹)"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Required field";
@@ -140,7 +136,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -159,7 +155,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   Navigator.pop(ctx);
                 }
               },
-              child: const Text("Add"),
+              child: Text("Add"),
             ),
           ],
         );
@@ -193,7 +189,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   TextFormField(
                     controller: stockController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Current Stock Level",
                     ),
                     validator: (value) {
@@ -209,22 +205,20 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   SizedBox(height: 12.h),
                   TextFormField(
                     controller: dosageController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Dosage (e.g., 500mg)",
                     ),
                   ),
                   SizedBox(height: 12.h),
                   TextFormField(
                     controller: imageUrlController,
-                    decoration: const InputDecoration(labelText: "Image URL"),
+                    decoration: InputDecoration(labelText: "Image URL"),
                   ),
                   SizedBox(height: 12.h),
                   TextFormField(
                     controller: buyPriceController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Buy Price (₹)",
-                    ),
+                    decoration: InputDecoration(labelText: "Buy Price (₹)"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Required field";
@@ -239,9 +233,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   TextFormField(
                     controller: sellPriceController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Sell Price (₹)",
-                    ),
+                    decoration: InputDecoration(labelText: "Sell Price (₹)"),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Required field";
@@ -259,7 +251,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text("Cancel"),
+              child: Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -276,7 +268,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                   Navigator.pop(ctx);
                 }
               },
-              child: const Text("Save"),
+              child: Text("Save"),
             ),
           ],
         );
@@ -293,7 +285,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
               title: "Pharmacy Inventory",
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.add, color: AppColors.primary),
+                  icon: Icon(Icons.add, color: AppColors.primary),
                   onPressed: _showAddMedicineDialog,
                 ),
               ],
@@ -306,7 +298,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
     return BlocBuilder<AdminPharmacyBloc, AdminPharmacyState>(
       builder: (context, state) {
         if (state is AdminPharmacyLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator());
         }
 
         if (state is AdminPharmacyError) {
@@ -314,16 +306,13 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  state.message,
-                  style: const TextStyle(color: AppColors.error),
-                ),
+                Text(state.message, style: TextStyle(color: AppColors.error)),
                 SizedBox(height: 12.h),
                 ElevatedButton(
                   onPressed: () => context.read<AdminPharmacyBloc>().add(
                     LoadPharmacyItems(),
                   ),
-                  child: const Text("Retry"),
+                  child: Text("Retry"),
                 ),
               ],
             ),
@@ -333,7 +322,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
         if (state is AdminPharmacyLoaded) {
           final items = state.items;
           if (items.isEmpty) {
-            return const Center(child: Text("No items found."));
+            return Center(child: Text("No items found."));
           }
 
           return ListView.builder(
@@ -450,7 +439,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.delete_outline,
                                 color: AppColors.error,
                                 size: 18,
@@ -472,7 +461,7 @@ class _AdminPharmacyPageState extends State<AdminPharmacyPage> {
           );
         }
 
-        return const SizedBox.shrink();
+        return SizedBox.shrink();
       },
     );
   }

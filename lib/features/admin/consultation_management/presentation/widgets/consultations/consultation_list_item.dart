@@ -34,7 +34,7 @@ class ConsultationListItem extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -152,18 +152,18 @@ class ConsultationListItem extends StatelessWidget {
               TextButton.icon(
                 onPressed: onViewDetails,
                 icon: Icon(Icons.info_outline, size: 16.r),
-                label: const Text("Details"),
+                label: Text("Details"),
                 style: TextButton.styleFrom(
                   foregroundColor: isDark ? Colors.white70 : Colors.black87,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               if (appointment.status.toLowerCase() != 'completed' &&
                   appointment.status.toLowerCase() != 'cancelled') ...[
                 OutlinedButton.icon(
                   onPressed: onRecordVitals,
                   icon: Icon(Icons.monitor_heart_outlined, size: 16.r),
-                  label: const Text("Vitals"),
+                  label: Text("Vitals"),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: BorderSide(color: AppColors.primary),
@@ -184,12 +184,12 @@ class ConsultationListItem extends StatelessWidget {
                     size: 16.r,
                     color: Colors.white,
                   ),
-                  label: const Text(
+                  label: Text(
                     "Complete",
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF10B981), // success green
+                    backgroundColor: Color(0xFF10B981), // success green
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.r),
@@ -305,9 +305,9 @@ class ConsultationListItem extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'completed':
-        return const Color(0xFF10B981);
+        return Color(0xFF10B981);
       case 'scheduled':
-        return const Color(0xFF3B5BFF);
+        return Color(0xFF3B5BFF);
       case 'cancelled':
         return AppColors.error;
       default:

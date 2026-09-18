@@ -31,7 +31,7 @@ class PrescriptionSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ConsultationSectionHeader(
+        ConsultationSectionHeader(
           icon: Icons.description_outlined,
           title: 'A. Prescription',
           subtitle: 'Add medicines and notes',
@@ -113,7 +113,7 @@ class PrescriptionSection extends StatelessWidget {
                         focusNode: focusNode,
                         optionsBuilder: (TextEditingValue textEditingValue) {
                           if (textEditingValue.text.isEmpty) {
-                            return const Iterable<PharmacyItemEntity>.empty();
+                            return Iterable<PharmacyItemEntity>.empty();
                           }
                           return pharmacyItems.where((
                             PharmacyItemEntity option,
@@ -163,7 +163,7 @@ class PrescriptionSection extends StatelessWidget {
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.r),
-                                    borderSide: const BorderSide(
+                                    borderSide: BorderSide(
                                       color: AppColors.primary,
                                       width: 1.5,
                                     ),
@@ -347,7 +347,7 @@ class PrescriptionSection extends StatelessWidget {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: AppColors.primary,
                           width: 1.5,
                         ),
@@ -391,7 +391,7 @@ class PrescriptionSection extends StatelessWidget {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: AppColors.primary,
                           width: 1.5,
                         ),
@@ -434,7 +434,7 @@ class PrescriptionSection extends StatelessWidget {
             ),
           ),
           style: OutlinedButton.styleFrom(
-            side: const BorderSide(color: AppColors.primary),
+            side: BorderSide(color: AppColors.primary),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -467,10 +467,7 @@ class PrescriptionSection extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(
-                color: AppColors.primary,
-                width: 1.5,
-              ),
+              borderSide: BorderSide(color: AppColors.primary, width: 1.5),
             ),
           ),
         ),

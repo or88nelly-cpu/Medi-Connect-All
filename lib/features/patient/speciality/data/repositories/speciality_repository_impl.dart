@@ -89,7 +89,7 @@ class SpecialityRepositoryImpl implements SpecialityRepository {
   Future<Either<Failure, void>> deleteSpeciality(String id) async {
     try {
       await _supabase.from(AppTableNames.specialities).delete().eq('id', id);
-      return const Right(null);
+      return Right(null);
     } catch (e, stackTrace) {
       developer.log(
         "Exception in deleteSpeciality",

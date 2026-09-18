@@ -36,9 +36,9 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
         "verified": false, // Newly uploaded simulated doc
       });
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Document uploaded successfully!")),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("Document uploaded successfully!")));
   }
 
   void _deleteDocument(int index) {
@@ -47,7 +47,7 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
     });
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text("Document removed.")));
+    ).showSnackBar(SnackBar(content: Text("Document removed.")));
   }
 
   @override
@@ -142,7 +142,7 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                         vertical: 2.h,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F9F58).withValues(alpha: 0.1),
+                        color: Color(0xFF0F9F58).withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: Row(
@@ -150,14 +150,14 @@ class _EditDocumentsSectionState extends State<EditDocumentsSection> {
                         children: [
                           Icon(
                             Icons.verified_outlined,
-                            color: const Color(0xFF0F9F58),
+                            color: Color(0xFF0F9F58),
                             size: 10.sp,
                           ),
                           SizedBox(width: 4.w),
                           Text(
                             "Verified",
                             style: TextStyle(
-                              color: const Color(0xFF0F9F58),
+                              color: Color(0xFF0F9F58),
                               fontSize: 8.sp,
                               fontWeight: FontWeight.bold,
                             ),

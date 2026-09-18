@@ -55,7 +55,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
         return BlocBuilder<EmrdBloc, EmrdState>(
           builder: (context, emrdState) {
             if (patientState is PatientLoading || emrdState is EmrdLoading) {
-              return const CustomScaffold(
+              return CustomScaffold(
                 customAppbar: CommonAppBar(
                   title: "Patient Registry & Identification",
                 ),
@@ -63,7 +63,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
               );
             } else if (patientState is PatientError) {
               return CustomScaffold(
-                customAppbar: const CommonAppBar(
+                customAppbar: CommonAppBar(
                   title: "Patient Registry & Identification",
                 ),
                 body: Center(
@@ -77,7 +77,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
               );
             } else if (emrdState is EmrdError) {
               return CustomScaffold(
-                customAppbar: const CommonAppBar(
+                customAppbar: CommonAppBar(
                   title: "Patient Registry & Identification",
                 ),
                 body: Center(
@@ -95,7 +95,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
               final emrRecords = emrdState.emrRecords;
 
               return CustomScaffold(
-                customAppbar: const CommonAppBar(
+                customAppbar: CommonAppBar(
                   title: "Patient Registry & Identification",
                 ),
                 body: SingleChildScrollView(
@@ -118,7 +118,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                               fontSize: 16.sp,
                             ),
                           ),
-                          const Spacer(),
+                          Spacer(),
                           ValueListenableBuilder<String>(
                             valueListenable: _queryNotifier,
                             builder: (context, query, _) {
@@ -205,7 +205,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.r),
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                         color: AppColors.primary,
                                       ),
                                     ),
@@ -227,7 +227,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                                   color: textColor,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                underline: const SizedBox(),
+                                underline: SizedBox(),
                                 items: ['Name', 'UHID', 'Phone'].map((
                                   String val,
                                 ) {
@@ -324,7 +324,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
 
                               return ListView.builder(
                                 shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
+                                physics: NeverScrollableScrollPhysics(),
                                 itemCount: filteredPatients.length,
                                 itemBuilder: (context, index) {
                                   final patient = filteredPatients[index];
@@ -374,7 +374,7 @@ class _PatientRegistryPageState extends State<PatientRegistryPage> {
                 ),
               );
             }
-            return const CustomScaffold(
+            return CustomScaffold(
               customAppbar: CommonAppBar(
                 title: "Patient Registry & Identification",
               ),

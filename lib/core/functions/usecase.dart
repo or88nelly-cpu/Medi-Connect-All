@@ -8,7 +8,7 @@ import 'package:medi_connect/core/models/failure.dart';
 /// Forces consistent input (Params) and output (Either Failure or Success Type).
 
 abstract class UseCase<Type, Params> {
-  const UseCase();
+  UseCase();
 
   /// Executes the core business logic of the use case.
   Future<Either<Failure, Type>> call(Params params);

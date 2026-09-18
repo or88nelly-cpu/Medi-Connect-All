@@ -185,9 +185,7 @@ class AppointmentCard extends StatelessWidget {
                       height: 44.r,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: isDark
-                            ? Colors.white12
-                            : const Color(0xFFF3F4F6),
+                        color: isDark ? Colors.white12 : Color(0xFFF3F4F6),
                         border: Border.all(
                           color: AppColors.border(context),
                           width: 1,
@@ -358,7 +356,7 @@ class AppointmentCard extends StatelessWidget {
                       ),
                     ),
                     children: [
-                      const Divider(height: 16),
+                      Divider(height: 16),
                       // Expandable actions based on status
                       if (appointment.status == 'Confirmed' ||
                           appointment.status == 'Pending')
@@ -390,9 +388,7 @@ class AppointmentCard extends StatelessWidget {
                                   backgroundColor: isDark
                                       ? AppColors.terminalDarkCard
                                       : Colors.white,
-                                  side: const BorderSide(
-                                    color: AppColors.primary,
-                                  ),
+                                  side: BorderSide(color: AppColors.primary),
                                   padding: EdgeInsets.symmetric(vertical: 6.h),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.r),
@@ -419,16 +415,14 @@ class AppointmentCard extends StatelessWidget {
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: isDark
-                                      ? const Color(
-                                          0xFF064E3B,
-                                        ).withValues(alpha: 0.2)
-                                      : const Color(0xFFE8F5E9),
+                                      ? Color(0xFF064E3B).withValues(alpha: 0.2)
+                                      : Color(0xFFE8F5E9),
                                   elevation: 0,
                                   foregroundColor: AppColors.success,
                                   padding: EdgeInsets.symmetric(vertical: 10.h),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.r),
-                                    side: const BorderSide(
+                                    side: BorderSide(
                                       color: AppColors.success,
                                       width: 0.5,
                                     ),
@@ -445,7 +439,7 @@ class AppointmentCard extends StatelessWidget {
                             onPressed: () {
                               _showCompletedSummarySheet(context);
                             },
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.article_outlined,
                               size: 16,
                               color: AppColors.infoPurple,
@@ -460,11 +454,9 @@ class AppointmentCard extends StatelessWidget {
                             style: OutlinedButton.styleFrom(
                               foregroundColor: AppColors.infoPurple,
                               backgroundColor: isDark
-                                  ? const Color(
-                                      0xFF3B0764,
-                                    ).withValues(alpha: 0.2)
-                                  : const Color(0xFFF3E8FF),
-                              side: const BorderSide(
+                                  ? Color(0xFF3B0764).withValues(alpha: 0.2)
+                                  : Color(0xFFF3E8FF),
+                              side: BorderSide(
                                 color: AppColors.infoPurple,
                                 width: 0.5,
                               ),
@@ -514,7 +506,7 @@ class AppointmentCard extends StatelessWidget {
         backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
         title: Row(
           children: [
-            const Icon(Icons.info_outline, color: AppColors.primary),
+            Icon(Icons.info_outline, color: AppColors.primary),
             SizedBox(width: 8.w),
             Text(
               AppStrings.appointmentDetails,
@@ -577,7 +569,7 @@ class AppointmentCard extends StatelessWidget {
                 valueColor: AppColors.accent,
                 valueFontWeight: FontWeight.bold,
               ),
-            const Divider(height: 20),
+            Divider(height: 20),
             Text(
               AppStrings.vitalsInformation,
               style: AppTextStyles.bodyMedium.copyWith(
@@ -644,7 +636,7 @@ class AppointmentCard extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text(AppStrings.close),
+            child: Text(AppStrings.close),
           ),
         ],
       ),
@@ -658,7 +650,7 @@ class AppointmentCard extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (ctx) => const Center(child: CircularProgressIndicator()),
+      builder: (ctx) => Center(child: CircularProgressIndicator()),
     );
 
     Map<String, dynamic>? emrRecord;
@@ -709,12 +701,12 @@ class AppointmentCard extends StatelessWidget {
         context: context,
         builder: (ctx) => AlertDialog(
           backgroundColor: isDark ? AppColors.terminalDarkCard : Colors.white,
-          title: const Text(AppStrings.noSummaryAvailable),
-          content: const Text(AppStrings.couldNotRetrieveEmr),
+          title: Text(AppStrings.noSummaryAvailable),
+          content: Text(AppStrings.couldNotRetrieveEmr),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text(AppStrings.ok),
+              child: Text(AppStrings.ok),
             ),
           ],
         ),
@@ -758,9 +750,7 @@ class AppointmentCard extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                 color: isDark ? AppColors.terminalDarkCard : Colors.white,
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(24),
-                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
               child: Column(
                 children: [
@@ -806,12 +796,12 @@ class AppointmentCard extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () => Navigator.pop(ctx),
-                          icon: const Icon(Icons.close),
+                          icon: Icon(Icons.close),
                         ),
                       ],
                     ),
                   ),
-                  const Divider(),
+                  Divider(),
                   Expanded(
                     child: ListView(
                       controller: scrollCtrl,
@@ -871,7 +861,7 @@ class AppointmentCard extends StatelessWidget {
                                       : AppColors.textPrimary(context),
                                 ),
                               ),
-                              const Divider(height: 24),
+                              Divider(height: 24),
                             ],
                             _buildInfoRow(
                               AppStrings.medicineTotal,
@@ -909,7 +899,7 @@ class AppointmentCard extends StatelessWidget {
                                       : AppColors.textPrimary(context),
                                 ),
                               ),
-                              const Divider(height: 24),
+                              Divider(height: 24),
                             ],
                             _buildInfoRow(
                               AppStrings.labTestsTotal,
@@ -998,7 +988,7 @@ class AppointmentCard extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(height: 24),
+          Divider(height: 24),
           ...children,
         ],
       ),

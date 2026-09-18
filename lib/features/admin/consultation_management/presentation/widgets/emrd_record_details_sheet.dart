@@ -44,9 +44,7 @@ void showEmrdRecordDetailsSheet(
           return Container(
             decoration: BoxDecoration(
               color: isDark ? AppColors.terminalDarkCard : Colors.white,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
-              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
             ),
             child: Column(
               children: [
@@ -91,12 +89,12 @@ void showEmrdRecordDetailsSheet(
                       ),
                       IconButton(
                         onPressed: () => Navigator.pop(ctx),
-                        icon: const Icon(Icons.close),
+                        icon: Icon(Icons.close),
                       ),
                     ],
                   ),
                 ),
-                const Divider(),
+                Divider(),
                 Expanded(
                   child: ListView(
                     controller: scrollCtrl,
@@ -126,11 +124,11 @@ void showEmrdRecordDetailsSheet(
                                 record: record,
                                 isPrescription: true,
                               ),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.picture_as_pdf,
                                 color: Colors.white,
                               ),
-                              label: const Text(
+                              label: Text(
                                 "Prescription",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -154,11 +152,11 @@ void showEmrdRecordDetailsSheet(
                                 record: record,
                                 isPrescription: false,
                               ),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.picture_as_pdf,
                                 color: Colors.white,
                               ),
-                              label: const Text(
+                              label: Text(
                                 "Consultation Inv",
                                 style: TextStyle(
                                   color: Colors.white,

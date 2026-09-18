@@ -21,21 +21,21 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
       "count": 98,
       "pct": "76%",
       "val": 0.76,
-      "color": const Color(0xFF0F9F58),
+      "color": Color(0xFF0F9F58),
     },
     {
       "stars": "4 Stars",
       "count": 22,
       "pct": "17%",
       "val": 0.17,
-      "color": const Color(0xFF0F9F58),
+      "color": Color(0xFF0F9F58),
     },
     {
       "stars": "3 Stars",
       "count": 6,
       "pct": "05%",
       "val": 0.05,
-      "color": const Color(0xFF00C2A8),
+      "color": Color(0xFF00C2A8),
     },
     {
       "stars": "2 Stars",
@@ -219,7 +219,7 @@ class _PatientFeedbackCardState extends State<PatientFeedbackCard> {
             child: InkWell(
               onTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text("Loading all patient feedback reviews..."),
                   ),
                 );

@@ -40,7 +40,7 @@ class DoctorConsultationsCard extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, authState) {
         if (authState is! Authenticated) {
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         }
         final doctor = authState.user;
         final docDisplayName = doctor.fullName;
@@ -48,7 +48,7 @@ class DoctorConsultationsCard extends StatelessWidget {
         return BlocBuilder<DoctorAppointmentsBloc, DoctorAppointmentsState>(
           builder: (context, state) {
             if (state is DoctorAppointmentsLoading) {
-              return const Center(
+              return Center(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
                   child: CircularProgressIndicator(),
@@ -132,7 +132,7 @@ class DoctorConsultationsCard extends StatelessWidget {
                 ),
                 child: ListView.separated(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: todayApts.length,
                   separatorBuilder: (context, idx) =>
                       Divider(color: AppColors.border(context), height: 1),
@@ -155,29 +155,19 @@ class DoctorConsultationsCard extends StatelessWidget {
                     IconData icon;
 
                     if (isVideo) {
-                      avatarBg = isDark
-                          ? const Color(0xFF143A24)
-                          : const Color(0xFFE6F4EA);
+                      avatarBg = isDark ? Color(0xFF143A24) : Color(0xFFE6F4EA);
                       iconColor = isDark
-                          ? const Color(0xFF34D399)
-                          : const Color(0xFF137333);
+                          ? Color(0xFF34D399)
+                          : Color(0xFF137333);
                       icon = Icons.videocam;
                     } else {
                       final useBlue = idx % 2 == 0;
                       avatarBg = useBlue
-                          ? (isDark
-                                ? const Color(0xFF1A365D)
-                                : const Color(0xFFE8F0FE))
-                          : (isDark
-                                ? const Color(0xFF3B0764)
-                                : const Color(0xFFF3E8FF));
+                          ? (isDark ? Color(0xFF1A365D) : Color(0xFFE8F0FE))
+                          : (isDark ? Color(0xFF3B0764) : Color(0xFFF3E8FF));
                       iconColor = useBlue
-                          ? (isDark
-                                ? const Color(0xFF60A5FA)
-                                : const Color(0xFF1A73E8))
-                          : (isDark
-                                ? const Color(0xFFC084FC)
-                                : const Color(0xFF7E22CE));
+                          ? (isDark ? Color(0xFF60A5FA) : Color(0xFF1A73E8))
+                          : (isDark ? Color(0xFFC084FC) : Color(0xFF7E22CE));
                       icon = Icons.person;
                     }
 
@@ -210,8 +200,8 @@ class DoctorConsultationsCard extends StatelessWidget {
                                   timeVal,
                                   style: TextStyle(
                                     color: isDark
-                                        ? const Color(0xFF60A5FA)
-                                        : const Color(0xFF1A73E8),
+                                        ? Color(0xFF60A5FA)
+                                        : Color(0xFF1A73E8),
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -310,7 +300,7 @@ class DoctorConsultationsCard extends StatelessWidget {
               );
             }
 
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         );
       },
@@ -323,27 +313,27 @@ class DoctorConsultationsCard extends StatelessWidget {
     IconData icon;
 
     if (status == 'Confirmed') {
-      bg = isDark ? const Color(0xFF064E3B) : const Color(0xFFE6F4EA);
-      text = isDark ? const Color(0xFF34D399) : const Color(0xFF137333);
+      bg = isDark ? Color(0xFF064E3B) : Color(0xFFE6F4EA);
+      text = isDark ? Color(0xFF34D399) : Color(0xFF137333);
       icon = Icons.check;
     } else if (status == 'Pending MRD') {
-      bg = isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF);
-      text = isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
+      bg = isDark ? Color(0xFF3B0764) : Color(0xFFF3E8FF);
+      text = isDark ? Color(0xFFC084FC) : Color(0xFF7E22CE);
       icon = Icons.pending_actions_rounded;
     } else if (status == 'Completed') {
-      bg = isDark ? const Color(0xFF581C87) : const Color(0xFFF3E8FF);
-      text = isDark ? const Color(0xFFC084FC) : const Color(0xFF7E22CE);
+      bg = isDark ? Color(0xFF581C87) : Color(0xFFF3E8FF);
+      text = isDark ? Color(0xFFC084FC) : Color(0xFF7E22CE);
       icon = Icons.check_circle_outline;
     } else if (status == 'Cancelled') {
-      bg = isDark ? const Color(0xFF7F1D1D) : const Color(0xFFFCE8E6);
-      text = isDark ? const Color(0xFFFCA5A5) : const Color(0xFFC5221F);
+      bg = isDark ? Color(0xFF7F1D1D) : Color(0xFFFCE8E6);
+      text = isDark ? Color(0xFFFCA5A5) : Color(0xFFC5221F);
       icon = Icons.close;
     } else {
       final useOrange = index % 2 == 0;
       bg = useOrange
-          ? (isDark ? const Color(0xFF7C2D12) : const Color(0xFFFFF7ED))
-          : (isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF));
-      text = useOrange ? const Color(0xFFFB923C) : const Color(0xFF60A5FA);
+          ? (isDark ? Color(0xFF7C2D12) : Color(0xFFFFF7ED))
+          : (isDark ? Color(0xFF1E3A8A) : Color(0xFFEFF6FF));
+      text = useOrange ? Color(0xFFFB923C) : Color(0xFF60A5FA);
       icon = Icons.access_time;
     }
 

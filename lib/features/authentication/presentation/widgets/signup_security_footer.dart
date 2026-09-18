@@ -19,7 +19,7 @@ class SignupSecurityFooter extends StatelessWidget {
             color: AppColors.primary.withValues(alpha: 0.15),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child: Icon(
             Icons.verified_user_rounded,
             color: AppColors.secondary, // Gold lock
             size: 16,

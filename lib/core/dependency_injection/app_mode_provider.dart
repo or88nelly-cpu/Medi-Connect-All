@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:medi_connect/core/constants/env_config.dart';
 
 /// Provides the application mode (single doctor or hospital).
@@ -12,5 +11,6 @@ class AppModeProvider {
 class CurrentDoctorProvider {
   final String doctorId;
 
-  CurrentDoctorProvider() : doctorId = EnvConfig.isSingleDoctor ? EnvConfig.singleDoctorId : '';
+  CurrentDoctorProvider()
+    : doctorId = EnvConfig.isSingleDoctor ? EnvConfig.singleDoctorId : '';
 }

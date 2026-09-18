@@ -52,7 +52,7 @@ class HumanResourceBloc extends Bloc<HumanResourceEvent, HumanResourceState> {
     Emitter<HumanResourceState> emit,
   ) async {
     emit(HumanResourceLoading());
-    final result = await _useCase(const NoParams());
+    final result = await _useCase(NoParams());
     result.fold(
       (failure) => emit(HumanResourceError(failure.message)),
       (stats) => emit(HumanResourceLoaded(stats)),

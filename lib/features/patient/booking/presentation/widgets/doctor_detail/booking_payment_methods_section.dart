@@ -27,7 +27,7 @@ class BookingPaymentMethodsSection extends StatelessWidget {
           style: TextStyle(
             fontSize: AppTextStyles.s14,
             fontWeight: FontWeight.w900,
-            color: const Color(0xFF0F172A),
+            color: Color(0xFF0F172A),
           ),
         ),
         SizedBox(height: AppDimensions.spaceS + 2), // 10
@@ -108,9 +108,7 @@ class BookingPaymentMethodsSection extends StatelessWidget {
               AppDimensions.radiusL - 2,
             ), // 14
             border: Border.all(
-              color: isSelected
-                  ? const Color(0xFF3B5BFD)
-                  : AppColors.border(context),
+              color: isSelected ? Color(0xFF3B5BFD) : AppColors.border(context),
               width: isSelected ? 1.5 : 1,
             ),
           ),
@@ -118,14 +116,14 @@ class BookingPaymentMethodsSection extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isSelected ? const Color(0xFF3B5BFD) : Colors.grey,
+                color: isSelected ? Color(0xFF3B5BFD) : Colors.grey,
                 size: 18,
               ),
               SizedBox(height: AppDimensions.spaceXS),
               Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? const Color(0xFF3B5BFD) : Colors.black87,
+                  color: isSelected ? Color(0xFF3B5BFD) : Colors.black87,
                   fontSize: AppTextStyles.s10 - 1, // 9
                   fontWeight: FontWeight.w900,
                 ),
@@ -133,7 +131,7 @@ class BookingPaymentMethodsSection extends StatelessWidget {
               Text(
                 sub,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.grey,
                   fontSize: 6.5,
                   fontWeight: FontWeight.bold,

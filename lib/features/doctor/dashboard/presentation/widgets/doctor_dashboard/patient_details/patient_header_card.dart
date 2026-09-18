@@ -33,8 +33,8 @@ class PatientHeaderCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF0F172A), const Color(0xFF1E293B)]
-              : [const Color(0xFFE8F1FF), const Color(0xFFF3F7FD)],
+              ? [Color(0xFF0F172A), Color(0xFF1E293B)]
+              : [Color(0xFFE8F1FF), Color(0xFFF3F7FD)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -44,7 +44,7 @@ class PatientHeaderCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.03),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -65,9 +65,7 @@ class PatientHeaderCard extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: 34.r,
-              backgroundColor: isDark
-                  ? const Color(0xFF334155)
-                  : const Color(0xFFE2E8F0),
+              backgroundColor: isDark ? Color(0xFF334155) : Color(0xFFE2E8F0),
               backgroundImage:
                   patient.profilePhoto != null &&
                       patient.profilePhoto!.isNotEmpty
@@ -113,7 +111,7 @@ class PatientHeaderCard extends StatelessWidget {
                         vertical: 4.h,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFEE2E2),
+                        color: Color(0xFFFEE2E2),
                         borderRadius: BorderRadius.circular(6.r),
                       ),
                       child: Text(
@@ -133,13 +131,13 @@ class PatientHeaderCard extends StatelessWidget {
                         vertical: 4.h,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFEF3C7),
+                        color: Color(0xFFFEF3C7),
                         borderRadius: BorderRadius.circular(6.r),
                       ),
                       child: Text(
                         "${AppStrings.allergiesPrefix}$allergies",
                         style: TextStyle(
-                          color: const Color(0xFFD97706),
+                          color: Color(0xFFD97706),
                           fontSize: 10.sp,
                           fontWeight: FontWeight.w600,
                         ),

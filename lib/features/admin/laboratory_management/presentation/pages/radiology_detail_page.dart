@@ -21,11 +21,11 @@ class _RadiologyDetailPageState extends State<RadiologyDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<RadiologyBloc>()..add(LoadRadiologyStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Radiology Department"),
+        customAppbar: CommonAppBar(title: "Radiology Department"),
         body: BlocBuilder<RadiologyBloc, RadiologyState>(
           builder: (context, state) {
             if (state is RadiologyLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is RadiologyError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _RadiologyDetailPageState extends State<RadiologyDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _RadiologyDetailPageState extends State<RadiologyDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

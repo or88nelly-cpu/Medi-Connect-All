@@ -45,7 +45,7 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final cardBg = isDark ? Color(0xFF1E293B) : Colors.white;
     final primaryTextColor = isDark ? Colors.white : AppColors.textDarkNavy;
     final secondaryTextColor = isDark ? Colors.white60 : Colors.grey[600];
     final borderCol = AppColors.border(context);
@@ -123,7 +123,7 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
                     return RawAutocomplete<String>(
                       optionsBuilder: (TextEditingValue textEditingValue) {
                         if (textEditingValue.text.isEmpty) {
-                          return const Iterable<String>.empty();
+                          return Iterable<String>.empty();
                         }
                         return suggestions.where((String option) {
                           return option.toLowerCase().contains(
@@ -272,11 +272,11 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
                   width: double.infinity,
                   child: OutlinedButton.icon(
                     onPressed: widget.onAddMedicine,
-                    icon: const Icon(Icons.add, size: 16),
-                    label: const Text('Add Medicine'),
+                    icon: Icon(Icons.add, size: 16),
+                    label: Text('Add Medicine'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.primary,
-                      side: const BorderSide(color: AppColors.primary),
+                      side: BorderSide(color: AppColors.primary),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r),
                       ),
@@ -311,7 +311,7 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
                 SizedBox(height: 8.h),
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: widget.medicines.length,
                   itemBuilder: (context, index) {
                     final med = widget.medicines[index];
@@ -322,9 +322,7 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
                       ),
                       margin: EdgeInsets.only(bottom: 6.h),
                       decoration: BoxDecoration(
-                        color: isDark
-                            ? Colors.white10
-                            : const Color(0xFFF1F5F9),
+                        color: isDark ? Colors.white10 : Color(0xFFF1F5F9),
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Row(
@@ -342,14 +340,14 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
                           ),
                           if (widget.isEditable)
                             IconButton(
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.delete_outline,
                                 color: AppColors.red,
                                 size: 18,
                               ),
                               onPressed: () => widget.onRemoveMedicine(index),
                               padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
+                              constraints: BoxConstraints(),
                             ),
                         ],
                       ),
@@ -400,7 +398,7 @@ class _VisitPrescriptionCardState extends State<VisitPrescriptionCard> {
                 fontSize: 11.sp,
                 fontWeight: FontWeight.bold,
               ),
-              dropdownColor: isDark ? const Color(0xFF1E293B) : Colors.white,
+              dropdownColor: isDark ? Color(0xFF1E293B) : Colors.white,
               items: items.map((String item) {
                 return DropdownMenuItem<String>(value: item, child: Text(item));
               }).toList(),

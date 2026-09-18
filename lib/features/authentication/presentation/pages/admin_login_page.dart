@@ -109,11 +109,11 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const LoginBranding(),
+                    LoginBranding(),
                     SizedBox(height: 48.h),
-                    const LoginWelcomeText(),
+                    LoginWelcomeText(),
                     SizedBox(height: 36.h),
-                    const LoginFeatureBadges(),
+                    LoginFeatureBadges(),
                   ],
                 ),
               ),
@@ -126,7 +126,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   children: [
                     _buildFormCard(),
                     SizedBox(height: 24.h),
-                    const LoginSecurityFooter(),
+                    LoginSecurityFooter(),
                   ],
                 ),
               ),
@@ -157,7 +157,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const LoginBranding(),
+              LoginBranding(),
               SizedBox(height: 12.h),
 
               Stack(
@@ -166,7 +166,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     children: [
                       FloatingDoctorImage(height: screenH * 0.25),
                       SizedBox(width: 12.w),
-                      const Expanded(child: LoginWelcomeText()),
+                      Expanded(child: LoginWelcomeText()),
                     ],
                   ),
                   Padding(
@@ -176,9 +176,9 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 ],
               ),
               SizedBox(height: 12.h),
-              const Center(child: LoginFeatureBadges()),
+              Center(child: LoginFeatureBadges()),
               SizedBox(height: 12.h),
-              const LoginSecurityFooter(),
+              LoginSecurityFooter(),
             ],
           ),
         ],
@@ -205,7 +205,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                 right: 0,
                 child: Opacity(
                   opacity: isDark ? 0.15 : 0.25,
-                  child: const HeartbeatPulseLine(height: 50),
+                  child: HeartbeatPulseLine(height: 50),
                 ),
               ),
 
@@ -225,7 +225,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.12),
                       blurRadius: 30,
-                      offset: const Offset(0, 8),
+                      offset: Offset(0, 8),
                     ),
                   ],
                 ),

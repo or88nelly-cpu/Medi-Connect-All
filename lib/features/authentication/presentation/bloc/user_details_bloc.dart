@@ -115,9 +115,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       event.data,
     );
     result.fold((failure) => emit(UserDetailsError(failure.message)), (_) {
-      emit(
-        const UserDetailsActionSuccess("Patient profile updated successfully"),
-      );
+      emit(UserDetailsActionSuccess("Patient profile updated successfully"));
       add(FetchUserDetails(event.userId));
     });
   }
@@ -132,9 +130,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       event.data,
     );
     result.fold((failure) => emit(UserDetailsError(failure.message)), (_) {
-      emit(
-        const UserDetailsActionSuccess("Employee profile updated successfully"),
-      );
+      emit(UserDetailsActionSuccess("Employee profile updated successfully"));
       add(FetchUserDetails(event.userId));
     });
   }
@@ -149,9 +145,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       event.data,
     );
     result.fold((failure) => emit(UserDetailsError(failure.message)), (_) {
-      emit(
-        const UserDetailsActionSuccess("Doctor profile updated successfully"),
-      );
+      emit(UserDetailsActionSuccess("Doctor profile updated successfully"));
       add(FetchUserDetails(event.userId));
     });
   }

@@ -124,7 +124,7 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
   Color _getStatusColor(String status) {
     switch (status) {
       case "Available":
-        return const Color(0xFF0F9F58);
+        return Color(0xFF0F9F58);
       case "Booked":
         return AppColors.primary;
       case "On Hold":
@@ -219,26 +219,24 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
               OutlinedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Opening Assign Slot Form..."),
-                    ),
+                    SnackBar(content: Text("Opening Assign Slot Form...")),
                   );
                 },
                 icon: Icon(
                   Icons.person_add_alt_1_outlined,
                   size: 12.sp,
-                  color: const Color(0xFF9C27B0),
+                  color: Color(0xFF9C27B0),
                 ),
                 label: Text(
                   "Assign Slot",
                   style: TextStyle(
-                    color: const Color(0xFF9C27B0),
+                    color: Color(0xFF9C27B0),
                     fontSize: 10.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFF9C27B0)),
+                  side: BorderSide(color: Color(0xFF9C27B0)),
                   padding: EdgeInsets.symmetric(
                     horizontal: 10.w,
                     vertical: 6.h,
@@ -357,7 +355,7 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
             runSpacing: 6.h,
             alignment: WrapAlignment.center,
             children: [
-              _buildLegendItem("Available", const Color(0xFF0F9F58)),
+              _buildLegendItem("Available", Color(0xFF0F9F58)),
               _buildLegendItem("Booked", AppColors.primary),
               _buildLegendItem("On Hold", AppColors.warning),
               _buildLegendItem("Blocked", AppColors.error),
@@ -447,7 +445,7 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
         // Slots Grid
         GridView.builder(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           itemCount: slots.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
@@ -465,7 +463,7 @@ class _SlotManagementCardState extends State<SlotManagementCard> {
               onTap: () => _toggleSlotStatus(slot),
               borderRadius: BorderRadius.circular(6.r),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
+                duration: Duration(milliseconds: 150),
                 decoration: BoxDecoration(
                   color: statusColor.withValues(alpha: isDark ? 0.05 : 0.1),
                   border: Border.all(

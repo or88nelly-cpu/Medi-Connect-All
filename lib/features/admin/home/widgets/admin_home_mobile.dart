@@ -15,7 +15,7 @@ class AdminHomeMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      drawer: const AdminDrawer(),
+      drawer: AdminDrawer(),
       appBarNeeded: false,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -27,9 +27,9 @@ class AdminHomeMobile extends StatelessWidget {
               child: DashboardHeader(user: user),
             ),
             SizedBox(height: 20.h),
-            const DepartmentListHome(),
+            DepartmentListHome(),
             SizedBox(height: 20.h),
-            const ExtraCard(),
+            ExtraCard(),
           ],
         ),
       ),

@@ -22,7 +22,7 @@ class LoginBranding extends StatelessWidget {
               // BoxShadow(
               //   color: AppColors.primary.withValues(alpha: 0.08),
               //   blurRadius: 16.r,
-              //   offset: const Offset(0, 4),
+              //   offset: Offset(0, 4),
               // ),
             ],
           ),

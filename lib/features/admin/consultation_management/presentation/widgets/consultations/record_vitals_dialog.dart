@@ -97,18 +97,18 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close),
+                    icon: Icon(Icons.close),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],
               ),
-              const Divider(),
+              Divider(),
               SizedBox(height: 12.h),
 
               // Form fields
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       _buildTextField(
@@ -191,7 +191,7 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("Cancel"),
+                    child: Text("Cancel"),
                   ),
                   SizedBox(width: 12.w),
                   ElevatedButton(
@@ -219,7 +219,7 @@ class _RecordVitalsDialogState extends State<RecordVitalsDialog> {
                         vertical: 10.h,
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Save Vitals",
                       style: TextStyle(
                         color: Colors.white,

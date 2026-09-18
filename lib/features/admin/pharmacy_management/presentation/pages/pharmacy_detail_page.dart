@@ -68,7 +68,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                   ? Colors.white70
                   : AppColors.textSecondary(context),
               indicatorColor: AppColors.primary,
-              tabs: const [
+              tabs: [
                 Tab(icon: Icon(Icons.analytics_outlined), text: "Insights"),
                 Tab(icon: Icon(Icons.inventory_2_outlined), text: "Inventory"),
               ],
@@ -80,7 +80,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
               BlocBuilder<PharmacyBloc, PharmacyState>(
                 builder: (context, state) {
                   if (state is PharmacyLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   } else if (state is PharmacyError) {
                     return Center(
                       child: Text(
@@ -110,7 +110,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                           SizedBox(height: 16.h),
                           GridView.builder(
                             shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
+                            physics: NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
@@ -186,7 +186,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                       ),
                     );
                   }
-                  return const SizedBox.shrink();
+                  return SizedBox.shrink();
                 },
               ),
 
@@ -228,7 +228,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: AppColors.primary,
                             width: 1.5,
                           ),
@@ -240,9 +240,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                       child: BlocBuilder<AdminPharmacyBloc, AdminPharmacyState>(
                         builder: (context, state) {
                           if (state is AdminPharmacyLoading) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            return Center(child: CircularProgressIndicator());
                           }
 
                           if (state is AdminPharmacyError) {
@@ -252,16 +250,14 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                                 children: [
                                   Text(
                                     state.message,
-                                    style: const TextStyle(
-                                      color: AppColors.error,
-                                    ),
+                                    style: TextStyle(color: AppColors.error),
                                   ),
                                   SizedBox(height: 12.h),
                                   ElevatedButton(
                                     onPressed: () => context
                                         .read<AdminPharmacyBloc>()
                                         .add(LoadPharmacyItems()),
-                                    child: const Text("Retry"),
+                                    child: Text("Retry"),
                                   ),
                                 ],
                               ),
@@ -455,7 +451,7 @@ class _PharmacyDetailPageState extends State<PharmacyDetailPage> {
                               },
                             );
                           }
-                          return const SizedBox.shrink();
+                          return SizedBox.shrink();
                         },
                       ),
                     ),
@@ -521,7 +517,7 @@ class _StockEditDialogState extends State<_StockEditDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.remove_circle_outline,
                   size: 36,
                   color: AppColors.error,
@@ -567,7 +563,7 @@ class _StockEditDialogState extends State<_StockEditDialog> {
               ),
               SizedBox(width: 16.w),
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.add_circle_outline,
                   size: 36,
                   color: AppColors.success,
@@ -586,13 +582,13 @@ class _StockEditDialogState extends State<_StockEditDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
+          child: Text("Cancel"),
         ),
         ElevatedButton(
           onPressed: () {
             Navigator.pop(context, _stock);
           },
-          child: const Text("Update"),
+          child: Text("Update"),
         ),
       ],
     );

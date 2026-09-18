@@ -21,11 +21,11 @@ class _WardDetailPageState extends State<WardDetailPage> {
     return BlocProvider(
       create: (context) => GetIt.I<WardBloc>()..add(LoadWardStats()),
       child: CustomScaffold(
-        customAppbar: const CommonAppBar(title: "Ward Department"),
+        customAppbar: CommonAppBar(title: "Ward Department"),
         body: BlocBuilder<WardBloc, WardState>(
           builder: (context, state) {
             if (state is WardLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is WardError) {
               return Center(
                 child: Text(
@@ -52,7 +52,7 @@ class _WardDetailPageState extends State<WardDetailPage> {
                     SizedBox(height: 16.h),
                     GridView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.w,
@@ -113,7 +113,7 @@ class _WardDetailPageState extends State<WardDetailPage> {
                 ),
               );
             }
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ),

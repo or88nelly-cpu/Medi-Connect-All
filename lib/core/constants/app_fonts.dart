@@ -2,7 +2,7 @@
 /// Prevents hardcoding font strings directly in TextStyles.
 class AppFonts {
   /// Main font family used across all applications.
-  static const String inter = "Inter";
+  static String inter = "Inter";
 
   AppFonts._();
 }

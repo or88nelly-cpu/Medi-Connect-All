@@ -33,7 +33,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              title: const Text("Trigger Emergency Alert"),
+              title: Text("Trigger Emergency Alert"),
               content: Form(
                 key: formKey,
                 child: Column(
@@ -42,7 +42,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                     TextFormField(
                       controller: messageController,
                       maxLines: 2,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: "Emergency Message",
                         hintText: "e.g., Code Blue in Room 204",
                       ),
@@ -53,9 +53,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                     SizedBox(height: 12.h),
                     DropdownButtonFormField<String>(
                       initialValue: level,
-                      decoration: const InputDecoration(
-                        labelText: "Emergency Level",
-                      ),
+                      decoration: InputDecoration(labelText: "Emergency Level"),
                       items: ["Medium", "High", "Critical"].map((lvl) {
                         return DropdownMenuItem(value: lvl, child: Text(lvl));
                       }).toList(),
@@ -71,7 +69,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(ctx),
-                  child: const Text("Cancel"),
+                  child: Text("Cancel"),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -89,7 +87,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                       Navigator.pop(ctx);
                     }
                   },
-                  child: const Text("Trigger"),
+                  child: Text("Trigger"),
                 ),
               ],
             );
@@ -104,15 +102,12 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text("Resolve Emergency?"),
+          title: Text("Resolve Emergency?"),
           content: Text(
             "Are you sure you want to mark this emergency alert as resolved?\n\n\"${emergency.message}\"",
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text("No"),
-            ),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text("No")),
             ElevatedButton(
               onPressed: () {
                 context.read<AdminEmergenciesBloc>().add(
@@ -120,7 +115,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                 );
                 Navigator.pop(ctx);
               },
-              child: const Text("Yes, Resolve"),
+              child: Text("Yes, Resolve"),
             ),
           ],
         );
@@ -135,7 +130,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
         title: "Active Emergencies",
         actions: [
           IconButton(
-            icon: const Icon(Icons.add_alert, color: AppColors.error),
+            icon: Icon(Icons.add_alert, color: AppColors.error),
             onPressed: _showTriggerEmergencyDialog,
           ),
         ],
@@ -143,7 +138,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
       body: BlocBuilder<AdminEmergenciesBloc, AdminEmergenciesState>(
         builder: (context, state) {
           if (state is AdminEmergenciesLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           if (state is AdminEmergenciesError) {
@@ -151,16 +146,13 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    state.message,
-                    style: const TextStyle(color: AppColors.error),
-                  ),
+                  Text(state.message, style: TextStyle(color: AppColors.error)),
                   SizedBox(height: 12.h),
                   ElevatedButton(
                     onPressed: () => context.read<AdminEmergenciesBloc>().add(
                       LoadEmergencies(),
                     ),
-                    child: const Text("Retry"),
+                    child: Text("Retry"),
                   ),
                 ],
               ),
@@ -174,13 +166,13 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.check_circle_outline,
                       size: 64,
                       color: AppColors.success,
                     ),
                     SizedBox(height: 12.h),
-                    const Text("All clear. No active emergencies!"),
+                    Text("All clear. No active emergencies!"),
                   ],
                 ),
               );
@@ -279,7 +271,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
                                 ),
                               ),
                               SizedBox(height: 4.h),
-                              const Icon(
+                              Icon(
                                 Icons.check,
                                 color: AppColors.success,
                                 size: 18,
@@ -295,7 +287,7 @@ class _AdminEmergenciesPageState extends State<AdminEmergenciesPage> {
             );
           }
 
-          return const SizedBox.shrink();
+          return SizedBox.shrink();
         },
       ),
     );

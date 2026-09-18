@@ -34,12 +34,8 @@ class EmrdDashboardHeader extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-              ? [const Color(0xFF0F172A), const Color(0xFF1E293B)]
-              : [
-                  const Color(0xFFDCEBFF),
-                  const Color(0xFFF1F6FF),
-                  Colors.white,
-                ],
+              ? [Color(0xFF0F172A), Color(0xFF1E293B)]
+              : [Color(0xFFDCEBFF), Color(0xFFF1F6FF), Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -58,7 +54,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                 width: 170.w,
                 height: 120.h,
                 fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => const SizedBox(),
+                errorBuilder: (_, _, _) => SizedBox(),
               ),
             ),
           ),
@@ -105,7 +101,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.04),
                               blurRadius: 8,
-                              offset: const Offset(0, 2),
+                              offset: Offset(0, 2),
                             ),
                           ],
                         ),
@@ -126,9 +122,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 21.sp,
                               fontWeight: FontWeight.w900,
-                              color: isDark
-                                  ? Colors.white
-                                  : const Color(0xFF1E293B),
+                              color: isDark ? Colors.white : Color(0xFF1E293B),
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -140,7 +134,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               color: isDark
                                   ? Colors.white54
-                                  : const Color(0xFF64748B),
+                                  : Color(0xFF64748B),
                             ),
                           ),
                         ],
@@ -164,9 +158,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                           child: Icon(
                             Icons.notifications_outlined,
                             size: 21.r,
-                            color: isDark
-                                ? Colors.white
-                                : const Color(0xFF475569),
+                            color: isDark ? Colors.white : Color(0xFF475569),
                           ),
                         ),
                         if (alertCount > 0)
@@ -180,7 +172,7 @@ class EmrdDashboardHeader extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: isDark
-                                      ? const Color(0xFF1E293B)
+                                      ? Color(0xFF1E293B)
                                       : Colors.white,
                                   width: 1.5,
                                 ),
@@ -233,11 +225,11 @@ class EmrdDashboardHeader extends StatelessWidget {
                             width: 10.r,
                             height: 10.r,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF10B981),
+                              color: Color(0xFF10B981),
                               shape: BoxShape.circle,
                               border: Border.all(
                                 color: isDark
-                                    ? const Color(0xFF1E293B)
+                                    ? Color(0xFF1E293B)
                                     : Colors.white,
                                 width: 1.5,
                               ),
@@ -259,7 +251,7 @@ class EmrdDashboardHeader extends StatelessWidget {
 
 class ECGPainter extends CustomPainter {
   final Color color;
-  const ECGPainter({required this.color});
+  ECGPainter({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

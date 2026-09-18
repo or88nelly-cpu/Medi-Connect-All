@@ -20,7 +20,7 @@ class GetOpInfoParams extends Equatable {
 class GetOpInfoUseCase extends UseCase<OpInfoSummaryEntity, GetOpInfoParams> {
   final OpInfoRepository _repository;
 
-  const GetOpInfoUseCase(this._repository);
+  GetOpInfoUseCase(this._repository);
 
   @override
   Future<Either<Failure, OpInfoSummaryEntity>> call(GetOpInfoParams params) {

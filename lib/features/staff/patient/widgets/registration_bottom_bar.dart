@@ -75,7 +75,7 @@ class RegistrationBottomBar extends StatelessWidget {
   Widget _buildSkipButton(BuildContext context) {
     return TextButton(
       onPressed: () => context.read<PatientRegistrationBloc>().add(
-        const SkipOnboardingRequested(),
+        SkipOnboardingRequested(),
       ),
       style: TextButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 14.h),
@@ -97,11 +97,10 @@ class RegistrationBottomBar extends StatelessWidget {
 
   Widget _buildBackButton(BuildContext context) {
     return OutlinedButton(
-      onPressed: () => context.read<PatientRegistrationBloc>().add(
-        const StepBackRequested(),
-      ),
+      onPressed: () =>
+          context.read<PatientRegistrationBloc>().add(StepBackRequested()),
       style: OutlinedButton.styleFrom(
-        side: const BorderSide(color: AppColors.primary, width: 1.5),
+        side: BorderSide(color: AppColors.primary, width: 1.5),
         padding: EdgeInsets.symmetric(vertical: 14.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -138,7 +137,7 @@ class RegistrationBottomBar extends StatelessWidget {
           ? SizedBox(
               width: 18.r,
               height: 18.r,
-              child: const CircularProgressIndicator(
+              child: CircularProgressIndicator(
                 strokeWidth: 2,
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),

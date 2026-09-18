@@ -31,7 +31,7 @@ class AdminSidebar extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 20,
-            offset: const Offset(4, 0),
+            offset: Offset(4, 0),
           ),
         ],
       ),
@@ -45,7 +45,7 @@ class AdminSidebar extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.r),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [
                       AppColors.controlCenterBlue,
                       AppColors.controlCenterBlueAccent,
@@ -152,7 +152,7 @@ class AdminSidebar extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(14.r),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 colors: [AppColors.primaryDark, AppColors.controlCenterBlue],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -229,7 +229,7 @@ class AdminSidebar extends StatelessWidget {
                 backgroundColor: AppColors.primaryLight,
                 child: Text(
                   user?.fullName.isNotEmpty == true ? user!.fullName[0] : 'A',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
@@ -285,7 +285,7 @@ class AdminSidebar extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(12.r),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
+            duration: Duration(milliseconds: 150),
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
             decoration: BoxDecoration(
               color: isActive

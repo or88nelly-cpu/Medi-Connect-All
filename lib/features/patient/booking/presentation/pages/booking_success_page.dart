@@ -46,7 +46,7 @@ class BookingSuccessPage extends StatelessWidget {
     final formattedDateStr = DateFormat('EEEE, d MMMM yyyy').format(date);
 
     return CustomScaffold(
-      customAppbar: const CommonAppBar(
+      customAppbar: CommonAppBar(
         title: "Booking Completed",
         // automaticallyImplyLeading: false,
       ),
@@ -66,7 +66,7 @@ class BookingSuccessPage extends StatelessWidget {
             SuccessActionButtons(
               onDownloadReceipt: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Downloading receipt...')),
+                  SnackBar(content: Text('Downloading receipt...')),
                 );
               },
               onViewAppointment: () {
@@ -96,12 +96,12 @@ class BookingSuccessPage extends StatelessWidget {
             SuccessHelperCards(
               onCalendarTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Adding to calendar...')),
+                  SnackBar(content: Text('Adding to calendar...')),
                 );
               },
               onSupportTap: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Connecting support...')),
+                  SnackBar(content: Text('Connecting support...')),
                 );
               },
               cardBg: cardBg,

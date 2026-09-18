@@ -11,7 +11,7 @@ class ActivityItem {
   final Color iconColor;
   final Color iconBgColor;
 
-  const ActivityItem({
+  ActivityItem({
     required this.message,
     required this.time,
     required this.icon,
@@ -117,7 +117,7 @@ class RecentActivityCard extends StatelessWidget {
                 ? Colors.black.withValues(alpha: 0.2)
                 : Colors.black.withValues(alpha: 0.02),
             blurRadius: 20,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
       ),
@@ -198,7 +198,7 @@ class RecentActivityCard extends StatelessWidget {
           ] else ...[
             ListView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               itemCount: parsedList.length,
               itemBuilder: (context, idx) {
                 final isLast = idx == parsedList.length - 1;

@@ -71,7 +71,7 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
   Color _getStatusColor(String status) {
     switch (status) {
       case "Available":
-        return const Color(0xFF0F9F58);
+        return Color(0xFF0F9F58);
       case "Booked":
         return AppColors.primary;
       case "On Hold":
@@ -174,7 +174,7 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
                     timeRange,
                     style: TextStyle(color: labelColor, fontSize: 10.sp),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   Icon(
                     isExpanded
                         ? Icons.keyboard_arrow_up
@@ -192,7 +192,7 @@ class _SlotsGridSectionState extends State<SlotsGridSection> {
               padding: EdgeInsets.all(12.r),
               child: GridView.builder(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: slots.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,

@@ -36,7 +36,7 @@ class AdminNotificationBell extends StatelessWidget {
           top: 0,
           child: Container(
             padding: EdgeInsets.all(3.r),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.badgeRed,
               shape: BoxShape.circle,
             ),

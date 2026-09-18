@@ -27,7 +27,7 @@ class _FloatingConnectingIconsState extends State<FloatingConnectingIcons>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: Duration(seconds: 4),
     )..repeat(reverse: true);
 
     _floatAnimation = Tween<double>(begin: -6.0, end: 6.0).animate(

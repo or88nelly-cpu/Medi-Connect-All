@@ -89,7 +89,7 @@ class EmrdPdfHelper {
         doc.addPage(
           pw.Page(
             pageFormat: PdfPageFormat.a4,
-            margin: const pw.EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            margin: pw.EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             build: (pw.Context context) {
               return pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -146,7 +146,7 @@ class EmrdPdfHelper {
                       pw.Container(
                         width: 44,
                         height: 44,
-                        padding: const pw.EdgeInsets.all(3),
+                        padding: pw.EdgeInsets.all(3),
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(
                             color: PdfColors.black,
@@ -168,21 +168,17 @@ class EmrdPdfHelper {
 
                   // Patient & Doctor Details Grid
                   pw.Container(
-                    padding: const pw.EdgeInsets.all(8),
+                    padding: pw.EdgeInsets.all(8),
                     decoration: pw.BoxDecoration(
                       border: pw.Border.all(color: borderColor, width: 1),
-                      borderRadius: const pw.BorderRadius.all(
-                        pw.Radius.circular(6),
-                      ),
+                      borderRadius: pw.BorderRadius.all(pw.Radius.circular(6)),
                     ),
                     child: pw.Table(
                       children: [
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -205,9 +201,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -234,9 +228,7 @@ class EmrdPdfHelper {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -254,16 +246,14 @@ class EmrdPdfHelper {
                                                 .substring(0, 8)
                                                 .toUpperCase()
                                           : 'N/A',
-                                      style: const pw.TextStyle(fontSize: 8.5),
+                                      style: pw.TextStyle(fontSize: 8.5),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -276,7 +266,7 @@ class EmrdPdfHelper {
                                     ),
                                     pw.TextSpan(
                                       text: formattedDate,
-                                      style: const pw.TextStyle(fontSize: 8.5),
+                                      style: pw.TextStyle(fontSize: 8.5),
                                     ),
                                   ],
                                 ),
@@ -287,9 +277,7 @@ class EmrdPdfHelper {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -300,7 +288,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "28 Y 6 M / Male",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -309,9 +297,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -339,9 +325,7 @@ class EmrdPdfHelper {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -352,7 +336,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "9495123456",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -361,9 +345,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -374,7 +356,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text:
                                           "12/345, West Hill, Calicut, Kerala, India - 673005",
                                       style: pw.TextStyle(fontSize: 8.5),
@@ -403,14 +385,14 @@ class EmrdPdfHelper {
 
                   // Rx Table
                   pw.Table(
-                    border: const pw.TableBorder(
+                    border: pw.TableBorder(
                       bottom: pw.BorderSide(color: borderColor, width: 1),
                       horizontalInside: pw.BorderSide(
                         color: borderColor,
                         width: 0.8,
                       ),
                     ),
-                    columnWidths: const {
+                    columnWidths: {
                       0: pw.FractionColumnWidth(0.06), // SN
                       1: pw.FractionColumnWidth(0.40), // Medicine
                       2: pw.FractionColumnWidth(0.18), // Dosage
@@ -420,12 +402,10 @@ class EmrdPdfHelper {
                     children: [
                       // Header Row
                       pw.TableRow(
-                        decoration: const pw.BoxDecoration(
-                          color: PdfColors.grey100,
-                        ),
+                        decoration: pw.BoxDecoration(color: PdfColors.grey100),
                         children: [
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Rx",
                               style: pw.TextStyle(
@@ -435,7 +415,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Medicine",
                               style: pw.TextStyle(
@@ -445,7 +425,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Dosage",
                               style: pw.TextStyle(
@@ -455,7 +435,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Duration",
                               style: pw.TextStyle(
@@ -465,7 +445,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Instructions",
                               style: pw.TextStyle(
@@ -484,14 +464,14 @@ class EmrdPdfHelper {
                           return pw.TableRow(
                             children: [
                               pw.Padding(
-                                padding: const pw.EdgeInsets.all(6),
+                                padding: pw.EdgeInsets.all(6),
                                 child: pw.Text(
                                   "$idx.",
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                               ),
                               pw.Padding(
-                                padding: const pw.EdgeInsets.all(6),
+                                padding: pw.EdgeInsets.all(6),
                                 child: pw.Text(
                                   med['name'] ?? '',
                                   style: pw.TextStyle(
@@ -501,24 +481,24 @@ class EmrdPdfHelper {
                                 ),
                               ),
                               pw.Padding(
-                                padding: const pw.EdgeInsets.all(6),
+                                padding: pw.EdgeInsets.all(6),
                                 child: pw.Text(
                                   med['dosage'] ?? '',
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                               ),
                               pw.Padding(
-                                padding: const pw.EdgeInsets.all(6),
+                                padding: pw.EdgeInsets.all(6),
                                 child: pw.Text(
                                   med['duration'] ?? '',
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                               ),
                               pw.Padding(
-                                padding: const pw.EdgeInsets.all(6),
+                                padding: pw.EdgeInsets.all(6),
                                 child: pw.Text(
                                   med['instructions'] ?? '',
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                               ),
                             ],
@@ -528,11 +508,11 @@ class EmrdPdfHelper {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(8),
+                              padding: pw.EdgeInsets.all(8),
                               child: pw.Text(""),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(8),
+                              padding: pw.EdgeInsets.all(8),
                               child: pw.Text(
                                 "No medicines prescribed.",
                                 style: pw.TextStyle(
@@ -542,15 +522,15 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(8),
+                              padding: pw.EdgeInsets.all(8),
                               child: pw.Text(""),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(8),
+                              padding: pw.EdgeInsets.all(8),
                               child: pw.Text(""),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(8),
+                              padding: pw.EdgeInsets.all(8),
                               child: pw.Text(""),
                             ),
                           ],
@@ -573,13 +553,10 @@ class EmrdPdfHelper {
                     pw.SizedBox(height: 4),
                     ...record['lab_tests'].toString().split(',').map((test) {
                       return pw.Padding(
-                        padding: const pw.EdgeInsets.only(left: 10, bottom: 2),
+                        padding: pw.EdgeInsets.only(left: 10, bottom: 2),
                         child: pw.Text(
                           "• ${test.trim()}",
-                          style: const pw.TextStyle(
-                            fontSize: 8.5,
-                            color: textColor,
-                          ),
+                          style: pw.TextStyle(fontSize: 8.5, color: textColor),
                         ),
                       );
                     }),
@@ -602,10 +579,10 @@ class EmrdPdfHelper {
                     ),
                     pw.SizedBox(height: 4),
                     pw.Padding(
-                      padding: const pw.EdgeInsets.only(left: 10),
+                      padding: pw.EdgeInsets.only(left: 10),
                       child: pw.Text(
                         record['prescription_notes'],
-                        style: const pw.TextStyle(
+                        style: pw.TextStyle(
                           fontSize: 8.5,
                           color: PdfColors.grey800,
                         ),
@@ -626,12 +603,12 @@ class EmrdPdfHelper {
                         children: [
                           pw.Text(
                             "Date : ${formattedDate.split(' ').first}",
-                            style: const pw.TextStyle(fontSize: 8.5),
+                            style: pw.TextStyle(fontSize: 8.5),
                           ),
                           pw.SizedBox(height: 2),
                           pw.Text(
                             "Time : ${formattedDate.contains(' ') ? formattedDate.split(' ').last : ''}",
-                            style: const pw.TextStyle(fontSize: 8.5),
+                            style: pw.TextStyle(fontSize: 8.5),
                           ),
                         ],
                       ),
@@ -713,7 +690,7 @@ class EmrdPdfHelper {
         doc.addPage(
           pw.Page(
             pageFormat: PdfPageFormat.a4,
-            margin: const pw.EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            margin: pw.EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             build: (pw.Context context) {
               return pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -744,7 +721,7 @@ class EmrdPdfHelper {
                           ),
                           pw.Text(
                             "CALICUT",
-                            style: const pw.TextStyle(
+                            style: pw.TextStyle(
                               fontSize: 7,
                               color: grayLabelColor,
                             ),
@@ -806,21 +783,17 @@ class EmrdPdfHelper {
 
                   // Bill Details Grid
                   pw.Container(
-                    padding: const pw.EdgeInsets.all(8),
+                    padding: pw.EdgeInsets.all(8),
                     decoration: pw.BoxDecoration(
                       border: pw.Border.all(color: borderColor, width: 1),
-                      borderRadius: const pw.BorderRadius.all(
-                        pw.Radius.circular(6),
-                      ),
+                      borderRadius: pw.BorderRadius.all(pw.Radius.circular(6)),
                     ),
                     child: pw.Table(
                       children: [
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -843,9 +816,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -858,16 +829,14 @@ class EmrdPdfHelper {
                                     ),
                                     pw.TextSpan(
                                       text: formattedDate,
-                                      style: const pw.TextStyle(fontSize: 8.5),
+                                      style: pw.TextStyle(fontSize: 8.5),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -895,9 +864,7 @@ class EmrdPdfHelper {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -915,16 +882,14 @@ class EmrdPdfHelper {
                                                 .substring(0, 8)
                                                 .toUpperCase()
                                           : 'N/A',
-                                      style: const pw.TextStyle(fontSize: 8.5),
+                                      style: pw.TextStyle(fontSize: 8.5),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -935,7 +900,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "Male/28 Y 6 M",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -944,9 +909,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -957,7 +920,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "Self",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -970,9 +933,7 @@ class EmrdPdfHelper {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -995,9 +956,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -1008,7 +967,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "9495123456",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -1017,9 +976,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -1030,7 +987,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "West Hill, Calicut",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -1043,9 +1000,7 @@ class EmrdPdfHelper {
                         pw.TableRow(
                           children: [
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -1068,9 +1023,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -1081,7 +1034,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "32",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -1090,9 +1043,7 @@ class EmrdPdfHelper {
                               ),
                             ),
                             pw.Padding(
-                              padding: const pw.EdgeInsets.symmetric(
-                                vertical: 2,
-                              ),
+                              padding: pw.EdgeInsets.symmetric(vertical: 2),
                               child: pw.RichText(
                                 text: pw.TextSpan(
                                   children: [
@@ -1103,7 +1054,7 @@ class EmrdPdfHelper {
                                         fontSize: 8.5,
                                       ),
                                     ),
-                                    const pw.TextSpan(
+                                    pw.TextSpan(
                                       text: "Calicut, Kerala",
                                       style: pw.TextStyle(fontSize: 8.5),
                                     ),
@@ -1120,14 +1071,14 @@ class EmrdPdfHelper {
 
                   // Service Particulars Table
                   pw.Table(
-                    border: const pw.TableBorder(
+                    border: pw.TableBorder(
                       bottom: pw.BorderSide(color: borderColor, width: 1),
                       horizontalInside: pw.BorderSide(
                         color: borderColor,
                         width: 0.8,
                       ),
                     ),
-                    columnWidths: const {
+                    columnWidths: {
                       0: pw.FractionColumnWidth(0.05), // SN
                       1: pw.FractionColumnWidth(0.12), // SrCode
                       2: pw.FractionColumnWidth(0.12), // SAC
@@ -1139,12 +1090,10 @@ class EmrdPdfHelper {
                     children: [
                       // Header Row
                       pw.TableRow(
-                        decoration: const pw.BoxDecoration(
-                          color: PdfColors.grey100,
-                        ),
+                        decoration: pw.BoxDecoration(color: PdfColors.grey100),
                         children: [
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "SN",
                               style: pw.TextStyle(
@@ -1154,7 +1103,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "SrCode",
                               style: pw.TextStyle(
@@ -1164,7 +1113,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "SAC",
                               style: pw.TextStyle(
@@ -1174,7 +1123,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Service Particulars",
                               style: pw.TextStyle(
@@ -1184,7 +1133,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Rate (R)",
                               style: pw.TextStyle(
@@ -1195,7 +1144,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Unit",
                               style: pw.TextStyle(
@@ -1206,7 +1155,7 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(5),
+                            padding: pw.EdgeInsets.all(5),
                             child: pw.Text(
                               "Net Amt",
                               style: pw.TextStyle(
@@ -1222,30 +1171,30 @@ class EmrdPdfHelper {
                       pw.TableRow(
                         children: [
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(6),
+                            padding: pw.EdgeInsets.all(6),
                             child: pw.Text(
                               "1",
-                              style: const pw.TextStyle(fontSize: 8.5),
+                              style: pw.TextStyle(fontSize: 8.5),
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(6),
+                            padding: pw.EdgeInsets.all(6),
                             child: pw.Text(
                               isMedicine
                                   ? "11858"
                                   : (isLab ? "11950" : "10101"),
-                              style: const pw.TextStyle(fontSize: 8.5),
+                              style: pw.TextStyle(fontSize: 8.5),
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(6),
+                            padding: pw.EdgeInsets.all(6),
                             child: pw.Text(
                               "999311",
-                              style: const pw.TextStyle(fontSize: 8.5),
+                              style: pw.TextStyle(fontSize: 8.5),
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(6),
+                            padding: pw.EdgeInsets.all(6),
                             child: pw.Text(
                               isMedicine
                                   ? "MEDICINE & CONSUMABLE"
@@ -1259,26 +1208,26 @@ class EmrdPdfHelper {
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(6),
+                            padding: pw.EdgeInsets.all(6),
                             child: pw.Text(
                               selectedAmt.toStringAsFixed(2),
-                              style: const pw.TextStyle(fontSize: 8.5),
+                              style: pw.TextStyle(fontSize: 8.5),
                               textAlign: pw.TextAlign.right,
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(6),
+                            padding: pw.EdgeInsets.all(6),
                             child: pw.Text(
                               "1",
-                              style: const pw.TextStyle(fontSize: 8.5),
+                              style: pw.TextStyle(fontSize: 8.5),
                               textAlign: pw.TextAlign.center,
                             ),
                           ),
                           pw.Padding(
-                            padding: const pw.EdgeInsets.all(6),
+                            padding: pw.EdgeInsets.all(6),
                             child: pw.Text(
                               selectedAmt.toStringAsFixed(2),
-                              style: const pw.TextStyle(fontSize: 8.5),
+                              style: pw.TextStyle(fontSize: 8.5),
                               textAlign: pw.TextAlign.right,
                             ),
                           ),
@@ -1294,10 +1243,10 @@ class EmrdPdfHelper {
                     children: [
                       pw.Container(
                         width: 200,
-                        padding: const pw.EdgeInsets.all(6),
+                        padding: pw.EdgeInsets.all(6),
                         decoration: pw.BoxDecoration(
                           border: pw.Border.all(color: borderColor, width: 1),
-                          borderRadius: const pw.BorderRadius.all(
+                          borderRadius: pw.BorderRadius.all(
                             pw.Radius.circular(4),
                           ),
                         ),
@@ -1309,7 +1258,7 @@ class EmrdPdfHelper {
                               children: [
                                 pw.Text(
                                   "Total Amount:",
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                                 pw.Text(
                                   "R ${grandTotal.toStringAsFixed(2)}",
@@ -1327,7 +1276,7 @@ class EmrdPdfHelper {
                               children: [
                                 pw.Text(
                                   "Net Amount:",
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                                 pw.Text(
                                   "R ${grandTotal.toStringAsFixed(2)}",
@@ -1345,7 +1294,7 @@ class EmrdPdfHelper {
                               children: [
                                 pw.Text(
                                   "Patient Amount:",
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                                 pw.Text(
                                   "R ${grandTotal.toStringAsFixed(2)}",
@@ -1363,7 +1312,7 @@ class EmrdPdfHelper {
                               children: [
                                 pw.Text(
                                   "Amt Received:",
-                                  style: const pw.TextStyle(fontSize: 8.5),
+                                  style: pw.TextStyle(fontSize: 8.5),
                                 ),
                                 pw.Text(
                                   "R ${grandTotal.toStringAsFixed(2)}",
@@ -1489,7 +1438,7 @@ class EmrdPdfHelper {
               '${customTitle ?? (isPrescription ? "Prescription" : "Invoice")} PDF generated in Downloads folder.',
             ),
             backgroundColor: AppColors.success,
-            duration: const Duration(seconds: 5),
+            duration: Duration(seconds: 5),
             action: SnackBarAction(
               label: 'OPEN',
               textColor: Colors.white,
